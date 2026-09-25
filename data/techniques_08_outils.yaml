@@ -1,0 +1,385 @@
+# Famille primaire OUTIL (armes, outils ninja, marionnettes) — JUT_185 à JUT_216
+- id: JUT_185
+  nom: "Kunai en éventail"
+  statut: CO
+  famille: OUTIL
+  livraison: SALVE
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Lance 3 kunai en éventail de 30° vers la cible la plus proche."
+  valeurs: "10 ; délai 1,0 s ; vitesse 14 m/s ; portée 9 m"
+  visuel: "Kunai noirs de 6 px à reflet d'1 px, traînée de 2 frames, planté au sol 0,3 s en cas d'échec."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_186
+  nom: "Lancer de shuriken"
+  statut: OA
+  famille: OUTIL
+  livraison: PROJECTILE
+  tags: [E_NEUTRE, REBOND]
+  cible: plus_proche
+  comportement: "Shuriken rapide qui rebondit une fois vers un second ennemi."
+  valeurs: "8 ; 1 rebond ; délai 0,6 s ; vitesse 16 m/s"
+  visuel: "Étoile à 4 branches en rotation 2 frames."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_187
+  nom: "Fūma Shuriken (Shuriken démoniaque)"
+  statut: OA
+  famille: OUTIL
+  livraison: PROJECTILE
+  tags: [E_NEUTRE, PERCANT]
+  cible: plus_dense
+  comportement: "Grand shuriken qui décrit un arc large, perce tout et revient."
+  valeurs: "24 ; rayon 0,8 m ; délai 3,0 s ; portée 7 m"
+  visuel: "Shuriken pliant de 16 px, sifflement de rotation, ombre au sol."
+  acces: LIBRE
+  limites: "1 touche par cible par passage."
+- id: JUT_188
+  nom: "Kage Shuriken no Jutsu (Shuriken de l'ombre)"
+  statut: OA
+  famille: OUTIL
+  livraison: PROJECTILE
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Un shuriken en cache un second dans son ombre : si le premier touche, le second frappe la même cible 0,15 s après avec +50 %."
+  valeurs: "16 puis 24 ; délai 2,0 s"
+  visuel: "Deux shuriken superposés, séparation visible à l'impact."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_189
+  nom: "Kibaku Fuda (Étiquette explosive)"
+  statut: OA
+  famille: OUTIL
+  livraison: DIFFERE
+  tags: [E_NEUTRE, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Kunai muni d'une étiquette qui se fiche dans le sol près d'un groupe et explose 1 s plus tard."
+  valeurs: "32 ; rayon 2 m ; délai 2,5 s"
+  visuel: "Étiquette qui se consume en 3 frames (grésillement), explosion orange-blanc en boule."
+  acces: LIBRE
+  limites: "Détruit les obstacles destructibles."
+- id: JUT_190
+  nom: "Senbon"
+  statut: OA
+  famille: OUTIL
+  livraison: SALVE
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Salve de 4 aiguilles fines, chance critique +15 %."
+  valeurs: "6 ; crit +15 % ; délai 0,8 s ; vitesse 20 m/s"
+  visuel: "Traits de 1 × 5 px, reflet métallique fugace."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_191
+  nom: "Makibishi (Chausse-trapes)"
+  statut: OA
+  famille: OUTIL
+  livraison: PIEGE
+  tags: [E_NEUTRE]
+  cible: chemin
+  comportement: "Répand des chausse-trapes derrière le joueur : dégâts et ralentissement de 30 % 1 s."
+  valeurs: "6 par pas ; max 20 pointes ; durée 8 s ; délai 3,0 s"
+  visuel: "Petites pointes de 3 px à reflet, éparpillées en arc."
+  acces: LIBRE
+  limites: "1 touche par ennemi par 0,5 s."
+- id: JUT_192
+  nom: "Fil d'acier tendu"
+  statut: OA
+  famille: OUTIL
+  livraison: ZONE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_dense
+  comportement: "Tend un fil de 5 m entre deux points ; les ennemis qui le franchissent sont Entravés 0,8 s."
+  valeurs: "8 ; Entravé 0,8 s ; durée 6 s ; délai 5 s"
+  visuel: "Ligne de 1 px grise qui scintille, vibration au contact."
+  acces: LIBRE
+  limites: "Max 2 fils."
+- id: JUT_193
+  nom: "Sōshōryū (Dragons jumeaux ascendants)"
+  statut: OA
+  famille: OUTIL
+  livraison: DIFFERE
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Deux rouleaux s'élèvent en spirale et font pleuvoir des dizaines d'armes sur 4 m."
+  valeurs: "24 armes × 7 ; délai 7 s"
+  visuel: "Deux rouleaux en double hélice, armes variées (kunai, shuriken, faucilles) qui tombent."
+  acces: "CHR_048|CHR_049"
+  limites: "—"
+- id: JUT_194
+  nom: "Rafale d'armes invoquées"
+  statut: OA
+  famille: OUTIL
+  livraison: SALVE
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Invoque depuis un rouleau une rafale alternant kunai (perçant), shuriken (rebond) et kusarigama (recul)."
+  valeurs: "6 armes × 9 ; délai 1,6 s"
+  visuel: "Rouleau déroulé 2 frames, cycle d'armes lisible par forme."
+  acces: "CHR_048|CHR_049"
+  limites: "—"
+- id: JUT_195
+  nom: "Kusarigama (Faucille à chaîne)"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE, ATTRACTION]
+  cible: plus_menacant
+  comportement: "La chaîne harponne une cible à 5 m et la ramène à 1,5 m, puis la faucille la frappe."
+  valeurs: "10 + 22 ; délai 3,0 s"
+  visuel: "Chaîne de maillons 2 px, faucille en arc brillant."
+  acces: LIBRE
+  limites: "Élites et boss non attirés (frappe à distance à 50 %)."
+- id: JUT_196
+  nom: "Hien (Lames de chakra de l'hirondelle)"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_FUTON]
+  cible: plus_proche
+  comportement: "Poings américains à lames prolongées par le vent : double taille en X à 2,2 m qui applique Entaillé."
+  valeurs: "2 × 14 ; Entaillé +1 ; délai 1,2 s"
+  visuel: "Lames courtes prolongées d'une lame de vent translucide."
+  acces: "ELEM_FUTON+CHR_052|ELEM_FUTON+CHR_020"
+  limites: "—"
+- id: JUT_197
+  nom: "Kubikiribōchō (Grand couperet)"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Balayage lent à 180° (3 m) ; chaque élimination répare la lame : +2 % dégâts (max +30 %, perdus à 10 s sans élimination)."
+  valeurs: "38 ; délai 2,4 s"
+  visuel: "Lame de 32 px à trou circulaire, arc lourd en 5 frames, éclaboussures stylisées non réalistes."
+  acces: "CHR_054|CHR_076"
+  limites: "—"
+- id: JUT_198
+  nom: "Samehada (Peau de requin)"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Coup d'épée écailleuse en arc de 120° (2,5 m) : chaque ennemi touché rend 0,5 chakra."
+  valeurs: "26 ; chakra 0,5 par cible ; délai 1,6 s"
+  visuel: "Épée couverte d'écailles qui s'hérissent à l'impact."
+  acces: "CHR_033|CHR_034|CHR_058"
+  limites: "Plafond global de chakra (12/s)."
+- id: JUT_199
+  nom: "Kusanagi (Estoc)"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE, PERCANT]
+  cible: plus_menacant
+  comportement: "Estoc éclair qui s'allonge sur 4 m et transperce ; hérite du tag Raiton si Chidori Nagashi est possédé."
+  valeurs: "34 ; délai 1,4 s"
+  visuel: "Lame droite fine, éclat blanc sur la longueur."
+  acces: "CHR_005|CHR_006|CHR_030"
+  limites: "—"
+- id: JUT_200
+  nom: "Tantō (Sabre court)"
+  statut: CO
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Deux entailles rapides ; +50 % dégâts aux cibles qui ne font pas face au joueur (dos)."
+  valeurs: "2 × 12 ; délai 0,8 s"
+  visuel: "Lame courte à reflet, deux arcs croisés."
+  acces: APT_KENJ
+  limites: "—"
+- id: JUT_201
+  nom: "Nunchaku de Guy"
+  statut: AV
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "Tournoiement continu autour du joueur (2 m), frappes rapides qui repoussent un peu."
+  valeurs: "7 par frappe ; 1 frappe/0,25 s par cible ; durée 3 s ; délai 5 s"
+  visuel: "Nunchaku en cercle flou (3 frames), éclats d'impact."
+  acces: CHR_045
+  limites: "—"
+- id: JUT_202
+  nom: "Karasu (Marionnette du corbeau)"
+  statut: OA
+  famille: OUTIL
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, MARIONNETTE]
+  cible: plus_proche
+  comportement: "Marionnette reliée par fils qui vole vers les ennemis et frappe avec des lames empoisonnées."
+  valeurs: "14 + Empoisonné +1 ; intervalle 0,7 s ; permanente ; portée des fils 7 m"
+  visuel: "Marionnette à 3 yeux, bras articulés en poses mécaniques (pas d'interpolation), fils bleus fins."
+  acces: APT_MARIO
+  limites: "1 Karasu."
+- id: JUT_203
+  nom: "Kuroari (Marionnette de la fourmi noire)"
+  statut: OA
+  famille: OUTIL
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, MARIONNETTE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Emprisonne la cible la plus menaçante 2 s dans son torse ; si Karasu est présent, il la transperce pour ×2 dégâts."
+  valeurs: "20 (40 avec Karasu) ; délai 7 s"
+  visuel: "Marionnette massive dont le torse s'ouvre en 3 frames."
+  acces: APT_MARIO
+  limites: "Boss : Vulnérable +10 %."
+- id: JUT_204
+  nom: "Sanshōuo (Marionnette de la salamandre)"
+  statut: OA
+  famille: OUTIL
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, MARIONNETTE, BOUCLIER]
+  cible: aucune
+  comportement: "Marionnette-bouclier qui se place entre le joueur et le projectile ennemi le plus proche et l'arrête."
+  valeurs: "Bloque 1 projectile/0,6 s ; permanente"
+  visuel: "Carapace plate à écailles de bois, déploiement en éventail."
+  acces: APT_MARIO
+  limites: "Ne bloque pas les télégraphes de boss."
+- id: JUT_205
+  nom: "Hiruko"
+  statut: OA
+  famille: OUTIL
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, MARIONNETTE]
+  cible: plus_proche
+  comportement: "Marionnette blindée à queue de scorpion : balayages empoisonnés à 3 m."
+  valeurs: "18 + Empoisonné +2 ; intervalle 1,0 s ; permanente"
+  visuel: "Silhouette voûtée, queue segmentée qui fouette en 4 frames."
+  acces: "APT_MARIO+CHR_037"
+  limites: "—"
+- id: JUT_206
+  nom: "Aiguilles empoisonnées"
+  statut: OA
+  famille: OUTIL
+  livraison: SALVE
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Salve de 5 aiguilles enduites : chacune pose 1 cumul de Poison."
+  valeurs: "4 + Empoisonné +1 ; délai 1,2 s"
+  visuel: "Aiguilles à pointe violette, cible qui verdit par palier."
+  acces: "APT_MARIO|APT_MED"
+  limites: "—"
+- id: JUT_207
+  nom: "Chikamatsu no Jikki (Les dix marionnettes)"
+  statut: OA
+  famille: OUTIL
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, MARIONNETTE]
+  cible: plus_dense
+  comportement: "Déploie 3 marionnettes aux armes différentes (lance, bouclier, lame) ; le niveau augmente leur nombre."
+  valeurs: "12 chacune ; intervalle 0,8 s ; permanente"
+  visuel: "Dix silhouettes distinctes à terme, fils de 10 doigts."
+  acces: CHR_074
+  limites: "Compte dans le plafond de 8 unités."
+- id: JUT_208
+  nom: "Chakra no Ito (Fils de chakra)"
+  statut: OA
+  famille: OUTIL
+  livraison: RAYON
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_proche
+  comportement: "Fils qui prennent le contrôle d'un ennemi ordinaire 3 s : il attaque ses alliés (Confus renforcé)."
+  valeurs: "0 ; contrôle 3 s ; délai 6 s ; portée 7 m"
+  visuel: "Fils bleus du bout des doigts à la cible, cible au contour bleu."
+  acces: APT_MARIO
+  limites: "Ordinaires uniquement ; 1 cible."
+- id: JUT_209
+  nom: "Kunai piégé"
+  statut: CO
+  famille: OUTIL
+  livraison: PIEGE
+  tags: [E_NEUTRE, EXPLOSIF]
+  cible: chemin
+  comportement: "Deux kunai reliés par un fil explosif sur le chemin des ennemis : le premier franchissement fait sauter toute la ligne."
+  valeurs: "28 sur la ligne (4 m) ; max 2 ; délai 4 s"
+  visuel: "Fil scintillant avec étiquettes, explosion en chapelet."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_210
+  nom: "Bombe fumigène"
+  statut: OA
+  famille: OUTIL
+  livraison: ZONE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: aucune
+  comportement: "Déclenchée par l'esquive : nuage de 2,5 m ; les ennemis dedans perdent la cible 1,5 s."
+  valeurs: "0 ; délai = esquive (min 4 s)"
+  visuel: "Volutes grises en 3 tons, bords nets pour ne pas masquer les télégraphes."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_211
+  nom: "Frappe du grand éventail"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_FUTON]
+  cible: plus_proche
+  comportement: "Coup d'éventail à 180° (2 m) qui projette ; relance de 20 % le délai de la technique Fūton la plus lente."
+  valeurs: "22 ; recul 2 m ; délai 2,0 s"
+  visuel: "Éventail géant à 3 lunes, arc de vent."
+  acces: CHR_026
+  limites: "Réduction du délai : 1 fois par coup."
+- id: JUT_212
+  nom: "Sept sabres de Bee"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "Sept sabres tenus en tous sens : rafale circulaire à 1,8 m au rythme d'une rime (4 temps, 4e temps ×2)."
+  valeurs: "9 × 7 par cycle ; cycle 1,6 s"
+  visuel: "Sabres tenus par mains, aisselle et bouche ; pose rythmique en 4 frames."
+  acces: CHR_058
+  limites: "—"
+- id: JUT_213
+  nom: "Bashōsen (Éventail de bananier)"
+  statut: OA
+  famille: OUTIL
+  livraison: CONE
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Éventail du Sage : chaque usage produit un élément différent en cycle Katon → Suiton → Raiton → Fūton (tags alternés)."
+  valeurs: "24 ; angle 60° ; portée 5 m ; délai 2,4 s"
+  visuel: "Éventail ocre ; l'effet emprunte la grammaire visuelle de l'élément du tour."
+  acces: CHR_049
+  limites: "L'élément du tour est affiché sur l'icône du HUD."
+- id: JUT_214
+  nom: "Spirale de kunai"
+  statut: CO
+  famille: OUTIL
+  livraison: SALVE
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "8 kunai lancés en spirale sur 360° en 1 s (contrôle de zone)."
+  valeurs: "9 ; délai 2,5 s ; vitesse 12 m/s"
+  visuel: "Spirale de traits noirs lisible depuis le dessus."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_215
+  nom: "Shuriken récupérables"
+  statut: CO
+  famille: OUTIL
+  livraison: PROJECTILE
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Les shuriken restent plantés au sol ; passer dessus les récupère et les relance aussitôt avec +50 % dégâts."
+  valeurs: "12 (18 relancé) ; max 6 au sol ; délai 1,2 s"
+  visuel: "Shuriken plantés à 45°, reflet pulsé pour être vus."
+  acces: LIBRE
+  limites: "Durée au sol 6 s."
+- id: JUT_216
+  nom: "Gunbai (Éventail de guerre)"
+  statut: OA
+  famille: OUTIL
+  livraison: CONTACT
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Toutes les 5 s, absorbe les projectiles ennemis frontaux 1 s puis les renvoie en rafale de vent."
+  valeurs: "Rafale 20 + 5 par projectile absorbé ; délai 5 s"
+  visuel: "Éventail rond laqué, tourbillon absorbé visible sur sa surface."
+  acces: "CHR_043|CHR_044|CHR_062"
+  limites: "Max 12 projectiles absorbés."

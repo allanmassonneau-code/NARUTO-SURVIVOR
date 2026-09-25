@@ -1,0 +1,290 @@
+# Famille primaire TAIJUTSU — JUT_161 à JUT_184
+# Règle : les frappes projettent une « image de frappe » ; le joueur n'est jamais déplacé sans action de sa part.
+- id: JUT_161
+  nom: "Konoha Reppū (Rafale de la feuille)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_proche
+  comportement: "Balayage bas en cône de 100° à 1,6 m : fait trébucher (Étourdi 0,3 s)."
+  valeurs: "14 ; délai 1,1 s"
+  visuel: "Jambe tendue en 3 frames, arc de poussière rasant, ennemis basculés 1 frame."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_162
+  nom: "Omote Renge (Lotus primaire)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE, EXPLOSIF]
+  cible: plus_menacant
+  comportement: "L'image de frappe saisit la cible la plus menaçante, l'emporte en vrille et l'écrase au sol (onde de 2 m)."
+  valeurs: "70 ; onde 25 ; délai 8,0 s ; portée de saisie 5 m"
+  visuel: "Bandages déroulés en ruban, vrille en 6 frames, cratère et anneau de poussière."
+  acces: APT_PORTES
+  limites: "Boss : pas de saisie ; frappe verticale 70 + Vulnérable +10 %."
+- id: JUT_163
+  nom: "Ura Renge (Lotus inversé)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Série aérienne de 6 frappes sur une élite ou le boss, finie par un coup double au sol."
+  valeurs: "6 × 12 + 40 ; délai 10 s"
+  visuel: "Images rémanentes rouges (vitesse), impacts en étoile à chaque frappe."
+  acces: APT_PORTES
+  limites: "Cible : élite ou boss en priorité, sinon ennemi le plus résistant."
+- id: JUT_164
+  nom: "Konoha Senpū (Tourbillon de la feuille)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "Déplacement volontaire : l'esquive du joueur devient un coup de pied tournoyant qui frappe tout ce qu'il traverse."
+  valeurs: "26 par esquive ; rayon 1,4 m ; délai = recharge de l'esquive"
+  visuel: "Rotation 360° en 4 frames pendant l'esquive, trainée de feuilles."
+  acces: LIBRE
+  limites: "Ne se déclenche que sur esquive du joueur."
+- id: JUT_165
+  nom: "Enchaînement de coups de pied"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "5 coups de pied rapides vers l'avant, chacun légèrement plus loin (1,2 → 2 m)."
+  valeurs: "5 × 7 ; délai 1,4 s"
+  visuel: "Pieds en arcs successifs, impacts en éventail."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_166
+  nom: "Dynamic Entry (Entrée dynamique)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Une image de frappe fond de loin (8 m) sur l'ennemi le plus menaçant et le projette ; les ennemis heurtés sur sa trajectoire sont touchés."
+  valeurs: "38 ; trajectoire 12 ; délai 4,5 s"
+  visuel: "Silhouette en coup de pied sauté, lignes de vitesse, impact en étoile."
+  acces: APT_PORTES
+  limites: "—"
+- id: JUT_167
+  nom: "Asa Kujaku (Paon du matin)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONE
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Rafale de coups si rapides qu'ils s'enflamment par friction : cône de 80° sur 4 m, applique Brûlure (sans tag Katon : non-chakra)."
+  valeurs: "12 coups × 6 ; Brûlure +1 par 3 coups ; délai 5,0 s"
+  visuel: "Éventail de poings stylisés en plumes de paon enflammées ; la couleur ne change pas l'élément."
+  acces: APT_PORTES
+  limites: "Ne compte pas comme Katon pour les synergies (règle §R6)."
+- id: JUT_168
+  nom: "Hirudora (Tigre du jour)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: PROJECTILE
+  tags: [E_NEUTRE, EXPLOSIF, PERCANT]
+  cible: plus_dense
+  comportement: "Un coup unique comprime l'air en un tigre énorme qui fonce et explose au bout de 8 m."
+  valeurs: "60 en traversée ; explosion 80 (r 3,5 m) ; délai 16 s"
+  visuel: "Tigre d'air translucide de 48 px à contour blanc, souffle qui couche l'herbe."
+  acces: "APT_PORTES+CHR_045"
+  limites: "Réservé à Might Guy ; micro-pause locale 60 ms."
+- id: JUT_169
+  nom: "Sekizō (Éléphant du soir)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: SALVE
+  tags: [E_NEUTRE, PERCANT]
+  cible: plus_menacant
+  comportement: "5 coups successifs projettent 5 masses d'air en ligne droite, chacune plus forte."
+  valeurs: "20 / 25 / 30 / 35 / 40 ; perce tout ; délai 12 s"
+  visuel: "Poings en impacts de pression concentriques, lignes droites."
+  acces: "APT_PORTES+CHR_045"
+  limites: "Réservé à Might Guy."
+- id: JUT_170
+  nom: "Suiken (Poing ivre)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: aleatoire_pondere
+  comportement: "Frappes erratiques dans des directions pseudo-aléatoires autour du joueur (2 m) ; chaque frappe a 25 % de chance de doubler."
+  valeurs: "11 ; 1 frappe/0,35 s ; permanente"
+  visuel: "Mouvements chaloupés du sprite (animation spécifique), impacts en virgules."
+  acces: CHR_015
+  limites: "Utilise le flux RNG de combat (reproductible)."
+- id: JUT_171
+  nom: "Shishi Rendan (Combo du lion)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Projette un ennemi en l'air puis l'abat au sol ; l'impact touche ceux qui sont en dessous."
+  valeurs: "18 + 30 (r 1,5 m) ; délai 3,5 s"
+  visuel: "Coup de pied montant, cible en l'air (ombre), talon descendant."
+  acces: "DOJ_SHARINGAN|APT_PORTES"
+  limites: "—"
+- id: JUT_172
+  nom: "Lariat"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE, PERCANT]
+  cible: direction
+  comportement: "Une image de frappe charge 5 m en avant bras tendu et fauche tout sur son passage."
+  valeurs: "34 ; largeur 1,2 m ; délai 4,0 s"
+  visuel: "Silhouette musclée en course, bras en lame blanche, souffle en V."
+  acces: "CHR_070|CHR_058"
+  limites: "—"
+- id: JUT_173
+  nom: "Guillotine Drop (Chute guillotine)"
+  statut: AV
+  famille: TAIJUTSU
+  livraison: DIFFERE
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Ombre allié au sol (0,6 s), puis talon d'une image de frappe tombant du ciel."
+  valeurs: "65 ; rayon 2 m ; délai 6,0 s"
+  visuel: "Ombre en forme de jambe, impact vertical à fissures radiales."
+  acces: CHR_070
+  limites: "—"
+- id: JUT_174
+  nom: "Tsūtenkyaku (Talon céleste)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, TERRAIN]
+  cible: plus_dense
+  comportement: "Coup de talon qui fend le sol : cratère de 2,5 m et fissure de 5 m vers l'avant."
+  valeurs: "52 ; fissure 20 ; délai 6,0 s"
+  visuel: "Talon levé 4 frames, sol qui se soulève en plaques."
+  acces: "CHR_029|CHR_007|CHR_011"
+  limites: "—"
+- id: JUT_175
+  nom: "Ōkashō (Poing de cerisier)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Coup de poing au sol qui projette des éclats de roche en cône de 60° sur 4 m."
+  valeurs: "Poing 40 ; éclats 6 × 8 ; délai 2,6 s"
+  visuel: "Poing entouré d'un halo de chakra rose (contour 1 px), éclats anguleux."
+  acces: "CHR_007|CHR_011|CHR_029"
+  limites: "—"
+- id: JUT_176
+  nom: "Contre-attaque"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Réactif : quand un ennemi entre à 1,2 m et que la technique est prête, riposte instantanée qui le repousse."
+  valeurs: "30 ; recul 2 m ; délai 1,5 s"
+  visuel: "Garde levée 1 frame, coup de paume, onde en croissant."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_177
+  nom: "Mille poings"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Rafale de 8 coups de poing rapides à courte portée sur la cible la plus proche."
+  valeurs: "8 × 5 ; portée 1,3 m ; délai 1,6 s"
+  visuel: "Poings démultipliés (3 images rémanentes), impacts en pluie d'étoiles."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_178
+  nom: "Saut de la grue"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: CHAINE
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Une image de frappe bondit de tête en tête sur 3 ennemis (trajet visible), le dernier bond frappe en zone."
+  valeurs: "18 par bond ; final 24 (r 1,2 m) ; portée de bond 4 m ; délai 2,8 s"
+  visuel: "Silhouette en arc, ombre qui suit, poussière à chaque appui."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_179
+  nom: "Onde du poing au sol"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: ONDE
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "Frappe le sol : onde de choc de 3 m qui soulève la poussière."
+  valeurs: "20 ; recul 1 m ; délai 2,5 s"
+  visuel: "Poing au sol, anneau de terre soulevée (non Doton)."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_180
+  nom: "Genou volant"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Frappe du genou qui projette la cible ; l'ennemi projeté blesse ceux qu'il percute (effet « quilles »)."
+  valeurs: "24 ; projection 4 m ; collision 16 ; délai 2,0 s"
+  visuel: "Genou en impact, cible qui tournoie, étoiles d'impact sur les percutés."
+  acces: LIBRE
+  limites: "Collision = SECONDAIRE."
+- id: JUT_181
+  nom: "Posture de fer"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Rester immobile 0,5 s active une garde : −30 % dégâts subis et riposte à chaque contact subi."
+  valeurs: "Riposte 18 ; réduction −30 % ; active tant que le joueur est immobile"
+  visuel: "Pose de garde dédiée, anneau au sol fixe."
+  acces: LIBRE
+  limites: "Réduction comptée dans le plafond de 60 %."
+- id: JUT_182
+  nom: "Kage Buyō (Ombre de la feuille dansante)"
+  statut: OA
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: marque
+  comportement: "Frappe automatiquement 2 fois chaque ennemi projeté en l'air (par n'importe quelle source) à 5 m."
+  valeurs: "2 × 14 ; délai interne 0,3 s par cible"
+  visuel: "Image de frappe qui suit la cible en l'air, deux impacts secs."
+  acces: LIBRE
+  limites: "Sans ennemi en l'air : inactif (carte avertit « Nécessite une projection »)."
+- id: JUT_183
+  nom: "Coups en écho"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, MARQUE]
+  cible: plus_menacant
+  comportement: "Marque une cible : 30 % des dégâts de taijutsu qu'elle reçoit pendant 2 s sont restitués d'un coup à la fin."
+  valeurs: "Restitution 30 % (+10 de base) ; délai 4,0 s"
+  visuel: "Marque en forme de poing, compteur de chocs (1 à 3 anneaux), éclat final."
+  acces: LIBRE
+  limites: "Plafond de restitution : 200."
+- id: JUT_184
+  nom: "Kenatsu (Pression des poings)"
+  statut: CO
+  famille: TAIJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Frappe au contact si un ennemi est à 1,5 m, sinon projette une onde d'air jusqu'à 5 m (garantit une portée minimale aux builds de mêlée)."
+  valeurs: "Contact 20 / onde 12 ; délai 0,9 s"
+  visuel: "Poing avec anneau de pression ; onde en croissant transparent."
+  acces: LIBRE
+  limites: "—"

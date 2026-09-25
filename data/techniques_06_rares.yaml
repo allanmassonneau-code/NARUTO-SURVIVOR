@@ -1,0 +1,483 @@
+# Famille primaire RARE (affinités rares) — JUT_121 à JUT_160
+# Mokuton 121–126 ; Hyōton 127–130 ; Sable 131–135 ; Jiton 136–139 ; Shakuton 140–142 ;
+# Yōton 143–146 ; Bakuton 147–150 ; Ranton 151–153 ; Enton 154–156 ; Futton 157–158 ; Jinton 159–160
+- id: JUT_121
+  nom: "Mokuton — Jukai Kōtan (Naissance de la forêt)"
+  statut: OA
+  famille: RARE
+  livraison: ZONE
+  tags: [E_MOKUTON, TERRAIN, CONTROLE, PERSISTANT]
+  cible: plus_dense
+  comportement: "Des arbres jaillissent sur 5 m, Entravent 1,5 s et laissent une surface BOIS qui ralentit de 25 %."
+  valeurs: "30 à l'émergence ; 4 par tick de 0,5 s ; durée 5 s ; délai 12 s"
+  visuel: "Troncs qui poussent en 4 frames avec branches en spirale, feuillage sombre à contour vert clair."
+  acces: KG_MOKUTON
+  limites: "Surface BOIS : brûlable (§B8.4)."
+- id: JUT_122
+  nom: "Mokuton — Mokujōheki (Rempart de bois)"
+  statut: OA
+  famille: RARE
+  livraison: ZONE
+  tags: [E_MOKUTON, BOUCLIER, TERRAIN]
+  cible: aucune
+  comportement: "Dôme de bois partiel (demi-cercle ouvert vers l'avant) qui bloque projectiles et ennemis par l'arrière 4 s."
+  valeurs: "PV du rempart 250 ; 10 aux ennemis qui le frappent ; délai 14 s"
+  visuel: "Planches courbes entrelacées, ouverture nette vers l'avant, éclats de bois à l'impact."
+  acces: KG_MOKUTON
+  limites: "Toujours ouvert sur 120° : ne peut enfermer le joueur."
+- id: JUT_123
+  nom: "Mokuton — Shichūrō (Prison à quatre piliers)"
+  statut: OA
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_MOKUTON, CONTROLE]
+  cible: plus_menacant
+  comportement: "Une cage de bois tombe sur la cible la plus menaçante et son entourage (r 2 m) : immobilisés 2 s."
+  valeurs: "25 ; Entravé 2 s ; délai d'impact 0,5 s ; délai 8 s"
+  visuel: "Cage carrée de 32 px qui chute (ombre annonciatrice), barreaux épais."
+  acces: KG_MOKUTON
+  limites: "Contrôle soumis à la résistance des boss."
+- id: JUT_124
+  nom: "Mokuton — Sashiki no Jutsu (Pieux de bois)"
+  statut: AV
+  famille: RARE
+  livraison: SALVE
+  tags: [E_MOKUTON, PERCANT]
+  cible: plus_proche
+  comportement: "Le bras se ramifie en 5 pieux qui s'allongent vers des cibles différentes et percent 2 ennemis."
+  valeurs: "18 par pieu ; portée 7 m ; délai 1,8 s"
+  visuel: "Tiges de bois qui poussent en segments depuis le bras, pointes claires."
+  acces: KG_MOKUTON
+  limites: "Obstacles hauts arrêtent les pieux."
+- id: JUT_125
+  nom: "Mokuton — Kajukai Kōrin (Avènement du monde des arbres en fleurs)"
+  statut: OA
+  famille: RARE
+  livraison: ZONE
+  tags: [E_MOKUTON, CONTROLE, PERSISTANT]
+  cible: aucune
+  comportement: "Des fleurs éclosent sur 6 m autour du joueur ; leur pollen endort les ordinaires (Étourdi 2 s, réveillés par les dégâts)."
+  valeurs: "0 ; Étourdi 2 s ; durée 5 s ; délai 18 s"
+  visuel: "Fleurs blanches de 6 px qui s'ouvrent en vague, pollen doré en particules lentes."
+  acces: KG_MOKUTON
+  limites: "Élites : ralenties 40 % ; boss : Vulnérable +10 %."
+- id: JUT_126
+  nom: "Mokuton — Mokuryū no Jutsu (Dragon de bois)"
+  statut: OA
+  famille: RARE
+  livraison: PROJECTILE
+  tags: [E_MOKUTON, PERCANT, CONTROLE]
+  cible: plus_dense
+  comportement: "Dragon de bois qui serpente à travers les groupes, perce tout et enserre la dernière cible 1,5 s."
+  valeurs: "34 ; vitesse 7 m/s ; portée 14 m ; délai 7 s"
+  visuel: "Corps en anneaux de bois de 48 px de long, tête sculptée, copeaux en traîne."
+  acces: KG_MOKUTON
+  limites: "—"
+- id: JUT_127
+  nom: "Hyōton — Makyō Hyōshō (Miroirs de glace démoniaques)"
+  statut: OA
+  famille: RARE
+  livraison: ZONE
+  tags: [E_HYOTON, PERSISTANT]
+  cible: plus_menacant
+  comportement: "Dresse 6 miroirs en cercle (r 2,5 m) autour d'un groupe ; des aiguilles fusent de miroir en miroir à travers le cercle."
+  valeurs: "6 par aiguille ; 12 aiguilles/s ; durée 3 s ; Refroidi +1 ; délai 10 s"
+  visuel: "Miroirs rectangulaires bleu pâle à reflet animé, aiguilles blanches en traits croisés."
+  acces: KG_HYOTON
+  limites: "1 cercle actif ; les ennemis peuvent sortir entre les miroirs (0,8 m)."
+- id: JUT_128
+  nom: "Hyōton — Sensatsu Hyōshō (Mille aiguilles de glace)"
+  statut: AV
+  famille: RARE
+  livraison: SALVE
+  tags: [E_HYOTON]
+  cible: plus_proche
+  comportement: "Salve de 10 aiguilles de glace en éventail étroit ; chaque touche Refroidit."
+  valeurs: "5 ; Refroidi +1 ; délai 1,2 s ; vitesse 16 m/s"
+  visuel: "Aiguilles translucides à pointe blanche, givre sur la cible."
+  acces: KG_HYOTON
+  limites: "—"
+- id: JUT_129
+  nom: "Prison de givre"
+  statut: CO
+  famille: RARE
+  livraison: PIEGE
+  tags: [E_HYOTON, CONTROLE]
+  cible: chemin
+  comportement: "Fleurs de givre au sol ; un ennemi qui marche dessus est Gelé 1,5 s et la glace éclate en éclats (r 1,5 m)."
+  valeurs: "Éclats 20 ; Gelé 1,5 s ; max 4 ; délai 3,0 s"
+  visuel: "Rosace de givre à 6 branches, éclatement cristallin."
+  acces: KG_HYOTON
+  limites: "—"
+- id: JUT_130
+  nom: "Hyōton — Tsubame Fubuki (Blizzard d'hirondelles)"
+  statut: AV
+  famille: RARE
+  livraison: SALVE
+  tags: [E_HYOTON]
+  cible: plus_dense
+  comportement: "8 hirondelles de glace qui décrivent une courbe large avant de plonger ; Refroidi +1."
+  valeurs: "11 ; délai 2,4 s ; vitesse 10 m/s"
+  visuel: "Oiseaux de glace de 8 px à ailes en 2 frames, traînée de neige."
+  acces: KG_HYOTON
+  limites: "—"
+- id: JUT_131
+  nom: "Sabaku Kyū (Cercueil de sable)"
+  statut: OA
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_SABLE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Le sable enveloppe la cible 1 s (immobile), puis se referme."
+  valeurs: "Enveloppe 0 ; broyage 45 ; délai d'impact 1,0 s ; délai 3,5 s ; Ensablé +3 aux voisins à 1,5 m"
+  visuel: "Flux granulaire qui grimpe en spirale sur la cible (5 frames), fermeture en poing."
+  acces: KG_SABLE
+  limites: "Boss : pas d'immobilisation (Vulnérable +10 % 2 s)."
+- id: JUT_132
+  nom: "Sabaku Sōsō (Enterrement dans le sable)"
+  statut: OA
+  famille: RARE
+  livraison: ZONE
+  tags: [E_SABLE, CONTROLE]
+  cible: marque
+  comportement: "Suite : écrase dans un rayon de 2,5 m toute cible Ensevelie ou enveloppée ; sans cible admissible, frappe le groupe le plus dense à 50 %."
+  valeurs: "70 (35 sans cible admissible) ; délai 5,0 s"
+  visuel: "Sable qui se contracte en sphère puis implose, onde de grains."
+  acces: KG_SABLE
+  limites: "—"
+- id: JUT_133
+  nom: "Suna Shigure (Averse de sable)"
+  statut: OA
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_SABLE]
+  cible: plus_dense
+  comportement: "Des balles de sable tombent du ciel sur 4 m pendant 2 s."
+  valeurs: "8 par balle ; 16 balles ; Ensablé +1 ; délai 6 s"
+  visuel: "Grains agglomérés à ombre au sol, impacts en éclaboussure de sable."
+  acces: KG_SABLE
+  limites: "—"
+- id: JUT_134
+  nom: "Suna no Tate (Bouclier de sable)"
+  statut: OA
+  famille: RARE
+  livraison: ORBITE
+  tags: [E_SABLE, BOUCLIER]
+  cible: aucune
+  comportement: "Un flux de sable intercepte automatiquement le prochain coup reçu (1 charge toutes les 4 s) et contre-frappe l'agresseur."
+  valeurs: "Absorbe 100 % d'un coup ≤ 30 dégâts (50 % au-delà) ; contre 15 ; recharge 4 s"
+  visuel: "Ruban de sable qui tourne près du joueur et jaillit en paroi à l'impact."
+  acces: KG_SABLE
+  limites: "Max 2 charges (+1 via Quantité)."
+- id: JUT_135
+  nom: "Ryūsa Bakuryū (Cascade de sable)"
+  statut: OA
+  famille: RARE
+  livraison: ONDE
+  tags: [E_SABLE, TERRAIN, CONTROLE]
+  cible: direction
+  comportement: "Raz-de-marée de sable qui avance sur 8 m, submerge et laisse une surface SABLE (Ensablé +1/s)."
+  valeurs: "38 ; recul 2 m ; délai 12 s ; surface SABLE 5 s"
+  visuel: "Vague de sable à crête granuleuse, grains qui ruissellent."
+  acces: KG_SABLE
+  limites: "—"
+- id: JUT_136
+  nom: "Jiton — Satetsu Shigure (Bruine de sable de fer)"
+  statut: OA
+  famille: RARE
+  livraison: SALVE
+  tags: [E_JITON, PERCANT]
+  cible: plus_proche
+  comportement: "Salve de 12 aiguilles de sable de fer qui perce 2 cibles et Aimante."
+  valeurs: "7 ; perce 2 ; Aimanté ; délai 1,6 s"
+  visuel: "Particules noires à reflet métallique violet, contour clair pour la lisibilité."
+  acces: KG_JITON
+  limites: "—"
+- id: JUT_137
+  nom: "Jiton — Satetsu Kaihō (Libération du sable de fer)"
+  statut: OA
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_JITON]
+  cible: plus_dense
+  comportement: "Le sable de fer se rassemble en sphère au-dessus d'un groupe puis explose en pointes dans toutes les directions."
+  valeurs: "40 ; rayon 3 m ; délai 6 s"
+  visuel: "Sphère hérissée qui se forme en 4 frames, pointes radiales noires."
+  acces: KG_JITON
+  limites: "—"
+- id: JUT_138
+  nom: "Jiton — Sakin Kaihō (Libération de la poudre d'or)"
+  statut: AV
+  famille: RARE
+  livraison: ONDE
+  tags: [E_JITON, CONTROLE]
+  cible: aucune
+  comportement: "Onde de poudre d'or lourde qui alourdit : ralentit de 40 % 2 s et Aimante vers le joueur (puis repoussés à 1 m)."
+  valeurs: "18 ; rayon 5 m ; délai 7 s"
+  visuel: "Poussière dorée dense à reflets, retombée lourde (particules qui tombent vite)."
+  acces: KG_JITON
+  limites: "Attraction jamais à moins de 1 m du joueur."
+- id: JUT_139
+  nom: "Noyau magnétique"
+  statut: CO
+  famille: RARE
+  livraison: ZONE
+  tags: [E_JITON, ATTRACTION, PERSISTANT]
+  cible: plus_dense
+  comportement: "Plante un noyau qui attire les ennemis Aimantés et les ordinaires (r 4 m), puis explose au bout de 3 s."
+  valeurs: "Explosion 36 ; attraction 1,5 m/s ; délai 8 s"
+  visuel: "Octaèdre noir en rotation, lignes de champ en pointillés."
+  acces: KG_JITON
+  limites: "1 noyau."
+- id: JUT_140
+  nom: "Shakuton — Kajōsatsu (Mort par évaporation)"
+  statut: OA
+  famille: RARE
+  livraison: PROJECTILE
+  tags: [E_SHAKUTON]
+  cible: plus_menacant
+  comportement: "Orbe brûlant qui se colle à la cible et l'assèche : dégâts continus croissants (+15 %/s) 4 s."
+  valeurs: "8 → 14 par s ; délai 3,0 s ; vitesse 7 m/s"
+  visuel: "Sphère orange-blanc à anneau de vapeur, cible qui pâlit progressivement."
+  acces: KG_SHAKUTON
+  limites: "1 orbe par cible."
+- id: JUT_141
+  nom: "Constellation brûlante"
+  statut: CO
+  famille: RARE
+  livraison: ORBITE
+  tags: [E_SHAKUTON]
+  cible: aucune
+  comportement: "3 orbes de chaleur tournent autour du joueur ; toutes les 3 s, un orbe se détache vers une cible et est remplacé."
+  valeurs: "Contact 8 ; projection 22 + Brûlure +2 ; permanente"
+  visuel: "Orbes à cœur blanc et anneau de vapeur, trajectoire d'éjection en arc."
+  acces: KG_SHAKUTON
+  limites: "—"
+- id: JUT_142
+  nom: "Évaporation"
+  statut: CO
+  famille: RARE
+  livraison: ZONE
+  tags: [E_SHAKUTON, PERSISTANT]
+  cible: plus_dense
+  comportement: "Zone de chaleur sèche (3 m) : dégâts ×1,5 contre les cibles Trempées (qui perdent leur état) et crée de la Vapeur."
+  valeurs: "7 par tick de 0,5 s ; durée 4 s ; délai 8 s"
+  visuel: "Distorsion thermique en tramage, vapeur blanche au-dessus des cibles."
+  acces: KG_SHAKUTON
+  limites: "Consomme Trempé : anti-synergie documentée avec SYN_001 (affichée sur la carte)."
+- id: JUT_143
+  nom: "Yōton — Yōkai no Jutsu (Crachat de lave)"
+  statut: OA
+  famille: RARE
+  livraison: SALVE
+  tags: [E_YOTON, TERRAIN]
+  cible: plus_dense
+  comportement: "3 globes de lave en cloche ; à l'impact, flaque de LAVE 3 s qui Corrode."
+  valeurs: "20 ; flaque 6 par tick de 0,5 s ; Corrodé ; délai 2,8 s"
+  visuel: "Globes rouge sombre à croûte noire, flaques incandescentes qui noircissent en bord."
+  acces: KG_YOTON
+  limites: "Max 6 flaques."
+- id: JUT_144
+  nom: "Mur de lave"
+  statut: CO
+  famille: RARE
+  livraison: ZONE
+  tags: [E_YOTON, PERSISTANT]
+  cible: direction
+  comportement: "Coulée transversale de 6 m devant le joueur qui ralentit de 30 % et Corrode ceux qui la traversent."
+  valeurs: "10 par tick de 0,5 s ; durée 4 s ; délai 9 s"
+  visuel: "Bande de lave à croûte craquelée, bulles qui éclatent."
+  acces: KG_YOTON
+  limites: "—"
+- id: JUT_145
+  nom: "Golem de magma"
+  statut: CO
+  famille: RARE
+  livraison: INVOCATION
+  tags: [E_YOTON, UNITE_ALLIEE]
+  cible: plus_proche
+  comportement: "Une créature de magma sort du sol, avance et laisse une traînée de lave ; explose à la fin."
+  valeurs: "Frappe 18 ; traînée 4 par tick ; explosion 40 ; durée 8 s ; délai 16 s"
+  visuel: "Masse informe de 20 px, croûte qui se fend en marchant."
+  acces: KG_YOTON
+  limites: "1 unité ; héritage ANIMAL."
+- id: JUT_146
+  nom: "Pluie de scories"
+  statut: CO
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_YOTON]
+  cible: aleatoire_pondere
+  comportement: "Des scories retombent sur 5 m ; chaque impact laisse une petite flaque qui Corrode."
+  valeurs: "14 par impact ; 6 impacts ; délai 5 s"
+  visuel: "Morceaux noirs à fissures rouges, fumée noire courte."
+  acces: KG_YOTON
+  limites: "—"
+- id: JUT_147
+  nom: "Bakuton — C1 (Araignées et oiseaux d'argile)"
+  statut: OA
+  famille: RARE
+  livraison: PROJECTILE
+  tags: [E_BAKUTON, EXPLOSIF]
+  cible: plus_proche
+  comportement: "3 petites créatures d'argile marchent ou volent vers des cibles et explosent ; une créature ratée se colle au sol (mine 4 s)."
+  valeurs: "20 (r 1,3 m) ; délai 1,6 s ; vitesse 7 m/s"
+  visuel: "Araignées et oiseaux blancs de 6 px, explosion à signe « Katsu » stylisé (pas de texte), nuage blanc-orange."
+  acces: KG_BAKUTON
+  limites: "Max 6 mines au sol."
+- id: JUT_148
+  nom: "Bakuton — C2 (Dragon d'argile)"
+  statut: OA
+  famille: RARE
+  livraison: INVOCATION
+  tags: [E_BAKUTON, UNITE_ALLIEE, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Un dragon d'argile survole le champ et crache des bombes sur les groupes, puis explose à la fin de sa durée."
+  valeurs: "Bombe 26 (r 1,5 m) toutes les 1,2 s ; explosion finale 50 ; durée 9 s ; délai 20 s"
+  visuel: "Dragon blanc de 40 px sans pattes, bombes en gouttes qui tombent (ombre)."
+  acces: KG_BAKUTON
+  limites: "1 dragon ; héritage ANIMAL."
+- id: JUT_149
+  nom: "Bakuton — C3 (Grande bombe)"
+  statut: OA
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_BAKUTON, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Grande figure d'argile qui tombe et grossit 1,5 s avant d'exploser très largement."
+  valeurs: "110 ; rayon 5 m ; délai 18 s"
+  visuel: "Statuette de 24 px qui gonfle à 64 px, détonation en dôme à 5 couches (pas de flash plein écran)."
+  acces: KG_BAKUTON
+  limites: "Micro-pause locale uniquement."
+- id: JUT_150
+  nom: "Bakuton — C4 Karura (Nuage de nano-bombes)"
+  statut: OA
+  famille: RARE
+  livraison: ZONE
+  tags: [E_BAKUTON, PERSISTANT]
+  cible: plus_dense
+  comportement: "Un nuage invisible (visible au joueur par un tramage allié) se répand sur 4 m ; les ennemis dedans se désintègrent progressivement."
+  valeurs: "12 par tick de 0,5 s, ignore 50 % de la résistance ; durée 4 s ; délai 22 s"
+  visuel: "Tramage pointillé allié, désintégration en pixels qui s'éparpillent (particules décoratives)."
+  acces: "KG_BAKUTON+CHR_036"
+  limites: "Réservé à Deidara Artiste aérien."
+- id: JUT_151
+  nom: "Ranton — Rēzā Sākasu (Cirque laser)"
+  statut: OA
+  famille: RARE
+  livraison: SALVE
+  tags: [E_RANTON]
+  cible: plus_proche
+  comportement: "8 faisceaux lumineux qui zigzaguent et rebondissent chacun une fois sur une nouvelle cible."
+  valeurs: "12 ; 1 rebond ; délai 2,0 s ; vitesse 18 m/s"
+  visuel: "Faisceaux blanc-cyan à angles vifs, halo en nuage gris."
+  acces: KG_RANTON
+  limites: "—"
+- id: JUT_152
+  nom: "Cage d'orage"
+  statut: CO
+  famille: RARE
+  livraison: ZONE
+  tags: [E_RANTON, E_SUITON, CONTROLE]
+  cible: plus_dense
+  comportement: "Nuage d'orage bas de 3 m : pluie (Trempé) et arcs internes ; compte comme Suiton et Raiton pour les synergies."
+  valeurs: "8 par tick de 0,5 s ; durée 4 s ; délai 10 s"
+  visuel: "Nuage gris-bleu bas, pluie oblique, arcs horizontaux."
+  acces: KG_RANTON
+  limites: "Déclenche SYN_001 au plus 1 fois/s."
+- id: JUT_153
+  nom: "Lance d'orage"
+  statut: CO
+  famille: RARE
+  livraison: RAYON
+  tags: [E_RANTON, PERCANT]
+  cible: plus_menacant
+  comportement: "Faisceau qui se courbe vers les cibles Trempées dans un cône de 30°."
+  valeurs: "36 ; longueur 11 m ; délai 3,2 s"
+  visuel: "Faisceau courbe à cœur blanc, bords pluvieux."
+  acces: KG_RANTON
+  limites: "—"
+- id: JUT_154
+  nom: "Enton — Kagutsuchi no Tsurugi (Lame de flammes noires)"
+  statut: OA
+  famille: RARE
+  livraison: CONTACT
+  tags: [E_ENTON]
+  cible: plus_proche
+  comportement: "Épée de flammes noires qui frappe en arc de 160° (2,5 m) et applique une Brûlure noire (compte double)."
+  valeurs: "30 ; Brûlure +2 (noire : dégâts ×2) ; délai 1,6 s"
+  visuel: "Lame noire à liseré rouge et contour blanc 1 px pour rester lisible sur fond sombre."
+  acces: KG_ENTON
+  limites: "—"
+- id: JUT_155
+  nom: "Enton — Kagutsuchi (Pointes de flammes noires)"
+  statut: AV
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_ENTON]
+  cible: marque
+  comportement: "Les flammes noires présentes sur une cible jaillissent en pointes vers 3 ennemis voisins."
+  valeurs: "26 par pointe ; portée 4 m ; délai 3,0 s"
+  visuel: "Pointes noires anguleuses à bordure rouge, contour blanc."
+  acces: KG_ENTON
+  limites: "Requiert une cible avec Brûlure ; sinon cible la plus proche à 50 %."
+- id: JUT_156
+  nom: "Enton — Yasaka Magatama (Magatama de flammes noires)"
+  statut: OA
+  famille: RARE
+  livraison: ORBITE
+  tags: [E_ENTON]
+  cible: plus_proche
+  comportement: "3 magatama noirs orbitent puis sont lancés en tourbillonnant vers les cibles toutes les 4 s."
+  valeurs: "Contact 10 ; lancer 28 + Brûlure noire +1 ; délai 4 s"
+  visuel: "Virgules noires à cœur rouge, contour blanc, rotation 4 frames."
+  acces: KG_ENTON
+  limites: "—"
+- id: JUT_157
+  nom: "Futton — Kōmu no Jutsu (Brume corrosive)"
+  statut: OA
+  famille: RARE
+  livraison: CONE
+  tags: [E_FUTTON, PERSISTANT]
+  cible: plus_dense
+  comportement: "Souffle une brume acide en cône qui reste 3 s : Corrode et ronge."
+  valeurs: "8 par tick de 0,5 s ; Corrodé ; portée 5 m ; délai 7 s"
+  visuel: "Brume jaune-vert en tramage, silhouettes ennemies qui fument."
+  acces: KG_FUTTON
+  limites: "—"
+- id: JUT_158
+  nom: "Geysers bouillants"
+  statut: CO
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_FUTTON]
+  cible: plus_dense
+  comportement: "3 geysers d'eau bouillante jaillissent en triangle : dégâts, Vapeur et Trempé."
+  valeurs: "24 par geyser ; délai 4 s"
+  visuel: "Colonnes blanches à bulles, vapeur persistante 1 s."
+  acces: KG_FUTTON
+  limites: "—"
+- id: JUT_159
+  nom: "Jinton — Genkai Hakuri no Jutsu (Détachement du monde primitif)"
+  statut: OA
+  famille: RARE
+  livraison: DIFFERE
+  tags: [E_JINTON]
+  cible: plus_dense
+  comportement: "Un cube lumineux se forme au centre d'un groupe puis s'étend et désintègre tout ce qu'il contient."
+  valeurs: "90, ignore la résistance ; cube 3 m ; délai 16 s"
+  visuel: "Cube blanc à arêtes nettes, intérieur en quadrillage, disparition des cibles en pixels (particules décoratives)."
+  acces: KG_JINTON
+  limites: "Pas de flash plein écran."
+- id: JUT_160
+  nom: "Jinton — Faisceau de poussière"
+  statut: AV
+  famille: RARE
+  livraison: RAYON
+  tags: [E_JINTON, PERCANT]
+  cible: plus_dense
+  comportement: "Version en faisceau : prisme allongé de 12 m, lent à se former (0,8 s), ignore la résistance."
+  valeurs: "60 ; largeur 0,8 m ; délai 10 s"
+  visuel: "Prisme blanc à facettes, lignes de quadrillage."
+  acces: KG_JINTON
+  limites: "—"
