@@ -1,0 +1,592 @@
+# Synergies SYN_001 à SYN_040 — règles de jeu (création originale) ; aucune consommation d'emplacement.
+# Règles communes (§B8.2) : effets SECONDAIRE, profondeur max 2, pas d'auto-déclenchement, ICD par propriétaire.
+# boss_isole : comportement lorsqu'il n'y a qu'une cible.
+- id: SYN_001
+  nom: Conduction
+  statut: CO
+  references:
+  - E_SUITON
+  - E_RAITON
+  - STA_03
+  condition: Une attaque Suiton admissible (tag E_SUITON, non SECONDAIRE) applique Trempé (Conducteur) 2 s ; une attaque Raiton
+    directe (non SECONDAIRE) touche une cible Trempée.
+  effet: Consomme Trempé et crée jusqu'à 2 arcs vers les ennemis à ≤ 4 m. Chaque arc = 30 % des dégâts de BASE de l'attaque
+    déclenchante × A (Puissance du joueur) × V × R de la cible touchée ; ni M, ni critique.
+  limite: 1 déclenchement / 0,6 s par propriétaire ; les arcs portent SECONDAIRE et ne redéclenchent pas Conduction.
+  plafond: 2 arcs (3 avec PAS_037 niv. 5).
+  compatibilite: Tous personnages disposant d'au moins une technique E_SUITON et une E_RAITON (ou Ranton, qui compte pour
+    les deux).
+  contrepartie: 'Consomme Trempé : incompatible dans le même instant avec Évaporation (SYN_028) — l''état est pris par le
+    premier effet résolu (ordre : Conduction puis Évaporation).'
+  manifestation: 'Cible Trempée : petites gouttes qui tombent (2 px) + motif électrique en pointillés ; déclenchement : 2
+    trajets d''arcs construits en 2 frames, son sec unique.'
+  boss_isole: 'Sans cible secondaire, l''arc se referme sur la cible déclenchante : 1 arc à 40 % au lieu de 2 × 30 %, et la
+    cible reste Trempée 0,5 s supplémentaire.'
+- id: SYN_002
+  nom: Flaque électrique
+  statut: CO
+  references:
+  - SURF_EAU
+  - E_RAITON
+  - STA_04
+  condition: Une attaque Raiton touche le sol ou un ennemi situé sur une surface EAU.
+  effet: Toute la flaque connexe (cellules EAU contiguës) Électrise les ennemis qui s'y trouvent et leur inflige 20 % des
+    dégâts de base de l'attaque.
+  limite: 1 fois / 1 s par flaque ; Électrisé respecte son délai interne par cible.
+  plafond: 20 ennemis touchés par déclenchement.
+  compatibilite: Toute source d'EAU (techniques Suiton, EQP_017, cartes à eau) + Raiton.
+  contrepartie: —
+  manifestation: La flaque s'illumine en bleu-blanc 3 frames avec un quadrillage d'arcs ; son de grésillement étalé.
+  boss_isole: Le boss sur la flaque subit 35 % au lieu de 20 %.
+- id: SYN_003
+  nom: Embrasement
+  statut: CO
+  references:
+  - SURF_HUILE
+  - E_KATON
+  - STA_02
+  - STA_01
+  condition: Une attaque Katon touche une surface HUILE ou un ennemi Imbibé d'huile.
+  effet: 'La nappe devient flamme 3 s : 8 dégâts / 0,5 s × A ; +2 cumuls de Brûlure aux ennemis dessus ; consomme l''huile.'
+  limite: 1 embrasement / 1 s par nappe (0,5 s avec EQP_029).
+  plafond: 400 cellules actives (plafond de surface).
+  compatibilite: Katon + source d'huile (JUT_010, PAS_036, EQP_029, Fukasaku et Shima).
+  contrepartie: L'huile consommée n'est plus disponible pour d'autres combos.
+  manifestation: Propagation cellule par cellule en 0,15 s (front visible), fumée noire au-dessus, crépitement grave.
+  boss_isole: Un boss Imbibé subit 1 embrasement direct de 60 × A (1 fois / 4 s).
+- id: SYN_004
+  nom: Flammes attisées
+  statut: CO
+  references:
+  - E_FUTON
+  - E_KATON
+  - ZONE
+  condition: Une attaque Fūton (CONE, ONDE ou ZONE) chevauche une zone Katon persistante du joueur.
+  effet: La zone Katon gagne +30 % de rayon et +1 s de durée, une fois par instance.
+  limite: Une fois par instance de zone.
+  plafond: Rayon final ≤ 150 % du rayon avant bonus.
+  compatibilite: Katon + Fūton (Asuma, Jiraiya, Minato, Madara, Hiruzen, Kakuzu, Temari via partage de run…).
+  contrepartie: Aucune ; le recul Fūton est réduit dans la zone (§B8.4).
+  manifestation: La zone se gonfle en 4 frames, flammes couchées dans l'axe du vent.
+  boss_isole: Inchangé (bonus de zone utile autour du boss).
+- id: SYN_005
+  nom: Vapeur
+  statut: CO
+  references:
+  - SURF_EAU
+  - E_KATON
+  - STA_23
+  condition: Une attaque Katon touche une surface EAU.
+  effet: 'La cellule devient nuage de vapeur 2 s : ennemis dedans Vapeur (−20 % dégâts infligés). Le feu n''est pas éteint
+    et garde ses dégâts.'
+  limite: Plafond de 60 cellules de vapeur ; 1 conversion par cellule / 2 s.
+  plafond: −20 % (non cumulable).
+  compatibilite: Katon + eau.
+  contrepartie: Consomme la cellule d'eau (elle ne peut plus servir à SYN_002 pendant 2 s).
+  manifestation: Volutes blanches à bords nets (pas de voile plein écran), sifflement.
+  boss_isole: Le boss dans la vapeur inflige −10 % seulement (réduit).
+- id: SYN_006
+  nom: Cendres ardentes
+  statut: CO
+  references:
+  - SURF_CENDRE
+  - E_KATON
+  - JUT_005
+  condition: Une attaque Katon touche une surface CENDRE.
+  effet: 'Explosion de la cellule : 25 × A (r 1 m) et Aveuglé 1 s.'
+  limite: 1 fois par cellule.
+  plafond: 12 explosions / s.
+  compatibilite: Asuma (Haisekishō) et tout porteur de Katon qui obtient Haisekishō.
+  contrepartie: Détruit la surface CENDRE (perte de l'aveuglement continu).
+  manifestation: Petits flashs orange contenus à la cellule, sons groupés.
+  boss_isole: 'Explosions uniques sur la cellule du boss : 40 × A.'
+- id: SYN_007
+  nom: Gel rapide
+  statut: CO
+  references:
+  - E_HYOTON
+  - STA_03
+  - STA_05
+  condition: Une attaque Hyōton touche une cible Trempée.
+  effet: +2 cumuls de Refroidi au lieu de 1 (Gel plus rapide) ; consomme Trempé.
+  limite: 1 fois / 0,5 s par cible.
+  plafond: Gelé reste limité à 1 s avec immunité 2 s.
+  compatibilite: Haku (Hyōton + Suiton).
+  contrepartie: Consomme Trempé (conflit avec Conduction).
+  manifestation: Cristaux blancs qui s'étendent sur la cible en 2 frames.
+  boss_isole: 'Boss : Refroidi +2 = ralentissement max −30 % ; Gel converti en Vulnérable +5 %.'
+- id: SYN_008
+  nom: Glace brisée
+  statut: CO
+  references:
+  - STA_05
+  - CONTACT
+  - EXPLOSIF
+  condition: Une attaque CONTACT ou EXPLOSIF touche un ennemi Gelé.
+  effet: +50 % dégâts sur ce coup ; le Gel prend fin ; éclats 15 × A à 1,5 m (SECONDAIRE).
+  limite: 1 fois par Gel.
+  plafond: —
+  compatibilite: Hyōton + taijutsu ou explosifs.
+  contrepartie: Termine le contrôle.
+  manifestation: Éclatement cristallin en 6 fragments, son aigu.
+  boss_isole: 'Boss non gelé : aucun effet (le boss ne se gèle pas).'
+- id: SYN_009
+  nom: Embourbement
+  statut: CO
+  references:
+  - E_DOTON
+  - SURF_EAU
+  - STA_06
+  condition: Une attaque Doton touche une surface EAU.
+  effet: 'La cellule devient boue 3 s : Ensablé +1 par seconde aux ennemis dessus.'
+  limite: 1 conversion par cellule / 3 s.
+  plafond: —
+  compatibilite: Doton + Suiton.
+  contrepartie: Consomme l'eau (pas de SYN_002 sur cette cellule).
+  manifestation: Eau qui brunit, bulles lentes.
+  boss_isole: 'Boss : ralentissement plafonné à −30 %.'
+- id: SYN_010
+  nom: Tempête de sable
+  statut: CO
+  references:
+  - E_FUTON
+  - SURF_SABLE
+  - STA_16
+  condition: Une attaque Fūton traverse une surface SABLE du joueur.
+  effet: 'Soulève un nuage mobile 2 s dans la direction du vent : Aveuglé et 4 × A / 0,5 s.'
+  limite: 1 nuage par attaque ; max 3 nuages.
+  plafond: —
+  compatibilite: Gaara, Gaara Kazekage (sable + Fūton).
+  contrepartie: La cellule de sable soulevée disparaît.
+  manifestation: Nuage ocre en tramage qui se déplace, grains en traînée.
+  boss_isole: 'Aveuglé du boss : ses projectiles mineurs dévient de ±10°.'
+- id: SYN_011
+  nom: Vitrification
+  statut: CO
+  references:
+  - E_KATON
+  - SURF_SABLE
+  - STA_18
+  condition: Une attaque Katon touche une surface SABLE.
+  effet: 'La cellule devient verre 4 s : les ennemis qui la traversent sont Entaillés.'
+  limite: 1 conversion par cellule / 4 s.
+  plafond: 3 cumuls d'Entaillé.
+  compatibilite: Sable + Katon (Pakura, via pool rare ; Sasori Troisième Kazekage non concerné).
+  contrepartie: Le sable vitrifié ne ralentit plus.
+  manifestation: Cellule brillante à reflets, fissures blanches.
+  boss_isole: 'Boss : +1 Entaillé par seconde passée sur le verre.'
+- id: SYN_012
+  nom: Sable et contrôle
+  statut: CO
+  references:
+  - E_SABLE
+  - CONTROLE
+  - STA_06
+  condition: Une attaque de sable touche une cible déjà sous un contrôle (Lié, Entravé, Étourdi, Gelé).
+  effet: +2 cumuls d'Ensablé ; si la cible atteint Enseveli, la durée du contrôle en cours est prolongée de 0,5 s.
+  limite: 1 fois / 1 s par cible.
+  plafond: Prolongation max 0,5 s par contrôle.
+  compatibilite: Gaara + toute source de contrôle.
+  contrepartie: —
+  manifestation: Sable qui s'enroule autour des jambes, anneau granuleux.
+  boss_isole: 'Boss : +10 points de résistance de contrôle en moins pour le prochain contrôle (au lieu de +20).'
+- id: SYN_013
+  nom: Attraction métallique
+  statut: CO
+  references:
+  - E_JITON
+  - STA_22
+  - OUTIL
+  condition: Un projectile OUTIL du joueur vole à ≤ 3 m d'un ennemi Aimanté.
+  effet: Le projectile s'incurve vers lui et gagne +1 perce.
+  limite: 1 fois par projectile.
+  plafond: —
+  compatibilite: Jiton + outils (Sasori Troisième Kazekage, Rasa).
+  contrepartie: Le projectile peut se détourner d'une cible plus menaçante.
+  manifestation: Ligne de champ pointillée entre projectile et cible.
+  boss_isole: Tous les projectiles OUTIL visent le boss Aimanté (+10 % dégâts).
+- id: SYN_014
+  nom: Racines humides
+  statut: CO
+  references:
+  - E_MOKUTON
+  - SURF_EAU
+  - STA_19
+  condition: Une technique Mokuton émerge sur une surface EAU.
+  effet: Durée des structures de bois +50 % ; Entravé +0,5 s.
+  limite: Une fois par structure.
+  plafond: —
+  compatibilite: Hashirama, Yamato (Mokuton + Suiton).
+  contrepartie: L'eau est absorbée (cellule consommée).
+  manifestation: Bois plus sombre, feuilles luisantes.
+  boss_isole: Inchangé (+0,5 s Entravé soumis à résistance).
+- id: SYN_015
+  nom: Ombre et immobilisation
+  statut: CO
+  references:
+  - JUT_282
+  - STA_07
+  - STA_19
+  - STA_11
+  condition: Une technique d'ombre Nara est active et un ennemi immobilisé (Entravé, Étourdi, Gelé, Enseveli) se trouve à
+    ≤ 3 m de la surface OMBRE.
+  effet: 'L''ombre se propage gratuitement vers lui : Lié par l''ombre 1 s.'
+  limite: 3 propagations / 2 s.
+  plafond: —
+  compatibilite: Shikamaru (toutes variantes).
+  contrepartie: —
+  manifestation: Ruban d'ombre qui file au sol en 3 frames.
+  boss_isole: 'Boss immobilisé : Lié converti en Vulnérable +10 %.'
+- id: SYN_016
+  nom: Pièges dans l'ombre
+  statut: CO
+  references:
+  - SURF_OMBRE
+  - PIEGE
+  condition: Un piège du joueur est posé sur une surface OMBRE.
+  effet: Le piège devient invisible aux ennemis poseurs/contrôleurs (ils ne l'évitent pas) et inflige +20 %.
+  limite: —
+  plafond: Plafond d'instances du piège inchangé.
+  compatibilite: 'Shikamaru (toutes variantes) : ombre + pièges LIBRE/APT_FUIN.'
+  contrepartie: Le piège reste visible pour le joueur (contour allié).
+  manifestation: Piège à demi fondu dans l'ombre, contour pointillé allié.
+  boss_isole: 'Piège sous le boss : +20 % conservé.'
+- id: SYN_017
+  nom: Refroidissement de lave
+  statut: CO
+  references:
+  - SURF_LAVE
+  - E_SUITON
+  condition: Une attaque Suiton touche une surface LAVE.
+  effet: 'La cellule devient croûte d''obsidienne 3 s : obstacle bas coupant (8 × A à la traversée) ; Vapeur 1 s.'
+  limite: 1 conversion par cellule / 3 s.
+  plafond: —
+  compatibilite: Mei Terumī (Yōton + Suiton).
+  contrepartie: Perte de la lave (Corrosion).
+  manifestation: Surface noire brillante, fissures qui refroidissent du rouge au gris.
+  boss_isole: 'Boss : obsidienne sous lui = Entaillé +1/s.'
+- id: SYN_018
+  nom: Sceaux et pièges
+  statut: CO
+  references:
+  - PIEGE
+  - STA_09
+  condition: Un piège du joueur est posé ou déclenché à ≤ 2 m d'une cible Marquée.
+  effet: Le piège s'arme instantanément et touche 2 fois (second impact à 60 %).
+  limite: 1 fois par piège.
+  plafond: —
+  compatibilite: Pièges + marques (Minato, Tobirama, Shikamaru, Konan, Karin, Kushina…).
+  contrepartie: —
+  manifestation: Sceau du piège qui s'illumine de la couleur de la marque.
+  boss_isole: 'Pièges posés sous le boss Marqué : double impact garanti.'
+- id: SYN_019
+  nom: Réaction d'argile en chaîne
+  statut: CO
+  references:
+  - EXPLOSIF
+  - STA_15
+  condition: Une explosion du joueur touche une cible portant une Charge d'argile.
+  effet: La charge détone immédiatement (dégâts de la technique d'origine à 80 %).
+  limite: Profondeur 2 (une charge qui détone peut en déclencher une autre, pas une troisième).
+  plafond: 12 détonations en chaîne par tick.
+  compatibilite: Deidara (toutes variantes).
+  contrepartie: Les charges n'attendent pas leur délai (moins de dégâts de zone planifiée).
+  manifestation: Chapelet d'explosions à 0,05 s d'écart, son groupé croissant.
+  boss_isole: 'Charges multiples sur le boss : détonation simultanée à 80 %.'
+- id: SYN_020
+  nom: Fil conducteur
+  statut: CO
+  references:
+  - JUT_192
+  - E_RAITON
+  - STA_04
+  condition: Une attaque Raiton touche un fil d'acier du joueur (JUT_192, JUT_016, JUT_209).
+  effet: 'Le fil devient électrifié 2 s : 10 × A par tick de 0,5 s aux ennemis qui le touchent + Électrisé.'
+  limite: 1 fois / 2 s par fil.
+  plafond: —
+  compatibilite: Raiton + fils (Kakashi, Sasuke, Kakashi ANBU…).
+  contrepartie: —
+  manifestation: Le fil blanc devient bleu, arcs courts le long.
+  boss_isole: 'Fil tendu près du boss : 1 contact / 1 s.'
+- id: SYN_021
+  nom: Poison et marionnettes
+  statut: CO
+  references:
+  - MARIONNETTE
+  - STA_08
+  condition: Une MARIONNETTE frappe une cible Empoisonnée.
+  effet: +1 cumul de Poison et +20 % dégâts de la frappe.
+  limite: Aucune au-delà des intervalles de frappe.
+  plafond: Cumul de Poison selon plafond (10 ; 15 avec Sasori).
+  compatibilite: Kankurō, Sasori, Chiyo.
+  contrepartie: —
+  manifestation: Lame de la marionnette qui goutte en violet.
+  boss_isole: Pleinement actif (le poison ignore la résistance).
+- id: SYN_022
+  nom: Nuée protectrice
+  statut: CO
+  references:
+  - JUT_292
+  - JUT_291
+  condition: Mushi Kame (JUT_292) absorbe un projectile pendant que Kikaichū (JUT_291) est actif.
+  effet: L'essaim gagne +10 % de dégâts pendant 3 s (cumulable 3 fois).
+  limite: 1 cumul par projectile absorbé.
+  plafond: +30 %.
+  compatibilite: Shino.
+  contrepartie: —
+  manifestation: Insectes de la coque qui rejoignent la nuée (trajectoires visibles).
+  boss_isole: Actif contre les projectiles du boss (non télégraphés).
+- id: SYN_023
+  nom: Papier porté par le vent
+  statut: CO
+  references:
+  - APT_PAPIER
+  - E_FUTON
+  condition: Une attaque Fūton du joueur traverse des shuriken de papier du joueur (JUT_247, TRF_023).
+  effet: Les shuriken gagnent +1 perce et +30 % de portée.
+  limite: 1 fois par shuriken.
+  plafond: —
+  compatibilite: Konan (papier + Fūton).
+  contrepartie: —
+  manifestation: Feuilles couchées dans l'axe du vent, traînée blanche.
+  boss_isole: Les feuilles déviées visent le boss (+10 %).
+- id: SYN_024
+  nom: Encre et lame
+  statut: CO
+  references:
+  - STA_21
+  - APT_KENJ
+  condition: Une technique CONTACT de famille OUTIL touche une cible Encrée.
+  effet: +25 % dégâts ; l'encre éclabousse et Encre 1 voisin.
+  limite: Éclaboussure 1 fois / 1 s par cible.
+  plafond: —
+  compatibilite: Sai (encre + tantō).
+  contrepartie: —
+  manifestation: Coup de pinceau noir qui prolonge l'arc de lame.
+  boss_isole: +25 % conservé sur boss Encré.
+- id: SYN_025
+  nom: Nuée toxique
+  statut: CO
+  references:
+  - E_FUTON
+  - STA_08
+  condition: Une attaque Fūton CONE ou ONDE touche une cible à ≥ 5 cumuls de Poison.
+  effet: 'Le poison se propage : +2 cumuls aux ennemis dans la zone de l''attaque.'
+  limite: 1 fois / 1 s par cible source.
+  plafond: —
+  compatibilite: Sasori (Fūton), Kankurō (Fūton).
+  contrepartie: —
+  manifestation: Traînées violettes portées par les lignes de vent.
+  boss_isole: 'Boss : +1 cumul à lui-même (pas de propagation).'
+- id: SYN_026
+  nom: Brume conductrice
+  statut: CO
+  references:
+  - JUT_028
+  - E_RAITON
+  condition: Une attaque Raiton est lancée alors qu'une brume du joueur (JUT_028, EVO_012) est active.
+  effet: Un éclair secondaire frappe un ennemi aléatoire dans la brume (40 % de la base).
+  limite: 1 fois / 0,8 s.
+  plafond: —
+  compatibilite: Kakashi, Tobirama, Darui (Zabuza, sans Raiton, ne la déclenche pas).
+  contrepartie: —
+  manifestation: Éclair qui illumine la brume de l'intérieur (brume plus claire 2 frames).
+  boss_isole: L'éclair frappe le boss s'il est dans la brume.
+- id: SYN_027
+  nom: Lave et brume acide
+  statut: CO
+  references:
+  - SURF_LAVE
+  - JUT_157
+  - STA_17
+  condition: Un ennemi Corrodé se tient sur une surface LAVE pendant qu'une brume Futton est active.
+  effet: 'La Corrosion devient profonde : −25 points de résistance (au lieu de 15) et +15 % dégâts Yōton.'
+  limite: —
+  plafond: Résistance minimale 0.
+  compatibilite: Mei Terumī.
+  contrepartie: —
+  manifestation: Fumée jaune-verte qui s'élève de la lave.
+  boss_isole: Pleinement utile contre un boss résistant.
+- id: SYN_028
+  nom: Évaporation brutale
+  statut: CO
+  references:
+  - E_SHAKUTON
+  - STA_03
+  - STA_23
+  condition: Une attaque Shakuton touche une cible Trempée.
+  effet: 'Consomme Trempé : dégâts ×1,5 sur ce coup et nuage de Vapeur (r 1,5 m).'
+  limite: 1 fois / 0,5 s par cible.
+  plafond: —
+  compatibilite: Pakura.
+  contrepartie: 'Interaction négative intentionnelle avec Conduction (SYN_001) : l''état est consommé. Affiché sur les cartes
+    des deux côtés.'
+  manifestation: Sifflement et vapeur blanche, cible qui pâlit.
+  boss_isole: Inchangé.
+- id: SYN_029
+  nom: Bois embrasé
+  statut: CO
+  references:
+  - SURF_BOIS
+  - E_KATON
+  condition: Une attaque Katon du joueur touche une structure ou une surface BOIS du joueur.
+  effet: 'Grand embrasement : 30 × A / 0,5 s pendant 3 s sur la structure ; la structure est détruite.'
+  limite: 1 fois par structure.
+  plafond: —
+  compatibilite: Madara Rinnegan, Obito (Mokuton + Katon).
+  contrepartie: 'Interaction négative intentionnelle : perte de la protection du bois (affichée « Brûle le bois »).'
+  manifestation: Flammes hautes sur le bois, craquements.
+  boss_isole: 'Bois autour du boss : dégâts de feu continus.'
+- id: SYN_030
+  nom: Blizzard
+  statut: CO
+  references:
+  - E_HYOTON
+  - E_FUTON
+  - STA_05
+  condition: Une attaque Fūton CONE ou ONDE traverse un cercle de miroirs ou une zone Hyōton.
+  effet: Refroidi +1 à tous les ennemis touchés par l'attaque Fūton.
+  limite: 1 fois / 1 s.
+  plafond: —
+  compatibilite: Haku (Hyōton + Fūton).
+  contrepartie: —
+  manifestation: Flocons entraînés dans les lignes de vent.
+  boss_isole: Refroidi sur boss plafonné à −30 %.
+- id: SYN_031
+  nom: Plaies brûlantes
+  statut: CO
+  references:
+  - STA_01
+  - STA_18
+  condition: Une cible est à la fois Brûlée et Entaillée.
+  effet: Les dégâts d'Entaillé par mètre sont +50 %.
+  limite: —
+  plafond: —
+  compatibilite: Katon + lames/vent (Asuma, Madara, Minato…).
+  contrepartie: —
+  manifestation: Entailles à liseré orange.
+  boss_isole: 'Utile : les boss se déplacent beaucoup.'
+- id: SYN_032
+  nom: Surcharge
+  statut: CO
+  references:
+  - STA_11
+  - E_RAITON
+  condition: Une attaque Raiton touche une cible Étourdie.
+  effet: +25 % dégâts sur ce coup.
+  limite: —
+  plafond: —
+  compatibilite: Raiton + étourdissements (Kakashi, A, Darui, Sasuke…).
+  contrepartie: —
+  manifestation: Arc supplémentaire en spirale sur la cible.
+  boss_isole: Actif pendant les courtes fenêtres d'étourdissement.
+- id: SYN_033
+  nom: Aiguilles de givre
+  statut: CO
+  references:
+  - JUT_190
+  - STA_05
+  condition: Un Senbon (JUT_190 ou EVO issue) touche une cible Refroidie.
+  effet: +1 cumul de Refroidi et +10 % de chance critique sur ce coup.
+  limite: 1 cumul / 0,5 s par cible.
+  plafond: Gelé 1 s max, immunité 2 s.
+  compatibilite: Haku (Senbon LIBRE + Hyōton).
+  contrepartie: —
+  manifestation: Givre qui se propage depuis le point d'impact de l'aiguille.
+  boss_isole: Critique +10 % conservé ; ralentissement plafonné.
+- id: SYN_034
+  nom: Coup de grâce de l'ombre
+  statut: CO
+  references:
+  - STA_07
+  - CONTACT
+  condition: Une attaque CONTACT touche une cible Liée par l'ombre.
+  effet: +30 % dégâts.
+  limite: —
+  plafond: —
+  compatibilite: Shikamaru héritier d'Asuma (Hien).
+  contrepartie: —
+  manifestation: Ombre qui se resserre au moment de l'impact.
+  boss_isole: Pendant la liaison (réduite par résistance).
+- id: SYN_035
+  nom: Point aveugle
+  statut: CO
+  references:
+  - STA_16
+  condition: Le joueur touche une cible Aveuglée.
+  effet: +15 % chance critique sur ce coup.
+  limite: —
+  plafond: Chance critique totale ≤ 60 %.
+  compatibilite: Tous.
+  contrepartie: —
+  manifestation: Petit œil barré au-dessus de la cible, critique marqué d'un éclat blanc.
+  boss_isole: Utile pendant l'aveuglement du boss.
+- id: SYN_036
+  nom: Discorde
+  statut: CO
+  references:
+  - STA_10
+  condition: Un ennemi Confus inflige des dégâts à un autre ennemi.
+  effet: Ces dégâts donnent du chakra au joueur comme s'il les avait infligés et les éliminations lui sont attribuées (technique
+    source).
+  limite: Plafond de gain de chakra global.
+  plafond: —
+  compatibilite: Genjutsu, Yamanaka.
+  contrepartie: —
+  manifestation: Petits éclats violets sur les coups entre ennemis.
+  boss_isole: Inactif (aucun ennemi pour se battre) ; la conversion Confus → Vulnérable prend le relais.
+- id: SYN_037
+  nom: Marque de mort
+  statut: CO
+  references:
+  - STA_09
+  - STA_12
+  condition: Une cible est Marquée et Vulnérable d'au moins +20 %.
+  effet: +0,3 aux dégâts critiques contre elle.
+  limite: —
+  plafond: Dégâts critiques ≤ ×3,0.
+  compatibilite: Sceaux + genjutsu ou Byakugan.
+  contrepartie: —
+  manifestation: La marque devient rouge et pulse.
+  boss_isole: Très utile contre un boss.
+- id: SYN_038
+  nom: Combustion toxique
+  statut: CO
+  references:
+  - STA_08
+  - E_KATON
+  condition: Une attaque Katon touche une cible à ≥ 8 cumuls de Poison.
+  effet: 'Le poison s''enflamme : 4 × (cumuls) × A en zone de 1,5 m, puis les cumuls sont réduits de moitié.'
+  limite: 1 fois / 2 s par cible.
+  plafond: —
+  compatibilite: Sasori (Katon), Kakuzu (Katon + via masques), Orochimaru (poison + pas Katon → inactive).
+  contrepartie: Réduit le poison.
+  manifestation: Flammes vertes-orangées, bulles qui éclatent.
+  boss_isole: Détonation sur le boss, poison réduit.
+- id: SYN_039
+  nom: Éclosion
+  statut: CO
+  references:
+  - STA_14
+  condition: Un ennemi Parasité à ≥ 5 cumuls meurt.
+  effet: 'Les insectes s''échappent : Parasité +2 aux ennemis à 2 m.'
+  limite: Profondeur 2.
+  plafond: 10 éclosions / s.
+  compatibilite: Shino.
+  contrepartie: —
+  manifestation: Nuée qui jaillit du corps (décorative), ronflement groupé.
+  boss_isole: Inactif ; le Parasité reste utile par ses dégâts.
+- id: SYN_040
+  nom: Explosion corrosive
+  statut: CO
+  references:
+  - STA_17
+  - EXPLOSIF
+  condition: Une explosion touche une cible Corrodée.
+  effet: +20 % dégâts.
+  limite: —
+  plafond: —
+  compatibilite: Mei (Yōton) + explosifs ; Katsuyu (acide) + explosifs.
+  contrepartie: —
+  manifestation: Explosion à bord jaune-vert.
+  boss_isole: Pleinement utile.

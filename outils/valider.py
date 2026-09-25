@@ -278,7 +278,8 @@ def verifier_synergies(cat, idx, r: Rapport) -> None:
     for s in cat["synergies"]:
         for ref in s.get("references", []):
             if ref not in idx and ref not in AFFINITES and ref not in TAGS_EFFET and not ref.startswith("STA_") \
-                    and not ref.startswith("SURF_") and ref not in LIVRAISONS and ref not in FAMILLES:
+                    and not ref.startswith("SURF_") and ref not in LIVRAISONS and ref not in FAMILLES \
+                    and ref not in APTITUDES:
                 r.err(f"{s['id']} référence inconnue {ref}")
         for champ in ("condition", "effet", "limite", "manifestation"):
             if not s.get(champ):

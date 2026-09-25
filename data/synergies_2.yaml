@@ -1,0 +1,481 @@
+# Synergies SYN_041 à SYN_080 — unités, outils, taijutsu, sceaux, oculaire, synergies de build.
+- id: SYN_041
+  nom: "Attaque coordonnée"
+  statut: CO
+  references: [CLONE, STA_09]
+  condition: "Le joueur touche une cible Marquée ou la cible prioritaire désignée par une technique de clones (JUT_217 niv. 7, EVO_069)."
+  effet: "Tous les clones actifs à ≤ 6 m changent de cible pour elle pendant 2 s ; leur prochaine frappe fait +40 %."
+  limite: "1 fois / 3 s par propriétaire ; les clones ne copient pas l'attaque déclenchante."
+  plafond: "+40 % sur 1 frappe par clone."
+  compatibilite: "Toute entrée possédant une technique CLONE ; source contenant explicitement le tag CLONE (exception de la règle §B8.2-5)."
+  contrepartie: "Les clones abandonnent leur cible précédente (peut laisser passer un ordinaire)."
+  manifestation: "Un seul petit triangle bleu au-dessus de la cible + un trait fin de chaque clone vers elle (pas de flash)."
+  boss_isole: "Pleinement utile : les clones convergent sur le boss."
+- id: SYN_042
+  nom: "Clones et fumée"
+  statut: CO
+  references: [CLONE, STA_16]
+  condition: "Un clone du joueur disparaît (fin de durée ou détruit)."
+  effet: "Son nuage de fumée Aveugle les ennemis à 1 m pendant 1 s."
+  limite: "1 fois par clone."
+  plafond: "8 nuages / s."
+  compatibilite: "Toute technique CLONE."
+  contrepartie: "—"
+  manifestation: "Nuage de fumée standard légèrement plus dense (1 frame de plus)."
+  boss_isole: "Boss aveuglé 0,5 s (résistance normale)."
+- id: SYN_043
+  nom: "Clones et crapauds"
+  statut: CO
+  references: [CLONE, CTR_CRAPAUD, JUT_225]
+  condition: "Des crapauds de combat (JUT_225) et des clones sont actifs simultanément."
+  effet: "Les crapauds bondissent sur la cible des clones ; leur coup de langue attire la cible de 1 m vers les clones."
+  limite: "1 fois / 1 s par crapaud."
+  plafond: "—"
+  compatibilite: "Naruto (toutes variantes) et Jiraiya (crapauds + Kage Bunshin). Minato n'a pas de technique CLONE : non concerné."
+  contrepartie: "—"
+  manifestation: "Crapaud qui saute sur l'épaule d'un clone avant l'attaque."
+  boss_isole: "Pas d'attraction (boss) ; les crapauds concentrent leurs coups."
+- id: SYN_044
+  nom: "Meute"
+  statut: CO
+  references: [ANIMAL]
+  condition: "Au moins 2 unités ANIMAL actives."
+  effet: "Chaque ANIMAL gagne +10 % de dégâts par autre ANIMAL actif."
+  limite: "—"
+  plafond: "+30 %."
+  compatibilite: "Kiba, Kakashi, Pain Six Chemins, Sai…"
+  contrepartie: "—"
+  manifestation: "Petites pattes lumineuses au sol sous chaque animal quand la meute est active."
+  boss_isole: "Pleinement utile."
+- id: SYN_045
+  nom: "Marionnettes gardiennes"
+  statut: CO
+  references: [MARIONNETTE, JUT_208]
+  condition: "Un ennemi est contrôlé par Chakra no Ito (JUT_208) pendant qu'une marionnette est active."
+  effet: "La marionnette protège l'ennemi contrôlé (elle intercepte 1 projectile ennemi qui le vise) et frappe ses agresseurs."
+  limite: "1 interception / 1 s."
+  plafond: "—"
+  compatibilite: "Kankurō, Kankurō Marionnette de Sasori, Sasori, Chiyo."
+  contrepartie: "La marionnette quitte le joueur pendant l'interception."
+  manifestation: "Fils bleus reliant marionnette et ennemi contrôlé."
+  boss_isole: "Inactive (aucun contrôle sur boss) ; aucune perte."
+- id: SYN_046
+  nom: "Contrat scellé"
+  statut: CO
+  references: [UNITE_ALLIEE, SCEAU]
+  condition: "Une unité alliée apparaît alors que le joueur possède au moins une technique SCEAU."
+  effet: "Son apparition libère une onde de 1,5 m (15 × A)."
+  limite: "1 fois / 1 s."
+  plafond: "—"
+  compatibilite: "Minato, Tobirama, Kushina, Karin, Jiraiya, Konan…"
+  contrepartie: "—"
+  manifestation: "Cercle de sceau au sol sous l'invocation."
+  boss_isole: "Onde sur le boss si proche."
+- id: SYN_047
+  nom: "Réanimés piégés"
+  statut: CO
+  references: [JUT_243, SCEAU]
+  condition: "Un réanimé (Edo Tensei) arrive en fin de durée et le joueur possède une technique SCEAU."
+  effet: "Il explose en étiquettes : 50 × A (r 2,5 m)."
+  limite: "1 fois par réanimé."
+  plafond: "—"
+  compatibilite: "Orochimaru et Tobirama (Edo Tensei + APT_FUIN). Les deux Kabuto n'ont pas de SCEAU : non concernés."
+  contrepartie: "—"
+  manifestation: "Étiquettes qui recouvrent le corps avant l'explosion."
+  boss_isole: "Explosion près du boss."
+- id: SYN_048
+  nom: "Substitution par clone"
+  statut: CO
+  references: [PAS_039, CLONE]
+  condition: "Kawarimi (PAS_039) se déclenche alors qu'une technique CLONE est possédée."
+  effet: "À la place de la bûche, un clone apparaît et provoque les ennemis à 3 m pendant 2 s."
+  limite: "Délai de Kawarimi."
+  plafond: "—"
+  compatibilite: "Toute entrée avec CLONE."
+  contrepartie: "—"
+  manifestation: "Fumée, clone en pose de défi."
+  boss_isole: "Le boss cible le clone 1 s."
+- id: SYN_049
+  nom: "Encre de sceau"
+  statut: CO
+  references: [STA_21, STA_09]
+  condition: "Une cible devient Encrée."
+  effet: "Elle compte comme Marquée pour les techniques et synergies du joueur tant qu'elle est Encrée."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Sai."
+  contrepartie: "—"
+  manifestation: "Taches d'encre en forme de sceau."
+  boss_isole: "Boss Encré = Marqué."
+- id: SYN_050
+  nom: "Ruche"
+  statut: CO
+  references: [STA_14]
+  condition: "Au moins 10 ennemis Parasités à l'écran."
+  effet: "Les essaims du joueur gagnent +20 % de dégâts et +20 % de vitesse."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Shino."
+  contrepartie: "—"
+  manifestation: "Icône de ruche discrète sur l'essaim, bourdonnement plus aigu."
+  boss_isole: "Inactive ; l'essaim reste au niveau de base."
+- id: SYN_051
+  nom: "Kunai de marquage universel"
+  statut: CO
+  references: [OUTIL, JUT_265]
+  condition: "Un projectile OUTIL du joueur (kunai, shuriken) se plante au sol et Hiraishin (JUT_265) est possédé."
+  effet: "Il compte comme kunai de marquage 3 s (dans la limite des kunai actifs)."
+  limite: "Kunai actifs max de JUT_265."
+  plafond: "—"
+  compatibilite: "Minato, Tobirama."
+  contrepartie: "Remplace le kunai le plus ancien."
+  manifestation: "Formule jaune qui s'imprime sur le kunai planté."
+  boss_isole: "Kunai autour du boss : réseau dense."
+- id: SYN_052
+  nom: "Kunai et étiquettes"
+  statut: CO
+  references: [OUTIL, JUT_189]
+  condition: "Le joueur possède Kibaku Fuda (JUT_189) et une technique OUTIL PROJECTILE ou SALVE."
+  effet: "1 projectile OUTIL sur 5 porte une étiquette : explosion 20 × A (r 1,5 m) à l'impact."
+  limite: "Compteur déterministe (1 sur 5)."
+  plafond: "—"
+  compatibilite: "Tous."
+  contrepartie: "—"
+  manifestation: "Kunai à ruban blanc, grésillement."
+  boss_isole: "Pleinement utile."
+- id: SYN_053
+  nom: "Jonglage"
+  statut: CO
+  references: [CONTACT, JUT_182]
+  condition: "Un ennemi est projeté en l'air (Courant ascendant, Konoha Daisenpū, Colonne de feu…)."
+  effet: "Les techniques CONTACT du joueur font +20 % contre lui."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Lee, Guy, Sasuke (Shishi Rendan), Temari (Courant ascendant)…"
+  contrepartie: "—"
+  manifestation: "Ombre au sol de la cible soulevée et lignes de vitesse."
+  boss_isole: "Inactive (boss non soulevés) ; conversion en Vulnérable."
+- id: SYN_054
+  nom: "Élan des Portes"
+  statut: CO
+  references: [TRF_009, CONTACT]
+  condition: "Les Portes sont ouvertes (TRF_009)."
+  effet: "Chaque élimination au CONTACT prolonge l'effet de 0,2 s."
+  limite: "Prolongation max +3 s par activation."
+  plafond: "—"
+  compatibilite: "Lee, Lee Poing ivre, Guy."
+  contrepartie: "Prolonge aussi le coût en PV (plancher 1 PV)."
+  manifestation: "Aura verte qui pulse à chaque élimination."
+  boss_isole: "Pas d'élimination → pas de prolongation."
+- id: SYN_055
+  nom: "Lame conductrice"
+  statut: CO
+  references: [OUTIL, CONTACT, JUT_051]
+  condition: "Chidori Nagashi (JUT_051) est possédé et une technique CONTACT de famille OUTIL touche."
+  effet: "La frappe Électrise et gagne +15 % dégâts."
+  limite: "Électrisé : délai interne par cible."
+  plafond: "—"
+  compatibilite: "Sasuke et Sasuke Mangekyō éternel avec Kusanagi ou Tantō ; pour Sasuke Taka, l'Électrisé est déjà fourni par son CPX (seul le +15 % s'ajoute)."
+  contrepartie: "—"
+  manifestation: "Lame parcourue d'arcs."
+  boss_isole: "Pleinement utile."
+- id: SYN_056
+  nom: "Lame de vent"
+  statut: CO
+  references: [OUTIL, CONTACT, E_FUTON]
+  condition: "Le joueur possède au moins 2 techniques Fūton et touche avec une technique CONTACT de famille OUTIL."
+  effet: "+0,8 m d'allonge et Entaillé +1."
+  limite: "—"
+  plafond: "Entaillé max 3 (4 avec PAS_024 niv. 5)."
+  compatibilite: "Asuma et Shikamaru héritier (Hien), Temari (Frappe du grand éventail)."
+  contrepartie: "—"
+  manifestation: "Lame prolongée d'un fil de vent translucide."
+  boss_isole: "Pleinement utile."
+- id: SYN_057
+  nom: "Courant porteur"
+  statut: CO
+  references: [E_FUTON, OUTIL]
+  condition: "Une attaque Fūton ONDE ou CONE chevauche un projectile OUTIL du joueur."
+  effet: "Le projectile gagne +1 perce et +25 % de vitesse."
+  limite: "1 fois par projectile."
+  plafond: "—"
+  compatibilite: "Temari, Asuma, Minato, Konohamaru…"
+  contrepartie: "—"
+  manifestation: "Traînée blanche sur le projectile."
+  boss_isole: "Pleinement utile."
+- id: SYN_058
+  nom: "Impact sismique"
+  statut: CO
+  references: [CONTACT, E_DOTON]
+  condition: "Une attaque CONTACT de ≥ 40 dégâts touche un ennemi à ≤ 2 m d'une structure ou surface de terre du joueur."
+  effet: "Un pic jaillit sous la cible : 25 × A, Étourdi 0,3 s."
+  limite: "1 fois / 1 s."
+  plafond: "—"
+  compatibilite: "Sakura, Tsunade, Chōji, Ōnoki…"
+  contrepartie: "—"
+  manifestation: "Pic anguleux, poussière."
+  boss_isole: "Pic sur le boss (sans étourdissement)."
+- id: SYN_059
+  nom: "Riposte blindée"
+  statut: CO
+  references: [BOUCLIER, CONTACT]
+  condition: "Un bouclier du joueur absorbe un coup."
+  effet: "La prochaine technique CONTACT fait +30 %."
+  limite: "1 charge (non cumulable)."
+  plafond: "—"
+  compatibilite: "Gaara (Suna no Tate), Hinata, Neji, Kimimaro…"
+  contrepartie: "—"
+  manifestation: "Contour du joueur qui scintille en or 1 s."
+  boss_isole: "Pleinement utile."
+- id: SYN_060
+  nom: "Élan"
+  statut: CO
+  references: [CONTACT]
+  condition: "Le joueur vient d'esquiver (moins de 1 s)."
+  effet: "La prochaine technique CONTACT fait +25 % et gagne +0,5 m d'allonge."
+  limite: "1 fois par esquive."
+  plafond: "—"
+  compatibilite: "Tous."
+  contrepartie: "—"
+  manifestation: "Image rémanente du joueur qui rejoint la frappe."
+  boss_isole: "Pleinement utile."
+- id: SYN_061
+  nom: "Illusion du Sharingan"
+  statut: CO
+  references: [DOJ_SHARINGAN, GENJUTSU]
+  condition: "Le joueur a le Sharingan et lance une technique GENJUTSU."
+  effet: "Durée des contrôles de genjutsu +20 %."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Itachi (toutes variantes) et Shisui (Sharingan + APT_GEN)."
+  contrepartie: "—"
+  manifestation: "Tomoe discret dans le motif du genjutsu."
+  boss_isole: "Conversion Vulnérable +6 % au lieu de +5 %."
+- id: SYN_062
+  nom: "Points fermés"
+  statut: CO
+  references: [JUT_296, STA_09]
+  condition: "Jūken touche une cible Marquée (Byakugan ou autre)."
+  effet: "La fermeture des points de chakra ajoute Vulnérable +10 % pendant 3 s."
+  limite: "1 fois / 3 s par cible."
+  plafond: "Vulnérable global +50 %."
+  compatibilite: "Neji, Hinata."
+  contrepartie: "—"
+  manifestation: "Points bleus qui se ferment en croix."
+  boss_isole: "Pleinement utile."
+- id: SYN_063
+  nom: "Attraction dans le piège"
+  statut: CO
+  references: [ATTRACTION, PIEGE, ZONE]
+  condition: "Un ennemi attiré par une technique ATTRACTION du joueur termine son déplacement dans une ZONE ou un PIEGE du joueur."
+  effet: "Le piège se déclenche immédiatement ; la zone applique un tick instantané."
+  limite: "1 fois / 1 s par zone."
+  plafond: "—"
+  compatibilite: "Pain (Bansho), Suiton (Tourbillon), Jiton (Noyau)…"
+  contrepartie: "—"
+  manifestation: "Flash de la zone à l'arrivée."
+  boss_isole: "Inactive (boss non attirés)."
+- id: SYN_064
+  nom: "Flèches de flammes noires"
+  statut: CO
+  references: [TRF_006, STA_01]
+  condition: "Susanoo de Sasuke (TRF_006) est actif et une flèche touche une cible déjà en Brûlure noire."
+  effet: "+1 cumul de Brûlure noire et propagation à 1 voisin."
+  limite: "—"
+  plafond: "6 cumuls."
+  compatibilite: "Sasuke Mangekyō éternel."
+  contrepartie: "—"
+  manifestation: "Pointe de flèche noire à liseré rouge."
+  boss_isole: "Pleinement utile."
+- id: SYN_065
+  nom: "Retour du Kamui"
+  statut: CO
+  references: [JUT_311]
+  condition: "L'intangibilité de Kamui (JUT_311) laisse traverser un projectile ennemi."
+  effet: "Le projectile est renvoyé 1 s plus tard depuis le joueur vers l'ennemi le plus proche (×1,5)."
+  limite: "1 projectile par phase."
+  plafond: "—"
+  compatibilite: "Obito."
+  contrepartie: "—"
+  manifestation: "Spirale qui recrache le projectile en couleur alliée."
+  boss_isole: "Renvoi vers le boss."
+- id: SYN_066
+  nom: "Résonance amplifiée"
+  statut: CO
+  references: [JUT_279, STA_09]
+  condition: "Une cible est Marquée par deux sources différentes."
+  effet: "Elle compte pour 2 marques dans le seuil du Sceau de résonance (JUT_279)."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Minato, Tobirama, Konan, Kushina, Karin (APT_FUIN)."
+  contrepartie: "—"
+  manifestation: "Double anneau sur la marque."
+  boss_isole: "Le boss Marqué deux fois rapproche la détonation."
+- id: SYN_067
+  nom: "Réveil brutal"
+  statut: CO
+  references: [STA_11, GENJUTSU]
+  condition: "Un ennemi endormi (Étourdi par sommeil : JUT_254, JUT_125) reçoit un coup."
+  effet: "Ce premier coup fait ×1,5 (bonus additif +50 %)."
+  limite: "1 fois par sommeil."
+  plafond: "—"
+  compatibilite: "Kabuto, Hashirama, Yamato."
+  contrepartie: "Réveille la cible."
+  manifestation: "Bulle de sommeil qui éclate, étoile d'impact."
+  boss_isole: "Inactive ; conversion en Vulnérable."
+- id: SYN_068
+  nom: "Barrière alimentée"
+  statut: CO
+  references: [JUT_268, JUT_278]
+  condition: "Une barrière de sceaux du joueur efface ou bloque un projectile."
+  effet: "+1 chakra par projectile."
+  limite: "Plafond global de chakra."
+  plafond: "—"
+  compatibilite: "APT_FUIN."
+  contrepartie: "—"
+  manifestation: "Étincelle bleue qui file vers le portrait."
+  boss_isole: "Utile contre les boss tireurs."
+- id: SYN_069
+  nom: "Rasengan éclair"
+  statut: CO
+  references: [JUT_281, JUT_265]
+  condition: "Le joueur possède Rasengan et Hiraishin — Kunai de marquage."
+  effet: "Le Rasengan peut partir d'un kunai de marquage à ≤ 3 m de sa cible (portée effective étendue)."
+  limite: "1 fois par lancer."
+  plafond: "—"
+  compatibilite: "Minato (toutes variantes)."
+  contrepartie: "—"
+  manifestation: "Éclair jaune puis orbe bleu depuis le kunai."
+  boss_isole: "Rasengan toujours à portée du boss."
+- id: SYN_070
+  nom: "Prédiction"
+  statut: CO
+  references: [DOJ_SHARINGAN, OCULAIRE]
+  condition: "Une technique OCULAIRE touche un ennemi en train de télégraphier une attaque."
+  effet: "+10 % chance critique sur ce coup et interruption des télégraphes mineurs."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Porteurs du Sharingan."
+  contrepartie: "—"
+  manifestation: "Tomoe rouge qui clignote au-dessus du télégraphe interrompu."
+  boss_isole: "Critique seulement (télégraphes majeurs non interrompus)."
+- id: SYN_071
+  nom: "Maîtrise des cinq natures"
+  statut: CO
+  references: [E_KATON, E_SUITON, E_RAITON, E_FUTON, E_DOTON]
+  condition: "Le joueur possède au moins une technique de chacune des 5 affinités de base."
+  effet: "+15 % Puissance (additif)."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Kakuzu, Hiruzen (Kakashi : 4 éléments → inactive)."
+  contrepartie: "Contraint fortement le build (5 emplacements sur 6)."
+  manifestation: "Pentagramme élémentaire autour du portrait."
+  boss_isole: "Pleinement utile."
+- id: SYN_072
+  nom: "Nuages de feu pour Kirin"
+  statut: CO
+  references: [JUT_054, E_KATON, ZONE]
+  condition: "Kirin (JUT_054 ou évolutions) est en construction et des zones Katon du joueur sont actives."
+  effet: "Chaque zone Katon active réduit la construction de 1 s."
+  limite: "Réduction max −3 s."
+  plafond: "—"
+  compatibilite: "Sasuke (toutes variantes)."
+  contrepartie: "—"
+  manifestation: "Fumée des zones qui monte vers le nuage (trait visible)."
+  boss_isole: "Pleinement utile."
+- id: SYN_073
+  nom: "Ultime élémentaire"
+  statut: CO
+  references: [E_KATON, E_SUITON, E_RAITON, E_FUTON, E_DOTON]
+  condition: "Un ultime applique un état élémentaire (Brûlure, Trempé, Électrisé…)."
+  effet: "Pour cet ultime, ses coups comptent comme coups primaires (profondeur 0) pour les synergies élémentaires, une fois par cible."
+  limite: "1 déclenchement par cible et par ultime."
+  plafond: "—"
+  compatibilite: "Ultimes élémentaires (ULT_028, ULT_039, ULT_040, ULT_042…)."
+  contrepartie: "—"
+  manifestation: "Icônes d'état qui s'allument en séquence."
+  boss_isole: "Pleinement utile."
+- id: SYN_074
+  nom: "Sacrifice partagé"
+  statut: CO
+  references: [SACRIFICE, STA_20]
+  condition: "Le joueur paie un coût en PV (SACRIFICE) alors qu'une cible porte le Lien maudit."
+  effet: "Le lien est posé sur 1 ennemi supplémentaire (max 3 liés)."
+  limite: "1 fois / 5 s."
+  plafond: "3 cibles liées."
+  compatibilite: "Hidan."
+  contrepartie: "Le coût en PV n'est pas réduit."
+  manifestation: "Ligne rouge supplémentaire depuis le cercle rituel."
+  boss_isole: "Inactive (1 seule cible)."
+- id: SYN_075
+  nom: "Surplus de soin"
+  statut: CO
+  references: [SOIN, BOUCLIER]
+  condition: "Un soin dépasse les PV max ou le plafond de soin."
+  effet: "50 % de l'excédent devient bouclier."
+  limite: "Plafond de bouclier (50 % PV max)."
+  plafond: "—"
+  compatibilite: "Tsunade, Sakura, Karin, Hashirama…"
+  contrepartie: "Sakura Byakugō : ne cumule pas avec sa réserve (le CPX a priorité)."
+  manifestation: "Contour vert qui devient doré."
+  boss_isole: "Pleinement utile."
+- id: SYN_076
+  nom: "Forêt nourricière"
+  statut: CO
+  references: [SURF_BOIS]
+  condition: "Le joueur se tient sur une surface BOIS qu'il a créée."
+  effet: "Régénération +0,3 PV/s (dans le plafond de régénération)."
+  limite: "—"
+  plafond: "—"
+  compatibilite: "Mokuton (Hashirama, Yamato, Madara Rinnegan, Obito)."
+  contrepartie: "Incite à rester dans la forêt (vulnérable aux zones ennemies)."
+  manifestation: "Feuilles lentes autour des pieds."
+  boss_isole: "Pleinement utile."
+- id: SYN_077
+  nom: "Éclats de décor"
+  statut: CO
+  references: [EXPLOSIF]
+  condition: "Une explosion du joueur détruit un obstacle destructible (caisse, rocher fissuré, arbre mort)."
+  effet: "Projection de 6 éclats (10 × A) dans toutes les directions."
+  limite: "1 fois par obstacle."
+  plafond: "—"
+  compatibilite: "Tous (dépend des cartes)."
+  contrepartie: "L'obstacle ne protège plus."
+  manifestation: "Éclats du matériau de l'obstacle (bois, pierre)."
+  boss_isole: "Utile si le boss est près des obstacles."
+- id: SYN_078
+  nom: "Surface gelée"
+  statut: CO
+  references: [E_HYOTON, SURF_EAU, STA_05]
+  condition: "Une attaque Hyōton touche une surface EAU."
+  effet: "La cellule devient GLACE 4 s : les ennemis y glissent (+20 % vitesse) mais gagnent Refroidi +1 par seconde passée dessus."
+  limite: "1 conversion par cellule / 4 s."
+  plafond: "—"
+  compatibilite: "Haku."
+  contrepartie: "Interaction négative intentionnelle : les ennemis arrivent plus vite (signalée sur la carte d'amélioration)."
+  manifestation: "Surface blanche-bleue réfléchissante, traces de glissade."
+  boss_isole: "Boss : Refroidi par seconde (ralentissement plafonné)."
+- id: SYN_079
+  nom: "Tornade électrique"
+  statut: CO
+  references: [E_FUTON, E_RAITON, JUT_081]
+  condition: "Une attaque Raiton touche une tornade du joueur (JUT_081, EVO_030, EVO_102)."
+  effet: "La tornade devient électrique 3 s : Électrise les ennemis aspirés et gagne +20 % dégâts."
+  limite: "1 fois par tornade."
+  plafond: "—"
+  compatibilite: "Minato, Hiruzen, Kakuzu, Tobirama (Fūton + Raiton)."
+  contrepartie: "—"
+  manifestation: "Tornade parcourue d'arcs bleus."
+  boss_isole: "Pleinement utile si le boss est dans la tornade."
+- id: SYN_080
+  nom: "Éveil synchronisé"
+  statut: CO
+  references: [TRF_001, TRF_003, TRF_009]
+  condition: "Un ultime est lancé pendant qu'une transformation est active."
+  effet: "Ultime ×1,2 et transformation prolongée de 2 s."
+  limite: "1 fois par activation de transformation."
+  plafond: "—"
+  compatibilite: "Toute entrée disposant d'une transformation (les références listent des exemples)."
+  contrepartie: "Respecte le report de 1 s entre activation et ultime (§B9.3)."
+  manifestation: "L'aura de transformation se colore brièvement de l'élément de l'ultime."
+  boss_isole: "Pleinement utile."
