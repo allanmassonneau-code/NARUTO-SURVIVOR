@@ -86,8 +86,8 @@ Exemples d'arbitrage déjà tranchés :
 
 | Périmètre | Contenu | But | Critère de sortie observable |
 |---|---|---|---|
-| **Prototype technique** | 1 personnage (Naruto), 3 techniques, 1 boss (Zabuza), placeholders **identifiés comme tels** | Déplacement, ciblage, dégâts, niveau | 5 testeurs sur 6 déclarent spontanément que les 30 premières secondes sont agréables ; 0 blocage de collision en 20 runs |
-| **Tranche verticale** | 3 personnages (Naruto, Sasuke, Gaara), 12 techniques, 6 passifs, 4 évolutions, 1 carte (Konoha — Terrain d'entraînement), 2 boss (Zabuza, Gaara), 10 min soignées | Qualité finale : impacts, montée en puissance, lisibilité de fin de partie | Test des 3 s réussi à ≥ 80 % sur 20 extraits ; 90 % des morts attribuées correctement par le joueur |
+| **Prototype technique** | 1 personnage (Naruto), 3 techniques (JUT_217, JUT_281, JUT_185), 1 boss (Zabuza, BOS_001), carte grise d'essai, placeholders **identifiés comme tels** | Déplacement, ciblage, dégâts, niveau | 5 testeurs sur 6 déclarent spontanément que les 30 premières secondes sont agréables ; 0 blocage de collision en 20 runs |
+| **Tranche verticale** | 3 personnages (Naruto, Sasuke, Gaara), 12 techniques, 6 passifs, 4 évolutions, 1 carte (MAP_002 Pays des Vagues — Pont inachevé), 2 boss (Haku en lieutenant, Zabuza en final), 10 min soignées (expédition courte) | Qualité finale : impacts, montée en puissance, lisibilité de fin de partie | Test des 3 s réussi à ≥ 80 % sur 20 extraits ; 90 % des morts attribuées correctement par le joueur |
 | **Version 1.0** | Cible évaluée : 20 personnages, 100 techniques, 30 évolutions, 8 cartes, 15 boss, 60 ennemis, 80 missions | Jeu complet premium | Voir §H4 (analyse de coûts et contre-proposition) |
 | **Bibliothèque complète** | 80 entrées jouables, 320 techniques, 120 évolutions/fusions, 80 synergies, 60 passifs, 40 équipements, 24 transformations, 40 ultimes, 20 cartes, 40 boss, 100 ennemis, 200 missions, 60 secrets, 40 builds | Vision long terme, extensions | Catalogue validé par `outils/valider.py` |
 

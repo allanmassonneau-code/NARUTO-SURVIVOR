@@ -372,6 +372,7 @@ def verifier_missions_deblocages(cat, idx, r: Rapport) -> None:
                 r.err(f"{p['id']} : la mission {ref} ne le débloque pas dans ses récompenses")
     # simulation de déblocage (ordre topologique) : aucun cycle, tout est atteignable
     possedes = {p["id"] for p in cat["personnages"] if p.get("deblocage", {}).get("type") in ("DEPART", "PREMIERE_RUN")}
+    possedes |= {"MAP_001", "MAP_002"}  # cartes disponibles au premier lancement (§D7)
     faites: set[str] = set()
     progres = True
     while progres:
@@ -381,8 +382,9 @@ def verifier_missions_deblocages(cat, idx, r: Rapport) -> None:
                 continue
             req = m.get("personnage")
             deps_ok = all(d in faites or d in possedes or not d.startswith("MIS_") for d in m.get("dependances", []))
+            carte_ok = m.get("carte") in (None,) or m.get("carte") in possedes
             if req in (None, "TOUS") or req in possedes:
-                if deps_ok:
+                if deps_ok and carte_ok:
                     faites.add(m["id"])
                     possedes |= set(m.get("recompenses", {}).get("deblocages", []))
                     progres = True
@@ -390,6 +392,9 @@ def verifier_missions_deblocages(cat, idx, r: Rapport) -> None:
     if inatteignables:
         r.err(f"missions inatteignables (cycle ou dépendance manquante) : {inatteignables[:12]}{'…' if len(inatteignables) > 12 else ''}")
     persos_non = [p["id"] for p in cat["personnages"] if p["id"] not in possedes]
+    cartes_non = [c["id"] for c in cat["cartes"] if c["id"] not in possedes]
+    if cartes_non:
+        r.err(f"cartes jamais débloquées : {cartes_non}")
     if persos_non:
         r.err(f"personnages jamais débloquables : {persos_non}")
     r.info(f"missions atteignables : {len(faites)}/{len(missions)}")

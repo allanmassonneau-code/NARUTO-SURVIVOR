@@ -147,7 +147,7 @@ Plusieurs montées de niveau simultanées sont mises en **file** (compteur « +2
 
 ### B2.5 Mission d'introduction et première défaite
 
-* **MIS_001 « Examen d'entrée à la simulation »** : Expédition de 8 min sur `MAP_001`, boss réduit (Zabuza en version « entraînement »). Sa réussite affiche « Examen réussi » et **pas** « Jeu terminé ».
+* **MIS_001 « Examen d'entrée à la simulation »** : Expédition de 8 min sur `MAP_001`, boss réduit (Kakashi, test des clochettes, `BOS_035` à 25 % de PV). Sa réussite affiche « Examen réussi » et **pas** « Jeu terminé ».
 * **Règle de déblocage de la première défaite** : toute run terminée (victoire ou défaite) après **03:00** de jeu débloque **Kakashi** (`CHR_008`) et la technique `JUT_185` (Kunai en éventail) dans le pool commun. Une défaite avant 03:00 débloque la variante d'aide « Conseil de Kakashi » (un indice des Archives). Aucune condition n'exige de posséder l'entrée débloquée.
 
 ## B3. Emplacements
