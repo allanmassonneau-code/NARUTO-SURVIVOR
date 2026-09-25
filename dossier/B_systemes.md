@@ -182,7 +182,7 @@ Présentation HUD : aucune ; écran pause/build : valeur totale + détail au sur
 | Régénération | 0 | PV/s | Appliquée par tranches de 0,5 s | ≤ 3,0 PV/s | cumul flottant | « Régén 0,8/s » |
 | Rayon de collecte | 1,5 m | m | `base × (1 + ΣCollecte%)` | ≤ +200 % (4,5 m) | — | Cercle pointillé en pause |
 
-**Statistiques avancées** (détail de pause uniquement) : Réduction des dégâts (%, ≤ 60 %), Bouclier max (§B4.9), Chance (influence les pondérations de rareté des Rouleaux, +0 à +50 %), Gain d'XP (+0 à +50 %), Gain de chakra (+0 à +60 %), Résistance au contrôle (le joueur, −50 % de durée max), Charges d'esquive.
+**Statistiques avancées** (détail de pause uniquement) : Réduction des dégâts (%, ≤ 60 %), Bouclier max (§B4.5), Chance (influence les pondérations de rareté des Rouleaux, +0 à +50 %), Gain d'XP (+0 à +50 %), Gain de chakra (+0 à +60 %), Résistance au contrôle (le joueur, −50 % de durée max), Charges d'esquive.
 
 ### B4.2 Ordre de calcul des dégâts infligés
 
@@ -230,15 +230,20 @@ La cadence augmente la **fréquence**. `+50 %` de cadence donne un délai `1/1,5
 
 L'**armure ne peut pas rendre invulnérable** : un coup inflige toujours au moins 25 % de ses dégâts après réduction (arrondi supérieur, minimum 1). Exemple : ennemi 8 dégâts, Armure 10 → max(2 ; −2) = **2**.
 
-### B4.5 Soins, boucliers, esquives et effets sur élimination
+### B4.5 Soins, vol de vie et boucliers
 
 | Effet | Plafond | Justification |
 |---|---|---|
 | Soin total hors Régénération | **8 % PV max par seconde** (fenêtre glissante) | Empêche l'immortalité par vol de vie de masse |
-| Vol de vie | 1 % des dégâts, **plafond 2 PV/s** | Réservé à quelques objets/techniques |
+| Vol de vie | 1 % des dégâts au maximum, **plafond 2 PV/s** | Réservé à quelques objets/techniques |
 | Bouclier | ≤ 50 % PV max ; se dissipe de 5 %/s après 5 s sans recharge | Les builds défensifs restent actifs |
+
+### B4.6 Effets sur élimination et évitement
+
+| Effet | Règle | Justification |
+|---|---|---|
 | Effets sur élimination | Chaque source : **1 déclenchement max par tick et 10 par seconde** | Évite les avalanches en horde |
-| Esquive passive (chance d'annuler un coup) | **N'existe pas** : remplacée par des effets déterministes (Kawarimi, recharge) | Lisibilité |
+| Esquive passive (chance d'annuler un coup) | **N'existe pas** : remplacée par des effets déterministes (Kawarimi, charges de bouclier, compteur d'ivresse visible) | Lisibilité : aucun coup n'est annulé par un hasard invisible |
 
 ### B4.7 Chakra (jauge d'ultime)
 
@@ -366,7 +371,7 @@ Une catégorie vide a une probabilité de 0 ; les autres sont **renormalisées p
 
 | Modificateur de poids (base 100) | Facteur |
 |---|---|
-| Partage un tag d'affinité ou de livraison avec ≥ 2 techniques possédées (« direction de build ») | ×1,3 |
+| Partage une affinité élémentaire (hors `E_NEUTRE`) ou une catégorie de livraison avec ≥ 2 techniques possédées (« direction de build ») | ×1,3 |
 | Catalyseur d'une évolution dont la technique source est possédée niv. ≥ 5 | ×1,5 |
 | Technique signature (catégorie A) | ×1,2 |
 | Passif sans effet sur aucune technique possédée | ×0,3 |
@@ -386,7 +391,7 @@ Les facteurs se multiplient ; aucun ne garantit une carte. L'objet tiré est ret
 | 28 nouveaux passifs | D | poids individuels | 15 % | 15,00 % |
 | **Total** | | | | **100,00 %** |
 
-Aucune des trois techniques possédées ne partage de tag de livraison ou d'affinité avec deux autres : le facteur « direction de build » ne s'applique pas. Pour la **carte 2**, l'objet tiré en carte 1 est retiré et les probabilités sont recalculées (ex. si Kage Bunshin est sorti : A = Rasengan 20 % + Kunai 20 %, le reste inchangé, total 100 %).
+Les trois techniques possédées n'ont ni affinité élémentaire commune (elles sont toutes `E_NEUTRE`, exclu du facteur) ni catégorie de livraison commune (INVOCATION, CONTACT, SALVE) : le facteur « direction de build » ne s'applique pas. Pour la **carte 2**, l'objet tiré en carte 1 est retiré et les probabilités sont recalculées (ex. si Kage Bunshin est sorti : A = Rasengan 20 % + Kunai 20 %, le reste inchangé, total 100 %).
 
 ### B6.5 Quatrième option (déblocage limité)
 
@@ -415,7 +420,7 @@ Quand il ne reste **aucune** carte admissible : trois cartes de secours — « R
 |---|---|---|---|---|
 | **Coffre simple** | Élite | 1 amélioration pertinente **ou** 1 évolution admissible (prioritaire) | Coffre au sol → écran compact | 1,2 s / 0,4 s rapide / désactivable |
 | **Coffre de lieutenant** | Lieutenant 09:30, boss d'Endless | 1 (70 %) ou 3 (30 %) éléments ; +1 Relance | Idem, cartes révélées en éventail | 1,8 s / 0,6 s |
-| **Rouleau** | Point d'intérêt de carte (2–3 par run) | **Choix** de 1 équipement parmi 3 (ordinaire 72 %, rare 28 % ; Chance modifie jusqu'à 55/45) | Écran de choix | 0,6 s |
+| **Rouleau** | Point d'intérêt de carte (2–3 par run) | **Choix** de 1 équipement parmi 3, tirés parmi les équipements débloqués et compatibles (ordinaire 72 %, rare 28 % ; Chance modifie jusqu'à 55/45) | Écran de choix | 0,6 s |
 | **Rouleau interdit** | Événement ≥ 12:00 (1 par run max) | Choix entre transformation admissible et objet interdit (sans transformation admissible : deux objets interdits) ; **coût affiché avant** ; refuser est toujours possible | Écran de choix avec coût en rouge | 1,0 s |
 
 Un coffre **ne donne jamais** de nouvelle technique ; un rouleau ne donne jamais d'amélioration. Garantie : si une évolution est admissible depuis 90 s sans coffre, l'élite suivante apparaît dans les 20 s.

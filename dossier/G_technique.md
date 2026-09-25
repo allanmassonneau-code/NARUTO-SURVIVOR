@@ -121,7 +121,7 @@ fonction proposer_cartes(build, pool, etat_rng, compteur_S):
         p = {k: proba_base[k] si candidats[k] non vide et k ∈ catégories_autorisées sinon 0}
         si somme(p) == 0: sortir de la boucle
         k = tirage_pondéré(normaliser(p), etat_rng.butin)
-        poids = {x: 100 × facteurs(x, build) pour x dans candidats[k]}   # ×1,3 direction, ×1,5 catalyseur,
+        poids = {x: 100 × facteurs(x, build) pour x dans candidats[k]}   # ×1,3 direction (hors E_NEUTRE), ×1,5 catalyseur,
                                                                           # ×1,2 signature, ×0,3 sans effet, ×0,7 refusé
         x = tirage_pondéré(poids, etat_rng.butin)
         cartes.ajouter(x); candidats[k].retirer(x)                       # pas de doublon

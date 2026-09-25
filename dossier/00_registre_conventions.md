@@ -163,8 +163,8 @@ Valeurs de base ; les techniques peuvent préciser des variantes. « Contrôle �
 | `REBOND` | Rebondit vers une nouvelle cible (jamais deux fois la même d'affilée) |
 | `CONTROLE` | Applique un état de contrôle (§R7) |
 | `MARQUE` | Applique ou consomme `STA_09` |
-| `SOIN` | Rend des PV au joueur ; soumis au plafond de soin §B4.9 |
-| `BOUCLIER` | Octroie un bouclier temporaire ; plafond §B4.9 |
+| `SOIN` | Rend des PV au joueur ; soumis au plafond de soin §B4.5 |
+| `BOUCLIER` | Octroie un bouclier temporaire ; plafond §B4.5 |
 | `SACRIFICE` | Coûte des PV ; **ne peut jamais tuer** (plancher 1 PV) |
 | `EXPLOSIF` | Dégâts en zone à l'impact ; peut détruire les obstacles destructibles |
 | `ATTRACTION` | Tire les ennemis ordinaires vers un point |
