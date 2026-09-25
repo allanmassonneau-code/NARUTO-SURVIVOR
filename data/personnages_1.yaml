@@ -397,7 +397,7 @@
   identite: "Sannin polyvalent : huile, feu, crapauds, cheveux."
   depart: JUT_010
   stats: {pv: 130, depl: 4.3, notes: "—"}
-  cpx: {nom: "Ermite pervers (Gama Sennin)", effet: "Les surfaces HUILE créées par le joueur durent 2 s de plus ; +1 Rouleau par run."}
+  cpx: {nom: "Ermite des crapauds (Gama Sennin)", effet: "Les surfaces HUILE créées par le joueur durent 2 s de plus ; +1 Rouleau par run."}
   faiblesse: "Pas de transformation dans cette version (Maîtrise de l'ultime)."
   signature: "Maîtrise de l'ultime : Hari Jizō riposte automatiquement à 3 coups de contact."
   aptitudes: [ELEM_KATON, ELEM_DOTON, ELEM_FUTON, CTR_CRAPAUD, APT_RASEN, APT_FUIN]
