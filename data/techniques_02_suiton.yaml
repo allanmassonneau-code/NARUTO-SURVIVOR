@@ -1,0 +1,289 @@
+# Famille primaire SUITON — JUT_025 à JUT_048
+- id: JUT_025
+  nom: "Suiton — Suiryūdan no Jutsu (Dragon d'eau)"
+  statut: OA
+  famille: SUITON
+  livraison: PROJECTILE
+  tags: [E_SUITON, PERCANT]
+  cible: plus_dense
+  comportement: "Dragon d'eau à trajectoire sinusoïdale (amplitude 1 m) qui perce 3 ennemis et les laisse Trempés."
+  valeurs: "22 ; délai 2,2 s ; vitesse 8 m/s ; portée 11 m ; perce 3 ; Trempé 2 s"
+  visuel: "Corps segmenté de 5 volumes bleus translucides à crête blanche, gerbes à chaque ondulation."
+  acces: ELEM_SUITON
+  limites: "—"
+- id: JUT_026
+  nom: "Suiton — Suijinheki (Mur d'eau)"
+  statut: OA
+  famille: SUITON
+  livraison: ONDE
+  tags: [E_SUITON, BOUCLIER]
+  cible: aucune
+  comportement: "Un mur d'eau circulaire jaillit du joueur jusqu'à 2,5 m : repousse, détruit les projectiles ordinaires et laisse un anneau d'eau au sol."
+  valeurs: "12 ; recul 2 m ; détruit jusqu'à 10 projectiles ; délai 7,0 s ; surface EAU 4 s"
+  visuel: "Anneau vertical d'eau en 3 frames montantes, crête d'écume, retombée en pluie."
+  acces: ELEM_SUITON
+  limites: "Les projectiles télégraphiés de boss ne sont pas détruits."
+- id: JUT_027
+  nom: "Suiton — Suirō no Jutsu (Prison aqueuse)"
+  statut: OA
+  famille: SUITON
+  livraison: ZONE
+  tags: [E_SUITON, CONTROLE]
+  cible: plus_menacant
+  comportement: "Enferme l'ennemi le plus menaçant (élite en priorité) dans une sphère d'eau : immobile, dégâts continus."
+  valeurs: "10 par tick de 0,5 s ; durée 2,5 s ; délai 6,0 s"
+  visuel: "Sphère bleue à reflets, silhouette de la cible déformée à l'intérieur, bulles montantes."
+  acces: ELEM_SUITON
+  limites: "Boss : soumis à la résistance de contrôle ; 1 prison active."
+- id: JUT_028
+  nom: "Suiton — Kirigakure no Jutsu (Brume dissimulatrice)"
+  statut: OA
+  famille: SUITON
+  livraison: ZONE
+  tags: [E_SUITON, CONTROLE]
+  cible: aucune
+  comportement: "Brume de 4 m autour du joueur : les ennemis dedans sont Aveuglés ; les coups du joueur sur ces cibles gagnent +15 % de chance critique."
+  valeurs: "0 dégât ; durée 4 s ; délai 10 s"
+  visuel: "Couche de brume en tramage à 2 niveaux, bords diffus en dithering ; le joueur reste net (contour conservé)."
+  acces: ELEM_SUITON
+  limites: "La brume n'occulte jamais les télégraphes ennemis (dessinés au-dessus)."
+- id: JUT_029
+  nom: "Suiton — Suikōdan no Jutsu (Requin missile)"
+  statut: OA
+  famille: SUITON
+  livraison: PROJECTILE
+  tags: [E_SUITON]
+  cible: plus_proche
+  comportement: "Requin d'eau à tête chercheuse (virage 180°/s) qui mord deux fois sa cible puis se disperse."
+  valeurs: "2 × 14 ; délai 1,6 s ; vitesse 9 m/s ; portée 10 m"
+  visuel: "Requin de 14 px, nageoire dorsale nette, gueule qui s'ouvre sur 2 frames."
+  acces: ELEM_SUITON
+  limites: "—"
+- id: JUT_030
+  nom: "Suiton — Daibakufu no Jutsu (Grande cascade)"
+  statut: OA
+  famille: SUITON
+  livraison: ONDE
+  tags: [E_SUITON, TERRAIN]
+  cible: aucune
+  comportement: "Immense vague circulaire qui balaie jusqu'à 7 m, repousse fortement et inonde l'anneau parcouru."
+  valeurs: "34 ; recul 3 m ; délai 9,0 s ; surface EAU 5 s"
+  visuel: "Vague haute de 20 px avec écume dessinée en crochets, sol assombri et luisant après passage."
+  acces: ELEM_SUITON
+  limites: "Recul réduit de 70 % dans les zones alliées persistantes (§B8.4)."
+- id: JUT_031
+  nom: "Suiton — Teppōdama (Balle d'eau)"
+  statut: OA
+  famille: SUITON
+  livraison: PROJECTILE
+  tags: [E_SUITON, REBOND]
+  cible: plus_menacant
+  comportement: "Boule d'eau lourde qui ricoche 2 fois sur obstacles ou ennemis et projette sa cible."
+  valeurs: "30 ; recul 2,5 m ; délai 2,6 s ; vitesse 10 m/s ; 2 rebonds"
+  visuel: "Sphère compacte à reflet en croissant, gerbe en éventail à chaque rebond."
+  acces: ELEM_SUITON
+  limites: "Rebond jamais deux fois sur la même cible d'affilée."
+- id: JUT_032
+  nom: "Suiton — Bakusui Shōha (Onde de choc explosive d'eau)"
+  statut: OA
+  famille: SUITON
+  livraison: ZONE
+  tags: [E_SUITON, TERRAIN, PERSISTANT]
+  cible: aucune
+  comportement: "Inonde un disque de 6 m autour du joueur ; les ennemis y sont ralentis de 20 % et Trempés en continu."
+  valeurs: "3 par tick de 0,5 s ; durée 5 s ; délai 12 s ; surface EAU"
+  visuel: "Nappe d'eau en 3 tons avec vaguelettes animées (4 frames en boucle), reflets du décor."
+  acces: ELEM_SUITON
+  limites: "1 inondation active ; plafond de surface §B8.3."
+- id: JUT_033
+  nom: "Suiton — Goshokuzame (Cinq requins voraces)"
+  statut: OA
+  famille: SUITON
+  livraison: ORBITE
+  tags: [E_SUITON]
+  cible: aucune
+  comportement: "5 requins tournent à grande distance (3,5 m) et plongent vers un ennemi proche de leur orbite avant de reprendre leur place."
+  valeurs: "12 par morsure ; rotation 1 tour/3 s ; durée 6 s ; délai 9 s"
+  visuel: "Ailerons émergeant d'un sillage d'écume, plongée en arc de 4 frames."
+  acces: ELEM_SUITON
+  limites: "1 plongée par requin par seconde."
+- id: JUT_034
+  nom: "Suiton — Suidanha (Onde tranchante d'eau)"
+  statut: OA
+  famille: SUITON
+  livraison: RAYON
+  tags: [E_SUITON, PERCANT]
+  cible: plus_menacant
+  comportement: "Jet d'eau à très haute pression, instantané, qui traverse tout sur sa longueur."
+  valeurs: "38 ; longueur 12 m ; largeur 0,25 m ; délai 3,4 s"
+  visuel: "Ligne blanche de 2 px bordée de bleu, fine brume à l'arrivée, sol entaillé 0,5 s."
+  acces: ELEM_SUITON
+  limites: "Traverse les obstacles bas, pas les hauts."
+- id: JUT_035
+  nom: "Suiton — Mizurappa (Vague déchaînée)"
+  statut: AV
+  famille: SUITON
+  livraison: CONE
+  tags: [E_SUITON]
+  cible: plus_dense
+  comportement: "Jet d'eau conique qui repousse et Trempe tous les ennemis touchés."
+  valeurs: "16 ; angle 45° ; portée 5 m ; recul 2 m ; délai 2,4 s"
+  visuel: "Cône d'eau en gerbes parallèles, gouttes projetées en bordure."
+  acces: ELEM_SUITON
+  limites: "—"
+- id: JUT_036
+  nom: "Bulles dérivantes"
+  statut: CO
+  famille: SUITON
+  livraison: ZONE
+  tags: [E_SUITON, CONTROLE]
+  cible: aleatoire_pondere
+  comportement: "Libère 6 bulles qui dérivent lentement ; un ennemi touché est enfermé 1 s puis la bulle éclate."
+  valeurs: "Éclatement 14 ; emprisonnement 1 s ; durée de vie 6 s ; délai 5 s"
+  visuel: "Cercles irisés à reflet mobile, éclatement en 4 gouttes."
+  acces: ELEM_SUITON
+  limites: "Max 12 bulles ; une bulle = 1 cible."
+- id: JUT_037
+  nom: "Fouet d'eau"
+  statut: CO
+  famille: SUITON
+  livraison: CONTACT
+  tags: [E_SUITON]
+  cible: plus_proche
+  comportement: "Coup de fouet en arc de 140° à longue allonge (3,5 m) devant le joueur ; la pointe inflige le double."
+  valeurs: "12 (pointe 24) ; délai 1,2 s"
+  visuel: "Ruban d'eau qui se déroule en 3 frames et claque ; éclaboussure en pointe."
+  acces: ELEM_SUITON
+  limites: "Pointe : derniers 0,6 m de l'arc."
+- id: JUT_038
+  nom: "Geyser"
+  statut: CO
+  famille: SUITON
+  livraison: DIFFERE
+  tags: [E_SUITON, TERRAIN]
+  cible: plus_dense
+  comportement: "Le sol se gonfle sous le groupe le plus dense puis une colonne d'eau jaillit, Trempe et soulève."
+  valeurs: "28 ; rayon 1,5 m ; délai d'impact 0,8 s ; délai 3,5 s ; surface EAU 3 s"
+  visuel: "Fissures humides au sol, colonne blanche de 40 px, retombée en gouttes lourdes."
+  acces: ELEM_SUITON
+  limites: "—"
+- id: JUT_039
+  nom: "Averse"
+  statut: CO
+  famille: SUITON
+  livraison: ZONE
+  tags: [E_SUITON, MOBILE]
+  cible: aucune
+  comportement: "Pluie localisée de 6 m centrée sur le joueur : chaque seconde, les ennemis dedans sont Trempés et subissent de légers dégâts."
+  valeurs: "3 par s ; Trempé ; durée 6 s ; délai 11 s"
+  visuel: "Traits de pluie obliques (1 px) en 2 couches de parallaxe, cercles d'impact au sol."
+  acces: ELEM_SUITON
+  limites: "Technique de préparation : faible dégât intentionnel."
+- id: JUT_040
+  nom: "Tourbillon"
+  statut: CO
+  famille: SUITON
+  livraison: ZONE
+  tags: [E_SUITON, ATTRACTION, PERSISTANT]
+  cible: plus_dense
+  comportement: "Maelström au sol qui attire les ennemis ordinaires vers son centre et les blesse."
+  valeurs: "5 par tick de 0,5 s ; attraction 1,2 m/s ; rayon 2,5 m ; durée 4 s ; délai 7 s"
+  visuel: "Spirale d'eau en 6 frames de rotation, écume au centre."
+  acces: ELEM_SUITON
+  limites: "Max 2 tourbillons ; boss non attirés."
+- id: JUT_041
+  nom: "Lame de marée"
+  statut: CO
+  famille: SUITON
+  livraison: PROJECTILE
+  tags: [E_SUITON, PERCANT]
+  cible: direction
+  comportement: "Croissant d'eau lancé vers l'avant qui revient au joueur (boomerang) en touchant à l'aller et au retour."
+  valeurs: "15 par passage ; portée 6 m ; délai 2,0 s ; perce illimité"
+  visuel: "Croissant bleu à bord blanc, rotation 4 frames, gouttes en traîne."
+  acces: ELEM_SUITON
+  limites: "1 touche par cible par passage."
+- id: JUT_042
+  nom: "Sphère gardienne"
+  statut: CO
+  famille: SUITON
+  livraison: ORBITE
+  tags: [E_SUITON, BOUCLIER]
+  cible: aucune
+  comportement: "Une grosse sphère d'eau orbite lentement à 2,5 m et absorbe les projectiles ennemis qu'elle croise."
+  valeurs: "10 au contact ; absorbe 1 projectile/0,5 s ; permanente"
+  visuel: "Sphère de 16 px avec reflet et caustiques ; un projectile absorbé y tourne 0,3 s puis s'éteint."
+  acces: ELEM_SUITON
+  limites: "Quantité : +1 sphère (max 3)."
+- id: JUT_043
+  nom: "Sensatsu Suishō (Mille aiguilles d'eau)"
+  statut: OA
+  famille: SUITON
+  livraison: DIFFERE
+  tags: [E_SUITON]
+  cible: plus_menacant
+  comportement: "Des aiguilles d'eau se forment en cercle autour d'une cible puis convergent ; bonus ×1,5 si la cible est sur une surface EAU."
+  valeurs: "12 aiguilles × 3 ; rayon de formation 2 m ; délai d'impact 0,5 s ; délai 2,8 s"
+  visuel: "Aiguilles blanches de 3 px en couronne, convergence en 3 frames, éclat en étoile."
+  acces: ELEM_SUITON
+  limites: "Aiguilles hors cible principale : touchent les ennemis traversés à 50 %."
+- id: JUT_044
+  nom: "Ricochet de gouttes"
+  statut: CO
+  famille: SUITON
+  livraison: PROJECTILE
+  tags: [E_SUITON, REBOND]
+  cible: plus_proche
+  comportement: "Petite goutte qui rebondit 4 fois d'ennemi en ennemi en accélérant."
+  valeurs: "9 (+2 par rebond) ; délai 1,0 s ; vitesse 10 → 16 m/s"
+  visuel: "Goutte en larme qui s'aplatit à chaque rebond (squash 2 frames)."
+  acces: ELEM_SUITON
+  limites: "Rebond sur cible déjà touchée interdit."
+- id: JUT_045
+  nom: "Flaque piégée"
+  statut: CO
+  famille: SUITON
+  livraison: PIEGE
+  tags: [E_SUITON, CONTROLE, TERRAIN]
+  cible: chemin
+  comportement: "Pose des flaques sur le trajet des ennemis ; la première victime est prise dans une gerbe qui l'Entrave 1 s et Trempe ses voisins."
+  valeurs: "18 ; Entravé 1 s ; rayon de gerbe 1,5 m ; max 3 flaques ; délai 3,0 s"
+  visuel: "Flaque plate à reflet vif, gerbe verticale en 3 frames."
+  acces: ELEM_SUITON
+  limites: "—"
+- id: JUT_046
+  nom: "Suiton — Daikōdan no Jutsu (Grand requin missile)"
+  statut: OA
+  famille: SUITON
+  livraison: PROJECTILE
+  tags: [E_SUITON, PERCANT]
+  cible: plus_dense
+  comportement: "Requin géant lent qui grossit de 10 % à chaque ennemi traversé (max 8) puis explose en vague."
+  valeurs: "26 ; explosion 20 × nombre de grossissements /4 ; vitesse 4 m/s ; délai 8 s"
+  visuel: "Requin de 32 px dont la gueule s'ouvre en avançant ; explosion en anneau d'écume."
+  acces: "ELEM_SUITON+CTR_REQUIN"
+  limites: "1 en vol."
+- id: JUT_047
+  nom: "Torrent serpentin"
+  statut: CO
+  famille: SUITON
+  livraison: CHAINE
+  tags: [E_SUITON]
+  cible: plus_proche
+  comportement: "Serpent d'eau qui saute de cible en cible ; portée de saut doublée vers les ennemis Trempés."
+  valeurs: "14 ; 4 sauts ; portée 3 m (6 m vers Trempé) ; −8 %/saut ; délai 2,0 s"
+  visuel: "Filet d'eau serpentin tracé entre cibles, tête plus claire, retombée en gouttes."
+  acces: ELEM_SUITON
+  limites: "—"
+- id: JUT_048
+  nom: "Voile de pluie"
+  statut: CO
+  famille: SUITON
+  livraison: ONDE
+  tags: [E_SUITON, BOUCLIER]
+  cible: aucune
+  comportement: "Toutes les 10 s, un film d'eau donne un bouclier ; quand il se rompt, il éclate en onde qui Trempe à 3 m."
+  valeurs: "Bouclier 12 ; onde 10 ; rayon 3 m ; délai 10 s"
+  visuel: "Contour aqueux ondulant autour du personnage (1 px, 2 tons), éclatement en anneau."
+  acces: ELEM_SUITON
+  limites: "Bouclier non cumulable avec lui-même."

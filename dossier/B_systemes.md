@@ -28,7 +28,7 @@ Toutes les touches sont reconfigurables ; chaque action « maintien » propose u
 
 ### B1.3 Ciblage automatique
 
-Chaque technique déclare une **règle de ciblage** (`plus_proche`, `plus_dense`, `plus_menaçant`, `direction`, `aléatoire_pondéré`, `marqué`, `aucune`). Règles communes :
+Chaque technique déclare une **règle de ciblage** (codes de données : `plus_proche`, `plus_dense`, `plus_menacant`, `direction`, `aleatoire_pondere`, `marque`, `chemin` — position prévue sur le trajet des ennemis —, `aucune`). Règles communes :
 
 1. **Candidats** : ennemis visibles à l'écran ou à ≤ 2 m du bord, ciblables, hors état « apparition » (0,4 s d'invulnérabilité à l'apparition, signalée par un cercle d'invocation).
 2. **Priorité globale** (départage) : cible « menace immédiate » (assassin en préparation, lanceur de projectile télégraphiant) > élite > boss > ordinaire ; puis distance.

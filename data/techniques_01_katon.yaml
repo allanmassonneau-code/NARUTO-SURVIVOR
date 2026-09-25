@@ -1,0 +1,290 @@
+# Famille primaire KATON — JUT_001 à JUT_024
+# Statuts : OA = œuvre adaptée ; CO = création originale ; AV = attribution à vérifier
+- id: JUT_001
+  nom: "Katon — Gōkakyū no Jutsu (Grande boule de feu)"
+  statut: OA
+  famille: KATON
+  livraison: PROJECTILE
+  tags: [E_KATON, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Boule lente qui grossit en vol ; explose au premier ennemi ou à 7 m et laisse une flaque de feu 1 s."
+  valeurs: "Impact 30 ; explosion 12 (r 1,5 m) ; délai 2,0 s ; vitesse 6 m/s ; rayon proj. 0,8 m ; Brûlure +1"
+  visuel: "Masse orange irrégulière à cœur jaune pâle, langues de feu vers l'arrière ; explosion en fleur à 6 lobes, braises retombantes."
+  acces: ELEM_KATON
+  limites: "1 boule active par tranche de Quantité ; flaque non cumulable sur elle-même."
+- id: JUT_002
+  nom: "Katon — Hōsenka no Jutsu (Fleurs de phénix)"
+  statut: OA
+  famille: KATON
+  livraison: SALVE
+  tags: [E_KATON]
+  cible: plus_proche
+  comportement: "5 petites flammes en éventail de 60° qui s'incurvent chacune vers une cible différente (ciblage réparti)."
+  valeurs: "9 par flamme ; délai 1,4 s ; vitesse 10 m/s ; portée 8 m ; Brûlure +1 par touche"
+  visuel: "Petites flammes ovales à traîne courbe, trajectoires en pétales ; micro-éclat en étoile à l'impact."
+  acces: ELEM_KATON
+  limites: "Une même cible reçoit au plus 2 flammes par salve."
+- id: JUT_003
+  nom: "Katon — Ryūka no Jutsu (Flamme du dragon)"
+  statut: OA
+  famille: KATON
+  livraison: RAYON
+  tags: [E_KATON, PERCANT]
+  cible: plus_menacant
+  comportement: "Jet de flammes linéaire maintenu 0,6 s qui balaie légèrement (±8°) vers la cible."
+  valeurs: "6 par tick de 0,2 s ; longueur 9 m ; largeur 0,5 m ; délai 3,0 s"
+  visuel: "Colonne de flamme segmentée en écailles, tête de dragon esquissée en 6 px au bout ; fumée en bordure."
+  acces: ELEM_KATON
+  limites: "S'arrête sur les obstacles hauts."
+- id: JUT_004
+  nom: "Katon — Karyū Endan (Balles de flammes du dragon)"
+  statut: OA
+  famille: KATON
+  livraison: CONE
+  tags: [E_KATON]
+  cible: direction
+  comportement: "Souffle continu en cône de 70° pendant 1 s dans la direction de déplacement ; pose de la Brûlure progressive."
+  valeurs: "5 par tick de 0,25 s ; portée 4 m ; délai 2,5 s ; Brûlure +1 par 2 ticks"
+  visuel: "Nappe de feu qui s'élargit, bordures dentelées, cœur blanc-jaune près de la bouche."
+  acces: ELEM_KATON
+  limites: "Intervalle par cible 0,25 s."
+- id: JUT_005
+  nom: "Katon — Haisekishō (Nuage de cendres ardentes)"
+  statut: OA
+  famille: KATON
+  livraison: DIFFERE
+  tags: [E_KATON, TERRAIN, CONTROLE]
+  cible: plus_dense
+  comportement: "Dépose un nuage de cendres (r 3 m) qui Aveugle ; 1,2 s plus tard une étincelle l'embrase."
+  valeurs: "Embrasement 35 ; Aveuglé 2 s ; délai 5,0 s ; surface CENDRE 3 s"
+  visuel: "Nuage gris-beige en volutes à contours foncés, étincelle unique qui court puis flash orange contenu."
+  acces: ELEM_KATON
+  limites: "1 nuage actif (+1 par Quantité, max 3)."
+- id: JUT_006
+  nom: "Katon — Gōryūka no Jutsu (Têtes de dragon de feu)"
+  statut: OA
+  famille: KATON
+  livraison: DIFFERE
+  tags: [E_KATON, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Trois têtes de dragon plongent successivement (0,3 s d'écart) sur les trois zones les plus denses."
+  valeurs: "26 par impact ; rayon 1,4 m ; télégraphe allié 0,6 s ; délai 4,0 s"
+  visuel: "Tête de dragon dessinée (16×24 px) plongeant en diagonale ; cratère de flammes en étoile."
+  acces: "ELEM_KATON+CLAN_UCHIHA"
+  limites: "Les zones ne se chevauchent pas à plus de 50 %."
+- id: JUT_007
+  nom: "Katon — Gōka Mekkyaku (Destruction par le grand feu)"
+  statut: OA
+  famille: KATON
+  livraison: ONDE
+  tags: [E_KATON, PERCANT]
+  cible: direction
+  comportement: "Mur de flammes de 10 m de large qui avance de 8 m devant le joueur puis se dissipe."
+  valeurs: "40 ; vitesse du mur 6 m/s ; délai 6,0 s ; Brûlure +2"
+  visuel: "Front de feu épais à crête irrégulière, arrière qui noircit en fumée ; sol calciné temporaire."
+  acces: "ELEM_KATON+CLAN_UCHIHA"
+  limites: "1 touche par cible par mur."
+- id: JUT_008
+  nom: "Katon — Zukokku (Pression de feu)"
+  statut: OA
+  famille: KATON
+  livraison: PROJECTILE
+  tags: [E_KATON, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Orbe très lent (2 m/s) qui détone si un ennemi passe à 1 m ou après 3 s de vol."
+  valeurs: "50 ; rayon 3 m ; délai 5,5 s ; recul léger"
+  visuel: "Sphère sombre à contour orange pulsant, halo de chaleur ; détonation en dôme puis anneau de fumée."
+  acces: ELEM_KATON
+  limites: "Max 2 orbes en vol."
+- id: JUT_009
+  nom: "Katon — Endan (Balle de flamme)"
+  statut: OA
+  famille: KATON
+  livraison: PROJECTILE
+  tags: [E_KATON, PERCANT]
+  cible: plus_proche
+  comportement: "Tir rapide de base qui transperce 2 ennemis en ligne droite."
+  valeurs: "14 ; délai 0,9 s ; vitesse 12 m/s ; portée 10 m ; perce 2"
+  visuel: "Goutte de feu allongée, traîne courte à 3 frames ; éclat latéral à chaque traversée."
+  acces: ELEM_KATON
+  limites: "—"
+- id: JUT_010
+  nom: "Katon — Gamayu Endan (Flammes à l'huile de crapaud)"
+  statut: OA
+  famille: KATON
+  livraison: CONE
+  tags: [E_KATON, TERRAIN]
+  cible: plus_dense
+  comportement: "Crache d'abord un cône d'huile (surface HUILE), puis l'embrase 0,5 s plus tard : combo en deux temps."
+  valeurs: "Huile 0 ; embrasement 30 + Brûlure +2 ; portée 5 m ; angle 50° ; délai 4,5 s"
+  visuel: "Gerbe brun-jaune luisante, puis vague de feu épaisse qui suit exactement la nappe."
+  acces: "ELEM_KATON+CTR_CRAPAUD"
+  limites: "Déclenche SYN_003 une fois par utilisation."
+- id: JUT_011
+  nom: "Sillage de braises"
+  statut: CO
+  famille: KATON
+  livraison: ZONE
+  tags: [E_KATON, PERSISTANT]
+  cible: aucune
+  comportement: "Le déplacement du joueur laisse des cellules de braises (1 cellule/0,25 s) qui brûlent 1,5 s."
+  valeurs: "4 par tick de 0,5 s ; Brûlure +1 ; largeur 1 m ; actif en permanence"
+  visuel: "Empreintes incandescentes qui passent du jaune au rouge sombre en 4 frames."
+  acces: ELEM_KATON
+  limites: "Max 12 cellules actives ; nul à l'arrêt."
+- id: JUT_012
+  nom: "Braises en éventail"
+  statut: CO
+  famille: KATON
+  livraison: SALVE
+  tags: [E_KATON, TERRAIN]
+  cible: plus_dense
+  comportement: "Lance 4 braises en cloche qui retombent et créent chacune une petite flaque de feu 2 s."
+  valeurs: "Impact 10 ; flaque 3/0,5 s (r 0,8 m) ; délai 2,2 s ; portée 6 m"
+  visuel: "Braises rondes à arc visible (ombre au sol qui rétrécit), flaques en étoile basse."
+  acces: ELEM_KATON
+  limites: "Max 8 flaques."
+- id: JUT_013
+  nom: "Couronne de flammes"
+  statut: CO
+  famille: KATON
+  livraison: ORBITE
+  tags: [E_KATON]
+  cible: aucune
+  comportement: "3 feux follets orbitent à 2 m ; chaque passage applique Brûlure +1 au lieu de gros dégâts."
+  valeurs: "6 par passage ; Brûlure +1 ; rotation 1 tour/1,8 s ; durée 5 s ; délai 7 s"
+  visuel: "Flammes en goutte inversée, traîne en spirale, alternance de 2 tailles pour éviter l'uniformité."
+  acces: ELEM_KATON
+  limites: "Intervalle par cible 0,5 s par follet."
+- id: JUT_014
+  nom: "Mine de braise"
+  statut: CO
+  famille: KATON
+  livraison: PIEGE
+  tags: [E_KATON, EXPLOSIF]
+  cible: chemin
+  comportement: "Pose une étiquette de feu sur le chemin prévu des ennemis ; explose au contact."
+  valeurs: "28 ; rayon 1,8 m ; armement 0,5 s ; durée 12 s ; délai 2,0 s"
+  visuel: "Petit sceau orange au sol, clignotement lent ; explosion en colonne courte."
+  acces: ELEM_KATON
+  limites: "Max 4 mines."
+- id: JUT_015
+  nom: "Soufflet ardent"
+  statut: CO
+  famille: KATON
+  livraison: ONDE
+  tags: [E_KATON]
+  cible: aucune
+  comportement: "Anneau de chaleur qui part du joueur jusqu'à 4 m ; repousse légèrement."
+  valeurs: "18 ; Brûlure +1 ; recul 0,8 m ; délai 3,0 s"
+  visuel: "Anneau de 2 px d'épaisseur à ondulation, distorsion de chaleur sur le sol."
+  acces: ELEM_KATON
+  limites: "1 touche par cible par onde."
+- id: JUT_016
+  nom: "Fil incandescent"
+  statut: CO
+  famille: KATON
+  livraison: ZONE
+  tags: [E_KATON, PERSISTANT]
+  cible: plus_dense
+  comportement: "Tend un fil enflammé de 6 m entre deux kunai plantés de part et d'autre de la cible ; brûle ce qui le traverse."
+  valeurs: "8 par tick de 0,5 s ; Brûlure +1 ; durée 3 s ; délai 3,5 s"
+  visuel: "Deux kunai noirs, ligne de 1 px blanche entourée de flammèches ; claquement au déploiement."
+  acces: ELEM_KATON
+  limites: "Max 2 fils."
+- id: JUT_017
+  nom: "Katon — Hōsenka Tsumabeni (Fleurs de phénix aux griffes rouges)"
+  statut: OA
+  famille: KATON
+  livraison: SALVE
+  tags: [E_KATON, PERCANT]
+  cible: plus_proche
+  comportement: "4 boules de feu contenant chacune un shuriken : après l'impact du feu, le shuriken poursuit sa course et perce 2 cibles."
+  valeurs: "Feu 8 ; shuriken 7 (perce 2) ; délai 1,8 s ; vitesse 11 m/s"
+  visuel: "Boules translucides laissant voir une silhouette de shuriken ; le shuriken ressort incandescent."
+  acces: ELEM_KATON
+  limites: "Les shuriken comptent comme OUTIL pour les synergies."
+- id: JUT_018
+  nom: "Katon — Dai Endan (Grande balle de flamme)"
+  statut: AV
+  famille: KATON
+  livraison: PROJECTILE
+  tags: [E_KATON]
+  cible: plus_proche
+  comportement: "Grosse balle qui, à l'impact, se divise en 4 flammèches en croix."
+  valeurs: "Impact 24 ; éclats 4 × 8 ; délai 2,4 s ; vitesse 8 m/s"
+  visuel: "Sphère ondulante, division en 4 gouttes orientées ; les éclats laissent une traîne de 2 frames."
+  acces: ELEM_KATON
+  limites: "Les éclats sont SECONDAIRE."
+- id: JUT_019
+  nom: "Colonne de feu"
+  statut: CO
+  famille: KATON
+  livraison: DIFFERE
+  tags: [E_KATON]
+  cible: plus_menacant
+  comportement: "Cercle d'avertissement allié sous la cible, puis pilier de feu qui projette les ennemis ordinaires en l'air (0,4 s d'inaction)."
+  valeurs: "36 ; rayon 1,2 m ; délai d'impact 0,8 s ; délai 3,2 s"
+  visuel: "Sceau circulaire au sol, jaillissement vertical sur 48 px, ennemis soulevés de 8 px."
+  acces: ELEM_KATON
+  limites: "Soulèvement sans effet sur les boss (converti en Vulnérable +5 %)."
+- id: JUT_020
+  nom: "Lanterne ardente"
+  statut: CO
+  famille: KATON
+  livraison: ZONE
+  tags: [E_KATON, MOBILE]
+  cible: aucune
+  comportement: "Une lanterne de chakra suit le joueur à 1,5 m derrière lui et irradie une aura brûlante."
+  valeurs: "6 par tick de 0,5 s ; rayon 1,8 m ; permanente"
+  visuel: "Lanterne en papier stylisée (12×14 px), halo à 2 anneaux pulsés ; reste lisible sur fond sombre grâce à un contour brun."
+  acces: ELEM_KATON
+  limites: "Pas d'instance supplémentaire via Quantité (augmente le rayon de 10 % à la place)."
+- id: JUT_021
+  nom: "Salamandre ardente"
+  statut: CO
+  famille: KATON
+  livraison: CHAINE
+  tags: [E_KATON, MOBILE]
+  cible: plus_proche
+  comportement: "Une salamandre de feu rampe au sol vers une cible puis bondit vers 2 cibles voisines (trajet physique visible entre chaque saut)."
+  valeurs: "16 par cible ; 3 cibles ; portée de saut 3,5 m ; −10 % par saut ; délai 2,0 s"
+  visuel: "Lézard de 10 px en 4 frames de reptation, traînée de braises, bond en arc."
+  acces: ELEM_KATON
+  limites: "Jamais deux fois la même cible."
+- id: JUT_022
+  nom: "Barrière de flammes"
+  statut: CO
+  famille: KATON
+  livraison: ZONE
+  tags: [E_KATON, PERSISTANT]
+  cible: aucune
+  comportement: "Élève derrière le joueur (perpendiculairement à sa course) un mur de feu de 5 m qui détruit les petits projectiles ennemis."
+  valeurs: "20 à la traversée ; Brûlure +2 ; durée 4 s ; délai 8,0 s ; bloque 6 projectiles"
+  visuel: "Rideau vertical de flammes hautes (24 px), base rouge, sommet jaune ; les projectiles bloqués crépitent."
+  acces: ELEM_KATON
+  limites: "Ne bloque pas les attaques télégraphiées lourdes."
+- id: JUT_023
+  nom: "Pluie de braises"
+  statut: CO
+  famille: KATON
+  livraison: DIFFERE
+  tags: [E_KATON]
+  cible: aleatoire_pondere
+  comportement: "8 impacts aléatoires dans un rayon de 5 m autour du joueur répartis sur 1,6 s (pondérés vers les ennemis)."
+  valeurs: "10 par impact ; rayon d'impact 0,8 m ; délai 4,0 s"
+  visuel: "Points lumineux qui tombent en diagonale, micro-cratères orange."
+  acces: ELEM_KATON
+  limites: "Jamais deux impacts au même point dans 0,3 s."
+- id: JUT_024
+  nom: "Cœur de forge"
+  statut: CO
+  famille: KATON
+  livraison: PROJECTILE
+  tags: [E_KATON, MARQUE]
+  cible: plus_menacant
+  comportement: "Braise qui se fiche dans une cible et chauffe : dégâts croissants 3 s puis explosion ; si la cible meurt, la braise saute sur l'ennemi le plus proche."
+  valeurs: "4 → 8 → 12 par s ; explosion 30 (r 1,6 m) ; délai 3,5 s"
+  visuel: "Point incandescent passant du rouge au blanc, fissures lumineuses sur la cible."
+  acces: ELEM_KATON
+  limites: "1 saut maximum."

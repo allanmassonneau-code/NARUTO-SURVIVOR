@@ -1,0 +1,289 @@
+# Famille primaire RAITON — JUT_049 à JUT_072
+- id: JUT_049
+  nom: "Chidori (Mille oiseaux)"
+  statut: OA
+  famille: RAITON
+  livraison: CONTACT
+  tags: [E_RAITON, PERCANT]
+  cible: plus_menacant
+  comportement: "Charge 0,4 s dans la main, puis une image de frappe fonce 4 m vers la cible et la transperce ; décharge en arc de 1,2 m au point d'impact. Le joueur ne bouge pas."
+  valeurs: "Frappe 48 ; décharge 14 ; délai 2,8 s ; Électrisé"
+  visuel: "Boule de filaments blancs-bleus dans la main avec 3 branches animées ; image de frappe bleutée à 60 % d'opacité ; cri d'oiseaux synthétique."
+  acces: "ELEM_RAITON+DOJ_SHARINGAN"
+  limites: "L'image de frappe n'est pas une unité : elle n'hérite de rien et disparaît à l'impact."
+- id: JUT_050
+  nom: "Raikiri (Tranche-foudre)"
+  statut: OA
+  famille: RAITON
+  livraison: RAYON
+  tags: [E_RAITON, PERCANT]
+  cible: plus_menacant
+  comportement: "Trait instantané de 4 m à travers la cible la plus menaçante ; le trajet reste électrisé 0,5 s. Chance critique +20 %."
+  valeurs: "60 ; sillage 6 ; délai 3,5 s ; crit +20 %"
+  visuel: "Ligne brisée anguleuse, 1 frame blanche puis 2 frames bleues ; sillage crépitant."
+  acces: "ELEM_RAITON+CHR_008|ELEM_RAITON+CHR_009|ELEM_RAITON+CHR_010"
+  limites: "Réservé aux entrées de Kakashi."
+- id: JUT_051
+  nom: "Chidori Nagashi (Courant des mille oiseaux)"
+  statut: OA
+  famille: RAITON
+  livraison: ONDE
+  tags: [E_RAITON, CONTROLE]
+  cible: aucune
+  comportement: "Toutes les 1,2 s, une décharge parcourt le corps et s'échappe en anneau de 2 m qui Électrise."
+  valeurs: "10 ; rayon 2 m ; délai 1,2 s ; Électrisé"
+  visuel: "Filaments courts qui s'échappent du contour du personnage sur 3 frames, sans masquer la silhouette."
+  acces: "ELEM_RAITON+CLAN_UCHIHA"
+  limites: "—"
+- id: JUT_052
+  nom: "Chidori Senbon (Aiguilles des mille oiseaux)"
+  statut: OA
+  famille: RAITON
+  livraison: SALVE
+  tags: [E_RAITON]
+  cible: plus_proche
+  comportement: "6 aiguilles de foudre tirées en rafale serrée ; la 6e Électrise systématiquement."
+  valeurs: "6 par aiguille ; intervalle 0,05 s ; délai 1,3 s ; vitesse 18 m/s"
+  visuel: "Traits de 4 px blancs à bord bleu, micro-étincelle à l'impact."
+  acces: "ELEM_RAITON+CLAN_UCHIHA"
+  limites: "—"
+- id: JUT_053
+  nom: "Chidori Eisō (Lance des mille oiseaux)"
+  statut: OA
+  famille: RAITON
+  livraison: RAYON
+  tags: [E_RAITON, PERCANT]
+  cible: plus_dense
+  comportement: "Lame de foudre de 8 m qui s'étend puis pivote de 60° en balayage."
+  valeurs: "20 par tick de 0,2 s ; durée 0,6 s ; largeur 0,35 m ; délai 3,0 s"
+  visuel: "Lame fine segmentée en zigzags, tête plus brillante, étincelles le long du balayage."
+  acces: "ELEM_RAITON+CLAN_UCHIHA"
+  limites: "Obstacles hauts arrêtent la lame."
+- id: JUT_054
+  nom: "Kirin"
+  statut: OA
+  famille: RAITON
+  livraison: DIFFERE
+  tags: [E_RAITON, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Construit pendant 6 s un nuage d'orage visible au-dessus de la zone la plus dense, puis y fait tomber une foudre en forme de bête."
+  valeurs: "120 ; rayon 3,5 m ; construction 6 s ; délai 14 s"
+  visuel: "Nuage sombre à contour clair qui grossit en 4 paliers ; bête de foudre de 64 px en 3 frames, onde au sol."
+  acces: "ELEM_RAITON+ELEM_KATON+CLAN_UCHIHA"
+  limites: "Pas de micro-pause globale ; micro-pause locale de 50 ms sur les cibles touchées."
+- id: JUT_055
+  nom: "Raiton — Raijū Tsuiga (Crocs du fauve de foudre)"
+  statut: OA
+  famille: RAITON
+  livraison: PROJECTILE
+  tags: [E_RAITON]
+  cible: plus_proche
+  comportement: "Un chien de foudre court au sol vers une cible ; après une élimination, il rebondit vers une nouvelle cible (3 éliminations max)."
+  valeurs: "28 ; vitesse 11 m/s ; délai 2,4 s"
+  visuel: "Canidé électrique de 12 px à 4 frames de course, traînée de filaments."
+  acces: "ELEM_RAITON+CTR_CHIEN"
+  limites: "Durée de vie 3 s."
+- id: JUT_056
+  nom: "Raiton — Gian (Fausse obscurité)"
+  statut: OA
+  famille: RAITON
+  livraison: RAYON
+  tags: [E_RAITON, PERCANT]
+  cible: plus_dense
+  comportement: "Télégraphe allié 0,5 s puis rayon épais de 14 m qui traverse tout."
+  valeurs: "44 ; largeur 0,6 m ; délai 4,5 s"
+  visuel: "Rayon en lance ondulée à cœur blanc, deux lignes d'éclairs parasites parallèles."
+  acces: ELEM_RAITON
+  limites: "—"
+- id: JUT_057
+  nom: "Raiton — Kuropansā (Panthère noire)"
+  statut: OA
+  famille: RAITON
+  livraison: PROJECTILE
+  tags: [E_RAITON, CONTROLE]
+  cible: plus_menacant
+  comportement: "Panthère de foudre noire qui bondit sur une cible, la cloue 0,8 s puis rebondit une fois."
+  valeurs: "34 ; Étourdi 0,8 s ; 1 rebond ; délai 4,0 s"
+  visuel: "Silhouette noire à contour jaune-blanc épais (2 px) pour rester visible sur fond sombre ; éclairs internes violets."
+  acces: ELEM_RAITON
+  limites: "Étourdissement soumis à la résistance de contrôle."
+- id: JUT_058
+  nom: "Raiton — Shichū Shibari (Prison des quatre piliers)"
+  statut: AV
+  famille: RAITON
+  livraison: PIEGE
+  tags: [E_RAITON, CONTROLE]
+  cible: plus_dense
+  comportement: "Quatre piliers jaillissent en carré de 3 m autour d'un groupe ; des arcs les relient 2,5 s : les ennemis dedans ne peuvent pas sortir."
+  valeurs: "8 par tick de 0,5 s ; durée 2,5 s ; délai 9 s"
+  visuel: "Piliers de pierre à glyphes, arcs horizontaux animés entre eux."
+  acces: ELEM_RAITON
+  limites: "Élites : ralenties de 50 % au lieu d'être bloquées."
+- id: JUT_059
+  nom: "Arc en chaîne"
+  statut: CO
+  famille: RAITON
+  livraison: CHAINE
+  tags: [E_RAITON]
+  cible: plus_proche
+  comportement: "Éclair qui saute instantanément de cible en cible."
+  valeurs: "18 ; 5 sauts ; portée 3,5 m ; −12 %/saut ; délai 1,5 s"
+  visuel: "Tracé construit en 2 frames (tête puis ramifications), disparition en 3 frames."
+  acces: ELEM_RAITON
+  limites: "Jamais deux fois la même cible."
+- id: JUT_060
+  nom: "Orbes crépitants"
+  statut: CO
+  famille: RAITON
+  livraison: ORBITE
+  tags: [E_RAITON, CONTROLE]
+  cible: aucune
+  comportement: "2 orbes tournent vite à 1,5 m et Électrisent au contact."
+  valeurs: "8 ; rotation 1 tour/1 s ; durée 4 s ; délai 5 s"
+  visuel: "Sphères de 6 px à filaments tournoyants, trace en arc de 3 frames."
+  acces: ELEM_RAITON
+  limites: "Intervalle par cible 0,5 s par orbe."
+- id: JUT_061
+  nom: "Paratonnerre"
+  statut: CO
+  famille: RAITON
+  livraison: PIEGE
+  tags: [E_RAITON]
+  cible: chemin
+  comportement: "Plante une tige métallique ; toutes les 1 s elle foudroie l'ennemi le plus proche à 4 m (6 frappes)."
+  valeurs: "16 par frappe ; 6 frappes ; délai 5 s ; max 2 tiges"
+  visuel: "Tige noire de 20 px à anneau lumineux, éclair vertical puis horizontal."
+  acces: ELEM_RAITON
+  limites: "—"
+- id: JUT_062
+  nom: "Clou de tonnerre"
+  statut: CO
+  famille: RAITON
+  livraison: DIFFERE
+  tags: [E_RAITON, MARQUE]
+  cible: plus_menacant
+  comportement: "Marque la cible d'un sigle ; 1,5 s plus tard la foudre tombe sur elle puis saute une fois."
+  valeurs: "40 ; saut 20 ; délai 3,0 s ; Marqué"
+  visuel: "Sigle en losange au-dessus de la cible, éclair vertical à tête épaisse."
+  acces: ELEM_RAITON
+  limites: "—"
+- id: JUT_063
+  nom: "Décharge statique"
+  statut: CO
+  famille: RAITON
+  livraison: ONDE
+  tags: [E_RAITON]
+  cible: aucune
+  comportement: "Le déplacement accumule de l'électricité : tous les 10 m parcourus, une onde de 3 m se libère."
+  valeurs: "30 ; rayon 3 m ; seuil 10 m (Cadence réduit le seuil)"
+  visuel: "Étincelles aux pieds qui s'intensifient en 4 paliers ; anneau crépitant."
+  acces: ELEM_RAITON
+  limites: "Nul à l'arrêt : récompense la mobilité."
+- id: JUT_064
+  nom: "Filet électrique"
+  statut: CO
+  famille: RAITON
+  livraison: ZONE
+  tags: [E_RAITON, CONTROLE, PERSISTANT]
+  cible: plus_dense
+  comportement: "Jette un filet de 3 × 3 m qui ralentit de 30 % et Électrise chaque seconde."
+  valeurs: "6 par s ; durée 3 s ; délai 6 s"
+  visuel: "Maillage de lignes fines au sol, nœuds lumineux qui clignotent en alternance."
+  acces: ELEM_RAITON
+  limites: "Max 2 filets."
+- id: JUT_065
+  nom: "Traits chercheurs"
+  statut: CO
+  famille: RAITON
+  livraison: SALVE
+  tags: [E_RAITON]
+  cible: plus_proche
+  comportement: "8 traits de foudre courbes qui cherchent chacun une cible différente."
+  valeurs: "10 par trait ; délai 2,2 s ; vitesse 14 m/s ; virage 240°/s"
+  visuel: "Traits lumineux sinueux à tête ronde, traînée de 6 px."
+  acces: ELEM_RAITON
+  limites: "Répartition : max 2 traits par cible."
+- id: JUT_066
+  nom: "Éclair fourchu"
+  statut: CO
+  famille: RAITON
+  livraison: CONE
+  tags: [E_RAITON]
+  cible: plus_dense
+  comportement: "Éclair qui se divise en 3 branches dans un cône de 50° sur 6 m."
+  valeurs: "22 par branche ; délai 1,8 s"
+  visuel: "Tronc épais puis 3 branches à angles vifs, ramifications secondaires décoratives."
+  acces: ELEM_RAITON
+  limites: "Une cible ne reçoit qu'une branche."
+- id: JUT_067
+  nom: "Raiton — Sandā Gēto (Porte du tonnerre)"
+  statut: AV
+  famille: RAITON
+  livraison: DIFFERE
+  tags: [E_RAITON]
+  cible: direction
+  comportement: "Marque 5 points en ligne vers l'avant ; la foudre y tombe successivement du plus proche au plus lointain."
+  valeurs: "26 par impact ; rayon 1,2 m ; écart 0,12 s ; ligne de 9 m ; délai 4,0 s"
+  visuel: "Étiquettes au sol, éclairs verticaux en cascade, écho sonore croissant."
+  acces: ELEM_RAITON
+  limites: "—"
+- id: JUT_068
+  nom: "Paume foudroyante"
+  statut: CO
+  famille: RAITON
+  livraison: CONTACT
+  tags: [E_RAITON, CONTROLE]
+  cible: plus_proche
+  comportement: "Série de 3 frappes de paume à 1,5 m ; la 3e étourdit brièvement."
+  valeurs: "10 / 10 / 18 ; Étourdi 0,4 s ; délai 1,0 s"
+  visuel: "Paume lumineuse, onde de choc en croissant, étincelles radiales à la 3e frappe."
+  acces: ELEM_RAITON
+  limites: "—"
+- id: JUT_069
+  nom: "Arc tendu"
+  statut: CO
+  famille: RAITON
+  livraison: RAYON
+  tags: [E_RAITON]
+  cible: plus_proche
+  comportement: "Lien électrique maintenu 1,5 s avec une cible ; les dégâts augmentent de 25 % toutes les 0,3 s. Rompu au-delà de 6 m."
+  valeurs: "5 → 12 par tick de 0,2 s ; délai 2,5 s"
+  visuel: "Arc qui s'épaissit en 4 paliers, tremblement de la ligne."
+  acces: ELEM_RAITON
+  limites: "—"
+- id: JUT_070
+  nom: "Tempête ionique"
+  statut: CO
+  famille: RAITON
+  livraison: ZONE
+  tags: [E_RAITON, MOBILE]
+  cible: plus_dense
+  comportement: "Petit nuage qui suit le groupe le plus dense et y fait tomber une foudre toutes les 0,4 s."
+  valeurs: "9 par éclair ; durée 4 s ; rayon 3 m ; délai 8 s"
+  visuel: "Nuage de 24 px à contour clair, éclairs courts aléatoires."
+  acces: ELEM_RAITON
+  limites: "1 nuage (+1 par Quantité, max 2)."
+- id: JUT_071
+  nom: "Raiton — Raikyū (Boule de foudre)"
+  statut: AV
+  famille: RAITON
+  livraison: PROJECTILE
+  tags: [E_RAITON]
+  cible: plus_proche
+  comportement: "Boule lente qui foudroie les ennemis proches pendant son vol (aura de 1,5 m) puis éclate."
+  valeurs: "Aura 5 par tick de 0,3 s ; éclatement 20 ; vitesse 4 m/s ; délai 3,0 s"
+  visuel: "Sphère à 3 anneaux orbitaux, filaments vers les cibles proches."
+  acces: ELEM_RAITON
+  limites: "—"
+- id: JUT_072
+  nom: "Retour de foudre"
+  statut: CO
+  famille: RAITON
+  livraison: CHAINE
+  tags: [E_RAITON]
+  cible: aucune
+  comportement: "Réactif : quand le joueur subit un coup, la foudre frappe l'agresseur puis 2 ennemis proches."
+  valeurs: "35 ; 3 cibles ; −10 %/saut ; délai interne 1,5 s"
+  visuel: "Éclair partant du contour du joueur vers l'agresseur, tracé en 2 frames."
+  acces: ELEM_RAITON
+  limites: "Déclenché aussi par un coup absorbé par bouclier."

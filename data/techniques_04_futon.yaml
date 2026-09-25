@@ -1,0 +1,289 @@
+# Famille primaire FUTON — JUT_073 à JUT_096
+- id: JUT_073
+  nom: "Fūton — Daitoppa (Grande percée)"
+  statut: OA
+  famille: FUTON
+  livraison: CONE
+  tags: [E_FUTON]
+  cible: plus_dense
+  comportement: "Bourrasque en cône de 60° sur 6 m : faibles dégâts, fort recul. Sert à dégager l'espace."
+  valeurs: "10 ; recul 3,5 m ; délai 3,0 s"
+  visuel: "Lignes de vent courbes blanches à 50 % d'opacité, feuilles et poussière entraînées dans l'axe."
+  acces: ELEM_FUTON
+  limites: "Recul réduit dans les zones alliées (§B8.4)."
+- id: JUT_074
+  nom: "Fūton — Kamaitachi no Jutsu (Faux de la belette)"
+  statut: OA
+  famille: FUTON
+  livraison: ONDE
+  tags: [E_FUTON, PERCANT]
+  cible: direction
+  comportement: "Croissant de vent de 120° qui avance sur 9 m et tranche 3 fois chaque ennemi traversé ; applique Entaillé."
+  valeurs: "3 × 8 ; Entaillé 1 cumul ; délai 2,6 s ; vitesse 10 m/s"
+  visuel: "Rubans blancs superposés en 3 couches décalées, entailles en X sur les cibles."
+  acces: ELEM_FUTON
+  limites: "Intervalle interne 0,1 s entre les 3 coupes."
+- id: JUT_075
+  nom: "Fūton — Shinkū Gyoku (Sphères de vide)"
+  statut: AV
+  famille: FUTON
+  livraison: SALVE
+  tags: [E_FUTON, PERCANT]
+  cible: plus_proche
+  comportement: "3 balles d'air comprimé très rapides, chacune perce 2 ennemis."
+  valeurs: "12 ; délai 1,2 s ; vitesse 20 m/s ; perce 2"
+  visuel: "Sphères presque transparentes à contour déformant (anneau de 1 px), cône de pression à la sortie."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_076
+  nom: "Fūton — Shinkūha (Onde de vide)"
+  statut: AV
+  famille: FUTON
+  livraison: RAYON
+  tags: [E_FUTON, PERCANT]
+  cible: plus_dense
+  comportement: "Taille horizontale instantanée de 7 m de long et 1 m de large."
+  valeurs: "30 ; délai 2,2 s"
+  visuel: "Trait blanc épais de 2 frames, poussière soulevée le long du trait."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_077
+  nom: "Fūton — Shinkū Taigyoku (Grande sphère de vide)"
+  statut: AV
+  famille: FUTON
+  livraison: PROJECTILE
+  tags: [E_FUTON, PERCANT]
+  cible: plus_dense
+  comportement: "Grosse sphère d'air lente qui traverse tout et aspire légèrement les ennemis sur son passage."
+  valeurs: "36 ; rayon 1,2 m ; vitesse 5 m/s ; attraction 0,6 m/s ; délai 4,0 s"
+  visuel: "Vortex sphérique à 3 anneaux concentriques, débris aspirés."
+  acces: ELEM_FUTON
+  limites: "1 en vol."
+- id: JUT_078
+  nom: "Fūton — Atsugai (Pression destructrice)"
+  statut: OA
+  famille: FUTON
+  livraison: DIFFERE
+  tags: [E_FUTON, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Compression d'air visible 0,6 s sur un groupe, puis éclatement en dôme qui repousse vers l'extérieur."
+  valeurs: "44 ; rayon 3 m ; recul 2 m ; délai 5,0 s"
+  visuel: "Sphère de distorsion qui se contracte (3 frames) puis dôme blanc et anneau de poussière."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_079
+  nom: "Fūton — Renkūdan (Balle d'air)"
+  statut: AV
+  famille: FUTON
+  livraison: PROJECTILE
+  tags: [E_FUTON]
+  cible: plus_menacant
+  comportement: "Balle d'air rapide ; à l'impact, l'onde se prolonge en cône derrière la cible."
+  valeurs: "26 ; cône arrière 12 (45°, 3 m) ; délai 1,8 s ; vitesse 16 m/s"
+  visuel: "Balle compacte à traînée en cône, éclat de pression en éventail derrière la cible."
+  acces: ELEM_FUTON
+  limites: "Cône arrière = SECONDAIRE."
+- id: JUT_080
+  nom: "Lames de vent"
+  statut: CO
+  famille: FUTON
+  livraison: ORBITE
+  tags: [E_FUTON]
+  cible: aucune
+  comportement: "4 lames de vent tournent vite à 2,2 m et appliquent Entaillé."
+  valeurs: "7 ; Entaillé 1 ; rotation 1 tour/1,2 s ; durée 4 s ; délai 6 s"
+  visuel: "Croissants blancs fins, feuilles aspirées dans la ronde."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_081
+  nom: "Tornade errante"
+  statut: CO
+  famille: FUTON
+  livraison: ZONE
+  tags: [E_FUTON, MOBILE, ATTRACTION]
+  cible: plus_dense
+  comportement: "Tornade qui erre vers les groupes, aspire les petits ennemis et les soulève 0,5 s."
+  valeurs: "6 par tick de 0,3 s ; rayon 1,6 m ; vitesse 3 m/s ; durée 5 s ; délai 9 s"
+  visuel: "Colonne en entonnoir de 40 px, bandes de vent en 6 frames, débris orbitaux."
+  acces: ELEM_FUTON
+  limites: "Élites et boss non soulevés."
+- id: JUT_082
+  nom: "Coup de vent circulaire"
+  statut: CO
+  famille: FUTON
+  livraison: CONTACT
+  tags: [E_FUTON]
+  cible: aucune
+  comportement: "Balayage à 360° autour du joueur (1,8 m) prolongé par le vent."
+  valeurs: "16 ; recul 0,8 m ; délai 1,6 s"
+  visuel: "Arc complet en 4 frames, poussière rabattue vers l'extérieur."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_083
+  nom: "Courant ascendant"
+  statut: CO
+  famille: FUTON
+  livraison: DIFFERE
+  tags: [E_FUTON, CONTROLE]
+  cible: plus_dense
+  comportement: "Marque le sol ; les ennemis au-dessus sont projetés en l'air 1 s (inactifs, +20 % dégâts des projectiles)."
+  valeurs: "14 ; rayon 2 m ; en l'air 1 s ; délai d'impact 0,5 s ; délai 5 s"
+  visuel: "Spirale au sol puis colonne ascendante, cibles surélevées de 12 px avec ombre au sol."
+  acces: ELEM_FUTON
+  limites: "Boss : Vulnérable +5 % au lieu d'être soulevés."
+- id: JUT_084
+  nom: "Voile de feuilles tranchantes"
+  statut: CO
+  famille: FUTON
+  livraison: SALVE
+  tags: [E_FUTON]
+  cible: aucune
+  comportement: "12 feuilles partent en spirale à 360° autour du joueur."
+  valeurs: "6 par feuille ; délai 2,0 s ; vitesse 9 m/s ; portée 7 m"
+  visuel: "Feuilles vertes de 4 px à contour sombre qui pivotent en vol (4 frames)."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_085
+  nom: "Bouclier de vent"
+  statut: CO
+  famille: FUTON
+  livraison: ONDE
+  tags: [E_FUTON, BOUCLIER]
+  cible: aucune
+  comportement: "Toutes les 6 s, une bulle de vent de 2 m renvoie pendant 1 s les projectiles ennemis ordinaires vers leur tireur."
+  valeurs: "Projectile renvoyé : ses dégâts ×2 contre les ennemis ; délai 6 s"
+  visuel: "Sphère striée de lignes courbes, projectiles renvoyés recolorés en couleur alliée."
+  acces: ELEM_FUTON
+  limites: "Ne renvoie pas les attaques de boss télégraphiées."
+- id: JUT_086
+  nom: "Croix de vent"
+  statut: CO
+  famille: FUTON
+  livraison: RAYON
+  tags: [E_FUTON, PERCANT]
+  cible: plus_menacant
+  comportement: "0,3 s après le signe, deux tailles se croisent en X sur la cible (5 m chacune)."
+  valeurs: "2 × 22 ; délai 2,4 s"
+  visuel: "Deux traits blancs successifs, étincelle au centre de la croix."
+  acces: ELEM_FUTON
+  limites: "Cible au centre touchée deux fois."
+- id: JUT_087
+  nom: "Œil du cyclone"
+  statut: CO
+  famille: FUTON
+  livraison: ZONE
+  tags: [E_FUTON, MOBILE]
+  cible: aucune
+  comportement: "Zone de 3 m centrée sur le joueur : projectiles ennemis ralentis de 60 %, ennemis ralentis de 20 %."
+  valeurs: "4 par tick de 0,5 s ; durée 4 s ; délai 12 s"
+  visuel: "Anneau de vent à la limite, calme visuel à l'intérieur."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_088
+  nom: "Disque tranchant"
+  statut: CO
+  famille: FUTON
+  livraison: PROJECTILE
+  tags: [E_FUTON, REBOND, PERCANT]
+  cible: direction
+  comportement: "Disque de vent fin qui perce et ricoche sur les obstacles du décor jusqu'à 5 fois."
+  valeurs: "15 ; 5 ricochets sur décor ; vitesse 12 m/s ; délai 2,0 s"
+  visuel: "Anneau aplati en rotation 2 frames, étincelle blanche à chaque ricochet."
+  acces: ELEM_FUTON
+  limites: "Ricoche sur le décor uniquement ; sans décor, disparaît à 12 m."
+- id: JUT_089
+  nom: "Poussière aveuglante"
+  statut: CO
+  famille: FUTON
+  livraison: CONE
+  tags: [E_FUTON, CONTROLE]
+  cible: plus_dense
+  comportement: "Soulève un cône de poussière de 70° qui Aveugle 2 s."
+  valeurs: "6 ; Aveuglé 2 s ; portée 4,5 m ; délai 4,0 s"
+  visuel: "Nuage ocre en tramage, particules lourdes qui retombent."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_090
+  nom: "Couloir de vent"
+  statut: CO
+  famille: FUTON
+  livraison: ZONE
+  tags: [E_FUTON, PERSISTANT]
+  cible: direction
+  comportement: "Couloir de 8 × 2 m dans la direction de course : +30 % vitesse du joueur et des projectiles alliés dedans ; les ennemis sont poussés sur les côtés."
+  valeurs: "5 par tick de 0,5 s ; durée 5 s ; délai 10 s"
+  visuel: "Lignes de flux parallèles animées, herbes couchées."
+  acces: ELEM_FUTON
+  limites: "Ne déplace jamais le joueur : bonus de vitesse uniquement."
+- id: JUT_091
+  nom: "Fūton — Shinkū Renpa (Salves de vide en étoile)"
+  statut: AV
+  famille: FUTON
+  livraison: SALVE
+  tags: [E_FUTON]
+  cible: aucune
+  comportement: "5 tirs d'air dans 5 directions fixes en étoile, pivotant de 36° à chaque salve."
+  valeurs: "14 ; délai 1,1 s ; vitesse 14 m/s ; portée 8 m"
+  visuel: "Étoile de traits blancs, rotation lisible salve après salve."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_092
+  nom: "Rafale arrière"
+  statut: CO
+  famille: FUTON
+  livraison: CONE
+  tags: [E_FUTON]
+  cible: aucune
+  comportement: "Couvre l'arrière : cône de 90° sur 4 m opposé à la direction de course."
+  valeurs: "18 ; recul 1,5 m ; délai 1,6 s"
+  visuel: "Éventail de lignes de vent vers l'arrière, cape/vêtements soulevés."
+  acces: ELEM_FUTON
+  limites: "À l'arrêt : dirigé vers l'ennemi le plus proche derrière."
+- id: JUT_093
+  nom: "Tourbillon de feuilles"
+  statut: CO
+  famille: FUTON
+  livraison: ORBITE
+  tags: [E_FUTON]
+  cible: aucune
+  comportement: "Spirale de feuilles qui s'éloigne jusqu'à 4 m puis revient au joueur (orbite pulsée)."
+  valeurs: "5 par feuille ; 10 feuilles ; cycle 2 s ; durée 6 s ; délai 8 s"
+  visuel: "Feuilles en double hélice, densité qui respire avec le cycle."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_094
+  nom: "Coupe-vent dissimulé"
+  statut: CO
+  famille: FUTON
+  livraison: PIEGE
+  tags: [E_FUTON]
+  cible: chemin
+  comportement: "Mines de vent quasi invisibles (contour visible pour le joueur) qui déchiquettent à 2 m et appliquent 2 Entaillé."
+  valeurs: "24 ; rayon 2 m ; max 3 ; délai 3,5 s"
+  visuel: "Tourbillon minuscule en boucle, visible au joueur par un contour pointillé allié."
+  acces: ELEM_FUTON
+  limites: "—"
+- id: JUT_095
+  nom: "Vent arrière"
+  statut: CO
+  famille: FUTON
+  livraison: ONDE
+  tags: [E_FUTON]
+  cible: direction
+  comportement: "Toutes les 4 s, une onde part de derrière le joueur vers l'avant : les projectiles alliés qu'elle rattrape gagnent +20 % de vitesse et +1 perce."
+  valeurs: "8 aux ennemis ; délai 4 s ; portée 10 m"
+  visuel: "Front de vent transparent à lignes longues, projectiles alliés dotés d'une traînée blanche."
+  acces: ELEM_FUTON
+  limites: "Un projectile ne reçoit le bonus qu'une fois."
+- id: JUT_096
+  nom: "Faucille stationnaire"
+  statut: CO
+  famille: FUTON
+  livraison: PROJECTILE
+  tags: [E_FUTON]
+  cible: plus_dense
+  comportement: "Faucille de vent lancée à 5 m qui s'arrête et tourne sur place 2 s (broyeur), puis revient."
+  valeurs: "6 par tick de 0,25 s ; rayon 1,2 m ; délai 4,5 s"
+  visuel: "Faucille à 3 frames de rotation, gerbes de feuilles hachées."
+  acces: ELEM_FUTON
+  limites: "Max 2 faucilles."

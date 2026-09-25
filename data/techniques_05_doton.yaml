@@ -1,0 +1,289 @@
+# Famille primaire DOTON — JUT_097 à JUT_120
+- id: JUT_097
+  nom: "Doton — Doryūheki (Mur de terre)"
+  statut: OA
+  famille: DOTON
+  livraison: ZONE
+  tags: [E_DOTON, PERSISTANT, TERRAIN]
+  cible: aucune
+  comportement: "Élève un mur incurvé de 4 m derrière le joueur qui bloque ennemis et projectiles ordinaires ; les ennemis doivent le contourner."
+  valeurs: "15 à l'émergence ; PV du mur 150 ; durée 5 s ; délai 10 s"
+  visuel: "Mur de 3 strates de pierre (ombre marquée au sol), éclats à l'émergence, fissures selon les PV."
+  acces: ELEM_DOTON
+  limites: "Jamais placé à < 2 m d'un obstacle : ne peut pas enfermer le joueur."
+- id: JUT_098
+  nom: "Doton — Doryūdan (Balles du dragon de terre)"
+  statut: OA
+  famille: DOTON
+  livraison: SALVE
+  tags: [E_DOTON]
+  cible: plus_dense
+  comportement: "Une tête de dragon de terre émerge 1 s et crache 3 boulets de boue en cloche."
+  valeurs: "3 × 24 ; rayon d'impact 1,3 m ; Ensablé +1 ; délai 3,6 s"
+  visuel: "Tête de dragon rocheuse de 24 px, boulets bruns à éclaboussures."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_099
+  nom: "Doton — Yomi Numa (Marais des enfers)"
+  statut: OA
+  famille: DOTON
+  livraison: ZONE
+  tags: [E_DOTON, CONTROLE, TERRAIN, PERSISTANT]
+  cible: plus_dense
+  comportement: "Transforme 4 m de sol en marécage : ralentit de 60 % ; les ennemis ordinaires sous 20 % de PV sont engloutis."
+  valeurs: "6 par tick de 0,5 s ; durée 4 s ; délai 11 s"
+  visuel: "Sol brun-violet ondulant, bulles, silhouettes qui s'enfoncent de 4 px par frame."
+  acces: ELEM_DOTON
+  limites: "Engloutissement : ordinaires seulement ; élites ralenties de 30 %."
+- id: JUT_100
+  nom: "Doton — Shinjū Zanshu (Décapitation par la terre)"
+  statut: OA
+  famille: DOTON
+  livraison: DIFFERE
+  tags: [E_DOTON, CONTROLE]
+  cible: plus_menacant
+  comportement: "La cible est aspirée dans le sol jusqu'au cou 1,5 s ; le prochain coup reçu est ×1,5."
+  valeurs: "20 ; Entravé 1,5 s ; délai d'impact 0,4 s ; délai 4,0 s"
+  visuel: "Mains de terre qui jaillissent (3 frames), cible réduite à sa tête au ras du sol."
+  acces: ELEM_DOTON
+  limites: "Boss : Vulnérable +10 % 1,5 s au lieu d'être enfoui."
+- id: JUT_101
+  nom: "Doton — Doryū Taiga (Rivière de terre)"
+  statut: AV
+  famille: DOTON
+  livraison: ZONE
+  tags: [E_DOTON, PERSISTANT]
+  cible: direction
+  comportement: "Coulée de boue de 8 × 2,5 m qui emporte les ennemis ordinaires loin du joueur."
+  valeurs: "5 par tick de 0,5 s ; courant 2,5 m/s ; durée 3 s ; délai 9 s"
+  visuel: "Flots bruns en bandes animées vers l'extérieur, rochers roulants."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_102
+  nom: "Doton — Kajūgan (Roche alourdie)"
+  statut: OA
+  famille: DOTON
+  livraison: DIFFERE
+  tags: [E_DOTON, CONTROLE]
+  cible: plus_menacant
+  comportement: "Alourdit une cible (−50 % vitesse) puis l'écrase au sol 1 s plus tard avec une onde de 2 m."
+  valeurs: "Écrasement 55 ; onde 20 ; délai 5,0 s"
+  visuel: "Glyphes en cube sur la cible, cible qui s'aplatit (squash 3 frames), cratère."
+  acces: "ELEM_DOTON+CHR_069"
+  limites: "—"
+- id: JUT_103
+  nom: "Doton — Dorōdomu (Dôme de terre)"
+  statut: OA
+  famille: DOTON
+  livraison: ONDE
+  tags: [E_DOTON, BOUCLIER]
+  cible: aucune
+  comportement: "Un dôme de terre se forme 1 s autour du joueur (bloque les projectiles, n'entrave pas son déplacement) puis éclate en fragments."
+  valeurs: "Fragments 26 (r 3 m) ; délai 12 s"
+  visuel: "Dôme translucide de pierre (contour épais, intérieur à 40 % d'opacité), éclatement en 12 fragments."
+  acces: ELEM_DOTON
+  limites: "Le dôme suit le joueur ; ne bloque pas les attaques de boss télégraphiées."
+- id: JUT_104
+  nom: "Doton — Doryō Dango (Boulette-mausolée)"
+  statut: OA
+  famille: DOTON
+  livraison: PROJECTILE
+  tags: [E_DOTON, PERCANT]
+  cible: plus_dense
+  comportement: "Soulève un énorme rocher et le lance en cloche ; il roule 4 m après l'impact en écrasant tout."
+  valeurs: "Impact 50 (r 2 m) ; roulement 20 ; délai 7,0 s"
+  visuel: "Rocher de 32 px, ombre qui grossit à l'approche, poussière en roulant."
+  acces: ELEM_DOTON
+  limites: "1 rocher actif."
+- id: JUT_105
+  nom: "Ligne de pics"
+  statut: CO
+  famille: DOTON
+  livraison: ONDE
+  tags: [E_DOTON, PERCANT]
+  cible: plus_dense
+  comportement: "Série de pics qui jaillissent en ligne vers la cible sur 7 m, l'un après l'autre."
+  valeurs: "22 par pic ; 7 pics ; écart 0,06 s ; délai 2,4 s"
+  visuel: "Pics anguleux gris-brun, fissure en zigzag reliant les pics."
+  acces: ELEM_DOTON
+  limites: "1 touche par cible par ligne."
+- id: JUT_106
+  nom: "Séisme en deux temps"
+  statut: CO
+  famille: DOTON
+  livraison: ONDE
+  tags: [E_DOTON, CONTROLE]
+  cible: aucune
+  comportement: "Onde au sol de 5 m qui étourdit 0,5 s les ordinaires, suivie 1 s plus tard d'une réplique plus forte."
+  valeurs: "12 puis 24 ; délai 6 s"
+  visuel: "Anneau de fissures, sol légèrement décalé de 1 px (pas de secousse caméra), poussière."
+  acces: ELEM_DOTON
+  limites: "Étourdissement : ordinaires uniquement."
+- id: JUT_107
+  nom: "Poing de pierre"
+  statut: CO
+  famille: DOTON
+  livraison: CONTACT
+  tags: [E_DOTON]
+  cible: plus_proche
+  comportement: "Coup de poing lent et très lourd en cône de 2 m ; fort recul."
+  valeurs: "46 ; recul 3 m ; délai 2,2 s"
+  visuel: "Anticipation 3 frames, poing couvert de roche ×1,5, poussière en éventail, ennemis déformés 2 frames."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_108
+  nom: "Galets en orbite"
+  statut: CO
+  famille: DOTON
+  livraison: ORBITE
+  tags: [E_DOTON]
+  cible: plus_proche
+  comportement: "3 gros galets orbitent lentement ; toutes les 5 s, le plus avancé est projeté vers une cible puis se reforme."
+  valeurs: "Contact 10 ; projection 30 ; rotation 1 tour/2,5 s ; permanente"
+  visuel: "Galets de 8 px ombrés, reformation par agrégation de poussière."
+  acces: ELEM_DOTON
+  limites: "Quantité : +1 galet (max 5)."
+- id: JUT_109
+  nom: "Sables mouvants"
+  statut: CO
+  famille: DOTON
+  livraison: PIEGE
+  tags: [E_DOTON, CONTROLE]
+  cible: chemin
+  comportement: "Fosses sur le trajet des ennemis : le premier qui tombe est Entravé 2 s, ceux qui le suivent trébuchent (0,3 s)."
+  valeurs: "14 ; Entravé 2 s ; max 3 ; délai 4,0 s"
+  visuel: "Cercle de sable qui tourbillonne légèrement, contour allié discret."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_110
+  nom: "Doton — Doroku Gaeshi (Rempart retourné)"
+  statut: AV
+  famille: DOTON
+  livraison: DIFFERE
+  tags: [E_DOTON]
+  cible: direction
+  comportement: "Soulève une dalle de 4 × 2 m devant le joueur (bloque 0,8 s) puis la rabat sur les ennemis."
+  valeurs: "40 ; délai 5,0 s"
+  visuel: "Dalle qui pivote en 4 frames, ombre projetée qui annonce la zone d'impact."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_111
+  nom: "Doton — Domu (Durcissement)"
+  statut: OA
+  famille: DOTON
+  livraison: CONTACT
+  tags: [E_DOTON, BOUCLIER]
+  cible: aucune
+  comportement: "Toutes les 8 s, la peau durcit 3 s : +8 Armure et chaque ennemi qui touche le joueur au contact subit un contre-coup."
+  valeurs: "Contre-coup 24 ; Armure +8 pendant 3 s ; délai 8 s"
+  visuel: "Peau grisée par un motif de pierre (palette), craquement sonore."
+  acces: "ELEM_DOTON+APT_CORPS|ELEM_DOTON+CHR_069"
+  limites: "Armure totale toujours plafonnée à 15."
+- id: JUT_112
+  nom: "Colonne de roche"
+  statut: CO
+  famille: DOTON
+  livraison: DIFFERE
+  tags: [E_DOTON, TERRAIN]
+  cible: plus_menacant
+  comportement: "Fait surgir une colonne sous la cible puis la laisse 5 s comme obstacle ; les chargeurs qui la heurtent sont étourdis 1 s."
+  valeurs: "32 ; délai d'impact 0,5 s ; délai 4,5 s"
+  visuel: "Colonne octogonale de 16 × 32 px, éclats à la base."
+  acces: ELEM_DOTON
+  limites: "Max 3 colonnes ; jamais à < 2 m du joueur."
+- id: JUT_113
+  nom: "Boue collante"
+  statut: CO
+  famille: DOTON
+  livraison: SALVE
+  tags: [E_DOTON, CONTROLE]
+  cible: plus_proche
+  comportement: "3 boules de boue qui appliquent chacune Ensablé (embourbé) +1 ; 3 cumuls = Enseveli."
+  valeurs: "8 ; délai 1,4 s ; vitesse 9 m/s"
+  visuel: "Boules brunes molles (squash à l'impact), traces sur la cible."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_114
+  nom: "Doton — Kekkai Dorōdōmu (Dôme absorbant)"
+  statut: OA
+  famille: DOTON
+  livraison: ZONE
+  tags: [E_DOTON, PERSISTANT]
+  cible: plus_dense
+  comportement: "Recouvre un groupe d'un dôme de 3 m qui draine : dégâts aux ennemis dedans et +1 chakra par ennemi et par seconde."
+  valeurs: "6 par tick de 0,5 s ; durée 4 s ; délai 14 s ; chakra max 6/s"
+  visuel: "Dôme opaque à 50 % avec lignes de drainage vers le joueur."
+  acces: ELEM_DOTON
+  limites: "Soumis au plafond global de gain de chakra (12/s)."
+- id: JUT_115
+  nom: "Doton — Gōremu no Jutsu (Golem de roche)"
+  statut: AV
+  famille: DOTON
+  livraison: INVOCATION
+  tags: [E_DOTON, UNITE_ALLIEE]
+  cible: plus_dense
+  comportement: "Un golem lent marche vers les groupes et frappe le sol (onde de 2 m) ; attire les ennemis au contact."
+  valeurs: "Frappe 30 ; intervalle 1,5 s ; durée 10 s ; délai 16 s"
+  visuel: "Golem de 32 px en blocs, marche 4 frames lourde, poussière à chaque pas."
+  acces: "ELEM_DOTON+CHR_069"
+  limites: "1 golem ; héritage type ANIMAL (§R9)."
+- id: JUT_116
+  nom: "Onde de gravier"
+  statut: CO
+  famille: DOTON
+  livraison: CONE
+  tags: [E_DOTON]
+  cible: plus_proche
+  comportement: "Décharge de 10 graviers à courte portée ; plus la cible est proche, plus elle en reçoit."
+  valeurs: "10 × 5 ; angle 40° ; portée 3,5 m ; délai 1,5 s"
+  visuel: "Graviers angulaires de 2 px, traînées courtes, poussière."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_117
+  nom: "Faille"
+  statut: CO
+  famille: DOTON
+  livraison: RAYON
+  tags: [E_DOTON, PERSISTANT]
+  cible: plus_dense
+  comportement: "Ouvre une fissure de 8 m qui reste 2 s ; les ennemis qui la franchissent tombent un instant (0,4 s) et subissent des dégâts."
+  valeurs: "Ouverture 20 ; franchissement 12 ; délai 4,0 s"
+  visuel: "Fente noire à bords éclairés, fragments qui tombent dedans."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_118
+  nom: "Rocher rebondissant"
+  statut: CO
+  famille: DOTON
+  livraison: PROJECTILE
+  tags: [E_DOTON]
+  cible: plus_dense
+  comportement: "Rocher lancé qui rebondit 3 fois au sol ; chaque rebond frappe en zone."
+  valeurs: "22 par rebond (r 1,2 m) ; bond 2,5 m ; délai 3,0 s"
+  visuel: "Rocher rond, ombre au sol qui suit les bonds, cratère à chaque rebond."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_119
+  nom: "Onde tellurique en chaîne"
+  statut: CO
+  famille: DOTON
+  livraison: CHAINE
+  tags: [E_DOTON, CONTROLE]
+  cible: plus_proche
+  comportement: "Un choc court dans le sol de cible en cible (fissure visible entre elles) et étourdit 0,2 s."
+  valeurs: "20 ; 4 sauts ; portée 3 m ; −10 %/saut ; délai 2,2 s"
+  visuel: "Fissure tracée en 3 frames entre les cibles, éclats sous les pieds."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_120
+  nom: "Doton — Chōkeijūgan (Roche ultra-légère)"
+  statut: OA
+  famille: DOTON
+  livraison: ZONE
+  tags: [E_DOTON]
+  cible: aucune
+  comportement: "Allège les ennemis dans 4 m : pendant 3 s, tout coup les repousse 3 fois plus loin."
+  valeurs: "0 ; recul ×3 ; durée 3 s ; délai 10 s"
+  visuel: "Glyphes cubiques flottants, ennemis décollés de 2 px avec ombre plus claire."
+  acces: "ELEM_DOTON+CHR_069"
+  limites: "Élites : ×1,5 ; boss : aucun effet (Vulnérable +5 %)."
