@@ -15,7 +15,7 @@ Format : `PRÉFIXE_NNN` (3 chiffres, zéros à gauche). Un identifiant est **sta
 | `PAS` | Passif | 001–060 | `data/passifs.yaml` |
 | `EQP` | Équipement | 001–040 | `data/equipements.yaml` |
 | `TRF` | Transformation | 001–024 | `data/transformations.yaml` |
-| `ULT` | Ultime | 001–040 | `data/ultimes.yaml` |
+| `ULT` | Ultime | 001–044 (cible du brief : ≥ 40) | `data/ultimes.yaml` |
 | `STA` | État (statut) | 01–24 | ce registre §R7 |
 | `MAP` | Carte | 001–020 | `data/cartes.yaml` |
 | `BOS` | Boss | 001–040 | `data/boss.yaml` |

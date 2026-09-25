@@ -1,0 +1,471 @@
+# Évolutions EVO_049 à EVO_095 (type EVOLUTION).
+- id: EVO_049
+  nom: "Cirque laser total"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_151]
+  catalyseurs: [PAS_007]
+  comportement: "16 faisceaux qui rebondissent 3 fois ; les cibles Trempées reçoivent 2 faisceaux."
+  valeurs: "18 ; délai 1,8 s"
+  limites: "Max 3 faisceaux par cible."
+  visuel: "Faisceaux blanc-cyan anguleux, nuage gris qui les émet au-dessus du joueur."
+- id: EVO_050
+  nom: "Enton — Lame du brasier éternel"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_154]
+  catalyseurs: [EQP_028]
+  comportement: "Arc de 220° à 3,5 m ; chaque coup laisse une ligne de flammes noires 2 s au sol."
+  valeurs: "55 ; Brûlure noire +2 ; ligne 10 par tick ; délai 1,4 s"
+  limites: "—"
+  visuel: "Lame noire plus longue, contour blanc, ligne sombre au sol à liseré rouge."
+- id: EVO_051
+  nom: "Lac de lave"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_143]
+  catalyseurs: [PAS_048]
+  comportement: "Les globes fusionnent en lacs de 3 m qui s'étendent 1 s ; ennemis Corrodés et ralentis de 30 %."
+  valeurs: "Impact 40 ; lac 14 par tick de 0,5 s ; durée 5 s ; délai 2,6 s"
+  limites: "Max 3 lacs."
+  visuel: "Lacs incandescents à croûte craquelée qui s'élargissent."
+- id: EVO_052
+  nom: "Soleil desséchant"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_140]
+  catalyseurs: [PAS_026]
+  comportement: "3 orbes par lancer ; à la mort d'une cible asséchée, l'orbe éclate en vapeur brûlante (r 2 m)."
+  valeurs: "14 → 24 par s ; éclatement 40 ; délai 2,6 s"
+  limites: "—"
+  visuel: "Trois orbes blancs à anneaux de vapeur."
+- id: EVO_053
+  nom: "Cube primordial"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_159]
+  catalyseurs: [PAS_003]
+  comportement: "Le cube s'étend à 5 m et laisse un cube résiduel 2 s qui désintègre les ordinaires qui y entrent."
+  valeurs: "160 ; résiduel 20 par tick ; délai 14 s"
+  limites: "Pas de flash plein écran."
+  visuel: "Cube plus grand à double arête, quadrillage animé."
+- id: EVO_054
+  nom: "Konoha Daisenpū (Grand tourbillon de la feuille)"
+  statut: OA
+  type: EVOLUTION
+  sources: [JUT_161]
+  catalyseurs: [PAS_027]
+  comportement: "Balayage à 360° en 3 rotations (bas, milieu, haut) ; la troisième projette en l'air (compatible Kage Buyō)."
+  valeurs: "3 × 22 ; délai 1,0 s"
+  limites: "—"
+  visuel: "Trois arcs de poussière superposés, feuilles aspirées."
+- id: EVO_055
+  nom: "Lotus de la jeunesse"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_162]
+  catalyseurs: [PAS_054]
+  comportement: "Saisit 2 cibles l'une après l'autre ; l'écrasement crée un cratère qui étourdit les ordinaires 1 s."
+  valeurs: "2 × 140 ; cratère 50 (r 3 m) ; délai 7 s"
+  limites: "Boss : frappe verticale 140 + Vulnérable +15 %."
+  visuel: "Bandages en double vrille, cratère en étoile."
+- id: EVO_056
+  nom: "Paon flamboyant"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_167]
+  catalyseurs: [PAS_042]
+  comportement: "Rafale de 24 coups en éventail de 120° ; chaque élimination pendant la rafale ajoute 2 coups (max +12)."
+  valeurs: "24 × 10 ; Brûlure +1 par 3 coups ; délai 4,5 s"
+  limites: "Ne compte pas comme Katon."
+  visuel: "Queue de paon enflammée complète derrière le joueur."
+- id: EVO_057
+  nom: "Dix mille poings"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_177]
+  catalyseurs: [PAS_002]
+  comportement: "Rafale continue de 20 coups sur la cible et ses voisins à 1,5 m ; la dernière frappe éjecte."
+  valeurs: "20 × 8 ; éjection 30 ; délai 1,4 s"
+  limites: "—"
+  visuel: "Poings en éventail d'images rémanentes, étoiles d'impact."
+- id: EVO_058
+  nom: "Floraison tectonique"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_175]
+  catalyseurs: [PAS_059]
+  comportement: "Le poing fend le sol en étoile à 5 branches ; chaque branche soigne le joueur de 1 PV par ennemi touché (plafond)."
+  valeurs: "Poing 90 ; branches 5 × 30 ; délai 2,4 s"
+  limites: "Soin dans le plafond §B4.5."
+  visuel: "Pétales de cerisier stylisés dans les fissures."
+- id: EVO_059
+  nom: "Liger Bomb (Bombe du tigre-lion)"
+  statut: OA
+  type: EVOLUTION
+  sources: [JUT_172]
+  catalyseurs: [PAS_023]
+  comportement: "La charge saisit la première élite (ou ordinaire) et l'écrase au sol avec une onde électrique de 3 m."
+  valeurs: "Charge 50 ; écrasement 130 ; onde 40 ; délai 4,0 s"
+  limites: "Boss : pas de saisie, frappe 130."
+  visuel: "Silhouette qui soulève la cible, éclairs en dôme."
+- id: EVO_060
+  nom: "Tempête de kunai"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_185]
+  catalyseurs: [EQP_002]
+  comportement: "3 éventails de 5 kunai vers 3 cibles ; les kunai plantés au sol explosent 1 s plus tard (étiquette)."
+  valeurs: "18 ; explosion 14 (r 1 m) ; délai 0,9 s"
+  limites: "Max 15 kunai plantés."
+  visuel: "Kunai en triple éventail, étiquettes qui grésillent."
+- id: EVO_061
+  nom: "Moulin démoniaque"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_187]
+  catalyseurs: [PAS_003]
+  comportement: "Deux grands shuriken en orbite large (4 m) pendant 5 s, puis lancés en ligne droite."
+  valeurs: "30 par passage ; lancer 50 ; délai 6 s"
+  limites: "—"
+  visuel: "Shuriken de 24 px, sifflement, ombres au sol."
+- id: EVO_062
+  nom: "Mille étiquettes"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_189]
+  catalyseurs: [PAS_049]
+  comportement: "5 kunai à étiquette autour du groupe le plus dense, détonation simultanée."
+  valeurs: "5 × 50 (r 2 m) ; délai 2,5 s"
+  limites: "Son groupé en un seul événement."
+  visuel: "Étiquettes en couronne, explosion en fleur."
+- id: EVO_063
+  nom: "Corbeau d'acier"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_202]
+  catalyseurs: [PAS_046]
+  comportement: "Karasu se démultiplie en 3 parties volantes qui attaquent 3 cibles différentes (poison)."
+  valeurs: "3 × 22 + Empoisonné +1 ; intervalle 0,6 s ; permanente"
+  limites: "Compte 1 unité du plafond."
+  visuel: "Tête, torse et bras séparés reliés par fils."
+- id: EVO_064
+  nom: "Queue de scorpion d'acier"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_205]
+  catalyseurs: [PAS_045]
+  comportement: "La queue fouette en cercle complet (3,5 m) et projette des aiguilles empoisonnées toutes les 2 s."
+  valeurs: "30 + Empoisonné +2 ; aiguilles 8 × 6 ; permanente"
+  limites: "—"
+  visuel: "Queue à segments d'acier, aiguilles violettes."
+- id: EVO_065
+  nom: "Couperet du démon"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_197]
+  catalyseurs: [PAS_058]
+  comportement: "Balayage 270° à 3,5 m ; la réparation de la lame monte à +60 % et ne se perd plus."
+  valeurs: "70 ; délai 2,0 s"
+  limites: "—"
+  visuel: "Lame plus grande, arc lourd, éclats métalliques."
+- id: EVO_066
+  nom: "Samehada éveillée"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_198]
+  catalyseurs: [PAS_041]
+  comportement: "L'épée mord : chaque coup vole 1 chakra et 1 PV (plafonds globaux) et grossit l'épée (+10 % portée, max +50 %)."
+  valeurs: "50 ; délai 1,4 s"
+  limites: "Plafonds de chakra et de vol de vie."
+  visuel: "Épée à gueule et écailles hérissées, langue."
+- id: EVO_067
+  nom: "Kusanagi — Lame qui s'allonge"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_199]
+  catalyseurs: [PAS_058]
+  comportement: "Estoc qui s'allonge à 9 m et revient ; balaie 30° au retour."
+  valeurs: "60 aller ; 30 retour ; délai 1,2 s"
+  limites: "—"
+  visuel: "Lame fine étirée, reflet qui court le long."
+- id: EVO_068
+  nom: "Mille dragons d'acier"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_193]
+  catalyseurs: [EQP_002]
+  comportement: "Quatre rouleaux ; la pluie couvre 7 m et les armes plantées forment un champ de chausse-trapes 4 s."
+  valeurs: "48 armes × 12 ; champ 6 par pas ; délai 6 s"
+  limites: "—"
+  visuel: "Quatre hélices de rouleaux, pluie d'armes dense."
+- id: EVO_069
+  nom: "Kage Bunshin — Rasengan des clones coordonnés"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_217]
+  catalyseurs: [PAS_060]
+  comportement: "Plafond de 4 clones ; toutes les 6 s, les clones convergent sur une cible prioritaire et frappent ensemble d'un Rasengan (signal commun discret)."
+  valeurs: "Frappe 30 ; Rasengan coordonné 4 × 50 ; durée 6 s ; délai 4 s"
+  limites: "Les clones copient le Rasengan de l'évolution, jamais un effet auto-déclenché ; aucun clone ne crée de clone."
+  visuel: "Anneau bleu discret au sol sous la cible avant la convergence ; 4 orbes synchrones."
+- id: EVO_070
+  nom: "Marée de clones"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_218]
+  catalyseurs: [PAS_030]
+  comportement: "Vague de 12 clones en V qui traversent l'écran ; chaque clone frappe 2 fois."
+  valeurs: "12 × 2 × 20 ; délai 8 s"
+  limites: "Compte 1 unité du plafond."
+  visuel: "Rangées de fumée en V, silhouettes en course."
+- id: EVO_071
+  nom: "Gamabunta — Grand combat"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_224]
+  catalyseurs: [PAS_029]
+  comportement: "Gamabunta reste 12 s, sabre 4 fois et crache un jet d'huile qui peut être embrasé (SYN_003)."
+  valeurs: "Atterrissage 90 ; sabre 4 × 100 ; délai 50 s"
+  limites: "1 géant."
+  visuel: "Crapaud géant plus détaillé, pipe fumante."
+- id: EVO_072
+  nom: "Meute de Pakkun"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_229]
+  catalyseurs: [PAS_053]
+  comportement: "Les 8 chiens restent 6 s et changent de cible à chaque immobilisation."
+  valeurs: "8 × 20 par morsure ; Entravé 1 s ; délai 10 s"
+  limites: "Compte 1 unité."
+  visuel: "Chiens identifiables (tailles, couleurs), poussière de course."
+- id: EVO_073
+  nom: "Akamaru adulte"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_230]
+  catalyseurs: [EQP_032]
+  comportement: "Akamaru double de taille : morsures en zone (1,5 m) et aboiement qui étourdit 0,5 s."
+  valeurs: "Morsure 30 ; aboiement 20 ; permanente"
+  limites: "—"
+  visuel: "Chien de 24 px, pelage détaillé."
+- id: EVO_074
+  nom: "Katsuyu — Division de soin"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_228]
+  catalyseurs: [PAS_059]
+  comportement: "3 limaces sur le joueur : soin 2 PV/s et acide sur 3 cibles."
+  valeurs: "Acide 3 × 18 ; soin 2 PV/s ; permanente"
+  limites: "Plafond de soin §B4.5."
+  visuel: "Trois limaces sur épaules et dos."
+- id: EVO_075
+  nom: "Bestiaire d'encre"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_235]
+  catalyseurs: [PAS_029]
+  comportement: "Alternance lions (dégâts), serpents (Entravé) et oiseaux (bombardement) à chaque invocation."
+  valeurs: "3 unités × 26 ; délai 6 s"
+  limites: "Compte 1 unité."
+  visuel: "Encre en traits de pinceau distincts par animal."
+- id: EVO_076
+  nom: "Edo Tensei — Légion réanimée"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_243]
+  catalyseurs: [PAS_057]
+  comportement: "3 réanimés maximum ; ils explosent en fin de durée (étiquette interne)."
+  valeurs: "Dégâts × 0,8 ; explosion 50 ; durée 15 s"
+  limites: "Jamais de boss réanimé."
+  visuel: "Cercueils multiples, fissures grises."
+- id: EVO_077
+  nom: "Narakumi — Vision collective"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_249]
+  catalyseurs: [PAS_032]
+  comportement: "Le cône devient un cercle de 5 m ; les ennemis figés sont Vulnérables +20 %."
+  valeurs: "10 ; Étourdi 1,2 s ; délai 4,5 s"
+  limites: "—"
+  visuel: "Feuilles tourbillonnant en cercle, silhouettes tremblantes."
+- id: EVO_078
+  nom: "Nuit éternelle"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_251]
+  catalyseurs: [PAS_032]
+  comportement: "L'obscurité suit le joueur (6 m) : les ennemis dedans sont Aveuglés et reçoivent +15 % de dégâts."
+  valeurs: "6 par tick de 0,5 s ; durée 6 s ; délai 9 s"
+  limites: "Contour des ennemis et télégraphes conservés."
+  visuel: "Tramage sombre mobile, ennemis surlignés."
+- id: EVO_079
+  nom: "Forêt d'illusions enserrantes"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_250]
+  catalyseurs: [PAS_050]
+  comportement: "3 arbres illusoires simultanés ; les coups de grâce propagent la terreur (Étourdi 1 s à 2 m)."
+  valeurs: "3 × 60 (120) ; délai 5 s"
+  limites: "—"
+  visuel: "Branches violettes pâles, fleurs de camélia."
+- id: EVO_080
+  nom: "Épidémie d'illusions"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_264]
+  catalyseurs: [PAS_032]
+  comportement: "La propagation touche 2 voisins et les confus infligent +30 % aux autres ennemis."
+  valeurs: "Confus 2 s ; délai 2,5 s"
+  limites: "Propagations max 16 par cycle."
+  visuel: "Fils violets ramifiés."
+- id: EVO_081
+  nom: "Hiraishin — Réseau céleste"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_265]
+  catalyseurs: [PAS_033]
+  comportement: "6 kunai actifs ; l'image-éclair frappe les ennemis sur les segments entre kunai (pas seulement autour)."
+  valeurs: "30 autour ; 20 sur segments ; toutes les 2 s"
+  limites: "—"
+  visuel: "Réseau de traits jaunes entre kunai."
+- id: EVO_082
+  nom: "Réseau d'étiquettes infini"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_270]
+  catalyseurs: [PAS_049]
+  comportement: "Grille 5 × 5 qui se reforme 3 s après la cascade (2 cycles)."
+  valeurs: "30 par étiquette ; délai 7 s"
+  limites: "1 grille."
+  visuel: "Grille plus grande, cascade en vague diagonale."
+- id: EVO_083
+  nom: "Grand sceau du mal"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_267]
+  catalyseurs: [PAS_033]
+  comportement: "Scelle 3 élites à la fois ; les ordinaires dans le sceau sont éliminés sous 30 %."
+  valeurs: "20 ; affaiblissement 8 s ; délai 10 s"
+  limites: "Boss : −25 % dégâts 5 s."
+  visuel: "Cercle de formule plus grand, trois cibles reliées."
+- id: EVO_084
+  nom: "Ōdama Rasengan (Grand orbe tourbillonnant)"
+  statut: OA
+  type: EVOLUTION
+  sources: [JUT_281]
+  catalyseurs: [PAS_060]
+  comportement: "Orbe géant (24 px) : l'impact repousse en onde de 3,5 m et laisse les ennemis Vulnérables +10 % 3 s."
+  valeurs: "Impact 120 ; onde 45 ; délai 2,0 s"
+  limites: "Le personnage reste visible (orbe tenu à bout de bras, contour conservé)."
+  visuel: "Orbe à 3 couches de rotation, anneaux de pression doubles."
+- id: EVO_085
+  nom: "Kagemane — Toile d'ombres"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_282]
+  catalyseurs: [PAS_050]
+  comportement: "L'ombre se ramifie en 5 branches et lie jusqu'à 6 cibles ; les liés partagent 20 % des dégâts reçus."
+  valeurs: "Lié 2,5 s ; partage 20 % (SECONDAIRE) ; délai 4,5 s"
+  limites: "Profondeur de partage 1."
+  visuel: "Toile noire plate à bords nets."
+- id: EVO_086
+  nom: "Essaim royal"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_291]
+  catalyseurs: [PAS_029]
+  comportement: "Deux essaims (unités logiques) ; les Parasités à 10 cumuls sont dévorés (élimination des ordinaires)."
+  valeurs: "5 par tick de 0,5 s + Parasité +2 ; permanente"
+  limites: "2 unités logiques, insectes décoratifs."
+  visuel: "Deux nuées en formation, reine esquissée."
+- id: EVO_087
+  nom: "Hakkeshō Kaiten — Grande rotation"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_297]
+  catalyseurs: [PAS_051]
+  comportement: "Dôme de 3,5 m qui dure 1 s ; les projectiles détruits sont renvoyés en éclats."
+  valeurs: "50 ; recul 3 m ; délai 5 s"
+  limites: "Télégraphes de boss non renvoyés."
+  visuel: "Dôme strié plus large, sol creusé profondément."
+- id: EVO_088
+  nom: "Soixante-quatre paumes — Garde des trigrammes"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_298]
+  catalyseurs: [PAS_002]
+  comportement: "Les 64 frappes créent une garde : les projectiles entrant à 2 m sont détruits pendant l'exécution."
+  valeurs: "64 × 4 ; 16 × 4 aux autres ; délai 7 s"
+  limites: "—"
+  visuel: "Octogone lumineux, trails de paumes."
+- id: EVO_089
+  nom: "Gatsūga — Crocs de la meute"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_294]
+  catalyseurs: [PAS_053]
+  comportement: "Quatre vrilles en croix double ; celles d'Akamaru ricochent sur les bords de l'écran."
+  valeurs: "4 × 40 ; délai 2,6 s"
+  limites: "—"
+  visuel: "Vrilles grises et blanches croisées."
+- id: EVO_090
+  nom: "Nikudan Hari Sensha (Char hérissé)"
+  statut: OA
+  type: EVOLUTION
+  sources: [JUT_285]
+  catalyseurs: [PAS_011]
+  comportement: "Boule hérissée qui perce tout, ricoche 4 fois et laisse des pointes au sol (Makibishi)."
+  valeurs: "50 ; pointes 6 par pas ; délai 3,5 s"
+  limites: "—"
+  visuel: "Boule couverte de pointes (kunai), traces."
+- id: EVO_091
+  nom: "Amaterasu — Brasier inextinguible"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_309]
+  catalyseurs: [PAS_035]
+  comportement: "Les flammes noires se transmettent sans limite de génération à la mort, mais seulement 1 cumul à chaque fois ; le sol brûle en noir 2 s."
+  valeurs: "Brûlure noire 5 cumuls ; sol 12 par tick ; délai 6 s"
+  limites: "Budget d'événements par tick respecté."
+  visuel: "Flammes noires à contour blanc 1 px, sol noirci à liseré rouge."
+- id: EVO_092
+  nom: "Kamui — Double spirale"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_310]
+  catalyseurs: [PAS_035]
+  comportement: "Deux spirales simultanées de 2,5 m ; seuil d'élimination porté à 55 %."
+  valeurs: "80 ; délai 6 s"
+  limites: "Élites et boss : dégâts."
+  visuel: "Spirales jumelles."
+- id: EVO_093
+  nom: "Shinra Tensei — Répulsion céleste"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_313]
+  catalyseurs: [PAS_035]
+  comportement: "Onde de 9 m ; les ennemis repoussés contre un obstacle subissent un choc supplémentaire."
+  valeurs: "60 ; choc 40 ; recul 5 m ; délai 9 s"
+  limites: "Recul réduit dans les zones alliées."
+  visuel: "Anneau blanc qui plie le décor, cratère."
+- id: EVO_094
+  nom: "Byakugan — Vision absolue"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_312]
+  catalyseurs: [PAS_047]
+  comportement: "Marque 6 ennemis ; chaque Marqué fait +50 % aux 3 prochains coups et révèle les assassins invisibles à 16 m."
+  valeurs: "+50 % additif ; délai 4 s"
+  limites: "—"
+  visuel: "Réseau de points vitaux plus dense."
+- id: EVO_095
+  nom: "Susanoo — Cage thoracique"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_318]
+  catalyseurs: [PAS_051]
+  comportement: "Le bras balaie à 180° et une cage thoracique donne un bouclier de 15 % PV max toutes les 8 s."
+  valeurs: "70 ; bouclier 15 % ; délai 2,6 s"
+  limites: "Plafond de bouclier."
+  visuel: "Côtes translucides autour du sprite, bras plus grand."

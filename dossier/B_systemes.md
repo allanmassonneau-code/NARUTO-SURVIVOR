@@ -205,7 +205,7 @@ Final = max(1, arrondi(B × A × M × C × V × R))
 | Étape | Valeur | Calcul |
 |---|---|---|
 | Base niveau 5 | 40 | données |
-| Additif : Puissance +20 % (PAS_001 niv. 2) + « Chakra dense » +10 % (PAS_004) | ×1,30 | 40 × 1,30 = **52,0** |
+| Additif : Puissance +20 % (PAS_001 niv. 2) + « Chakra dense » +10 % (PAS_004 niv. 2, technique CONTACT) | ×1,30 | 40 × 1,30 = **52,0** |
 | Multiplicatif : Manteau du Kyūbi (TRF_001) ×1,20 | ×1,20 | 52,0 × 1,20 = **62,4** |
 | Critique réussi, dégâts crit. ×1,5 | ×1,5 | 62,4 × 1,5 = **93,6** |
 | Vulnérable +20 % (STA_12 via Trempé-Conduction) | ×1,20 | 93,6 × 1,20 = **112,32** |
@@ -338,7 +338,14 @@ Le catalogue global n'est **pas** le pool. Construction, dans cet ordre :
 4. ∪ bonus de **Doctrine** choisie avant la run (optionnelle, débloquée en maîtrise 2) : ajoute 3 techniques thématiques compatibles ou retire une famille entière.
 5. Exclusions dynamiques : emplacement plein, niveau max, bannissement, recette déjà consommée.
 
-**Taille cible** : 24–40 techniques et 30–40 passifs admissibles en début de run. Un pool < 18 techniques déclenche une alerte de validation de contenu.
+**Taille cible** : 24–40 techniques et 30–40 passifs admissibles en début de run. Un pool < 18 techniques déclenche une alerte de validation de contenu (mesure actuelle par `outils/valider.py` : 26 à 147 techniques admissibles selon l'entrée, avant déblocages).
+
+**Échantillonnage du pool (entrées très polyvalentes)** : si plus de 40 techniques restent admissibles après l'étape 5, le pool de la run est réduit à 40, de façon déterministe à partir de la graine de run :
+1. on conserve toutes les techniques **exclusives** (accès nominatif `CHR_`, clan, dōjutsu, affinité rare, contrat) et la technique de départ ;
+2. on complète par tirage **stratifié** : au moins 3 techniques par élément de base possédé, puis au moins 2 par famille non élémentaire représentée, puis le reste au hasard pondéré ;
+3. la Doctrine choisie avant la run est appliquée **avant** l'échantillonnage (elle garantit ses techniques).
+
+Les exceptions de personnage modifient ce plafond : Hiruzen (« Le Professeur ») 44, Kakashi +1 par élément possédé (44 au total). L'écran de sélection affiche « Pool : 40 techniques » et le détail par famille.
 
 ### B6.4 Tirage des cartes (sans doublon)
 

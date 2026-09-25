@@ -1,0 +1,482 @@
+# Évolutions EVO_001 à EVO_048 (type EVOLUTION : source niv. 8 + catalyseur équipé ; remplace la source ; catalyseur conservé).
+# Obtention : coffre (prioritaire). Statut « CO » = recette de jeu ; le nom peut être OA/AV.
+- id: EVO_001
+  nom: "Soleil de l'Uchiha"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_001]
+  catalyseurs: [PAS_021]
+  comportement: "La grande boule de feu grossit en traversant les ennemis (perce 6) puis explose en 3 boules secondaires qui repartent en étoile."
+  valeurs: "Impact 70 ; explosion 40 (r 2,5 m) ; 3 × 25 ; délai 1,8 s"
+  limites: "Boules secondaires SECONDAIRE, ne se divisent pas."
+  visuel: "Boule de 32 px à cœur blanc, trois sous-boules de 12 px ; traînée de fumée noire."
+- id: EVO_002
+  nom: "Nuée de phénix"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_002]
+  catalyseurs: [PAS_007]
+  comportement: "12 flammes guidées en deux vagues d'éventail, qui reprennent une nouvelle cible si la leur meurt en vol."
+  valeurs: "18 par flamme ; délai 1,2 s ; Brûlure +1"
+  limites: "Max 3 flammes par cible."
+  visuel: "Flammes en forme d'oiseaux (4 frames d'ailes), pétales de feu."
+- id: EVO_003
+  nom: "Souffle du dragon ancestral"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_004]
+  catalyseurs: [EQP_018]
+  comportement: "Le cône continu passe à 120° et 6 m ; les ennemis à 6 cumuls de Brûlure éclatent en braises (propagation)."
+  valeurs: "12 par tick de 0,25 s ; éclatement 30 ; délai 2,2 s"
+  limites: "Éclatement : 1 par cible."
+  visuel: "Nappe de feu en 3 couches, tête de dragon esquissée au départ."
+- id: EVO_004
+  nom: "Déluge d'huile ardente"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_010]
+  catalyseurs: [EQP_029]
+  comportement: "Deux gerbes d'huile en V puis embrasement : laisse un lac de flammes de 4 m pendant 4 s."
+  valeurs: "Embrasement 60 ; lac 10 par tick de 0,5 s ; délai 4,0 s"
+  limites: "1 lac actif."
+  visuel: "Huile luisante puis mer de flammes à crêtes, sol noirci."
+- id: EVO_005
+  nom: "Balle de flamme perforante"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_009]
+  catalyseurs: [PAS_020]
+  comportement: "Tir rapide qui perce tout et ricoche une fois sur les obstacles ; laisse une ligne de braises 1 s."
+  valeurs: "30 ; délai 0,7 s ; vitesse 16 m/s"
+  limites: "—"
+  visuel: "Goutte de feu à cœur blanc et traîne longue."
+- id: EVO_006
+  nom: "Halo solaire"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_013]
+  catalyseurs: [PAS_005]
+  comportement: "Couronne permanente de 5 feux follets sur deux anneaux contrarotatifs (2 m et 3,5 m)."
+  valeurs: "12 par passage ; Brûlure +1 ; permanente"
+  limites: "Intervalle 0,5 s par follet et par cible."
+  visuel: "Deux anneaux de flammes, lueur au sol en cercle."
+- id: EVO_007
+  nom: "Hydre de braises"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_021]
+  catalyseurs: [PAS_006]
+  comportement: "La salamandre se divise en 2 à chaque élimination (max 4 simultanées), chacune poursuivant sa chaîne."
+  valeurs: "26 par cible ; 5 sauts par salamandre ; délai 1,8 s"
+  limites: "Divisions : profondeur 2."
+  visuel: "Salamandres à 2 têtes, traînées de braises entrecroisées."
+- id: EVO_008
+  nom: "Pression infernale"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_008]
+  catalyseurs: [PAS_049]
+  comportement: "L'orbe attire les ennemis ordinaires à 3 m pendant son vol, puis détone en double explosion (implosion puis explosion)."
+  valeurs: "Implosion 40 ; explosion 110 (r 4 m) ; délai 5,0 s"
+  limites: "Max 2 orbes."
+  visuel: "Orbe noir à anneau orange, implosion en 3 frames puis dôme."
+- id: EVO_009
+  nom: "Dragons jumeaux d'eau"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_025]
+  catalyseurs: [PAS_022]
+  comportement: "Deux dragons entrelacés (sinusoïdes opposées) ; chaque croisement crée un geyser."
+  valeurs: "2 × 40 ; geyser 25 (r 1,2 m) ; perce illimité ; délai 2,0 s"
+  limites: "—"
+  visuel: "Deux corps d'eau en double hélice, gerbes aux croisements."
+- id: EVO_010
+  nom: "Rempart des marées"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_026]
+  catalyseurs: [PAS_051]
+  comportement: "Le mur d'eau reste 2 s en anneau à 2,5 m : bloque tous les projectiles ordinaires, puis s'effondre en vague vers l'extérieur."
+  valeurs: "Vague 40 ; recul 3 m ; délai 6,0 s"
+  limites: "Télégraphes de boss non bloqués."
+  visuel: "Anneau d'eau haut de 24 px, écume, effondrement en 4 frames."
+- id: EVO_011
+  nom: "Prison des profondeurs"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_027]
+  catalyseurs: [PAS_050]
+  comportement: "Jusqu'à 3 prisons simultanées ; à la fin, chaque prison éclate et Trempe à 2 m."
+  valeurs: "20 par tick de 0,5 s ; durée 3 s ; éclatement 30 ; délai 5,0 s"
+  limites: "Boss : résistance de contrôle."
+  visuel: "Sphères plus sombres, silhouette déformée, bulles."
+- id: EVO_012
+  nom: "Brume du démon"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_028]
+  catalyseurs: [EQP_016]
+  comportement: "Brume de 6 m qui suit le joueur ; critique +25 % contre les cibles dedans ; les ennemis dedans s'attaquent parfois (Confus 1 s toutes les 3 s)."
+  valeurs: "Durée 6 s ; délai 9 s"
+  limites: "Télégraphes toujours au-dessus."
+  visuel: "Brume dense à bord net en dithering, silhouettes ennemies contourées."
+- id: EVO_013
+  nom: "Banc de requins missiles"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_029]
+  catalyseurs: [PAS_053]
+  comportement: "4 requins chercheurs par salve ; chaque morsure Trempe."
+  valeurs: "4 × (2 × 20) ; délai 1,4 s"
+  limites: "—"
+  visuel: "Requins en formation serrée, sillages croisés."
+- id: EVO_014
+  nom: "Raz-de-marée"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_030]
+  catalyseurs: [PAS_048]
+  comportement: "Deux vagues successives (7 m puis 10 m) ; l'inondation reste 6 s et les ennemis y sont ralentis de 30 %."
+  valeurs: "60 + 40 ; recul 3 m ; délai 8,0 s"
+  limites: "Recul réduit dans les zones alliées."
+  visuel: "Vague de 32 px à écume en crochets, sol inondé animé."
+- id: EVO_015
+  nom: "Lame d'eau infinie"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_034]
+  catalyseurs: [PAS_020]
+  comportement: "Jet maintenu 1 s qui balaie 90° ; traverse les obstacles bas et hauts."
+  valeurs: "30 par tick de 0,2 s ; longueur 14 m ; délai 3,0 s"
+  limites: "—"
+  visuel: "Ligne blanche de 3 px, brume en bordure, entaille au sol."
+- id: EVO_016
+  nom: "Mille aiguilles mortelles"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_043]
+  catalyseurs: [PAS_008]
+  comportement: "Trois couronnes d'aiguilles sur 3 cibles ; critique garanti sur cible Trempée."
+  valeurs: "3 × 12 × 5 ; délai 2,4 s"
+  limites: "—"
+  visuel: "Aiguilles blanches en couronnes décalées."
+- id: EVO_017
+  nom: "Requin dévoreur de chakra"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_046]
+  catalyseurs: [EQP_023]
+  comportement: "Le grand requin absorbe les projectiles ennemis et le chakra des ennemis traversés (+1 chakra chacun) ; explosion finale proportionnelle."
+  valeurs: "50 ; explosion 40 + 8 par absorption ; délai 7 s"
+  limites: "Plafond de chakra global."
+  visuel: "Requin de 40 px, gueule qui aspire des particules bleues."
+- id: EVO_018
+  nom: "Chidori — Mille oiseaux hurlants"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_049]
+  catalyseurs: [PAS_023]
+  comportement: "L'image de frappe enchaîne 3 cibles (4 m entre chacune) ; chaque impact décharge en arc de 2 m."
+  valeurs: "3 × 80 ; décharge 30 ; délai 2,4 s"
+  limites: "—"
+  visuel: "Filaments épais, cri d'oiseaux en crescendo."
+- id: EVO_019
+  nom: "Shiden (Éclair violet)"
+  statut: OA
+  type: EVOLUTION
+  sources: [JUT_050]
+  catalyseurs: [PAS_043]
+  comportement: "Trait de foudre plus fin et plus long (7 m) qui frappe l'élite ou le boss en priorité ; +50 % contre eux."
+  valeurs: "120 (180 élite/boss) ; délai 3,0 s"
+  limites: "—"
+  visuel: "Foudre violette à cœur blanc, contour clair."
+- id: EVO_020
+  nom: "Pluie des mille oiseaux"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_052]
+  catalyseurs: [PAS_007]
+  comportement: "3 rafales de 8 aiguilles, chaque rafale vers une cible différente ; toutes Électrisent."
+  valeurs: "3 × 8 × 8 ; délai 1,2 s"
+  limites: "Électrisé : délai interne par cible respecté."
+  visuel: "Aiguilles blanches en salves décalées."
+- id: EVO_021
+  nom: "Lance tournoyante des mille oiseaux"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_053]
+  catalyseurs: [PAS_003]
+  comportement: "La lance de 10 m effectue un tour complet (360°) autour du joueur."
+  valeurs: "30 par tick de 0,2 s ; durée 1,0 s ; délai 3,0 s"
+  limites: "Obstacles hauts : la lance se raccourcit."
+  visuel: "Lame zigzag qui balaie un cercle, traînée de 4 frames."
+- id: EVO_022
+  nom: "Kirin — Orage perpétuel"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_054]
+  catalyseurs: [EQP_034]
+  comportement: "Le nuage reste en place après la foudre et lance des éclairs secondaires 4 s ; la construction passe à 4 s."
+  valeurs: "150 ; éclairs 20 × 10 ; délai 12 s"
+  limites: "Micro-pause locale uniquement."
+  visuel: "Nuage d'orage permanent à contour clair, bête de foudre plus grande (80 px)."
+- id: EVO_023
+  nom: "Meute de foudre"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_055]
+  catalyseurs: [PAS_053]
+  comportement: "3 chiens de foudre ; chacun peut enchaîner 5 éliminations."
+  valeurs: "3 × 40 ; délai 2,2 s"
+  limites: "—"
+  visuel: "Chiens électriques en meute, traînées croisées."
+- id: EVO_024
+  nom: "Tempête ramifiée"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_059]
+  catalyseurs: [EQP_019]
+  comportement: "L'éclair se divise en 2 à chaque saut (max 16 cibles) ; −8 % par saut."
+  valeurs: "26 ; 4 générations ; délai 1,4 s"
+  limites: "Jamais deux fois la même cible."
+  visuel: "Arbre de foudre construit génération par génération (0,03 s)."
+- id: EVO_025
+  nom: "Panthères jumelles"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_057]
+  catalyseurs: [PAS_050]
+  comportement: "Deux panthères noires ; chaque cible clouée Électrise ses voisins à 2 m."
+  valeurs: "2 × 50 ; Étourdi 1 s ; délai 3,5 s"
+  limites: "—"
+  visuel: "Panthères noires à contour jaune épais, arcs violets."
+- id: EVO_026
+  nom: "Châtiment de foudre"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_072]
+  catalyseurs: [PAS_019]
+  comportement: "Chaque coup reçu déclenche une chaîne de 6 cibles et accorde 1 s de −30 % dégâts subis."
+  valeurs: "50 ; délai interne 1,2 s"
+  limites: "Réduction comptée dans le plafond de 60 %."
+  visuel: "Éclairs depuis le contour du joueur, bouclier crépitant bref."
+- id: EVO_027
+  nom: "Daikamaitachi (Grande faux de la belette)"
+  statut: AV
+  type: EVOLUTION
+  sources: [JUT_074]
+  catalyseurs: [EQP_020]
+  comportement: "Deux croissants de 160° partent en V et tranchent 4 fois ; les Entaillés à 3 cumuls sont projetés."
+  valeurs: "4 × 14 ; délai 2,2 s"
+  limites: "—"
+  visuel: "Rubans blancs plus épais, feuilles hachées en pluie."
+- id: EVO_028
+  nom: "Percée-tornade"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_073]
+  catalyseurs: [PAS_003]
+  comportement: "La bourrasque devient une tornade horizontale qui avance 8 m en aspirant puis rejette les ennemis sur les côtés."
+  valeurs: "30 ; recul latéral 3 m ; délai 2,6 s"
+  limites: "Recul réduit dans les zones alliées."
+  visuel: "Colonne de vent horizontale à bandes, débris."
+- id: EVO_029
+  nom: "Rafale de vide"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_075]
+  catalyseurs: [PAS_006]
+  comportement: "7 balles de vide en éventail ; chacune éclate en fin de course en onde de 1,5 m."
+  valeurs: "22 ; éclatement 12 ; délai 1,0 s"
+  limites: "—"
+  visuel: "Sphères déformantes, anneaux d'éclatement."
+- id: EVO_030
+  nom: "Ouragan"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_081]
+  catalyseurs: [PAS_005]
+  comportement: "Tornade géante (r 3 m) qui erre 8 s et soulève tous les ordinaires ; aspire les projectiles ennemis ordinaires."
+  valeurs: "12 par tick de 0,3 s ; délai 12 s"
+  limites: "Élites non soulevées ; 1 ouragan."
+  visuel: "Entonnoir de 64 px, débris et feuilles orbitaux."
+- id: EVO_031
+  nom: "Tourbillon de lames"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_080]
+  catalyseurs: [PAS_024]
+  comportement: "8 lames permanentes qui alternent entre 1,5 m et 3 m (respiration de 2 s) ; Entaillé."
+  valeurs: "12 ; permanente"
+  limites: "—"
+  visuel: "Croissants blancs en couronne respirante."
+- id: EVO_032
+  nom: "Miroir de vent"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_085]
+  catalyseurs: [PAS_051]
+  comportement: "La bulle dure 2 s toutes les 5 s et renvoie les projectiles vers l'ennemi le plus proche (pas forcément le tireur) avec ×3."
+  valeurs: "Renvoi ×3 ; délai 5 s"
+  limites: "Télégraphes de boss non renvoyés."
+  visuel: "Sphère striée plus dense, reflets."
+- id: EVO_033
+  nom: "Canon à air"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_079]
+  catalyseurs: [PAS_009]
+  comportement: "Balle d'air lourde : critique garanti sur la première cible, cône arrière élargi (90°, 5 m)."
+  valeurs: "60 ; cône 30 ; délai 1,6 s"
+  limites: "—"
+  visuel: "Balle à onde de choc visible, poussière en éventail."
+- id: EVO_034
+  nom: "Forteresse de terre"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_097]
+  catalyseurs: [PAS_011]
+  comportement: "Trois murs en demi-cercle (ouvert à l'avant) ; les ennemis qui les frappent reçoivent des éclats ; Armure +3 près d'un mur."
+  valeurs: "Émergence 30 ; éclats 12 ; PV 300 par mur ; délai 9 s"
+  limites: "Toujours ouverte sur 120° et à ≥ 2 m des obstacles."
+  visuel: "Murs à strates plus épais, créneaux."
+- id: EVO_035
+  nom: "Dragon de terre ancestral"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_098]
+  catalyseurs: [PAS_025]
+  comportement: "Le dragon reste 4 s et crache 8 boulets en rafale vers les groupes."
+  valeurs: "8 × 30 (r 1,5 m) ; Ensablé +1 ; délai 7 s"
+  limites: "—"
+  visuel: "Tête de 32 px plus détaillée, boulets en cascade."
+- id: EVO_036
+  nom: "Marais sans fond"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_099]
+  catalyseurs: [PAS_048]
+  comportement: "Marais de 6 m qui suit lentement le groupe le plus dense ; engloutit les ordinaires sous 35 %."
+  valeurs: "12 par tick de 0,5 s ; durée 6 s ; délai 10 s"
+  limites: "Élites ralenties 40 %."
+  visuel: "Sol violacé mouvant, remous."
+- id: EVO_037
+  nom: "Étoile de pics"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_105]
+  catalyseurs: [PAS_006]
+  comportement: "5 lignes de pics partent en étoile autour du joueur."
+  valeurs: "5 lignes × 7 pics × 30 ; délai 2,6 s"
+  limites: "1 touche par cible par ligne."
+  visuel: "Étoile de fissures en zigzag, pics anguleux."
+- id: EVO_038
+  nom: "Poing de montagne"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_107]
+  catalyseurs: [PAS_027]
+  comportement: "Le poing géant écrase un cône de 4 m puis une onde de terre de 5 m ; les ennemis projetés percutent les autres."
+  valeurs: "110 ; onde 40 ; collision 20 ; délai 2,4 s"
+  limites: "—"
+  visuel: "Poing de pierre de 32 px, déformation du sol, poussière dirigée."
+- id: EVO_039
+  nom: "Colosse de roche"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_115]
+  catalyseurs: [PAS_029]
+  comportement: "Golem permanent, plus grand, dont chaque frappe au sol crée une colonne de roche."
+  valeurs: "Frappe 60 (r 3 m) ; permanente"
+  limites: "1 golem ; héritage ANIMAL."
+  visuel: "Golem de 48 px, blocs gravés."
+- id: EVO_040
+  nom: "Gravité écrasante"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_102]
+  catalyseurs: [PAS_050]
+  comportement: "Alourdit 3 cibles à la fois ; l'écrasement crée une zone de gravité 2 s (−40 % vitesse)."
+  valeurs: "3 × 90 ; délai 4,5 s"
+  limites: "—"
+  visuel: "Cubes de glyphes multiples, sol enfoncé."
+- id: EVO_041
+  nom: "Mokuton — Shinrin Kōtan (Forêt profonde)"
+  statut: OA
+  type: EVOLUTION
+  sources: [JUT_121]
+  catalyseurs: [PAS_048]
+  comportement: "Forêt de 8 m qui pousse en vague depuis le joueur ; les arbres Entravent puis restent 6 s comme obstacles pour les ennemis (pas pour le joueur)."
+  valeurs: "70 ; 8 par tick de 0,5 s ; délai 11 s"
+  limites: "Couloirs de 2 m toujours laissés libres autour du joueur."
+  visuel: "Troncs épais à feuillage dense en parallaxe, couloirs visibles."
+- id: EVO_042
+  nom: "Dragon de bois dévorant"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_126]
+  catalyseurs: [PAS_026]
+  comportement: "Le dragon absorbe le chakra : chaque cible enserrée rend 2 chakra et donne +5 % dégâts au dragon (max +50 %)."
+  valeurs: "60 ; délai 6 s"
+  limites: "Plafond de chakra global."
+  visuel: "Dragon de 64 px, gueule qui mord, veines de chakra."
+- id: EVO_043
+  nom: "Palais de miroirs"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_127]
+  catalyseurs: [PAS_050]
+  comportement: "Deux cercles de miroirs simultanés ; les ennemis Gelés dans un cercle éclatent en éclats de glace."
+  valeurs: "10 par aiguille ; 20 aiguilles/s par cercle ; éclats 30 ; délai 9 s"
+  limites: "—"
+  visuel: "Miroirs plus hauts à reflets du joueur."
+- id: EVO_044
+  nom: "Cercueil de sable de masse"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_131]
+  catalyseurs: [EQP_003]
+  comportement: "Enveloppe jusqu'à 6 ennemis proches de la cible puis les broie ensemble ; le sable reste en surface."
+  valeurs: "6 × 90 ; surface SABLE 4 s ; délai 3,5 s"
+  limites: "Boss : Vulnérable +15 % 2 s."
+  visuel: "Six colonnes de sable qui se referment en même temps (son groupé)."
+- id: EVO_045
+  nom: "Shukaku no Tate (Bouclier de Shukaku)"
+  statut: AV
+  type: EVOLUTION
+  sources: [JUT_134]
+  catalyseurs: [PAS_051]
+  comportement: "Charges de sable jusqu'à 4 ; chaque charge absorbe un coup (quel qu'il soit, hors télégraphe majeur) et contre-frappe en zone de 2 m."
+  valeurs: "Contre 40 ; recharge 3 s par charge"
+  limites: "Télégraphes majeurs : réduits de 50 %."
+  visuel: "Flux de sable plus dense, silhouette de tanuki esquissée au blocage."
+- id: EVO_046
+  nom: "Satetsu Kekkai (Barrière de sable de fer)"
+  statut: AV
+  type: EVOLUTION
+  sources: [JUT_136]
+  catalyseurs: [PAS_026]
+  comportement: "Les aiguilles restent dans l'air 2 s en réseau ; les ennemis qui traversent le réseau sont Aimantés et blessés."
+  valeurs: "14 ; réseau 10 par tick ; délai 1,4 s"
+  limites: "1 réseau actif."
+  visuel: "Réseau de lignes noires à reflets violets."
+- id: EVO_047
+  nom: "Nuée d'argile"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_147]
+  catalyseurs: [PAS_049]
+  comportement: "8 créatures d'argile par salve ; les mines au sol se déplacent vers les ennemis proches."
+  valeurs: "30 (r 1,5 m) ; délai 1,4 s"
+  limites: "Max 10 mines."
+  visuel: "Araignées et oiseaux blancs en essaim."
+- id: EVO_048
+  nom: "Détonation en chaîne"
+  statut: CO
+  type: EVOLUTION
+  sources: [JUT_149]
+  catalyseurs: [EQP_007]
+  comportement: "La grande bombe laisse 6 petites bombes qui explosent en cascade vers l'extérieur."
+  valeurs: "140 ; 6 × 40 ; délai 16 s"
+  limites: "Pas de flash plein écran."
+  visuel: "Explosion en dôme puis chapelet de 6 explosions."

@@ -1,0 +1,443 @@
+# Ultimes ULT_001 à ULT_044 (cible du brief : ≥ 40). Coût standard : 100 chakra.
+# auto : condition de déclenchement automatique (règle générale §B4.8 si « standard »).
+# a_vide : comportement manuel sans ennemi. maitrise : second effet pour les entrées sans transformation.
+- id: ULT_001
+  nom: "Barrage de Rasengan des clones"
+  statut: CO
+  utilisateurs: [CHR_001, CHR_079]
+  auto: standard
+  effet: "8 clones apparaissent en cercle (r 4 m) et plongent chacun un Rasengan sur l'ennemi le plus dense de leur secteur."
+  valeurs: "8 × 45 (r 1,5 m) ; durée 1,6 s ; invulnérabilité 0,4 s au lancement"
+  a_vide: "Clones à 50 % qui restent 3 s ; jauge ramenée à 50."
+  maitrise: "Konohamaru : 4 clones supplémentaires à 50 %."
+  visuel: "Fumée en couronne, 8 orbes bleues synchronisées, impacts en cascade de 0,1 s."
+- id: ULT_002
+  nom: "Senpō — Chō Ōdama Rasengan (Méga-orbe ermite)"
+  statut: OA
+  utilisateurs: [CHR_002, CHR_028]
+  auto: "élite ou boss à ≤ 10 m, ou ≥ 10 ennemis à ≤ 6 m"
+  effet: "Orbe géant tenu au-dessus de la tête (0,6 s), écrasé devant le joueur : dôme de 5 m."
+  valeurs: "180 ; recul 3 m ; Vulnérable +15 % 4 s"
+  a_vide: "Dôme réduit de moitié, jauge 50."
+  maitrise: "—"
+  visuel: "Orbe de 48 px à rotation interne dense, marques d'ermite orangées autour des yeux du sprite."
+- id: ULT_003
+  nom: "Bijūdama (Orbe du démon à queues)"
+  statut: OA
+  utilisateurs: [CHR_003, CHR_042, CHR_058, CHR_062]
+  auto: "≥ 12 ennemis dans un cône de 30° à 14 m, ou boss dans l'axe"
+  effet: "Orbe noire compressée (0,8 s) tirée en ligne droite : traverse tout puis explose à 14 m."
+  valeurs: "Traversée 90 ; explosion 150 (r 4 m) ; télégraphe allié 0,8 s"
+  a_vide: "Tir dans la dernière direction, jauge 50."
+  maitrise: "—"
+  visuel: "Sphère noire à halo blanc et violet ; explosion en dôme sombre avec contour clair, sans flash plein écran."
+- id: ULT_004
+  nom: "Tempête des mille oiseaux"
+  statut: CO
+  utilisateurs: [CHR_004, CHR_005]
+  auto: standard
+  effet: "12 frappes de Chidori téléguidées sur les 12 ennemis les plus menaçants de l'écran (0,08 s d'écart)."
+  valeurs: "12 × 55 ; Électrisé"
+  a_vide: "Orage autour du joueur 3 s (10/s à 3 m), jauge 50."
+  maitrise: "Sasuke Taka : chaque frappe laisse un Chidori Nagashi au sol 1 s."
+  visuel: "Éclairs blancs verticaux successifs, gazouillis synthétique en montée."
+- id: ULT_005
+  nom: "Susanoo — Flèche de flammes noires"
+  statut: AV
+  utilisateurs: [CHR_006]
+  auto: "boss ou ≥ 2 élites à l'écran"
+  effet: "Un arc de Susanoo tire une flèche d'Enton qui perce l'écran et embrase la ligne."
+  valeurs: "200 ; Brûlure noire +5 ; ligne de 1,5 m"
+  a_vide: "Flèche dans la dernière direction, jauge 50."
+  maitrise: "—"
+  visuel: "Arc violet translucide, flèche noire à liseré rouge et contour blanc."
+- id: ULT_006
+  nom: "Coup de poing tectonique"
+  statut: CO
+  utilisateurs: [CHR_007]
+  auto: standard
+  effet: "Poing au sol : le terrain se soulève en plaques sur 6 m (projette les ordinaires, Étourdit 1 s)."
+  valeurs: "120 ; Étourdi 1 s ; soin 10 % PV max"
+  a_vide: "Onde réduite, soin conservé, jauge 50."
+  maitrise: "Second effet : les plaques restent 4 s comme obstacles."
+  visuel: "Anticipation 4 frames, plaques anguleuses qui montent en couronne."
+- id: ULT_007
+  nom: "Katsuyu — Mille limaces"
+  statut: OA
+  utilisateurs: [CHR_029, CHR_011]
+  auto: "PV < 40 % ou ≥ 20 ennemis à l'écran"
+  effet: "Des limaces se répandent sur 7 m : soin de 30 % PV max sur 5 s et acide (Corrodé) sur les ennemis."
+  valeurs: "Acide 20 par tick de 0,5 s ; durée 5 s"
+  a_vide: "Soin seul, jauge 50."
+  maitrise: "—"
+  visuel: "Petites limaces blanches et bleues en vague, éclaboussures d'acide."
+- id: ULT_008
+  nom: "Doton — Tsuiga (Meute traqueuse)"
+  statut: OA
+  utilisateurs: [CHR_008, CHR_010]
+  auto: standard
+  effet: "8 ninken jaillissent du sol sous les 8 cibles les plus menaçantes et les immobilisent 2 s ; Raikiri gratuit sur la plus menaçante."
+  valeurs: "8 × 30 ; Entravé 2 s ; Raikiri 90"
+  a_vide: "Chiens de garde 4 s autour du joueur, jauge 50."
+  maitrise: "Second effet : la meute reste 4 s et mord (12/s)."
+  visuel: "Chiens surgissant en poussière, éclair final."
+- id: ULT_009
+  nom: "Kamui — Distorsion totale"
+  statut: OA
+  utilisateurs: [CHR_009, CHR_061]
+  auto: "≥ 15 ennemis à ≤ 6 m"
+  effet: "Spirale de 5 m : élimine les ordinaires sous 60 % de PV, blesse les autres."
+  valeurs: "110 ; spirale 1,2 s"
+  a_vide: "Spirale réduite, jauge 50."
+  maitrise: "—"
+  visuel: "Spirale qui aspire les pixels, silhouettes étirées."
+- id: ULT_010
+  nom: "Sabaku Taisō (Grand enterrement du désert)"
+  statut: OA
+  utilisateurs: [CHR_012, CHR_013]
+  auto: standard
+  effet: "Le sol devient sable sur 8 m, engloutit les ordinaires Ensevelis et écrase les autres."
+  valeurs: "140 ; surface SABLE 6 s ; Ensablé +3"
+  a_vide: "Surface seule, jauge 50."
+  maitrise: "Gaara Kazekage : une seconde vague de sable 2 s plus tard (70)."
+  visuel: "Sol qui s'affaisse en spirale, vagues granuleuses."
+- id: ULT_011
+  nom: "Tourbillon de la jeunesse"
+  statut: CO
+  utilisateurs: [CHR_014, CHR_015, CHR_045]
+  auto: standard
+  effet: "Une image de frappe tourbillonnante parcourt 5 tours de l'écran en suivant les groupes."
+  valeurs: "10 touches × 25 par cible max ; durée 2,5 s"
+  a_vide: "Tourbillon autour du joueur, jauge 50."
+  maitrise: "Guy : sans transformation active, +1 Porte ouverte gratuitement à la fin."
+  visuel: "Feuilles vertes et poussière en spirale, silhouette en combinaison verte."
+- id: ULT_012
+  nom: "Champ des trigrammes — Cent vingt-huit paumes"
+  statut: OA
+  utilisateurs: [CHR_016, CHR_017, CHR_018]
+  auto: "élite à ≤ 3 m ou ≥ 8 ennemis à ≤ 3 m"
+  effet: "Champ de 3 m : 128 frappes réparties sur toutes les cibles, puis les points de chakra se ferment (−30 % dégâts ennemis 5 s)."
+  valeurs: "128 × 4 réparties ; affaiblissement 5 s"
+  a_vide: "Rotation défensive seule, jauge 50."
+  maitrise: "Hinata : les alliés logiques (boucliers) gagnent +20 PV de bouclier."
+  visuel: "Octogone de trigrammes au sol, compteur 2→128 stylisé."
+- id: ULT_013
+  nom: "Cage des chaînes adamantines"
+  statut: OA
+  utilisateurs: [CHR_077, CHR_075]
+  auto: "boss ou ≥ 2 élites à l'écran"
+  effet: "Des chaînes jaillissent en cercle et forment une cage de 6 m : ennemis Entravés 3 s, boss Vulnérable +20 % 5 s."
+  valeurs: "60 ; Entravé 3 s"
+  a_vide: "Chaînes de garde 3 s (bloquent les projectiles), jauge 50."
+  maitrise: "Second effet : soin 15 % PV max (Karin : 25 %)."
+  visuel: "Chaînes dorées en dôme, maillons épais, point d'ancrage dans le dos."
+- id: ULT_014
+  nom: "Filet d'ombres total"
+  statut: CO
+  utilisateurs: [CHR_019, CHR_020]
+  auto: standard
+  effet: "L'ombre s'étend en étoile à 10 branches et Lie par l'ombre tout ennemi touché 3 s ; étranglement collectif à la fin."
+  valeurs: "Étranglement 80 ; Lié 3 s"
+  a_vide: "Surface OMBRE seule 5 s, jauge 50."
+  maitrise: "Second effet : les ennemis liés sont Vulnérables +20 %."
+  visuel: "Étoile noire plate au sol à bords nets, mains d'ombre qui montent."
+- id: ULT_015
+  nom: "Kikaichū — Nuée dévorante"
+  statut: CO
+  utilisateurs: [CHR_021]
+  auto: standard
+  effet: "L'essaim triple 6 s et dévore : Parasité +5 sur tous les ennemis à l'écran."
+  valeurs: "Parasité +5 ; +10/s aux cibles déjà à 10 cumuls"
+  a_vide: "Essaim renforcé 6 s, jauge 50."
+  maitrise: "Second effet : chaque mort Parasitée pendant l'ultime soigne 1 PV."
+  visuel: "Nuée noire en vagues, sons groupés en un bourdonnement montant."
+- id: ULT_016
+  nom: "Gatsūga en rafale"
+  statut: CO
+  utilisateurs: [CHR_022, CHR_023]
+  auto: standard
+  effet: "6 vrilles successives rebondissent sur les bords de l'écran pendant 3 s."
+  valeurs: "6 × 40 par passage"
+  a_vide: "Vrilles autour du joueur, jauge 50."
+  maitrise: "Second effet : Akamaru grandit 10 s (+50 % dégâts)."
+  visuel: "Vrilles grises et blanches en rebonds, trajectoires lisibles."
+- id: ULT_017
+  nom: "Offrande à Jashin"
+  statut: CO
+  utilisateurs: [CHR_056]
+  auto: "boss ou élite marquée par le Lien maudit"
+  effet: "Coût annoncé : 25 % des PV actuels (jamais mortel). Le joueur se transperce : la cible liée subit 3 fois ce coût en dégâts, puis tous les ennemis à 5 m 1 fois."
+  valeurs: "Dégâts = 3 × PV sacrifiés (min 60) ; zone = 1 × (min 20)"
+  a_vide: "Aucun sacrifice, jauge conservée à 100 (ne se lance pas)."
+  maitrise: "Second effet : les PV sacrifiés sont rendus à 50 % en 5 s."
+  visuel: "Cercle rituel au sol, peau noire et blanche du sprite (palette dédiée), lance qui se plante."
+- id: ULT_018
+  nom: "Tempête tranchante"
+  statut: CO
+  utilisateurs: [CHR_026, CHR_052]
+  auto: standard
+  effet: "Grande faux de vent qui balaie l'écran d'un bord à l'autre deux fois (aller-retour)."
+  valeurs: "2 × 90 ; Entaillé +3"
+  a_vide: "Un seul passage, jauge 50."
+  maitrise: "Second effet (Temari et Asuma) : les surfaces CENDRE/Katon touchées s'embrasent (SYN_004)."
+  visuel: "Croissant blanc gigantesque avec feuilles et poussière, sans flash."
+- id: ULT_019
+  nom: "Ninpō — Hari Jizō (Hérisson de cheveux)"
+  statut: OA
+  utilisateurs: [CHR_027]
+  auto: "PV < 50 % ou ≥ 10 ennemis au contact"
+  effet: "Les cheveux enveloppent le joueur (bouclier 40 % PV max 3 s) puis projettent 40 aiguilles en étoile."
+  valeurs: "40 × 12 ; bouclier 40 %"
+  a_vide: "Bouclier seul, jauge 50."
+  maitrise: "Second effet : riposte automatique contre 3 contacts."
+  visuel: "Sprite recouvert d'une masse blanche hérissée, aiguilles radiales."
+- id: ULT_020
+  nom: "Yamata no Jutsu (Huit têtes de serpent)"
+  statut: OA
+  utilisateurs: [CHR_030, CHR_063, CHR_064]
+  auto: standard
+  effet: "Huit serpents géants jaillissent vers les huit directions et dévorent sur 8 m."
+  valeurs: "8 × 70 ; Empoisonné +5"
+  a_vide: "Serpents de garde 3 s, jauge 50."
+  maitrise: "Second effet : chaque élimination par un serpent soigne 1 %."
+  visuel: "Têtes de serpent de 32 px, corps sinueux convergeant vers le joueur (le joueur reste au-dessus, contour conservé)."
+- id: ULT_021
+  nom: "Susanoo — Épée de Totsuka"
+  statut: OA
+  utilisateurs: [CHR_031, CHR_032]
+  auto: "boss ou élite à l'écran"
+  effet: "L'épée scellante frappe la cible la plus menaçante : scelle une élite (élimination) ou inflige de lourds dégâts au boss et l'Étourdit 1 s (résistance)."
+  valeurs: "Élite : scellée ; boss : 220"
+  a_vide: "Bouclier de Yata 3 s, jauge 50."
+  maitrise: "—"
+  visuel: "Épée de liquide lumineux, gourde qui absorbe la cible."
+- id: ULT_022
+  nom: "Suiton — Suirō Sameodori (Danse des requins en prison d'eau)"
+  statut: OA
+  utilisateurs: [CHR_033, CHR_034]
+  auto: standard
+  effet: "Dôme d'eau de 7 m autour du joueur 6 s : requins qui mordent, ennemis ralentis 40 %, joueur +20 % déplacement."
+  valeurs: "Requins 6 × 30 par s répartis ; surface EAU"
+  a_vide: "Dôme réduit, jauge 50."
+  maitrise: "Kisame Maître des requins : le dôme dure 9 s."
+  visuel: "Dôme bleu translucide, silhouettes de requins circulant à l'intérieur."
+- id: ULT_023
+  nom: "C0 — Autodestruction contrôlée"
+  statut: AV
+  utilisateurs: [CHR_035]
+  auto: "PV < 30 % et ≥ 15 ennemis à ≤ 6 m"
+  effet: "Coût annoncé : 50 % des PV actuels (jamais mortel, plancher 1 PV). Explosion géante de 8 m, puis 1,0 s d'invulnérabilité et Épuisé 3 s."
+  valeurs: "260 ; ignore 50 % de la résistance"
+  a_vide: "Ne se lance pas."
+  maitrise: "Second effet : le coût passe à 35 %."
+  visuel: "Corps fissuré de lumière (3 frames), explosion en dôme blanc à contour noir, pas de flash plein écran."
+- id: ULT_024
+  nom: "Escadre d'argile"
+  statut: CO
+  utilisateurs: [CHR_036]
+  auto: standard
+  effet: "6 oiseaux d'argile piquent sur les groupes les plus denses et explosent ; C4 gratuit sur le boss."
+  valeurs: "6 × 60 (r 2 m)"
+  a_vide: "Oiseaux en orbite 4 s, jauge 50."
+  maitrise: "Second effet : chaque oiseau laisse une mine C1."
+  visuel: "Oiseaux blancs en formation en V, ombres au sol."
+- id: ULT_025
+  nom: "Cent marionnettes"
+  statut: OA
+  utilisateurs: [CHR_024, CHR_025, CHR_037, CHR_038, CHR_074]
+  auto: standard
+  effet: "Une armée de marionnettes (1 unité logique de zone) balaie un cercle de 7 m pendant 3 s ; poison massif."
+  valeurs: "15 par tick de 0,25 s ; Empoisonné +3/s"
+  a_vide: "Marionnettes de garde, jauge 50."
+  maitrise: "Second effet : les marionnettes du joueur gagnent +30 % 10 s."
+  visuel: "Rangées de silhouettes articulées, fils rouges multiples."
+- id: ULT_026
+  nom: "Chibaku Tensei (Planète explosive)"
+  statut: OA
+  utilisateurs: [CHR_039, CHR_040]
+  auto: "≥ 25 ennemis à l'écran ou boss"
+  effet: "Un noyau noir s'élève et attire tous les ennemis ordinaires à 10 m, qui forment une sphère de roche ; écrasement final."
+  valeurs: "Attraction 3 s ; écrasement 180 ; boss : 150 + Vulnérable +20 %"
+  a_vide: "Noyau seul (attire les fragments), jauge 50."
+  maitrise: "Second effet : les rochers retombent en pluie (20 × 10)."
+  visuel: "Noyau de 8 px à anneau, débris qui convergent en sphère de 64 px."
+- id: ULT_027
+  nom: "Danse éclair"
+  statut: CO
+  utilisateurs: [CHR_041, CHR_060, CHR_078]
+  auto: standard
+  effet: "Téléportations successives d'une image-éclair sur 10 cibles, entaille à chaque arrivée ; le joueur reste en place."
+  valeurs: "10 × 50"
+  a_vide: "Kunai marqués posés autour du joueur, jauge 50."
+  maitrise: "Second effet : les cibles sont Marquées 6 s."
+  visuel: "Traits jaunes (Minato), bleus (Tobirama) ou rouges (Shisui) en zigzag."
+- id: ULT_028
+  nom: "Katon — Gōka Messhitsu (Extinction par le grand feu)"
+  statut: OA
+  utilisateurs: [CHR_043]
+  auto: standard
+  effet: "Mer de flammes de 14 m devant le joueur qui avance en 2 s."
+  valeurs: "150 ; Brûlure +5"
+  a_vide: "Mer de flammes réduite, jauge 50."
+  maitrise: "—"
+  visuel: "Front de feu à 3 couches de profondeur, sol calciné temporaire."
+- id: ULT_029
+  nom: "Rinbo Hengoku (Prison du purgatoire)"
+  statut: OA
+  utilisateurs: [CHR_044]
+  auto: "boss ou ≥ 2 élites"
+  effet: "Des ombres invisibles (visibles au joueur en pointillé) frappent 5 fois chaque élite et le boss."
+  valeurs: "5 × 60 par cible majeure ; 5 × 20 aux ordinaires à ≤ 5 m"
+  a_vide: "Ombres de garde 3 s, jauge 50."
+  maitrise: "—"
+  visuel: "Contours pointillés violets de silhouettes, impacts sans source visible pour les ennemis."
+- id: ULT_030
+  nom: "Illusion collective"
+  statut: CO
+  utilisateurs: [CHR_046, CHR_066]
+  auto: standard
+  effet: "Tous les ennemis ordinaires à l'écran deviennent Confus 4 s ; les élites attaquent l'ennemi le plus proche 2 s."
+  valeurs: "Confus 4 s ; boss : Vulnérable +20 % 4 s"
+  a_vide: "Faux reflets gratuits, jauge 50."
+  maitrise: "Second effet : les confus infligent +50 % à leurs alliés."
+  visuel: "Pétales et spirales au-dessus de toutes les têtes, filtre local violet pâle sur les ennemis (pas plein écran)."
+- id: ULT_031
+  nom: "Nikudan Hari Sensha géant"
+  statut: OA
+  utilisateurs: [CHR_047]
+  auto: standard
+  effet: "Une boule hérissée géante roule 4 s en suivant les groupes (image de frappe)."
+  valeurs: "30 par touche (1/0,3 s par cible)"
+  a_vide: "Roulade autour du joueur, jauge 50."
+  maitrise: "Second effet : les pointes restent au sol (Makibishi)."
+  visuel: "Boule de 40 px couverte de pointes, sol labouré."
+- id: ULT_032
+  nom: "Arsenal céleste"
+  statut: CO
+  utilisateurs: [CHR_048, CHR_049]
+  auto: standard
+  effet: "Pluie de 60 armes sur tout l'écran pendant 3 s, pondérée vers les groupes."
+  valeurs: "60 × 18"
+  a_vide: "Pluie autour du joueur, jauge 50."
+  maitrise: "Second effet : les armes restent plantées et peuvent être ramassées (JUT_215)."
+  visuel: "Armes variées, ombres qui annoncent les impacts."
+- id: ULT_033
+  nom: "Chōjū Giga — Grand dragon d'encre"
+  statut: AV
+  utilisateurs: [CHR_050]
+  auto: standard
+  effet: "Dragon d'encre qui traverse l'écran en serpentant puis éclate en pluie d'encre (Encré)."
+  valeurs: "120 ; pluie 20 × 10"
+  a_vide: "Dragon en orbite 3 s, jauge 50."
+  maitrise: "Second effet : 3 fauves d'encre 8 s."
+  visuel: "Trait de pinceau épais animé, éclaboussures noires."
+- id: ULT_034
+  nom: "Mokuton — Mokujin (Géant de bois)"
+  statut: OA
+  utilisateurs: [CHR_051, CHR_059]
+  auto: standard
+  effet: "Invocation géante (règles §B9.4) : un géant de bois frappe 3 fois et laisse une forêt."
+  valeurs: "3 × 120 (r 4 m) ; forêt (surface BOIS) 6 s ; durée 8 s"
+  a_vide: "Forêt seule, jauge 50."
+  maitrise: "Yamato : la forêt Entrave 1,5 s."
+  visuel: "Géant de 128 px à bras multiples (Hashirama) ou simple (Yamato), transparence 55 % sur conflit."
+- id: ULT_035
+  nom: "Jinton — Désintégration de masse"
+  statut: OA
+  utilisateurs: [CHR_069, CHR_080]
+  auto: "≥ 20 ennemis à ≤ 8 m ou boss"
+  effet: "Grand cube de 7 m qui désintègre tout, ignore la résistance."
+  valeurs: "240 ; formation 1,0 s"
+  a_vide: "Ne se lance pas."
+  maitrise: "Second effet : un second cube plus petit (3 m) sur le boss."
+  visuel: "Cube blanc à quadrillage, disparition en pixels."
+- id: ULT_036
+  nom: "Tempête de miroirs de glace"
+  statut: CO
+  utilisateurs: [CHR_053]
+  auto: standard
+  effet: "12 miroirs en cercle de 6 m ; des aiguilles fusent entre eux 4 s ; Gelé à 3 cumuls."
+  valeurs: "Aiguilles 8 × 30/s réparties"
+  a_vide: "Miroirs de garde, jauge 50."
+  maitrise: "Second effet : le joueur est invulnérable aux projectiles dans le cercle."
+  visuel: "Miroirs rectangulaires, reflets du personnage dedans."
+- id: ULT_037
+  nom: "Assassinat silencieux"
+  statut: CO
+  utilisateurs: [CHR_054, CHR_076]
+  auto: "élite ou boss à l'écran"
+  effet: "Brume totale 5 s (ennemis Aveuglés) ; frappe critique garantie sur les 5 cibles les plus menaçantes."
+  valeurs: "5 × 90 critiques"
+  a_vide: "Brume seule, jauge 50."
+  maitrise: "Second effet : chaque élimination pendant la brume rend 5 chakra."
+  visuel: "Brume blanche épaisse en tramage, silhouettes de lame."
+- id: ULT_038
+  nom: "Mer de papier explosif"
+  statut: OA
+  utilisateurs: [CHR_055]
+  auto: "≥ 25 ennemis à l'écran ou boss"
+  effet: "Étiquettes explosives recouvrent 9 m autour du joueur et explosent en vagues pendant 3 s."
+  valeurs: "Vagues 5 × 50"
+  a_vide: "Ailes de papier (bouclier 20 %) 4 s, jauge 50."
+  maitrise: "—"
+  visuel: "Feuilles déployées en mer, explosions en chapelet, son groupé."
+- id: ULT_039
+  nom: "Déluge des cinq éléments"
+  statut: CO
+  utilisateurs: [CHR_057, CHR_065]
+  auto: standard
+  effet: "Cinq techniques successives : Katon (cône), Suiton (vague), Raiton (chaîne), Fūton (lames), Doton (séisme) ; chacune applique son état."
+  valeurs: "5 × 70"
+  a_vide: "Doton seul (mur défensif), jauge 50."
+  maitrise: "Hiruzen : une sixième frappe (Enma)."
+  visuel: "Chaque élément dans sa grammaire visuelle, enchaînés à 0,3 s."
+- id: ULT_040
+  nom: "Foudre noire de Kumo"
+  statut: CO
+  utilisateurs: [CHR_070, CHR_071]
+  auto: standard
+  effet: "Une colonne de foudre noire tombe sur le joueur puis se propage en 6 éclairs vers les groupes."
+  valeurs: "Colonne 100 (r 3 m) ; 6 × 60 ; Électrisé"
+  a_vide: "Armure électrique (Armure +5) 5 s, jauge 50."
+  maitrise: "Darui : les éclairs laissent des cages d'orage 2 s."
+  visuel: "Foudre noire à contour jaune épais pour la lisibilité."
+- id: ULT_041
+  nom: "Tessenka no Mai — Fleur de clématite"
+  statut: OA
+  utilisateurs: [CHR_067]
+  auto: "élite ou boss à ≤ 8 m"
+  effet: "Une lance d'os en spirale perce la cible et tout ce qui est derrière, puis éclate en forêt d'os."
+  valeurs: "200 ; forêt 40 (r 3 m)"
+  a_vide: "Armure d'os (Armure +5) 5 s, jauge 50."
+  maitrise: "—"
+  visuel: "Lance en spirale blanche, os qui éclosent en fleur."
+- id: ULT_042
+  nom: "Coulée de lave totale"
+  statut: CO
+  utilisateurs: [CHR_068]
+  auto: standard
+  effet: "Crachat de lave en éventail qui recouvre 8 m de LAVE ; brume acide simultanée."
+  valeurs: "90 ; LAVE 6 s ; Corrodé"
+  a_vide: "Brume acide défensive, jauge 50."
+  maitrise: "Second effet : la lave ralentit de 40 %."
+  visuel: "Coulées à croûte noire, bulles, brume jaune-vert en bord."
+- id: ULT_043
+  nom: "Soleils brûlants"
+  statut: CO
+  utilisateurs: [CHR_072]
+  auto: standard
+  effet: "9 orbes Shakuton se fixent sur les 9 cibles les plus résistantes et les assèchent 4 s."
+  valeurs: "9 × (15 → 30 par s)"
+  a_vide: "Orbes en orbite 4 s, jauge 50."
+  maitrise: "Second effet : les orbes survivantes traquent de nouvelles cibles."
+  visuel: "Soleils miniatures blancs à anneau de vapeur."
+- id: ULT_044
+  nom: "Vague de poudre d'or"
+  statut: CO
+  utilisateurs: [CHR_073]
+  auto: standard
+  effet: "Vague d'or de 8 m qui Aimante et écrase ; les ennemis tués lâchent des Ryō (+1 chacun, max 30)."
+  valeurs: "110 ; ralentissement 60 % 3 s"
+  a_vide: "Mur d'or défensif 4 s, jauge 50."
+  maitrise: "Second effet : un second passage en sens inverse."
+  visuel: "Vague dorée dense, poussière lourde qui retombe vite."

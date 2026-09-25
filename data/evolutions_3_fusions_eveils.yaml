@@ -1,0 +1,260 @@
+# Fusions EVO_096 à EVO_112 (2 techniques niv. 8 consommées, 1 emplacement libéré, résultat non améliorable)
+# Éveils EVO_113 à EVO_120 (1 évolution + temps ≥ 15:00 + condition tardive ; profondeur max 2)
+- id: EVO_096
+  nom: "Fūton — Rasenshuriken"
+  statut: OA
+  type: FUSION
+  sources: [JUT_281, JUT_080]
+  catalyseurs: [PAS_038]
+  comportement: "Shuriken de vent à noyau d'orbe lancé vers le groupe le plus dense ; à l'impact, dôme de lames microscopiques 1 s qui touche toutes les 0,1 s."
+  valeurs: "Impact 80 ; dôme 10 × 12 (r 3 m) ; délai 3,5 s"
+  limites: "Dôme : 1 touche/0,1 s par cible ; pas de flash plein écran."
+  visuel: "Orbe bleu avec 4 lames blanches en rotation ; dôme blanc strié, son aigu continu."
+- id: EVO_097
+  nom: "Tempête de feu"
+  statut: CO
+  type: FUSION
+  sources: [JUT_001, JUT_073]
+  catalyseurs: []
+  comportement: "La bourrasque porte une boule de feu qui se déploie en mur de flammes de 8 m avançant sur 10 m."
+  valeurs: "90 ; Brûlure +3 ; délai 3,0 s"
+  limites: "—"
+  visuel: "Front de feu attisé à lignes de vent, braises horizontales."
+- id: EVO_098
+  nom: "Brouillard ébouillantant"
+  statut: CO
+  type: FUSION
+  sources: [JUT_028, JUT_015]
+  catalyseurs: []
+  comportement: "Brume brûlante de 5 m autour du joueur : Vapeur (−20 % dégâts ennemis), Aveuglé et dégâts continus."
+  valeurs: "10 par tick de 0,5 s ; durée 5 s ; délai 8 s"
+  limites: "—"
+  visuel: "Brume blanche à reflets orange."
+- id: EVO_099
+  nom: "Orage de Kiri"
+  statut: CO
+  type: FUSION
+  sources: [JUT_039, JUT_059]
+  catalyseurs: [PAS_037]
+  comportement: "Averse permanente (6 m) sur le joueur : toutes les 0,5 s, un éclair saute entre les ennemis Trempés (6 sauts)."
+  valeurs: "Éclairs 30 ; permanente"
+  limites: "Déclenche SYN_001 au plus 2 fois/s."
+  visuel: "Pluie oblique, arcs en chaîne entre gouttes."
+- id: EVO_100
+  nom: "Météore de magma"
+  statut: CO
+  type: FUSION
+  sources: [JUT_104, JUT_008]
+  catalyseurs: []
+  comportement: "Rocher incandescent lancé en cloche : explosion de 3,5 m puis lac de LAVE 3 s."
+  valeurs: "120 ; lave 12 par tick ; délai 6 s"
+  limites: "—"
+  visuel: "Rocher à fissures rouges, fumée noire."
+- id: EVO_101
+  nom: "Gouffre de boue"
+  statut: CO
+  type: FUSION
+  sources: [JUT_099, JUT_040]
+  catalyseurs: []
+  comportement: "Tourbillon de boue de 5 m qui aspire et engloutit les ordinaires sous 30 %."
+  valeurs: "12 par tick de 0,5 s ; attraction 1,5 m/s ; durée 5 s ; délai 10 s"
+  limites: "Boss non attirés."
+  visuel: "Spirale brune et bleue."
+- id: EVO_102
+  nom: "Tempête du désert"
+  statut: CO
+  type: FUSION
+  sources: [JUT_133, JUT_081]
+  catalyseurs: []
+  comportement: "Tempête de sable errante de 4 m : Ensablé +1/s, Aveuglé, grains projetés."
+  valeurs: "10 par tick de 0,3 s ; durée 7 s ; délai 11 s"
+  limites: "1 tempête."
+  visuel: "Colonne de sable ocre, grains en spirale."
+- id: EVO_103
+  nom: "Kusanagi — Lame du courant des mille oiseaux"
+  statut: CO
+  type: FUSION
+  sources: [JUT_199, JUT_051]
+  catalyseurs: []
+  comportement: "Estocs électrifiés de 5 m ; chaque estoc décharge Chidori Nagashi en ligne sur toute la lame."
+  valeurs: "70 ; Électrisé ; délai 1,1 s"
+  limites: "—"
+  visuel: "Lame blanche enveloppée d'éclairs."
+- id: EVO_104
+  nom: "Bataillon des crapauds ardents"
+  statut: CO
+  type: FUSION
+  sources: [JUT_225, JUT_010]
+  catalyseurs: []
+  comportement: "4 crapauds crachent huile puis feu sur leurs cibles (combo en deux temps par crapaud)."
+  valeurs: "4 × 40 + Brûlure +2 ; durée 10 s ; délai 12 s"
+  limites: "Compte 1 unité."
+  visuel: "Crapauds à gourdes, jets bruns puis orange."
+- id: EVO_105
+  nom: "Kurohigi — Kiki Ippatsu (Piège de la fourmi et du corbeau)"
+  statut: OA
+  type: FUSION
+  sources: [JUT_202, JUT_203]
+  catalyseurs: [PAS_046]
+  comportement: "Kuroari emprisonne une élite ; Karasu la transperce de 6 lames empoisonnées ; recommence toutes les 6 s."
+  valeurs: "6 × 30 + Empoisonné +3 ; permanente"
+  limites: "Boss : lames seulement (Vulnérable +10 %)."
+  visuel: "Torse qui se ferme, lames qui traversent en rayons."
+- id: EVO_106
+  nom: "Rotation du vide"
+  statut: CO
+  type: FUSION
+  sources: [JUT_297, JUT_299]
+  catalyseurs: []
+  comportement: "Rotation qui projette 8 paumes du vide en étoile à 8 m."
+  valeurs: "Rotation 40 ; paumes 8 × 35 ; délai 4 s"
+  limites: "—"
+  visuel: "Dôme bleu puis 8 demi-lunes."
+- id: EVO_107
+  nom: "Étreinte mortelle de l'ombre"
+  statut: CO
+  type: FUSION
+  sources: [JUT_282, JUT_283]
+  catalyseurs: []
+  comportement: "L'ombre lie 4 cibles et les étrangle aussitôt ; les ordinaires éliminés propagent l'ombre (1 lien)."
+  valeurs: "20 par tick de 0,5 s ; Lié 2 s ; délai 4 s"
+  limites: "Propagation profondeur 1."
+  visuel: "Ruban noir ramifié, mains plates."
+- id: EVO_108
+  nom: "Tombeau du désert"
+  statut: CO
+  type: FUSION
+  sources: [JUT_131, JUT_132]
+  catalyseurs: []
+  comportement: "Cercueil puis enterrement automatique : chaque cible enveloppée est broyée et entraîne ses voisins (r 2 m)."
+  valeurs: "Broyage 110 ; voisins 40 ; délai 3 s"
+  limites: "Boss : Vulnérable +15 %."
+  visuel: "Sable qui se referme puis s'enfonce en entonnoir."
+- id: EVO_109
+  nom: "Forteresse-prison de bois"
+  statut: CO
+  type: FUSION
+  sources: [JUT_122, JUT_123]
+  catalyseurs: []
+  comportement: "Le rempart s'ouvre vers l'avant ; toutes les 4 s, une cage tombe sur la cible la plus menaçante devant l'ouverture."
+  valeurs: "Rempart 300 PV ; cage 45 + Entravé 2 s ; durée 8 s ; délai 12 s"
+  limites: "Rempart toujours ouvert sur 120°."
+  visuel: "Rempart de bois avec cages suspendues."
+- id: EVO_110
+  nom: "Tigre et éléphant du soir"
+  statut: CO
+  type: FUSION
+  sources: [JUT_168, JUT_169]
+  catalyseurs: []
+  comportement: "Sekizō (5 coups) suivi d'Hirudora à la fin ; délai commun réduit."
+  valeurs: "5 × 45 + 120 (r 4 m) ; délai 12 s"
+  limites: "Réservé à Might Guy."
+  visuel: "Poings concentriques puis tigre d'air."
+- id: EVO_111
+  nom: "Enton — Brasier façonné"
+  statut: OA
+  type: FUSION
+  sources: [JUT_309, JUT_154]
+  catalyseurs: []
+  comportement: "Les flammes noires posées sur une cible jaillissent en 5 pointes et une lame noire balaie autour du joueur."
+  valeurs: "Pointes 5 × 40 ; lame 60 ; Brûlure noire +3 ; délai 3,5 s"
+  limites: "—"
+  visuel: "Pointes noires à contour blanc, lame noire."
+- id: EVO_112
+  nom: "Ten'in-Tensei (Cycle attraction-répulsion)"
+  statut: CO
+  type: FUSION
+  sources: [JUT_313, JUT_314]
+  catalyseurs: []
+  comportement: "Attire violemment les ordinaires à 8 m vers le joueur (arrêt à 2 m) puis les repousse en onde ; collisions."
+  valeurs: "Attraction 20 ; répulsion 70 ; délai 8 s"
+  limites: "Point d'arrêt jamais sur le joueur."
+  visuel: "Lignes convergentes puis anneau blanc."
+- id: EVO_113
+  nom: "Senpō — Rasenshuriken ermite"
+  statut: OA
+  type: EVEIL
+  sources: [EVO_096]
+  catalyseurs: []
+  condition_tardive: "TRF_002|TRF_003"
+  comportement: "Le Rasenshuriken est lancé (sans contact), explose en dôme de 5 m ; les ennemis au centre sont fixés 0,5 s."
+  valeurs: "Impact 120 ; dôme 16 × 12 ; délai 3,0 s"
+  limites: "Déclenchable seulement pendant la transformation la première fois ; ensuite permanent."
+  visuel: "Dôme blanc plus grand, marques d'ermite sur l'icône."
+- id: EVO_114
+  nom: "Chō Ōdama Rasen Tarengan (Méga-orbes multiples)"
+  statut: AV
+  type: EVEIL
+  sources: [EVO_084]
+  catalyseurs: []
+  condition_tardive: "TRF_002"
+  comportement: "Trois orbes géants lancés en rafale sur 3 cibles."
+  valeurs: "3 × 150 ; onde 60 ; délai 2,6 s"
+  limites: "—"
+  visuel: "Trois orbes de 32 px en séquence."
+- id: EVO_115
+  nom: "Kirin — Tonnerre céleste"
+  statut: CO
+  type: EVEIL
+  sources: [EVO_022]
+  catalyseurs: []
+  condition_tardive: "TRF_005|TRF_006"
+  comportement: "Deux bêtes de foudre tombent successivement (0,5 s) et le nuage reste 6 s."
+  valeurs: "2 × 170 ; éclairs 25 × 14 ; délai 11 s"
+  limites: "Micro-pause locale uniquement."
+  visuel: "Deux bêtes de 80 px, nuage persistant."
+- id: EVO_116
+  nom: "Amaterasu — Susanoo enflammé"
+  statut: CO
+  type: EVEIL
+  sources: [EVO_091]
+  catalyseurs: []
+  condition_tardive: "TRF_006|TRF_007"
+  comportement: "Le joueur est entouré d'un anneau de flammes noires (3 m) qui pose Brûlure noire en continu."
+  valeurs: "Anneau 20 par tick ; transmissions illimitées ; délai 6 s"
+  limites: "—"
+  visuel: "Anneau noir à contour blanc et rouge."
+- id: EVO_117
+  nom: "Kage Bunshin — Armée du Kyūbi"
+  statut: CO
+  type: EVEIL
+  sources: [EVO_069]
+  catalyseurs: []
+  condition_tardive: "TRF_001|TRF_003"
+  comportement: "Les clones portent le manteau du Kyūbi : plafond 6, chaque clone frappe d'un bras de chakra (2 m) et les Rasengan coordonnés deviennent Ōdama."
+  valeurs: "Frappe 40 ; Rasengan coordonné 6 × 90 ; délai 3,5 s"
+  limites: "Plafond global de 8 unités respecté."
+  visuel: "Clones auréolés d'orange, contour bleu conservé."
+- id: EVO_118
+  nom: "Désert impérial"
+  statut: CO
+  type: EVEIL
+  sources: [EVO_044]
+  catalyseurs: []
+  condition_tardive: "TRF_011"
+  comportement: "Tout l'écran devient SABLE ; chaque seconde, un cercueil de masse part sur le groupe le plus dense."
+  valeurs: "6 × 90 par seconde ; délai 1,0 s"
+  limites: "Plafond de surfaces respecté."
+  visuel: "Sol entièrement sableux, vagues légères."
+- id: EVO_119
+  nom: "Lotus de la Porte"
+  statut: CO
+  type: EVEIL
+  sources: [EVO_055]
+  catalyseurs: []
+  condition_tardive: "TRF_009"
+  comportement: "Avec ≥ 6 Portes ouvertes : chaque Lotus s'enchaîne sur 4 cibles et projette des flammes (Brûlure)."
+  valeurs: "4 × 160 ; délai 6 s"
+  limites: "Hors Portes ≥ 6 : fonctionne comme Lotus de la jeunesse."
+  visuel: "Aura verte, bandages enflammés."
+- id: EVO_120
+  nom: "Forêt primordiale"
+  statut: CO
+  type: EVEIL
+  sources: [EVO_041]
+  catalyseurs: []
+  condition_tardive: "TRF_016|EQP_038"
+  comportement: "La forêt profonde se régénère sans délai tant que le joueur y reste ; les arbres lancent des pieux (JUT_124 niv. 8)."
+  valeurs: "Forêt 12 par tick ; pieux 5 × 30 / 2 s"
+  limites: "Couloirs de 2 m garantis."
+  visuel: "Troncs anciens, pollen doré."
