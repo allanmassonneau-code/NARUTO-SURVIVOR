@@ -1,0 +1,542 @@
+[
+ {
+  "id": "PAS_001",
+  "nom": "Entraînement intensif",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Puissance",
+  "par_niveau": "+10 % Puissance",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_002",
+  "nom": "Rythme du shinobi",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Cadence",
+  "par_niveau": "+7 % Cadence (niv. 5 : +35 %, délai −26 %)",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_003",
+  "nom": "Maîtrise de la forme",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Zone",
+  "par_niveau": "+8 % Zone (dimensions linéaires)",
+  "applique_a": "CONE, ONDE, ZONE, PIEGE, RAYON, ORBITE, DIFFERE, CONTACT, PROJECTILE"
+ },
+ {
+  "id": "PAS_004",
+  "nom": "Chakra dense",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Puissance conditionnelle",
+  "par_niveau": "+5 % dégâts des techniques CONTACT et ONDE",
+  "applique_a": "CONTACT, ONDE"
+ },
+ {
+  "id": "PAS_005",
+  "nom": "Endurance du chakra",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Durée",
+  "par_niveau": "+8 % Durée",
+  "applique_a": "ZONE, ORBITE, PIEGE, INVOCATION, RAYON"
+ },
+ {
+  "id": "PAS_006",
+  "nom": "Sceau de multiplication",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Quantité",
+  "par_niveau": "niv. 2 : +1 Quantité ; niv. 4 : +1 (total +2) ; niv. 1/3/5 : +4 % Puissance",
+  "applique_a": "PROJECTILE, SALVE, ONDE, ZONE, PIEGE, ORBITE, INVOCATION, DIFFERE, CHAINE"
+ },
+ {
+  "id": "PAS_007",
+  "nom": "Poignet vif",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Vitesse des projectiles",
+  "par_niveau": "+12 % vitesse des projectiles",
+  "applique_a": "PROJECTILE, SALVE, CHAINE"
+ },
+ {
+  "id": "PAS_008",
+  "nom": "Œil aiguisé",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Chance critique",
+  "par_niveau": "+4 % chance critique",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_009",
+  "nom": "Frappe vitale",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Dégâts critiques",
+  "par_niveau": "+0,12 au multiplicateur critique",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_010",
+  "nom": "Jambes légères",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Déplacement",
+  "par_niveau": "+6 % déplacement",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_011",
+  "nom": "Gilet de chūnin",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Armure",
+  "par_niveau": "+1 Armure",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_012",
+  "nom": "Sceaux rapides",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Réduction du délai",
+  "par_niveau": "−4 % de délai des techniques SCEAU et PIEGE (appliqué après la Cadence, max −20 %)",
+  "applique_a": "SCEAU, PIEGE"
+ },
+ {
+  "id": "PAS_013",
+  "nom": "Pilules de soldat",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Régénération",
+  "par_niveau": "+0,2 PV/s",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_014",
+  "nom": "Aimant de chakra",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Rayon de collecte",
+  "par_niveau": "+20 % rayon de collecte",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_015",
+  "nom": "Vitalité",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "PV max",
+  "par_niveau": "+10 % PV max",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_016",
+  "nom": "Méditation",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Gain de chakra",
+  "par_niveau": "+10 % gain de chakra",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_017",
+  "nom": "Talent précoce",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Gain d'XP",
+  "par_niveau": "+6 % gain d'XP",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_018",
+  "nom": "Chance du débutant",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Chance",
+  "par_niveau": "+10 % Chance (rareté des Rouleaux, coffres triples)",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_019",
+  "nom": "Réflexes",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Réduction des dégâts",
+  "par_niveau": "+3 % réduction des dégâts",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_020",
+  "nom": "Précision",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Perce",
+  "par_niveau": "niv. 3 : +1 perce ; niv. 5 : +1 perce ; niv. 1/2/4 : +3 % Puissance des projectiles",
+  "applique_a": "PROJECTILE, SALVE"
+ },
+ {
+  "id": "PAS_021",
+  "nom": "Flamme intérieure",
+  "statut": "CO",
+  "acces": "ELEM_KATON",
+  "stat": "Affinité Katon",
+  "par_niveau": "+6 % dégâts E_KATON ; Brûlure +0,3 s",
+  "applique_a": "E_KATON"
+ },
+ {
+  "id": "PAS_022",
+  "nom": "Source vive",
+  "statut": "CO",
+  "acces": "ELEM_SUITON",
+  "stat": "Affinité Suiton",
+  "par_niveau": "+6 % dégâts E_SUITON ; Trempé +0,3 s",
+  "applique_a": "E_SUITON"
+ },
+ {
+  "id": "PAS_023",
+  "nom": "Nerfs de foudre",
+  "statut": "CO",
+  "acces": "ELEM_RAITON",
+  "stat": "Affinité Raiton",
+  "par_niveau": "+6 % dégâts E_RAITON ; délai interne d'Électrisé −0,1 s (min 0,5 s)",
+  "applique_a": "E_RAITON"
+ },
+ {
+  "id": "PAS_024",
+  "nom": "Souffle tranchant",
+  "statut": "CO",
+  "acces": "ELEM_FUTON",
+  "stat": "Affinité Fūton",
+  "par_niveau": "+6 % dégâts E_FUTON ; niv. 5 : Entaillé cumul max 4",
+  "applique_a": "E_FUTON"
+ },
+ {
+  "id": "PAS_025",
+  "nom": "Racines profondes",
+  "statut": "CO",
+  "acces": "ELEM_DOTON",
+  "stat": "Affinité Doton",
+  "par_niveau": "+6 % dégâts E_DOTON ; +2 % Armure effective près d'une structure de terre",
+  "applique_a": "E_DOTON"
+ },
+ {
+  "id": "PAS_026",
+  "nom": "Lignée héritée",
+  "statut": "CO",
+  "acces": "KG_MOKUTON|KG_HYOTON|KG_SABLE|KG_JITON|KG_SHAKUTON|KG_YOTON|KG_BAKUTON|KG_RANTON|KG_ENTON|KG_FUTTON|KG_JINTON",
+  "stat": "Affinité rare",
+  "par_niveau": "+6 % dégâts des techniques de famille RARE",
+  "applique_a": "RARE"
+ },
+ {
+  "id": "PAS_027",
+  "nom": "Corps d'acier",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Taijutsu",
+  "par_niveau": "+5 % dégâts CONTACT ; +10 % recul",
+  "applique_a": "CONTACT"
+ },
+ {
+  "id": "PAS_028",
+  "nom": "Étui bien garni",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Outils",
+  "par_niveau": "+5 % dégâts OUTIL ; niv. 5 : +1 Quantité aux OUTIL",
+  "applique_a": "OUTIL"
+ },
+ {
+  "id": "PAS_029",
+  "nom": "Contrat de sang",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Invocations",
+  "par_niveau": "+10 % durée des unités ; +4 % dégâts des unités",
+  "applique_a": "UNITE_ALLIEE"
+ },
+ {
+  "id": "PAS_030",
+  "nom": "Esprit d'équipe",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Clones",
+  "par_niveau": "+6 % dégâts des CLONE ; niv. 5 : +1 au plafond de clones de chaque technique",
+  "applique_a": "CLONE"
+ },
+ {
+  "id": "PAS_031",
+  "nom": "Pas de l'ombre",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Esquive",
+  "par_niveau": "−6 % recharge d'esquive ; niv. 3 : +1 charge",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_032",
+  "nom": "Voile d'illusion",
+  "statut": "CO",
+  "acces": "APT_GEN",
+  "stat": "Genjutsu",
+  "par_niveau": "+8 % durée des contrôles GENJUTSU",
+  "applique_a": "GENJUTSU"
+ },
+ {
+  "id": "PAS_033",
+  "nom": "Encre de sceau",
+  "statut": "CO",
+  "acces": "APT_FUIN",
+  "stat": "Sceaux",
+  "par_niveau": "+1 s durée de Marqué ; +6 % dégâts SCEAU",
+  "applique_a": "SCEAU"
+ },
+ {
+  "id": "PAS_034",
+  "nom": "Sang du clan",
+  "statut": "CO",
+  "acces": "CLAN_UCHIHA|CLAN_HYUGA|CLAN_NARA|CLAN_AKIMICHI|CLAN_YAMANAKA|CLAN_ABURAME|CLAN_INUZUKA|CLAN_UZUMAKI|CLAN_KAGUYA|CLAN_HOZUKI|APT_RASEN",
+  "stat": "Clan",
+  "par_niveau": "+6 % dégâts CLAN",
+  "applique_a": "CLAN"
+ },
+ {
+  "id": "PAS_035",
+  "nom": "Pupilles éveillées",
+  "statut": "CO",
+  "acces": "DOJ_SHARINGAN|DOJ_BYAKUGAN|DOJ_RINNEGAN",
+  "stat": "Oculaire",
+  "par_niveau": "−4 % délai des techniques OCULAIRE (après Cadence)",
+  "applique_a": "OCULAIRE"
+ },
+ {
+  "id": "PAS_036",
+  "nom": "Huile de crapaud",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Terrain",
+  "par_niveau": "Toutes les (10 − niv) s, la prochaine technique CONE, ONDE ou ZONE dépose une nappe d'HUILE sur sa zone",
+  "applique_a": "CONE, ONDE, ZONE"
+ },
+ {
+  "id": "PAS_037",
+  "nom": "Conducteur de chakra",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Conduction",
+  "par_niveau": "Trempé +0,2 s ; niv. 5 : Conduction crée 3 arcs au lieu de 2",
+  "applique_a": "E_SUITON, E_RAITON"
+ },
+ {
+  "id": "PAS_038",
+  "nom": "Nature du vent",
+  "statut": "CO",
+  "acces": "ELEM_FUTON",
+  "stat": "Transformation de nature",
+  "par_niveau": "+0,3 m portée Fūton ; niv. 3 : les techniques CLAN d'héritage (Rasengan) gagnent le tag E_FUTON",
+  "applique_a": "E_FUTON, CLAN"
+ },
+ {
+  "id": "PAS_039",
+  "nom": "Kawarimi (Substitution)",
+  "statut": "OA",
+  "acces": "LIBRE",
+  "stat": "Survie",
+  "par_niveau": "Un coup qui ferait passer sous 1 PV est remplacé par une bûche ; délai 90/80/70/60/50 s",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_040",
+  "nom": "Chakra de réserve",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Bouclier",
+  "par_niveau": "Toutes les 12 s : bouclier de 5 % PV max par niveau",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_041",
+  "nom": "Absorption",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Vol de vie",
+  "par_niveau": "0,2 % des dégâts infligés rendus en PV (plafond 2 PV/s)",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_042",
+  "nom": "Frénésie",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Cadence conditionnelle",
+  "par_niveau": "Chaque élimination : +1 % Cadence 3 s (max +2 % × niv × 5)",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_043",
+  "nom": "Tueur d'élites",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Dégâts ciblés",
+  "par_niveau": "+8 % dégâts contre élites et boss",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_044",
+  "nom": "Nettoyeur de horde",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Dégâts ciblés",
+  "par_niveau": "+6 % dégâts contre ennemis ordinaires",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_045",
+  "nom": "Poison concentré",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Poison",
+  "par_niveau": "+2 cumuls max d'Empoisonné ; +5 % dégâts du poison",
+  "applique_a": "POISON"
+ },
+ {
+  "id": "PAS_046",
+  "nom": "Maître des fils",
+  "statut": "CO",
+  "acces": "APT_MARIO",
+  "stat": "Marionnettes",
+  "par_niveau": "+1 m portée des fils ; +5 % dégâts MARIONNETTE",
+  "applique_a": "MARIONNETTE"
+ },
+ {
+  "id": "PAS_047",
+  "nom": "Perception",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Détection",
+  "par_niveau": "+2 m de détection hors écran ; +3 % chance critique contre Marqués",
+  "applique_a": "MARQUE"
+ },
+ {
+  "id": "PAS_048",
+  "nom": "Terrain favorable",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Terrain",
+  "par_niveau": "+15 % durée des surfaces créées par le joueur",
+  "applique_a": "TERRAIN"
+ },
+ {
+  "id": "PAS_049",
+  "nom": "Explosifs instables",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Explosifs",
+  "par_niveau": "+6 % dégâts EXPLOSIF ; +5 % rayon d'explosion",
+  "applique_a": "EXPLOSIF"
+ },
+ {
+  "id": "PAS_050",
+  "nom": "Contrôle absolu",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Contrôle",
+  "par_niveau": "+6 % durée des contrôles ; résistance ajoutée aux boss −0,8 point par niveau (20 → 16)",
+  "applique_a": "CONTROLE"
+ },
+ {
+  "id": "PAS_051",
+  "nom": "Bouclier de chakra",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Bouclier",
+  "par_niveau": "+10 % valeur des boucliers et +10 % durée des barrières",
+  "applique_a": "BOUCLIER"
+ },
+ {
+  "id": "PAS_052",
+  "nom": "Cycle de l'ultime",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Ultime",
+  "par_niveau": "Après un ultime : +4 % Puissance par niveau pendant 10 s",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_053",
+  "nom": "Instinct animal",
+  "statut": "CO",
+  "acces": "LIBRE",
+  "stat": "Animaux",
+  "par_niveau": "+6 % dégâts ANIMAL ; +5 % vitesse des unités",
+  "applique_a": "ANIMAL"
+ },
+ {
+  "id": "PAS_054",
+  "nom": "Volonté du Feu",
+  "statut": "OA",
+  "acces": "LIBRE",
+  "stat": "Défense conditionnelle",
+  "par_niveau": "Sous 50 % PV : +4 % réduction des dégâts et +3 % Puissance",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_055",
+  "nom": "Énergie naturelle",
+  "statut": "OA",
+  "acces": "APT_SENJ",
+  "stat": "Senjutsu",
+  "par_niveau": "Immobile 1 s : +4 % dégâts (perdu après 2 s de mouvement)",
+  "applique_a": "TOUT"
+ },
+ {
+  "id": "PAS_056",
+  "nom": "Chakra de bijū",
+  "statut": "CO",
+  "acces": "APT_JINCH",
+  "stat": "Jinchūriki",
+  "par_niveau": "+0,3 PV/s ; +6 % gain de chakra",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_057",
+  "nom": "Corps modifié",
+  "statut": "CO",
+  "acces": "APT_CORPS",
+  "stat": "Corps",
+  "par_niveau": "+6 % PV max ; −8 % coûts en PV (SACRIFICE)",
+  "applique_a": "JOUEUR"
+ },
+ {
+  "id": "PAS_058",
+  "nom": "Lame affûtée",
+  "statut": "CO",
+  "acces": "APT_KENJ",
+  "stat": "Kenjutsu",
+  "par_niveau": "+6 % dégâts CONTACT de famille OUTIL ; Entaillé +1 à niv. 3",
+  "applique_a": "OUTIL"
+ },
+ {
+  "id": "PAS_059",
+  "nom": "Médecine ninja",
+  "statut": "CO",
+  "acces": "APT_MED",
+  "stat": "Soins",
+  "par_niveau": "+10 % soins reçus et prodigués",
+  "applique_a": "SOIN"
+ },
+ {
+  "id": "PAS_060",
+  "nom": "Main de chakra rotatif",
+  "statut": "CO",
+  "acces": "APT_RASEN",
+  "stat": "Lignée du Rasengan",
+  "par_niveau": "+0,3 m au rayon d'onde des techniques d'héritage ; +5 % dégâts",
+  "applique_a": "CLAN"
+ }
+]

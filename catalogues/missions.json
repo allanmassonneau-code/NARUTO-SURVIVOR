@@ -1,0 +1,3807 @@
+[
+ {
+  "id": "MIS_001",
+  "nom": "Examen d'entrée à la simulation",
+  "type": "scenario",
+  "mode": "Expedition",
+  "carte": "MAP_001",
+  "personnage": "TOUS",
+  "rang": "D",
+  "condition": "Survivre 8 min et vaincre Kakashi (version d'entraînement, 25 % PV).",
+  "recompenses": {
+   "ryo": 150,
+   "deblocages": [],
+   "autres": "Archives Ninja ; écran de Doctrine visible (verrouillé)"
+  },
+  "dependances": []
+ },
+ {
+  "id": "MIS_002",
+  "nom": "Rang C — Le pont de Tazuna",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_002",
+  "personnage": "TOUS",
+  "rang": "D",
+  "condition": "Vaincre Zabuza.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [
+    "MAP_003"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_001"
+  ]
+ },
+ {
+  "id": "MIS_003",
+  "nom": "Examen chūnin — La Forêt de la Mort",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "D",
+  "condition": "Vaincre Orochimaru.",
+  "recompenses": {
+   "ryo": 350,
+   "deblocages": [
+    "MAP_004"
+   ],
+   "autres": "Doctrine débloquée"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_004",
+  "nom": "Examen chūnin — La finale",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "D",
+  "condition": "Vaincre Gaara.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [
+    "MAP_005",
+    "MAP_008"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_005",
+  "nom": "Poursuite de Sasuke",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kimimaro.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [
+    "MAP_006"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_006",
+  "nom": "La Vallée de la Fin",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_006",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre le rival (Sasuke ou Naruto selon l'entrée jouée).",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [
+    "MAP_007"
+   ],
+   "autres": "Rang B"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_007",
+  "nom": "Le repaire du serpent",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_007",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kabuto.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [
+    "MAP_009"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_006"
+  ]
+ },
+ {
+  "id": "MIS_008",
+  "nom": "Sauvetage du Kazekage",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Sasori.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [
+    "MAP_010",
+    "MAP_011"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_009",
+  "nom": "Les frères Uchiha",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Vaincre Itachi.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "Cosmétique : bandeau rayé"
+  },
+  "dependances": [
+   "MIS_007"
+  ]
+ },
+ {
+  "id": "MIS_010",
+  "nom": "La brume de Kiri",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Vaincre Kisame.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [
+    "MAP_018"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_011",
+  "nom": "Le duo immortel",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_011",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Vaincre Kakuzu.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [
+    "MAP_012"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_012",
+  "nom": "La pluie de Pain",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Vaincre Pain.",
+  "recompenses": {
+   "ryo": 550,
+   "deblocages": [
+    "MAP_013"
+   ],
+   "autres": "Rang A"
+  },
+  "dependances": [
+   "MIS_011"
+  ]
+ },
+ {
+  "id": "MIS_013",
+  "nom": "La nuit du Kyūbi",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Vaincre Kurama.",
+  "recompenses": {
+   "ryo": 550,
+   "deblocages": [
+    "MAP_014"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_012"
+  ]
+ },
+ {
+  "id": "MIS_014",
+  "nom": "Le Sommet des Kage",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_014",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre Danzō.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [
+    "MAP_015"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_015",
+  "nom": "Les falaises de Kumo",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_015",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre Hachibi.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [
+    "MAP_016"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_014"
+  ]
+ },
+ {
+  "id": "MIS_016",
+  "nom": "La quatrième grande guerre",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre Kinkaku et Ginkaku.",
+  "recompenses": {
+   "ryo": 650,
+   "deblocages": [
+    "MAP_017"
+   ],
+   "autres": "Rang S"
+  },
+  "dependances": [
+   "MIS_015"
+  ]
+ },
+ {
+  "id": "MIS_017",
+  "nom": "La division du désert",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre Mū.",
+  "recompenses": {
+   "ryo": 650,
+   "deblocages": [
+    "MAP_019"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_018",
+  "nom": "Le lac de la tortue",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_018",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre Sanbi.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "Cosmétique : carapace"
+  },
+  "dependances": [
+   "MIS_010"
+  ]
+ },
+ {
+  "id": "MIS_019",
+  "nom": "L'autre dimension",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_019",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Obito.",
+  "recompenses": {
+   "ryo": 700,
+   "deblocages": [
+    "MAP_020"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_017"
+  ]
+ },
+ {
+  "id": "MIS_020",
+  "nom": "Le champ final",
+  "type": "scenario",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Madara.",
+  "recompenses": {
+   "ryo": 1000,
+   "deblocages": [],
+   "autres": "Mode Endless, Boss Rush, rang S+"
+  },
+  "dependances": [
+   "MIS_019"
+  ]
+ },
+ {
+  "id": "MIS_021",
+  "nom": "Défi de clan — Uchiha",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer avec 3 techniques exclusives au clan Uchiha équipées.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Technique de départ alternative Uchiha : JUT_002 pour Sasuke"
+  },
+  "dependances": [
+   "MIS_009"
+  ]
+ },
+ {
+  "id": "MIS_022",
+  "nom": "Défi de clan — Hyūga",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer avec 3 techniques Hyūga ; aucun projectile possédé.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Poing souple »"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_023",
+  "nom": "Défi de clan — Nara",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_011",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Lier 300 ennemis par l'ombre dans une run.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Stratège »"
+  },
+  "dependances": [
+   "MIS_011"
+  ]
+ },
+ {
+  "id": "MIS_024",
+  "nom": "Défi de clan — Akimichi",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Éliminer 500 ennemis au CONTACT.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Cosmétique Akimichi"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_025",
+  "nom": "Défi de clan — Yamanaka",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Faire éliminer 200 ennemis par des ennemis confus.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Esprit »"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_026",
+  "nom": "Défi de clan — Aburame",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Déclencher 100 Éclosions.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Cosmétique : lunettes noires"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_027",
+  "nom": "Défi de clan — Inuzuka",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Avoir 3 unités ANIMAL simultanées pendant 60 s.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Meute »"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_028",
+  "nom": "Défi de clan — Uzumaki",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Terminer avec un sceau et une technique d'héritage (Rasengan).",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "Relance +1 (permanent)"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_029",
+  "nom": "Défi de clan — Senju",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Couvrir 300 cellules de BOIS simultanément.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "Cosmétique : armure Senju"
+  },
+  "dependances": [
+   "MIS_020"
+  ]
+ },
+ {
+  "id": "MIS_030",
+  "nom": "Défi de clan — Kaguya",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Parer 150 projectiles.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "Doctrine « Danse des os »"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_031",
+  "nom": "Défi de clan — Hōzuki",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Terminer sans jamais subir de dégâts de contact deux fois en 3 s.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "Cosmétique : gourde"
+  },
+  "dependances": [
+   "MIS_010"
+  ]
+ },
+ {
+  "id": "MIS_032",
+  "nom": "Défi de clan — Sarutobi",
+  "type": "defi_clan",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Posséder 4 affinités élémentaires différentes à 15:00.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "Doctrine « Professeur »"
+  },
+  "dependances": [
+   "MIS_012"
+  ]
+ },
+ {
+  "id": "MIS_033",
+  "nom": "Défi élémentaire — Katon",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Pool restreint aux techniques E_KATON + OUTIL ; vaincre le boss.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Flamme »"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_034",
+  "nom": "Défi élémentaire — Suiton",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Pool Suiton + OUTIL ; vaincre le boss.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Marée »"
+  },
+  "dependances": [
+   "MIS_010"
+  ]
+ },
+ {
+  "id": "MIS_035",
+  "nom": "Défi élémentaire — Raiton",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_015",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Pool Raiton + OUTIL ; vaincre le boss.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Foudre »"
+  },
+  "dependances": [
+   "MIS_015"
+  ]
+ },
+ {
+  "id": "MIS_036",
+  "nom": "Défi élémentaire — Fūton",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Pool Fūton + OUTIL ; vaincre le boss.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Vent »"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_037",
+  "nom": "Défi élémentaire — Doton",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Pool Doton + OUTIL ; vaincre le boss.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Doctrine « Terre »"
+  },
+  "dependances": [
+   "MIS_017"
+  ]
+ },
+ {
+  "id": "MIS_038",
+  "nom": "Défi élémentaire — Conduction",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Déclencher 500 Conductions.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "Archive de synergie SYN_001 complète"
+  },
+  "dependances": [
+   "MIS_012"
+  ]
+ },
+ {
+  "id": "MIS_039",
+  "nom": "Défi élémentaire — Embrasement",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Embraser 2 000 cellules d'huile.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "EQP_029 ajouté au pool des Rouleaux"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_040",
+  "nom": "Défi élémentaire — Affinités rares",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Terminer avec 3 techniques de famille RARE.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "Doctrine « Lignée »"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_041",
+  "nom": "Défi élémentaire — Cinq natures",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Activer SYN_071 avant 15:00.",
+  "recompenses": {
+   "ryo": 550,
+   "deblocages": [],
+   "autres": "EQP_033 ajouté au pool"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_042",
+  "nom": "Défi élémentaire — Sans élément",
+  "type": "defi_element",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Terminer avec uniquement des techniques E_NEUTRE.",
+  "recompenses": {
+   "ryo": 450,
+   "deblocages": [],
+   "autres": "Doctrine « Corps et outils »"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_043",
+  "nom": "Boss Rush — Pays des Vagues à l'examen",
+  "type": "boss_rush",
+  "mode": "BossRush",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Enchaîner BOS_002, BOS_001, BOS_003, BOS_004.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "Passage +1 (permanent)"
+  },
+  "dependances": [
+   "MIS_020"
+  ]
+ },
+ {
+  "id": "MIS_044",
+  "nom": "Boss Rush — Akatsuki I",
+  "type": "boss_rush",
+  "mode": "BossRush",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Enchaîner Deidara, Sasori, Hidan, Kakuzu.",
+  "recompenses": {
+   "ryo": 650,
+   "deblocages": [],
+   "autres": "Cosmétique : anneau"
+  },
+  "dependances": [
+   "MIS_043"
+  ]
+ },
+ {
+  "id": "MIS_045",
+  "nom": "Boss Rush — Akatsuki II",
+  "type": "boss_rush",
+  "mode": "BossRush",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Enchaîner Kisame, Itachi, Konan, Pain.",
+  "recompenses": {
+   "ryo": 700,
+   "deblocages": [],
+   "autres": "Bannissement +1 (permanent)"
+  },
+  "dependances": [
+   "MIS_044"
+  ]
+ },
+ {
+  "id": "MIS_046",
+  "nom": "Boss Rush — Géants",
+  "type": "boss_rush",
+  "mode": "BossRush",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Enchaîner Shukaku, Sanbi, Hachibi, Kurama.",
+  "recompenses": {
+   "ryo": 750,
+   "deblocages": [],
+   "autres": "Cosmétique : sceau"
+  },
+  "dependances": [
+   "MIS_045"
+  ]
+ },
+ {
+  "id": "MIS_047",
+  "nom": "Boss Rush — Guerre",
+  "type": "boss_rush",
+  "mode": "BossRush",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Enchaîner Kinkaku et Ginkaku, Mū, Hanzō, Obito.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_046"
+  ]
+ },
+ {
+  "id": "MIS_048",
+  "nom": "Boss Rush — Légendes",
+  "type": "boss_rush",
+  "mode": "BossRush",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Enchaîner Danzō, Madara, Madara (Dix-Queues).",
+  "recompenses": {
+   "ryo": 1000,
+   "deblocages": [],
+   "autres": "Titre « Légende »"
+  },
+  "dependances": [
+   "MIS_047"
+  ]
+ },
+ {
+  "id": "MIS_049",
+  "nom": "Draft — Premier tirage",
+  "type": "draft",
+  "mode": "Draft",
+  "carte": "MAP_002",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Mode Draft : avant la run, choisir 6 techniques parmi 12 proposées (compatibles) ; aucune nouvelle technique en jeu ; vaincre le boss.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "Mode Draft permanent"
+  },
+  "dependances": [
+   "MIS_006"
+  ]
+ },
+ {
+  "id": "MIS_050",
+  "nom": "Draft — Sans passifs",
+  "type": "draft",
+  "mode": "Draft",
+  "carte": "MAP_006",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Draft ; passifs limités à 3.",
+  "recompenses": {
+   "ryo": 550,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_049"
+  ]
+ },
+ {
+  "id": "MIS_051",
+  "nom": "Draft — Aveugle",
+  "type": "draft",
+  "mode": "Draft",
+  "carte": "MAP_011",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Draft : les 6 techniques sont tirées sans voir leur nom (icônes seules).",
+  "recompenses": {
+   "ryo": 550,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_049"
+  ]
+ },
+ {
+  "id": "MIS_052",
+  "nom": "Draft — Recette imposée",
+  "type": "draft",
+  "mode": "Draft",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Réaliser la fusion proposée par le draft avant 16:00.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "Indice de fusion aléatoire en Archives"
+  },
+  "dependances": [
+   "MIS_049"
+  ]
+ },
+ {
+  "id": "MIS_053",
+  "nom": "Draft — Équipe de trois",
+  "type": "draft",
+  "mode": "Draft",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Trois runs courtes enchaînées avec trois entrées différentes (les deux autres donnent 1 passif chacune à la troisième).",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "Cosmétique : bannière d'équipe"
+  },
+  "dependances": [
+   "MIS_050"
+  ]
+ },
+ {
+  "id": "MIS_054",
+  "nom": "Draft — Maître du hasard",
+  "type": "draft",
+  "mode": "Draft",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Draft rang S sans Relance ni Bannissement.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_053"
+  ]
+ },
+ {
+  "id": "MIS_055",
+  "nom": "Expédition — Terrains d'entraînement",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_001",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte (12 min).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_001"
+  ]
+ },
+ {
+  "id": "MIS_056",
+  "nom": "Expédition — Pont",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_002",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_057",
+  "nom": "Expédition — Forêt de la Mort",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_058",
+  "nom": "Expédition — Stade",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_059",
+  "nom": "Expédition — Forêt frontalière",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_060",
+  "nom": "Expédition — Vallée de la Fin",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_006",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_006"
+  ]
+ },
+ {
+  "id": "MIS_061",
+  "nom": "Expédition — Suna",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_062",
+  "nom": "Expédition — Kiri",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_010",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_010"
+  ]
+ },
+ {
+  "id": "MIS_063",
+  "nom": "Expédition — Amegakure",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_012"
+  ]
+ },
+ {
+  "id": "MIS_064",
+  "nom": "Expédition — Plaine de la guerre",
+  "type": "expedition",
+  "mode": "Expedition",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer l'expédition courte.",
+  "recompenses": {
+   "ryo": 350,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_065",
+  "nom": "Endless — 30 minutes",
+  "type": "endless",
+  "mode": "Endless",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Tenir 30 min en Endless.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_020"
+  ]
+ },
+ {
+  "id": "MIS_066",
+  "nom": "Endless — 45 minutes",
+  "type": "endless",
+  "mode": "Endless",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Tenir 45 min.",
+  "recompenses": {
+   "ryo": 700,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_065"
+  ]
+ },
+ {
+  "id": "MIS_067",
+  "nom": "Endless — 60 minutes",
+  "type": "endless",
+  "mode": "Endless",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Tenir 60 min.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique : aura d'endurance"
+  },
+  "dependances": [
+   "MIS_066"
+  ]
+ },
+ {
+  "id": "MIS_068",
+  "nom": "Endless — Chasse aux boss",
+  "type": "endless",
+  "mode": "Endless",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Vaincre 5 boss tournants dans une même partie Endless.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_065"
+  ]
+ },
+ {
+  "id": "MIS_069",
+  "nom": "Endless — Sans soin",
+  "type": "endless",
+  "mode": "Endless",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Tenir 30 min sans soin (Régénération comprise).",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_065"
+  ]
+ },
+ {
+  "id": "MIS_070",
+  "nom": "Endless — Dix mille",
+  "type": "endless",
+  "mode": "Endless",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Éliminer 10 000 ennemis en une partie.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Titre « Catastrophe naturelle »"
+  },
+  "dependances": [
+   "MIS_065"
+  ]
+ },
+ {
+  "id": "MIS_071",
+  "nom": "Et si… Minato défendait le pont",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_002",
+  "personnage": "CHR_041",
+  "rang": "B",
+  "condition": "Vaincre Zabuza avec Minato en rang B.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "Cosmétique : cape de Hokage alternative"
+  },
+  "dependances": [
+   "MIS_141"
+  ]
+ },
+ {
+  "id": "MIS_072",
+  "nom": "Et si… Haku rencontrait Gaara",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "CHR_053",
+  "rang": "B",
+  "condition": "Vaincre Gaara avec Haku.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_153"
+  ]
+ },
+ {
+  "id": "MIS_073",
+  "nom": "Et si… les Sannin se retrouvaient",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "CHR_027",
+  "rang": "B",
+  "condition": "Vaincre Orochimaru avec Jiraiya en rang B.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_127"
+  ]
+ },
+ {
+  "id": "MIS_074",
+  "nom": "Et si… Itachi protégeait Konoha",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "CHR_031",
+  "rang": "A",
+  "condition": "Vaincre Kurama avec Itachi.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_131"
+  ]
+ },
+ {
+  "id": "MIS_075",
+  "nom": "Et si… Guy affrontait Madara plus tôt",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "CHR_045",
+  "rang": "A",
+  "condition": "Vaincre Madara avec Guy sans la Porte de la mort.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_145"
+  ]
+ },
+ {
+  "id": "MIS_076",
+  "nom": "Et si… le Tsuchikage défiait le joueur",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre Ōnoki (boss de mission).",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_017"
+  ]
+ },
+ {
+  "id": "MIS_077",
+  "nom": "Et si… Kushina gardait la nuit",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "CHR_077",
+  "rang": "A",
+  "condition": "Vaincre Kurama avec Kushina.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "Cosmétique"
+  },
+  "dependances": [
+   "MIS_177"
+  ]
+ },
+ {
+  "id": "MIS_078",
+  "nom": "Et si… Sasori revenait à Suna",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "CHR_037",
+  "rang": "B",
+  "condition": "Vaincre Deidara (lieutenant promu boss) avec Sasori.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_137"
+  ]
+ },
+ {
+  "id": "MIS_079",
+  "nom": "Et si… Hashirama visitait la Vallée",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_006",
+  "personnage": "CHR_059",
+  "rang": "A",
+  "condition": "Vaincre le rival avec Hashirama.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_159"
+  ]
+ },
+ {
+  "id": "MIS_080",
+  "nom": "Et si… Pain frappait Kiri",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "CHR_039",
+  "rang": "A",
+  "condition": "Vaincre Kisame avec Pain.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_139"
+  ]
+ },
+ {
+  "id": "MIS_081",
+  "nom": "Et si… Killer Bee chantait au Pays des Vagues",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_002",
+  "personnage": "CHR_058",
+  "rang": "B",
+  "condition": "Terminer avec 100 coups sur le 4e temps.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_158"
+  ]
+ },
+ {
+  "id": "MIS_082",
+  "nom": "Et si… Kakashi ANBU surveillait Orochimaru",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_007",
+  "personnage": "CHR_010",
+  "rang": "A",
+  "condition": "Vaincre Kabuto avec Kakashi ANBU.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_110"
+  ]
+ },
+ {
+  "id": "MIS_083",
+  "nom": "Et si… Tobirama sondait le lac",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_018",
+  "personnage": "CHR_060",
+  "rang": "A",
+  "condition": "Vaincre Sanbi avec Tobirama.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_160"
+  ]
+ },
+ {
+  "id": "MIS_084",
+  "nom": "Et si… Shisui arrêtait la guerre",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "CHR_078",
+  "rang": "S",
+  "condition": "Vaincre Kinkaku et Ginkaku avec Shisui en rang S.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_178"
+  ]
+ },
+ {
+  "id": "MIS_085",
+  "nom": "Et si… Konohamaru passait l'examen",
+  "type": "hors_chrono",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "CHR_079",
+  "rang": "C",
+  "condition": "Vaincre Gaara avec Konohamaru.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Cosmétique : écharpe"
+  },
+  "dependances": [
+   "MIS_179"
+  ]
+ },
+ {
+  "id": "MIS_086",
+  "nom": "Maîtrise — Première évolution",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_002",
+  "personnage": "TOUS",
+  "rang": "D",
+  "condition": "Réaliser une évolution.",
+  "recompenses": {
+   "ryo": 200,
+   "deblocages": [],
+   "autres": "Écran des recettes dans les Archives"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_087",
+  "nom": "Maîtrise — Première fusion",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Réaliser une fusion.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "Indice de fusion"
+  },
+  "dependances": [
+   "MIS_086"
+  ]
+ },
+ {
+  "id": "MIS_088",
+  "nom": "Maîtrise — Premier éveil",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Réaliser un éveil.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_087"
+  ]
+ },
+ {
+  "id": "MIS_089",
+  "nom": "Maîtrise — Rouleau interdit",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_007",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Accepter un Rouleau interdit et terminer la run.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [
+    "EQP_036"
+   ],
+   "autres": "EQP_036 ajouté au pool des Rouleaux interdits"
+  },
+  "dependances": [
+   "MIS_007"
+  ]
+ },
+ {
+  "id": "MIS_090",
+  "nom": "Maîtrise — Vingt synergies",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Découvrir 20 synergies différentes (cumul).",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "Quatrième carte (Voie du quatrième sceau) achetable"
+  },
+  "dependances": [
+   "MIS_086"
+  ]
+ },
+ {
+  "id": "MIS_091",
+  "nom": "Maîtrise — Quarante synergies",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Découvrir 40 synergies (cumul).",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "Relance +1 (permanent)"
+  },
+  "dependances": [
+   "MIS_090"
+  ]
+ },
+ {
+  "id": "MIS_092",
+  "nom": "Maîtrise — Contrôle du hasard",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Utiliser 5 Bannissements dans une run et vaincre le boss.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_045"
+  ]
+ },
+ {
+  "id": "MIS_093",
+  "nom": "Maîtrise — Survie",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Déclencher Kawarimi 3 fois et survivre.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_094",
+  "nom": "Maîtrise — Géant",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Éliminer 100 ennemis avec une invocation géante.",
+  "recompenses": {
+   "ryo": 400,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_009"
+  ]
+ },
+ {
+  "id": "MIS_095",
+  "nom": "Maîtrise — Transformations",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Utiliser 10 transformations différentes (cumul).",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_096",
+  "nom": "Maîtrise — Pacifiste temporaire",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "TOUS",
+  "rang": "D",
+  "condition": "Survivre la première minute sans éliminer d'ennemi (esquive seule).",
+  "recompenses": {
+   "ryo": 150,
+   "deblocages": [],
+   "autres": "Option d'assistance « déplacement seul » expliquée"
+  },
+  "dependances": [
+   "MIS_001"
+  ]
+ },
+ {
+  "id": "MIS_097",
+  "nom": "Maîtrise — Tous les rôles",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "B",
+  "condition": "Éliminer au moins 50 ennemis de chacun des 9 rôles en une run.",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_098",
+  "nom": "Maîtrise — Collection d'équipements",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Obtenir 25 équipements différents (cumul).",
+  "recompenses": {
+   "ryo": 500,
+   "deblocages": [
+    "EQP_031"
+   ],
+   "autres": "—"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_099",
+  "nom": "Maîtrise — Archives complètes du rang C",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre les 10 premiers boss au rang C.",
+  "recompenses": {
+   "ryo": 600,
+   "deblocages": [],
+   "autres": "Rang C+ en Boss Rush"
+  },
+  "dependances": [
+   "MIS_010"
+  ]
+ },
+ {
+  "id": "MIS_100",
+  "nom": "Maîtrise — Cent recettes",
+  "type": "systeme",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Découvrir 100 recettes (évolutions, fusions, éveils).",
+  "recompenses": {
+   "ryo": 1500,
+   "deblocages": [],
+   "autres": "Prestige optionnel"
+  },
+  "dependances": [
+   "MIS_088"
+  ]
+ },
+ {
+  "id": "MIS_101",
+  "nom": "Maîtrise — Naruto Uzumaki",
+  "type": "maitrise",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "CHR_001",
+  "rang": "D",
+  "condition": "Atteindre le niveau de maîtrise 2 avec Naruto.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "Technique de départ alternative et cosmétique de maîtrise"
+  },
+  "dependances": [
+   "MIS_001"
+  ]
+ },
+ {
+  "id": "MIS_102",
+  "nom": "Maîtrise avancée — Naruto — Mode Ermite",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "CHR_001",
+  "rang": "B",
+  "condition": "Avec Naruto (maîtrise 4) : rester immobile au total 120 s pendant une run réussie.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_002"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_009"
+  ]
+ },
+ {
+  "id": "MIS_103",
+  "nom": "Maîtrise avancée — Naruto — Chakra de Kurama",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "CHR_001",
+  "rang": "B",
+  "condition": "Avec Naruto (maîtrise 7) : vaincre Kurama.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_003"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_104",
+  "nom": "Maîtrise — Sasuke Uchiha",
+  "type": "maitrise",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "CHR_004",
+  "rang": "D",
+  "condition": "Atteindre le niveau de maîtrise 2 avec Sasuke.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "Technique de départ alternative et cosmétique de maîtrise"
+  },
+  "dependances": [
+   "MIS_001"
+  ]
+ },
+ {
+  "id": "MIS_105",
+  "nom": "Maîtrise avancée — Sasuke — Taka",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_007",
+  "personnage": "CHR_004",
+  "rang": "B",
+  "condition": "Avec Sasuke (maîtrise 4) : vaincre Kabuto avec une technique OUTIL de mêlée équipée.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_005"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_007"
+  ]
+ },
+ {
+  "id": "MIS_106",
+  "nom": "Maîtrise avancée — Sasuke — Mangekyō éternel",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "CHR_004",
+  "rang": "B",
+  "condition": "Avec Sasuke (maîtrise 7) : vaincre Itachi.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_006"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_009"
+  ]
+ },
+ {
+  "id": "MIS_107",
+  "nom": "Maîtrise — Sakura Haruno",
+  "type": "maitrise",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "CHR_007",
+  "rang": "D",
+  "condition": "Atteindre le niveau de maîtrise 2 avec Sakura.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "Technique de départ alternative et cosmétique de maîtrise"
+  },
+  "dependances": [
+   "MIS_001"
+  ]
+ },
+ {
+  "id": "MIS_108",
+  "nom": "Maîtrise — Kakashi Hatake",
+  "type": "maitrise",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "CHR_008",
+  "rang": "D",
+  "condition": "Atteindre le niveau de maîtrise 2 avec Kakashi.",
+  "recompenses": {
+   "ryo": 300,
+   "deblocages": [],
+   "autres": "Technique de départ alternative et cosmétique de maîtrise"
+  },
+  "dependances": [
+   "MIS_001"
+  ]
+ },
+ {
+  "id": "MIS_109",
+  "nom": "Maîtrise avancée — Kakashi — Kamui",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_019",
+  "personnage": "CHR_008",
+  "rang": "B",
+  "condition": "Avec Kakashi (maîtrise 6) : éliminer 300 ennemis par Kamui.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_009"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_019"
+  ]
+ },
+ {
+  "id": "MIS_110",
+  "nom": "Maîtrise avancée — Kakashi — ANBU",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_014",
+  "personnage": "CHR_008",
+  "rang": "B",
+  "condition": "Avec Kakashi (maîtrise 3) : terminer une run avec 50 éliminations de dos.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_010"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_014"
+  ]
+ },
+ {
+  "id": "MIS_111",
+  "nom": "Maîtrise avancée — Sakura — Byakugō",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "CHR_007",
+  "rang": "B",
+  "condition": "Avec Sakura (maîtrise 5) : soigner 3 000 PV en une run.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_011"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_112",
+  "nom": "Recrutement — Gaara",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Gaara (n'importe quelle entrée).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_012"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_113",
+  "nom": "Maîtrise avancée — Gaara — Kazekage",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "CHR_012",
+  "rang": "B",
+  "condition": "Avec Gaara (maîtrise 5) : vaincre Sasori.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_013"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_008",
+   "MIS_112"
+  ]
+ },
+ {
+  "id": "MIS_114",
+  "nom": "Recrutement — Rock Lee",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Éliminer 1 000 ennemis au CONTACT (cumul, toutes entrées).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_014"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_115",
+  "nom": "Maîtrise avancée — Rock Lee — Poing ivre",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "CHR_014",
+  "rang": "B",
+  "condition": "Avec Rock Lee (maîtrise 3) : terminer une run en ouvrant 5 Portes.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_015"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004",
+   "MIS_114"
+  ]
+ },
+ {
+  "id": "MIS_116",
+  "nom": "Recrutement — Neji Hyūga",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Gaara sans subir plus de 10 projectiles au boss.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_016"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_117",
+  "nom": "Recrutement — Hinata Hyūga",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer une run en ayant bloqué 100 projectiles (boucliers).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_017"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_118",
+  "nom": "Maîtrise avancée — Hinata — Poings de lion",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "CHR_017",
+  "rang": "B",
+  "condition": "Avec Hinata (maîtrise 4) : vaincre Pain.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_018"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_012",
+   "MIS_117"
+  ]
+ },
+ {
+  "id": "MIS_119",
+  "nom": "Recrutement — Shikamaru Nara",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Immobiliser 200 ennemis (toute source) dans une run réussie.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_019"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_120",
+  "nom": "Maîtrise avancée — Shikamaru — Héritier d'Asuma",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_011",
+  "personnage": "CHR_019",
+  "rang": "B",
+  "condition": "Avec Shikamaru (maîtrise 4) : vaincre Hidan.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_020"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_011",
+   "MIS_119"
+  ]
+ },
+ {
+  "id": "MIS_121",
+  "nom": "Recrutement — Shino Aburame",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Appliquer 2 000 cumuls de Parasité ou de Poison (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_021"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_122",
+  "nom": "Recrutement — Kiba Inuzuka",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Avoir 2 compagnons ANIMAL simultanés pendant 30 s.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_022"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_123",
+  "nom": "Maîtrise avancée — Kiba — Garōga",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "CHR_022",
+  "rang": "B",
+  "condition": "Avec Kiba (maîtrise 5) : vaincre Kimimaro.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_023"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_005",
+   "MIS_122"
+  ]
+ },
+ {
+  "id": "MIS_124",
+  "nom": "Recrutement — Kankurō",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Éliminer 300 ennemis avec des unités alliées dans une run.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_024"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_125",
+  "nom": "Maîtrise avancée — Kankurō — Marionnette de Sasori",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "CHR_024",
+  "rang": "B",
+  "condition": "Avec Kankurō (maîtrise 5) : vaincre Sasori.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_025"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_008",
+   "MIS_124"
+  ]
+ },
+ {
+  "id": "MIS_126",
+  "nom": "Recrutement — Temari",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Repousser 1 000 ennemis (recul) dans une run.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_026"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_127",
+  "nom": "Recrutement — Jiraiya",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Embraser 500 cellules d'huile (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_027"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_128",
+  "nom": "Maîtrise avancée — Jiraiya — Mode Ermite",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "CHR_027",
+  "rang": "B",
+  "condition": "Avec Jiraiya (maîtrise 5) : vaincre Pain.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_028"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_012",
+   "MIS_127"
+  ]
+ },
+ {
+  "id": "MIS_129",
+  "nom": "Recrutement — Tsunade",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer une run avec plus de 1 000 PV soignés.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_029"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_130",
+  "nom": "Recrutement — Orochimaru",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_003",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Orochimaru au rang C.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_030"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_003"
+  ]
+ },
+ {
+  "id": "MIS_131",
+  "nom": "Recrutement — Itachi Uchiha",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Itachi.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_031"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_009"
+  ]
+ },
+ {
+  "id": "MIS_132",
+  "nom": "Maîtrise avancée — Itachi — Réanimé",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "CHR_031",
+  "rang": "B",
+  "condition": "Avec Itachi (maîtrise 6) : terminer la Plaine de la guerre.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_032"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_016",
+   "MIS_131"
+  ]
+ },
+ {
+  "id": "MIS_133",
+  "nom": "Recrutement — Kisame Hoshigaki",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kisame.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_033"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_010"
+  ]
+ },
+ {
+  "id": "MIS_134",
+  "nom": "Maîtrise avancée — Kisame — Maître des requins",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "CHR_033",
+  "rang": "B",
+  "condition": "Avec Kisame (maîtrise 5) : maintenir 300 cellules d'EAU.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_034"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_010",
+   "MIS_133"
+  ]
+ },
+ {
+  "id": "MIS_135",
+  "nom": "Recrutement — Deidara",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Détruire 200 obstacles avec des explosions (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_035"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_136",
+  "nom": "Maîtrise avancée — Deidara — Artiste aérien",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_015",
+  "personnage": "CHR_035",
+  "rang": "B",
+  "condition": "Avec Deidara (maîtrise 6) : vaincre Hachibi.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_036"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_015",
+   "MIS_135"
+  ]
+ },
+ {
+  "id": "MIS_137",
+  "nom": "Recrutement — Sasori",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Sasori.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_037"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_138",
+  "nom": "Maîtrise avancée — Sasori — Troisième Kazekage",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "CHR_037",
+  "rang": "B",
+  "condition": "Avec Sasori (maîtrise 5) : vaincre Mū.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_038"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_017",
+   "MIS_137"
+  ]
+ },
+ {
+  "id": "MIS_139",
+  "nom": "Recrutement — Pain (Chemin des Dieux)",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Pain.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_039"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_012"
+  ]
+ },
+ {
+  "id": "MIS_140",
+  "nom": "Maîtrise avancée — Pain — Six Chemins",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "CHR_039",
+  "rang": "B",
+  "condition": "Avec Pain (maîtrise 6) : terminer le Champ final.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_040"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_020",
+   "MIS_139"
+  ]
+ },
+ {
+  "id": "MIS_141",
+  "nom": "Recrutement — Minato Namikaze",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kurama.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_041"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_142",
+  "nom": "Maîtrise avancée — Minato — Chakra de Kurama",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "CHR_041",
+  "rang": "B",
+  "condition": "Avec Minato (maîtrise 6) : vaincre Madara.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_042"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_020",
+   "MIS_141"
+  ]
+ },
+ {
+  "id": "MIS_143",
+  "nom": "Recrutement — Madara Uchiha",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Madara.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_043"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_020"
+  ]
+ },
+ {
+  "id": "MIS_144",
+  "nom": "Maîtrise avancée — Madara — Rinnegan",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "CHR_043",
+  "rang": "B",
+  "condition": "Avec Madara (maîtrise 7) : vaincre Madara au rang S.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_044"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_020",
+   "MIS_143"
+  ]
+ },
+ {
+  "id": "MIS_145",
+  "nom": "Recrutement — Might Guy",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Avec Rock Lee : vaincre Gaara.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_045"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_146",
+  "nom": "Recrutement — Ino Yamanaka",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Faire éliminer 100 ennemis par des ennemis confus (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_046"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_147",
+  "nom": "Recrutement — Chōji Akimichi",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer une run avec plus de 180 PV max.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_047"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_148",
+  "nom": "Recrutement — Tenten",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Lancer 5 000 projectiles OUTIL (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_048"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_004"
+  ]
+ },
+ {
+  "id": "MIS_149",
+  "nom": "Maîtrise avancée — Tenten — Trésors du Sage",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "CHR_048",
+  "rang": "B",
+  "condition": "Avec Tenten (maîtrise 5) : vaincre Kinkaku et Ginkaku.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_049"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_016",
+   "MIS_148"
+  ]
+ },
+ {
+  "id": "MIS_150",
+  "nom": "Recrutement — Sai",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_014",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Éliminer 500 ennemis avec des unités alliées (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_050"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_014"
+  ]
+ },
+ {
+  "id": "MIS_151",
+  "nom": "Recrutement — Yamato",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Créer 200 structures (murs, cages, arbres) (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_051"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_012"
+  ]
+ },
+ {
+  "id": "MIS_152",
+  "nom": "Recrutement — Asuma Sarutobi",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_011",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kakuzu.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_052"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_011"
+  ]
+ },
+ {
+  "id": "MIS_153",
+  "nom": "Recrutement — Haku",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_002",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Haku (lieutenant) sans être gelé ni entravé.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_053"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_154",
+  "nom": "Recrutement — Zabuza Momochi",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_002",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Zabuza au rang C.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_054"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_155",
+  "nom": "Recrutement — Konan",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Konan (lieutenant).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_055"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_012"
+  ]
+ },
+ {
+  "id": "MIS_156",
+  "nom": "Recrutement — Hidan",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_011",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Hidan.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_056"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_011"
+  ]
+ },
+ {
+  "id": "MIS_157",
+  "nom": "Recrutement — Kakuzu",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_011",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kakuzu en détruisant ses 4 masques.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_057"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_011"
+  ]
+ },
+ {
+  "id": "MIS_158",
+  "nom": "Recrutement — Killer Bee",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_015",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Killer Bee (lieutenant).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_058"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_015"
+  ]
+ },
+ {
+  "id": "MIS_159",
+  "nom": "Recrutement — Hashirama Senju",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Couvrir 100 cellules de BOIS (cumul, toutes entrées).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_059"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_020"
+  ]
+ },
+ {
+  "id": "MIS_160",
+  "nom": "Recrutement — Tobirama Senju",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Réaliser 50 esquives parfaites en une run.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_060"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_161",
+  "nom": "Recrutement — Obito Uchiha (Tobi)",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_019",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Obito.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_061"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_019"
+  ]
+ },
+ {
+  "id": "MIS_162",
+  "nom": "Maîtrise avancée — Obito — Jinchūriki du Dix-Queues",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "CHR_061",
+  "rang": "B",
+  "condition": "Avec Obito (maîtrise 7) : vaincre Madara.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_062"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_020",
+   "MIS_161"
+  ]
+ },
+ {
+  "id": "MIS_163",
+  "nom": "Recrutement — Kabuto Yakushi",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_007",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kabuto.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_063"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_007"
+  ]
+ },
+ {
+  "id": "MIS_164",
+  "nom": "Maîtrise avancée — Kabuto — Mode Ermite serpent",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "CHR_063",
+  "rang": "B",
+  "condition": "Avec Kabuto (maîtrise 6) : sceller 20 réanimés.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_064"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_016",
+   "MIS_163"
+  ]
+ },
+ {
+  "id": "MIS_165",
+  "nom": "Recrutement — Hiruzen Sarutobi",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Posséder 4 affinités élémentaires dans une run réussie.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_065"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_166",
+  "nom": "Recrutement — Kurenai Yūhi",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Appliquer 500 contrôles de genjutsu (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_066"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_167",
+  "nom": "Recrutement — Kimimaro Kaguya",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_005",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Kimimaro.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_067"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_005"
+  ]
+ },
+ {
+  "id": "MIS_168",
+  "nom": "Recrutement — Mei Terumī",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Corroder 300 ennemis (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_068"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_010"
+  ]
+ },
+ {
+  "id": "MIS_169",
+  "nom": "Recrutement — Ōnoki",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Mū.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_069"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_017"
+  ]
+ },
+ {
+  "id": "MIS_170",
+  "nom": "Recrutement — A (Quatrième Raikage)",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_014",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre A (lieutenant) au Sommet des Kage.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_070"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_014"
+  ]
+ },
+ {
+  "id": "MIS_171",
+  "nom": "Recrutement — Darui",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_015",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Déclencher 300 Conductions (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_071"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_015"
+  ]
+ },
+ {
+  "id": "MIS_172",
+  "nom": "Recrutement — Pakura",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Terminer Suna avec une technique Katon et une Fūton.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_072"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_173",
+  "nom": "Recrutement — Rasa (Quatrième Kazekage)",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Aimanter 300 ennemis (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_073"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_017"
+  ]
+ },
+ {
+  "id": "MIS_174",
+  "nom": "Recrutement — Chiyo",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Avec une entrée APT_MARIO : vaincre Sasori.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_074"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_008"
+  ]
+ },
+ {
+  "id": "MIS_175",
+  "nom": "Recrutement — Karin",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_007",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Survivre 60 s sous 20 % de PV (cumul dans une run).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_075"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_007"
+  ]
+ },
+ {
+  "id": "MIS_176",
+  "nom": "Recrutement — Suigetsu Hōzuki",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_007",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Vaincre Jūgo (lieutenant).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_076"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_007"
+  ]
+ },
+ {
+  "id": "MIS_177",
+  "nom": "Recrutement — Kushina Uzumaki",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Entraver 300 ennemis (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_077"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_013"
+  ]
+ },
+ {
+  "id": "MIS_178",
+  "nom": "Recrutement — Shisui Uchiha",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Réaliser 30 esquives parfaites en une run.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_078"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_009"
+  ]
+ },
+ {
+  "id": "MIS_179",
+  "nom": "Recrutement — Konohamaru Sarutobi",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_001",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Réaliser 3 runs avec 3 entrées différentes.",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_079"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_002"
+  ]
+ },
+ {
+  "id": "MIS_180",
+  "nom": "Recrutement — Mū (Deuxième Tsuchikage)",
+  "type": "recrutement",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "TOUS",
+  "rang": "C",
+  "condition": "Éliminer 200 ennemis avec des techniques Jinton ou Kamui (cumul).",
+  "recompenses": {
+   "ryo": 250,
+   "deblocages": [
+    "CHR_080"
+   ],
+   "autres": "Fiche d'Archives du personnage"
+  },
+  "dependances": [
+   "MIS_017"
+  ]
+ },
+ {
+  "id": "MIS_181",
+  "nom": "Rang S — Pont sans brume",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_002",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Zabuza au rang S sans être touché par l'Assassinat silencieux.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_182",
+  "nom": "Rang S — Examen parfait",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_004",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Gaara au rang S en moins de 3 min de combat.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_183",
+  "nom": "Rang S — Vallée en crue",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_006",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Terminer la Vallée de la Fin au rang S.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_184",
+  "nom": "Rang S — Pluie éternelle",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Pain au rang S.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_185",
+  "nom": "Rang S — Nuit rouge",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_013",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Kurama au rang S.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_186",
+  "nom": "Rang S — Sommet glacé",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_014",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Danzō au rang S.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_187",
+  "nom": "Rang S — Orage de Kumo",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_015",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Hachibi au rang S.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_188",
+  "nom": "Rang S — Champ final",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Vaincre Madara au rang S.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_020"
+  ]
+ },
+ {
+  "id": "MIS_189",
+  "nom": "Rang S+ — Champ final",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "S+",
+  "condition": "Vaincre Madara (Dix-Queues) au rang S+.",
+  "recompenses": {
+   "ryo": 1100,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert ; titre"
+  },
+  "dependances": [
+   "MIS_188"
+  ]
+ },
+ {
+  "id": "MIS_190",
+  "nom": "Rang S+ — Dimension de Kamui",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_019",
+  "personnage": "TOUS",
+  "rang": "S+",
+  "condition": "Vaincre Obito au rang S+.",
+  "recompenses": {
+   "ryo": 1100,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert ; titre"
+  },
+  "dependances": [
+   "MIS_188"
+  ]
+ },
+ {
+  "id": "MIS_191",
+  "nom": "Rang S+ — Amegakure",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_012",
+  "personnage": "TOUS",
+  "rang": "S+",
+  "condition": "Vaincre Pain au rang S+.",
+  "recompenses": {
+   "ryo": 1100,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert ; titre"
+  },
+  "dependances": [
+   "MIS_188"
+  ]
+ },
+ {
+  "id": "MIS_192",
+  "nom": "Rang S+ — Repaire Uchiha",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_009",
+  "personnage": "TOUS",
+  "rang": "S+",
+  "condition": "Vaincre Itachi au rang S+.",
+  "recompenses": {
+   "ryo": 1100,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert ; titre"
+  },
+  "dependances": [
+   "MIS_188"
+  ]
+ },
+ {
+  "id": "MIS_193",
+  "nom": "Expert — Sans évolution",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_016",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre le boss au rang A sans évolution ni fusion.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_194",
+  "nom": "Expert — Signature seule niveau 8",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_010",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Terminer au rang A en n'améliorant que la technique signature jusqu'à 15:00.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_195",
+  "nom": "Expert — Trois techniques",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_011",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Terminer au rang A avec au plus 3 techniques.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_196",
+  "nom": "Expert — Sans esquive",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_008",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Terminer au rang A sans utiliser l'esquive.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_197",
+  "nom": "Expert — Passifs interdits",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_018",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Terminer au rang A sans aucun passif.",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_016"
+  ]
+ },
+ {
+  "id": "MIS_198",
+  "nom": "Expert — Aucun soin",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_017",
+  "personnage": "TOUS",
+  "rang": "S",
+  "condition": "Terminer au rang S sans aucun soin.",
+  "recompenses": {
+   "ryo": 900,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_188"
+  ]
+ },
+ {
+  "id": "MIS_199",
+  "nom": "Expert — Toutes les cartes",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "A",
+  "condition": "Vaincre les 20 boss finaux au rang A (cumul).",
+  "recompenses": {
+   "ryo": 800,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert"
+  },
+  "dependances": [
+   "MIS_020"
+  ]
+ },
+ {
+  "id": "MIS_200",
+  "nom": "Expert — Légende du shinobi",
+  "type": "expert",
+  "mode": "Standard",
+  "carte": "MAP_020",
+  "personnage": "TOUS",
+  "rang": "S+",
+  "condition": "Vaincre Kaguya (secret SEC_020 requis).",
+  "recompenses": {
+   "ryo": 1100,
+   "deblocages": [],
+   "autres": "Cosmétique d'expert ; titre"
+  },
+  "dependances": [
+   "MIS_189"
+  ]
+ }
+]

@@ -1,0 +1,368 @@
+[
+ {
+  "id": "VAG_001",
+  "carte": "MAP_002",
+  "mode": "Standard",
+  "segments": [
+   {
+    "debut": 0,
+    "fin": 90,
+    "composition": {
+     "ENM_002": 70,
+     "ENM_003": 30
+    },
+    "taux": 1.2,
+    "formation": "flux",
+    "plafond": 60
+   },
+   {
+    "debut": 90,
+    "fin": 180,
+    "composition": {
+     "ENM_002": 50,
+     "ENM_003": 30,
+     "ENM_011": 20
+    },
+    "taux": 1.6,
+    "formation": "flux",
+    "plafond": 90
+   },
+   {
+    "debut": 180,
+    "fin": 300,
+    "composition": {
+     "ENM_003": 45,
+     "ENM_011": 20,
+     "ENM_019": 20,
+     "ENM_020": 15
+    },
+    "taux": 2.0,
+    "formation": "pinces",
+    "plafond": 120,
+    "elites": [
+     {
+      "t": 270,
+      "id": "ENM_077"
+     }
+    ]
+   },
+   {
+    "debut": 300,
+    "fin": 330,
+    "composition": {
+     "ENM_002": 100
+    },
+    "taux": 0.6,
+    "formation": "flux",
+    "plafond": 60,
+    "note": "Creux de récupération"
+   },
+   {
+    "debut": 330,
+    "fin": 480,
+    "composition": {
+     "ENM_003": 40,
+     "ENM_011": 20,
+     "ENM_019": 20,
+     "ENM_029": 20
+    },
+    "taux": 2.4,
+    "formation": "anneau",
+    "plafond": 150,
+    "evenements": [
+     {
+      "t": 360,
+      "id": "Brume de Kiri",
+      "duree": 45
+     }
+    ]
+   },
+   {
+    "debut": 480,
+    "fin": 570,
+    "composition": {
+     "ENM_003": 35,
+     "ENM_011": 15,
+     "ENM_020": 15,
+     "ENM_037": 15,
+     "ENM_047": 10,
+     "ENM_072": 10
+    },
+    "taux": 2.8,
+    "formation": "flux",
+    "plafond": 170
+   },
+   {
+    "debut": 570,
+    "fin": 630,
+    "composition": {
+     "ENM_003": 60,
+     "ENM_037": 20,
+     "ENM_047": 20
+    },
+    "taux": 1.2,
+    "formation": "flux",
+    "plafond": 120,
+    "lieutenant": {
+     "t": 570,
+     "id": "BOS_002"
+    }
+   },
+   {
+    "debut": 630,
+    "fin": 660,
+    "composition": {
+     "ENM_002": 100
+    },
+    "taux": 0.6,
+    "formation": "flux",
+    "plafond": 60,
+    "note": "Creux après le lieutenant"
+   },
+   {
+    "debut": 660,
+    "fin": 780,
+    "composition": {
+     "ENM_003": 30,
+     "ENM_011": 15,
+     "ENM_019": 15,
+     "ENM_029": 15,
+     "ENM_047": 10,
+     "ENM_072": 15
+    },
+    "taux": 3.2,
+    "formation": "embuscade",
+    "plafond": 200,
+    "evenements": [
+     {
+      "t": 720,
+      "id": "Rouleau interdit (si ≥ 12:00 non atteint : reporté)",
+      "duree": 0
+     }
+    ]
+   },
+   {
+    "debut": 780,
+    "fin": 900,
+    "composition": {
+     "ENM_003": 25,
+     "ENM_011": 15,
+     "ENM_020": 20,
+     "ENM_037": 20,
+     "ENM_072": 20
+    },
+    "taux": 3.4,
+    "formation": "pinces",
+    "plafond": 220,
+    "elites": [
+     {
+      "t": 870,
+      "id": "ENM_077"
+     },
+     {
+      "t": 875,
+      "id": "ENM_076"
+     }
+    ]
+   },
+   {
+    "debut": 900,
+    "fin": 930,
+    "composition": {
+     "ENM_002": 100
+    },
+    "taux": 0.8,
+    "formation": "flux",
+    "plafond": 80,
+    "note": "Creux"
+   },
+   {
+    "debut": 930,
+    "fin": 1080,
+    "composition": {
+     "ENM_003": 25,
+     "ENM_011": 15,
+     "ENM_019": 10,
+     "ENM_029": 15,
+     "ENM_037": 15,
+     "ENM_047": 10,
+     "ENM_072": 10
+    },
+    "taux": 3.8,
+    "formation": "maree",
+    "plafond": 260,
+    "evenements": [
+     {
+      "t": 990,
+      "id": "Brume de Kiri",
+      "duree": 45
+     }
+    ]
+   },
+   {
+    "debut": 1080,
+    "fin": 1180,
+    "composition": {
+     "ENM_003": 30,
+     "ENM_011": 20,
+     "ENM_020": 15,
+     "ENM_037": 15,
+     "ENM_072": 20
+    },
+    "taux": 4.4,
+    "formation": "anneau",
+    "plafond": 300,
+    "elites": [
+     {
+      "t": 1140,
+      "id": "ENM_077"
+     }
+    ]
+   },
+   {
+    "debut": 1180,
+    "fin": 1200,
+    "composition": {},
+    "taux": 0,
+    "formation": "aucune",
+    "plafond": 0,
+    "note": "Dégagement : les ordinaires fuient vers les bords"
+   },
+   {
+    "debut": 1200,
+    "fin": 1500,
+    "composition": {
+     "ENM_003": 50,
+     "ENM_072": 25,
+     "ENM_047": 25
+    },
+    "taux": 0.9,
+    "formation": "flux",
+    "plafond": 70,
+    "boss": {
+     "t": 1200,
+     "id": "BOS_001"
+    }
+   },
+   {
+    "debut": 1500,
+    "fin": 1680,
+    "composition": {
+     "ENM_003": 50,
+     "ENM_072": 50
+    },
+    "taux": 1.6,
+    "formation": "flux",
+    "plafond": 120,
+    "note": "Prolongation : boss en rage (motifs resserrés, pas de PV ajoutés)"
+   }
+  ]
+ },
+ {
+  "id": "VAG_002",
+  "carte": "MAP_001",
+  "mode": "Expedition",
+  "note": "MIS_001 — examen d'entrée (8 min). Tutoriel intégré dans les 90 premières secondes (§B1.7).",
+  "segments": [
+   {
+    "debut": 0,
+    "fin": 25,
+    "composition": {
+     "ENM_001": 100
+    },
+    "taux": 0.2,
+    "formation": "flux",
+    "plafond": 6,
+    "note": "4 ennemis lents, apprentissage du déplacement"
+   },
+   {
+    "debut": 25,
+    "fin": 90,
+    "composition": {
+     "ENM_001": 100
+    },
+    "taux": 0.8,
+    "formation": "flux",
+    "plafond": 30
+   },
+   {
+    "debut": 60,
+    "fin": 90,
+    "composition": {
+     "ENM_001": 70,
+     "ENM_002": 30
+    },
+    "taux": 1.0,
+    "formation": "flux",
+    "plafond": 40,
+    "elites": [
+     {
+      "t": 75,
+      "id": "ENM_076",
+      "note": "mini-élite à 40 % de PV : première esquive suggérée"
+     }
+    ]
+   },
+   {
+    "debut": 90,
+    "fin": 240,
+    "composition": {
+     "ENM_001": 40,
+     "ENM_002": 40,
+     "ENM_010": 20
+    },
+    "taux": 1.6,
+    "formation": "pinces",
+    "plafond": 80
+   },
+   {
+    "debut": 240,
+    "fin": 270,
+    "composition": {
+     "ENM_001": 100
+    },
+    "taux": 0.5,
+    "formation": "flux",
+    "plafond": 40,
+    "note": "Creux"
+   },
+   {
+    "debut": 270,
+    "fin": 420,
+    "composition": {
+     "ENM_002": 40,
+     "ENM_010": 20,
+     "ENM_019": 20,
+     "ENM_028": 20
+    },
+    "taux": 2.2,
+    "formation": "anneau",
+    "plafond": 120
+   },
+   {
+    "debut": 420,
+    "fin": 480,
+    "composition": {},
+    "taux": 0,
+    "formation": "aucune",
+    "plafond": 0,
+    "note": "Dégagement"
+   },
+   {
+    "debut": 480,
+    "fin": 720,
+    "composition": {
+     "ENM_001": 100
+    },
+    "taux": 0.5,
+    "formation": "flux",
+    "plafond": 20,
+    "boss": {
+     "t": 480,
+     "id": "BOS_035",
+     "pv_facteur": 0.25
+    }
+   }
+  ]
+ }
+]

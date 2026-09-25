@@ -1,0 +1,1903 @@
+[
+ {
+  "id": "EVO_001",
+  "nom": "Soleil de l'Uchiha",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_001"
+  ],
+  "catalyseurs": [
+   "PAS_021"
+  ],
+  "comportement": "La grande boule de feu grossit en traversant les ennemis (perce 6) puis explose en 3 boules secondaires qui repartent en étoile.",
+  "valeurs": "Impact 70 ; explosion 40 (r 2,5 m) ; 3 × 25 ; délai 1,8 s",
+  "limites": "Boules secondaires SECONDAIRE, ne se divisent pas.",
+  "visuel": "Boule de 32 px à cœur blanc, trois sous-boules de 12 px ; traînée de fumée noire."
+ },
+ {
+  "id": "EVO_002",
+  "nom": "Nuée de phénix",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_002"
+  ],
+  "catalyseurs": [
+   "PAS_007"
+  ],
+  "comportement": "12 flammes guidées en deux vagues d'éventail, qui reprennent une nouvelle cible si la leur meurt en vol.",
+  "valeurs": "18 par flamme ; délai 1,2 s ; Brûlure +1",
+  "limites": "Max 3 flammes par cible.",
+  "visuel": "Flammes en forme d'oiseaux (4 frames d'ailes), pétales de feu."
+ },
+ {
+  "id": "EVO_003",
+  "nom": "Souffle du dragon ancestral",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_004"
+  ],
+  "catalyseurs": [
+   "EQP_018"
+  ],
+  "comportement": "Le cône continu passe à 120° et 6 m ; les ennemis à 6 cumuls de Brûlure éclatent en braises (propagation).",
+  "valeurs": "12 par tick de 0,25 s ; éclatement 30 ; délai 2,2 s",
+  "limites": "Éclatement : 1 par cible.",
+  "visuel": "Nappe de feu en 3 couches, tête de dragon esquissée au départ."
+ },
+ {
+  "id": "EVO_004",
+  "nom": "Déluge d'huile ardente",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_010"
+  ],
+  "catalyseurs": [
+   "EQP_029"
+  ],
+  "comportement": "Deux gerbes d'huile en V puis embrasement : laisse un lac de flammes de 4 m pendant 4 s.",
+  "valeurs": "Embrasement 60 ; lac 10 par tick de 0,5 s ; délai 4,0 s",
+  "limites": "1 lac actif.",
+  "visuel": "Huile luisante puis mer de flammes à crêtes, sol noirci."
+ },
+ {
+  "id": "EVO_005",
+  "nom": "Balle de flamme perforante",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_009"
+  ],
+  "catalyseurs": [
+   "PAS_020"
+  ],
+  "comportement": "Tir rapide qui perce tout et ricoche une fois sur les obstacles ; laisse une ligne de braises 1 s.",
+  "valeurs": "30 ; délai 0,7 s ; vitesse 16 m/s",
+  "limites": "—",
+  "visuel": "Goutte de feu à cœur blanc et traîne longue."
+ },
+ {
+  "id": "EVO_006",
+  "nom": "Halo solaire",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_013"
+  ],
+  "catalyseurs": [
+   "PAS_005"
+  ],
+  "comportement": "Couronne permanente de 5 feux follets sur deux anneaux contrarotatifs (2 m et 3,5 m).",
+  "valeurs": "12 par passage ; Brûlure +1 ; permanente",
+  "limites": "Intervalle 0,5 s par follet et par cible.",
+  "visuel": "Deux anneaux de flammes, lueur au sol en cercle."
+ },
+ {
+  "id": "EVO_007",
+  "nom": "Hydre de braises",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_021"
+  ],
+  "catalyseurs": [
+   "PAS_006"
+  ],
+  "comportement": "La salamandre se divise en 2 à chaque élimination (max 4 simultanées), chacune poursuivant sa chaîne.",
+  "valeurs": "26 par cible ; 5 sauts par salamandre ; délai 1,8 s",
+  "limites": "Divisions : profondeur 2.",
+  "visuel": "Salamandres à 2 têtes, traînées de braises entrecroisées."
+ },
+ {
+  "id": "EVO_008",
+  "nom": "Pression infernale",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_008"
+  ],
+  "catalyseurs": [
+   "PAS_049"
+  ],
+  "comportement": "L'orbe attire les ennemis ordinaires à 3 m pendant son vol, puis détone en double explosion (implosion puis explosion).",
+  "valeurs": "Implosion 40 ; explosion 110 (r 4 m) ; délai 5,0 s",
+  "limites": "Max 2 orbes.",
+  "visuel": "Orbe noir à anneau orange, implosion en 3 frames puis dôme."
+ },
+ {
+  "id": "EVO_009",
+  "nom": "Dragons jumeaux d'eau",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_025"
+  ],
+  "catalyseurs": [
+   "PAS_022"
+  ],
+  "comportement": "Deux dragons entrelacés (sinusoïdes opposées) ; chaque croisement crée un geyser.",
+  "valeurs": "2 × 40 ; geyser 25 (r 1,2 m) ; perce illimité ; délai 2,0 s",
+  "limites": "—",
+  "visuel": "Deux corps d'eau en double hélice, gerbes aux croisements."
+ },
+ {
+  "id": "EVO_010",
+  "nom": "Rempart des marées",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_026"
+  ],
+  "catalyseurs": [
+   "PAS_051"
+  ],
+  "comportement": "Le mur d'eau reste 2 s en anneau à 2,5 m : bloque tous les projectiles ordinaires, puis s'effondre en vague vers l'extérieur.",
+  "valeurs": "Vague 40 ; recul 3 m ; délai 6,0 s",
+  "limites": "Télégraphes de boss non bloqués.",
+  "visuel": "Anneau d'eau haut de 24 px, écume, effondrement en 4 frames."
+ },
+ {
+  "id": "EVO_011",
+  "nom": "Prison des profondeurs",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_027"
+  ],
+  "catalyseurs": [
+   "PAS_050"
+  ],
+  "comportement": "Jusqu'à 3 prisons simultanées ; à la fin, chaque prison éclate et Trempe à 2 m.",
+  "valeurs": "20 par tick de 0,5 s ; durée 3 s ; éclatement 30 ; délai 5,0 s",
+  "limites": "Boss : résistance de contrôle.",
+  "visuel": "Sphères plus sombres, silhouette déformée, bulles."
+ },
+ {
+  "id": "EVO_012",
+  "nom": "Brume du démon",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_028"
+  ],
+  "catalyseurs": [
+   "EQP_016"
+  ],
+  "comportement": "Brume de 6 m qui suit le joueur ; critique +25 % contre les cibles dedans ; les ennemis dedans s'attaquent parfois (Confus 1 s toutes les 3 s).",
+  "valeurs": "Durée 6 s ; délai 9 s",
+  "limites": "Télégraphes toujours au-dessus.",
+  "visuel": "Brume dense à bord net en dithering, silhouettes ennemies contourées."
+ },
+ {
+  "id": "EVO_013",
+  "nom": "Banc de requins missiles",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_029"
+  ],
+  "catalyseurs": [
+   "PAS_053"
+  ],
+  "comportement": "4 requins chercheurs par salve ; chaque morsure Trempe.",
+  "valeurs": "4 × (2 × 20) ; délai 1,4 s",
+  "limites": "—",
+  "visuel": "Requins en formation serrée, sillages croisés."
+ },
+ {
+  "id": "EVO_014",
+  "nom": "Raz-de-marée",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_030"
+  ],
+  "catalyseurs": [
+   "PAS_048"
+  ],
+  "comportement": "Deux vagues successives (7 m puis 10 m) ; l'inondation reste 6 s et les ennemis y sont ralentis de 30 %.",
+  "valeurs": "60 + 40 ; recul 3 m ; délai 8,0 s",
+  "limites": "Recul réduit dans les zones alliées.",
+  "visuel": "Vague de 32 px à écume en crochets, sol inondé animé."
+ },
+ {
+  "id": "EVO_015",
+  "nom": "Lame d'eau infinie",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_034"
+  ],
+  "catalyseurs": [
+   "PAS_020"
+  ],
+  "comportement": "Jet maintenu 1 s qui balaie 90° ; traverse les obstacles bas et hauts.",
+  "valeurs": "30 par tick de 0,2 s ; longueur 14 m ; délai 3,0 s",
+  "limites": "—",
+  "visuel": "Ligne blanche de 3 px, brume en bordure, entaille au sol."
+ },
+ {
+  "id": "EVO_016",
+  "nom": "Mille aiguilles mortelles",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_043"
+  ],
+  "catalyseurs": [
+   "PAS_008"
+  ],
+  "comportement": "Trois couronnes d'aiguilles sur 3 cibles ; critique garanti sur cible Trempée.",
+  "valeurs": "3 × 12 × 5 ; délai 2,4 s",
+  "limites": "—",
+  "visuel": "Aiguilles blanches en couronnes décalées."
+ },
+ {
+  "id": "EVO_017",
+  "nom": "Requin dévoreur de chakra",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_046"
+  ],
+  "catalyseurs": [
+   "EQP_023"
+  ],
+  "comportement": "Le grand requin absorbe les projectiles ennemis et le chakra des ennemis traversés (+1 chakra chacun) ; explosion finale proportionnelle.",
+  "valeurs": "50 ; explosion 40 + 8 par absorption ; délai 7 s",
+  "limites": "Plafond de chakra global.",
+  "visuel": "Requin de 40 px, gueule qui aspire des particules bleues."
+ },
+ {
+  "id": "EVO_018",
+  "nom": "Chidori — Mille oiseaux hurlants",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_049"
+  ],
+  "catalyseurs": [
+   "PAS_023"
+  ],
+  "comportement": "L'image de frappe enchaîne 3 cibles (4 m entre chacune) ; chaque impact décharge en arc de 2 m.",
+  "valeurs": "3 × 80 ; décharge 30 ; délai 2,4 s",
+  "limites": "—",
+  "visuel": "Filaments épais, cri d'oiseaux en crescendo."
+ },
+ {
+  "id": "EVO_019",
+  "nom": "Shiden (Éclair violet)",
+  "statut": "OA",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_050"
+  ],
+  "catalyseurs": [
+   "PAS_043"
+  ],
+  "comportement": "Trait de foudre plus fin et plus long (7 m) qui frappe l'élite ou le boss en priorité ; +50 % contre eux.",
+  "valeurs": "120 (180 élite/boss) ; délai 3,0 s",
+  "limites": "—",
+  "visuel": "Foudre violette à cœur blanc, contour clair."
+ },
+ {
+  "id": "EVO_020",
+  "nom": "Pluie des mille oiseaux",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_052"
+  ],
+  "catalyseurs": [
+   "PAS_007"
+  ],
+  "comportement": "3 rafales de 8 aiguilles, chaque rafale vers une cible différente ; toutes Électrisent.",
+  "valeurs": "3 × 8 × 8 ; délai 1,2 s",
+  "limites": "Électrisé : délai interne par cible respecté.",
+  "visuel": "Aiguilles blanches en salves décalées."
+ },
+ {
+  "id": "EVO_021",
+  "nom": "Lance tournoyante des mille oiseaux",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_053"
+  ],
+  "catalyseurs": [
+   "PAS_003"
+  ],
+  "comportement": "La lance de 10 m effectue un tour complet (360°) autour du joueur.",
+  "valeurs": "30 par tick de 0,2 s ; durée 1,0 s ; délai 3,0 s",
+  "limites": "Obstacles hauts : la lance se raccourcit.",
+  "visuel": "Lame zigzag qui balaie un cercle, traînée de 4 frames."
+ },
+ {
+  "id": "EVO_022",
+  "nom": "Kirin — Orage perpétuel",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_054"
+  ],
+  "catalyseurs": [
+   "EQP_034"
+  ],
+  "comportement": "Le nuage reste en place après la foudre et lance des éclairs secondaires 4 s ; la construction passe à 4 s.",
+  "valeurs": "150 ; éclairs 20 × 10 ; délai 12 s",
+  "limites": "Micro-pause locale uniquement.",
+  "visuel": "Nuage d'orage permanent à contour clair, bête de foudre plus grande (80 px)."
+ },
+ {
+  "id": "EVO_023",
+  "nom": "Meute de foudre",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_055"
+  ],
+  "catalyseurs": [
+   "PAS_053"
+  ],
+  "comportement": "3 chiens de foudre ; chacun peut enchaîner 5 éliminations.",
+  "valeurs": "3 × 40 ; délai 2,2 s",
+  "limites": "—",
+  "visuel": "Chiens électriques en meute, traînées croisées."
+ },
+ {
+  "id": "EVO_024",
+  "nom": "Tempête ramifiée",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_059"
+  ],
+  "catalyseurs": [
+   "EQP_019"
+  ],
+  "comportement": "L'éclair se divise en 2 à chaque saut (max 16 cibles) ; −8 % par saut.",
+  "valeurs": "26 ; 4 générations ; délai 1,4 s",
+  "limites": "Jamais deux fois la même cible.",
+  "visuel": "Arbre de foudre construit génération par génération (0,03 s)."
+ },
+ {
+  "id": "EVO_025",
+  "nom": "Panthères jumelles",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_057"
+  ],
+  "catalyseurs": [
+   "PAS_050"
+  ],
+  "comportement": "Deux panthères noires ; chaque cible clouée Électrise ses voisins à 2 m.",
+  "valeurs": "2 × 50 ; Étourdi 1 s ; délai 3,5 s",
+  "limites": "—",
+  "visuel": "Panthères noires à contour jaune épais, arcs violets."
+ },
+ {
+  "id": "EVO_026",
+  "nom": "Châtiment de foudre",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_072"
+  ],
+  "catalyseurs": [
+   "PAS_019"
+  ],
+  "comportement": "Chaque coup reçu déclenche une chaîne de 6 cibles et accorde 1 s de −30 % dégâts subis.",
+  "valeurs": "50 ; délai interne 1,2 s",
+  "limites": "Réduction comptée dans le plafond de 60 %.",
+  "visuel": "Éclairs depuis le contour du joueur, bouclier crépitant bref."
+ },
+ {
+  "id": "EVO_027",
+  "nom": "Daikamaitachi (Grande faux de la belette)",
+  "statut": "AV",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_074"
+  ],
+  "catalyseurs": [
+   "EQP_020"
+  ],
+  "comportement": "Deux croissants de 160° partent en V et tranchent 4 fois ; les Entaillés à 3 cumuls sont projetés.",
+  "valeurs": "4 × 14 ; délai 2,2 s",
+  "limites": "—",
+  "visuel": "Rubans blancs plus épais, feuilles hachées en pluie."
+ },
+ {
+  "id": "EVO_028",
+  "nom": "Percée-tornade",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_073"
+  ],
+  "catalyseurs": [
+   "PAS_003"
+  ],
+  "comportement": "La bourrasque devient une tornade horizontale qui avance 8 m en aspirant puis rejette les ennemis sur les côtés.",
+  "valeurs": "30 ; recul latéral 3 m ; délai 2,6 s",
+  "limites": "Recul réduit dans les zones alliées.",
+  "visuel": "Colonne de vent horizontale à bandes, débris."
+ },
+ {
+  "id": "EVO_029",
+  "nom": "Rafale de vide",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_075"
+  ],
+  "catalyseurs": [
+   "PAS_006"
+  ],
+  "comportement": "7 balles de vide en éventail ; chacune éclate en fin de course en onde de 1,5 m.",
+  "valeurs": "22 ; éclatement 12 ; délai 1,0 s",
+  "limites": "—",
+  "visuel": "Sphères déformantes, anneaux d'éclatement."
+ },
+ {
+  "id": "EVO_030",
+  "nom": "Ouragan",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_081"
+  ],
+  "catalyseurs": [
+   "PAS_005"
+  ],
+  "comportement": "Tornade géante (r 3 m) qui erre 8 s et soulève tous les ordinaires ; aspire les projectiles ennemis ordinaires.",
+  "valeurs": "12 par tick de 0,3 s ; délai 12 s",
+  "limites": "Élites non soulevées ; 1 ouragan.",
+  "visuel": "Entonnoir de 64 px, débris et feuilles orbitaux."
+ },
+ {
+  "id": "EVO_031",
+  "nom": "Tourbillon de lames",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_080"
+  ],
+  "catalyseurs": [
+   "PAS_024"
+  ],
+  "comportement": "8 lames permanentes qui alternent entre 1,5 m et 3 m (respiration de 2 s) ; Entaillé.",
+  "valeurs": "12 ; permanente",
+  "limites": "—",
+  "visuel": "Croissants blancs en couronne respirante."
+ },
+ {
+  "id": "EVO_032",
+  "nom": "Miroir de vent",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_085"
+  ],
+  "catalyseurs": [
+   "PAS_051"
+  ],
+  "comportement": "La bulle dure 2 s toutes les 5 s et renvoie les projectiles vers l'ennemi le plus proche (pas forcément le tireur) avec ×3.",
+  "valeurs": "Renvoi ×3 ; délai 5 s",
+  "limites": "Télégraphes de boss non renvoyés.",
+  "visuel": "Sphère striée plus dense, reflets."
+ },
+ {
+  "id": "EVO_033",
+  "nom": "Canon à air",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_079"
+  ],
+  "catalyseurs": [
+   "PAS_009"
+  ],
+  "comportement": "Balle d'air lourde : critique garanti sur la première cible, cône arrière élargi (90°, 5 m).",
+  "valeurs": "60 ; cône 30 ; délai 1,6 s",
+  "limites": "—",
+  "visuel": "Balle à onde de choc visible, poussière en éventail."
+ },
+ {
+  "id": "EVO_034",
+  "nom": "Forteresse de terre",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_097"
+  ],
+  "catalyseurs": [
+   "PAS_011"
+  ],
+  "comportement": "Trois murs en demi-cercle (ouvert à l'avant) ; les ennemis qui les frappent reçoivent des éclats ; Armure +3 près d'un mur.",
+  "valeurs": "Émergence 30 ; éclats 12 ; PV 300 par mur ; délai 9 s",
+  "limites": "Toujours ouverte sur 120° et à ≥ 2 m des obstacles.",
+  "visuel": "Murs à strates plus épais, créneaux."
+ },
+ {
+  "id": "EVO_035",
+  "nom": "Dragon de terre ancestral",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_098"
+  ],
+  "catalyseurs": [
+   "PAS_025"
+  ],
+  "comportement": "Le dragon reste 4 s et crache 8 boulets en rafale vers les groupes.",
+  "valeurs": "8 × 30 (r 1,5 m) ; Ensablé +1 ; délai 7 s",
+  "limites": "—",
+  "visuel": "Tête de 32 px plus détaillée, boulets en cascade."
+ },
+ {
+  "id": "EVO_036",
+  "nom": "Marais sans fond",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_099"
+  ],
+  "catalyseurs": [
+   "PAS_048"
+  ],
+  "comportement": "Marais de 6 m qui suit lentement le groupe le plus dense ; engloutit les ordinaires sous 35 %.",
+  "valeurs": "12 par tick de 0,5 s ; durée 6 s ; délai 10 s",
+  "limites": "Élites ralenties 40 %.",
+  "visuel": "Sol violacé mouvant, remous."
+ },
+ {
+  "id": "EVO_037",
+  "nom": "Étoile de pics",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_105"
+  ],
+  "catalyseurs": [
+   "PAS_006"
+  ],
+  "comportement": "5 lignes de pics partent en étoile autour du joueur.",
+  "valeurs": "5 lignes × 7 pics × 30 ; délai 2,6 s",
+  "limites": "1 touche par cible par ligne.",
+  "visuel": "Étoile de fissures en zigzag, pics anguleux."
+ },
+ {
+  "id": "EVO_038",
+  "nom": "Poing de montagne",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_107"
+  ],
+  "catalyseurs": [
+   "PAS_027"
+  ],
+  "comportement": "Le poing géant écrase un cône de 4 m puis une onde de terre de 5 m ; les ennemis projetés percutent les autres.",
+  "valeurs": "110 ; onde 40 ; collision 20 ; délai 2,4 s",
+  "limites": "—",
+  "visuel": "Poing de pierre de 32 px, déformation du sol, poussière dirigée."
+ },
+ {
+  "id": "EVO_039",
+  "nom": "Colosse de roche",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_115"
+  ],
+  "catalyseurs": [
+   "PAS_029"
+  ],
+  "comportement": "Golem permanent, plus grand, dont chaque frappe au sol crée une colonne de roche.",
+  "valeurs": "Frappe 60 (r 3 m) ; permanente",
+  "limites": "1 golem ; héritage ANIMAL.",
+  "visuel": "Golem de 48 px, blocs gravés."
+ },
+ {
+  "id": "EVO_040",
+  "nom": "Gravité écrasante",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_102"
+  ],
+  "catalyseurs": [
+   "PAS_050"
+  ],
+  "comportement": "Alourdit 3 cibles à la fois ; l'écrasement crée une zone de gravité 2 s (−40 % vitesse).",
+  "valeurs": "3 × 90 ; délai 4,5 s",
+  "limites": "—",
+  "visuel": "Cubes de glyphes multiples, sol enfoncé."
+ },
+ {
+  "id": "EVO_041",
+  "nom": "Mokuton — Shinrin Kōtan (Forêt profonde)",
+  "statut": "OA",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_121"
+  ],
+  "catalyseurs": [
+   "PAS_048"
+  ],
+  "comportement": "Forêt de 8 m qui pousse en vague depuis le joueur ; les arbres Entravent puis restent 6 s comme obstacles pour les ennemis (pas pour le joueur).",
+  "valeurs": "70 ; 8 par tick de 0,5 s ; délai 11 s",
+  "limites": "Couloirs de 2 m toujours laissés libres autour du joueur.",
+  "visuel": "Troncs épais à feuillage dense en parallaxe, couloirs visibles."
+ },
+ {
+  "id": "EVO_042",
+  "nom": "Dragon de bois dévorant",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_126"
+  ],
+  "catalyseurs": [
+   "PAS_026"
+  ],
+  "comportement": "Le dragon absorbe le chakra : chaque cible enserrée rend 2 chakra et donne +5 % dégâts au dragon (max +50 %).",
+  "valeurs": "60 ; délai 6 s",
+  "limites": "Plafond de chakra global.",
+  "visuel": "Dragon de 64 px, gueule qui mord, veines de chakra."
+ },
+ {
+  "id": "EVO_043",
+  "nom": "Palais de miroirs",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_127"
+  ],
+  "catalyseurs": [
+   "PAS_050"
+  ],
+  "comportement": "Deux cercles de miroirs simultanés ; les ennemis Gelés dans un cercle éclatent en éclats de glace.",
+  "valeurs": "10 par aiguille ; 20 aiguilles/s par cercle ; éclats 30 ; délai 9 s",
+  "limites": "—",
+  "visuel": "Miroirs plus hauts à reflets du joueur."
+ },
+ {
+  "id": "EVO_044",
+  "nom": "Cercueil de sable de masse",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_131"
+  ],
+  "catalyseurs": [
+   "EQP_003"
+  ],
+  "comportement": "Enveloppe jusqu'à 6 ennemis proches de la cible puis les broie ensemble ; le sable reste en surface.",
+  "valeurs": "6 × 90 ; surface SABLE 4 s ; délai 3,5 s",
+  "limites": "Boss : Vulnérable +15 % 2 s.",
+  "visuel": "Six colonnes de sable qui se referment en même temps (son groupé)."
+ },
+ {
+  "id": "EVO_045",
+  "nom": "Shukaku no Tate (Bouclier de Shukaku)",
+  "statut": "AV",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_134"
+  ],
+  "catalyseurs": [
+   "PAS_051"
+  ],
+  "comportement": "Charges de sable jusqu'à 4 ; chaque charge absorbe un coup (quel qu'il soit, hors télégraphe majeur) et contre-frappe en zone de 2 m.",
+  "valeurs": "Contre 40 ; recharge 3 s par charge",
+  "limites": "Télégraphes majeurs : réduits de 50 %.",
+  "visuel": "Flux de sable plus dense, silhouette de tanuki esquissée au blocage."
+ },
+ {
+  "id": "EVO_046",
+  "nom": "Satetsu Kekkai (Barrière de sable de fer)",
+  "statut": "AV",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_136"
+  ],
+  "catalyseurs": [
+   "PAS_026"
+  ],
+  "comportement": "Les aiguilles restent dans l'air 2 s en réseau ; les ennemis qui traversent le réseau sont Aimantés et blessés.",
+  "valeurs": "14 ; réseau 10 par tick ; délai 1,4 s",
+  "limites": "1 réseau actif.",
+  "visuel": "Réseau de lignes noires à reflets violets."
+ },
+ {
+  "id": "EVO_047",
+  "nom": "Nuée d'argile",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_147"
+  ],
+  "catalyseurs": [
+   "PAS_049"
+  ],
+  "comportement": "8 créatures d'argile par salve ; les mines au sol se déplacent vers les ennemis proches.",
+  "valeurs": "30 (r 1,5 m) ; délai 1,4 s",
+  "limites": "Max 10 mines.",
+  "visuel": "Araignées et oiseaux blancs en essaim."
+ },
+ {
+  "id": "EVO_048",
+  "nom": "Détonation en chaîne",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_149"
+  ],
+  "catalyseurs": [
+   "EQP_007"
+  ],
+  "comportement": "La grande bombe laisse 6 petites bombes qui explosent en cascade vers l'extérieur.",
+  "valeurs": "140 ; 6 × 40 ; délai 16 s",
+  "limites": "Pas de flash plein écran.",
+  "visuel": "Explosion en dôme puis chapelet de 6 explosions."
+ },
+ {
+  "id": "EVO_049",
+  "nom": "Cirque laser total",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_151"
+  ],
+  "catalyseurs": [
+   "PAS_007"
+  ],
+  "comportement": "16 faisceaux qui rebondissent 3 fois ; les cibles Trempées reçoivent 2 faisceaux.",
+  "valeurs": "18 ; délai 1,8 s",
+  "limites": "Max 3 faisceaux par cible.",
+  "visuel": "Faisceaux blanc-cyan anguleux, nuage gris qui les émet au-dessus du joueur."
+ },
+ {
+  "id": "EVO_050",
+  "nom": "Enton — Lame du brasier éternel",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_154"
+  ],
+  "catalyseurs": [
+   "EQP_028"
+  ],
+  "comportement": "Arc de 220° à 3,5 m ; chaque coup laisse une ligne de flammes noires 2 s au sol.",
+  "valeurs": "55 ; Brûlure noire +2 ; ligne 10 par tick ; délai 1,4 s",
+  "limites": "—",
+  "visuel": "Lame noire plus longue, contour blanc, ligne sombre au sol à liseré rouge."
+ },
+ {
+  "id": "EVO_051",
+  "nom": "Lac de lave",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_143"
+  ],
+  "catalyseurs": [
+   "PAS_048"
+  ],
+  "comportement": "Les globes fusionnent en lacs de 3 m qui s'étendent 1 s ; ennemis Corrodés et ralentis de 30 %.",
+  "valeurs": "Impact 40 ; lac 14 par tick de 0,5 s ; durée 5 s ; délai 2,6 s",
+  "limites": "Max 3 lacs.",
+  "visuel": "Lacs incandescents à croûte craquelée qui s'élargissent."
+ },
+ {
+  "id": "EVO_052",
+  "nom": "Soleil desséchant",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_140"
+  ],
+  "catalyseurs": [
+   "PAS_026"
+  ],
+  "comportement": "3 orbes par lancer ; à la mort d'une cible asséchée, l'orbe éclate en vapeur brûlante (r 2 m).",
+  "valeurs": "14 → 24 par s ; éclatement 40 ; délai 2,6 s",
+  "limites": "—",
+  "visuel": "Trois orbes blancs à anneaux de vapeur."
+ },
+ {
+  "id": "EVO_053",
+  "nom": "Cube primordial",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_159"
+  ],
+  "catalyseurs": [
+   "PAS_003"
+  ],
+  "comportement": "Le cube s'étend à 5 m et laisse un cube résiduel 2 s qui désintègre les ordinaires qui y entrent.",
+  "valeurs": "160 ; résiduel 20 par tick ; délai 14 s",
+  "limites": "Pas de flash plein écran.",
+  "visuel": "Cube plus grand à double arête, quadrillage animé."
+ },
+ {
+  "id": "EVO_054",
+  "nom": "Konoha Daisenpū (Grand tourbillon de la feuille)",
+  "statut": "OA",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_161"
+  ],
+  "catalyseurs": [
+   "PAS_027"
+  ],
+  "comportement": "Balayage à 360° en 3 rotations (bas, milieu, haut) ; la troisième projette en l'air (compatible Kage Buyō).",
+  "valeurs": "3 × 22 ; délai 1,0 s",
+  "limites": "—",
+  "visuel": "Trois arcs de poussière superposés, feuilles aspirées."
+ },
+ {
+  "id": "EVO_055",
+  "nom": "Lotus de la jeunesse",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_162"
+  ],
+  "catalyseurs": [
+   "PAS_054"
+  ],
+  "comportement": "Saisit 2 cibles l'une après l'autre ; l'écrasement crée un cratère qui étourdit les ordinaires 1 s.",
+  "valeurs": "2 × 140 ; cratère 50 (r 3 m) ; délai 7 s",
+  "limites": "Boss : frappe verticale 140 + Vulnérable +15 %.",
+  "visuel": "Bandages en double vrille, cratère en étoile."
+ },
+ {
+  "id": "EVO_056",
+  "nom": "Paon flamboyant",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_167"
+  ],
+  "catalyseurs": [
+   "PAS_042"
+  ],
+  "comportement": "Rafale de 24 coups en éventail de 120° ; chaque élimination pendant la rafale ajoute 2 coups (max +12).",
+  "valeurs": "24 × 10 ; Brûlure +1 par 3 coups ; délai 4,5 s",
+  "limites": "Ne compte pas comme Katon.",
+  "visuel": "Queue de paon enflammée complète derrière le joueur."
+ },
+ {
+  "id": "EVO_057",
+  "nom": "Dix mille poings",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_177"
+  ],
+  "catalyseurs": [
+   "PAS_002"
+  ],
+  "comportement": "Rafale continue de 20 coups sur la cible et ses voisins à 1,5 m ; la dernière frappe éjecte.",
+  "valeurs": "20 × 8 ; éjection 30 ; délai 1,4 s",
+  "limites": "—",
+  "visuel": "Poings en éventail d'images rémanentes, étoiles d'impact."
+ },
+ {
+  "id": "EVO_058",
+  "nom": "Floraison tectonique",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_175"
+  ],
+  "catalyseurs": [
+   "PAS_059"
+  ],
+  "comportement": "Le poing fend le sol en étoile à 5 branches ; chaque branche soigne le joueur de 1 PV par ennemi touché (plafond).",
+  "valeurs": "Poing 90 ; branches 5 × 30 ; délai 2,4 s",
+  "limites": "Soin dans le plafond §B4.5.",
+  "visuel": "Pétales de cerisier stylisés dans les fissures."
+ },
+ {
+  "id": "EVO_059",
+  "nom": "Liger Bomb (Bombe du tigre-lion)",
+  "statut": "OA",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_172"
+  ],
+  "catalyseurs": [
+   "PAS_023"
+  ],
+  "comportement": "La charge saisit la première élite (ou ordinaire) et l'écrase au sol avec une onde électrique de 3 m.",
+  "valeurs": "Charge 50 ; écrasement 130 ; onde 40 ; délai 4,0 s",
+  "limites": "Boss : pas de saisie, frappe 130.",
+  "visuel": "Silhouette qui soulève la cible, éclairs en dôme."
+ },
+ {
+  "id": "EVO_060",
+  "nom": "Tempête de kunai",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_185"
+  ],
+  "catalyseurs": [
+   "EQP_002"
+  ],
+  "comportement": "3 éventails de 5 kunai vers 3 cibles ; les kunai plantés au sol explosent 1 s plus tard (étiquette).",
+  "valeurs": "18 ; explosion 14 (r 1 m) ; délai 0,9 s",
+  "limites": "Max 15 kunai plantés.",
+  "visuel": "Kunai en triple éventail, étiquettes qui grésillent."
+ },
+ {
+  "id": "EVO_061",
+  "nom": "Moulin démoniaque",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_187"
+  ],
+  "catalyseurs": [
+   "PAS_003"
+  ],
+  "comportement": "Deux grands shuriken en orbite large (4 m) pendant 5 s, puis lancés en ligne droite.",
+  "valeurs": "30 par passage ; lancer 50 ; délai 6 s",
+  "limites": "—",
+  "visuel": "Shuriken de 24 px, sifflement, ombres au sol."
+ },
+ {
+  "id": "EVO_062",
+  "nom": "Mille étiquettes",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_189"
+  ],
+  "catalyseurs": [
+   "PAS_049"
+  ],
+  "comportement": "5 kunai à étiquette autour du groupe le plus dense, détonation simultanée.",
+  "valeurs": "5 × 50 (r 2 m) ; délai 2,5 s",
+  "limites": "Son groupé en un seul événement.",
+  "visuel": "Étiquettes en couronne, explosion en fleur."
+ },
+ {
+  "id": "EVO_063",
+  "nom": "Corbeau d'acier",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_202"
+  ],
+  "catalyseurs": [
+   "PAS_046"
+  ],
+  "comportement": "Karasu se démultiplie en 3 parties volantes qui attaquent 3 cibles différentes (poison).",
+  "valeurs": "3 × 22 + Empoisonné +1 ; intervalle 0,6 s ; permanente",
+  "limites": "Compte 1 unité du plafond.",
+  "visuel": "Tête, torse et bras séparés reliés par fils."
+ },
+ {
+  "id": "EVO_064",
+  "nom": "Queue de scorpion d'acier",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_205"
+  ],
+  "catalyseurs": [
+   "PAS_045"
+  ],
+  "comportement": "La queue fouette en cercle complet (3,5 m) et projette des aiguilles empoisonnées toutes les 2 s.",
+  "valeurs": "30 + Empoisonné +2 ; aiguilles 8 × 6 ; permanente",
+  "limites": "—",
+  "visuel": "Queue à segments d'acier, aiguilles violettes."
+ },
+ {
+  "id": "EVO_065",
+  "nom": "Couperet du démon",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_197"
+  ],
+  "catalyseurs": [
+   "PAS_058"
+  ],
+  "comportement": "Balayage 270° à 3,5 m ; la réparation de la lame monte à +60 % et ne se perd plus.",
+  "valeurs": "70 ; délai 2,0 s",
+  "limites": "—",
+  "visuel": "Lame plus grande, arc lourd, éclats métalliques."
+ },
+ {
+  "id": "EVO_066",
+  "nom": "Samehada éveillée",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_198"
+  ],
+  "catalyseurs": [
+   "PAS_041"
+  ],
+  "comportement": "L'épée mord : chaque coup vole 1 chakra et 1 PV (plafonds globaux) et grossit l'épée (+10 % portée, max +50 %).",
+  "valeurs": "50 ; délai 1,4 s",
+  "limites": "Plafonds de chakra et de vol de vie.",
+  "visuel": "Épée à gueule et écailles hérissées, langue."
+ },
+ {
+  "id": "EVO_067",
+  "nom": "Kusanagi — Lame qui s'allonge",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_199"
+  ],
+  "catalyseurs": [
+   "PAS_058"
+  ],
+  "comportement": "Estoc qui s'allonge à 9 m et revient ; balaie 30° au retour.",
+  "valeurs": "60 aller ; 30 retour ; délai 1,2 s",
+  "limites": "—",
+  "visuel": "Lame fine étirée, reflet qui court le long."
+ },
+ {
+  "id": "EVO_068",
+  "nom": "Mille dragons d'acier",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_193"
+  ],
+  "catalyseurs": [
+   "EQP_002"
+  ],
+  "comportement": "Quatre rouleaux ; la pluie couvre 7 m et les armes plantées forment un champ de chausse-trapes 4 s.",
+  "valeurs": "48 armes × 12 ; champ 6 par pas ; délai 6 s",
+  "limites": "—",
+  "visuel": "Quatre hélices de rouleaux, pluie d'armes dense."
+ },
+ {
+  "id": "EVO_069",
+  "nom": "Kage Bunshin — Rasengan des clones coordonnés",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_217"
+  ],
+  "catalyseurs": [
+   "PAS_060"
+  ],
+  "comportement": "Plafond de 4 clones ; toutes les 6 s, les clones convergent sur une cible prioritaire et frappent ensemble d'un Rasengan (signal commun discret).",
+  "valeurs": "Frappe 30 ; Rasengan coordonné 4 × 50 ; durée 6 s ; délai 4 s",
+  "limites": "Les clones copient le Rasengan de l'évolution, jamais un effet auto-déclenché ; aucun clone ne crée de clone.",
+  "visuel": "Anneau bleu discret au sol sous la cible avant la convergence ; 4 orbes synchrones."
+ },
+ {
+  "id": "EVO_070",
+  "nom": "Marée de clones",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_218"
+  ],
+  "catalyseurs": [
+   "PAS_030"
+  ],
+  "comportement": "Vague de 12 clones en V qui traversent l'écran ; chaque clone frappe 2 fois.",
+  "valeurs": "12 × 2 × 20 ; délai 8 s",
+  "limites": "Compte 1 unité du plafond.",
+  "visuel": "Rangées de fumée en V, silhouettes en course."
+ },
+ {
+  "id": "EVO_071",
+  "nom": "Gamabunta — Grand combat",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_224"
+  ],
+  "catalyseurs": [
+   "PAS_029"
+  ],
+  "comportement": "Gamabunta reste 12 s, sabre 4 fois et crache un jet d'huile qui peut être embrasé (SYN_003).",
+  "valeurs": "Atterrissage 90 ; sabre 4 × 100 ; délai 50 s",
+  "limites": "1 géant.",
+  "visuel": "Crapaud géant plus détaillé, pipe fumante."
+ },
+ {
+  "id": "EVO_072",
+  "nom": "Meute de Pakkun",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_229"
+  ],
+  "catalyseurs": [
+   "PAS_053"
+  ],
+  "comportement": "Les 8 chiens restent 6 s et changent de cible à chaque immobilisation.",
+  "valeurs": "8 × 20 par morsure ; Entravé 1 s ; délai 10 s",
+  "limites": "Compte 1 unité.",
+  "visuel": "Chiens identifiables (tailles, couleurs), poussière de course."
+ },
+ {
+  "id": "EVO_073",
+  "nom": "Akamaru adulte",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_230"
+  ],
+  "catalyseurs": [
+   "EQP_032"
+  ],
+  "comportement": "Akamaru double de taille : morsures en zone (1,5 m) et aboiement qui étourdit 0,5 s.",
+  "valeurs": "Morsure 30 ; aboiement 20 ; permanente",
+  "limites": "—",
+  "visuel": "Chien de 24 px, pelage détaillé."
+ },
+ {
+  "id": "EVO_074",
+  "nom": "Katsuyu — Division de soin",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_228"
+  ],
+  "catalyseurs": [
+   "PAS_059"
+  ],
+  "comportement": "3 limaces sur le joueur : soin 2 PV/s et acide sur 3 cibles.",
+  "valeurs": "Acide 3 × 18 ; soin 2 PV/s ; permanente",
+  "limites": "Plafond de soin §B4.5.",
+  "visuel": "Trois limaces sur épaules et dos."
+ },
+ {
+  "id": "EVO_075",
+  "nom": "Bestiaire d'encre",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_235"
+  ],
+  "catalyseurs": [
+   "PAS_029"
+  ],
+  "comportement": "Alternance lions (dégâts), serpents (Entravé) et oiseaux (bombardement) à chaque invocation.",
+  "valeurs": "3 unités × 26 ; délai 6 s",
+  "limites": "Compte 1 unité.",
+  "visuel": "Encre en traits de pinceau distincts par animal."
+ },
+ {
+  "id": "EVO_076",
+  "nom": "Edo Tensei — Légion réanimée",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_243"
+  ],
+  "catalyseurs": [
+   "PAS_057"
+  ],
+  "comportement": "3 réanimés maximum ; ils explosent en fin de durée (étiquette interne).",
+  "valeurs": "Dégâts × 0,8 ; explosion 50 ; durée 15 s",
+  "limites": "Jamais de boss réanimé.",
+  "visuel": "Cercueils multiples, fissures grises."
+ },
+ {
+  "id": "EVO_077",
+  "nom": "Narakumi — Vision collective",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_249"
+  ],
+  "catalyseurs": [
+   "PAS_032"
+  ],
+  "comportement": "Le cône devient un cercle de 5 m ; les ennemis figés sont Vulnérables +20 %.",
+  "valeurs": "10 ; Étourdi 1,2 s ; délai 4,5 s",
+  "limites": "—",
+  "visuel": "Feuilles tourbillonnant en cercle, silhouettes tremblantes."
+ },
+ {
+  "id": "EVO_078",
+  "nom": "Nuit éternelle",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_251"
+  ],
+  "catalyseurs": [
+   "PAS_032"
+  ],
+  "comportement": "L'obscurité suit le joueur (6 m) : les ennemis dedans sont Aveuglés et reçoivent +15 % de dégâts.",
+  "valeurs": "6 par tick de 0,5 s ; durée 6 s ; délai 9 s",
+  "limites": "Contour des ennemis et télégraphes conservés.",
+  "visuel": "Tramage sombre mobile, ennemis surlignés."
+ },
+ {
+  "id": "EVO_079",
+  "nom": "Forêt d'illusions enserrantes",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_250"
+  ],
+  "catalyseurs": [
+   "PAS_050"
+  ],
+  "comportement": "3 arbres illusoires simultanés ; les coups de grâce propagent la terreur (Étourdi 1 s à 2 m).",
+  "valeurs": "3 × 60 (120) ; délai 5 s",
+  "limites": "—",
+  "visuel": "Branches violettes pâles, fleurs de camélia."
+ },
+ {
+  "id": "EVO_080",
+  "nom": "Épidémie d'illusions",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_264"
+  ],
+  "catalyseurs": [
+   "PAS_032"
+  ],
+  "comportement": "La propagation touche 2 voisins et les confus infligent +30 % aux autres ennemis.",
+  "valeurs": "Confus 2 s ; délai 2,5 s",
+  "limites": "Propagations max 16 par cycle.",
+  "visuel": "Fils violets ramifiés."
+ },
+ {
+  "id": "EVO_081",
+  "nom": "Hiraishin — Réseau céleste",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_265"
+  ],
+  "catalyseurs": [
+   "PAS_033"
+  ],
+  "comportement": "6 kunai actifs ; l'image-éclair frappe les ennemis sur les segments entre kunai (pas seulement autour).",
+  "valeurs": "30 autour ; 20 sur segments ; toutes les 2 s",
+  "limites": "—",
+  "visuel": "Réseau de traits jaunes entre kunai."
+ },
+ {
+  "id": "EVO_082",
+  "nom": "Réseau d'étiquettes infini",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_270"
+  ],
+  "catalyseurs": [
+   "PAS_049"
+  ],
+  "comportement": "Grille 5 × 5 qui se reforme 3 s après la cascade (2 cycles).",
+  "valeurs": "30 par étiquette ; délai 7 s",
+  "limites": "1 grille.",
+  "visuel": "Grille plus grande, cascade en vague diagonale."
+ },
+ {
+  "id": "EVO_083",
+  "nom": "Grand sceau du mal",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_267"
+  ],
+  "catalyseurs": [
+   "PAS_033"
+  ],
+  "comportement": "Scelle 3 élites à la fois ; les ordinaires dans le sceau sont éliminés sous 30 %.",
+  "valeurs": "20 ; affaiblissement 8 s ; délai 10 s",
+  "limites": "Boss : −25 % dégâts 5 s.",
+  "visuel": "Cercle de formule plus grand, trois cibles reliées."
+ },
+ {
+  "id": "EVO_084",
+  "nom": "Ōdama Rasengan (Grand orbe tourbillonnant)",
+  "statut": "OA",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_281"
+  ],
+  "catalyseurs": [
+   "PAS_060"
+  ],
+  "comportement": "Orbe géant (24 px) : l'impact repousse en onde de 3,5 m et laisse les ennemis Vulnérables +10 % 3 s.",
+  "valeurs": "Impact 120 ; onde 45 ; délai 2,0 s",
+  "limites": "Le personnage reste visible (orbe tenu à bout de bras, contour conservé).",
+  "visuel": "Orbe à 3 couches de rotation, anneaux de pression doubles."
+ },
+ {
+  "id": "EVO_085",
+  "nom": "Kagemane — Toile d'ombres",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_282"
+  ],
+  "catalyseurs": [
+   "PAS_050"
+  ],
+  "comportement": "L'ombre se ramifie en 5 branches et lie jusqu'à 6 cibles ; les liés partagent 20 % des dégâts reçus.",
+  "valeurs": "Lié 2,5 s ; partage 20 % (SECONDAIRE) ; délai 4,5 s",
+  "limites": "Profondeur de partage 1.",
+  "visuel": "Toile noire plate à bords nets."
+ },
+ {
+  "id": "EVO_086",
+  "nom": "Essaim royal",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_291"
+  ],
+  "catalyseurs": [
+   "PAS_029"
+  ],
+  "comportement": "Deux essaims (unités logiques) ; les Parasités à 10 cumuls sont dévorés (élimination des ordinaires).",
+  "valeurs": "5 par tick de 0,5 s + Parasité +2 ; permanente",
+  "limites": "2 unités logiques, insectes décoratifs.",
+  "visuel": "Deux nuées en formation, reine esquissée."
+ },
+ {
+  "id": "EVO_087",
+  "nom": "Hakkeshō Kaiten — Grande rotation",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_297"
+  ],
+  "catalyseurs": [
+   "PAS_051"
+  ],
+  "comportement": "Dôme de 3,5 m qui dure 1 s ; les projectiles détruits sont renvoyés en éclats.",
+  "valeurs": "50 ; recul 3 m ; délai 5 s",
+  "limites": "Télégraphes de boss non renvoyés.",
+  "visuel": "Dôme strié plus large, sol creusé profondément."
+ },
+ {
+  "id": "EVO_088",
+  "nom": "Soixante-quatre paumes — Garde des trigrammes",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_298"
+  ],
+  "catalyseurs": [
+   "PAS_002"
+  ],
+  "comportement": "Les 64 frappes créent une garde : les projectiles entrant à 2 m sont détruits pendant l'exécution.",
+  "valeurs": "64 × 4 ; 16 × 4 aux autres ; délai 7 s",
+  "limites": "—",
+  "visuel": "Octogone lumineux, trails de paumes."
+ },
+ {
+  "id": "EVO_089",
+  "nom": "Gatsūga — Crocs de la meute",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_294"
+  ],
+  "catalyseurs": [
+   "PAS_053"
+  ],
+  "comportement": "Quatre vrilles en croix double ; celles d'Akamaru ricochent sur les bords de l'écran.",
+  "valeurs": "4 × 40 ; délai 2,6 s",
+  "limites": "—",
+  "visuel": "Vrilles grises et blanches croisées."
+ },
+ {
+  "id": "EVO_090",
+  "nom": "Nikudan Hari Sensha (Char hérissé)",
+  "statut": "OA",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_285"
+  ],
+  "catalyseurs": [
+   "PAS_011"
+  ],
+  "comportement": "Boule hérissée qui perce tout, ricoche 4 fois et laisse des pointes au sol (Makibishi).",
+  "valeurs": "50 ; pointes 6 par pas ; délai 3,5 s",
+  "limites": "—",
+  "visuel": "Boule couverte de pointes (kunai), traces."
+ },
+ {
+  "id": "EVO_091",
+  "nom": "Amaterasu — Brasier inextinguible",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_309"
+  ],
+  "catalyseurs": [
+   "PAS_035"
+  ],
+  "comportement": "Les flammes noires se transmettent sans limite de génération à la mort, mais seulement 1 cumul à chaque fois ; le sol brûle en noir 2 s.",
+  "valeurs": "Brûlure noire 5 cumuls ; sol 12 par tick ; délai 6 s",
+  "limites": "Budget d'événements par tick respecté.",
+  "visuel": "Flammes noires à contour blanc 1 px, sol noirci à liseré rouge."
+ },
+ {
+  "id": "EVO_092",
+  "nom": "Kamui — Double spirale",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_310"
+  ],
+  "catalyseurs": [
+   "PAS_035"
+  ],
+  "comportement": "Deux spirales simultanées de 2,5 m ; seuil d'élimination porté à 55 %.",
+  "valeurs": "80 ; délai 6 s",
+  "limites": "Élites et boss : dégâts.",
+  "visuel": "Spirales jumelles."
+ },
+ {
+  "id": "EVO_093",
+  "nom": "Shinra Tensei — Répulsion céleste",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_313"
+  ],
+  "catalyseurs": [
+   "PAS_035"
+  ],
+  "comportement": "Onde de 9 m ; les ennemis repoussés contre un obstacle subissent un choc supplémentaire.",
+  "valeurs": "60 ; choc 40 ; recul 5 m ; délai 9 s",
+  "limites": "Recul réduit dans les zones alliées.",
+  "visuel": "Anneau blanc qui plie le décor, cratère."
+ },
+ {
+  "id": "EVO_094",
+  "nom": "Byakugan — Vision absolue",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_312"
+  ],
+  "catalyseurs": [
+   "PAS_047"
+  ],
+  "comportement": "Marque 6 ennemis ; chaque Marqué fait +50 % aux 3 prochains coups et révèle les assassins invisibles à 16 m.",
+  "valeurs": "+50 % additif ; délai 4 s",
+  "limites": "—",
+  "visuel": "Réseau de points vitaux plus dense."
+ },
+ {
+  "id": "EVO_095",
+  "nom": "Susanoo — Cage thoracique",
+  "statut": "CO",
+  "type": "EVOLUTION",
+  "sources": [
+   "JUT_318"
+  ],
+  "catalyseurs": [
+   "PAS_051"
+  ],
+  "comportement": "Le bras balaie à 180° et une cage thoracique donne un bouclier de 15 % PV max toutes les 8 s.",
+  "valeurs": "70 ; bouclier 15 % ; délai 2,6 s",
+  "limites": "Plafond de bouclier.",
+  "visuel": "Côtes translucides autour du sprite, bras plus grand."
+ },
+ {
+  "id": "EVO_096",
+  "nom": "Fūton — Rasenshuriken",
+  "statut": "OA",
+  "type": "FUSION",
+  "sources": [
+   "JUT_281",
+   "JUT_080"
+  ],
+  "catalyseurs": [
+   "PAS_038"
+  ],
+  "comportement": "Shuriken de vent à noyau d'orbe lancé vers le groupe le plus dense ; à l'impact, dôme de lames microscopiques 1 s qui touche toutes les 0,1 s.",
+  "valeurs": "Impact 80 ; dôme 10 × 12 (r 3 m) ; délai 3,5 s",
+  "limites": "Dôme : 1 touche/0,1 s par cible ; pas de flash plein écran.",
+  "visuel": "Orbe bleu avec 4 lames blanches en rotation ; dôme blanc strié, son aigu continu."
+ },
+ {
+  "id": "EVO_097",
+  "nom": "Tempête de feu",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_001",
+   "JUT_073"
+  ],
+  "catalyseurs": [],
+  "comportement": "La bourrasque porte une boule de feu qui se déploie en mur de flammes de 8 m avançant sur 10 m.",
+  "valeurs": "90 ; Brûlure +3 ; délai 3,0 s",
+  "limites": "—",
+  "visuel": "Front de feu attisé à lignes de vent, braises horizontales."
+ },
+ {
+  "id": "EVO_098",
+  "nom": "Brouillard ébouillantant",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_028",
+   "JUT_015"
+  ],
+  "catalyseurs": [],
+  "comportement": "Brume brûlante de 5 m autour du joueur : Vapeur (−20 % dégâts ennemis), Aveuglé et dégâts continus.",
+  "valeurs": "10 par tick de 0,5 s ; durée 5 s ; délai 8 s",
+  "limites": "—",
+  "visuel": "Brume blanche à reflets orange."
+ },
+ {
+  "id": "EVO_099",
+  "nom": "Orage de Kiri",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_039",
+   "JUT_059"
+  ],
+  "catalyseurs": [
+   "PAS_037"
+  ],
+  "comportement": "Averse permanente (6 m) sur le joueur : toutes les 0,5 s, un éclair saute entre les ennemis Trempés (6 sauts).",
+  "valeurs": "Éclairs 30 ; permanente",
+  "limites": "Déclenche SYN_001 au plus 2 fois/s.",
+  "visuel": "Pluie oblique, arcs en chaîne entre gouttes."
+ },
+ {
+  "id": "EVO_100",
+  "nom": "Météore de magma",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_104",
+   "JUT_008"
+  ],
+  "catalyseurs": [],
+  "comportement": "Rocher incandescent lancé en cloche : explosion de 3,5 m puis lac de LAVE 3 s.",
+  "valeurs": "120 ; lave 12 par tick ; délai 6 s",
+  "limites": "—",
+  "visuel": "Rocher à fissures rouges, fumée noire."
+ },
+ {
+  "id": "EVO_101",
+  "nom": "Gouffre de boue",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_099",
+   "JUT_040"
+  ],
+  "catalyseurs": [],
+  "comportement": "Tourbillon de boue de 5 m qui aspire et engloutit les ordinaires sous 30 %.",
+  "valeurs": "12 par tick de 0,5 s ; attraction 1,5 m/s ; durée 5 s ; délai 10 s",
+  "limites": "Boss non attirés.",
+  "visuel": "Spirale brune et bleue."
+ },
+ {
+  "id": "EVO_102",
+  "nom": "Tempête du désert",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_133",
+   "JUT_081"
+  ],
+  "catalyseurs": [],
+  "comportement": "Tempête de sable errante de 4 m : Ensablé +1/s, Aveuglé, grains projetés.",
+  "valeurs": "10 par tick de 0,3 s ; durée 7 s ; délai 11 s",
+  "limites": "1 tempête.",
+  "visuel": "Colonne de sable ocre, grains en spirale."
+ },
+ {
+  "id": "EVO_103",
+  "nom": "Kusanagi — Lame du courant des mille oiseaux",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_199",
+   "JUT_051"
+  ],
+  "catalyseurs": [],
+  "comportement": "Estocs électrifiés de 5 m ; chaque estoc décharge Chidori Nagashi en ligne sur toute la lame.",
+  "valeurs": "70 ; Électrisé ; délai 1,1 s",
+  "limites": "—",
+  "visuel": "Lame blanche enveloppée d'éclairs."
+ },
+ {
+  "id": "EVO_104",
+  "nom": "Bataillon des crapauds ardents",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_225",
+   "JUT_010"
+  ],
+  "catalyseurs": [],
+  "comportement": "4 crapauds crachent huile puis feu sur leurs cibles (combo en deux temps par crapaud).",
+  "valeurs": "4 × 40 + Brûlure +2 ; durée 10 s ; délai 12 s",
+  "limites": "Compte 1 unité.",
+  "visuel": "Crapauds à gourdes, jets bruns puis orange."
+ },
+ {
+  "id": "EVO_105",
+  "nom": "Kurohigi — Kiki Ippatsu (Piège de la fourmi et du corbeau)",
+  "statut": "OA",
+  "type": "FUSION",
+  "sources": [
+   "JUT_202",
+   "JUT_203"
+  ],
+  "catalyseurs": [
+   "PAS_046"
+  ],
+  "comportement": "Kuroari emprisonne une élite ; Karasu la transperce de 6 lames empoisonnées ; recommence toutes les 6 s.",
+  "valeurs": "6 × 30 + Empoisonné +3 ; permanente",
+  "limites": "Boss : lames seulement (Vulnérable +10 %).",
+  "visuel": "Torse qui se ferme, lames qui traversent en rayons."
+ },
+ {
+  "id": "EVO_106",
+  "nom": "Rotation du vide",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_297",
+   "JUT_299"
+  ],
+  "catalyseurs": [],
+  "comportement": "Rotation qui projette 8 paumes du vide en étoile à 8 m.",
+  "valeurs": "Rotation 40 ; paumes 8 × 35 ; délai 4 s",
+  "limites": "—",
+  "visuel": "Dôme bleu puis 8 demi-lunes."
+ },
+ {
+  "id": "EVO_107",
+  "nom": "Étreinte mortelle de l'ombre",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_282",
+   "JUT_283"
+  ],
+  "catalyseurs": [],
+  "comportement": "L'ombre lie 4 cibles et les étrangle aussitôt ; les ordinaires éliminés propagent l'ombre (1 lien).",
+  "valeurs": "20 par tick de 0,5 s ; Lié 2 s ; délai 4 s",
+  "limites": "Propagation profondeur 1.",
+  "visuel": "Ruban noir ramifié, mains plates."
+ },
+ {
+  "id": "EVO_108",
+  "nom": "Tombeau du désert",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_131",
+   "JUT_132"
+  ],
+  "catalyseurs": [],
+  "comportement": "Cercueil puis enterrement automatique : chaque cible enveloppée est broyée et entraîne ses voisins (r 2 m).",
+  "valeurs": "Broyage 110 ; voisins 40 ; délai 3 s",
+  "limites": "Boss : Vulnérable +15 %.",
+  "visuel": "Sable qui se referme puis s'enfonce en entonnoir."
+ },
+ {
+  "id": "EVO_109",
+  "nom": "Forteresse-prison de bois",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_122",
+   "JUT_123"
+  ],
+  "catalyseurs": [],
+  "comportement": "Le rempart s'ouvre vers l'avant ; toutes les 4 s, une cage tombe sur la cible la plus menaçante devant l'ouverture.",
+  "valeurs": "Rempart 300 PV ; cage 45 + Entravé 2 s ; durée 8 s ; délai 12 s",
+  "limites": "Rempart toujours ouvert sur 120°.",
+  "visuel": "Rempart de bois avec cages suspendues."
+ },
+ {
+  "id": "EVO_110",
+  "nom": "Tigre et éléphant du soir",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_168",
+   "JUT_169"
+  ],
+  "catalyseurs": [],
+  "comportement": "Sekizō (5 coups) suivi d'Hirudora à la fin ; délai commun réduit.",
+  "valeurs": "5 × 45 + 120 (r 4 m) ; délai 12 s",
+  "limites": "Réservé à Might Guy.",
+  "visuel": "Poings concentriques puis tigre d'air."
+ },
+ {
+  "id": "EVO_111",
+  "nom": "Enton — Brasier façonné",
+  "statut": "OA",
+  "type": "FUSION",
+  "sources": [
+   "JUT_309",
+   "JUT_154"
+  ],
+  "catalyseurs": [],
+  "comportement": "Les flammes noires posées sur une cible jaillissent en 5 pointes et une lame noire balaie autour du joueur.",
+  "valeurs": "Pointes 5 × 40 ; lame 60 ; Brûlure noire +3 ; délai 3,5 s",
+  "limites": "—",
+  "visuel": "Pointes noires à contour blanc, lame noire."
+ },
+ {
+  "id": "EVO_112",
+  "nom": "Ten'in-Tensei (Cycle attraction-répulsion)",
+  "statut": "CO",
+  "type": "FUSION",
+  "sources": [
+   "JUT_313",
+   "JUT_314"
+  ],
+  "catalyseurs": [],
+  "comportement": "Attire violemment les ordinaires à 8 m vers le joueur (arrêt à 2 m) puis les repousse en onde ; collisions.",
+  "valeurs": "Attraction 20 ; répulsion 70 ; délai 8 s",
+  "limites": "Point d'arrêt jamais sur le joueur.",
+  "visuel": "Lignes convergentes puis anneau blanc."
+ },
+ {
+  "id": "EVO_113",
+  "nom": "Senpō — Rasenshuriken ermite",
+  "statut": "OA",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_096"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_002|TRF_003",
+  "comportement": "Le Rasenshuriken est lancé (sans contact), explose en dôme de 5 m ; les ennemis au centre sont fixés 0,5 s.",
+  "valeurs": "Impact 120 ; dôme 16 × 12 ; délai 3,0 s",
+  "limites": "Déclenchable seulement pendant la transformation la première fois ; ensuite permanent.",
+  "visuel": "Dôme blanc plus grand, marques d'ermite sur l'icône."
+ },
+ {
+  "id": "EVO_114",
+  "nom": "Chō Ōdama Rasen Tarengan (Méga-orbes multiples)",
+  "statut": "AV",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_084"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_002",
+  "comportement": "Trois orbes géants lancés en rafale sur 3 cibles.",
+  "valeurs": "3 × 150 ; onde 60 ; délai 2,6 s",
+  "limites": "—",
+  "visuel": "Trois orbes de 32 px en séquence."
+ },
+ {
+  "id": "EVO_115",
+  "nom": "Kirin — Tonnerre céleste",
+  "statut": "CO",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_022"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_005|TRF_006",
+  "comportement": "Deux bêtes de foudre tombent successivement (0,5 s) et le nuage reste 6 s.",
+  "valeurs": "2 × 170 ; éclairs 25 × 14 ; délai 11 s",
+  "limites": "Micro-pause locale uniquement.",
+  "visuel": "Deux bêtes de 80 px, nuage persistant."
+ },
+ {
+  "id": "EVO_116",
+  "nom": "Amaterasu — Susanoo enflammé",
+  "statut": "CO",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_091"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_006|TRF_007",
+  "comportement": "Le joueur est entouré d'un anneau de flammes noires (3 m) qui pose Brûlure noire en continu.",
+  "valeurs": "Anneau 20 par tick ; transmissions illimitées ; délai 6 s",
+  "limites": "—",
+  "visuel": "Anneau noir à contour blanc et rouge."
+ },
+ {
+  "id": "EVO_117",
+  "nom": "Kage Bunshin — Armée du Kyūbi",
+  "statut": "CO",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_069"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_001|TRF_003",
+  "comportement": "Les clones portent le manteau du Kyūbi : plafond 6, chaque clone frappe d'un bras de chakra (2 m) et les Rasengan coordonnés deviennent Ōdama.",
+  "valeurs": "Frappe 40 ; Rasengan coordonné 6 × 90 ; délai 3,5 s",
+  "limites": "Plafond global de 8 unités respecté.",
+  "visuel": "Clones auréolés d'orange, contour bleu conservé."
+ },
+ {
+  "id": "EVO_118",
+  "nom": "Désert impérial",
+  "statut": "CO",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_044"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_011",
+  "comportement": "Tout l'écran devient SABLE ; chaque seconde, un cercueil de masse part sur le groupe le plus dense.",
+  "valeurs": "6 × 90 par seconde ; délai 1,0 s",
+  "limites": "Plafond de surfaces respecté.",
+  "visuel": "Sol entièrement sableux, vagues légères."
+ },
+ {
+  "id": "EVO_119",
+  "nom": "Lotus de la Porte",
+  "statut": "CO",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_055"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_009",
+  "comportement": "Avec ≥ 6 Portes ouvertes : chaque Lotus s'enchaîne sur 4 cibles et projette des flammes (Brûlure).",
+  "valeurs": "4 × 160 ; délai 6 s",
+  "limites": "Hors Portes ≥ 6 : fonctionne comme Lotus de la jeunesse.",
+  "visuel": "Aura verte, bandages enflammés."
+ },
+ {
+  "id": "EVO_120",
+  "nom": "Forêt primordiale",
+  "statut": "CO",
+  "type": "EVEIL",
+  "sources": [
+   "EVO_041"
+  ],
+  "catalyseurs": [],
+  "condition_tardive": "TRF_016|EQP_038",
+  "comportement": "La forêt profonde se régénère sans délai tant que le joueur y reste ; les arbres lancent des pieux (JUT_124 niv. 8).",
+  "valeurs": "Forêt 12 par tick ; pieux 5 × 30 / 2 s",
+  "limites": "Couloirs de 2 m garantis.",
+  "visuel": "Troncs anciens, pollen doré."
+ }
+]

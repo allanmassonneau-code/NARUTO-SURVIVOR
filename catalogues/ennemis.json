@@ -1,0 +1,1627 @@
+[
+ {
+  "id": "ENM_001",
+  "nom": "Clone d'entraînement",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_001",
+   "MAP_004"
+  ],
+  "pv": 8,
+  "vitesse": 2.6,
+  "degats": 5,
+  "xp": 1,
+  "comportement": "Marche droit vers le joueur ; se dissipe en fumée.",
+  "annonce": "Silhouette générique à contour blanc pointillé, bras en avant."
+ },
+ {
+  "id": "ENM_002",
+  "nom": "Bandit déserteur",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_001",
+   "MAP_002",
+   "MAP_011",
+   "MAP_015"
+  ],
+  "pv": 12,
+  "vitesse": 2.8,
+  "degats": 6,
+  "xp": 1,
+  "comportement": "Poursuite avec légère dispersion latérale (évite l'agglutinement parfait).",
+  "annonce": "Bandeau rayé, dos voûté, couteau court."
+ },
+ {
+  "id": "ENM_003",
+  "nom": "Nukenin de Kiri",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_002",
+   "MAP_010",
+   "MAP_018"
+  ],
+  "pv": 14,
+  "vitesse": 3.0,
+  "degats": 7,
+  "xp": 1,
+  "comportement": "Poursuite ; accélère de 20 % sur surface EAU.",
+  "annonce": "Bandeau de Kiri barré, masque respiratoire."
+ },
+ {
+  "id": "ENM_004",
+  "nom": "Serpent de la forêt",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_003",
+   "MAP_007"
+  ],
+  "pv": 10,
+  "vitesse": 3.2,
+  "degats": 6,
+  "xp": 1,
+  "comportement": "Trajectoire ondulante ; applique Empoisonné +1 au contact.",
+  "annonce": "Corps sinueux au ras du sol, langue qui sort."
+ },
+ {
+  "id": "ENM_005",
+  "nom": "Genin du Son",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_004",
+   "MAP_005",
+   "MAP_006"
+  ],
+  "pv": 14,
+  "vitesse": 2.9,
+  "degats": 7,
+  "xp": 1,
+  "comportement": "Poursuite en petits groupes de 3 alignés.",
+  "annonce": "Bandeau à note de musique, tenue sombre."
+ },
+ {
+  "id": "ENM_006",
+  "nom": "Ninja de la Racine",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_009",
+   "MAP_013",
+   "MAP_014"
+  ],
+  "pv": 18,
+  "vitesse": 3.0,
+  "degats": 8,
+  "xp": 1,
+  "comportement": "Poursuite ; contourne les clones plutôt que de les attaquer.",
+  "annonce": "Masque blanc sans visage, tanto dans le dos."
+ },
+ {
+  "id": "ENM_007",
+  "nom": "Zetsu blanc",
+  "statut": "OA",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_016",
+   "MAP_019",
+   "MAP_020",
+   "MAP_006"
+  ],
+  "pv": 16,
+  "vitesse": 2.7,
+  "degats": 7,
+  "xp": 1,
+  "comportement": "Poursuite ; à la mort, 10 % de chance de se diviser en 2 petits (PV 4) — compteur déterministe 1 sur 10.",
+  "annonce": "Corps blanc lisse, sourire figé."
+ },
+ {
+  "id": "ENM_008",
+  "nom": "Ninja d'Amegakure",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_012",
+   "MAP_011"
+  ],
+  "pv": 16,
+  "vitesse": 3.0,
+  "degats": 7,
+  "xp": 1,
+  "comportement": "Poursuite ; résiste 20 % au Raiton (Trempé permanent visible).",
+  "annonce": "Respirateur, cape imperméable ruisselante."
+ },
+ {
+  "id": "ENM_009",
+  "nom": "Scorpion du désert",
+  "statut": "CO",
+  "role": "poursuivant",
+  "cartes": [
+   "MAP_008",
+   "MAP_017"
+  ],
+  "pv": 14,
+  "vitesse": 3.1,
+  "degats": 6,
+  "xp": 1,
+  "comportement": "Sort du sable à 6 m (cercle de sable 0,8 s avant), puis poursuit.",
+  "annonce": "Dard levé, carapace ocre à contour foncé."
+ },
+ {
+  "id": "ENM_010",
+  "nom": "Sanglier de Konoha",
+  "statut": "CO",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_001",
+   "MAP_003"
+  ],
+  "pv": 24,
+  "vitesse": 2.0,
+  "degats": 12,
+  "xp": 2,
+  "comportement": "Gratte le sol 0,8 s (poussière), puis charge en ligne droite 8 m à 9 m/s ; étourdi 1 s s'il percute un obstacle.",
+  "annonce": "Tête baissée, défenses, grattage visible."
+ },
+ {
+  "id": "ENM_011",
+  "nom": "Brute de Gatō",
+  "statut": "CO",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_002"
+  ],
+  "pv": 30,
+  "vitesse": 2.2,
+  "degats": 14,
+  "xp": 2,
+  "comportement": "Télégraphe 0,7 s (bras levé), charge d'épaule 6 m.",
+  "annonce": "Carrure large, gourdin sur l'épaule."
+ },
+ {
+  "id": "ENM_012",
+  "nom": "Samouraï du Pays du Fer",
+  "statut": "OA",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_014"
+  ],
+  "pv": 36,
+  "vitesse": 2.3,
+  "degats": 16,
+  "xp": 2,
+  "comportement": "Iai : se fige 0,6 s (lame à demi dégainée) puis fonce 5 m en tranchant.",
+  "annonce": "Armure lamellaire, main sur la garde."
+ },
+ {
+  "id": "ENM_013",
+  "nom": "Tigre de la Forêt de la Mort",
+  "statut": "CO",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_003"
+  ],
+  "pv": 34,
+  "vitesse": 2.8,
+  "degats": 15,
+  "xp": 2,
+  "comportement": "Tourne autour du joueur à 6 m puis bondit (ombre au sol 0,6 s).",
+  "annonce": "Tigre à rayures, dos arqué avant le bond."
+ },
+ {
+  "id": "ENM_014",
+  "nom": "Colosse du Son",
+  "statut": "CO",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_004",
+   "MAP_005"
+  ],
+  "pv": 40,
+  "vitesse": 1.9,
+  "degats": 18,
+  "xp": 2,
+  "comportement": "Charge lente mais longue (10 m) qui renverse les autres ennemis sur son passage.",
+  "annonce": "Corps massif, sol qui tremble à chaque pas (poussière)."
+ },
+ {
+  "id": "ENM_015",
+  "nom": "Ninja de Kumo épaulé",
+  "statut": "CO",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_015",
+   "MAP_016"
+  ],
+  "pv": 32,
+  "vitesse": 2.6,
+  "degats": 15,
+  "xp": 2,
+  "comportement": "Charge électrique 7 m laissant une traînée électrisée 1 s.",
+  "annonce": "Épaulières, arcs courts sur les bras 0,8 s avant la charge."
+ },
+ {
+  "id": "ENM_016",
+  "nom": "Golem de roche d'Iwa",
+  "statut": "CO",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_017",
+   "MAP_006"
+  ],
+  "pv": 48,
+  "vitesse": 1.6,
+  "degats": 20,
+  "xp": 2,
+  "comportement": "Roule en boule 8 m après 1 s de repli (se met en boule visiblement).",
+  "annonce": "Blocs de pierre assemblés, posture de repli."
+ },
+ {
+  "id": "ENM_017",
+  "nom": "Sujet maudit enragé",
+  "statut": "CO",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_007",
+   "MAP_013"
+  ],
+  "pv": 30,
+  "vitesse": 2.4,
+  "degats": 16,
+  "xp": 2,
+  "comportement": "Enchaîne 2 charges courtes (4 m) à 0,5 s d'intervalle.",
+  "annonce": "Marques noires sur la peau, spasmes."
+ },
+ {
+  "id": "ENM_018",
+  "nom": "Rhinocéros invoqué",
+  "statut": "OA",
+  "role": "chargeur",
+  "cartes": [
+   "MAP_012",
+   "MAP_019"
+  ],
+  "pv": 44,
+  "vitesse": 2.0,
+  "degats": 18,
+  "xp": 2,
+  "comportement": "Charge 12 m à travers les obstacles bas ; ne se retourne qu'après 1 s.",
+  "annonce": "Corne, anneaux de Rinnegan sur le flanc."
+ },
+ {
+  "id": "ENM_019",
+  "nom": "Lanceur de kunai",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_001",
+   "MAP_002",
+   "MAP_013"
+  ],
+  "pv": 14,
+  "vitesse": 2.2,
+  "degats": 6,
+  "xp": 2,
+  "comportement": "Reste à 7 m ; lance 1 kunai toutes les 2 s (télégraphe : bras armé 0,5 s).",
+  "annonce": "Holster de cuisse, main levée."
+ },
+ {
+  "id": "ENM_020",
+  "nom": "Arbalétrier de Gatō",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_002"
+  ],
+  "pv": 12,
+  "vitesse": 2.0,
+  "degats": 8,
+  "xp": 2,
+  "comportement": "Vise 1 s (ligne de visée pointillée), tir perçant à 10 m.",
+  "annonce": "Arbalète épaulée, ligne de visée."
+ },
+ {
+  "id": "ENM_021",
+  "nom": "Ninja d'Oto aux ondes",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_003",
+   "MAP_004",
+   "MAP_005"
+  ],
+  "pv": 16,
+  "vitesse": 2.2,
+  "degats": 7,
+  "xp": 2,
+  "comportement": "Onde sonore en arc de 60° à 6 m toutes les 3 s (ondulation au bras 0,6 s).",
+  "annonce": "Bras métallique percé, ondulations."
+ },
+ {
+  "id": "ENM_022",
+  "nom": "Marionnette lance-aiguilles",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_008",
+   "MAP_004"
+  ],
+  "pv": 18,
+  "vitesse": 1.8,
+  "degats": 5,
+  "xp": 2,
+  "comportement": "Éventail de 5 aiguilles empoisonnées toutes les 2,5 s (bouche qui s'ouvre 0,5 s).",
+  "annonce": "Poses mécaniques saccadées, fils coupés visibles."
+ },
+ {
+  "id": "ENM_023",
+  "nom": "Ninja d'Iwa (projectiles de roche)",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_005",
+   "MAP_017",
+   "MAP_016"
+  ],
+  "pv": 20,
+  "vitesse": 2.0,
+  "degats": 10,
+  "xp": 2,
+  "comportement": "Lance un rocher en cloche (ombre au sol qui grossit 0,9 s).",
+  "annonce": "Tenue épaisse, rocher soulevé au-dessus de la tête."
+ },
+ {
+  "id": "ENM_024",
+  "nom": "Tireur de Kiri",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_010",
+   "MAP_006",
+   "MAP_018"
+  ],
+  "pv": 16,
+  "vitesse": 2.2,
+  "degats": 7,
+  "xp": 2,
+  "comportement": "Balles d'eau en rafale de 3 ; applique Trempé au joueur (le joueur peut être électrisé par les ennemis Raiton).",
+  "annonce": "Gourde à la ceinture, doigts pointés."
+ },
+ {
+  "id": "ENM_025",
+  "nom": "Ninja de Suna (vent)",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_008",
+   "MAP_017"
+  ],
+  "pv": 16,
+  "vitesse": 2.3,
+  "degats": 6,
+  "xp": 2,
+  "comportement": "Lame de vent qui traverse les ennemis alliés (ligne 8 m), télégraphe éventail levé 0,6 s.",
+  "annonce": "Petit éventail, foulard de Suna."
+ },
+ {
+  "id": "ENM_026",
+  "nom": "Ninja d'Ame (aiguilles de pluie)",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_012"
+  ],
+  "pv": 16,
+  "vitesse": 2.2,
+  "degats": 5,
+  "xp": 2,
+  "comportement": "Ouvre un parapluie (0,8 s) et tire 8 aiguilles en cercle.",
+  "annonce": "Parapluie fermé à la main."
+ },
+ {
+  "id": "ENM_027",
+  "nom": "Ninja de Kumo (foudre)",
+  "statut": "CO",
+  "role": "tireur",
+  "cartes": [
+   "MAP_015",
+   "MAP_014"
+  ],
+  "pv": 18,
+  "vitesse": 2.3,
+  "degats": 8,
+  "xp": 2,
+  "comportement": "Éclair en ligne 9 m après 0,7 s de charge (arc entre ses mains).",
+  "annonce": "Gilet de Kumo, mains rapprochées crépitantes."
+ },
+ {
+  "id": "ENM_028",
+  "nom": "Sentinelle à fils",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_001",
+   "MAP_011"
+  ],
+  "pv": 18,
+  "vitesse": 2.0,
+  "degats": 4,
+  "xp": 3,
+  "comportement": "Tend un fil entre deux arbres sur le chemin du joueur : ralentit de 30 % au franchissement (fil visible 1 s avant d'être tendu).",
+  "annonce": "Bobine de fil à la ceinture, gestes de tissage."
+ },
+ {
+  "id": "ENM_029",
+  "nom": "Ninja de Kiri — Filet d'eau",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_002",
+   "MAP_010"
+  ],
+  "pv": 18,
+  "vitesse": 2.1,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Lance un filet d'eau (cercle 2 m annoncé 1 s) qui ralentit de 40 % 2 s.",
+  "annonce": "Filet enroulé sur le bras."
+ },
+ {
+  "id": "ENM_030",
+  "nom": "Araignée géante",
+  "statut": "OA",
+  "role": "controleur",
+  "cartes": [
+   "MAP_003",
+   "MAP_005"
+  ],
+  "pv": 22,
+  "vitesse": 2.4,
+  "degats": 5,
+  "xp": 3,
+  "comportement": "Crache une toile (zone collante 2,5 m 4 s : −35 % déplacement).",
+  "annonce": "Abdomen gonflé qui se contracte 0,8 s."
+ },
+ {
+  "id": "ENM_031",
+  "nom": "Joueur de flûte du Son",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_004",
+   "MAP_005"
+  ],
+  "pv": 16,
+  "vitesse": 2.0,
+  "degats": 0,
+  "xp": 3,
+  "comportement": "Joue 1,5 s (notes visibles) puis allonge de 1 s la recharge d'esquive du joueur pendant 3 s. Ne modifie jamais les commandes.",
+  "annonce": "Flûte aux lèvres, notes qui flottent."
+ },
+ {
+  "id": "ENM_032",
+  "nom": "Scelleur de la Racine",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_014",
+   "MAP_013",
+   "MAP_009"
+  ],
+  "pv": 20,
+  "vitesse": 2.1,
+  "degats": 4,
+  "xp": 3,
+  "comportement": "Sceau au sol (cercle de 2 m, 1,2 s d'avertissement) : Entrave 0,8 s si le joueur reste dedans.",
+  "annonce": "Pinceau et encre, sceaux dessinés au sol."
+ },
+ {
+  "id": "ENM_033",
+  "nom": "Ninja d'Iwa alourdisseur",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_017",
+   "MAP_006"
+  ],
+  "pv": 22,
+  "vitesse": 1.9,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Glyphe cubique sur le joueur (2 s de télégraphe) : −25 % déplacement 3 s.",
+  "annonce": "Cubes de glyphes flottant autour des mains."
+ },
+ {
+  "id": "ENM_034",
+  "nom": "Laborantin au gaz",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_007"
+  ],
+  "pv": 18,
+  "vitesse": 2.0,
+  "degats": 2,
+  "xp": 3,
+  "comportement": "Nuage vert (3 m) qui réduit la régénération du joueur à 0 pendant 4 s.",
+  "annonce": "Blouse, bonbonne dans le dos."
+ },
+ {
+  "id": "ENM_035",
+  "nom": "Marionnette à fils ralentisseurs",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_008"
+  ],
+  "pv": 20,
+  "vitesse": 1.8,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Fils vers le joueur (ligne visible 0,8 s) : −30 % déplacement tant que le fil tient (coupé par l'esquive ou à 8 m).",
+  "annonce": "Doigts tendus avec fils bleus visibles."
+ },
+ {
+  "id": "ENM_036",
+  "nom": "Illusionniste Uchiha fantôme",
+  "statut": "CO",
+  "role": "controleur",
+  "cartes": [
+   "MAP_009",
+   "MAP_019"
+  ],
+  "pv": 20,
+  "vitesse": 2.2,
+  "degats": 0,
+  "xp": 3,
+  "comportement": "Regard (cône 6 m, œil qui s'allume 1 s) : le joueur voit 3 faux ennemis 3 s (sans hitbox, contour violet pâle).",
+  "annonce": "Œil rouge brillant, silhouette translucide."
+ },
+ {
+  "id": "ENM_037",
+  "nom": "Porte-bouclier de Kiri",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_010",
+   "MAP_018",
+   "MAP_002"
+  ],
+  "pv": 40,
+  "vitesse": 1.8,
+  "degats": 8,
+  "xp": 4,
+  "comportement": "Bouclier d'eau frontal (180°) qui bloque les projectiles ; vulnérable de dos ; protège les ennemis derrière lui.",
+  "annonce": "Grand bouclier bleu, pas lents."
+ },
+ {
+  "id": "ENM_038",
+  "nom": "Gardien de la tour",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_003",
+   "MAP_004"
+  ],
+  "pv": 44,
+  "vitesse": 1.7,
+  "degats": 9,
+  "xp": 4,
+  "comportement": "Aura de 3 m : −30 % dégâts subis par les ennemis dedans.",
+  "annonce": "Anneau au sol autour de lui, bâton planté."
+ },
+ {
+  "id": "ENM_039",
+  "nom": "Ninja du Son au dôme",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_004",
+   "MAP_005"
+  ],
+  "pv": 42,
+  "vitesse": 1.6,
+  "degats": 8,
+  "xp": 4,
+  "comportement": "Dresse un dôme de terre (1,5 s) qui protège 5 ennemis 3 s.",
+  "annonce": "Mains au sol, veines de terre."
+ },
+ {
+  "id": "ENM_040",
+  "nom": "Golem de laboratoire",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_007"
+  ],
+  "pv": 60,
+  "vitesse": 1.5,
+  "degats": 12,
+  "xp": 4,
+  "comportement": "Collision solide (contour épais) ; absorbe les attaques de zone destinées aux voisins (50 %).",
+  "annonce": "Corps rapiécé, contour épais, pas lourds."
+ },
+ {
+  "id": "ENM_041",
+  "nom": "Marionnette-bouclier",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_008"
+  ],
+  "pv": 46,
+  "vitesse": 1.7,
+  "degats": 7,
+  "xp": 4,
+  "comportement": "Se place entre le joueur et le tireur le plus proche.",
+  "annonce": "Carapace en éventail repliée."
+ },
+ {
+  "id": "ENM_042",
+  "nom": "Garde Uchiha spectral",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_009"
+  ],
+  "pv": 44,
+  "vitesse": 1.8,
+  "degats": 9,
+  "xp": 4,
+  "comportement": "Côtes spectrales (mini-Susanoo) : bloque 3 coups puis se brise 3 s.",
+  "annonce": "Côtes translucides rouges autour du buste."
+ },
+ {
+  "id": "ENM_043",
+  "nom": "Ninja d'Iwa à dôme de terre",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_017",
+   "MAP_015"
+  ],
+  "pv": 48,
+  "vitesse": 1.6,
+  "degats": 8,
+  "xp": 4,
+  "comportement": "Durcissement : 3 s de −60 % dégâts subis toutes les 8 s (peau grisée).",
+  "annonce": "Peau qui grisonne 0,5 s avant."
+ },
+ {
+  "id": "ENM_044",
+  "nom": "Moine-guerrier du Temple",
+  "statut": "OA",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_011"
+  ],
+  "pv": 46,
+  "vitesse": 1.9,
+  "degats": 10,
+  "xp": 4,
+  "comportement": "Barrière de prière frontale ; repousse le joueur au contact (0,8 m).",
+  "annonce": "Chapelet, mains jointes."
+ },
+ {
+  "id": "ENM_045",
+  "nom": "Ninja d'Ame au parapluie",
+  "statut": "CO",
+  "role": "protecteur",
+  "cartes": [
+   "MAP_012",
+   "MAP_016"
+  ],
+  "pv": 40,
+  "vitesse": 1.8,
+  "degats": 7,
+  "xp": 4,
+  "comportement": "Parapluie ouvert au-dessus des voisins : bloque les attaques DIFFERE venant du ciel sur 2 m.",
+  "annonce": "Parapluie ouvert en permanence."
+ },
+ {
+  "id": "ENM_046",
+  "nom": "Medic-nin de la Racine",
+  "statut": "CO",
+  "role": "soigneur",
+  "cartes": [
+   "MAP_013",
+   "MAP_014"
+  ],
+  "pv": 18,
+  "vitesse": 2.2,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Soigne 20 % d'un allié à 5 m toutes les 3 s (rayon vert visible 0,5 s) ; fuit le joueur.",
+  "annonce": "Croix verte sur l'épaule, trousse."
+ },
+ {
+  "id": "ENM_047",
+  "nom": "Medic-nin mercenaire",
+  "statut": "CO",
+  "role": "soigneur",
+  "cartes": [
+   "MAP_002",
+   "MAP_006"
+  ],
+  "pv": 16,
+  "vitesse": 2.2,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Soin de zone (3 m) de 10 % toutes les 4 s.",
+  "annonce": "Sacoche de fioles, lueur verte aux mains."
+ },
+ {
+  "id": "ENM_048",
+  "nom": "Médecin du Son",
+  "statut": "CO",
+  "role": "soigneur",
+  "cartes": [
+   "MAP_005",
+   "MAP_007"
+  ],
+  "pv": 18,
+  "vitesse": 2.1,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Transfuse : sacrifie 10 % de ses PV pour soigner 30 % à un allié élite.",
+  "annonce": "Tubes reliés à ses bras."
+ },
+ {
+  "id": "ENM_049",
+  "nom": "Moine guérisseur",
+  "statut": "CO",
+  "role": "soigneur",
+  "cartes": [
+   "MAP_006",
+   "MAP_011"
+  ],
+  "pv": 20,
+  "vitesse": 2.0,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Aura de régénération (2 m) : +2 % PV/s aux ennemis dedans.",
+  "annonce": "Encens fumant, cercle au sol."
+ },
+ {
+  "id": "ENM_050",
+  "nom": "Médecin de Suna",
+  "statut": "CO",
+  "role": "soigneur",
+  "cartes": [
+   "MAP_008",
+   "MAP_017"
+  ],
+  "pv": 18,
+  "vitesse": 2.2,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Antidote : purge les états (Poison, Brûlure) d'un allié toutes les 5 s.",
+  "annonce": "Fioles colorées, geste de pulvérisation."
+ },
+ {
+  "id": "ENM_051",
+  "nom": "Prêtre du clan",
+  "statut": "CO",
+  "role": "soigneur",
+  "cartes": [
+   "MAP_009"
+  ],
+  "pv": 20,
+  "vitesse": 2.0,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Rend un bouclier de 15 PV aux protecteurs.",
+  "annonce": "Robe à éventail brodé."
+ },
+ {
+  "id": "ENM_052",
+  "nom": "Medic-nin de Kiri",
+  "statut": "CO",
+  "role": "soigneur",
+  "cartes": [
+   "MAP_010",
+   "MAP_018"
+  ],
+  "pv": 18,
+  "vitesse": 2.3,
+  "degats": 3,
+  "xp": 3,
+  "comportement": "Soin 15 % à distance ; dans l'eau, soin doublé.",
+  "annonce": "Bulles de soin flottantes."
+ },
+ {
+  "id": "ENM_053",
+  "nom": "Poseur d'étiquettes de la Racine",
+  "statut": "CO",
+  "role": "poseur",
+  "cartes": [
+   "MAP_011",
+   "MAP_013"
+  ],
+  "pv": 18,
+  "vitesse": 2.4,
+  "degats": 14,
+  "xp": 3,
+  "comportement": "Pose des étiquettes (cercle rouge 1,5 m, armement 1 s) sur les trajectoires probables du joueur.",
+  "annonce": "Liasse d'étiquettes, pose accroupie."
+ },
+ {
+  "id": "ENM_054",
+  "nom": "Ninja d'Ame à étiquettes",
+  "statut": "CO",
+  "role": "poseur",
+  "cartes": [
+   "MAP_012"
+  ],
+  "pv": 18,
+  "vitesse": 2.3,
+  "degats": 12,
+  "xp": 3,
+  "comportement": "Étiquettes de papier qui flottent 2 s puis explosent.",
+  "annonce": "Papier plié en origami autour de lui."
+ },
+ {
+  "id": "ENM_055",
+  "nom": "Démineur de Konoha",
+  "statut": "CO",
+  "role": "poseur",
+  "cartes": [
+   "MAP_013",
+   "MAP_001"
+  ],
+  "pv": 18,
+  "vitesse": 2.4,
+  "degats": 12,
+  "xp": 3,
+  "comportement": "Mines de feu (surface feu ennemie 2 s après déclenchement).",
+  "annonce": "Tablier, sac de mines."
+ },
+ {
+  "id": "ENM_056",
+  "nom": "Poseur de fils de la forêt",
+  "statut": "CO",
+  "role": "poseur",
+  "cartes": [
+   "MAP_003"
+  ],
+  "pv": 16,
+  "vitesse": 2.5,
+  "degats": 10,
+  "xp": 3,
+  "comportement": "Fils à kunai (ligne 4 m visible) qui se déclenchent au franchissement.",
+  "annonce": "Kunai reliés par fil, lueur d'acier."
+ },
+ {
+  "id": "ENM_057",
+  "nom": "Laborantin à mines de gaz",
+  "statut": "CO",
+  "role": "poseur",
+  "cartes": [
+   "MAP_007"
+  ],
+  "pv": 18,
+  "vitesse": 2.2,
+  "degats": 8,
+  "xp": 3,
+  "comportement": "Mines de gaz toxique (Empoisonné +2).",
+  "annonce": "Masque à gaz, bonbonnes."
+ },
+ {
+  "id": "ENM_058",
+  "nom": "Ninja Uchiha à kunai-pièges",
+  "statut": "CO",
+  "role": "poseur",
+  "cartes": [
+   "MAP_009"
+  ],
+  "pv": 18,
+  "vitesse": 2.6,
+  "degats": 12,
+  "xp": 3,
+  "comportement": "Kunai plantés en cercle (rayon 3 m) qui se déclenchent ensemble si le joueur entre au centre.",
+  "annonce": "Kunai à fil tenus en éventail."
+ },
+ {
+  "id": "ENM_059",
+  "nom": "Ninja de Kiri à mines d'eau",
+  "statut": "CO",
+  "role": "poseur",
+  "cartes": [
+   "MAP_010",
+   "MAP_018"
+  ],
+  "pv": 18,
+  "vitesse": 2.4,
+  "degats": 10,
+  "xp": 3,
+  "comportement": "Mines sous les flaques (flaque qui bouillonne 1 s avant).",
+  "annonce": "Gourdes multiples à la ceinture."
+ },
+ {
+  "id": "ENM_060",
+  "nom": "Zetsu géniteur",
+  "statut": "OA",
+  "role": "invocateur",
+  "cartes": [
+   "MAP_016",
+   "MAP_020"
+  ],
+  "pv": 30,
+  "vitesse": 1.8,
+  "degats": 5,
+  "xp": 4,
+  "comportement": "Fait pousser 3 Zetsu blancs du sol toutes les 6 s (bourgeons visibles 1,5 s).",
+  "annonce": "Corps couvert de bourgeons."
+ },
+ {
+  "id": "ENM_061",
+  "nom": "Invocateur de serpents",
+  "statut": "CO",
+  "role": "invocateur",
+  "cartes": [
+   "MAP_003",
+   "MAP_007"
+  ],
+  "pv": 26,
+  "vitesse": 1.9,
+  "degats": 5,
+  "xp": 4,
+  "comportement": "Invoque 4 serpents (fumée + sceau 1 s) toutes les 7 s.",
+  "annonce": "Tatouage de contrat au bras, rouleau."
+ },
+ {
+  "id": "ENM_062",
+  "nom": "Invocateur de chiens de l'enfer",
+  "statut": "CO",
+  "role": "invocateur",
+  "cartes": [
+   "MAP_012"
+  ],
+  "pv": 28,
+  "vitesse": 1.9,
+  "degats": 5,
+  "xp": 4,
+  "comportement": "Invoque 1 chien qui se divise en 2 à chaque coup reçu (max 4).",
+  "annonce": "Anneaux sur les poignets, sceau au sol."
+ },
+ {
+  "id": "ENM_063",
+  "nom": "Invocateur de loups des neiges",
+  "statut": "CO",
+  "role": "invocateur",
+  "cartes": [
+   "MAP_014"
+  ],
+  "pv": 26,
+  "vitesse": 2.0,
+  "degats": 5,
+  "xp": 4,
+  "comportement": "Invoque une meute de 3 loups qui encerclent (jamais sur le joueur).",
+  "annonce": "Hurlement visible (onde), fourrure."
+ },
+ {
+  "id": "ENM_064",
+  "nom": "Invocateur de corbeaux",
+  "statut": "CO",
+  "role": "invocateur",
+  "cartes": [
+   "MAP_009",
+   "MAP_015"
+  ],
+  "pv": 24,
+  "vitesse": 2.0,
+  "degats": 4,
+  "xp": 4,
+  "comportement": "Nuée de 6 corbeaux qui Aveuglent au contact.",
+  "annonce": "Corbeaux perchés sur les épaules."
+ },
+ {
+  "id": "ENM_065",
+  "nom": "Invocateur de sangsues",
+  "statut": "CO",
+  "role": "invocateur",
+  "cartes": [
+   "MAP_018",
+   "MAP_010"
+  ],
+  "pv": 26,
+  "vitesse": 1.8,
+  "degats": 4,
+  "xp": 4,
+  "comportement": "Sangsues depuis l'eau qui volent 1 chakra au joueur par contact.",
+  "annonce": "Bocal de sangsues, jambes dans l'eau."
+ },
+ {
+  "id": "ENM_066",
+  "nom": "Marionnettiste d'Akatsuki",
+  "statut": "CO",
+  "role": "invocateur",
+  "cartes": [
+   "MAP_008",
+   "MAP_011"
+  ],
+  "pv": 24,
+  "vitesse": 1.8,
+  "degats": 5,
+  "xp": 4,
+  "comportement": "Déploie 2 marionnettes poursuivantes toutes les 8 s ; tuer le marionnettiste coupe les fils.",
+  "annonce": "Fils rouges aux doigts, marionnettes pliées."
+ },
+ {
+  "id": "ENM_067",
+  "nom": "ANBU de la Racine",
+  "statut": "CO",
+  "role": "assassin",
+  "cartes": [
+   "MAP_013",
+   "MAP_014",
+   "MAP_017"
+  ],
+  "pv": 22,
+  "vitesse": 3.4,
+  "degats": 18,
+  "xp": 5,
+  "comportement": "Disparaît (fumée), réapparaît derrière le joueur à 3 m avec un marqueur au sol 0,7 s, puis frappe.",
+  "annonce": "Masque d'animal, posture basse."
+ },
+ {
+  "id": "ENM_068",
+  "nom": "Ombre de Kamui",
+  "statut": "CO",
+  "role": "assassin",
+  "cartes": [
+   "MAP_019",
+   "MAP_020"
+  ],
+  "pv": 24,
+  "vitesse": 3.0,
+  "degats": 20,
+  "xp": 5,
+  "comportement": "Sort d'une spirale (visible 0,8 s) à 4 m, frappe, repart dans la spirale.",
+  "annonce": "Silhouette spiralée, masque orange."
+ },
+ {
+  "id": "ENM_069",
+  "nom": "Samouraï-ombre",
+  "statut": "CO",
+  "role": "assassin",
+  "cartes": [
+   "MAP_014"
+  ],
+  "pv": 26,
+  "vitesse": 3.2,
+  "degats": 20,
+  "xp": 5,
+  "comportement": "Coup de sabre à distance (croissant de 3 m) après 0,6 s de pose.",
+  "annonce": "Kasa (chapeau) bas, lame luisante."
+ },
+ {
+  "id": "ENM_070",
+  "nom": "Chasseur de primes",
+  "statut": "CO",
+  "role": "assassin",
+  "cartes": [
+   "MAP_011",
+   "MAP_015"
+  ],
+  "pv": 24,
+  "vitesse": 3.3,
+  "degats": 16,
+  "xp": 5,
+  "comportement": "Cible les PV bas : fonce quand le joueur est sous 50 %.",
+  "annonce": "Cicatrices, liste de primes à la ceinture."
+ },
+ {
+  "id": "ENM_071",
+  "nom": "Assassin de papier d'Ame",
+  "statut": "CO",
+  "role": "assassin",
+  "cartes": [
+   "MAP_012",
+   "MAP_016"
+  ],
+  "pv": 20,
+  "vitesse": 3.4,
+  "degats": 16,
+  "xp": 5,
+  "comportement": "Se replie en papier (invulnérable 0,5 s, visible), réapparaît à 3 m.",
+  "annonce": "Corps aux bords de papier, fleur au cheveux."
+ },
+ {
+  "id": "ENM_072",
+  "nom": "Ninja chasseur de Kiri",
+  "statut": "OA",
+  "role": "assassin",
+  "cartes": [
+   "MAP_002",
+   "MAP_010",
+   "MAP_013"
+  ],
+  "pv": 22,
+  "vitesse": 3.3,
+  "degats": 17,
+  "xp": 5,
+  "comportement": "Lance 3 senbon précis vers la position anticipée du joueur (lignes pointillées 0,5 s).",
+  "annonce": "Masque de chasseur blanc, senbon entre les doigts."
+ },
+ {
+  "id": "ENM_073",
+  "nom": "Réanimé assassin",
+  "statut": "CO",
+  "role": "assassin",
+  "cartes": [
+   "MAP_016",
+   "MAP_020"
+  ],
+  "pv": 30,
+  "vitesse": 3.1,
+  "degats": 18,
+  "xp": 5,
+  "comportement": "Se reconstitue une fois (fissures) s'il n'est pas tué par un effet de zone.",
+  "annonce": "Peau fissurée grise, yeux noirs."
+ },
+ {
+  "id": "ENM_074",
+  "nom": "Ninja de la brume sanglante",
+  "statut": "OA",
+  "role": "assassin",
+  "cartes": [
+   "MAP_010",
+   "MAP_020",
+   "MAP_014"
+  ],
+  "pv": 26,
+  "vitesse": 3.2,
+  "degats": 20,
+  "xp": 5,
+  "comportement": "Invisible hors 6 m (scintillement à 6 m), attaque tournoyante à 1,5 m.",
+  "annonce": "Scintillement de brume, épée courte."
+ },
+ {
+  "id": "ENM_075",
+  "nom": "Ninja de Kumo furtif",
+  "statut": "CO",
+  "role": "assassin",
+  "cartes": [
+   "MAP_015"
+  ],
+  "pv": 24,
+  "vitesse": 3.6,
+  "degats": 16,
+  "xp": 5,
+  "comportement": "Dash électrique en zigzag (2 angles annoncés par des arcs) vers le joueur.",
+  "annonce": "Tenue ajustée, arcs aux pieds."
+ },
+ {
+  "id": "ENM_076",
+  "nom": "Chūnin instructeur",
+  "statut": "CO",
+  "role": "controleur",
+  "elite": true,
+  "modificateur": "Contre-attaquant",
+  "cartes": [
+   "MAP_001"
+  ],
+  "pv": 260,
+  "vitesse": 2.4,
+  "degats": 14,
+  "xp": 60,
+  "comportement": "Entrave par fil puis frappe ; le modificateur Contre-attaquant riposte (18) aux 3 premiers coups CONTACT reçus toutes les 5 s (posture de garde visible).",
+  "annonce": "Gilet de chūnin, posture de garde qui brille quand la riposte est prête."
+ },
+ {
+  "id": "ENM_077",
+  "nom": "Frères démons (Gōzu et Meizu)",
+  "statut": "OA",
+  "role": "assassin",
+  "elite": true,
+  "modificateur": "Chaîne liée",
+  "cartes": [
+   "MAP_002"
+  ],
+  "pv": 180,
+  "vitesse": 3.2,
+  "degats": 16,
+  "xp": 60,
+  "comportement": "Deux ennemis reliés par une chaîne qui blesse (ligne dangereuse) ; si l'un meurt, l'autre se relève à 50 % sauf s'il meurt dans les 5 s.",
+  "annonce": "Deux silhouettes à gantelets griffus, chaîne tendue entre elles."
+ },
+ {
+  "id": "ENM_078",
+  "nom": "Chef tigre",
+  "statut": "CO",
+  "role": "chargeur",
+  "elite": true,
+  "modificateur": "Enragé",
+  "cartes": [
+   "MAP_003"
+  ],
+  "pv": 320,
+  "vitesse": 2.8,
+  "degats": 20,
+  "xp": 60,
+  "comportement": "Bonds successifs ; Enragé : +10 % vitesse et cadence par tranche de 25 % de PV perdus (paliers affichés par sa crinière qui s'embrase).",
+  "annonce": "Tigre à cicatrice, crinière rouge."
+ },
+ {
+  "id": "ENM_079",
+  "nom": "Dosu Kinuta",
+  "statut": "OA",
+  "role": "tireur",
+  "elite": true,
+  "modificateur": "Résonance",
+  "cartes": [
+   "MAP_004"
+  ],
+  "pv": 240,
+  "vitesse": 2.3,
+  "degats": 14,
+  "xp": 60,
+  "comportement": "Onde sonore frontale ; Résonance : chaque onde accélère de 20 % pendant 2 s les ennemis qu'elle traverse (anneaux visibles sur eux).",
+  "annonce": "Bandages, bras mélodieux percé."
+ },
+ {
+  "id": "ENM_080",
+  "nom": "Maître barrière du Son",
+  "statut": "CO",
+  "role": "protecteur",
+  "elite": true,
+  "modificateur": "Barrière",
+  "cartes": [
+   "MAP_005"
+  ],
+  "pv": 300,
+  "vitesse": 1.8,
+  "degats": 12,
+  "xp": 60,
+  "comportement": "Dresse un carré de barrière violette 8 × 8 m autour d'un groupe ; la barrière bloque les projectiles du joueur ; la toucher au CONTACT la brise en 3 coups.",
+  "annonce": "Tenue à grelots, piliers de flamme violette aux coins."
+ },
+ {
+  "id": "ENM_081",
+  "nom": "Colosse de la cascade",
+  "statut": "CO",
+  "role": "chargeur",
+  "elite": true,
+  "modificateur": "Crue",
+  "cartes": [
+   "MAP_006"
+  ],
+  "pv": 360,
+  "vitesse": 1.9,
+  "degats": 22,
+  "xp": 60,
+  "comportement": "Charge qui laisse une traînée d'eau ; Crue : ses charges étendent les surfaces EAU (qui profitent aussi au joueur).",
+  "annonce": "Corps ruisselant, épaules en rochers."
+ },
+ {
+  "id": "ENM_082",
+  "nom": "Sujet maudit (niveau 2)",
+  "statut": "CO",
+  "role": "poursuivant",
+  "elite": true,
+  "modificateur": "Mutation",
+  "cartes": [
+   "MAP_007"
+  ],
+  "pv": 280,
+  "vitesse": 2.8,
+  "degats": 18,
+  "xp": 60,
+  "comportement": "À 50 % de PV, mute (1 s d'invulnérabilité visible) : ailes-mains et attaque à distance en cône.",
+  "annonce": "Marques noires qui s'étendent, peau grise."
+ },
+ {
+  "id": "ENM_083",
+  "nom": "Marionnette à trois bras",
+  "statut": "CO",
+  "role": "tireur",
+  "elite": true,
+  "modificateur": "Dédoublement",
+  "cartes": [
+   "MAP_008"
+  ],
+  "pv": 260,
+  "vitesse": 2.0,
+  "degats": 14,
+  "xp": 60,
+  "comportement": "Rafales d'aiguilles ; Dédoublement : à 50 %, se sépare en 2 marionnettes à 35 % chacune.",
+  "annonce": "Trois bras articulés, fils rouges."
+ },
+ {
+  "id": "ENM_084",
+  "nom": "Fantôme Uchiha",
+  "statut": "CO",
+  "role": "controleur",
+  "elite": true,
+  "modificateur": "Copie",
+  "cartes": [
+   "MAP_009"
+  ],
+  "pv": 260,
+  "vitesse": 2.4,
+  "degats": 16,
+  "xp": 60,
+  "comportement": "Copie la dernière technique PROJECTILE du joueur et la relance en version ennemie (dégâts ennemis, couleur ennemie, contour épais).",
+  "annonce": "Sharingan brillant, silhouette translucide."
+ },
+ {
+  "id": "ENM_085",
+  "nom": "Épéiste de la brume",
+  "statut": "CO",
+  "role": "assassin",
+  "elite": true,
+  "modificateur": "Invisible",
+  "cartes": [
+   "MAP_010"
+  ],
+  "pv": 240,
+  "vitesse": 3.2,
+  "degats": 22,
+  "xp": 60,
+  "comportement": "Invisible hors 5 m (scintillement) ; frappe tournoyante ; se révèle 2 s après chaque attaque.",
+  "annonce": "Grande épée, brume qui s'enroule."
+ },
+ {
+  "id": "ENM_086",
+  "nom": "Chasseur de primes vétéran",
+  "statut": "CO",
+  "role": "assassin",
+  "elite": true,
+  "modificateur": "Vampire",
+  "cartes": [
+   "MAP_011"
+  ],
+  "pv": 280,
+  "vitesse": 3.0,
+  "degats": 18,
+  "xp": 60,
+  "comportement": "Poursuit ; Vampire : se soigne de 100 % des dégâts qu'il inflige (appliquer Poison/Brûlure réduit ce soin de 50 %).",
+  "annonce": "Faux, aura rouge sombre."
+ },
+ {
+  "id": "ENM_087",
+  "nom": "Gardien d'Ame",
+  "statut": "CO",
+  "role": "protecteur",
+  "elite": true,
+  "modificateur": "Réflecteur",
+  "cartes": [
+   "MAP_012"
+  ],
+  "pv": 320,
+  "vitesse": 1.8,
+  "degats": 12,
+  "xp": 60,
+  "comportement": "Parapluie de métal frontal qui renvoie les projectiles du joueur (en couleur ennemie) ; vulnérable de dos.",
+  "annonce": "Parapluie métallique à reflets."
+ },
+ {
+  "id": "ENM_088",
+  "nom": "Renard de chakra",
+  "statut": "CO",
+  "role": "chargeur",
+  "elite": true,
+  "modificateur": "Brasier",
+  "cartes": [
+   "MAP_013"
+  ],
+  "pv": 300,
+  "vitesse": 3.0,
+  "degats": 20,
+  "xp": 60,
+  "comportement": "Charges en arc ; Brasier : aura de feu (1,5 m), immunisé à la Brûlure (mais pas aux dégâts Katon).",
+  "annonce": "Renard de chakra rouge, queue flamboyante."
+ },
+ {
+  "id": "ENM_089",
+  "nom": "Garde de la Racine",
+  "statut": "CO",
+  "role": "controleur",
+  "elite": true,
+  "modificateur": "Sceau anti-chakra",
+  "cartes": [
+   "MAP_014"
+  ],
+  "pv": 260,
+  "vitesse": 2.4,
+  "degats": 14,
+  "xp": 60,
+  "comportement": "Sceau au sol de 4 m : dans la zone, le gain de chakra du joueur est suspendu (la jauge ne baisse jamais).",
+  "annonce": "Langue marquée d'un sceau, pinceau."
+ },
+ {
+  "id": "ENM_090",
+  "nom": "Capitaine samouraï",
+  "statut": "OA",
+  "role": "protecteur",
+  "elite": true,
+  "modificateur": "Blindé frontal",
+  "cartes": [
+   "MAP_014"
+  ],
+  "pv": 380,
+  "vitesse": 2.0,
+  "degats": 20,
+  "xp": 60,
+  "comportement": "Iai en arc ; Blindé frontal : −70 % dégâts reçus de face (arc de 120°), plein dégâts de dos.",
+  "annonce": "Armure lourde, plastron doré."
+ },
+ {
+  "id": "ENM_091",
+  "nom": "Ninja de Kumo chargé",
+  "statut": "CO",
+  "role": "chargeur",
+  "elite": true,
+  "modificateur": "Surcharge",
+  "cartes": [
+   "MAP_015"
+  ],
+  "pv": 280,
+  "vitesse": 2.8,
+  "degats": 18,
+  "xp": 60,
+  "comportement": "Charges électriques ; Surcharge : à la mort, explosion électrique de 3 m après 1 s (cercle d'avertissement).",
+  "annonce": "Corps traversé d'arcs, pulsations."
+ },
+ {
+  "id": "ENM_092",
+  "nom": "Commandant Zetsu",
+  "statut": "CO",
+  "role": "invocateur",
+  "elite": true,
+  "modificateur": "Multiplication",
+  "cartes": [
+   "MAP_016",
+   "MAP_020"
+  ],
+  "pv": 300,
+  "vitesse": 2.0,
+  "degats": 12,
+  "xp": 60,
+  "comportement": "Fait pousser des Zetsu ; Multiplication : chaque Zetsu tué près de lui le soigne de 3 %.",
+  "annonce": "Zetsu plus grand, bourgeons dorés."
+ },
+ {
+  "id": "ENM_093",
+  "nom": "Shinobi réanimé",
+  "statut": "OA",
+  "role": "poursuivant",
+  "elite": true,
+  "modificateur": "Reconstitution",
+  "cartes": [
+   "MAP_016",
+   "MAP_020"
+  ],
+  "pv": 260,
+  "vitesse": 2.8,
+  "degats": 18,
+  "xp": 60,
+  "comportement": "Se reconstitue 2 fois à 30 % (fissures), sauf s'il est Marqué/Scellé ou tué par un EXPLOSIF.",
+  "annonce": "Peau fissurée, sclérotiques noires, papier talisman sur la tête."
+ },
+ {
+  "id": "ENM_094",
+  "nom": "Général d'Iwa",
+  "statut": "CO",
+  "role": "controleur",
+  "elite": true,
+  "modificateur": "Gravité",
+  "cartes": [
+   "MAP_017"
+  ],
+  "pv": 320,
+  "vitesse": 1.8,
+  "degats": 16,
+  "xp": 60,
+  "comportement": "Cubes d'alourdissement ; Gravité : aura de 4 m qui ralentit les projectiles du joueur de 40 %.",
+  "annonce": "Glyphes cubiques en orbite."
+ },
+ {
+  "id": "ENM_095",
+  "nom": "Sangsue géante",
+  "statut": "CO",
+  "role": "invocateur",
+  "elite": true,
+  "modificateur": "Absorption",
+  "cartes": [
+   "MAP_018"
+  ],
+  "pv": 340,
+  "vitesse": 1.6,
+  "degats": 12,
+  "xp": 60,
+  "comportement": "Invoque des sangsues ; Absorption : vole 3 chakra au joueur par contact de ses sangsues.",
+  "annonce": "Corps gonflé luisant, ventouse."
+ },
+ {
+  "id": "ENM_096",
+  "nom": "Zetsu noir",
+  "statut": "OA",
+  "role": "assassin",
+  "elite": true,
+  "modificateur": "Parasite",
+  "cartes": [
+   "MAP_019",
+   "MAP_020"
+  ],
+  "pv": 260,
+  "vitesse": 3.0,
+  "degats": 16,
+  "xp": 60,
+  "comportement": "Se fond dans le sol et réapparaît sous un autre ennemi qu'il renforce (+50 % dégâts) ; se détache s'il subit 30 % de PV.",
+  "annonce": "Masse noire liquide, yeux jaunes."
+ },
+ {
+  "id": "ENM_097",
+  "nom": "Ombre de Kamui supérieure",
+  "statut": "CO",
+  "role": "assassin",
+  "elite": true,
+  "modificateur": "Téléporteur",
+  "cartes": [
+   "MAP_019",
+   "MAP_020"
+  ],
+  "pv": 280,
+  "vitesse": 3.0,
+  "degats": 20,
+  "xp": 60,
+  "comportement": "Téléporte un ennemi ordinaire près du joueur toutes les 4 s (spirale 0,8 s, jamais sur le joueur).",
+  "annonce": "Masque spiral, main tendue."
+ },
+ {
+  "id": "ENM_098",
+  "nom": "Gardien des racines divines",
+  "statut": "CO",
+  "role": "protecteur",
+  "elite": true,
+  "modificateur": "Enracinement",
+  "cartes": [
+   "MAP_020"
+  ],
+  "pv": 380,
+  "vitesse": 1.5,
+  "degats": 18,
+  "xp": 60,
+  "comportement": "Racines qui Entravent le joueur 0,6 s si ses pieds restent dans le cercle annoncé 1 s.",
+  "annonce": "Corps d'écorce, racines pulsantes."
+ },
+ {
+  "id": "ENM_099",
+  "nom": "Kage réanimé",
+  "statut": "OA",
+  "role": "tireur",
+  "elite": true,
+  "modificateur": "Kekkei genkai",
+  "cartes": [
+   "MAP_020"
+  ],
+  "pv": 360,
+  "vitesse": 2.2,
+  "degats": 22,
+  "xp": 60,
+  "comportement": "Tire au sort (graine) un comportement élémentaire rare : lave, sable d'or, poussière (cube lent télégraphié 2 s) ; l'élément est affiché par une icône.",
+  "annonce": "Chapeau de Kage, talisman, icône d'élément."
+ },
+ {
+  "id": "ENM_100",
+  "nom": "Clone de chakra du Dix-Queues",
+  "statut": "CO",
+  "role": "invocateur",
+  "elite": true,
+  "modificateur": "Démon à queues",
+  "cartes": [
+   "MAP_020"
+  ],
+  "pv": 400,
+  "vitesse": 2.0,
+  "degats": 20,
+  "xp": 60,
+  "comportement": "Crée des clones blancs ; Démon à queues : tous les 25 % de PV, une mini-orbe (télégraphe 1,2 s, ligne 10 m).",
+  "annonce": "Silhouette blanche à cornes, queues courtes."
+ }
+]

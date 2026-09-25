@@ -1,0 +1,41 @@
+id;nom;rarete;statut;acces;role;effet;contrainte
+EQP_001;Bandeau frontal;Ordinaire;CO;LIBRE;recuperation;Les fragments à moins de 6 m dérivent doucement vers le joueur (0,5 m/s).;—
+EQP_002;Sacoche de kunai;Ordinaire;CO;LIBRE;specialisation;+1 Quantité aux techniques OUTIL de livraison PROJECTILE ou SALVE.;—
+EQP_003;Gourde de sable;Ordinaire;AV;KG_SABLE;specialisation;"Surfaces SABLE +30 % de durée ; Suna no Tate +1 charge.";—
+EQP_004;Rouleau d'invocation vierge;Ordinaire;CO;LIBRE;specialisation;"+15 % durée des unités ; la première invocation après un niveau part immédiatement.";—
+EQP_005;Sandales de ninja;Ordinaire;CO;LIBRE;survie;"Esquive +1 m ; +0,05 s d'invulnérabilité.";—
+EQP_006;Gilet tactique;Ordinaire;CO;LIBRE;contre;"Armure +2 ; chaque contact subi renvoie 10 dégâts à l'agresseur.";—
+EQP_007;Étiquettes de rechange;Ordinaire;CO;LIBRE;specialisation;Chaque explosion (EXPLOSIF) du joueur laisse 1 mine d'étiquette 4 s (max 6).;—
+EQP_008;Bobine de fil d'acier;Ordinaire;CO;LIBRE;specialisation;"+1 instance maximale aux PIEGE ; armement −0,2 s.";—
+EQP_009;Pilules de sang;Ordinaire;CO;LIBRE;survie;Sous 30 % PV : Régénération +1/s.;—
+EQP_010;Poids d'entraînement;Ordinaire;OA;LIBRE;avantage_contrainte;"+15 % dégâts CONTACT ; en les retirant (manuel, pause), +20 % déplacement pour le reste de la run et l'objet disparaît.";−10 % déplacement tant qu'ils sont portés
+EQP_011;Senbon d'acupuncture;Ordinaire;CO;LIBRE;marquage;"+6 % chance critique ; les critiques Marquent la cible 3 s.";—
+EQP_012;Carte de mission;Ordinaire;CO;LIBRE;recuperation;"Révèle tous les points d'intérêt de la carte ; +1 Rouleau par run.";—
+EQP_013;Clochettes d'entraînement;Ordinaire;AV;LIBRE;controle_hasard;"Toutes les 60 s, un ennemi porte une clochette ; l'éliminer donne +1 Relance (max 3 par run).";—
+EQP_014;Ration de voyage;Ordinaire;CO;LIBRE;survie;"Rations de soldat +50 % ; une ration apparaît à chaque élite éliminée.";—
+EQP_015;Lunettes de protection;Ordinaire;CO;LIBRE;survie;"Immunité à l'aveuglement et au brouillard ennemi ; +10 % vitesse des projectiles.";—
+EQP_016;Masque ANBU;Ordinaire;CO;LIBRE;specialisation;+20 % dégâts aux ennemis qui ne ciblent pas le joueur (leurres, confusion, clones).;—
+EQP_017;Étui à rouleaux d'eau;Ordinaire;CO;ELEM_SUITON;specialisation;Toutes les 8 s, une flaque d'EAU (r 1,5 m) apparaît sous le joueur.;—
+EQP_018;Pierre à briquet;Ordinaire;CO;ELEM_KATON;specialisation;"Brûlure : cumul maximal +1 (6) ; les Brûlures à 6 cumuls se propagent à 1 voisin.";—
+EQP_019;Paratonnerre portatif;Ordinaire;CO;ELEM_RAITON;specialisation;"+1 saut aux techniques CHAINE Raiton ; Électrisé dure 0,1 s de plus.";—
+EQP_020;Éventail léger;Ordinaire;CO;ELEM_FUTON;specialisation;Fūton : +0,5 m portée et +20 % recul.;—
+EQP_021;Gantelets de pierre;Ordinaire;CO;ELEM_DOTON;contre;"Doton +10 % ; chaque coup lourd reçu fait jaillir un pic (20) sous l'agresseur.";—
+EQP_022;Collier du Premier Hokage;Rare;OA;LIBRE;survie;"Une fois par run, un coup fatal laisse à 1 PV + 3 s d'invulnérabilité ; Régénération +0,5/s.";—
+EQP_023;Écaille de Samehada;Rare;AV;LIBRE;recuperation;"+1 chakra par coup CONTACT (plafond global) ; +5 % dégâts CONTACT.";—
+EQP_024;Kunai à trois pointes;Rare;OA;LIBRE;marquage;"Chaque esquive laisse un kunai : les ennemis à 2 m sont Marqués ; les techniques SCEAU les traitent comme des kunai de marquage.";—
+EQP_025;Anneau de l'Akatsuki;Rare;OA;LIBRE;avantage_contrainte;"+15 % Puissance ; +10 % gain de chakra.";−10 % PV max
+EQP_026;Masque spiralé;Rare;AV;LIBRE;survie;L'esquive rend intangible 0,4 s au lieu de 0,25 s.;Recharge d'esquive +2 s
+EQP_027;Pendentif de vitalité Uzumaki;Rare;CO;LIBRE;survie;"+20 % PV max ; Régénération +0,3/s.";—
+EQP_028;Lame de chakra ancienne;Rare;CO;LIBRE;specialisation;"Techniques CONTACT : +1 m d'allonge ; les lames (OUTIL CONTACT) appliquent Entaillé.";—
+EQP_029;Fiole d'huile de crapaud;Rare;AV;LIBRE;specialisation;"Les techniques Katon de livraison ZONE ou CONE laissent de l'HUILE sur leur bordure ; SYN_003 : délai interne −50 %.";—
+EQP_030;Maillon adamantin;Rare;CO;LIBRE;controle;"Les contrôles durent +0,5 s ; les ennemis Entravés subissent +10 %.";—
+EQP_031;Sceau de mémoire;Rare;CO;LIBRE;controle_hasard;Tous les 3 niveaux, une quatrième carte (catégories A ou C uniquement).;—
+EQP_032;Sifflet de ninken;Rare;CO;LIBRE;specialisation;"+1 au plafond des unités ANIMAL de chaque technique ; animaux +20 % dégâts.";—
+EQP_033;Rouleau des cinq éléments;Rare;CO;LIBRE;specialisation;+4 % Puissance par affinité élémentaire de base différente parmi les techniques possédées (max +20 %).;—
+EQP_034;Tambour de guerre;Rare;CO;LIBRE;specialisation;"Après un ultime : +30 % Cadence 6 s ; la jauge démarre à 15 après chaque ultime.";—
+EQP_035;Éclat du miroir de Yata;Rare;AV;LIBRE;survie;Bloque le premier projectile ennemi toutes les 5 s (hors télégraphe majeur).;—
+EQP_036;Rouleau interdit de Konoha;Interdit;OA;LIBRE;avantage_contrainte;"Toutes les techniques CLONE : +1 au plafond ; Kage Bunshin devient admissible pour tout personnage.";−20 % PV max
+EQP_037;Pilules des trois couleurs;Interdit;OA;LIBRE;avantage_contrainte;+40 % Puissance.;"−3 PV/s tant que les PV sont au-dessus de 50 % ; ne descend jamais sous 50 % par ce coût"
+EQP_038;Cellules de Hashirama;Interdit;OA;LIBRE;avantage_contrainte;"Régénération +2/s ; accès au Mokuton de base (JUT_121–124) pour les recettes et le pool.";Soins hors Régénération −50 %
+EQP_039;Sharingan greffé;Interdit;OA;LIBRE;avantage_contrainte;"Izanagi : un coup fatal est annulé (1 fois / 3 min) ; +10 % chance critique.";"Emplacements de passif : 5 au lieu de 6 (le 6e est verrouillé ; s'il est occupé, le passif de plus bas niveau est retiré et chacun de ses niveaux est converti en +3 % de Puissance, affiché avant confirmation)"
+EQP_040;Médaillon de Jashin;Interdit;OA;LIBRE;avantage_contrainte;"L'élite la plus proche reçoit le Lien maudit (×1) ; +25 % dégâts contre les cibles liées.";Aucune Régénération

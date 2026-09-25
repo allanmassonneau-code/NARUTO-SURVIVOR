@@ -1,0 +1,2832 @@
+[
+ {
+  "id": "CHR_001",
+  "nom": "Naruto Uzumaki",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Submerger par le nombre : clones, Rasengan porté par les clones, crapauds.",
+  "depart": "JUT_217",
+  "stats": {
+   "pv": 120,
+   "depl": 4.5,
+   "notes": "Régénération +0,3/s de base (vitalité Uzumaki)"
+  },
+  "cpx": {
+   "nom": "Volonté indomptable",
+   "effet": "Sous 30 % de PV : +15 % Cadence et +1 clone au plafond de JUT_217 (et de ses évolutions)."
+  },
+  "faiblesse": "Puissance brute individuelle faible avant 8 min ; peu de contrôle.",
+  "signature": "Les clones héritent du Rasengan : si JUT_281 est possédé, chaque clone lance un Rasengan à 60 % à sa disparition (1 fois par clone).",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "CLAN_UZUMAKI",
+   "APT_RASEN",
+   "CTR_CRAPAUD",
+   "APT_JINCH"
+  ],
+  "ultime": "ULT_001",
+  "transformations": [
+   "TRF_001",
+   "TRF_024"
+  ],
+  "deblocage": {
+   "type": "DEPART"
+  },
+  "orientations": [
+   "Armée de clones",
+   "Rasengan / Rasenshuriken",
+   "Invocations de crapauds"
+  ]
+ },
+ {
+  "id": "CHR_002",
+  "nom": "Naruto — Mode Ermite",
+  "type": "VARIANTE",
+  "base": "CHR_001",
+  "identite": "Mêlée étendue par l'énergie naturelle : immobilité = puissance.",
+  "depart": "JUT_281",
+  "stats": {
+   "pv": 130,
+   "depl": 4.3,
+   "notes": "Pas de régénération de base"
+  },
+  "cpx": {
+   "nom": "Kawazu Kumite (Kumite de la grenouille)",
+   "effet": "Les attaques CONTACT gagnent +1 m de portée invisible (aura) ; rester immobile 1 s charge l'énergie naturelle (+10 %/s de Puissance, max +40 %, perdue en 2 s de mouvement)."
+  },
+  "faiblesse": "Récompense l'immobilité : dangereux face aux tireurs et poseurs de pièges.",
+  "signature": "Jauge d'énergie naturelle visible sous le portrait ; Kage Bunshin non disponible au départ.",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "CLAN_UZUMAKI",
+   "APT_RASEN",
+   "CTR_CRAPAUD",
+   "APT_SENJ",
+   "APT_JINCH"
+  ],
+  "ultime": "ULT_002",
+  "transformations": [
+   "TRF_002"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 4,
+   "ref": "MIS_102"
+  },
+  "orientations": [
+   "Rasengan ermite au contact",
+   "Crapauds et Chant des crapauds"
+  ]
+ },
+ {
+  "id": "CHR_003",
+  "nom": "Naruto — Chakra de Kurama",
+  "type": "VARIANTE",
+  "base": "CHR_001",
+  "identite": "Vitesse et bras de chakra : clones de masse éphémères et orbes de démon.",
+  "depart": "JUT_218",
+  "stats": {
+   "pv": 140,
+   "depl": 5.0,
+   "notes": "Gain de chakra +20 %"
+  },
+  "cpx": {
+   "nom": "Bras de chakra",
+   "effet": "Chaque clone de JUT_218 frappe avec un bras de chakra qui touche 2 cibles en ligne."
+  },
+  "faiblesse": "Défense faible (Armure plafonnée à 8 pour cette entrée).",
+  "signature": "L'ultime peut être chargé 2 fois (stock de 200) ; le second tir coûte 100 mais sort 1,5 s après le premier.",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "CLAN_UZUMAKI",
+   "APT_RASEN",
+   "CTR_CRAPAUD",
+   "APT_JINCH"
+  ],
+  "ultime": "ULT_003",
+  "transformations": [
+   "TRF_003",
+   "TRF_004"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 7,
+   "ref": "MIS_103"
+  },
+  "orientations": [
+   "Déferlement de clones éphémères",
+   "Bijūdama et Rasenshuriken"
+  ]
+ },
+ {
+  "id": "CHR_004",
+  "nom": "Sasuke Uchiha",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Précision Uchiha : flammes à distance, foudre en réponse au danger.",
+  "depart": "JUT_001",
+  "stats": {
+   "pv": 100,
+   "depl": 4.7,
+   "notes": "Chance critique +5 %"
+  },
+  "cpx": {
+   "nom": "Sharingan (3 tomoe)",
+   "effet": "Les attaques télégraphiées d'ennemis ordinaires sont vues 0,15 s plus tôt (contour rouge) ; esquive parfaite : fenêtre +0,1 s."
+  },
+  "faiblesse": "PV faibles ; peu de soins accessibles.",
+  "signature": "Chaque esquive parfaite réduit de 50 % le délai restant de la technique Raiton la plus lente.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_RAITON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "CTR_FAUCON",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_004",
+  "transformations": [
+   "TRF_005"
+  ],
+  "deblocage": {
+   "type": "DEPART"
+  },
+  "orientations": [
+   "Tempête de foudre (Chidori, Kirin)",
+   "Flammes Uchiha (Gōkakyū, Gōryūka)"
+  ]
+ },
+ {
+  "id": "CHR_005",
+  "nom": "Sasuke — Taka",
+  "type": "VARIANTE",
+  "base": "CHR_004",
+  "identite": "Kenjutsu électrifié : estocs, courant et serpents.",
+  "depart": "JUT_199",
+  "stats": {
+   "pv": 110,
+   "depl": 4.9,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Lame conductrice",
+   "effet": "Les techniques CONTACT de famille OUTIL comptent comme Raiton (tag E_RAITON ajouté)."
+  },
+  "faiblesse": "Portée courte hors foudre ; le Katon est moins accessible (pas de Doctrine Katon).",
+  "signature": "Chidori Nagashi (JUT_051) déclenché après chaque estoc touchant ≥ 3 cibles (délai interne 2 s).",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_RAITON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "CTR_SERPENT",
+   "CTR_FAUCON",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_004",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 4,
+   "ref": "MIS_105"
+  },
+  "orientations": [
+   "Kusanagi électrique",
+   "Serpents et Kirin"
+  ]
+ },
+ {
+  "id": "CHR_006",
+  "nom": "Sasuke — Mangekyō éternel",
+  "type": "VARIANTE",
+  "base": "CHR_004",
+  "identite": "Flammes noires façonnées : Enton, Amaterasu, Susanoo.",
+  "depart": "JUT_154",
+  "stats": {
+   "pv": 110,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Contrôle de l'Enton",
+   "effet": "Toute Brûlure noire posée par le joueur peut être façonnée : +1 cumul maximal (6) et propagation de 1 cumul à 1 voisin toutes les 2 s."
+  },
+  "faiblesse": "Techniques lourdes à délai long ; début lent.",
+  "signature": "Les flammes noires restent lisibles sur fond sombre (contour blanc) et leurs dégâts ×2 ne s'appliquent qu'aux Brûlures noires.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_RAITON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "KG_ENTON",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_005",
+  "transformations": [
+   "TRF_006"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 7,
+   "ref": "MIS_106"
+  },
+  "orientations": [
+   "Brasier noir propagé",
+   "Susanoo et Raiton"
+  ]
+ },
+ {
+  "id": "CHR_007",
+  "nom": "Sakura Haruno",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Force contrôlée et médecine : peu de coups, chacun décisif, soins mesurés.",
+  "depart": "JUT_175",
+  "stats": {
+   "pv": 110,
+   "depl": 4.4,
+   "notes": "Soins reçus +20 %"
+  },
+  "cpx": {
+   "nom": "Contrôle précis du chakra",
+   "effet": "Les coups de taijutsu critiques libèrent une onde de 1,5 m (40 % des dégâts) ; délai interne 0,5 s."
+  },
+  "faiblesse": "Portée courte ; dépend du positionnement.",
+  "signature": "Techniques médicales : chaque élimination d'élite soigne 8 % des PV max (dans le plafond de soin).",
+  "aptitudes": [
+   "ELEM_DOTON",
+   "APT_MED",
+   "CTR_LIMACE",
+   "APT_GEN"
+  ],
+  "ultime": "ULT_006",
+  "transformations": [],
+  "deblocage": {
+   "type": "DEPART"
+  },
+  "orientations": [
+   "Frappes tectoniques",
+   "Soutien médical et genjutsu défensif"
+  ]
+ },
+ {
+  "id": "CHR_008",
+  "nom": "Kakashi Hatake",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Ninja aux mille techniques : copie et polyvalence élémentaire.",
+  "depart": "JUT_050",
+  "stats": {
+   "pv": 105,
+   "depl": 4.6,
+   "notes": "Pool élargi : +1 technique admissible par élément possédé"
+  },
+  "cpx": {
+   "nom": "Copie du Sharingan",
+   "effet": "Une fois par run, après avoir vu 3 fois une technique d'élite, le joueur reçoit une carte bonus pour une technique de base admissible de même famille."
+  },
+  "faiblesse": "Chakra limité : ultime gagne −15 % de chakra.",
+  "signature": "Peut équiper 2 techniques de familles élémentaires différentes avec +10 % de Puissance chacune (bonus « Polyvalence »).",
+  "aptitudes": [
+   "ELEM_RAITON",
+   "ELEM_DOTON",
+   "ELEM_SUITON",
+   "ELEM_KATON",
+   "DOJ_SHARINGAN",
+   "CTR_CHIEN",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_008",
+  "transformations": [],
+  "deblocage": {
+   "type": "PREMIERE_RUN"
+  },
+  "orientations": [
+   "Raiton et meute de ninken",
+   "Mosaïque élémentaire Suiton-Doton"
+  ]
+ },
+ {
+  "id": "CHR_009",
+  "nom": "Kakashi — Kamui",
+  "type": "VARIANTE",
+  "base": "CHR_008",
+  "identite": "Contrôle de l'espace à distance : effacer des zones entières.",
+  "depart": "JUT_310",
+  "stats": {
+   "pv": 100,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Double Mangekyō",
+   "effet": "Kamui (JUT_310) peut être lancé avec 2 charges ; la 2e charge se recharge en 12 s."
+  },
+  "faiblesse": "Défense faible et peu d'aire continue.",
+  "signature": "Les ennemis éliminés par Kamui ne laissent pas de fragments : leur XP arrive directement (+10 %).",
+  "aptitudes": [
+   "ELEM_RAITON",
+   "ELEM_DOTON",
+   "ELEM_SUITON",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "CTR_CHIEN"
+  ],
+  "ultime": "ULT_009",
+  "transformations": [
+   "TRF_022"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 6,
+   "ref": "MIS_109"
+  },
+  "orientations": [
+   "Effacement spatial",
+   "Raiton de précision"
+  ]
+ },
+ {
+  "id": "CHR_010",
+  "nom": "Kakashi — ANBU",
+  "type": "VARIANTE",
+  "base": "CHR_008",
+  "identite": "Assassin : attaques de dos, pièges et chiens.",
+  "depart": "JUT_200",
+  "stats": {
+   "pv": 95,
+   "depl": 5.0,
+   "notes": "Chance critique +10 %"
+  },
+  "cpx": {
+   "nom": "Masque de chien",
+   "effet": "Les ennemis ciblant autre chose que le joueur (clones, leurres) reçoivent +30 % de dégâts de sa part."
+  },
+  "faiblesse": "Très fragile au contact.",
+  "signature": "Esquive : laisse un leurre qui provoque 1,5 s.",
+  "aptitudes": [
+   "ELEM_RAITON",
+   "DOJ_SHARINGAN",
+   "CTR_CHIEN",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_008",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 3,
+   "ref": "MIS_110"
+  },
+  "orientations": [
+   "Frappes de dos et leurres",
+   "Pièges et meute"
+  ]
+ },
+ {
+  "id": "CHR_011",
+  "nom": "Sakura — Byakugō",
+  "type": "VARIANTE",
+  "base": "CHR_007",
+  "identite": "Tank régénérant : encaisser, puis frapper avec la réserve du sceau.",
+  "depart": "JUT_228",
+  "stats": {
+   "pv": 140,
+   "depl": 4.3,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Sceau de la force (réserve)",
+   "effet": "10 % des soins excédentaires (au-delà du plafond) sont stockés ; à 50 points, le prochain coup de taijutsu libère la réserve en dégâts ×3."
+  },
+  "faiblesse": "Peu de dégâts de zone à distance.",
+  "signature": "Katsuyu (JUT_228) peut se diviser en 2 limaces (soins partagés, pas cumulés au-delà du plafond).",
+  "aptitudes": [
+   "ELEM_DOTON",
+   "APT_MED",
+   "CTR_LIMACE"
+  ],
+  "ultime": "ULT_007",
+  "transformations": [
+   "TRF_012"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_111"
+  },
+  "orientations": [
+   "Frappes de réserve",
+   "Soutien Katsuyu"
+  ]
+ },
+ {
+  "id": "CHR_012",
+  "nom": "Gaara",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Défense mobile automatique puis contrôle de zone par le sable.",
+  "depart": "JUT_131",
+  "stats": {
+   "pv": 110,
+   "depl": 4.1,
+   "notes": "Armure +2"
+  },
+  "cpx": {
+   "nom": "Défense absolue",
+   "effet": "Suna no Tate (JUT_134) est toujours actif avec 1 charge même sans être équipé (n'occupe pas d'emplacement)."
+  },
+  "faiblesse": "Lent ; faible vitesse de projectile.",
+  "signature": "Les surfaces SABLE créées par le joueur ralentissent les ennemis et accélèrent le joueur de 10 %.",
+  "aptitudes": [
+   "KG_SABLE",
+   "ELEM_FUTON",
+   "APT_JINCH"
+  ],
+  "ultime": "ULT_010",
+  "transformations": [
+   "TRF_011"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_112"
+  },
+  "orientations": [
+   "Forteresse de sable (défense mobile)",
+   "Désert contrôlé (Sabaku Kyū / Sōsō)"
+  ]
+ },
+ {
+  "id": "CHR_013",
+  "nom": "Gaara — Kazekage",
+  "type": "VARIANTE",
+  "base": "CHR_012",
+  "identite": "Artillerie de sable aérienne : il frappe de loin, le sable fait le reste.",
+  "depart": "JUT_133",
+  "stats": {
+   "pv": 115,
+   "depl": 4.3,
+   "notes": "Zone +15 %"
+  },
+  "cpx": {
+   "nom": "Œil de sable",
+   "effet": "Voit à 16 m (indicateurs hors écran) ; les techniques DIFFERE de sable ont −20 % de délai."
+  },
+  "faiblesse": "Aucune transformation : repose sur l'ultime (Maîtrise de l'ultime).",
+  "signature": "Maîtrise de l'ultime : gain de chakra +30 % et second effet d'ULT_010.",
+  "aptitudes": [
+   "KG_SABLE",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_010",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_113"
+  },
+  "orientations": [
+   "Averse de sable",
+   "Tempête de contrôle"
+  ]
+ },
+ {
+  "id": "CHR_014",
+  "nom": "Rock Lee",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Vitesse et engagement : mêlée continue sans ninjutsu.",
+  "depart": "JUT_161",
+  "stats": {
+   "pv": 125,
+   "depl": 5.2,
+   "notes": "Pas d'accès aux éléments"
+  },
+  "cpx": {
+   "nom": "Fleur de la jeunesse",
+   "effet": "Chaque ennemi touché au contact dans les 2 dernières secondes donne +3 % de Cadence (max +30 %)."
+  },
+  "faiblesse": "Aucun ninjutsu ni genjutsu : les tireurs lointains exigent du déplacement.",
+  "signature": "Poids aux chevilles : l'esquive gagne +1 charge ; à la première ouverture de Porte, les poids tombent (+15 % déplacement pour la run).",
+  "aptitudes": [
+   "APT_PORTES"
+  ],
+  "ultime": "ULT_011",
+  "transformations": [
+   "TRF_009"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_114"
+  },
+  "orientations": [
+   "Tourbillon de contact",
+   "Portes et Lotus"
+  ]
+ },
+ {
+  "id": "CHR_015",
+  "nom": "Rock Lee — Poing ivre",
+  "type": "VARIANTE",
+  "base": "CHR_014",
+  "identite": "Imprévisible : frappes erratiques automatiques, esquive naturelle.",
+  "depart": "JUT_170",
+  "stats": {
+   "pv": 120,
+   "depl": 4.8,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Ivresse",
+   "effet": "Les déplacements ont une légère ondulation visuelle ; 1 coup de contact sur 8 est esquivé automatiquement (déterministe, compteur visible)."
+  },
+  "faiblesse": "Contrôle imprécis de la zone de frappe.",
+  "signature": "Le compteur d'ivresse (8 pips) est affiché sous le portrait : aucune esquive cachée.",
+  "aptitudes": [
+   "APT_PORTES"
+  ],
+  "ultime": "ULT_011",
+  "transformations": [
+   "TRF_009"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_115"
+  },
+  "orientations": [
+   "Ivresse permanente",
+   "Portes chaotiques"
+  ]
+ },
+ {
+  "id": "CHR_016",
+  "nom": "Neji Hyūga",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Défense rotative et points vitaux : sanctuaire à 360°.",
+  "depart": "JUT_297",
+  "stats": {
+   "pv": 110,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Byakugan (angle mort réduit)",
+   "effet": "Voit à 360° : les ennemis derrière le joueur sont ciblés à égalité avec ceux de devant ; Marque automatique (JUT_312 simplifié) sur 1 élite toutes les 8 s."
+  },
+  "faiblesse": "Dégâts de zone lointaine faibles.",
+  "signature": "Chaque Rotation (JUT_297) prépare le Champ des trigrammes : la prochaine technique CONTACT touche 2 fois.",
+  "aptitudes": [
+   "CLAN_HYUGA",
+   "DOJ_BYAKUGAN"
+  ],
+  "ultime": "ULT_012",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_116"
+  },
+  "orientations": [
+   "Sanctuaire rotatif",
+   "Soixante-quatre paumes et points vitaux"
+  ]
+ },
+ {
+  "id": "CHR_017",
+  "nom": "Hinata Hyūga",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Protectrice : coups souples qui affaiblissent et protègent.",
+  "depart": "JUT_296",
+  "stats": {
+   "pv": 105,
+   "depl": 4.5,
+   "notes": "Réduction des dégâts +5 %"
+  },
+  "cpx": {
+   "nom": "Détermination",
+   "effet": "Chaque ennemi affaibli par Jūken à 3 m réduit de 2 % les dégâts subis (max 10 %)."
+  },
+  "faiblesse": "Élimination lente des grandes hordes avant 10 min.",
+  "signature": "Les boucliers qu'elle crée durent 50 % plus longtemps avant dissipation.",
+  "aptitudes": [
+   "CLAN_HYUGA",
+   "DOJ_BYAKUGAN"
+  ],
+  "ultime": "ULT_012",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_117"
+  },
+  "orientations": [
+   "Affaiblissement de masse",
+   "Protection des 64 paumes"
+  ]
+ },
+ {
+  "id": "CHR_018",
+  "nom": "Hinata — Poings de lion",
+  "type": "VARIANTE",
+  "base": "CHR_017",
+  "identite": "Agression à allonge : têtes de lion qui drainent le chakra.",
+  "depart": "JUT_300",
+  "stats": {
+   "pv": 110,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Lions jumeaux",
+   "effet": "Le drain de chakra de JUT_300 est doublé contre les élites ; l'ultime sort 30 % plus souvent."
+  },
+  "faiblesse": "Moins de défense que la version de base.",
+  "signature": "Cycle ultime rapide ; chaque ultime rafraîchit les têtes de lion (+20 % dégâts 5 s).",
+  "aptitudes": [
+   "CLAN_HYUGA",
+   "DOJ_BYAKUGAN"
+  ],
+  "ultime": "ULT_012",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 4,
+   "ref": "MIS_118"
+  },
+  "orientations": [
+   "Cycle d'ultime",
+   "Allonge et drain"
+  ]
+ },
+ {
+  "id": "CHR_019",
+  "nom": "Shikamaru Nara",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Stratège : immobiliser, puis exécuter les cibles liées.",
+  "depart": "JUT_282",
+  "stats": {
+   "pv": 100,
+   "depl": 4.3,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Plan à 200 coups",
+   "effet": "Chaque montée de niveau montre 1 carte supplémentaire en aperçu (grisée) de la proposition suivante."
+  },
+  "faiblesse": "Faible dégât direct ; exige de combiner l'ombre avec d'autres sources.",
+  "signature": "Les surfaces OMBRE durent 2 s de plus ; les ennemis Liés par l'ombre subissent +15 % de dégâts (Vulnérable).",
+  "aptitudes": [
+   "CLAN_NARA",
+   "ELEM_KATON",
+   "APT_FUIN"
+  ],
+  "ultime": "ULT_014",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_119"
+  },
+  "orientations": [
+   "Exécution des ombres",
+   "Pièges et étiquettes"
+  ]
+ },
+ {
+  "id": "CHR_020",
+  "nom": "Shikamaru — Héritier d'Asuma",
+  "type": "VARIANTE",
+  "base": "CHR_019",
+  "identite": "Lames de vent et pièges explosifs : venger le maître.",
+  "depart": "JUT_196",
+  "stats": {
+   "pv": 105,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Serment du Roi",
+   "effet": "Les ennemis Liés par l'ombre prennent +1 Entaillé par coup de lame."
+  },
+  "faiblesse": "Moins de contrôle pur.",
+  "signature": "Fil d'acier (JUT_192) et étiquettes explosives : +1 instance.",
+  "aptitudes": [
+   "CLAN_NARA",
+   "ELEM_FUTON",
+   "ELEM_KATON",
+   "APT_FUIN"
+  ],
+  "ultime": "ULT_014",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 4,
+   "ref": "MIS_120"
+  },
+  "orientations": [
+   "Lames et ombres",
+   "Champ de pièges"
+  ]
+ },
+ {
+  "id": "CHR_021",
+  "nom": "Shino Aburame",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Essaim patient : parasiter, puis multiplier la nuée.",
+  "depart": "JUT_291",
+  "stats": {
+   "pv": 105,
+   "depl": 4.2,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Ruche vivante",
+   "effet": "Chaque ennemi Parasité qui meurt ajoute 1 insecte à l'essaim (+2 % dégâts de l'essaim, max +60 %)."
+  },
+  "faiblesse": "Démarrage lent ; aucune explosion.",
+  "signature": "L'essaim est 1 seule unité logique ; les insectes sont décoratifs (règle §G5).",
+  "aptitudes": [
+   "CLAN_ABURAME"
+  ],
+  "ultime": "ULT_015",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_121"
+  },
+  "orientations": [
+   "Nuée croissante",
+   "Dômes et contre-attaques"
+  ]
+ },
+ {
+  "id": "CHR_022",
+  "nom": "Kiba Inuzuka",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Duo mobile : Akamaru et vrilles en X.",
+  "depart": "JUT_294",
+  "stats": {
+   "pv": 115,
+   "depl": 4.8,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Flair",
+   "effet": "Les élites et coffres hors écran sont signalés ; Akamaru (JUT_230) est offert au niveau 3 si non obtenu."
+  },
+  "faiblesse": "Dépend d'Akamaru pour la couverture arrière.",
+  "signature": "Gatsūga part d'Akamaru si présent : deux angles d'attaque.",
+  "aptitudes": [
+   "CLAN_INUZUKA"
+  ],
+  "ultime": "ULT_016",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_122"
+  },
+  "orientations": [
+   "Vrilles croisées",
+   "Meute (compagnons animaux)"
+  ]
+ },
+ {
+  "id": "CHR_023",
+  "nom": "Kiba — Garōga",
+  "type": "VARIANTE",
+  "base": "CHR_022",
+  "identite": "Forage lourd et lent : un coup qui creuse la carte.",
+  "depart": "JUT_295",
+  "stats": {
+   "pv": 130,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Loup bicéphale",
+   "effet": "Après chaque Garōga, Akamaru et le joueur gagnent +20 % Cadence 4 s."
+  },
+  "faiblesse": "Rythme lent entre les gros coups.",
+  "signature": "Garōga laisse une tranchée (surface) qui ralentit de 20 %.",
+  "aptitudes": [
+   "CLAN_INUZUKA"
+  ],
+  "ultime": "ULT_016",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_123"
+  },
+  "orientations": [
+   "Tranchées",
+   "Rafales de vrilles"
+  ]
+ },
+ {
+  "id": "CHR_024",
+  "nom": "Kankurō",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Marionnettiste : trois marionnettes spécialisées et poison.",
+  "depart": "JUT_202",
+  "stats": {
+   "pv": 100,
+   "depl": 4.2,
+   "notes": "Portée des fils +2 m"
+  },
+  "cpx": {
+   "nom": "Maître des fils",
+   "effet": "Les marionnettes ne comptent que pour 1/2 dans le plafond d'unités (arrondi supérieur)."
+  },
+  "faiblesse": "Marionnettes rompues à plus de 9 m ; le joueur doit rester proche.",
+  "signature": "Combo Kuroari + Karasu : ×2 dégâts sur la cible emprisonnée.",
+  "aptitudes": [
+   "APT_MARIO",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_025",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_124"
+  },
+  "orientations": [
+   "Trio de marionnettes",
+   "Poison et pièges"
+  ]
+ },
+ {
+  "id": "CHR_025",
+  "nom": "Kankurō — Marionnette de Sasori",
+  "type": "VARIANTE",
+  "base": "CHR_024",
+  "identite": "Contrôle adverse : fils qui retournent les ennemis.",
+  "depart": "JUT_208",
+  "stats": {
+   "pv": 105,
+   "depl": 4.3,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Marionnette de Sasori",
+   "effet": "Une marionnette-lanceflammes permanente (non comptée dans les emplacements) crache du feu en cône toutes les 3 s (18)."
+  },
+  "faiblesse": "Moins d'unités simultanées.",
+  "signature": "Les ennemis contrôlés par fils explosent en poison à leur mort.",
+  "aptitudes": [
+   "APT_MARIO",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_025",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_125"
+  },
+  "orientations": [
+   "Retournement",
+   "Poison de Sasori"
+  ]
+ },
+ {
+  "id": "CHR_026",
+  "nom": "Temari",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Contrôle au vent : grandes faux, recul, champ dégagé.",
+  "depart": "JUT_074",
+  "stats": {
+   "pv": 100,
+   "depl": 4.5,
+   "notes": "Zone +10 %"
+  },
+  "cpx": {
+   "nom": "Grand éventail",
+   "effet": "Les techniques Fūton gagnent +1 m de portée ; Frappe du grand éventail (JUT_211) réduit leurs délais."
+  },
+  "faiblesse": "Dégâts modérés par coup ; le recul peut disperser ses propres zones (atténué §B8.4).",
+  "signature": "Toutes les 3 Kamaitachi, Kamatari traverse l'écran gratuitement (si JUT_232 possédé : ×1,5).",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "CTR_BELETTE"
+  ],
+  "ultime": "ULT_018",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_126"
+  },
+  "orientations": [
+   "Faux de vent",
+   "Vent attiseur de feu (avec passifs de synergie)"
+  ]
+ },
+ {
+  "id": "CHR_027",
+  "nom": "Jiraiya",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Sannin polyvalent : huile, feu, crapauds, cheveux.",
+  "depart": "JUT_010",
+  "stats": {
+   "pv": 130,
+   "depl": 4.3,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Ermite pervers (Gama Sennin)",
+   "effet": "Les surfaces HUILE créées par le joueur durent 2 s de plus ; +1 Rouleau par run."
+  },
+  "faiblesse": "Pas de transformation dans cette version (Maîtrise de l'ultime).",
+  "signature": "Maîtrise de l'ultime : Hari Jizō riposte automatiquement à 3 coups de contact.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_DOTON",
+   "ELEM_FUTON",
+   "CTR_CRAPAUD",
+   "APT_RASEN",
+   "APT_FUIN"
+  ],
+  "ultime": "ULT_019",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_127"
+  },
+  "orientations": [
+   "Huile et feu",
+   "Crapauds et Rasengan"
+  ]
+ },
+ {
+  "id": "CHR_028",
+  "nom": "Jiraiya — Mode Ermite",
+  "type": "VARIANTE",
+  "base": "CHR_027",
+  "identite": "Ermite imparfait épaulé par Fukasaku et Shima : combos d'éléments à deux voix.",
+  "depart": "JUT_242",
+  "stats": {
+   "pv": 135,
+   "depl": 4.1,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Mode imparfait",
+   "effet": "Mode Ermite (TRF_002) dure 30 % de moins mais se recharge 30 % plus vite ; les anciens restent pendant la transformation."
+  },
+  "faiblesse": "Silhouette alourdie (traits de crapaud) : vitesse réduite.",
+  "signature": "Jet d'huile des anciens + Katon du joueur = embrasement garanti (SYN_003 sans délai interne 1 fois / 5 s).",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_DOTON",
+   "ELEM_FUTON",
+   "CTR_CRAPAUD",
+   "APT_RASEN",
+   "APT_FUIN",
+   "APT_SENJ",
+   "APT_GEN"
+  ],
+  "ultime": "ULT_002",
+  "transformations": [
+   "TRF_002"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_128"
+  },
+  "orientations": [
+   "Duo des anciens",
+   "Chant des crapauds"
+  ]
+ },
+ {
+  "id": "CHR_029",
+  "nom": "Tsunade",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Force sannin et longévité : soigne en frappant, gagne en encaissant.",
+  "depart": "JUT_174",
+  "stats": {
+   "pv": 150,
+   "depl": 4.2,
+   "notes": "Régénération +0,5/s"
+  },
+  "cpx": {
+   "nom": "Hémophobie vaincue",
+   "effet": "Sous 50 % de PV : dégâts de taijutsu +25 %."
+  },
+  "faiblesse": "Lente ; peu d'options à distance.",
+  "signature": "Chaque coup lourd (≥ 40 dégâts) soigne 1 PV (plafond de soin).",
+  "aptitudes": [
+   "ELEM_DOTON",
+   "ELEM_RAITON",
+   "APT_MED",
+   "CTR_LIMACE"
+  ],
+  "ultime": "ULT_007",
+  "transformations": [
+   "TRF_012"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_129"
+  },
+  "orientations": [
+   "Talon céleste et séismes",
+   "Katsuyu et régénération"
+  ]
+ },
+ {
+  "id": "CHR_030",
+  "nom": "Orochimaru",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Serpents et corps modifié : poison, mues et invocations interdites.",
+  "depart": "JUT_227",
+  "stats": {
+   "pv": 110,
+   "depl": 4.4,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Mue",
+   "effet": "Une fois par run, un coup fatal est annulé : le joueur mue (1 PV → 40 % PV) et devient invulnérable 1,5 s."
+  },
+  "faiblesse": "Dégâts de départ faibles, puissance tardive.",
+  "signature": "Les morsures de serpent appliquent Empoisonné ; les cibles empoisonnées à 5 cumuls attirent les serpents (+1 cible).",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "CTR_SERPENT",
+   "APT_CORPS",
+   "APT_FUIN",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_020",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_130"
+  },
+  "orientations": [
+   "Nids de serpents",
+   "Sceaux interdits et Edo Tensei"
+  ]
+ },
+ {
+  "id": "CHR_031",
+  "nom": "Itachi Uchiha",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Illusionniste économe : leurres, corbeaux, frappes rares et décisives.",
+  "depart": "JUT_223",
+  "stats": {
+   "pv": 95,
+   "depl": 4.6,
+   "notes": "Chance critique +10 %"
+  },
+  "cpx": {
+   "nom": "Maladie",
+   "effet": "PV max −10 %, mais chaque technique Oculaire se recharge 15 % plus vite."
+  },
+  "faiblesse": "Fragile ; peu de régénération.",
+  "signature": "Les leurres (clones de corbeaux, Bunshin) provoquent aussi les élites.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_SUITON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "CTR_CORBEAU",
+   "APT_GEN"
+  ],
+  "ultime": "ULT_021",
+  "transformations": [
+   "TRF_007"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_131"
+  },
+  "orientations": [
+   "Corbeaux et genjutsu",
+   "Amaterasu et Susanoo"
+  ]
+ },
+ {
+  "id": "CHR_032",
+  "nom": "Itachi — Réanimé",
+  "type": "VARIANTE",
+  "base": "CHR_031",
+  "identite": "Corps indestructible : il se reconstitue, les flammes noires s'étendent.",
+  "depart": "JUT_309",
+  "stats": {
+   "pv": 90,
+   "depl": 4.6,
+   "notes": "Aucune régénération ni soin"
+  },
+  "cpx": {
+   "nom": "Corps réanimé",
+   "effet": "Pas de soins ; à la place, toutes les 20 s, les PV perdus depuis 20 s sont rendus à 50 % (reconstitution visible : fissures qui se referment)."
+  },
+  "faiblesse": "Les soins et vols de vie ne fonctionnent pas (retirés du pool).",
+  "signature": "Amaterasu se transmet 1 fois de plus (3 transmissions).",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_SUITON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "CTR_CORBEAU",
+   "APT_GEN"
+  ],
+  "ultime": "ULT_021",
+  "transformations": [
+   "TRF_007"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 6,
+   "ref": "MIS_132"
+  },
+  "orientations": [
+   "Brasier noir",
+   "Susanoo et épée scellante"
+  ]
+ },
+ {
+  "id": "CHR_033",
+  "nom": "Kisame Hoshigaki",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Réserve de chakra infinie : dévorer le chakra ennemi au contact.",
+  "depart": "JUT_198",
+  "stats": {
+   "pv": 140,
+   "depl": 4.3,
+   "notes": "Gain de chakra +20 %"
+  },
+  "cpx": {
+   "nom": "Bête à queues sans queue",
+   "effet": "Chaque 100 chakra dépensés rendent 10 % des PV max (dans le plafond de soin)."
+  },
+  "faiblesse": "Portée courte hors eau.",
+  "signature": "Sur une surface EAU : +20 % déplacement et +15 % dégâts Suiton.",
+  "aptitudes": [
+   "ELEM_SUITON",
+   "CTR_REQUIN",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_022",
+  "transformations": [
+   "TRF_018"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_133"
+  },
+  "orientations": [
+   "Drain Samehada",
+   "Arène aquatique"
+  ]
+ },
+ {
+  "id": "CHR_034",
+  "nom": "Kisame — Maître des requins",
+  "type": "VARIANTE",
+  "base": "CHR_033",
+  "identite": "Invocateur aquatique : inonder la carte, les requins chassent.",
+  "depart": "JUT_029",
+  "stats": {
+   "pv": 120,
+   "depl": 4.4,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Mer intérieure",
+   "effet": "Les surfaces EAU créées par le joueur durent 3 s de plus et le plafond de requins (JUT_233) passe à 5."
+  },
+  "faiblesse": "Sans eau au sol, beaucoup de techniques sont moyennes.",
+  "signature": "Maîtrise de l'ultime (pas de transformation) : second effet de Danse des requins.",
+  "aptitudes": [
+   "ELEM_SUITON",
+   "CTR_REQUIN"
+  ],
+  "ultime": "ULT_022",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_134"
+  },
+  "orientations": [
+   "Inondation et requins",
+   "Prisons d'eau"
+  ]
+ },
+ {
+  "id": "CHR_035",
+  "nom": "Deidara",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "L'art est une explosion : créatures d'argile et bombes différées.",
+  "depart": "JUT_147",
+  "stats": {
+   "pv": 95,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Katsu !",
+   "effet": "Toutes les créatures d'argile non explosées à la fin de leur durée explosent quand même (dégâts 50 %)."
+  },
+  "faiblesse": "Explosions retardées : faible contre les chargeurs rapides.",
+  "signature": "Les explosions (tag EXPLOSIF) du joueur détruisent les obstacles destructibles et les projectiles ennemis dans leur zone.",
+  "aptitudes": [
+   "KG_BAKUTON",
+   "ELEM_DOTON",
+   "ELEM_RAITON"
+  ],
+  "ultime": "ULT_023",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_135"
+  },
+  "orientations": [
+   "Tapis de mines C1",
+   "Grandes bombes C3"
+  ]
+ },
+ {
+  "id": "CHR_036",
+  "nom": "Deidara — Artiste aérien",
+  "type": "VARIANTE",
+  "base": "CHR_035",
+  "identite": "Bombardier au-dessus du champ : dragons et nano-bombes.",
+  "depart": "JUT_148",
+  "stats": {
+   "pv": 90,
+   "depl": 4.8,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Oiseau de monture",
+   "effet": "Survole les obstacles bas et les surfaces (immunité aux ralentissements de terrain) ; ombre au sol toujours visible."
+  },
+  "faiblesse": "PV très faibles.",
+  "signature": "Accès exclusif à C4 Karura (JUT_150).",
+  "aptitudes": [
+   "KG_BAKUTON",
+   "ELEM_DOTON",
+   "ELEM_RAITON"
+  ],
+  "ultime": "ULT_024",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 6,
+   "ref": "MIS_136"
+  },
+  "orientations": [
+   "Escadre de dragons",
+   "Nano-bombes"
+  ]
+ },
+ {
+  "id": "CHR_037",
+  "nom": "Sasori",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Poison absolu : marionnettes humaines et aiguilles.",
+  "depart": "JUT_205",
+  "stats": {
+   "pv": 100,
+   "depl": 4.1,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Poison de Sasori",
+   "effet": "Le Poison cumule jusqu'à 15 et ses dégâts par cumul passent à 2,5/s."
+  },
+  "faiblesse": "Dégâts directs faibles ; long temps de mise en place.",
+  "signature": "Les marionnettes ne sont jamais rompues par la distance (fils de 12 m).",
+  "aptitudes": [
+   "APT_MARIO",
+   "ELEM_KATON",
+   "ELEM_SUITON",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_025",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_137"
+  },
+  "orientations": [
+   "Poison maximal",
+   "Armée de marionnettes"
+  ]
+ },
+ {
+  "id": "CHR_038",
+  "nom": "Sasori — Troisième Kazekage",
+  "type": "VARIANTE",
+  "base": "CHR_037",
+  "identite": "Sable de fer magnétique : figer et hérisser le champ de bataille.",
+  "depart": "JUT_136",
+  "stats": {
+   "pv": 105,
+   "depl": 4.1,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Marionnette humaine",
+   "effet": "Les techniques Jiton appliquent aussi Empoisonné +1."
+  },
+  "faiblesse": "Peu de mobilité.",
+  "signature": "Les ennemis Aimantés sont attirés vers le noyau le plus proche ET ralentis de 15 %.",
+  "aptitudes": [
+   "APT_MARIO",
+   "KG_JITON"
+  ],
+  "ultime": "ULT_025",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_138"
+  },
+  "orientations": [
+   "Hérisson de fer",
+   "Aimantation et poison"
+  ]
+ },
+ {
+  "id": "CHR_039",
+  "nom": "Pain (Chemin des Dieux)",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Répulsion et attraction : contrôler l'espace autour de soi.",
+  "depart": "JUT_313",
+  "stats": {
+   "pv": 115,
+   "depl": 4.2,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Intervalle de cinq secondes",
+   "effet": "Après Shinra Tensei, attraction et répulsion ont un délai partagé de 1 s ; en contrepartie leurs dégâts sont +30 %."
+  },
+  "faiblesse": "Rythme en créneaux : vulnérable dans les intervalles.",
+  "signature": "Alternance attraction/répulsion affichée sur l'icône (repousser puis attirer = bonus).",
+  "aptitudes": [
+   "DOJ_RINNEGAN",
+   "ELEM_FUTON",
+   "ELEM_SUITON",
+   "ELEM_DOTON"
+  ],
+  "ultime": "ULT_026",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_139"
+  },
+  "orientations": [
+   "Répulsion-attraction",
+   "Chemins de Rinnegan"
+  ]
+ },
+ {
+  "id": "CHR_040",
+  "nom": "Pain — Six Chemins",
+  "type": "VARIANTE",
+  "base": "CHR_039",
+  "identite": "Six corps : chaque technique de Rinnegan est portée par un chemin distinct.",
+  "depart": "JUT_237",
+  "stats": {
+   "pv": 100,
+   "depl": 4.2,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Vision partagée",
+   "effet": "Les invocations de Rinnegan voient pour le joueur : pas d'angle mort, indicateurs hors écran à 18 m."
+  },
+  "faiblesse": "Plafond d'unités atteint vite.",
+  "signature": "Chaque technique Oculaire possédée fait apparaître un corps logique (sans collision) qui la lance depuis un autre angle.",
+  "aptitudes": [
+   "DOJ_RINNEGAN",
+   "ELEM_FUTON",
+   "ELEM_SUITON",
+   "ELEM_DOTON"
+  ],
+  "ultime": "ULT_026",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 6,
+   "ref": "MIS_140"
+  },
+  "orientations": [
+   "Six angles de feu",
+   "Bestiaire"
+  ]
+ },
+ {
+  "id": "CHR_041",
+  "nom": "Minato Namikaze",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Éclair jaune : kunai de marquage et téléportation volontaire.",
+  "depart": "JUT_265",
+  "stats": {
+   "pv": 105,
+   "depl": 5.0,
+   "notes": "Recharge d'esquive −25 %"
+  },
+  "cpx": {
+   "nom": "Dieu du tonnerre volant",
+   "effet": "Chaque esquive laisse un kunai de marquage (max 3 avec JUT_265)."
+  },
+  "faiblesse": "Dépend des kunai : un champ vide réduit son efficacité.",
+  "signature": "Esquive vers un kunai possible dès le départ (Hiraishin Giri simplifié, sans dégâts).",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "ELEM_KATON",
+   "ELEM_RAITON",
+   "APT_FUIN",
+   "APT_RASEN",
+   "CTR_CRAPAUD"
+  ],
+  "ultime": "ULT_027",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_141"
+  },
+  "orientations": [
+   "Réseau de kunai",
+   "Rasengan et sceaux"
+  ]
+ },
+ {
+  "id": "CHR_042",
+  "nom": "Minato — Chakra de Kurama",
+  "type": "VARIANTE",
+  "base": "CHR_041",
+  "identite": "Vitesse et chakra Yang : Rasengan téléporté.",
+  "depart": "JUT_281",
+  "stats": {
+   "pv": 120,
+   "depl": 5.2,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Moitié Yang",
+   "effet": "Le Rasengan peut être téléporté sur un kunai de marquage (lancé depuis ce kunai)."
+  },
+  "faiblesse": "PV modestes pour un profil de mêlée.",
+  "signature": "Bijūdama (ULT_003) lancée depuis le kunai le plus proche des ennemis.",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "ELEM_KATON",
+   "ELEM_RAITON",
+   "APT_FUIN",
+   "APT_RASEN",
+   "APT_JINCH"
+  ],
+  "ultime": "ULT_003",
+  "transformations": [
+   "TRF_003"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 6,
+   "ref": "MIS_142"
+  },
+  "orientations": [
+   "Rasengan téléporté",
+   "Mode Kurama"
+  ]
+ },
+ {
+  "id": "CHR_043",
+  "nom": "Madara Uchiha",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Légende armée : feu de masse, éventail de guerre, Susanoo.",
+  "depart": "JUT_007",
+  "stats": {
+   "pv": 130,
+   "depl": 4.5,
+   "notes": "Puissance +10 %"
+  },
+  "cpx": {
+   "nom": "Danse",
+   "effet": "Chaque élite éliminée donne +5 % de Puissance jusqu'à la fin de la run (max +30 %)."
+  },
+  "faiblesse": "Techniques à délais longs ; peu de mobilité défensive.",
+  "signature": "Gunbai (JUT_216) renvoie aussi les projectiles de boss mineurs (non télégraphiés).",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_FUTON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_028",
+  "transformations": [
+   "TRF_008"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_143"
+  },
+  "orientations": [
+   "Extinction par le feu",
+   "Susanoo et gunbai"
+  ]
+ },
+ {
+  "id": "CHR_044",
+  "nom": "Madara — Rinnegan",
+  "type": "VARIANTE",
+  "base": "CHR_043",
+  "identite": "Dieu de la guerre : bois, météores, attractions.",
+  "depart": "JUT_314",
+  "stats": {
+   "pv": 140,
+   "depl": 4.4,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Cellules de Hashirama",
+   "effet": "Régénération +0,8/s ; accès au Mokuton."
+  },
+  "faiblesse": "Démarrage modeste, montée en puissance tardive.",
+  "signature": "Accès exclusif à Tengai Shinsei (JUT_320).",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_FUTON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "DOJ_RINNEGAN",
+   "KG_MOKUTON"
+  ],
+  "ultime": "ULT_029",
+  "transformations": [
+   "TRF_017",
+   "TRF_008"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 7,
+   "ref": "MIS_144"
+  },
+  "orientations": [
+   "Météores et Mokuton",
+   "Rinnegan et Dix-Queues"
+  ]
+ },
+ {
+  "id": "CHR_045",
+  "nom": "Might Guy",
+  "type": "BASE",
+  "prioritaire": true,
+  "identite": "Bête verte : ouvrir les Portes au bon moment, puis tout balayer.",
+  "depart": "JUT_166",
+  "stats": {
+   "pv": 135,
+   "depl": 5.1,
+   "notes": "Pas d'accès aux éléments"
+  },
+  "cpx": {
+   "nom": "Rival éternel",
+   "effet": "Chaque élite éliminée au contact accorde +1 charge de Porte (TRF_009) — ouvre une Porte de plus."
+  },
+  "faiblesse": "Aucun contrôle à distance ; les Portes coûtent des PV.",
+  "signature": "Les Portes s'ouvrent par paliers visibles (1 à 7 ; 8 via TRF_010).",
+  "aptitudes": [
+   "APT_PORTES"
+  ],
+  "ultime": "ULT_011",
+  "transformations": [
+   "TRF_009",
+   "TRF_010"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_145"
+  },
+  "orientations": [
+   "Paon et Tigre",
+   "Tortue et nunchaku (défense)"
+  ]
+ },
+ {
+  "id": "CHR_046",
+  "nom": "Ino Yamanaka",
+  "type": "BASE",
+  "identite": "Esprit : retourner les élites, confondre les hordes, soigner l'équipe mentale.",
+  "depart": "JUT_289",
+  "stats": {
+   "pv": 100,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Fleuriste",
+   "effet": "Les ennemis Confus lâchent des pétales : +1 % de chakra par ennemi confus éliminé."
+  },
+  "faiblesse": "Dégâts directs faibles.",
+  "signature": "Les élites contrôlées gagnent +50 % de durée si elles sont Confuses au moment du transfert.",
+  "aptitudes": [
+   "CLAN_YAMANAKA",
+   "APT_MED",
+   "APT_GEN"
+  ],
+  "ultime": "ULT_030",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_146"
+  },
+  "orientations": [
+   "Chaos mental",
+   "Élites retournées"
+  ]
+ },
+ {
+  "id": "CHR_047",
+  "nom": "Chōji Akimichi",
+  "type": "BASE",
+  "identite": "Masse : rouler, grossir, écraser.",
+  "depart": "JUT_285",
+  "stats": {
+   "pv": 150,
+   "depl": 4.0,
+   "notes": "Armure +2"
+  },
+  "cpx": {
+   "nom": "Estomac d'Akimichi",
+   "effet": "Les Rations de soldat soignent +50 % et donnent +10 chakra."
+  },
+  "faiblesse": "Très lent hors roulades.",
+  "signature": "Après chaque expansion (Baika), +1 m de rayon aux techniques CONTACT pendant 3 s.",
+  "aptitudes": [
+   "CLAN_AKIMICHI",
+   "ELEM_DOTON"
+  ],
+  "ultime": "ULT_031",
+  "transformations": [
+   "TRF_021"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_147"
+  },
+  "orientations": [
+   "Char d'assaut",
+   "Papillon de chakra"
+  ]
+ },
+ {
+  "id": "CHR_048",
+  "nom": "Tenten",
+  "type": "BASE",
+  "identite": "Arsenal : quantité, variété, pluie d'armes.",
+  "depart": "JUT_194",
+  "stats": {
+   "pv": 100,
+   "depl": 4.6,
+   "notes": "Quantité +1"
+  },
+  "cpx": {
+   "nom": "Maîtresse d'armes",
+   "effet": "Les techniques OUTIL ont +1 niveau maximal virtuel : au niveau 8, une 9e amélioration « Affûtage » (+15 % dégâts) apparaît."
+  },
+  "faiblesse": "Aucun élément : peu de synergies de terrain.",
+  "signature": "Les rouleaux d'invocation peuvent contenir un équipement : +1 choix sur chaque Rouleau.",
+  "aptitudes": [
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_032",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_148"
+  },
+  "orientations": [
+   "Pluie d'armes",
+   "Armes de précision"
+  ]
+ },
+ {
+  "id": "CHR_049",
+  "nom": "Tenten — Trésors du Sage",
+  "type": "VARIANTE",
+  "base": "CHR_048",
+  "identite": "Artefacts : l'éventail change d'élément à chaque coup.",
+  "depart": "JUT_213",
+  "stats": {
+   "pv": 105,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Trésors du Sage",
+   "effet": "L'élément courant du Bashōsen s'ajoute comme tag à la prochaine technique OUTIL lancée."
+  },
+  "faiblesse": "Rythme élémentaire imposé.",
+  "signature": "Cycle élémentaire affiché : planifier les synergies (huile→feu, eau→foudre).",
+  "aptitudes": [
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_032",
+  "transformations": [],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 5,
+   "ref": "MIS_149"
+  },
+  "orientations": [
+   "Cycle élémentaire",
+   "Arsenal mixte"
+  ]
+ },
+ {
+  "id": "CHR_050",
+  "nom": "Sai",
+  "type": "BASE",
+  "identite": "Encre vivante : fauves, serpents, oiseaux.",
+  "depart": "JUT_235",
+  "stats": {
+   "pv": 95,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Rouleau vierge",
+   "effet": "Chaque technique d'encre qui élimine une élite dessine gratuitement 1 fauve d'encre supplémentaire (6 s)."
+  },
+  "faiblesse": "Unités fragiles à l'eau (surfaces EAU : durée −30 %, signalé).",
+  "signature": "Les ennemis Encrés sont ciblés en priorité par les créatures d'encre.",
+  "aptitudes": [
+   "APT_ENCRE",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_033",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_150"
+  },
+  "orientations": [
+   "Ménagerie d'encre",
+   "Tantō et encre"
+  ]
+ },
+ {
+  "id": "CHR_051",
+  "nom": "Yamato",
+  "type": "BASE",
+  "identite": "Architecte du bois : murs, cages et contrôle défensif.",
+  "depart": "JUT_124",
+  "stats": {
+   "pv": 125,
+   "depl": 4.3,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Capitaine du bois",
+   "effet": "Les structures de bois (murs, cages, arbres) ont +50 % de PV et +2 s de durée."
+  },
+  "faiblesse": "Dégâts moyens ; dépend des structures.",
+  "signature": "Armure +2 à moins de 3 m d'une structure de bois alliée ; les cages de bois comptent comme obstacles pour les chargeurs (étourdis 1 s au choc).",
+  "aptitudes": [
+   "KG_MOKUTON",
+   "ELEM_DOTON",
+   "ELEM_SUITON"
+  ],
+  "ultime": "ULT_034",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_151"
+  },
+  "orientations": [
+   "Forteresse de bois",
+   "Pieux et cages"
+  ]
+ },
+ {
+  "id": "CHR_052",
+  "nom": "Asuma Sarutobi",
+  "type": "BASE",
+  "identite": "Cendres et lames de vent : aveugler, embraser, trancher.",
+  "depart": "JUT_005",
+  "stats": {
+   "pv": 115,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Fumeur",
+   "effet": "Les surfaces CENDRE durent 2 s de plus et s'embrasent au contact d'une technique Katon (SYN)."
+  },
+  "faiblesse": "Portée moyenne ; peu de défense.",
+  "signature": "Lames Hien : +1 Entaillé contre les ennemis Aveuglés.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_FUTON",
+   "CLAN_SARUTOBI"
+  ],
+  "ultime": "ULT_018",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_152"
+  },
+  "orientations": [
+   "Cendres embrasées",
+   "Lames de vent"
+  ]
+ },
+ {
+  "id": "CHR_053",
+  "nom": "Haku",
+  "type": "BASE",
+  "identite": "Glace et miroirs : piéger, refroidir, geler.",
+  "depart": "JUT_128",
+  "stats": {
+   "pv": 95,
+   "depl": 4.9,
+   "notes": "Chance critique +5 %"
+  },
+  "cpx": {
+   "nom": "Miroirs de glace",
+   "effet": "Dans le cercle de Makyō Hyōshō, le joueur est invulnérable aux projectiles 0,5 s toutes les 3 s."
+  },
+  "faiblesse": "Fragile ; faible contre les ennemis à forte résistance au froid (élites « Brasier »).",
+  "signature": "Senbon compatibles : les techniques Senbon appliquent Refroidi.",
+  "aptitudes": [
+   "KG_HYOTON",
+   "ELEM_SUITON",
+   "ELEM_FUTON",
+   "APT_MED"
+  ],
+  "ultime": "ULT_036",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_153"
+  },
+  "orientations": [
+   "Cercle de miroirs",
+   "Gel en chaîne"
+  ]
+ },
+ {
+  "id": "CHR_054",
+  "nom": "Zabuza Momochi",
+  "type": "BASE",
+  "identite": "Démon du brouillard : couperet et assassinat silencieux.",
+  "depart": "JUT_197",
+  "stats": {
+   "pv": 130,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Démon de la brume",
+   "effet": "Dans une brume (JUT_028), les attaques du joueur sur cibles Aveuglées font +30 %."
+  },
+  "faiblesse": "Frappe lente ; vulnérable aux tireurs hors de la brume.",
+  "signature": "Le couperet se répare à chaque élimination (règle JUT_197).",
+  "aptitudes": [
+   "ELEM_SUITON",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_037",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_154"
+  },
+  "orientations": [
+   "Brume et couperet",
+   "Dragons d'eau"
+  ]
+ },
+ {
+  "id": "CHR_055",
+  "nom": "Konan",
+  "type": "BASE",
+  "identite": "Papier : clones qui se dispersent, nuées et mer d'étiquettes.",
+  "depart": "JUT_247",
+  "stats": {
+   "pv": 100,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Ange de papier",
+   "effet": "Toutes les 12 s, le joueur se disperse en papier 0,4 s au premier coup reçu (invulnérable) et reforme son corps 2 m plus loin dans la direction de déplacement (déplacement uniquement si le joueur bouge)."
+  },
+  "faiblesse": "Papier vulnérable au feu ennemi : +20 % dégâts subis des sources Katon ennemies (affiché).",
+  "signature": "Les étiquettes explosives créées par le joueur sont deux fois plus nombreuses (1 étiquette = 2 impacts à 60 %).",
+  "aptitudes": [
+   "APT_PAPIER",
+   "APT_FUIN",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_038",
+  "transformations": [
+   "TRF_023"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_155"
+  },
+  "orientations": [
+   "Nuée de papier",
+   "Mer d'étiquettes"
+  ]
+ },
+ {
+  "id": "CHR_056",
+  "nom": "Hidan",
+  "type": "BASE",
+  "identite": "Immortel sacrificiel : se blesser pour maudire.",
+  "depart": "JUT_195",
+  "stats": {
+   "pv": 160,
+   "depl": 4.3,
+   "notes": "Aucune régénération"
+  },
+  "cpx": {
+   "nom": "Immortalité de Jashin",
+   "effet": "Les coûts en PV (tag SACRIFICE) ne descendent jamais sous 1 PV et chaque PV sacrifié donne 0,5 chakra."
+  },
+  "faiblesse": "Aucun soin régulier ; dépend de la malédiction pour tuer vite.",
+  "signature": "Le Lien maudit (STA_20) est posé sur la cible de la faux ; les dégâts que le joueur s'inflige sont reproduits sur elle (×2).",
+  "aptitudes": [
+   "APT_CORPS"
+  ],
+  "ultime": "ULT_017",
+  "transformations": [
+   "TRF_019"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_156"
+  },
+  "orientations": [
+   "Malédiction ciblée",
+   "Faux et contact"
+  ]
+ },
+ {
+  "id": "CHR_057",
+  "nom": "Kakuzu",
+  "type": "BASE",
+  "identite": "Cinq cœurs, cinq affinités : masques élémentaires autonomes.",
+  "depart": "JUT_056",
+  "stats": {
+   "pv": 145,
+   "depl": 4.1,
+   "notes": "Armure +3"
+  },
+  "cpx": {
+   "nom": "Cœurs volés",
+   "effet": "Chaque élite éliminée ajoute 1 cœur (max 5) : +5 % PV max et +1 élément temporaire admissible pour la prochaine carte."
+  },
+  "faiblesse": "Très lent ; les cœurs se perdent (1 par coup lourd reçu).",
+  "signature": "Les masques (TRF_020) sont des unités ANIMAL lançant des techniques de leur élément.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_RAITON",
+   "ELEM_FUTON",
+   "ELEM_SUITON",
+   "ELEM_DOTON",
+   "APT_CORPS"
+  ],
+  "ultime": "ULT_039",
+  "transformations": [
+   "TRF_020"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_157"
+  },
+  "orientations": [
+   "Cinq masques",
+   "Durcissement et contre"
+  ]
+ },
+ {
+  "id": "CHR_058",
+  "nom": "Killer Bee",
+  "type": "BASE",
+  "identite": "Rythme et sabres : jinchūriki qui frappe en cadence.",
+  "depart": "JUT_212",
+  "stats": {
+   "pv": 140,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Rime de la victoire",
+   "effet": "Les coups qui tombent sur le 4e temps du cycle (indicateur de rythme au HUD) font ×2 ; pour le mode assisté, le cycle est automatique."
+  },
+  "faiblesse": "Couverture arrière faible sans tentacules.",
+  "signature": "Tentacules (TRF_014) : 8 extensions qui frappent dans toutes les directions.",
+  "aptitudes": [
+   "ELEM_RAITON",
+   "APT_JINCH",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_003",
+  "transformations": [
+   "TRF_014"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_158"
+  },
+  "orientations": [
+   "Sept sabres en rythme",
+   "Lariat et Hachibi"
+  ]
+ },
+ {
+  "id": "CHR_059",
+  "nom": "Hashirama Senju",
+  "type": "BASE",
+  "identite": "Dieu des shinobi : forêts qui naissent et soignent.",
+  "depart": "JUT_121",
+  "stats": {
+   "pv": 150,
+   "depl": 4.4,
+   "notes": "Régénération +1,0/s"
+  },
+  "cpx": {
+   "nom": "Régénération Senju",
+   "effet": "Les soins de Régénération ne sont pas comptés dans le plafond de soin (mais Régénération reste plafonnée à 3/s)."
+  },
+  "faiblesse": "Dégâts de base modestes : puissance en surface et en contrôle.",
+  "signature": "Les surfaces BOIS soignent le joueur de 0,5 PV/s quand il s'y tient.",
+  "aptitudes": [
+   "KG_MOKUTON",
+   "ELEM_DOTON",
+   "ELEM_SUITON",
+   "CLAN_SENJU",
+   "APT_SENJ"
+  ],
+  "ultime": "ULT_034",
+  "transformations": [
+   "TRF_016"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_159"
+  },
+  "orientations": [
+   "Forêt vivante",
+   "Mode Ermite Mokuton"
+  ]
+ },
+ {
+  "id": "CHR_060",
+  "nom": "Tobirama Senju",
+  "type": "BASE",
+  "identite": "Suiton sans source d'eau et Hiraishin inventé : précision tactique.",
+  "depart": "JUT_034",
+  "stats": {
+   "pv": 115,
+   "depl": 4.8,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Créateur",
+   "effet": "Les techniques Suiton ne nécessitent jamais de surface EAU pour leurs bonus « sur eau » : elles comptent comme sur eau."
+  },
+  "faiblesse": "Aucune technique de zone large au départ.",
+  "signature": "Accès à Hiraishin (JUT_265/266) et à Edo Tensei (JUT_243).",
+  "aptitudes": [
+   "ELEM_SUITON",
+   "ELEM_FUTON",
+   "ELEM_RAITON",
+   "CLAN_SENJU",
+   "APT_FUIN"
+  ],
+  "ultime": "ULT_027",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_160"
+  },
+  "orientations": [
+   "Suiton de précision",
+   "Hiraishin et réanimés"
+  ]
+ },
+ {
+  "id": "CHR_061",
+  "nom": "Obito Uchiha (Tobi)",
+  "type": "BASE",
+  "identite": "Intangibilité : traverser le danger, aspirer l'ennemi.",
+  "depart": "JUT_311",
+  "stats": {
+   "pv": 110,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Dimension de Kamui",
+   "effet": "Les ennemis ordinaires éliminés par une technique Kamui sont « aspirés » : leurs fragments sont remplacés par du chakra (+2 chacun)."
+  },
+  "faiblesse": "Peu de dégâts de zone continue.",
+  "signature": "Intangibilité régulière (JUT_311) : lecture claire du danger requise pour l'exploiter.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "KG_MOKUTON"
+  ],
+  "ultime": "ULT_009",
+  "transformations": [
+   "TRF_022"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_161"
+  },
+  "orientations": [
+   "Intangible et aspirant",
+   "Mokuton et Katon"
+  ]
+ },
+ {
+  "id": "CHR_062",
+  "nom": "Obito — Jinchūriki du Dix-Queues",
+  "type": "VARIANTE",
+  "base": "CHR_061",
+  "identite": "Puissance cosmique : orbes, gunbai, Dix-Queues.",
+  "depart": "JUT_216",
+  "stats": {
+   "pv": 150,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Orbes chercheuses de vérité",
+   "effet": "4 orbes noires orbitent en permanence (unité logique d'orbite, 8 dégâts) et bloquent 1 projectile/2 s."
+  },
+  "faiblesse": "Sans Mangekyō Kamui dans cette version (Kamui retiré du pool).",
+  "signature": "Gunbai + Dix-Queues.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_RINNEGAN",
+   "KG_MOKUTON",
+   "APT_JINCH"
+  ],
+  "ultime": "ULT_003",
+  "transformations": [
+   "TRF_017"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 7,
+   "ref": "MIS_162"
+  },
+  "orientations": [
+   "Orbes et gunbai",
+   "Mokuton cosmique"
+  ]
+ },
+ {
+  "id": "CHR_063",
+  "nom": "Kabuto Yakushi",
+  "type": "BASE",
+  "identite": "Médecin espion : poison, soins, sommeil.",
+  "depart": "JUT_206",
+  "stats": {
+   "pv": 110,
+   "depl": 4.6,
+   "notes": "Soins reçus +15 %"
+  },
+  "cpx": {
+   "nom": "Scalpel de chakra",
+   "effet": "Les coups de contact ralentissent de 10 % (nerfs coupés) et les aiguilles empoisonnées ont +1 cumul."
+  },
+  "faiblesse": "Dégâts faibles contre les boss (poison lent).",
+  "signature": "Temple du Nirvana (JUT_254) accessible dès le niveau 2.",
+  "aptitudes": [
+   "APT_MED",
+   "APT_GEN",
+   "CTR_SERPENT",
+   "ELEM_DOTON"
+  ],
+  "ultime": "ULT_020",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_163"
+  },
+  "orientations": [
+   "Sommeil et poison",
+   "Serpents médicaux"
+  ]
+ },
+ {
+  "id": "CHR_064",
+  "nom": "Kabuto — Mode Ermite serpent",
+  "type": "VARIANTE",
+  "base": "CHR_063",
+  "identite": "Nécromancien : réanimer les élites vaincues, serpents blancs.",
+  "depart": "JUT_243",
+  "stats": {
+   "pv": 125,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Réanimateur",
+   "effet": "Edo Tensei peut maintenir 2 réanimés simultanés (au lieu de 1)."
+  },
+  "faiblesse": "Dépend des élites vaincues.",
+  "signature": "Mode Ermite serpent : perçoit les ennemis invisibles et les assassins hors écran.",
+  "aptitudes": [
+   "APT_MED",
+   "APT_GEN",
+   "CTR_SERPENT",
+   "ELEM_DOTON",
+   "APT_SENJ",
+   "APT_CORPS"
+  ],
+  "ultime": "ULT_020",
+  "transformations": [
+   "TRF_013"
+  ],
+  "deblocage": {
+   "type": "MAITRISE",
+   "niveau": 6,
+   "ref": "MIS_164"
+  },
+  "orientations": [
+   "Armée de réanimés",
+   "Serpents ermites"
+  ]
+ },
+ {
+  "id": "CHR_065",
+  "nom": "Hiruzen Sarutobi",
+  "type": "BASE",
+  "identite": "Le Professeur : cinq éléments, Enma et savoir encyclopédique.",
+  "depart": "JUT_231",
+  "stats": {
+   "pv": 110,
+   "depl": 4.2,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Le Professeur",
+   "effet": "Pool de départ enrichi : +4 techniques élémentaires admissibles supplémentaires ; les recettes inconnues affichent leur indice complet."
+  },
+  "faiblesse": "PV modestes, peu de mobilité (âge).",
+  "signature": "Maîtrise de l'ultime : Déluge des cinq éléments frappe une fois de plus.",
+  "aptitudes": [
+   "ELEM_KATON",
+   "ELEM_SUITON",
+   "ELEM_RAITON",
+   "ELEM_FUTON",
+   "ELEM_DOTON",
+   "CTR_SINGE",
+   "APT_FUIN",
+   "CLAN_SARUTOBI"
+  ],
+  "ultime": "ULT_039",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_165"
+  },
+  "orientations": [
+   "Cinq éléments tournants",
+   "Enma et sceaux"
+  ]
+ },
+ {
+  "id": "CHR_066",
+  "nom": "Kurenai Yūhi",
+  "type": "BASE",
+  "identite": "Maîtresse du genjutsu : les ennemis s'entravent et s'entretuent.",
+  "depart": "JUT_250",
+  "stats": {
+   "pv": 100,
+   "depl": 4.5,
+   "notes": "Durée des contrôles +15 %"
+  },
+  "cpx": {
+   "nom": "Illusion de la forêt",
+   "effet": "Chaque ennemi Confus inflige +30 % de dégâts aux autres ennemis."
+  },
+  "faiblesse": "Peu efficace contre les boss seuls (compensé par conversion en vulnérabilité).",
+  "signature": "Les contrôles de genjutsu convertis en vulnérabilité donnent +8 % au lieu de +5 %.",
+  "aptitudes": [
+   "APT_GEN"
+  ],
+  "ultime": "ULT_030",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_166"
+  },
+  "orientations": [
+   "Contagion d'illusions",
+   "Arbres et coups de grâce"
+  ]
+ },
+ {
+  "id": "CHR_067",
+  "nom": "Kimimaro Kaguya",
+  "type": "BASE",
+  "identite": "Danse des os : lames, parades, forêt d'os.",
+  "depart": "JUT_302",
+  "stats": {
+   "pv": 125,
+   "depl": 4.6,
+   "notes": "Armure +2"
+  },
+  "cpx": {
+   "nom": "Os durcis",
+   "effet": "Chaque projectile paré par Tsubaki no Mai donne +1 Armure 3 s (max +5)."
+  },
+  "faiblesse": "Maladie : la transformation coûte 10 % de PV max pour la run.",
+  "signature": "Les danses enchaînées (2 techniques Kaguya en 1 s) font +20 %.",
+  "aptitudes": [
+   "CLAN_KAGUYA"
+  ],
+  "ultime": "ULT_041",
+  "transformations": [
+   "TRF_005"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_167"
+  },
+  "orientations": [
+   "Danses d'os",
+   "Marque maudite de la terre"
+  ]
+ },
+ {
+  "id": "CHR_068",
+  "nom": "Mei Terumī",
+  "type": "BASE",
+  "identite": "Lave et brume acide : corroder puis faire fondre.",
+  "depart": "JUT_143",
+  "stats": {
+   "pv": 115,
+   "depl": 4.4,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Double kekkei genkai",
+   "effet": "Les cibles Corrodées subissent +20 % de dégâts Yōton et Futton."
+  },
+  "faiblesse": "Zones persistantes lentes à rentabiliser contre les chargeurs.",
+  "signature": "Les flaques de LAVE et la brume acide se renforcent mutuellement (SYN_027).",
+  "aptitudes": [
+   "KG_YOTON",
+   "KG_FUTTON",
+   "ELEM_SUITON",
+   "ELEM_KATON",
+   "ELEM_DOTON"
+  ],
+  "ultime": "ULT_042",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_168"
+  },
+  "orientations": [
+   "Champ de lave",
+   "Brume corrosive"
+  ]
+ },
+ {
+  "id": "CHR_069",
+  "nom": "Ōnoki",
+  "type": "BASE",
+  "identite": "Poids et poussière : alourdir, alléger, désintégrer.",
+  "depart": "JUT_102",
+  "stats": {
+   "pv": 100,
+   "depl": 4.0,
+   "notes": "Vole à basse altitude : ignore les surfaces"
+  },
+  "cpx": {
+   "nom": "Mal de dos",
+   "effet": "Après 60 s sans être touché, +20 % Puissance ; se réinitialise au premier coup lourd reçu."
+  },
+  "faiblesse": "Lent, fragile au contact.",
+  "signature": "Accès exclusif au golem et à Chōkeijūgan ; Jinton disponible.",
+  "aptitudes": [
+   "ELEM_DOTON",
+   "ELEM_FUTON",
+   "KG_JINTON"
+  ],
+  "ultime": "ULT_035",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_169"
+  },
+  "orientations": [
+   "Gravité (alourdir/alléger)",
+   "Désintégration Jinton"
+  ]
+ },
+ {
+  "id": "CHR_070",
+  "nom": "A (Quatrième Raikage)",
+  "type": "BASE",
+  "identite": "Force et vitesse brute sous armure de foudre.",
+  "depart": "JUT_172",
+  "stats": {
+   "pv": 150,
+   "depl": 5.0,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Poing du Raikage",
+   "effet": "Les coups CONTACT détruisent les boucliers ennemis en 1 coup."
+  },
+  "faiblesse": "Aucune attaque à distance hors foudre.",
+  "signature": "Armure de foudre (TRF_015) : le déplacement électrise les ennemis traversés.",
+  "aptitudes": [
+   "ELEM_RAITON",
+   "APT_PORTES"
+  ],
+  "ultime": "ULT_040",
+  "transformations": [
+   "TRF_015"
+  ],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_170"
+  },
+  "orientations": [
+   "Charge électrique",
+   "Guillotine et Lariat"
+  ]
+ },
+ {
+  "id": "CHR_071",
+  "nom": "Darui",
+  "type": "BASE",
+  "identite": "Foudre noire et Ranton : panthères et faisceaux.",
+  "depart": "JUT_057",
+  "stats": {
+   "pv": 115,
+   "depl": 4.5,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Paresse efficace",
+   "effet": "Si le joueur n'a pas bougé depuis 1 s, la prochaine technique Raiton ou Ranton fait +25 %."
+  },
+  "faiblesse": "Récompense l'immobilité ponctuelle.",
+  "signature": "Techniques Ranton : comptent comme Suiton et Raiton pour Conduction.",
+  "aptitudes": [
+   "ELEM_RAITON",
+   "ELEM_SUITON",
+   "KG_RANTON",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_040",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_171"
+  },
+  "orientations": [
+   "Cirque laser",
+   "Panthères noires"
+  ]
+ },
+ {
+  "id": "CHR_072",
+  "nom": "Pakura",
+  "type": "BASE",
+  "identite": "Héroïne de Suna : orbes brûlants qui assèchent.",
+  "depart": "JUT_140",
+  "stats": {
+   "pv": 105,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Chaleur torride",
+   "effet": "Les cibles sous effet Shakuton ne peuvent pas être soignées par les soigneurs ennemis."
+  },
+  "faiblesse": "Peu de contrôle.",
+  "signature": "Les orbes Shakuton traquent automatiquement une nouvelle cible à la mort de la leur.",
+  "aptitudes": [
+   "KG_SHAKUTON",
+   "ELEM_KATON",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_043",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_172"
+  },
+  "orientations": [
+   "Orbes traqueurs",
+   "Évaporation (anti-Suiton)"
+  ]
+ },
+ {
+  "id": "CHR_073",
+  "nom": "Rasa (Quatrième Kazekage)",
+  "type": "BASE",
+  "identite": "Poudre d'or : alourdir le monde et l'attirer à soi.",
+  "depart": "JUT_138",
+  "stats": {
+   "pv": 120,
+   "depl": 4.2,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Fortune de Suna",
+   "effet": "+15 % Ryō gagnés ; les ennemis Aimantés lâchent 1 fragment supplémentaire à 10 %."
+  },
+  "faiblesse": "Aucune technique rapide.",
+  "signature": "Poudre d'or : les zones de Jiton sont plus lourdes (ralentissement +10 %).",
+  "aptitudes": [
+   "KG_JITON",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_044",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_173"
+  },
+  "orientations": [
+   "Aimantation lourde",
+   "Vagues d'or"
+  ]
+ },
+ {
+  "id": "CHR_074",
+  "nom": "Chiyo",
+  "type": "BASE",
+  "identite": "Grand-mère marionnettiste : dix marionnettes et soin.",
+  "depart": "JUT_207",
+  "stats": {
+   "pv": 95,
+   "depl": 4.0,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Contrôle de l'allié",
+   "effet": "Les marionnettes gagnent +20 % de dégâts ; une fois par run, Chiyo peut « contrôler » le joueur pour annuler un coup fatal (1 PV, 1 s d'invulnérabilité)."
+  },
+  "faiblesse": "Très fragile.",
+  "signature": "Antidote : immunité aux poisons ennemis.",
+  "aptitudes": [
+   "APT_MARIO",
+   "APT_MED"
+  ],
+  "ultime": "ULT_025",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_174"
+  },
+  "orientations": [
+   "Dix marionnettes",
+   "Poison et antidotes"
+  ]
+ },
+ {
+  "id": "CHR_075",
+  "nom": "Karin",
+  "type": "BASE",
+  "identite": "Senseur et soigneuse : chaînes et morsure de soin.",
+  "depart": "JUT_301",
+  "stats": {
+   "pv": 115,
+   "depl": 4.6,
+   "notes": "Rayon de collecte +30 %"
+  },
+  "cpx": {
+   "nom": "Morsure de soin",
+   "effet": "Une fois toutes les 30 s, sous 40 % de PV : soin de 30 % des PV max (compté dans le plafond de soin, étalé sur 3 s)."
+  },
+  "faiblesse": "Dégâts faibles ; les chaînes sont son unique contrôle de départ.",
+  "signature": "Voit les élites et les pièges hors écran (sensorielle).",
+  "aptitudes": [
+   "CLAN_UZUMAKI",
+   "APT_FUIN",
+   "APT_MED"
+  ],
+  "ultime": "ULT_013",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_175"
+  },
+  "orientations": [
+   "Chaînes et survie",
+   "Sceaux de soutien"
+  ]
+ },
+ {
+  "id": "CHR_076",
+  "nom": "Suigetsu Hōzuki",
+  "type": "BASE",
+  "identite": "Corps d'eau : esquiver par liquéfaction, frapper au couperet.",
+  "depart": "JUT_304",
+  "stats": {
+   "pv": 110,
+   "depl": 4.7,
+   "notes": "Dégâts de contact subis −20 %"
+  },
+  "cpx": {
+   "nom": "Liquéfaction",
+   "effet": "Esquive : le joueur devient liquide 0,4 s (invulnérable 0,4 s au lieu de 0,25 s) mais la recharge passe à 5 s."
+  },
+  "faiblesse": "Raiton ennemi : +25 % de dégâts subis (affiché).",
+  "signature": "Accès au Grand couperet (JUT_197).",
+  "aptitudes": [
+   "CLAN_HOZUKI",
+   "ELEM_SUITON",
+   "APT_KENJ"
+  ],
+  "ultime": "ULT_037",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_176"
+  },
+  "orientations": [
+   "Pistolet à eau",
+   "Couperet liquide"
+  ]
+ },
+ {
+  "id": "CHR_077",
+  "nom": "Kushina Uzumaki",
+  "type": "BASE",
+  "identite": "Chaînes de scellement : attacher, puis tout broyer.",
+  "depart": "JUT_301",
+  "stats": {
+   "pv": 125,
+   "depl": 4.6,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Habanero sanglant",
+   "effet": "Les chaînes Entravent 1 cible de plus et les cibles Entravées subissent +20 %."
+  },
+  "faiblesse": "Peu d'aire sans chaînes.",
+  "signature": "Chaînes sur boss : la résistance de contrôle monte de 10 points au lieu de 20.",
+  "aptitudes": [
+   "CLAN_UZUMAKI",
+   "APT_FUIN",
+   "ELEM_SUITON",
+   "ELEM_FUTON",
+   "APT_JINCH"
+  ],
+  "ultime": "ULT_013",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_177"
+  },
+  "orientations": [
+   "Réseau de chaînes",
+   "Sceaux et Suiton"
+  ]
+ },
+ {
+  "id": "CHR_078",
+  "nom": "Shisui Uchiha",
+  "type": "BASE",
+  "identite": "Shunshin : le plus rapide, attaques d'apparition.",
+  "depart": "JUT_002",
+  "stats": {
+   "pv": 100,
+   "depl": 5.4,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Shisui du Shunshin",
+   "effet": "Toutes les 6 s, la prochaine esquive laisse 3 images qui frappent chacune l'ennemi le plus proche (15)."
+  },
+  "faiblesse": "PV faibles ; puissance dispersée.",
+  "signature": "Accès exclusif à Kotoamatsukami (JUT_319).",
+  "aptitudes": [
+   "ELEM_KATON",
+   "CLAN_UCHIHA",
+   "DOJ_SHARINGAN",
+   "DOJ_MANGEKYO",
+   "APT_GEN",
+   "CTR_CORBEAU"
+  ],
+  "ultime": "ULT_027",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_178"
+  },
+  "orientations": [
+   "Apparitions",
+   "Élites retournées"
+  ]
+ },
+ {
+  "id": "CHR_079",
+  "nom": "Konohamaru Sarutobi",
+  "type": "BASE",
+  "identite": "Petit-fils du Hokage : Rasengan précoce et clones taquins.",
+  "depart": "JUT_281",
+  "stats": {
+   "pv": 105,
+   "depl": 4.8,
+   "notes": "Gain d'XP +10 %"
+  },
+  "cpx": {
+   "nom": "Apprenti",
+   "effet": "Les 3 premières montées de niveau offrent 4 cartes au lieu de 3."
+  },
+  "faiblesse": "Plafond de puissance tardive plus bas (Puissance max +250 %).",
+  "signature": "Kage Bunshin accessible ; les clones font un Rasengan réduit (comme Naruto, à 40 %).",
+  "aptitudes": [
+   "ELEM_FUTON",
+   "ELEM_KATON",
+   "APT_RASEN",
+   "CLAN_SARUTOBI",
+   "CTR_SINGE"
+  ],
+  "ultime": "ULT_001",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_179"
+  },
+  "orientations": [
+   "Rasengan précoce",
+   "Clones et Katon"
+  ]
+ },
+ {
+  "id": "CHR_080",
+  "nom": "Mū (Deuxième Tsuchikage)",
+  "type": "BASE",
+  "identite": "L'invisible : désintégration Jinton à long délai, division.",
+  "depart": "JUT_159",
+  "stats": {
+   "pv": 110,
+   "depl": 4.3,
+   "notes": "—"
+  },
+  "cpx": {
+   "nom": "Division",
+   "effet": "Délais des techniques Jinton −40 % ; toutes les 20 s, le joueur devient invisible 2 s (les ennemis perdent la cible, le joueur reste visible à l'écran avec contour pointillé)."
+  },
+  "faiblesse": "Début très lent : peu de techniques rapides.",
+  "signature": "Les techniques Jinton ignorent la résistance.",
+  "aptitudes": [
+   "KG_JINTON",
+   "ELEM_DOTON",
+   "ELEM_FUTON"
+  ],
+  "ultime": "ULT_035",
+  "transformations": [],
+  "deblocage": {
+   "type": "MISSION",
+   "ref": "MIS_180"
+  },
+  "orientations": [
+   "Désintégration",
+   "Terre et vent de soutien"
+  ]
+ }
+]

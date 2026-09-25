@@ -1,0 +1,5410 @@
+[
+ {
+  "id": "JUT_001",
+  "nom": "Katon — Gōkakyū no Jutsu (Grande boule de feu)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_KATON",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Boule lente qui grossit en vol ; explose au premier ennemi ou à 7 m et laisse une flaque de feu 1 s.",
+  "valeurs": "Impact 30 ; explosion 12 (r 1,5 m) ; délai 2,0 s ; vitesse 6 m/s ; rayon proj. 0,8 m ; Brûlure +1",
+  "visuel": "Masse orange irrégulière à cœur jaune pâle, langues de feu vers l'arrière ; explosion en fleur à 6 lobes, braises retombantes.",
+  "acces": "ELEM_KATON",
+  "limites": "1 boule active par tranche de Quantité ; flaque non cumulable sur elle-même."
+ },
+ {
+  "id": "JUT_002",
+  "nom": "Katon — Hōsenka no Jutsu (Fleurs de phénix)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_KATON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "5 petites flammes en éventail de 60° qui s'incurvent chacune vers une cible différente (ciblage réparti).",
+  "valeurs": "9 par flamme ; délai 1,4 s ; vitesse 10 m/s ; portée 8 m ; Brûlure +1 par touche",
+  "visuel": "Petites flammes ovales à traîne courbe, trajectoires en pétales ; micro-éclat en étoile à l'impact.",
+  "acces": "ELEM_KATON",
+  "limites": "Une même cible reçoit au plus 2 flammes par salve."
+ },
+ {
+  "id": "JUT_003",
+  "nom": "Katon — Ryūka no Jutsu (Flamme du dragon)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_KATON",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Jet de flammes linéaire maintenu 0,6 s qui balaie légèrement (±8°) vers la cible.",
+  "valeurs": "6 par tick de 0,2 s ; longueur 9 m ; largeur 0,5 m ; délai 3,0 s",
+  "visuel": "Colonne de flamme segmentée en écailles, tête de dragon esquissée en 6 px au bout ; fumée en bordure.",
+  "acces": "ELEM_KATON",
+  "limites": "S'arrête sur les obstacles hauts."
+ },
+ {
+  "id": "JUT_004",
+  "nom": "Katon — Karyū Endan (Balles de flammes du dragon)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "CONE",
+  "tags": [
+   "E_KATON"
+  ],
+  "cible": "direction",
+  "comportement": "Souffle continu en cône de 70° pendant 1 s dans la direction de déplacement ; pose de la Brûlure progressive.",
+  "valeurs": "5 par tick de 0,25 s ; portée 4 m ; délai 2,5 s ; Brûlure +1 par 2 ticks",
+  "visuel": "Nappe de feu qui s'élargit, bordures dentelées, cœur blanc-jaune près de la bouche.",
+  "acces": "ELEM_KATON",
+  "limites": "Intervalle par cible 0,25 s."
+ },
+ {
+  "id": "JUT_005",
+  "nom": "Katon — Haisekishō (Nuage de cendres ardentes)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_KATON",
+   "TERRAIN",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Dépose un nuage de cendres (r 3 m) qui Aveugle ; 1,2 s plus tard une étincelle l'embrase.",
+  "valeurs": "Embrasement 35 ; Aveuglé 2 s ; délai 5,0 s ; surface CENDRE 3 s",
+  "visuel": "Nuage gris-beige en volutes à contours foncés, étincelle unique qui court puis flash orange contenu.",
+  "acces": "ELEM_KATON",
+  "limites": "1 nuage actif (+1 par Quantité, max 3)."
+ },
+ {
+  "id": "JUT_006",
+  "nom": "Katon — Gōryūka no Jutsu (Têtes de dragon de feu)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_KATON",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Trois têtes de dragon plongent successivement (0,3 s d'écart) sur les trois zones les plus denses.",
+  "valeurs": "26 par impact ; rayon 1,4 m ; télégraphe allié 0,6 s ; délai 4,0 s",
+  "visuel": "Tête de dragon dessinée (16×24 px) plongeant en diagonale ; cratère de flammes en étoile.",
+  "acces": "ELEM_KATON+CLAN_UCHIHA",
+  "limites": "Les zones ne se chevauchent pas à plus de 50 %."
+ },
+ {
+  "id": "JUT_007",
+  "nom": "Katon — Gōka Mekkyaku (Destruction par le grand feu)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_KATON",
+   "PERCANT"
+  ],
+  "cible": "direction",
+  "comportement": "Mur de flammes de 10 m de large qui avance de 8 m devant le joueur puis se dissipe.",
+  "valeurs": "40 ; vitesse du mur 6 m/s ; délai 6,0 s ; Brûlure +2",
+  "visuel": "Front de feu épais à crête irrégulière, arrière qui noircit en fumée ; sol calciné temporaire.",
+  "acces": "ELEM_KATON+CLAN_UCHIHA",
+  "limites": "1 touche par cible par mur."
+ },
+ {
+  "id": "JUT_008",
+  "nom": "Katon — Zukokku (Pression de feu)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_KATON",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Orbe très lent (2 m/s) qui détone si un ennemi passe à 1 m ou après 3 s de vol.",
+  "valeurs": "50 ; rayon 3 m ; délai 5,5 s ; recul léger",
+  "visuel": "Sphère sombre à contour orange pulsant, halo de chaleur ; détonation en dôme puis anneau de fumée.",
+  "acces": "ELEM_KATON",
+  "limites": "Max 2 orbes en vol."
+ },
+ {
+  "id": "JUT_009",
+  "nom": "Katon — Endan (Balle de flamme)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_KATON",
+   "PERCANT"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Tir rapide de base qui transperce 2 ennemis en ligne droite.",
+  "valeurs": "14 ; délai 0,9 s ; vitesse 12 m/s ; portée 10 m ; perce 2",
+  "visuel": "Goutte de feu allongée, traîne courte à 3 frames ; éclat latéral à chaque traversée.",
+  "acces": "ELEM_KATON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_010",
+  "nom": "Katon — Gamayu Endan (Flammes à l'huile de crapaud)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "CONE",
+  "tags": [
+   "E_KATON",
+   "TERRAIN"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Crache d'abord un cône d'huile (surface HUILE), puis l'embrase 0,5 s plus tard : combo en deux temps.",
+  "valeurs": "Huile 0 ; embrasement 30 + Brûlure +2 ; portée 5 m ; angle 50° ; délai 4,5 s",
+  "visuel": "Gerbe brun-jaune luisante, puis vague de feu épaisse qui suit exactement la nappe.",
+  "acces": "ELEM_KATON+CTR_CRAPAUD",
+  "limites": "Déclenche SYN_003 une fois par utilisation."
+ },
+ {
+  "id": "JUT_011",
+  "nom": "Sillage de braises",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_KATON",
+   "PERSISTANT"
+  ],
+  "cible": "aucune",
+  "comportement": "Le déplacement du joueur laisse des cellules de braises (1 cellule/0,25 s) qui brûlent 1,5 s.",
+  "valeurs": "4 par tick de 0,5 s ; Brûlure +1 ; largeur 1 m ; actif en permanence",
+  "visuel": "Empreintes incandescentes qui passent du jaune au rouge sombre en 4 frames.",
+  "acces": "ELEM_KATON",
+  "limites": "Max 12 cellules actives ; nul à l'arrêt."
+ },
+ {
+  "id": "JUT_012",
+  "nom": "Braises en éventail",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_KATON",
+   "TERRAIN"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Lance 4 braises en cloche qui retombent et créent chacune une petite flaque de feu 2 s.",
+  "valeurs": "Impact 10 ; flaque 3/0,5 s (r 0,8 m) ; délai 2,2 s ; portée 6 m",
+  "visuel": "Braises rondes à arc visible (ombre au sol qui rétrécit), flaques en étoile basse.",
+  "acces": "ELEM_KATON",
+  "limites": "Max 8 flaques."
+ },
+ {
+  "id": "JUT_013",
+  "nom": "Couronne de flammes",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_KATON"
+  ],
+  "cible": "aucune",
+  "comportement": "3 feux follets orbitent à 2 m ; chaque passage applique Brûlure +1 au lieu de gros dégâts.",
+  "valeurs": "6 par passage ; Brûlure +1 ; rotation 1 tour/1,8 s ; durée 5 s ; délai 7 s",
+  "visuel": "Flammes en goutte inversée, traîne en spirale, alternance de 2 tailles pour éviter l'uniformité.",
+  "acces": "ELEM_KATON",
+  "limites": "Intervalle par cible 0,5 s par follet."
+ },
+ {
+  "id": "JUT_014",
+  "nom": "Mine de braise",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_KATON",
+   "EXPLOSIF"
+  ],
+  "cible": "chemin",
+  "comportement": "Pose une étiquette de feu sur le chemin prévu des ennemis ; explose au contact.",
+  "valeurs": "28 ; rayon 1,8 m ; armement 0,5 s ; durée 12 s ; délai 2,0 s",
+  "visuel": "Petit sceau orange au sol, clignotement lent ; explosion en colonne courte.",
+  "acces": "ELEM_KATON",
+  "limites": "Max 4 mines."
+ },
+ {
+  "id": "JUT_015",
+  "nom": "Soufflet ardent",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_KATON"
+  ],
+  "cible": "aucune",
+  "comportement": "Anneau de chaleur qui part du joueur jusqu'à 4 m ; repousse légèrement.",
+  "valeurs": "18 ; Brûlure +1 ; recul 0,8 m ; délai 3,0 s",
+  "visuel": "Anneau de 2 px d'épaisseur à ondulation, distorsion de chaleur sur le sol.",
+  "acces": "ELEM_KATON",
+  "limites": "1 touche par cible par onde."
+ },
+ {
+  "id": "JUT_016",
+  "nom": "Fil incandescent",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_KATON",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Tend un fil enflammé de 6 m entre deux kunai plantés de part et d'autre de la cible ; brûle ce qui le traverse.",
+  "valeurs": "8 par tick de 0,5 s ; Brûlure +1 ; durée 3 s ; délai 3,5 s",
+  "visuel": "Deux kunai noirs, ligne de 1 px blanche entourée de flammèches ; claquement au déploiement.",
+  "acces": "ELEM_KATON",
+  "limites": "Max 2 fils."
+ },
+ {
+  "id": "JUT_017",
+  "nom": "Katon — Hōsenka Tsumabeni (Fleurs de phénix aux griffes rouges)",
+  "statut": "OA",
+  "famille": "KATON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_KATON",
+   "PERCANT"
+  ],
+  "cible": "plus_proche",
+  "comportement": "4 boules de feu contenant chacune un shuriken : après l'impact du feu, le shuriken poursuit sa course et perce 2 cibles.",
+  "valeurs": "Feu 8 ; shuriken 7 (perce 2) ; délai 1,8 s ; vitesse 11 m/s",
+  "visuel": "Boules translucides laissant voir une silhouette de shuriken ; le shuriken ressort incandescent.",
+  "acces": "ELEM_KATON",
+  "limites": "Les shuriken comptent comme OUTIL pour les synergies."
+ },
+ {
+  "id": "JUT_018",
+  "nom": "Katon — Dai Endan (Grande balle de flamme)",
+  "statut": "AV",
+  "famille": "KATON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_KATON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Grosse balle qui, à l'impact, se divise en 4 flammèches en croix.",
+  "valeurs": "Impact 24 ; éclats 4 × 8 ; délai 2,4 s ; vitesse 8 m/s",
+  "visuel": "Sphère ondulante, division en 4 gouttes orientées ; les éclats laissent une traîne de 2 frames.",
+  "acces": "ELEM_KATON",
+  "limites": "Les éclats sont SECONDAIRE."
+ },
+ {
+  "id": "JUT_019",
+  "nom": "Colonne de feu",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_KATON"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Cercle d'avertissement allié sous la cible, puis pilier de feu qui projette les ennemis ordinaires en l'air (0,4 s d'inaction).",
+  "valeurs": "36 ; rayon 1,2 m ; délai d'impact 0,8 s ; délai 3,2 s",
+  "visuel": "Sceau circulaire au sol, jaillissement vertical sur 48 px, ennemis soulevés de 8 px.",
+  "acces": "ELEM_KATON",
+  "limites": "Soulèvement sans effet sur les boss (converti en Vulnérable +5 %)."
+ },
+ {
+  "id": "JUT_020",
+  "nom": "Lanterne ardente",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_KATON",
+   "MOBILE"
+  ],
+  "cible": "aucune",
+  "comportement": "Une lanterne de chakra suit le joueur à 1,5 m derrière lui et irradie une aura brûlante.",
+  "valeurs": "6 par tick de 0,5 s ; rayon 1,8 m ; permanente",
+  "visuel": "Lanterne en papier stylisée (12×14 px), halo à 2 anneaux pulsés ; reste lisible sur fond sombre grâce à un contour brun.",
+  "acces": "ELEM_KATON",
+  "limites": "Pas d'instance supplémentaire via Quantité (augmente le rayon de 10 % à la place)."
+ },
+ {
+  "id": "JUT_021",
+  "nom": "Salamandre ardente",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_KATON",
+   "MOBILE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Une salamandre de feu rampe au sol vers une cible puis bondit vers 2 cibles voisines (trajet physique visible entre chaque saut).",
+  "valeurs": "16 par cible ; 3 cibles ; portée de saut 3,5 m ; −10 % par saut ; délai 2,0 s",
+  "visuel": "Lézard de 10 px en 4 frames de reptation, traînée de braises, bond en arc.",
+  "acces": "ELEM_KATON",
+  "limites": "Jamais deux fois la même cible."
+ },
+ {
+  "id": "JUT_022",
+  "nom": "Barrière de flammes",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_KATON",
+   "PERSISTANT"
+  ],
+  "cible": "aucune",
+  "comportement": "Élève derrière le joueur (perpendiculairement à sa course) un mur de feu de 5 m qui détruit les petits projectiles ennemis.",
+  "valeurs": "20 à la traversée ; Brûlure +2 ; durée 4 s ; délai 8,0 s ; bloque 6 projectiles",
+  "visuel": "Rideau vertical de flammes hautes (24 px), base rouge, sommet jaune ; les projectiles bloqués crépitent.",
+  "acces": "ELEM_KATON",
+  "limites": "Ne bloque pas les attaques télégraphiées lourdes."
+ },
+ {
+  "id": "JUT_023",
+  "nom": "Pluie de braises",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_KATON"
+  ],
+  "cible": "aleatoire_pondere",
+  "comportement": "8 impacts aléatoires dans un rayon de 5 m autour du joueur répartis sur 1,6 s (pondérés vers les ennemis).",
+  "valeurs": "10 par impact ; rayon d'impact 0,8 m ; délai 4,0 s",
+  "visuel": "Points lumineux qui tombent en diagonale, micro-cratères orange.",
+  "acces": "ELEM_KATON",
+  "limites": "Jamais deux impacts au même point dans 0,3 s."
+ },
+ {
+  "id": "JUT_024",
+  "nom": "Cœur de forge",
+  "statut": "CO",
+  "famille": "KATON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_KATON",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Braise qui se fiche dans une cible et chauffe : dégâts croissants 3 s puis explosion ; si la cible meurt, la braise saute sur l'ennemi le plus proche.",
+  "valeurs": "4 → 8 → 12 par s ; explosion 30 (r 1,6 m) ; délai 3,5 s",
+  "visuel": "Point incandescent passant du rouge au blanc, fissures lumineuses sur la cible.",
+  "acces": "ELEM_KATON",
+  "limites": "1 saut maximum."
+ },
+ {
+  "id": "JUT_025",
+  "nom": "Suiton — Suiryūdan no Jutsu (Dragon d'eau)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SUITON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Dragon d'eau à trajectoire sinusoïdale (amplitude 1 m) qui perce 3 ennemis et les laisse Trempés.",
+  "valeurs": "22 ; délai 2,2 s ; vitesse 8 m/s ; portée 11 m ; perce 3 ; Trempé 2 s",
+  "visuel": "Corps segmenté de 5 volumes bleus translucides à crête blanche, gerbes à chaque ondulation.",
+  "acces": "ELEM_SUITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_026",
+  "nom": "Suiton — Suijinheki (Mur d'eau)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_SUITON",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Un mur d'eau circulaire jaillit du joueur jusqu'à 2,5 m : repousse, détruit les projectiles ordinaires et laisse un anneau d'eau au sol.",
+  "valeurs": "12 ; recul 2 m ; détruit jusqu'à 10 projectiles ; délai 7,0 s ; surface EAU 4 s",
+  "visuel": "Anneau vertical d'eau en 3 frames montantes, crête d'écume, retombée en pluie.",
+  "acces": "ELEM_SUITON",
+  "limites": "Les projectiles télégraphiés de boss ne sont pas détruits."
+ },
+ {
+  "id": "JUT_027",
+  "nom": "Suiton — Suirō no Jutsu (Prison aqueuse)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SUITON",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Enferme l'ennemi le plus menaçant (élite en priorité) dans une sphère d'eau : immobile, dégâts continus.",
+  "valeurs": "10 par tick de 0,5 s ; durée 2,5 s ; délai 6,0 s",
+  "visuel": "Sphère bleue à reflets, silhouette de la cible déformée à l'intérieur, bulles montantes.",
+  "acces": "ELEM_SUITON",
+  "limites": "Boss : soumis à la résistance de contrôle ; 1 prison active."
+ },
+ {
+  "id": "JUT_028",
+  "nom": "Suiton — Kirigakure no Jutsu (Brume dissimulatrice)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SUITON",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Brume de 4 m autour du joueur : les ennemis dedans sont Aveuglés ; les coups du joueur sur ces cibles gagnent +15 % de chance critique.",
+  "valeurs": "0 dégât ; durée 4 s ; délai 10 s",
+  "visuel": "Couche de brume en tramage à 2 niveaux, bords diffus en dithering ; le joueur reste net (contour conservé).",
+  "acces": "ELEM_SUITON",
+  "limites": "La brume n'occulte jamais les télégraphes ennemis (dessinés au-dessus)."
+ },
+ {
+  "id": "JUT_029",
+  "nom": "Suiton — Suikōdan no Jutsu (Requin missile)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SUITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Requin d'eau à tête chercheuse (virage 180°/s) qui mord deux fois sa cible puis se disperse.",
+  "valeurs": "2 × 14 ; délai 1,6 s ; vitesse 9 m/s ; portée 10 m",
+  "visuel": "Requin de 14 px, nageoire dorsale nette, gueule qui s'ouvre sur 2 frames.",
+  "acces": "ELEM_SUITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_030",
+  "nom": "Suiton — Daibakufu no Jutsu (Grande cascade)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_SUITON",
+   "TERRAIN"
+  ],
+  "cible": "aucune",
+  "comportement": "Immense vague circulaire qui balaie jusqu'à 7 m, repousse fortement et inonde l'anneau parcouru.",
+  "valeurs": "34 ; recul 3 m ; délai 9,0 s ; surface EAU 5 s",
+  "visuel": "Vague haute de 20 px avec écume dessinée en crochets, sol assombri et luisant après passage.",
+  "acces": "ELEM_SUITON",
+  "limites": "Recul réduit de 70 % dans les zones alliées persistantes (§B8.4)."
+ },
+ {
+  "id": "JUT_031",
+  "nom": "Suiton — Teppōdama (Balle d'eau)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SUITON",
+   "REBOND"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Boule d'eau lourde qui ricoche 2 fois sur obstacles ou ennemis et projette sa cible.",
+  "valeurs": "30 ; recul 2,5 m ; délai 2,6 s ; vitesse 10 m/s ; 2 rebonds",
+  "visuel": "Sphère compacte à reflet en croissant, gerbe en éventail à chaque rebond.",
+  "acces": "ELEM_SUITON",
+  "limites": "Rebond jamais deux fois sur la même cible d'affilée."
+ },
+ {
+  "id": "JUT_032",
+  "nom": "Suiton — Bakusui Shōha (Onde de choc explosive d'eau)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SUITON",
+   "TERRAIN",
+   "PERSISTANT"
+  ],
+  "cible": "aucune",
+  "comportement": "Inonde un disque de 6 m autour du joueur ; les ennemis y sont ralentis de 20 % et Trempés en continu.",
+  "valeurs": "3 par tick de 0,5 s ; durée 5 s ; délai 12 s ; surface EAU",
+  "visuel": "Nappe d'eau en 3 tons avec vaguelettes animées (4 frames en boucle), reflets du décor.",
+  "acces": "ELEM_SUITON",
+  "limites": "1 inondation active ; plafond de surface §B8.3."
+ },
+ {
+  "id": "JUT_033",
+  "nom": "Suiton — Goshokuzame (Cinq requins voraces)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_SUITON"
+  ],
+  "cible": "aucune",
+  "comportement": "5 requins tournent à grande distance (3,5 m) et plongent vers un ennemi proche de leur orbite avant de reprendre leur place.",
+  "valeurs": "12 par morsure ; rotation 1 tour/3 s ; durée 6 s ; délai 9 s",
+  "visuel": "Ailerons émergeant d'un sillage d'écume, plongée en arc de 4 frames.",
+  "acces": "ELEM_SUITON",
+  "limites": "1 plongée par requin par seconde."
+ },
+ {
+  "id": "JUT_034",
+  "nom": "Suiton — Suidanha (Onde tranchante d'eau)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_SUITON",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Jet d'eau à très haute pression, instantané, qui traverse tout sur sa longueur.",
+  "valeurs": "38 ; longueur 12 m ; largeur 0,25 m ; délai 3,4 s",
+  "visuel": "Ligne blanche de 2 px bordée de bleu, fine brume à l'arrivée, sol entaillé 0,5 s.",
+  "acces": "ELEM_SUITON",
+  "limites": "Traverse les obstacles bas, pas les hauts."
+ },
+ {
+  "id": "JUT_035",
+  "nom": "Suiton — Mizurappa (Vague déchaînée)",
+  "statut": "AV",
+  "famille": "SUITON",
+  "livraison": "CONE",
+  "tags": [
+   "E_SUITON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Jet d'eau conique qui repousse et Trempe tous les ennemis touchés.",
+  "valeurs": "16 ; angle 45° ; portée 5 m ; recul 2 m ; délai 2,4 s",
+  "visuel": "Cône d'eau en gerbes parallèles, gouttes projetées en bordure.",
+  "acces": "ELEM_SUITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_036",
+  "nom": "Bulles dérivantes",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SUITON",
+   "CONTROLE"
+  ],
+  "cible": "aleatoire_pondere",
+  "comportement": "Libère 6 bulles qui dérivent lentement ; un ennemi touché est enfermé 1 s puis la bulle éclate.",
+  "valeurs": "Éclatement 14 ; emprisonnement 1 s ; durée de vie 6 s ; délai 5 s",
+  "visuel": "Cercles irisés à reflet mobile, éclatement en 4 gouttes.",
+  "acces": "ELEM_SUITON",
+  "limites": "Max 12 bulles ; une bulle = 1 cible."
+ },
+ {
+  "id": "JUT_037",
+  "nom": "Fouet d'eau",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_SUITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Coup de fouet en arc de 140° à longue allonge (3,5 m) devant le joueur ; la pointe inflige le double.",
+  "valeurs": "12 (pointe 24) ; délai 1,2 s",
+  "visuel": "Ruban d'eau qui se déroule en 3 frames et claque ; éclaboussure en pointe.",
+  "acces": "ELEM_SUITON",
+  "limites": "Pointe : derniers 0,6 m de l'arc."
+ },
+ {
+  "id": "JUT_038",
+  "nom": "Geyser",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_SUITON",
+   "TERRAIN"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Le sol se gonfle sous le groupe le plus dense puis une colonne d'eau jaillit, Trempe et soulève.",
+  "valeurs": "28 ; rayon 1,5 m ; délai d'impact 0,8 s ; délai 3,5 s ; surface EAU 3 s",
+  "visuel": "Fissures humides au sol, colonne blanche de 40 px, retombée en gouttes lourdes.",
+  "acces": "ELEM_SUITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_039",
+  "nom": "Averse",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SUITON",
+   "MOBILE"
+  ],
+  "cible": "aucune",
+  "comportement": "Pluie localisée de 6 m centrée sur le joueur : chaque seconde, les ennemis dedans sont Trempés et subissent de légers dégâts.",
+  "valeurs": "3 par s ; Trempé ; durée 6 s ; délai 11 s",
+  "visuel": "Traits de pluie obliques (1 px) en 2 couches de parallaxe, cercles d'impact au sol.",
+  "acces": "ELEM_SUITON",
+  "limites": "Technique de préparation : faible dégât intentionnel."
+ },
+ {
+  "id": "JUT_040",
+  "nom": "Tourbillon",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SUITON",
+   "ATTRACTION",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Maelström au sol qui attire les ennemis ordinaires vers son centre et les blesse.",
+  "valeurs": "5 par tick de 0,5 s ; attraction 1,2 m/s ; rayon 2,5 m ; durée 4 s ; délai 7 s",
+  "visuel": "Spirale d'eau en 6 frames de rotation, écume au centre.",
+  "acces": "ELEM_SUITON",
+  "limites": "Max 2 tourbillons ; boss non attirés."
+ },
+ {
+  "id": "JUT_041",
+  "nom": "Lame de marée",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SUITON",
+   "PERCANT"
+  ],
+  "cible": "direction",
+  "comportement": "Croissant d'eau lancé vers l'avant qui revient au joueur (boomerang) en touchant à l'aller et au retour.",
+  "valeurs": "15 par passage ; portée 6 m ; délai 2,0 s ; perce illimité",
+  "visuel": "Croissant bleu à bord blanc, rotation 4 frames, gouttes en traîne.",
+  "acces": "ELEM_SUITON",
+  "limites": "1 touche par cible par passage."
+ },
+ {
+  "id": "JUT_042",
+  "nom": "Sphère gardienne",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_SUITON",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Une grosse sphère d'eau orbite lentement à 2,5 m et absorbe les projectiles ennemis qu'elle croise.",
+  "valeurs": "10 au contact ; absorbe 1 projectile/0,5 s ; permanente",
+  "visuel": "Sphère de 16 px avec reflet et caustiques ; un projectile absorbé y tourne 0,3 s puis s'éteint.",
+  "acces": "ELEM_SUITON",
+  "limites": "Quantité : +1 sphère (max 3)."
+ },
+ {
+  "id": "JUT_043",
+  "nom": "Sensatsu Suishō (Mille aiguilles d'eau)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_SUITON"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Des aiguilles d'eau se forment en cercle autour d'une cible puis convergent ; bonus ×1,5 si la cible est sur une surface EAU.",
+  "valeurs": "12 aiguilles × 3 ; rayon de formation 2 m ; délai d'impact 0,5 s ; délai 2,8 s",
+  "visuel": "Aiguilles blanches de 3 px en couronne, convergence en 3 frames, éclat en étoile.",
+  "acces": "ELEM_SUITON",
+  "limites": "Aiguilles hors cible principale : touchent les ennemis traversés à 50 %."
+ },
+ {
+  "id": "JUT_044",
+  "nom": "Ricochet de gouttes",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SUITON",
+   "REBOND"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Petite goutte qui rebondit 4 fois d'ennemi en ennemi en accélérant.",
+  "valeurs": "9 (+2 par rebond) ; délai 1,0 s ; vitesse 10 → 16 m/s",
+  "visuel": "Goutte en larme qui s'aplatit à chaque rebond (squash 2 frames).",
+  "acces": "ELEM_SUITON",
+  "limites": "Rebond sur cible déjà touchée interdit."
+ },
+ {
+  "id": "JUT_045",
+  "nom": "Flaque piégée",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_SUITON",
+   "CONTROLE",
+   "TERRAIN"
+  ],
+  "cible": "chemin",
+  "comportement": "Pose des flaques sur le trajet des ennemis ; la première victime est prise dans une gerbe qui l'Entrave 1 s et Trempe ses voisins.",
+  "valeurs": "18 ; Entravé 1 s ; rayon de gerbe 1,5 m ; max 3 flaques ; délai 3,0 s",
+  "visuel": "Flaque plate à reflet vif, gerbe verticale en 3 frames.",
+  "acces": "ELEM_SUITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_046",
+  "nom": "Suiton — Daikōdan no Jutsu (Grand requin missile)",
+  "statut": "OA",
+  "famille": "SUITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SUITON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Requin géant lent qui grossit de 10 % à chaque ennemi traversé (max 8) puis explose en vague.",
+  "valeurs": "26 ; explosion 20 × nombre de grossissements /4 ; vitesse 4 m/s ; délai 8 s",
+  "visuel": "Requin de 32 px dont la gueule s'ouvre en avançant ; explosion en anneau d'écume.",
+  "acces": "ELEM_SUITON+CTR_REQUIN",
+  "limites": "1 en vol."
+ },
+ {
+  "id": "JUT_047",
+  "nom": "Torrent serpentin",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_SUITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Serpent d'eau qui saute de cible en cible ; portée de saut doublée vers les ennemis Trempés.",
+  "valeurs": "14 ; 4 sauts ; portée 3 m (6 m vers Trempé) ; −8 %/saut ; délai 2,0 s",
+  "visuel": "Filet d'eau serpentin tracé entre cibles, tête plus claire, retombée en gouttes.",
+  "acces": "ELEM_SUITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_048",
+  "nom": "Voile de pluie",
+  "statut": "CO",
+  "famille": "SUITON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_SUITON",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Toutes les 10 s, un film d'eau donne un bouclier ; quand il se rompt, il éclate en onde qui Trempe à 3 m.",
+  "valeurs": "Bouclier 12 ; onde 10 ; rayon 3 m ; délai 10 s",
+  "visuel": "Contour aqueux ondulant autour du personnage (1 px, 2 tons), éclatement en anneau.",
+  "acces": "ELEM_SUITON",
+  "limites": "Bouclier non cumulable avec lui-même."
+ },
+ {
+  "id": "JUT_049",
+  "nom": "Chidori (Mille oiseaux)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_RAITON",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Charge 0,4 s dans la main, puis une image de frappe fonce 4 m vers la cible et la transperce ; décharge en arc de 1,2 m au point d'impact. Le joueur ne bouge pas.",
+  "valeurs": "Frappe 48 ; décharge 14 ; délai 2,8 s ; Électrisé",
+  "visuel": "Boule de filaments blancs-bleus dans la main avec 3 branches animées ; image de frappe bleutée à 60 % d'opacité ; cri d'oiseaux synthétique.",
+  "acces": "ELEM_RAITON+DOJ_SHARINGAN",
+  "limites": "L'image de frappe n'est pas une unité : elle n'hérite de rien et disparaît à l'impact."
+ },
+ {
+  "id": "JUT_050",
+  "nom": "Raikiri (Tranche-foudre)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_RAITON",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Trait instantané de 4 m à travers la cible la plus menaçante ; le trajet reste électrisé 0,5 s. Chance critique +20 %.",
+  "valeurs": "60 ; sillage 6 ; délai 3,5 s ; crit +20 %",
+  "visuel": "Ligne brisée anguleuse, 1 frame blanche puis 2 frames bleues ; sillage crépitant.",
+  "acces": "ELEM_RAITON+CHR_008|ELEM_RAITON+CHR_009|ELEM_RAITON+CHR_010",
+  "limites": "Réservé aux entrées de Kakashi."
+ },
+ {
+  "id": "JUT_051",
+  "nom": "Chidori Nagashi (Courant des mille oiseaux)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_RAITON",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Toutes les 1,2 s, une décharge parcourt le corps et s'échappe en anneau de 2 m qui Électrise.",
+  "valeurs": "10 ; rayon 2 m ; délai 1,2 s ; Électrisé",
+  "visuel": "Filaments courts qui s'échappent du contour du personnage sur 3 frames, sans masquer la silhouette.",
+  "acces": "ELEM_RAITON+CLAN_UCHIHA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_052",
+  "nom": "Chidori Senbon (Aiguilles des mille oiseaux)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "6 aiguilles de foudre tirées en rafale serrée ; la 6e Électrise systématiquement.",
+  "valeurs": "6 par aiguille ; intervalle 0,05 s ; délai 1,3 s ; vitesse 18 m/s",
+  "visuel": "Traits de 4 px blancs à bord bleu, micro-étincelle à l'impact.",
+  "acces": "ELEM_RAITON+CLAN_UCHIHA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_053",
+  "nom": "Chidori Eisō (Lance des mille oiseaux)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_RAITON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Lame de foudre de 8 m qui s'étend puis pivote de 60° en balayage.",
+  "valeurs": "20 par tick de 0,2 s ; durée 0,6 s ; largeur 0,35 m ; délai 3,0 s",
+  "visuel": "Lame fine segmentée en zigzags, tête plus brillante, étincelles le long du balayage.",
+  "acces": "ELEM_RAITON+CLAN_UCHIHA",
+  "limites": "Obstacles hauts arrêtent la lame."
+ },
+ {
+  "id": "JUT_054",
+  "nom": "Kirin",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_RAITON",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Construit pendant 6 s un nuage d'orage visible au-dessus de la zone la plus dense, puis y fait tomber une foudre en forme de bête.",
+  "valeurs": "120 ; rayon 3,5 m ; construction 6 s ; délai 14 s",
+  "visuel": "Nuage sombre à contour clair qui grossit en 4 paliers ; bête de foudre de 64 px en 3 frames, onde au sol.",
+  "acces": "ELEM_RAITON+ELEM_KATON+CLAN_UCHIHA",
+  "limites": "Pas de micro-pause globale ; micro-pause locale de 50 ms sur les cibles touchées."
+ },
+ {
+  "id": "JUT_055",
+  "nom": "Raiton — Raijū Tsuiga (Crocs du fauve de foudre)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Un chien de foudre court au sol vers une cible ; après une élimination, il rebondit vers une nouvelle cible (3 éliminations max).",
+  "valeurs": "28 ; vitesse 11 m/s ; délai 2,4 s",
+  "visuel": "Canidé électrique de 12 px à 4 frames de course, traînée de filaments.",
+  "acces": "ELEM_RAITON+CTR_CHIEN",
+  "limites": "Durée de vie 3 s."
+ },
+ {
+  "id": "JUT_056",
+  "nom": "Raiton — Gian (Fausse obscurité)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_RAITON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Télégraphe allié 0,5 s puis rayon épais de 14 m qui traverse tout.",
+  "valeurs": "44 ; largeur 0,6 m ; délai 4,5 s",
+  "visuel": "Rayon en lance ondulée à cœur blanc, deux lignes d'éclairs parasites parallèles.",
+  "acces": "ELEM_RAITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_057",
+  "nom": "Raiton — Kuropansā (Panthère noire)",
+  "statut": "OA",
+  "famille": "RAITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_RAITON",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Panthère de foudre noire qui bondit sur une cible, la cloue 0,8 s puis rebondit une fois.",
+  "valeurs": "34 ; Étourdi 0,8 s ; 1 rebond ; délai 4,0 s",
+  "visuel": "Silhouette noire à contour jaune-blanc épais (2 px) pour rester visible sur fond sombre ; éclairs internes violets.",
+  "acces": "ELEM_RAITON",
+  "limites": "Étourdissement soumis à la résistance de contrôle."
+ },
+ {
+  "id": "JUT_058",
+  "nom": "Raiton — Shichū Shibari (Prison des quatre piliers)",
+  "statut": "AV",
+  "famille": "RAITON",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_RAITON",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Quatre piliers jaillissent en carré de 3 m autour d'un groupe ; des arcs les relient 2,5 s : les ennemis dedans ne peuvent pas sortir.",
+  "valeurs": "8 par tick de 0,5 s ; durée 2,5 s ; délai 9 s",
+  "visuel": "Piliers de pierre à glyphes, arcs horizontaux animés entre eux.",
+  "acces": "ELEM_RAITON",
+  "limites": "Élites : ralenties de 50 % au lieu d'être bloquées."
+ },
+ {
+  "id": "JUT_059",
+  "nom": "Arc en chaîne",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Éclair qui saute instantanément de cible en cible.",
+  "valeurs": "18 ; 5 sauts ; portée 3,5 m ; −12 %/saut ; délai 1,5 s",
+  "visuel": "Tracé construit en 2 frames (tête puis ramifications), disparition en 3 frames.",
+  "acces": "ELEM_RAITON",
+  "limites": "Jamais deux fois la même cible."
+ },
+ {
+  "id": "JUT_060",
+  "nom": "Orbes crépitants",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_RAITON",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "2 orbes tournent vite à 1,5 m et Électrisent au contact.",
+  "valeurs": "8 ; rotation 1 tour/1 s ; durée 4 s ; délai 5 s",
+  "visuel": "Sphères de 6 px à filaments tournoyants, trace en arc de 3 frames.",
+  "acces": "ELEM_RAITON",
+  "limites": "Intervalle par cible 0,5 s par orbe."
+ },
+ {
+  "id": "JUT_061",
+  "nom": "Paratonnerre",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "chemin",
+  "comportement": "Plante une tige métallique ; toutes les 1 s elle foudroie l'ennemi le plus proche à 4 m (6 frappes).",
+  "valeurs": "16 par frappe ; 6 frappes ; délai 5 s ; max 2 tiges",
+  "visuel": "Tige noire de 20 px à anneau lumineux, éclair vertical puis horizontal.",
+  "acces": "ELEM_RAITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_062",
+  "nom": "Clou de tonnerre",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_RAITON",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Marque la cible d'un sigle ; 1,5 s plus tard la foudre tombe sur elle puis saute une fois.",
+  "valeurs": "40 ; saut 20 ; délai 3,0 s ; Marqué",
+  "visuel": "Sigle en losange au-dessus de la cible, éclair vertical à tête épaisse.",
+  "acces": "ELEM_RAITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_063",
+  "nom": "Décharge statique",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "aucune",
+  "comportement": "Le déplacement accumule de l'électricité : tous les 10 m parcourus, une onde de 3 m se libère.",
+  "valeurs": "30 ; rayon 3 m ; seuil 10 m (Cadence réduit le seuil)",
+  "visuel": "Étincelles aux pieds qui s'intensifient en 4 paliers ; anneau crépitant.",
+  "acces": "ELEM_RAITON",
+  "limites": "Nul à l'arrêt : récompense la mobilité."
+ },
+ {
+  "id": "JUT_064",
+  "nom": "Filet électrique",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_RAITON",
+   "CONTROLE",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Jette un filet de 3 × 3 m qui ralentit de 30 % et Électrise chaque seconde.",
+  "valeurs": "6 par s ; durée 3 s ; délai 6 s",
+  "visuel": "Maillage de lignes fines au sol, nœuds lumineux qui clignotent en alternance.",
+  "acces": "ELEM_RAITON",
+  "limites": "Max 2 filets."
+ },
+ {
+  "id": "JUT_065",
+  "nom": "Traits chercheurs",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "8 traits de foudre courbes qui cherchent chacun une cible différente.",
+  "valeurs": "10 par trait ; délai 2,2 s ; vitesse 14 m/s ; virage 240°/s",
+  "visuel": "Traits lumineux sinueux à tête ronde, traînée de 6 px.",
+  "acces": "ELEM_RAITON",
+  "limites": "Répartition : max 2 traits par cible."
+ },
+ {
+  "id": "JUT_066",
+  "nom": "Éclair fourchu",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "CONE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Éclair qui se divise en 3 branches dans un cône de 50° sur 6 m.",
+  "valeurs": "22 par branche ; délai 1,8 s",
+  "visuel": "Tronc épais puis 3 branches à angles vifs, ramifications secondaires décoratives.",
+  "acces": "ELEM_RAITON",
+  "limites": "Une cible ne reçoit qu'une branche."
+ },
+ {
+  "id": "JUT_067",
+  "nom": "Raiton — Sandā Gēto (Porte du tonnerre)",
+  "statut": "AV",
+  "famille": "RAITON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "direction",
+  "comportement": "Marque 5 points en ligne vers l'avant ; la foudre y tombe successivement du plus proche au plus lointain.",
+  "valeurs": "26 par impact ; rayon 1,2 m ; écart 0,12 s ; ligne de 9 m ; délai 4,0 s",
+  "visuel": "Étiquettes au sol, éclairs verticaux en cascade, écho sonore croissant.",
+  "acces": "ELEM_RAITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_068",
+  "nom": "Paume foudroyante",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_RAITON",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Série de 3 frappes de paume à 1,5 m ; la 3e étourdit brièvement.",
+  "valeurs": "10 / 10 / 18 ; Étourdi 0,4 s ; délai 1,0 s",
+  "visuel": "Paume lumineuse, onde de choc en croissant, étincelles radiales à la 3e frappe.",
+  "acces": "ELEM_RAITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_069",
+  "nom": "Arc tendu",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Lien électrique maintenu 1,5 s avec une cible ; les dégâts augmentent de 25 % toutes les 0,3 s. Rompu au-delà de 6 m.",
+  "valeurs": "5 → 12 par tick de 0,2 s ; délai 2,5 s",
+  "visuel": "Arc qui s'épaissit en 4 paliers, tremblement de la ligne.",
+  "acces": "ELEM_RAITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_070",
+  "nom": "Tempête ionique",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_RAITON",
+   "MOBILE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Petit nuage qui suit le groupe le plus dense et y fait tomber une foudre toutes les 0,4 s.",
+  "valeurs": "9 par éclair ; durée 4 s ; rayon 3 m ; délai 8 s",
+  "visuel": "Nuage de 24 px à contour clair, éclairs courts aléatoires.",
+  "acces": "ELEM_RAITON",
+  "limites": "1 nuage (+1 par Quantité, max 2)."
+ },
+ {
+  "id": "JUT_071",
+  "nom": "Raiton — Raikyū (Boule de foudre)",
+  "statut": "AV",
+  "famille": "RAITON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Boule lente qui foudroie les ennemis proches pendant son vol (aura de 1,5 m) puis éclate.",
+  "valeurs": "Aura 5 par tick de 0,3 s ; éclatement 20 ; vitesse 4 m/s ; délai 3,0 s",
+  "visuel": "Sphère à 3 anneaux orbitaux, filaments vers les cibles proches.",
+  "acces": "ELEM_RAITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_072",
+  "nom": "Retour de foudre",
+  "statut": "CO",
+  "famille": "RAITON",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_RAITON"
+  ],
+  "cible": "aucune",
+  "comportement": "Réactif : quand le joueur subit un coup, la foudre frappe l'agresseur puis 2 ennemis proches.",
+  "valeurs": "35 ; 3 cibles ; −10 %/saut ; délai interne 1,5 s",
+  "visuel": "Éclair partant du contour du joueur vers l'agresseur, tracé en 2 frames.",
+  "acces": "ELEM_RAITON",
+  "limites": "Déclenché aussi par un coup absorbé par bouclier."
+ },
+ {
+  "id": "JUT_073",
+  "nom": "Fūton — Daitoppa (Grande percée)",
+  "statut": "OA",
+  "famille": "FUTON",
+  "livraison": "CONE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Bourrasque en cône de 60° sur 6 m : faibles dégâts, fort recul. Sert à dégager l'espace.",
+  "valeurs": "10 ; recul 3,5 m ; délai 3,0 s",
+  "visuel": "Lignes de vent courbes blanches à 50 % d'opacité, feuilles et poussière entraînées dans l'axe.",
+  "acces": "ELEM_FUTON",
+  "limites": "Recul réduit dans les zones alliées (§B8.4)."
+ },
+ {
+  "id": "JUT_074",
+  "nom": "Fūton — Kamaitachi no Jutsu (Faux de la belette)",
+  "statut": "OA",
+  "famille": "FUTON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_FUTON",
+   "PERCANT"
+  ],
+  "cible": "direction",
+  "comportement": "Croissant de vent de 120° qui avance sur 9 m et tranche 3 fois chaque ennemi traversé ; applique Entaillé.",
+  "valeurs": "3 × 8 ; Entaillé 1 cumul ; délai 2,6 s ; vitesse 10 m/s",
+  "visuel": "Rubans blancs superposés en 3 couches décalées, entailles en X sur les cibles.",
+  "acces": "ELEM_FUTON",
+  "limites": "Intervalle interne 0,1 s entre les 3 coupes."
+ },
+ {
+  "id": "JUT_075",
+  "nom": "Fūton — Shinkū Gyoku (Sphères de vide)",
+  "statut": "AV",
+  "famille": "FUTON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_FUTON",
+   "PERCANT"
+  ],
+  "cible": "plus_proche",
+  "comportement": "3 balles d'air comprimé très rapides, chacune perce 2 ennemis.",
+  "valeurs": "12 ; délai 1,2 s ; vitesse 20 m/s ; perce 2",
+  "visuel": "Sphères presque transparentes à contour déformant (anneau de 1 px), cône de pression à la sortie.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_076",
+  "nom": "Fūton — Shinkūha (Onde de vide)",
+  "statut": "AV",
+  "famille": "FUTON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_FUTON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Taille horizontale instantanée de 7 m de long et 1 m de large.",
+  "valeurs": "30 ; délai 2,2 s",
+  "visuel": "Trait blanc épais de 2 frames, poussière soulevée le long du trait.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_077",
+  "nom": "Fūton — Shinkū Taigyoku (Grande sphère de vide)",
+  "statut": "AV",
+  "famille": "FUTON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_FUTON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Grosse sphère d'air lente qui traverse tout et aspire légèrement les ennemis sur son passage.",
+  "valeurs": "36 ; rayon 1,2 m ; vitesse 5 m/s ; attraction 0,6 m/s ; délai 4,0 s",
+  "visuel": "Vortex sphérique à 3 anneaux concentriques, débris aspirés.",
+  "acces": "ELEM_FUTON",
+  "limites": "1 en vol."
+ },
+ {
+  "id": "JUT_078",
+  "nom": "Fūton — Atsugai (Pression destructrice)",
+  "statut": "OA",
+  "famille": "FUTON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_FUTON",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Compression d'air visible 0,6 s sur un groupe, puis éclatement en dôme qui repousse vers l'extérieur.",
+  "valeurs": "44 ; rayon 3 m ; recul 2 m ; délai 5,0 s",
+  "visuel": "Sphère de distorsion qui se contracte (3 frames) puis dôme blanc et anneau de poussière.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_079",
+  "nom": "Fūton — Renkūdan (Balle d'air)",
+  "statut": "AV",
+  "famille": "FUTON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Balle d'air rapide ; à l'impact, l'onde se prolonge en cône derrière la cible.",
+  "valeurs": "26 ; cône arrière 12 (45°, 3 m) ; délai 1,8 s ; vitesse 16 m/s",
+  "visuel": "Balle compacte à traînée en cône, éclat de pression en éventail derrière la cible.",
+  "acces": "ELEM_FUTON",
+  "limites": "Cône arrière = SECONDAIRE."
+ },
+ {
+  "id": "JUT_080",
+  "nom": "Lames de vent",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "aucune",
+  "comportement": "4 lames de vent tournent vite à 2,2 m et appliquent Entaillé.",
+  "valeurs": "7 ; Entaillé 1 ; rotation 1 tour/1,2 s ; durée 4 s ; délai 6 s",
+  "visuel": "Croissants blancs fins, feuilles aspirées dans la ronde.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_081",
+  "nom": "Tornade errante",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_FUTON",
+   "MOBILE",
+   "ATTRACTION"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Tornade qui erre vers les groupes, aspire les petits ennemis et les soulève 0,5 s.",
+  "valeurs": "6 par tick de 0,3 s ; rayon 1,6 m ; vitesse 3 m/s ; durée 5 s ; délai 9 s",
+  "visuel": "Colonne en entonnoir de 40 px, bandes de vent en 6 frames, débris orbitaux.",
+  "acces": "ELEM_FUTON",
+  "limites": "Élites et boss non soulevés."
+ },
+ {
+  "id": "JUT_082",
+  "nom": "Coup de vent circulaire",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "aucune",
+  "comportement": "Balayage à 360° autour du joueur (1,8 m) prolongé par le vent.",
+  "valeurs": "16 ; recul 0,8 m ; délai 1,6 s",
+  "visuel": "Arc complet en 4 frames, poussière rabattue vers l'extérieur.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_083",
+  "nom": "Courant ascendant",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_FUTON",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Marque le sol ; les ennemis au-dessus sont projetés en l'air 1 s (inactifs, +20 % dégâts des projectiles).",
+  "valeurs": "14 ; rayon 2 m ; en l'air 1 s ; délai d'impact 0,5 s ; délai 5 s",
+  "visuel": "Spirale au sol puis colonne ascendante, cibles surélevées de 12 px avec ombre au sol.",
+  "acces": "ELEM_FUTON",
+  "limites": "Boss : Vulnérable +5 % au lieu d'être soulevés."
+ },
+ {
+  "id": "JUT_084",
+  "nom": "Voile de feuilles tranchantes",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "aucune",
+  "comportement": "12 feuilles partent en spirale à 360° autour du joueur.",
+  "valeurs": "6 par feuille ; délai 2,0 s ; vitesse 9 m/s ; portée 7 m",
+  "visuel": "Feuilles vertes de 4 px à contour sombre qui pivotent en vol (4 frames).",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_085",
+  "nom": "Bouclier de vent",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_FUTON",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Toutes les 6 s, une bulle de vent de 2 m renvoie pendant 1 s les projectiles ennemis ordinaires vers leur tireur.",
+  "valeurs": "Projectile renvoyé : ses dégâts ×2 contre les ennemis ; délai 6 s",
+  "visuel": "Sphère striée de lignes courbes, projectiles renvoyés recolorés en couleur alliée.",
+  "acces": "ELEM_FUTON",
+  "limites": "Ne renvoie pas les attaques de boss télégraphiées."
+ },
+ {
+  "id": "JUT_086",
+  "nom": "Croix de vent",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_FUTON",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "0,3 s après le signe, deux tailles se croisent en X sur la cible (5 m chacune).",
+  "valeurs": "2 × 22 ; délai 2,4 s",
+  "visuel": "Deux traits blancs successifs, étincelle au centre de la croix.",
+  "acces": "ELEM_FUTON",
+  "limites": "Cible au centre touchée deux fois."
+ },
+ {
+  "id": "JUT_087",
+  "nom": "Œil du cyclone",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_FUTON",
+   "MOBILE"
+  ],
+  "cible": "aucune",
+  "comportement": "Zone de 3 m centrée sur le joueur : projectiles ennemis ralentis de 60 %, ennemis ralentis de 20 %.",
+  "valeurs": "4 par tick de 0,5 s ; durée 4 s ; délai 12 s",
+  "visuel": "Anneau de vent à la limite, calme visuel à l'intérieur.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_088",
+  "nom": "Disque tranchant",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_FUTON",
+   "REBOND",
+   "PERCANT"
+  ],
+  "cible": "direction",
+  "comportement": "Disque de vent fin qui perce et ricoche sur les obstacles du décor jusqu'à 5 fois.",
+  "valeurs": "15 ; 5 ricochets sur décor ; vitesse 12 m/s ; délai 2,0 s",
+  "visuel": "Anneau aplati en rotation 2 frames, étincelle blanche à chaque ricochet.",
+  "acces": "ELEM_FUTON",
+  "limites": "Ricoche sur le décor uniquement ; sans décor, disparaît à 12 m."
+ },
+ {
+  "id": "JUT_089",
+  "nom": "Poussière aveuglante",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "CONE",
+  "tags": [
+   "E_FUTON",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Soulève un cône de poussière de 70° qui Aveugle 2 s.",
+  "valeurs": "6 ; Aveuglé 2 s ; portée 4,5 m ; délai 4,0 s",
+  "visuel": "Nuage ocre en tramage, particules lourdes qui retombent.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_090",
+  "nom": "Couloir de vent",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_FUTON",
+   "PERSISTANT"
+  ],
+  "cible": "direction",
+  "comportement": "Couloir de 8 × 2 m dans la direction de course : +30 % vitesse du joueur et des projectiles alliés dedans ; les ennemis sont poussés sur les côtés.",
+  "valeurs": "5 par tick de 0,5 s ; durée 5 s ; délai 10 s",
+  "visuel": "Lignes de flux parallèles animées, herbes couchées.",
+  "acces": "ELEM_FUTON",
+  "limites": "Ne déplace jamais le joueur : bonus de vitesse uniquement."
+ },
+ {
+  "id": "JUT_091",
+  "nom": "Fūton — Shinkū Renpa (Salves de vide en étoile)",
+  "statut": "AV",
+  "famille": "FUTON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "aucune",
+  "comportement": "5 tirs d'air dans 5 directions fixes en étoile, pivotant de 36° à chaque salve.",
+  "valeurs": "14 ; délai 1,1 s ; vitesse 14 m/s ; portée 8 m",
+  "visuel": "Étoile de traits blancs, rotation lisible salve après salve.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_092",
+  "nom": "Rafale arrière",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "CONE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "aucune",
+  "comportement": "Couvre l'arrière : cône de 90° sur 4 m opposé à la direction de course.",
+  "valeurs": "18 ; recul 1,5 m ; délai 1,6 s",
+  "visuel": "Éventail de lignes de vent vers l'arrière, cape/vêtements soulevés.",
+  "acces": "ELEM_FUTON",
+  "limites": "À l'arrêt : dirigé vers l'ennemi le plus proche derrière."
+ },
+ {
+  "id": "JUT_093",
+  "nom": "Tourbillon de feuilles",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "aucune",
+  "comportement": "Spirale de feuilles qui s'éloigne jusqu'à 4 m puis revient au joueur (orbite pulsée).",
+  "valeurs": "5 par feuille ; 10 feuilles ; cycle 2 s ; durée 6 s ; délai 8 s",
+  "visuel": "Feuilles en double hélice, densité qui respire avec le cycle.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_094",
+  "nom": "Coupe-vent dissimulé",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "chemin",
+  "comportement": "Mines de vent quasi invisibles (contour visible pour le joueur) qui déchiquettent à 2 m et appliquent 2 Entaillé.",
+  "valeurs": "24 ; rayon 2 m ; max 3 ; délai 3,5 s",
+  "visuel": "Tourbillon minuscule en boucle, visible au joueur par un contour pointillé allié.",
+  "acces": "ELEM_FUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_095",
+  "nom": "Vent arrière",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "direction",
+  "comportement": "Toutes les 4 s, une onde part de derrière le joueur vers l'avant : les projectiles alliés qu'elle rattrape gagnent +20 % de vitesse et +1 perce.",
+  "valeurs": "8 aux ennemis ; délai 4 s ; portée 10 m",
+  "visuel": "Front de vent transparent à lignes longues, projectiles alliés dotés d'une traînée blanche.",
+  "acces": "ELEM_FUTON",
+  "limites": "Un projectile ne reçoit le bonus qu'une fois."
+ },
+ {
+  "id": "JUT_096",
+  "nom": "Faucille stationnaire",
+  "statut": "CO",
+  "famille": "FUTON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Faucille de vent lancée à 5 m qui s'arrête et tourne sur place 2 s (broyeur), puis revient.",
+  "valeurs": "6 par tick de 0,25 s ; rayon 1,2 m ; délai 4,5 s",
+  "visuel": "Faucille à 3 frames de rotation, gerbes de feuilles hachées.",
+  "acces": "ELEM_FUTON",
+  "limites": "Max 2 faucilles."
+ },
+ {
+  "id": "JUT_097",
+  "nom": "Doton — Doryūheki (Mur de terre)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_DOTON",
+   "PERSISTANT",
+   "TERRAIN"
+  ],
+  "cible": "aucune",
+  "comportement": "Élève un mur incurvé de 4 m derrière le joueur qui bloque ennemis et projectiles ordinaires ; les ennemis doivent le contourner.",
+  "valeurs": "15 à l'émergence ; PV du mur 150 ; durée 5 s ; délai 10 s",
+  "visuel": "Mur de 3 strates de pierre (ombre marquée au sol), éclats à l'émergence, fissures selon les PV.",
+  "acces": "ELEM_DOTON",
+  "limites": "Jamais placé à < 2 m d'un obstacle : ne peut pas enfermer le joueur."
+ },
+ {
+  "id": "JUT_098",
+  "nom": "Doton — Doryūdan (Balles du dragon de terre)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_DOTON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Une tête de dragon de terre émerge 1 s et crache 3 boulets de boue en cloche.",
+  "valeurs": "3 × 24 ; rayon d'impact 1,3 m ; Ensablé +1 ; délai 3,6 s",
+  "visuel": "Tête de dragon rocheuse de 24 px, boulets bruns à éclaboussures.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_099",
+  "nom": "Doton — Yomi Numa (Marais des enfers)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_DOTON",
+   "CONTROLE",
+   "TERRAIN",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Transforme 4 m de sol en marécage : ralentit de 60 % ; les ennemis ordinaires sous 20 % de PV sont engloutis.",
+  "valeurs": "6 par tick de 0,5 s ; durée 4 s ; délai 11 s",
+  "visuel": "Sol brun-violet ondulant, bulles, silhouettes qui s'enfoncent de 4 px par frame.",
+  "acces": "ELEM_DOTON",
+  "limites": "Engloutissement : ordinaires seulement ; élites ralenties de 30 %."
+ },
+ {
+  "id": "JUT_100",
+  "nom": "Doton — Shinjū Zanshu (Décapitation par la terre)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_DOTON",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "La cible est aspirée dans le sol jusqu'au cou 1,5 s ; le prochain coup reçu est ×1,5.",
+  "valeurs": "20 ; Entravé 1,5 s ; délai d'impact 0,4 s ; délai 4,0 s",
+  "visuel": "Mains de terre qui jaillissent (3 frames), cible réduite à sa tête au ras du sol.",
+  "acces": "ELEM_DOTON",
+  "limites": "Boss : Vulnérable +10 % 1,5 s au lieu d'être enfoui."
+ },
+ {
+  "id": "JUT_101",
+  "nom": "Doton — Doryū Taiga (Rivière de terre)",
+  "statut": "AV",
+  "famille": "DOTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_DOTON",
+   "PERSISTANT"
+  ],
+  "cible": "direction",
+  "comportement": "Coulée de boue de 8 × 2,5 m qui emporte les ennemis ordinaires loin du joueur.",
+  "valeurs": "5 par tick de 0,5 s ; courant 2,5 m/s ; durée 3 s ; délai 9 s",
+  "visuel": "Flots bruns en bandes animées vers l'extérieur, rochers roulants.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_102",
+  "nom": "Doton — Kajūgan (Roche alourdie)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_DOTON",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Alourdit une cible (−50 % vitesse) puis l'écrase au sol 1 s plus tard avec une onde de 2 m.",
+  "valeurs": "Écrasement 55 ; onde 20 ; délai 5,0 s",
+  "visuel": "Glyphes en cube sur la cible, cible qui s'aplatit (squash 3 frames), cratère.",
+  "acces": "ELEM_DOTON+CHR_069",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_103",
+  "nom": "Doton — Dorōdomu (Dôme de terre)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_DOTON",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Un dôme de terre se forme 1 s autour du joueur (bloque les projectiles, n'entrave pas son déplacement) puis éclate en fragments.",
+  "valeurs": "Fragments 26 (r 3 m) ; délai 12 s",
+  "visuel": "Dôme translucide de pierre (contour épais, intérieur à 40 % d'opacité), éclatement en 12 fragments.",
+  "acces": "ELEM_DOTON",
+  "limites": "Le dôme suit le joueur ; ne bloque pas les attaques de boss télégraphiées."
+ },
+ {
+  "id": "JUT_104",
+  "nom": "Doton — Doryō Dango (Boulette-mausolée)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_DOTON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Soulève un énorme rocher et le lance en cloche ; il roule 4 m après l'impact en écrasant tout.",
+  "valeurs": "Impact 50 (r 2 m) ; roulement 20 ; délai 7,0 s",
+  "visuel": "Rocher de 32 px, ombre qui grossit à l'approche, poussière en roulant.",
+  "acces": "ELEM_DOTON",
+  "limites": "1 rocher actif."
+ },
+ {
+  "id": "JUT_105",
+  "nom": "Ligne de pics",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_DOTON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Série de pics qui jaillissent en ligne vers la cible sur 7 m, l'un après l'autre.",
+  "valeurs": "22 par pic ; 7 pics ; écart 0,06 s ; délai 2,4 s",
+  "visuel": "Pics anguleux gris-brun, fissure en zigzag reliant les pics.",
+  "acces": "ELEM_DOTON",
+  "limites": "1 touche par cible par ligne."
+ },
+ {
+  "id": "JUT_106",
+  "nom": "Séisme en deux temps",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "ONDE",
+  "tags": [
+   "E_DOTON",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Onde au sol de 5 m qui étourdit 0,5 s les ordinaires, suivie 1 s plus tard d'une réplique plus forte.",
+  "valeurs": "12 puis 24 ; délai 6 s",
+  "visuel": "Anneau de fissures, sol légèrement décalé de 1 px (pas de secousse caméra), poussière.",
+  "acces": "ELEM_DOTON",
+  "limites": "Étourdissement : ordinaires uniquement."
+ },
+ {
+  "id": "JUT_107",
+  "nom": "Poing de pierre",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_DOTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Coup de poing lent et très lourd en cône de 2 m ; fort recul.",
+  "valeurs": "46 ; recul 3 m ; délai 2,2 s",
+  "visuel": "Anticipation 3 frames, poing couvert de roche ×1,5, poussière en éventail, ennemis déformés 2 frames.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_108",
+  "nom": "Galets en orbite",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_DOTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "3 gros galets orbitent lentement ; toutes les 5 s, le plus avancé est projeté vers une cible puis se reforme.",
+  "valeurs": "Contact 10 ; projection 30 ; rotation 1 tour/2,5 s ; permanente",
+  "visuel": "Galets de 8 px ombrés, reformation par agrégation de poussière.",
+  "acces": "ELEM_DOTON",
+  "limites": "Quantité : +1 galet (max 5)."
+ },
+ {
+  "id": "JUT_109",
+  "nom": "Sables mouvants",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_DOTON",
+   "CONTROLE"
+  ],
+  "cible": "chemin",
+  "comportement": "Fosses sur le trajet des ennemis : le premier qui tombe est Entravé 2 s, ceux qui le suivent trébuchent (0,3 s).",
+  "valeurs": "14 ; Entravé 2 s ; max 3 ; délai 4,0 s",
+  "visuel": "Cercle de sable qui tourbillonne légèrement, contour allié discret.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_110",
+  "nom": "Doton — Doroku Gaeshi (Rempart retourné)",
+  "statut": "AV",
+  "famille": "DOTON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_DOTON"
+  ],
+  "cible": "direction",
+  "comportement": "Soulève une dalle de 4 × 2 m devant le joueur (bloque 0,8 s) puis la rabat sur les ennemis.",
+  "valeurs": "40 ; délai 5,0 s",
+  "visuel": "Dalle qui pivote en 4 frames, ombre projetée qui annonce la zone d'impact.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_111",
+  "nom": "Doton — Domu (Durcissement)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_DOTON",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Toutes les 8 s, la peau durcit 3 s : +8 Armure et chaque ennemi qui touche le joueur au contact subit un contre-coup.",
+  "valeurs": "Contre-coup 24 ; Armure +8 pendant 3 s ; délai 8 s",
+  "visuel": "Peau grisée par un motif de pierre (palette), craquement sonore.",
+  "acces": "ELEM_DOTON+APT_CORPS|ELEM_DOTON+CHR_069",
+  "limites": "Armure totale toujours plafonnée à 15."
+ },
+ {
+  "id": "JUT_112",
+  "nom": "Colonne de roche",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_DOTON",
+   "TERRAIN"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Fait surgir une colonne sous la cible puis la laisse 5 s comme obstacle ; les chargeurs qui la heurtent sont étourdis 1 s.",
+  "valeurs": "32 ; délai d'impact 0,5 s ; délai 4,5 s",
+  "visuel": "Colonne octogonale de 16 × 32 px, éclats à la base.",
+  "acces": "ELEM_DOTON",
+  "limites": "Max 3 colonnes ; jamais à < 2 m du joueur."
+ },
+ {
+  "id": "JUT_113",
+  "nom": "Boue collante",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "SALVE",
+  "tags": [
+   "E_DOTON",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "3 boules de boue qui appliquent chacune Ensablé (embourbé) +1 ; 3 cumuls = Enseveli.",
+  "valeurs": "8 ; délai 1,4 s ; vitesse 9 m/s",
+  "visuel": "Boules brunes molles (squash à l'impact), traces sur la cible.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_114",
+  "nom": "Doton — Kekkai Dorōdōmu (Dôme absorbant)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_DOTON",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Recouvre un groupe d'un dôme de 3 m qui draine : dégâts aux ennemis dedans et +1 chakra par ennemi et par seconde.",
+  "valeurs": "6 par tick de 0,5 s ; durée 4 s ; délai 14 s ; chakra max 6/s",
+  "visuel": "Dôme opaque à 50 % avec lignes de drainage vers le joueur.",
+  "acces": "ELEM_DOTON",
+  "limites": "Soumis au plafond global de gain de chakra (12/s)."
+ },
+ {
+  "id": "JUT_115",
+  "nom": "Doton — Gōremu no Jutsu (Golem de roche)",
+  "statut": "AV",
+  "famille": "DOTON",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_DOTON",
+   "UNITE_ALLIEE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un golem lent marche vers les groupes et frappe le sol (onde de 2 m) ; attire les ennemis au contact.",
+  "valeurs": "Frappe 30 ; intervalle 1,5 s ; durée 10 s ; délai 16 s",
+  "visuel": "Golem de 32 px en blocs, marche 4 frames lourde, poussière à chaque pas.",
+  "acces": "ELEM_DOTON+CHR_069",
+  "limites": "1 golem ; héritage type ANIMAL (§R9)."
+ },
+ {
+  "id": "JUT_116",
+  "nom": "Onde de gravier",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "CONE",
+  "tags": [
+   "E_DOTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Décharge de 10 graviers à courte portée ; plus la cible est proche, plus elle en reçoit.",
+  "valeurs": "10 × 5 ; angle 40° ; portée 3,5 m ; délai 1,5 s",
+  "visuel": "Graviers angulaires de 2 px, traînées courtes, poussière.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_117",
+  "nom": "Faille",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "RAYON",
+  "tags": [
+   "E_DOTON",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Ouvre une fissure de 8 m qui reste 2 s ; les ennemis qui la franchissent tombent un instant (0,4 s) et subissent des dégâts.",
+  "valeurs": "Ouverture 20 ; franchissement 12 ; délai 4,0 s",
+  "visuel": "Fente noire à bords éclairés, fragments qui tombent dedans.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_118",
+  "nom": "Rocher rebondissant",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_DOTON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Rocher lancé qui rebondit 3 fois au sol ; chaque rebond frappe en zone.",
+  "valeurs": "22 par rebond (r 1,2 m) ; bond 2,5 m ; délai 3,0 s",
+  "visuel": "Rocher rond, ombre au sol qui suit les bonds, cratère à chaque rebond.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_119",
+  "nom": "Onde tellurique en chaîne",
+  "statut": "CO",
+  "famille": "DOTON",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_DOTON",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Un choc court dans le sol de cible en cible (fissure visible entre elles) et étourdit 0,2 s.",
+  "valeurs": "20 ; 4 sauts ; portée 3 m ; −10 %/saut ; délai 2,2 s",
+  "visuel": "Fissure tracée en 3 frames entre les cibles, éclats sous les pieds.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_120",
+  "nom": "Doton — Chōkeijūgan (Roche ultra-légère)",
+  "statut": "OA",
+  "famille": "DOTON",
+  "livraison": "ZONE",
+  "tags": [
+   "E_DOTON"
+  ],
+  "cible": "aucune",
+  "comportement": "Allège les ennemis dans 4 m : pendant 3 s, tout coup les repousse 3 fois plus loin.",
+  "valeurs": "0 ; recul ×3 ; durée 3 s ; délai 10 s",
+  "visuel": "Glyphes cubiques flottants, ennemis décollés de 2 px avec ombre plus claire.",
+  "acces": "ELEM_DOTON+CHR_069",
+  "limites": "Élites : ×1,5 ; boss : aucun effet (Vulnérable +5 %)."
+ },
+ {
+  "id": "JUT_121",
+  "nom": "Mokuton — Jukai Kōtan (Naissance de la forêt)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_MOKUTON",
+   "TERRAIN",
+   "CONTROLE",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Des arbres jaillissent sur 5 m, Entravent 1,5 s et laissent une surface BOIS qui ralentit de 25 %.",
+  "valeurs": "30 à l'émergence ; 4 par tick de 0,5 s ; durée 5 s ; délai 12 s",
+  "visuel": "Troncs qui poussent en 4 frames avec branches en spirale, feuillage sombre à contour vert clair.",
+  "acces": "KG_MOKUTON",
+  "limites": "Surface BOIS : brûlable (§B8.4)."
+ },
+ {
+  "id": "JUT_122",
+  "nom": "Mokuton — Mokujōheki (Rempart de bois)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_MOKUTON",
+   "BOUCLIER",
+   "TERRAIN"
+  ],
+  "cible": "aucune",
+  "comportement": "Dôme de bois partiel (demi-cercle ouvert vers l'avant) qui bloque projectiles et ennemis par l'arrière 4 s.",
+  "valeurs": "PV du rempart 250 ; 10 aux ennemis qui le frappent ; délai 14 s",
+  "visuel": "Planches courbes entrelacées, ouverture nette vers l'avant, éclats de bois à l'impact.",
+  "acces": "KG_MOKUTON",
+  "limites": "Toujours ouvert sur 120° : ne peut enfermer le joueur."
+ },
+ {
+  "id": "JUT_123",
+  "nom": "Mokuton — Shichūrō (Prison à quatre piliers)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_MOKUTON",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Une cage de bois tombe sur la cible la plus menaçante et son entourage (r 2 m) : immobilisés 2 s.",
+  "valeurs": "25 ; Entravé 2 s ; délai d'impact 0,5 s ; délai 8 s",
+  "visuel": "Cage carrée de 32 px qui chute (ombre annonciatrice), barreaux épais.",
+  "acces": "KG_MOKUTON",
+  "limites": "Contrôle soumis à la résistance des boss."
+ },
+ {
+  "id": "JUT_124",
+  "nom": "Mokuton — Sashiki no Jutsu (Pieux de bois)",
+  "statut": "AV",
+  "famille": "RARE",
+  "livraison": "SALVE",
+  "tags": [
+   "E_MOKUTON",
+   "PERCANT"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Le bras se ramifie en 5 pieux qui s'allongent vers des cibles différentes et percent 2 ennemis.",
+  "valeurs": "18 par pieu ; portée 7 m ; délai 1,8 s",
+  "visuel": "Tiges de bois qui poussent en segments depuis le bras, pointes claires.",
+  "acces": "KG_MOKUTON",
+  "limites": "Obstacles hauts arrêtent les pieux."
+ },
+ {
+  "id": "JUT_125",
+  "nom": "Mokuton — Kajukai Kōrin (Avènement du monde des arbres en fleurs)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_MOKUTON",
+   "CONTROLE",
+   "PERSISTANT"
+  ],
+  "cible": "aucune",
+  "comportement": "Des fleurs éclosent sur 6 m autour du joueur ; leur pollen endort les ordinaires (Étourdi 2 s, réveillés par les dégâts).",
+  "valeurs": "0 ; Étourdi 2 s ; durée 5 s ; délai 18 s",
+  "visuel": "Fleurs blanches de 6 px qui s'ouvrent en vague, pollen doré en particules lentes.",
+  "acces": "KG_MOKUTON",
+  "limites": "Élites : ralenties 40 % ; boss : Vulnérable +10 %."
+ },
+ {
+  "id": "JUT_126",
+  "nom": "Mokuton — Mokuryū no Jutsu (Dragon de bois)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_MOKUTON",
+   "PERCANT",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Dragon de bois qui serpente à travers les groupes, perce tout et enserre la dernière cible 1,5 s.",
+  "valeurs": "34 ; vitesse 7 m/s ; portée 14 m ; délai 7 s",
+  "visuel": "Corps en anneaux de bois de 48 px de long, tête sculptée, copeaux en traîne.",
+  "acces": "KG_MOKUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_127",
+  "nom": "Hyōton — Makyō Hyōshō (Miroirs de glace démoniaques)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_HYOTON",
+   "PERSISTANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Dresse 6 miroirs en cercle (r 2,5 m) autour d'un groupe ; des aiguilles fusent de miroir en miroir à travers le cercle.",
+  "valeurs": "6 par aiguille ; 12 aiguilles/s ; durée 3 s ; Refroidi +1 ; délai 10 s",
+  "visuel": "Miroirs rectangulaires bleu pâle à reflet animé, aiguilles blanches en traits croisés.",
+  "acces": "KG_HYOTON",
+  "limites": "1 cercle actif ; les ennemis peuvent sortir entre les miroirs (0,8 m)."
+ },
+ {
+  "id": "JUT_128",
+  "nom": "Hyōton — Sensatsu Hyōshō (Mille aiguilles de glace)",
+  "statut": "AV",
+  "famille": "RARE",
+  "livraison": "SALVE",
+  "tags": [
+   "E_HYOTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Salve de 10 aiguilles de glace en éventail étroit ; chaque touche Refroidit.",
+  "valeurs": "5 ; Refroidi +1 ; délai 1,2 s ; vitesse 16 m/s",
+  "visuel": "Aiguilles translucides à pointe blanche, givre sur la cible.",
+  "acces": "KG_HYOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_129",
+  "nom": "Prison de givre",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_HYOTON",
+   "CONTROLE"
+  ],
+  "cible": "chemin",
+  "comportement": "Fleurs de givre au sol ; un ennemi qui marche dessus est Gelé 1,5 s et la glace éclate en éclats (r 1,5 m).",
+  "valeurs": "Éclats 20 ; Gelé 1,5 s ; max 4 ; délai 3,0 s",
+  "visuel": "Rosace de givre à 6 branches, éclatement cristallin.",
+  "acces": "KG_HYOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_130",
+  "nom": "Hyōton — Tsubame Fubuki (Blizzard d'hirondelles)",
+  "statut": "AV",
+  "famille": "RARE",
+  "livraison": "SALVE",
+  "tags": [
+   "E_HYOTON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "8 hirondelles de glace qui décrivent une courbe large avant de plonger ; Refroidi +1.",
+  "valeurs": "11 ; délai 2,4 s ; vitesse 10 m/s",
+  "visuel": "Oiseaux de glace de 8 px à ailes en 2 frames, traînée de neige.",
+  "acces": "KG_HYOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_131",
+  "nom": "Sabaku Kyū (Cercueil de sable)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_SABLE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Le sable enveloppe la cible 1 s (immobile), puis se referme.",
+  "valeurs": "Enveloppe 0 ; broyage 45 ; délai d'impact 1,0 s ; délai 3,5 s ; Ensablé +3 aux voisins à 1,5 m",
+  "visuel": "Flux granulaire qui grimpe en spirale sur la cible (5 frames), fermeture en poing.",
+  "acces": "KG_SABLE",
+  "limites": "Boss : pas d'immobilisation (Vulnérable +10 % 2 s)."
+ },
+ {
+  "id": "JUT_132",
+  "nom": "Sabaku Sōsō (Enterrement dans le sable)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SABLE",
+   "CONTROLE"
+  ],
+  "cible": "marque",
+  "comportement": "Suite : écrase dans un rayon de 2,5 m toute cible Ensevelie ou enveloppée ; sans cible admissible, frappe le groupe le plus dense à 50 %.",
+  "valeurs": "70 (35 sans cible admissible) ; délai 5,0 s",
+  "visuel": "Sable qui se contracte en sphère puis implose, onde de grains.",
+  "acces": "KG_SABLE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_133",
+  "nom": "Suna Shigure (Averse de sable)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_SABLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Des balles de sable tombent du ciel sur 4 m pendant 2 s.",
+  "valeurs": "8 par balle ; 16 balles ; Ensablé +1 ; délai 6 s",
+  "visuel": "Grains agglomérés à ombre au sol, impacts en éclaboussure de sable.",
+  "acces": "KG_SABLE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_134",
+  "nom": "Suna no Tate (Bouclier de sable)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_SABLE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Un flux de sable intercepte automatiquement le prochain coup reçu (1 charge toutes les 4 s) et contre-frappe l'agresseur.",
+  "valeurs": "Absorbe 100 % d'un coup ≤ 30 dégâts (50 % au-delà) ; contre 15 ; recharge 4 s",
+  "visuel": "Ruban de sable qui tourne près du joueur et jaillit en paroi à l'impact.",
+  "acces": "KG_SABLE",
+  "limites": "Max 2 charges (+1 via Quantité)."
+ },
+ {
+  "id": "JUT_135",
+  "nom": "Ryūsa Bakuryū (Cascade de sable)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ONDE",
+  "tags": [
+   "E_SABLE",
+   "TERRAIN",
+   "CONTROLE"
+  ],
+  "cible": "direction",
+  "comportement": "Raz-de-marée de sable qui avance sur 8 m, submerge et laisse une surface SABLE (Ensablé +1/s).",
+  "valeurs": "38 ; recul 2 m ; délai 12 s ; surface SABLE 5 s",
+  "visuel": "Vague de sable à crête granuleuse, grains qui ruissellent.",
+  "acces": "KG_SABLE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_136",
+  "nom": "Jiton — Satetsu Shigure (Bruine de sable de fer)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "SALVE",
+  "tags": [
+   "E_JITON",
+   "PERCANT"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Salve de 12 aiguilles de sable de fer qui perce 2 cibles et Aimante.",
+  "valeurs": "7 ; perce 2 ; Aimanté ; délai 1,6 s",
+  "visuel": "Particules noires à reflet métallique violet, contour clair pour la lisibilité.",
+  "acces": "KG_JITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_137",
+  "nom": "Jiton — Satetsu Kaihō (Libération du sable de fer)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_JITON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Le sable de fer se rassemble en sphère au-dessus d'un groupe puis explose en pointes dans toutes les directions.",
+  "valeurs": "40 ; rayon 3 m ; délai 6 s",
+  "visuel": "Sphère hérissée qui se forme en 4 frames, pointes radiales noires.",
+  "acces": "KG_JITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_138",
+  "nom": "Jiton — Sakin Kaihō (Libération de la poudre d'or)",
+  "statut": "AV",
+  "famille": "RARE",
+  "livraison": "ONDE",
+  "tags": [
+   "E_JITON",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Onde de poudre d'or lourde qui alourdit : ralentit de 40 % 2 s et Aimante vers le joueur (puis repoussés à 1 m).",
+  "valeurs": "18 ; rayon 5 m ; délai 7 s",
+  "visuel": "Poussière dorée dense à reflets, retombée lourde (particules qui tombent vite).",
+  "acces": "KG_JITON",
+  "limites": "Attraction jamais à moins de 1 m du joueur."
+ },
+ {
+  "id": "JUT_139",
+  "nom": "Noyau magnétique",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_JITON",
+   "ATTRACTION",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Plante un noyau qui attire les ennemis Aimantés et les ordinaires (r 4 m), puis explose au bout de 3 s.",
+  "valeurs": "Explosion 36 ; attraction 1,5 m/s ; délai 8 s",
+  "visuel": "Octaèdre noir en rotation, lignes de champ en pointillés.",
+  "acces": "KG_JITON",
+  "limites": "1 noyau."
+ },
+ {
+  "id": "JUT_140",
+  "nom": "Shakuton — Kajōsatsu (Mort par évaporation)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SHAKUTON"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Orbe brûlant qui se colle à la cible et l'assèche : dégâts continus croissants (+15 %/s) 4 s.",
+  "valeurs": "8 → 14 par s ; délai 3,0 s ; vitesse 7 m/s",
+  "visuel": "Sphère orange-blanc à anneau de vapeur, cible qui pâlit progressivement.",
+  "acces": "KG_SHAKUTON",
+  "limites": "1 orbe par cible."
+ },
+ {
+  "id": "JUT_141",
+  "nom": "Constellation brûlante",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_SHAKUTON"
+  ],
+  "cible": "aucune",
+  "comportement": "3 orbes de chaleur tournent autour du joueur ; toutes les 3 s, un orbe se détache vers une cible et est remplacé.",
+  "valeurs": "Contact 8 ; projection 22 + Brûlure +2 ; permanente",
+  "visuel": "Orbes à cœur blanc et anneau de vapeur, trajectoire d'éjection en arc.",
+  "acces": "KG_SHAKUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_142",
+  "nom": "Évaporation",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_SHAKUTON",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Zone de chaleur sèche (3 m) : dégâts ×1,5 contre les cibles Trempées (qui perdent leur état) et crée de la Vapeur.",
+  "valeurs": "7 par tick de 0,5 s ; durée 4 s ; délai 8 s",
+  "visuel": "Distorsion thermique en tramage, vapeur blanche au-dessus des cibles.",
+  "acces": "KG_SHAKUTON",
+  "limites": "Consomme Trempé : anti-synergie documentée avec SYN_001 (affichée sur la carte)."
+ },
+ {
+  "id": "JUT_143",
+  "nom": "Yōton — Yōkai no Jutsu (Crachat de lave)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "SALVE",
+  "tags": [
+   "E_YOTON",
+   "TERRAIN"
+  ],
+  "cible": "plus_dense",
+  "comportement": "3 globes de lave en cloche ; à l'impact, flaque de LAVE 3 s qui Corrode.",
+  "valeurs": "20 ; flaque 6 par tick de 0,5 s ; Corrodé ; délai 2,8 s",
+  "visuel": "Globes rouge sombre à croûte noire, flaques incandescentes qui noircissent en bord.",
+  "acces": "KG_YOTON",
+  "limites": "Max 6 flaques."
+ },
+ {
+  "id": "JUT_144",
+  "nom": "Mur de lave",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_YOTON",
+   "PERSISTANT"
+  ],
+  "cible": "direction",
+  "comportement": "Coulée transversale de 6 m devant le joueur qui ralentit de 30 % et Corrode ceux qui la traversent.",
+  "valeurs": "10 par tick de 0,5 s ; durée 4 s ; délai 9 s",
+  "visuel": "Bande de lave à croûte craquelée, bulles qui éclatent.",
+  "acces": "KG_YOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_145",
+  "nom": "Golem de magma",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_YOTON",
+   "UNITE_ALLIEE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Une créature de magma sort du sol, avance et laisse une traînée de lave ; explose à la fin.",
+  "valeurs": "Frappe 18 ; traînée 4 par tick ; explosion 40 ; durée 8 s ; délai 16 s",
+  "visuel": "Masse informe de 20 px, croûte qui se fend en marchant.",
+  "acces": "KG_YOTON",
+  "limites": "1 unité ; héritage ANIMAL."
+ },
+ {
+  "id": "JUT_146",
+  "nom": "Pluie de scories",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_YOTON"
+  ],
+  "cible": "aleatoire_pondere",
+  "comportement": "Des scories retombent sur 5 m ; chaque impact laisse une petite flaque qui Corrode.",
+  "valeurs": "14 par impact ; 6 impacts ; délai 5 s",
+  "visuel": "Morceaux noirs à fissures rouges, fumée noire courte.",
+  "acces": "KG_YOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_147",
+  "nom": "Bakuton — C1 (Araignées et oiseaux d'argile)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_BAKUTON",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_proche",
+  "comportement": "3 petites créatures d'argile marchent ou volent vers des cibles et explosent ; une créature ratée se colle au sol (mine 4 s).",
+  "valeurs": "20 (r 1,3 m) ; délai 1,6 s ; vitesse 7 m/s",
+  "visuel": "Araignées et oiseaux blancs de 6 px, explosion à signe « Katsu » stylisé (pas de texte), nuage blanc-orange.",
+  "acces": "KG_BAKUTON",
+  "limites": "Max 6 mines au sol."
+ },
+ {
+  "id": "JUT_148",
+  "nom": "Bakuton — C2 (Dragon d'argile)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_BAKUTON",
+   "UNITE_ALLIEE",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un dragon d'argile survole le champ et crache des bombes sur les groupes, puis explose à la fin de sa durée.",
+  "valeurs": "Bombe 26 (r 1,5 m) toutes les 1,2 s ; explosion finale 50 ; durée 9 s ; délai 20 s",
+  "visuel": "Dragon blanc de 40 px sans pattes, bombes en gouttes qui tombent (ombre).",
+  "acces": "KG_BAKUTON",
+  "limites": "1 dragon ; héritage ANIMAL."
+ },
+ {
+  "id": "JUT_149",
+  "nom": "Bakuton — C3 (Grande bombe)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_BAKUTON",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Grande figure d'argile qui tombe et grossit 1,5 s avant d'exploser très largement.",
+  "valeurs": "110 ; rayon 5 m ; délai 18 s",
+  "visuel": "Statuette de 24 px qui gonfle à 64 px, détonation en dôme à 5 couches (pas de flash plein écran).",
+  "acces": "KG_BAKUTON",
+  "limites": "Micro-pause locale uniquement."
+ },
+ {
+  "id": "JUT_150",
+  "nom": "Bakuton — C4 Karura (Nuage de nano-bombes)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_BAKUTON",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un nuage invisible (visible au joueur par un tramage allié) se répand sur 4 m ; les ennemis dedans se désintègrent progressivement.",
+  "valeurs": "12 par tick de 0,5 s, ignore 50 % de la résistance ; durée 4 s ; délai 22 s",
+  "visuel": "Tramage pointillé allié, désintégration en pixels qui s'éparpillent (particules décoratives).",
+  "acces": "KG_BAKUTON+CHR_036",
+  "limites": "Réservé à Deidara Artiste aérien."
+ },
+ {
+  "id": "JUT_151",
+  "nom": "Ranton — Rēzā Sākasu (Cirque laser)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "SALVE",
+  "tags": [
+   "E_RANTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "8 faisceaux lumineux qui zigzaguent et rebondissent chacun une fois sur une nouvelle cible.",
+  "valeurs": "12 ; 1 rebond ; délai 2,0 s ; vitesse 18 m/s",
+  "visuel": "Faisceaux blanc-cyan à angles vifs, halo en nuage gris.",
+  "acces": "KG_RANTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_152",
+  "nom": "Cage d'orage",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_RANTON",
+   "E_SUITON",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Nuage d'orage bas de 3 m : pluie (Trempé) et arcs internes ; compte comme Suiton et Raiton pour les synergies.",
+  "valeurs": "8 par tick de 0,5 s ; durée 4 s ; délai 10 s",
+  "visuel": "Nuage gris-bleu bas, pluie oblique, arcs horizontaux.",
+  "acces": "KG_RANTON",
+  "limites": "Déclenche SYN_001 au plus 1 fois/s."
+ },
+ {
+  "id": "JUT_153",
+  "nom": "Lance d'orage",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "RAYON",
+  "tags": [
+   "E_RANTON",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Faisceau qui se courbe vers les cibles Trempées dans un cône de 30°.",
+  "valeurs": "36 ; longueur 11 m ; délai 3,2 s",
+  "visuel": "Faisceau courbe à cœur blanc, bords pluvieux.",
+  "acces": "KG_RANTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_154",
+  "nom": "Enton — Kagutsuchi no Tsurugi (Lame de flammes noires)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_ENTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Épée de flammes noires qui frappe en arc de 160° (2,5 m) et applique une Brûlure noire (compte double).",
+  "valeurs": "30 ; Brûlure +2 (noire : dégâts ×2) ; délai 1,6 s",
+  "visuel": "Lame noire à liseré rouge et contour blanc 1 px pour rester lisible sur fond sombre.",
+  "acces": "KG_ENTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_155",
+  "nom": "Enton — Kagutsuchi (Pointes de flammes noires)",
+  "statut": "AV",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_ENTON"
+  ],
+  "cible": "marque",
+  "comportement": "Les flammes noires présentes sur une cible jaillissent en pointes vers 3 ennemis voisins.",
+  "valeurs": "26 par pointe ; portée 4 m ; délai 3,0 s",
+  "visuel": "Pointes noires anguleuses à bordure rouge, contour blanc.",
+  "acces": "KG_ENTON",
+  "limites": "Requiert une cible avec Brûlure ; sinon cible la plus proche à 50 %."
+ },
+ {
+  "id": "JUT_156",
+  "nom": "Enton — Yasaka Magatama (Magatama de flammes noires)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_ENTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "3 magatama noirs orbitent puis sont lancés en tourbillonnant vers les cibles toutes les 4 s.",
+  "valeurs": "Contact 10 ; lancer 28 + Brûlure noire +1 ; délai 4 s",
+  "visuel": "Virgules noires à cœur rouge, contour blanc, rotation 4 frames.",
+  "acces": "KG_ENTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_157",
+  "nom": "Futton — Kōmu no Jutsu (Brume corrosive)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "CONE",
+  "tags": [
+   "E_FUTTON",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Souffle une brume acide en cône qui reste 3 s : Corrode et ronge.",
+  "valeurs": "8 par tick de 0,5 s ; Corrodé ; portée 5 m ; délai 7 s",
+  "visuel": "Brume jaune-vert en tramage, silhouettes ennemies qui fument.",
+  "acces": "KG_FUTTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_158",
+  "nom": "Geysers bouillants",
+  "statut": "CO",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_FUTTON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "3 geysers d'eau bouillante jaillissent en triangle : dégâts, Vapeur et Trempé.",
+  "valeurs": "24 par geyser ; délai 4 s",
+  "visuel": "Colonnes blanches à bulles, vapeur persistante 1 s.",
+  "acces": "KG_FUTTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_159",
+  "nom": "Jinton — Genkai Hakuri no Jutsu (Détachement du monde primitif)",
+  "statut": "OA",
+  "famille": "RARE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_JINTON"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un cube lumineux se forme au centre d'un groupe puis s'étend et désintègre tout ce qu'il contient.",
+  "valeurs": "90, ignore la résistance ; cube 3 m ; délai 16 s",
+  "visuel": "Cube blanc à arêtes nettes, intérieur en quadrillage, disparition des cibles en pixels (particules décoratives).",
+  "acces": "KG_JINTON",
+  "limites": "Pas de flash plein écran."
+ },
+ {
+  "id": "JUT_160",
+  "nom": "Jinton — Faisceau de poussière",
+  "statut": "AV",
+  "famille": "RARE",
+  "livraison": "RAYON",
+  "tags": [
+   "E_JINTON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Version en faisceau : prisme allongé de 12 m, lent à se former (0,8 s), ignore la résistance.",
+  "valeurs": "60 ; largeur 0,8 m ; délai 10 s",
+  "visuel": "Prisme blanc à facettes, lignes de quadrillage.",
+  "acces": "KG_JINTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_161",
+  "nom": "Konoha Reppū (Rafale de la feuille)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Balayage bas en cône de 100° à 1,6 m : fait trébucher (Étourdi 0,3 s).",
+  "valeurs": "14 ; délai 1,1 s",
+  "visuel": "Jambe tendue en 3 frames, arc de poussière rasant, ennemis basculés 1 frame.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_162",
+  "nom": "Omote Renge (Lotus primaire)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "L'image de frappe saisit la cible la plus menaçante, l'emporte en vrille et l'écrase au sol (onde de 2 m).",
+  "valeurs": "70 ; onde 25 ; délai 8,0 s ; portée de saisie 5 m",
+  "visuel": "Bandages déroulés en ruban, vrille en 6 frames, cratère et anneau de poussière.",
+  "acces": "APT_PORTES",
+  "limites": "Boss : pas de saisie ; frappe verticale 70 + Vulnérable +10 %."
+ },
+ {
+  "id": "JUT_163",
+  "nom": "Ura Renge (Lotus inversé)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Série aérienne de 6 frappes sur une élite ou le boss, finie par un coup double au sol.",
+  "valeurs": "6 × 12 + 40 ; délai 10 s",
+  "visuel": "Images rémanentes rouges (vitesse), impacts en étoile à chaque frappe.",
+  "acces": "APT_PORTES",
+  "limites": "Cible : élite ou boss en priorité, sinon ennemi le plus résistant."
+ },
+ {
+  "id": "JUT_164",
+  "nom": "Konoha Senpū (Tourbillon de la feuille)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "Déplacement volontaire : l'esquive du joueur devient un coup de pied tournoyant qui frappe tout ce qu'il traverse.",
+  "valeurs": "26 par esquive ; rayon 1,4 m ; délai = recharge de l'esquive",
+  "visuel": "Rotation 360° en 4 frames pendant l'esquive, trainée de feuilles.",
+  "acces": "LIBRE",
+  "limites": "Ne se déclenche que sur esquive du joueur."
+ },
+ {
+  "id": "JUT_165",
+  "nom": "Enchaînement de coups de pied",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "5 coups de pied rapides vers l'avant, chacun légèrement plus loin (1,2 → 2 m).",
+  "valeurs": "5 × 7 ; délai 1,4 s",
+  "visuel": "Pieds en arcs successifs, impacts en éventail.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_166",
+  "nom": "Dynamic Entry (Entrée dynamique)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Une image de frappe fond de loin (8 m) sur l'ennemi le plus menaçant et le projette ; les ennemis heurtés sur sa trajectoire sont touchés.",
+  "valeurs": "38 ; trajectoire 12 ; délai 4,5 s",
+  "visuel": "Silhouette en coup de pied sauté, lignes de vitesse, impact en étoile.",
+  "acces": "APT_PORTES",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_167",
+  "nom": "Asa Kujaku (Paon du matin)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Rafale de coups si rapides qu'ils s'enflamment par friction : cône de 80° sur 4 m, applique Brûlure (sans tag Katon : non-chakra).",
+  "valeurs": "12 coups × 6 ; Brûlure +1 par 3 coups ; délai 5,0 s",
+  "visuel": "Éventail de poings stylisés en plumes de paon enflammées ; la couleur ne change pas l'élément.",
+  "acces": "APT_PORTES",
+  "limites": "Ne compte pas comme Katon pour les synergies (règle §R6)."
+ },
+ {
+  "id": "JUT_168",
+  "nom": "Hirudora (Tigre du jour)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un coup unique comprime l'air en un tigre énorme qui fonce et explose au bout de 8 m.",
+  "valeurs": "60 en traversée ; explosion 80 (r 3,5 m) ; délai 16 s",
+  "visuel": "Tigre d'air translucide de 48 px à contour blanc, souffle qui couche l'herbe.",
+  "acces": "APT_PORTES+CHR_045",
+  "limites": "Réservé à Might Guy ; micro-pause locale 60 ms."
+ },
+ {
+  "id": "JUT_169",
+  "nom": "Sekizō (Éléphant du soir)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "5 coups successifs projettent 5 masses d'air en ligne droite, chacune plus forte.",
+  "valeurs": "20 / 25 / 30 / 35 / 40 ; perce tout ; délai 12 s",
+  "visuel": "Poings en impacts de pression concentriques, lignes droites.",
+  "acces": "APT_PORTES+CHR_045",
+  "limites": "Réservé à Might Guy."
+ },
+ {
+  "id": "JUT_170",
+  "nom": "Suiken (Poing ivre)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aleatoire_pondere",
+  "comportement": "Frappes erratiques dans des directions pseudo-aléatoires autour du joueur (2 m) ; chaque frappe a 25 % de chance de doubler.",
+  "valeurs": "11 ; 1 frappe/0,35 s ; permanente",
+  "visuel": "Mouvements chaloupés du sprite (animation spécifique), impacts en virgules.",
+  "acces": "CHR_015",
+  "limites": "Utilise le flux RNG de combat (reproductible)."
+ },
+ {
+  "id": "JUT_171",
+  "nom": "Shishi Rendan (Combo du lion)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Projette un ennemi en l'air puis l'abat au sol ; l'impact touche ceux qui sont en dessous.",
+  "valeurs": "18 + 30 (r 1,5 m) ; délai 3,5 s",
+  "visuel": "Coup de pied montant, cible en l'air (ombre), talon descendant.",
+  "acces": "DOJ_SHARINGAN|APT_PORTES",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_172",
+  "nom": "Lariat",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT"
+  ],
+  "cible": "direction",
+  "comportement": "Une image de frappe charge 5 m en avant bras tendu et fauche tout sur son passage.",
+  "valeurs": "34 ; largeur 1,2 m ; délai 4,0 s",
+  "visuel": "Silhouette musclée en course, bras en lame blanche, souffle en V.",
+  "acces": "CHR_070|CHR_058",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_173",
+  "nom": "Guillotine Drop (Chute guillotine)",
+  "statut": "AV",
+  "famille": "TAIJUTSU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Ombre allié au sol (0,6 s), puis talon d'une image de frappe tombant du ciel.",
+  "valeurs": "65 ; rayon 2 m ; délai 6,0 s",
+  "visuel": "Ombre en forme de jambe, impact vertical à fissures radiales.",
+  "acces": "CHR_070",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_174",
+  "nom": "Tsūtenkyaku (Talon céleste)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "TERRAIN"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Coup de talon qui fend le sol : cratère de 2,5 m et fissure de 5 m vers l'avant.",
+  "valeurs": "52 ; fissure 20 ; délai 6,0 s",
+  "visuel": "Talon levé 4 frames, sol qui se soulève en plaques.",
+  "acces": "CHR_029|CHR_007|CHR_011",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_175",
+  "nom": "Ōkashō (Poing de cerisier)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Coup de poing au sol qui projette des éclats de roche en cône de 60° sur 4 m.",
+  "valeurs": "Poing 40 ; éclats 6 × 8 ; délai 2,6 s",
+  "visuel": "Poing entouré d'un halo de chakra rose (contour 1 px), éclats anguleux.",
+  "acces": "CHR_007|CHR_011|CHR_029",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_176",
+  "nom": "Contre-attaque",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Réactif : quand un ennemi entre à 1,2 m et que la technique est prête, riposte instantanée qui le repousse.",
+  "valeurs": "30 ; recul 2 m ; délai 1,5 s",
+  "visuel": "Garde levée 1 frame, coup de paume, onde en croissant.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_177",
+  "nom": "Mille poings",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Rafale de 8 coups de poing rapides à courte portée sur la cible la plus proche.",
+  "valeurs": "8 × 5 ; portée 1,3 m ; délai 1,6 s",
+  "visuel": "Poings démultipliés (3 images rémanentes), impacts en pluie d'étoiles.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_178",
+  "nom": "Saut de la grue",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Une image de frappe bondit de tête en tête sur 3 ennemis (trajet visible), le dernier bond frappe en zone.",
+  "valeurs": "18 par bond ; final 24 (r 1,2 m) ; portée de bond 4 m ; délai 2,8 s",
+  "visuel": "Silhouette en arc, ombre qui suit, poussière à chaque appui.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_179",
+  "nom": "Onde du poing au sol",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "Frappe le sol : onde de choc de 3 m qui soulève la poussière.",
+  "valeurs": "20 ; recul 1 m ; délai 2,5 s",
+  "visuel": "Poing au sol, anneau de terre soulevée (non Doton).",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_180",
+  "nom": "Genou volant",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Frappe du genou qui projette la cible ; l'ennemi projeté blesse ceux qu'il percute (effet « quilles »).",
+  "valeurs": "24 ; projection 4 m ; collision 16 ; délai 2,0 s",
+  "visuel": "Genou en impact, cible qui tournoie, étoiles d'impact sur les percutés.",
+  "acces": "LIBRE",
+  "limites": "Collision = SECONDAIRE."
+ },
+ {
+  "id": "JUT_181",
+  "nom": "Posture de fer",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Rester immobile 0,5 s active une garde : −30 % dégâts subis et riposte à chaque contact subi.",
+  "valeurs": "Riposte 18 ; réduction −30 % ; active tant que le joueur est immobile",
+  "visuel": "Pose de garde dédiée, anneau au sol fixe.",
+  "acces": "LIBRE",
+  "limites": "Réduction comptée dans le plafond de 60 %."
+ },
+ {
+  "id": "JUT_182",
+  "nom": "Kage Buyō (Ombre de la feuille dansante)",
+  "statut": "OA",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "marque",
+  "comportement": "Frappe automatiquement 2 fois chaque ennemi projeté en l'air (par n'importe quelle source) à 5 m.",
+  "valeurs": "2 × 14 ; délai interne 0,3 s par cible",
+  "visuel": "Image de frappe qui suit la cible en l'air, deux impacts secs.",
+  "acces": "LIBRE",
+  "limites": "Sans ennemi en l'air : inactif (carte avertit « Nécessite une projection »)."
+ },
+ {
+  "id": "JUT_183",
+  "nom": "Coups en écho",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Marque une cible : 30 % des dégâts de taijutsu qu'elle reçoit pendant 2 s sont restitués d'un coup à la fin.",
+  "valeurs": "Restitution 30 % (+10 de base) ; délai 4,0 s",
+  "visuel": "Marque en forme de poing, compteur de chocs (1 à 3 anneaux), éclat final.",
+  "acces": "LIBRE",
+  "limites": "Plafond de restitution : 200."
+ },
+ {
+  "id": "JUT_184",
+  "nom": "Kenatsu (Pression des poings)",
+  "statut": "CO",
+  "famille": "TAIJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Frappe au contact si un ennemi est à 1,5 m, sinon projette une onde d'air jusqu'à 5 m (garantit une portée minimale aux builds de mêlée).",
+  "valeurs": "Contact 20 / onde 12 ; délai 0,9 s",
+  "visuel": "Poing avec anneau de pression ; onde en croissant transparent.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_185",
+  "nom": "Kunai en éventail",
+  "statut": "CO",
+  "famille": "OUTIL",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Lance 3 kunai en éventail de 30° vers la cible la plus proche.",
+  "valeurs": "10 ; délai 1,0 s ; vitesse 14 m/s ; portée 9 m",
+  "visuel": "Kunai noirs de 6 px à reflet d'1 px, traînée de 2 frames, planté au sol 0,3 s en cas d'échec.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_186",
+  "nom": "Lancer de shuriken",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE",
+   "REBOND"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Shuriken rapide qui rebondit une fois vers un second ennemi.",
+  "valeurs": "8 ; 1 rebond ; délai 0,6 s ; vitesse 16 m/s",
+  "visuel": "Étoile à 4 branches en rotation 2 frames.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_187",
+  "nom": "Fūma Shuriken (Shuriken démoniaque)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Grand shuriken qui décrit un arc large, perce tout et revient.",
+  "valeurs": "24 ; rayon 0,8 m ; délai 3,0 s ; portée 7 m",
+  "visuel": "Shuriken pliant de 16 px, sifflement de rotation, ombre au sol.",
+  "acces": "LIBRE",
+  "limites": "1 touche par cible par passage."
+ },
+ {
+  "id": "JUT_188",
+  "nom": "Kage Shuriken no Jutsu (Shuriken de l'ombre)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Un shuriken en cache un second dans son ombre : si le premier touche, le second frappe la même cible 0,15 s après avec +50 %.",
+  "valeurs": "16 puis 24 ; délai 2,0 s",
+  "visuel": "Deux shuriken superposés, séparation visible à l'impact.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_189",
+  "nom": "Kibaku Fuda (Étiquette explosive)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Kunai muni d'une étiquette qui se fiche dans le sol près d'un groupe et explose 1 s plus tard.",
+  "valeurs": "32 ; rayon 2 m ; délai 2,5 s",
+  "visuel": "Étiquette qui se consume en 3 frames (grésillement), explosion orange-blanc en boule.",
+  "acces": "LIBRE",
+  "limites": "Détruit les obstacles destructibles."
+ },
+ {
+  "id": "JUT_190",
+  "nom": "Senbon",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Salve de 4 aiguilles fines, chance critique +15 %.",
+  "valeurs": "6 ; crit +15 % ; délai 0,8 s ; vitesse 20 m/s",
+  "visuel": "Traits de 1 × 5 px, reflet métallique fugace.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_191",
+  "nom": "Makibishi (Chausse-trapes)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "chemin",
+  "comportement": "Répand des chausse-trapes derrière le joueur : dégâts et ralentissement de 30 % 1 s.",
+  "valeurs": "6 par pas ; max 20 pointes ; durée 8 s ; délai 3,0 s",
+  "visuel": "Petites pointes de 3 px à reflet, éparpillées en arc.",
+  "acces": "LIBRE",
+  "limites": "1 touche par ennemi par 0,5 s."
+ },
+ {
+  "id": "JUT_192",
+  "nom": "Fil d'acier tendu",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Tend un fil de 5 m entre deux points ; les ennemis qui le franchissent sont Entravés 0,8 s.",
+  "valeurs": "8 ; Entravé 0,8 s ; durée 6 s ; délai 5 s",
+  "visuel": "Ligne de 1 px grise qui scintille, vibration au contact.",
+  "acces": "LIBRE",
+  "limites": "Max 2 fils."
+ },
+ {
+  "id": "JUT_193",
+  "nom": "Sōshōryū (Dragons jumeaux ascendants)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Deux rouleaux s'élèvent en spirale et font pleuvoir des dizaines d'armes sur 4 m.",
+  "valeurs": "24 armes × 7 ; délai 7 s",
+  "visuel": "Deux rouleaux en double hélice, armes variées (kunai, shuriken, faucilles) qui tombent.",
+  "acces": "CHR_048|CHR_049",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_194",
+  "nom": "Rafale d'armes invoquées",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Invoque depuis un rouleau une rafale alternant kunai (perçant), shuriken (rebond) et kusarigama (recul).",
+  "valeurs": "6 armes × 9 ; délai 1,6 s",
+  "visuel": "Rouleau déroulé 2 frames, cycle d'armes lisible par forme.",
+  "acces": "CHR_048|CHR_049",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_195",
+  "nom": "Kusarigama (Faucille à chaîne)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "ATTRACTION"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "La chaîne harponne une cible à 5 m et la ramène à 1,5 m, puis la faucille la frappe.",
+  "valeurs": "10 + 22 ; délai 3,0 s",
+  "visuel": "Chaîne de maillons 2 px, faucille en arc brillant.",
+  "acces": "LIBRE",
+  "limites": "Élites et boss non attirés (frappe à distance à 50 %)."
+ },
+ {
+  "id": "JUT_196",
+  "nom": "Hien (Lames de chakra de l'hirondelle)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Poings américains à lames prolongées par le vent : double taille en X à 2,2 m qui applique Entaillé.",
+  "valeurs": "2 × 14 ; Entaillé +1 ; délai 1,2 s",
+  "visuel": "Lames courtes prolongées d'une lame de vent translucide.",
+  "acces": "ELEM_FUTON+CHR_052|ELEM_FUTON+CHR_020",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_197",
+  "nom": "Kubikiribōchō (Grand couperet)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Balayage lent à 180° (3 m) ; chaque élimination répare la lame : +2 % dégâts (max +30 %, perdus à 10 s sans élimination).",
+  "valeurs": "38 ; délai 2,4 s",
+  "visuel": "Lame de 32 px à trou circulaire, arc lourd en 5 frames, éclaboussures stylisées non réalistes.",
+  "acces": "CHR_054|CHR_076",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_198",
+  "nom": "Samehada (Peau de requin)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Coup d'épée écailleuse en arc de 120° (2,5 m) : chaque ennemi touché rend 0,5 chakra.",
+  "valeurs": "26 ; chakra 0,5 par cible ; délai 1,6 s",
+  "visuel": "Épée couverte d'écailles qui s'hérissent à l'impact.",
+  "acces": "CHR_033|CHR_034|CHR_058",
+  "limites": "Plafond global de chakra (12/s)."
+ },
+ {
+  "id": "JUT_199",
+  "nom": "Kusanagi (Estoc)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Estoc éclair qui s'allonge sur 4 m et transperce ; hérite du tag Raiton si Chidori Nagashi est possédé.",
+  "valeurs": "34 ; délai 1,4 s",
+  "visuel": "Lame droite fine, éclat blanc sur la longueur.",
+  "acces": "CHR_005|CHR_006|CHR_030",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_200",
+  "nom": "Tantō (Sabre court)",
+  "statut": "CO",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Deux entailles rapides ; +50 % dégâts aux cibles qui ne font pas face au joueur (dos).",
+  "valeurs": "2 × 12 ; délai 0,8 s",
+  "visuel": "Lame courte à reflet, deux arcs croisés.",
+  "acces": "APT_KENJ",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_201",
+  "nom": "Nunchaku de Guy",
+  "statut": "AV",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "Tournoiement continu autour du joueur (2 m), frappes rapides qui repoussent un peu.",
+  "valeurs": "7 par frappe ; 1 frappe/0,25 s par cible ; durée 3 s ; délai 5 s",
+  "visuel": "Nunchaku en cercle flou (3 frames), éclats d'impact.",
+  "acces": "CHR_045",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_202",
+  "nom": "Karasu (Marionnette du corbeau)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "MARIONNETTE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Marionnette reliée par fils qui vole vers les ennemis et frappe avec des lames empoisonnées.",
+  "valeurs": "14 + Empoisonné +1 ; intervalle 0,7 s ; permanente ; portée des fils 7 m",
+  "visuel": "Marionnette à 3 yeux, bras articulés en poses mécaniques (pas d'interpolation), fils bleus fins.",
+  "acces": "APT_MARIO",
+  "limites": "1 Karasu."
+ },
+ {
+  "id": "JUT_203",
+  "nom": "Kuroari (Marionnette de la fourmi noire)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "MARIONNETTE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Emprisonne la cible la plus menaçante 2 s dans son torse ; si Karasu est présent, il la transperce pour ×2 dégâts.",
+  "valeurs": "20 (40 avec Karasu) ; délai 7 s",
+  "visuel": "Marionnette massive dont le torse s'ouvre en 3 frames.",
+  "acces": "APT_MARIO",
+  "limites": "Boss : Vulnérable +10 %."
+ },
+ {
+  "id": "JUT_204",
+  "nom": "Sanshōuo (Marionnette de la salamandre)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "MARIONNETTE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Marionnette-bouclier qui se place entre le joueur et le projectile ennemi le plus proche et l'arrête.",
+  "valeurs": "Bloque 1 projectile/0,6 s ; permanente",
+  "visuel": "Carapace plate à écailles de bois, déploiement en éventail.",
+  "acces": "APT_MARIO",
+  "limites": "Ne bloque pas les télégraphes de boss."
+ },
+ {
+  "id": "JUT_205",
+  "nom": "Hiruko",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "MARIONNETTE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Marionnette blindée à queue de scorpion : balayages empoisonnés à 3 m.",
+  "valeurs": "18 + Empoisonné +2 ; intervalle 1,0 s ; permanente",
+  "visuel": "Silhouette voûtée, queue segmentée qui fouette en 4 frames.",
+  "acces": "APT_MARIO+CHR_037",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_206",
+  "nom": "Aiguilles empoisonnées",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Salve de 5 aiguilles enduites : chacune pose 1 cumul de Poison.",
+  "valeurs": "4 + Empoisonné +1 ; délai 1,2 s",
+  "visuel": "Aiguilles à pointe violette, cible qui verdit par palier.",
+  "acces": "APT_MARIO|APT_MED",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_207",
+  "nom": "Chikamatsu no Jikki (Les dix marionnettes)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "MARIONNETTE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Déploie 3 marionnettes aux armes différentes (lance, bouclier, lame) ; le niveau augmente leur nombre.",
+  "valeurs": "12 chacune ; intervalle 0,8 s ; permanente",
+  "visuel": "Dix silhouettes distinctes à terme, fils de 10 doigts.",
+  "acces": "CHR_074",
+  "limites": "Compte dans le plafond de 8 unités."
+ },
+ {
+  "id": "JUT_208",
+  "nom": "Chakra no Ito (Fils de chakra)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "RAYON",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Fils qui prennent le contrôle d'un ennemi ordinaire 3 s : il attaque ses alliés (Confus renforcé).",
+  "valeurs": "0 ; contrôle 3 s ; délai 6 s ; portée 7 m",
+  "visuel": "Fils bleus du bout des doigts à la cible, cible au contour bleu.",
+  "acces": "APT_MARIO",
+  "limites": "Ordinaires uniquement ; 1 cible."
+ },
+ {
+  "id": "JUT_209",
+  "nom": "Kunai piégé",
+  "statut": "CO",
+  "famille": "OUTIL",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF"
+  ],
+  "cible": "chemin",
+  "comportement": "Deux kunai reliés par un fil explosif sur le chemin des ennemis : le premier franchissement fait sauter toute la ligne.",
+  "valeurs": "28 sur la ligne (4 m) ; max 2 ; délai 4 s",
+  "visuel": "Fil scintillant avec étiquettes, explosion en chapelet.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_210",
+  "nom": "Bombe fumigène",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Déclenchée par l'esquive : nuage de 2,5 m ; les ennemis dedans perdent la cible 1,5 s.",
+  "valeurs": "0 ; délai = esquive (min 4 s)",
+  "visuel": "Volutes grises en 3 tons, bords nets pour ne pas masquer les télégraphes.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_211",
+  "nom": "Frappe du grand éventail",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_FUTON"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Coup d'éventail à 180° (2 m) qui projette ; relance de 20 % le délai de la technique Fūton la plus lente.",
+  "valeurs": "22 ; recul 2 m ; délai 2,0 s",
+  "visuel": "Éventail géant à 3 lunes, arc de vent.",
+  "acces": "CHR_026",
+  "limites": "Réduction du délai : 1 fois par coup."
+ },
+ {
+  "id": "JUT_212",
+  "nom": "Sept sabres de Bee",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "Sept sabres tenus en tous sens : rafale circulaire à 1,8 m au rythme d'une rime (4 temps, 4e temps ×2).",
+  "valeurs": "9 × 7 par cycle ; cycle 1,6 s",
+  "visuel": "Sabres tenus par mains, aisselle et bouche ; pose rythmique en 4 frames.",
+  "acces": "CHR_058",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_213",
+  "nom": "Bashōsen (Éventail de bananier)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Éventail du Sage : chaque usage produit un élément différent en cycle Katon → Suiton → Raiton → Fūton (tags alternés).",
+  "valeurs": "24 ; angle 60° ; portée 5 m ; délai 2,4 s",
+  "visuel": "Éventail ocre ; l'effet emprunte la grammaire visuelle de l'élément du tour.",
+  "acces": "CHR_049",
+  "limites": "L'élément du tour est affiché sur l'icône du HUD."
+ },
+ {
+  "id": "JUT_214",
+  "nom": "Spirale de kunai",
+  "statut": "CO",
+  "famille": "OUTIL",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "8 kunai lancés en spirale sur 360° en 1 s (contrôle de zone).",
+  "valeurs": "9 ; délai 2,5 s ; vitesse 12 m/s",
+  "visuel": "Spirale de traits noirs lisible depuis le dessus.",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_215",
+  "nom": "Shuriken récupérables",
+  "statut": "CO",
+  "famille": "OUTIL",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Les shuriken restent plantés au sol ; passer dessus les récupère et les relance aussitôt avec +50 % dégâts.",
+  "valeurs": "12 (18 relancé) ; max 6 au sol ; délai 1,2 s",
+  "visuel": "Shuriken plantés à 45°, reflet pulsé pour être vus.",
+  "acces": "LIBRE",
+  "limites": "Durée au sol 6 s."
+ },
+ {
+  "id": "JUT_216",
+  "nom": "Gunbai (Éventail de guerre)",
+  "statut": "OA",
+  "famille": "OUTIL",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Toutes les 5 s, absorbe les projectiles ennemis frontaux 1 s puis les renvoie en rafale de vent.",
+  "valeurs": "Rafale 20 + 5 par projectile absorbé ; délai 5 s",
+  "visuel": "Éventail rond laqué, tourbillon absorbé visible sur sa surface.",
+  "acces": "CHR_043|CHR_044|CHR_062",
+  "limites": "Max 12 projectiles absorbés."
+ },
+ {
+  "id": "JUT_217",
+  "nom": "Kage Bunshin no Jutsu (Multiclonage)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CLONE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Invoque un clone toutes les 5 s ; il dure 4 s et frappe la cible proche. Au plafond : la nouvelle invocation RAFRAÎCHIT la durée du clone le plus ancien (pas de remplacement, pas d'attente).",
+  "valeurs": "18 par frappe ; intervalle 0,9 s ; durée 4 s ; délai 5 s ; plafond 1",
+  "visuel": "Nuage de fumée bref (6 frames), silhouette révélée, bandeau et couleurs du personnage ; contour bleu clair 1 px et palette désaturée de 15 % pour distinguer le clone.",
+  "acces": "CHR_001|CHR_002|CHR_003|CHR_008|CHR_009|CHR_010|CHR_027|CHR_028|CHR_031|CHR_032|CHR_079",
+  "limites": "Ne peut ni invoquer un clone ni reproduire un effet qui s'auto-déclenche."
+ },
+ {
+  "id": "JUT_218",
+  "nom": "Tajū Kage Bunshin (Multiclonage de masse)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CLONE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Libère une vague de 6 clones fragiles qui chargent le groupe le plus dense, frappent une fois et disparaissent.",
+  "valeurs": "6 clones × 14 ; délai 9 s ; durée max 2 s",
+  "visuel": "Explosion de fumée en rangée, silhouettes en course (4 frames), disparitions en chaîne.",
+  "acces": "CHR_001|CHR_002|CHR_003",
+  "limites": "Clones éphémères : comptent 1 seul emplacement du plafond d'unités."
+ },
+ {
+  "id": "JUT_219",
+  "nom": "Bunshin Daibakuha (Clone explosif)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CLONE",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un clone court vers le groupe le plus dense et explose au contact.",
+  "valeurs": "Explosion 45 (r 2,5 m) ; délai 6 s",
+  "visuel": "Clone qui se gonfle de lumière 3 frames avant l'explosion ; contour clignotant d'avertissement allié.",
+  "acces": "CHR_031|CHR_032",
+  "limites": "L'explosion est SECONDAIRE."
+ },
+ {
+  "id": "JUT_220",
+  "nom": "Mizu Bunshin (Clone d'eau)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_SUITON",
+   "UNITE_ALLIEE",
+   "CLONE",
+   "TERRAIN"
+  ],
+  "cible": "plus_proche",
+  "comportement": "2 clones d'eau frappent et Trempent ; à leur disparition, ils laissent une flaque d'EAU.",
+  "valeurs": "12 par frappe ; intervalle 1,0 s ; durée 5 s ; délai 7 s",
+  "visuel": "Silhouette bleue translucide, écoulement en bas du sprite ; flaque à la fin.",
+  "acces": "ELEM_SUITON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_221",
+  "nom": "Tsuchi Bunshin (Clone de terre)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_DOTON",
+   "UNITE_ALLIEE",
+   "CLONE",
+   "ATTRACTION"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Clone lourd qui attire les ennemis ordinaires à 3 m (provocation) puis s'effondre en boue qui Ensable.",
+  "valeurs": "Frappe 16 ; effondrement 20 + Ensablé +2 ; durée 6 s ; délai 10 s",
+  "visuel": "Clone brun à texture de terre, effondrement en tas.",
+  "acces": "ELEM_DOTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_222",
+  "nom": "Raiton — Kage Bunshin (Clone de foudre)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_RAITON",
+   "UNITE_ALLIEE",
+   "CLONE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Clone chargé d'électricité ; quand il est heurté par un ennemi ou expire, il se décharge en zone et Électrise.",
+  "valeurs": "Frappe 14 ; décharge 30 (r 2,5 m) ; durée 5 s ; délai 8 s",
+  "visuel": "Clone traversé d'étincelles, décharge en éclairs radiaux.",
+  "acces": "ELEM_RAITON+DOJ_SHARINGAN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_223",
+  "nom": "Karasu Bunshin (Clone de corbeaux)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CLONE",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Leurre qui attire les attaques ; il se disperse ensuite en 8 corbeaux qui Aveuglent les ennemis touchés.",
+  "valeurs": "Corbeaux 8 × 6 ; Aveuglé 1,5 s ; durée 4 s ; délai 9 s",
+  "visuel": "Silhouette qui se défait en corbeaux noirs à contour clair (lisibles sur fond sombre).",
+  "acces": "CTR_CORBEAU",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_224",
+  "nom": "Kuchiyose — Gamabunta",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "GEANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Invocation géante : le chef crapaud atterrit (onde), donne 2 coups de sabre larges puis repart.",
+  "valeurs": "Atterrissage 60 (r 4 m) ; sabre 2 × 70 (arc 8 m) ; durée 8 s ; délai 60 s",
+  "visuel": "Crapaud de 96 px, pipe et sabre ; transparence 55 % au-dessus des télégraphes (§B9.4).",
+  "acces": "CTR_CRAPAUD",
+  "limites": "1 géant ; héritage GEANT."
+ },
+ {
+  "id": "JUT_225",
+  "nom": "Kuchiyose — Crapauds de combat",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_proche",
+  "comportement": "2 petits crapauds bondissent d'ennemi en ennemi et les frappent de la langue (attraction de 1 m).",
+  "valeurs": "10 par coup ; intervalle 0,8 s ; durée 8 s ; délai 10 s",
+  "visuel": "Crapauds de 12 px, bonds en arc, langue de 3 frames.",
+  "acces": "CTR_CRAPAUD",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_226",
+  "nom": "Kuchiyose — Manda",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "GEANT",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Serpent géant qui encercle un grand groupe puis se resserre (Entravé 1,5 s) et l'écrase.",
+  "valeurs": "Constriction 80 (anneau de 6 m) ; durée 8 s ; délai 60 s",
+  "visuel": "Serpent violet de 128 px de long en anneau ; écailles en 2 tons ; tête télégraphie la fermeture.",
+  "acces": "CTR_SERPENT",
+  "limites": "1 géant."
+ },
+ {
+  "id": "JUT_227",
+  "nom": "Sen'ei Tajashu (Mains-serpents multiples)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Des serpents jaillissent des manches et mordent jusqu'à 4 cibles à 3,5 m ; Empoisonné +1.",
+  "valeurs": "14 par morsure ; délai 1,6 s",
+  "visuel": "Serpents fins à 3 frames de détente, gueules ouvertes.",
+  "acces": "CTR_SERPENT",
+  "limites": "Pas une unité : extension du joueur."
+ },
+ {
+  "id": "JUT_228",
+  "nom": "Kuchiyose — Katsuyu (Limace)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL",
+   "SOIN"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Une petite limace se colle au joueur : soigne 1 PV/s et crache de l'acide qui Corrode.",
+  "valeurs": "Acide 12 + Corrodé ; intervalle 1,5 s ; soin 1 PV/s ; permanente",
+  "visuel": "Limace blanche et bleue de 10 px sur l'épaule, jet d'acide en arc.",
+  "acces": "CTR_LIMACE",
+  "limites": "Soin soumis au plafond §B4.5."
+ },
+ {
+  "id": "JUT_229",
+  "nom": "Kuchiyose — Meute de ninken",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "8 chiens surgissent du sol et mordent chacun une cible différente pour l'immobiliser 1,5 s.",
+  "valeurs": "8 × 12 ; Entravé 1,5 s ; délai 12 s",
+  "visuel": "Chiens de 10 px distincts (tailles et couleurs), sortie du sol en poussière.",
+  "acces": "CTR_CHIEN",
+  "limites": "Compte 1 emplacement du plafond d'unités."
+ },
+ {
+  "id": "JUT_230",
+  "nom": "Akamaru",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Compagnon permanent qui suit le joueur, mord et aboie (onde qui repousse, 1 fois/6 s).",
+  "valeurs": "Morsure 12 ; intervalle 0,8 s ; aboiement 8 ; permanente",
+  "visuel": "Chien blanc de 14 px (24 px en variante adulte), oreilles animées.",
+  "acces": "CLAN_INUZUKA",
+  "limites": "Ne bloque jamais le joueur."
+ },
+ {
+  "id": "JUT_231",
+  "nom": "Kuchiyose — Enma (Bâton adamantin)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Le roi singe se change en bâton qui s'allonge à 6 m et balaie un arc de 90°.",
+  "valeurs": "40 ; recul 2 m ; délai 3,2 s",
+  "visuel": "Bâton noir à anneaux dorés qui s'étire (3 frames), visage de singe gravé.",
+  "acces": "CTR_SINGE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_232",
+  "nom": "Kuchiyose — Kirikiri Mai (Danse tranchante de Kamatari)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_FUTON",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "La belette à faux traverse tout l'écran en tornade et entaille tout sur son passage.",
+  "valeurs": "30 ; Entaillé +2 ; largeur 2 m ; délai 10 s",
+  "visuel": "Belette borgne à faux, tornade de lames autour, sillage de feuilles hachées.",
+  "acces": "CTR_BELETTE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_233",
+  "nom": "Kuchiyose — Requins",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_SUITON",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Sur chaque surface EAU, un requin surgit toutes les 2 s pour mordre un ennemi à 2 m de la flaque.",
+  "valeurs": "22 par morsure ; permanent tant qu'il y a de l'eau",
+  "visuel": "Aileron qui fend la flaque, saut hors de l'eau en 3 frames.",
+  "acces": "CTR_REQUIN",
+  "limites": "Max 3 requins simultanés."
+ },
+ {
+  "id": "JUT_234",
+  "nom": "Kuchiyose — Faucon",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Un faucon plane et pique sur les tireurs et assassins en priorité.",
+  "valeurs": "26 par piqué ; intervalle 1,6 s ; permanente",
+  "visuel": "Rapace de 16 px, ombre au sol distincte, piqué en 3 frames.",
+  "acces": "CTR_FAUCON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_235",
+  "nom": "Chōjū Giga (Fauves d'encre)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_dense",
+  "comportement": "2 lions d'encre bondissent sur les groupes ; à la mort ils éclatent en encre qui Encre les voisins.",
+  "valeurs": "18 par coup ; intervalle 1,0 s ; durée 6 s ; délai 8 s",
+  "visuel": "Fauves noirs au trait de pinceau, éclaboussures d'encre.",
+  "acces": "APT_ENCRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_236",
+  "nom": "Chōjū Giga — Serpents d'encre",
+  "statut": "AV",
+  "famille": "INVOC",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Serpents d'encre qui ligotent en chaîne jusqu'à 4 ennemis (Entravé 1 s) et les Encrent.",
+  "valeurs": "10 ; 4 cibles ; délai 4 s",
+  "visuel": "Lignes d'encre ondulantes qui s'enroulent.",
+  "acces": "APT_ENCRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_237",
+  "nom": "Kuchiyose — Cerbère (Chemin animal)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Chien à plusieurs têtes ; chaque fois qu'il élimine 5 ennemis, il se divise (max 3 chiens).",
+  "valeurs": "20 par morsure ; intervalle 0,9 s ; durée 10 s ; délai 15 s",
+  "visuel": "Chien massif aux yeux cerclés, division en fumée.",
+  "acces": "DOJ_RINNEGAN",
+  "limites": "Les copies sont des ANIMAL (pas des clones)."
+ },
+ {
+  "id": "JUT_238",
+  "nom": "Kuchiyose — Rhinocéros cuirassé",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "direction",
+  "comportement": "Charge en ligne droite sur 10 m en renversant tout, puis disparaît.",
+  "valeurs": "36 ; recul 2 m ; délai 7 s",
+  "visuel": "Rhinocéros de 32 px, poussière massive, cornes en avant.",
+  "acces": "DOJ_RINNEGAN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_239",
+  "nom": "Kuchiyose — Tortue",
+  "statut": "AV",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Tortue qui suit le joueur et se place devant le plus gros projectile ennemi (bloque 1/1,5 s) ; carapace qui repousse au contact.",
+  "valeurs": "Contact 10 ; bloque 1 projectile/1,5 s ; permanente",
+  "visuel": "Tortue de 16 px au gilet vert, rentrée dans la carapace à chaque blocage.",
+  "acces": "CHR_045",
+  "limites": "Ne bloque pas les télégraphes de boss."
+ },
+ {
+  "id": "JUT_240",
+  "nom": "Mokuton Bunshin (Clone de bois)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_MOKUTON",
+   "UNITE_ALLIEE",
+   "CLONE",
+   "CONTROLE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Clone de bois qui combat 6 s puis se fige en arbre qui Entrave les ennemis au contact 2 s.",
+  "valeurs": "Frappe 16 ; racines 12 + Entravé ; durée 6 s + arbre 4 s ; délai 9 s",
+  "visuel": "Clone à texture de fibres, transformation en arbre en 5 frames.",
+  "acces": "KG_MOKUTON",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_241",
+  "nom": "Suna Bunshin (Clone de sable)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_SABLE",
+   "UNITE_ALLIEE",
+   "CLONE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Clone de sable qui frappe ; à sa disparition, il enveloppe l'ennemi le plus proche (Ensablé +3).",
+  "valeurs": "Frappe 14 ; enveloppe 25 ; durée 5 s ; délai 8 s",
+  "visuel": "Silhouette granuleuse qui s'effrite par le bas.",
+  "acces": "KG_SABLE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_242",
+  "nom": "Fukasaku et Shima (Anciens crapauds)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Deux anciens sur les épaules lancent en alternance un jet d'eau (Trempé) et une rafale (recul) ; comptent comme Suiton et Fūton.",
+  "valeurs": "Jet 18 ; rafale 14 ; alternance 1,2 s ; permanente",
+  "visuel": "Deux vieux crapauds de 8 px sur les épaules, gestes alternés.",
+  "acces": "CTR_CRAPAUD+APT_SENJ",
+  "limites": "Ne quittent pas le joueur."
+ },
+ {
+  "id": "JUT_243",
+  "nom": "Edo Tensei (Réincarnation des âmes)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Une élite vaincue se relève comme alliée pendant 12 s avec son comportement d'origine (sans son modificateur).",
+  "valeurs": "Dégâts de l'élite × 0,6 ; 1 réanimé actif ; délai interne 20 s",
+  "visuel": "Corps couvert de fissures grises, cercueil qui s'ouvre (4 frames) ; contour allié.",
+  "acces": "CHR_030|CHR_060|CHR_063|CHR_064",
+  "limites": "Ne fonctionne jamais sur les boss ; inactif sans élite vaincue (carte avertit)."
+ },
+ {
+  "id": "JUT_244",
+  "nom": "Kuchiyose — Rashōmon (Porte des démons)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Une porte colossale surgit entre le joueur et la plus grande menace et encaisse une attaque lourde (y compris un télégraphe de boss).",
+  "valeurs": "Bloque 1 attaque ; 20 aux ennemis écrasés à l'apparition ; délai 30 s",
+  "visuel": "Porte de 48 px à visage de démon, fissure qui se propage à l'impact.",
+  "acces": "CHR_030",
+  "limites": "Seule technique pouvant bloquer un télégraphe de boss : 1 fois / 30 s."
+ },
+ {
+  "id": "JUT_245",
+  "nom": "Bunshin no Jutsu (Clone illusoire)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CLONE"
+  ],
+  "cible": "aucune",
+  "comportement": "Deux clones sans substance attirent l'attention : les ennemis proches les ciblent 2 s (aucun dégât).",
+  "valeurs": "0 ; provocation 2 s ; délai 8 s",
+  "visuel": "Clones à 70 % d'opacité, sans ombre au sol (signal de non-matérialité).",
+  "acces": "LIBRE",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_246",
+  "nom": "Tako Bunshin (Clone de tentacule)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CLONE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Un clone né d'un tentacule combat ; s'il disparaît de force, il redevient tentacule et fouette en cercle.",
+  "valeurs": "Frappe 20 ; fouet 26 (r 2 m) ; durée 6 s ; délai 10 s",
+  "visuel": "Clone à contour rouge-violet, transformation en tentacule en 4 frames.",
+  "acces": "CHR_058",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_247",
+  "nom": "Kami Bunshin (Clone de papier)",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CLONE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Clone de papier qui, à sa fin, se disperse en 10 shuriken de papier.",
+  "valeurs": "Frappe 12 ; dispersion 10 × 7 ; durée 5 s ; délai 8 s",
+  "visuel": "Silhouette pliée qui se défait en feuilles tournoyantes.",
+  "acces": "APT_PAPIER",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_248",
+  "nom": "Kuchiyose — Aoda",
+  "statut": "OA",
+  "famille": "INVOC",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "ANIMAL"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Grand serpent qui avale un ennemi ordinaire (élimination immédiate) toutes les 3 s ; mord les autres.",
+  "valeurs": "Avalement : ordinaires < 60 PV ; morsure 24 ; durée 10 s ; délai 14 s",
+  "visuel": "Serpent bleu de 48 px, gonflement du corps après avalement.",
+  "acces": "CTR_SERPENT+CHR_005|CTR_SERPENT+CHR_006",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_249",
+  "nom": "Magen — Narakumi no Jutsu (Vision de l'enfer)",
+  "statut": "OA",
+  "famille": "GENJUTSU",
+  "livraison": "CONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Les ennemis d'un cône de 70° (5 m) sont figés d'effroi 1 s ; les coups suivants ×1,2 pendant l'effroi.",
+  "valeurs": "5 ; Étourdi 1 s ; délai 5 s",
+  "visuel": "Feuilles qui tourbillonnent autour des cibles (répétition localisée), silhouettes tremblantes.",
+  "acces": "APT_GEN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_250",
+  "nom": "Magen — Jubaku Satsu (Mort par l'arbre enserrant)",
+  "statut": "OA",
+  "famille": "GENJUTSU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Un arbre illusoire enserre la cible 2 s ; à la fin, coup de grâce (×2 si la cible est sous 50 % de PV).",
+  "valeurs": "Coup 40 (80) ; Entravé 2 s ; délai 6 s",
+  "visuel": "Branches qui poussent autour de la cible avec contour violet pâle (illusion), silhouette de Kurenai fugace.",
+  "acces": "APT_GEN+CHR_066",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_251",
+  "nom": "Kokuangyō no Jutsu (Chemin des ténèbres)",
+  "statut": "OA",
+  "famille": "GENJUTSU",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Zone d'obscurité de 4 m : ennemis Aveuglés et ralentis de 20 %.",
+  "valeurs": "3 par tick de 0,5 s ; durée 4 s ; délai 9 s",
+  "visuel": "Zone assombrie en tramage, ennemis dessinés avec contour clair (la lisibilité joueur est conservée).",
+  "acces": "APT_GEN",
+  "limites": "Les télégraphes ennemis restent au-dessus de l'obscurité."
+ },
+ {
+  "id": "JUT_252",
+  "nom": "Magen — Kyōten Chiten (Retournement)",
+  "statut": "OA",
+  "famille": "GENJUTSU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Réactif : un ennemi qui touche le joueur au contact devient Confus 2 s et subit un contre.",
+  "valeurs": "Contre 16 ; Confus 2 s ; délai interne 1,5 s",
+  "visuel": "Image du joueur qui se dédouble en miroir sur l'agresseur.",
+  "acces": "APT_GEN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_253",
+  "nom": "Genjutsu sonore",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Onde sonore de 4 m : 1 ennemi sur 3 touché (déterministe par ordre de contact) devient Confus 2 s ; les autres ralentissent 1 s.",
+  "valeurs": "8 ; délai 4 s",
+  "visuel": "Anneaux de portée musicale (lignes parallèles), notes stylisées sur les confus.",
+  "acces": "APT_GEN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_254",
+  "nom": "Nehan Shōja no Jutsu (Temple du Nirvana)",
+  "statut": "OA",
+  "famille": "GENJUTSU",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Plumes qui tombent sur 7 m : les ennemis ordinaires s'endorment 3 s (réveillés par les dégâts).",
+  "valeurs": "0 ; Étourdi 3 s ; délai 20 s",
+  "visuel": "Plumes blanches lentes en 3 plans, ennemis endormis avec bulle de sommeil.",
+  "acces": "APT_GEN+CHR_063|APT_GEN+CHR_064",
+  "limites": "Élites : ralenties 40 % ; boss : Vulnérable +10 %."
+ },
+ {
+  "id": "JUT_255",
+  "nom": "Magen — Gamarinshō (Chant des crapauds)",
+  "statut": "OA",
+  "famille": "GENJUTSU",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Chant de 2 s (visible) puis tous les ennemis à 6 m sont paralysés 3 s.",
+  "valeurs": "Paralysie (Étourdi) 3 s ; délai 25 s",
+  "visuel": "Notes qui s'accumulent en cercle, cage d'illusion translucide sur les cibles.",
+  "acces": "APT_SENJ+CTR_CRAPAUD",
+  "limites": "Boss : 1 s puis résistance normale."
+ },
+ {
+  "id": "JUT_256",
+  "nom": "Faux reflets",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Trois reflets illusoires du joueur ; un ennemi qui en frappe un devient Confus 2 s et le reflet se brise.",
+  "valeurs": "0 ; délai 10 s",
+  "visuel": "Copies en silhouette violette pâle, bris en éclats de verre.",
+  "acces": "APT_GEN",
+  "limites": "Ne sont pas des clones (aucun dégât)."
+ },
+ {
+  "id": "JUT_257",
+  "nom": "Hallucination de discorde",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Une élite marquée croit voir le joueur parmi ses alliés : elle attaque les ordinaires voisins 3 s.",
+  "valeurs": "Confus renforcé 3 s ; délai 12 s",
+  "visuel": "Masque du joueur superposé aux têtes des ordinaires voisins (vu par l'élite).",
+  "acces": "APT_GEN",
+  "limites": "Boss : Vulnérable +10 %."
+ },
+ {
+  "id": "JUT_258",
+  "nom": "Distorsion d'espace",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Zone de 3 m : les projectiles ennemis ordinaires qui y entrent sont déviés de 40° loin du joueur.",
+  "valeurs": "0 ; durée 4 s ; délai 11 s",
+  "visuel": "Grille déformée en lentille autour du joueur.",
+  "acces": "APT_GEN",
+  "limites": "Télégraphes de boss non déviés."
+ },
+ {
+  "id": "JUT_259",
+  "nom": "Illusion de terreur",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Les ennemis à 4 m fuient le joueur 2 s (sans recul physique).",
+  "valeurs": "6 ; fuite 2 s ; délai 8 s",
+  "visuel": "Ombre gigantesque du joueur projetée au sol 0,5 s.",
+  "acces": "APT_GEN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_260",
+  "nom": "Pétales hypnotiques",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE",
+   "MOBILE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Pétales qui dérivent vers un groupe : dégâts légers, ralentissement 25 % et Confus 1,5 s à l'entrée.",
+  "valeurs": "4 par tick de 0,5 s ; durée 5 s ; délai 8 s",
+  "visuel": "Pétales roses de 2 px à rotation, couche légère.",
+  "acces": "APT_GEN",
+  "limites": "Confus 1 fois par cible par zone."
+ },
+ {
+  "id": "JUT_261",
+  "nom": "Rembobinage",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "aucune",
+  "comportement": "Les ennemis à 5 m rejouent à l'envers leurs 1,5 dernières secondes de déplacement (ils reculent).",
+  "valeurs": "0 ; délai 10 s",
+  "visuel": "Images rémanentes inversées et lignes de balayage horizontales.",
+  "acces": "APT_GEN",
+  "limites": "Boss : Vulnérable +5 %."
+ },
+ {
+  "id": "JUT_262",
+  "nom": "Faille illusoire",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "RAYON",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "direction",
+  "comportement": "Une fausse crevasse de 8 m apparaît : les ennemis ordinaires qui l'atteignent s'arrêtent 2 s au bord.",
+  "valeurs": "0 ; Entravé 2 s ; durée 3 s ; délai 7 s",
+  "visuel": "Crevasse dessinée avec contour violet pâle (marqueur d'illusion).",
+  "acces": "APT_GEN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_263",
+  "nom": "Marque de cauchemar",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "La cible marquée devient Vulnérable +25 % pendant 3 s.",
+  "valeurs": "Vulnérable +25 % ; délai 5 s",
+  "visuel": "Œil stylisé au-dessus de la cible, contour violet.",
+  "acces": "APT_GEN",
+  "limites": "Plafond global de vulnérabilité +50 %."
+ },
+ {
+  "id": "JUT_264",
+  "nom": "Contagion d'illusion",
+  "statut": "CO",
+  "famille": "GENJUTSU",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "marque",
+  "comportement": "Toutes les 3 s, chaque ennemi Confus propage la confusion à 1 voisin (portée 2,5 m).",
+  "valeurs": "Confus 1,5 s ; 1 propagation par confus ; délai 3 s",
+  "visuel": "Fil violet entre les cibles, spirale au-dessus des têtes.",
+  "acces": "APT_GEN",
+  "limites": "Propagations max 8 par cycle."
+ },
+ {
+  "id": "JUT_265",
+  "nom": "Hiraishin — Kunai de marquage",
+  "statut": "OA",
+  "famille": "SCEAU",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Lance des kunai à formule qui restent plantés ; toutes les 3 s, une image-éclair saute de kunai en kunai et frappe autour de chacun.",
+  "valeurs": "22 par kunai (r 1,5 m) ; max 3 kunai ; délai de lancer 2 s",
+  "visuel": "Kunai à trois pointes avec formule, traînée jaune-blanche en zigzag entre eux.",
+  "acces": "CHR_041|CHR_042|CHR_060",
+  "limites": "L'image-éclair n'est pas une unité."
+ },
+ {
+  "id": "JUT_266",
+  "nom": "Hiraishin Giri (Coupe du dieu du tonnerre)",
+  "statut": "AV",
+  "famille": "SCEAU",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "marque",
+  "comportement": "Déplacement volontaire : l'esquive téléporte le joueur au kunai marqué le plus proche dans sa direction et tranche autour.",
+  "valeurs": "45 (r 2 m) ; délai = esquive",
+  "visuel": "Éclair jaune de 1 frame, pose d'arrivée, arc de coupe.",
+  "acces": "CHR_041|CHR_042|CHR_060",
+  "limites": "Sans kunai : esquive normale."
+ },
+ {
+  "id": "JUT_267",
+  "nom": "Fūja Hōin (Sceau du mal)",
+  "statut": "OA",
+  "famille": "SCEAU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Scelle une élite : −40 % dégâts et vitesse 6 s.",
+  "valeurs": "10 ; affaiblissement 6 s ; délai 12 s",
+  "visuel": "Formule en cercle qui se referme sur la cible, glyphes noirs.",
+  "acces": "APT_FUIN",
+  "limites": "Boss : −20 % dégâts 4 s (résistance normale)."
+ },
+ {
+  "id": "JUT_268",
+  "nom": "Barrière de sceaux",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER",
+   "PERSISTANT"
+  ],
+  "cible": "aucune",
+  "comportement": "Carré de 5 m autour du joueur 3 s : projectiles ennemis ordinaires effacés en entrant ; ennemis qui entrent brûlés.",
+  "valeurs": "14 à l'entrée ; délai 16 s",
+  "visuel": "4 étiquettes aux coins, parois de lumière violette.",
+  "acces": "APT_FUIN",
+  "limites": "Ne suit pas le joueur."
+ },
+ {
+  "id": "JUT_269",
+  "nom": "Rouleau de scellement",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Aspire les projectiles ennemis à 2,5 m pendant 1 s, puis les relâche 2 s plus tard en couleur alliée vers les ennemis.",
+  "valeurs": "Relâche : 12 par projectile (max 15) ; délai 10 s",
+  "visuel": "Rouleau qui se déroule, projectiles absorbés en spirale, relâchés en éventail.",
+  "acces": "APT_FUIN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_270",
+  "nom": "Réseau d'étiquettes",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "PIEGE",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF"
+  ],
+  "cible": "chemin",
+  "comportement": "Pose 3 × 3 étiquettes en grille ; le déclenchement d'une étiquette fait exploser ses voisines en cascade.",
+  "valeurs": "20 par étiquette (r 1,3 m) ; écart de cascade 0,08 s ; délai 8 s",
+  "visuel": "Grille d'étiquettes reliées par lignes fines, explosions en vague.",
+  "acces": "APT_FUIN",
+  "limites": "1 grille active."
+ },
+ {
+  "id": "JUT_271",
+  "nom": "Gogyō Fūin (Sceau des cinq éléments)",
+  "statut": "OA",
+  "famille": "SCEAU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Retire à une élite son modificateur d'élite pendant 8 s.",
+  "valeurs": "15 ; suppression 8 s ; délai 14 s",
+  "visuel": "Cinq doigts lumineux, pentagramme qui s'imprime sur la cible.",
+  "acces": "APT_FUIN",
+  "limites": "Sans effet sur les boss (Vulnérable +10 % 4 s)."
+ },
+ {
+  "id": "JUT_272",
+  "nom": "Hakke no Fūin Shiki (Sceau à huit trigrammes)",
+  "statut": "OA",
+  "famille": "SCEAU",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "Stocke 20 % des dégâts subis ; toutes les 8 s, les relâche en onde de 4 m (minimum 10).",
+  "valeurs": "Onde = max(10 ; stock × 3) ; délai 8 s ; plafond 150",
+  "visuel": "Spirale et trigrammes lumineux sur le ventre, anneau à 8 segments.",
+  "acces": "CLAN_UZUMAKI|CHR_041|CHR_042",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_273",
+  "nom": "Cercle de sceaux temporisé",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "6 glyphes apparaissent autour du joueur (3 m) et s'activent l'un après l'autre en sens horaire (colonne de lumière).",
+  "valeurs": "18 par glyphe (r 1,2 m) ; écart 0,25 s ; délai 5 s",
+  "visuel": "Glyphes au sol qui s'allument en horloge, colonnes violettes brèves.",
+  "acces": "APT_FUIN",
+  "limites": "Les glyphes restent fixes quand le joueur bouge."
+ },
+ {
+  "id": "JUT_274",
+  "nom": "Sceau d'héritage",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Marque un ennemi ; s'il meurt Marqué, la marque passe à 3 voisins (max 2 générations).",
+  "valeurs": "8 ; Marqué 6 s ; délai 3 s",
+  "visuel": "Sceau qui se divise en trois lignes vers les voisins.",
+  "acces": "APT_FUIN",
+  "limites": "Profondeur 2 (règle §B8.2)."
+ },
+ {
+  "id": "JUT_275",
+  "nom": "Shishō Fūin (Sceau des quatre symboles)",
+  "statut": "AV",
+  "famille": "SCEAU",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Cercle de 4 m : les invocateurs dedans ne peuvent plus invoquer, les soigneurs ne soignent plus.",
+  "valeurs": "6 par tick de 0,5 s ; durée 5 s ; délai 12 s",
+  "visuel": "Quatre symboles aux points cardinaux, cercle lent.",
+  "acces": "APT_FUIN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_276",
+  "nom": "Étiquette de silence",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Étiquette qui interrompt et empêche les attaques à distance d'un tireur ou contrôleur 3 s (priorité à ceux qui télégraphient).",
+  "valeurs": "10 ; silence 3 s ; délai 4 s",
+  "visuel": "Étiquette collée sur la bouche/l'arme, trait barré.",
+  "acces": "APT_FUIN",
+  "limites": "Boss : interrompt un télégraphe mineur, jamais un majeur."
+ },
+ {
+  "id": "JUT_277",
+  "nom": "Gyaku Kuchiyose (Rappel des invocations)",
+  "statut": "OA",
+  "famille": "SCEAU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Toutes les 6 s, toutes les unités alliées se téléportent sur l'ennemi Marqué le plus menaçant et frappent ensemble (+30 % sur cette frappe).",
+  "valeurs": "Marque 6 ; bonus +30 % ; délai 6 s",
+  "visuel": "Sceau d'invocation au sol, bouffées de fumée synchrones.",
+  "acces": "APT_FUIN",
+  "limites": "Sans unité alliée : marque seule (carte avertit)."
+ },
+ {
+  "id": "JUT_278",
+  "nom": "Rouleau de barrière à sens unique",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER",
+   "PERSISTANT"
+  ],
+  "cible": "aucune",
+  "comportement": "Déroule une barrière de 6 m derrière le joueur : les ennemis ne la franchissent pas, le joueur et ses projectiles oui.",
+  "valeurs": "10 au contact ; durée 5 s ; délai 12 s",
+  "visuel": "Rouleau au sol, paroi de caractères verticaux, flèche de sens discrète.",
+  "acces": "APT_FUIN",
+  "limites": "Jamais fermée sur un obstacle (brèches de 2 m aux extrémités)."
+ },
+ {
+  "id": "JUT_279",
+  "nom": "Sceau de résonance",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE",
+   "EXPLOSIF"
+  ],
+  "cible": "marque",
+  "comportement": "Quand 5 ennemis ou plus sont Marqués, toutes les marques détonent ensemble.",
+  "valeurs": "30 par marque (r 1,5 m) ; délai interne 4 s",
+  "visuel": "Les marques vibrent à l'unisson puis éclatent simultanément (son unique groupé).",
+  "acces": "APT_FUIN",
+  "limites": "Consomme les marques."
+ },
+ {
+  "id": "JUT_280",
+  "nom": "Sceau de lien",
+  "statut": "CO",
+  "famille": "SCEAU",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_NEUTRE",
+   "MARQUE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Lie la cible la plus menaçante à 2 voisins : 40 % des dégâts qu'elle subit sont copiés sur eux.",
+  "valeurs": "Copie 40 % (SECONDAIRE) ; durée 5 s ; délai 8 s",
+  "visuel": "Chaînes de caractères reliant les cibles.",
+  "acces": "APT_FUIN",
+  "limites": "Les dégâts copiés ne se recopient pas."
+ },
+ {
+  "id": "JUT_281",
+  "nom": "Rasengan (Orbe tourbillonnant)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Concentre un orbe (0,3 s), puis une image de frappe le projette dans la cible la plus proche (≤ 3 m) : impact et onde de 1,5 m qui repousse.",
+  "valeurs": "Impact 26 ; onde 10 ; recul 1,5 m ; délai 2,2 s",
+  "visuel": "Sphère de 12 px à rotation interne (6 frames), anneaux de pression à l'impact ; le personnage reste visible (orbe tenu devant la main).",
+  "acces": "APT_RASEN",
+  "limites": "Voir fiche approfondie (8 niveaux)."
+ },
+ {
+  "id": "JUT_282",
+  "nom": "Kagemane no Jutsu (Imitation d'ombre)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "RAYON",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE",
+   "TERRAIN"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "L'ombre du joueur s'étire jusqu'à 7 m et immobilise la première cible touchée ; se ramifie vers 1 cible supplémentaire à 2 m.",
+  "valeurs": "Lié par l'ombre 2 s ; délai 5 s ; crée une surface OMBRE sur le trajet",
+  "visuel": "Ruban noir plat au sol à bord net (surface graphique), jonction en crochet.",
+  "acces": "CLAN_NARA",
+  "limites": "Boss : soumis à la résistance de contrôle."
+ },
+ {
+  "id": "JUT_283",
+  "nom": "Kage Kubi Shibari (Étranglement de l'ombre)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "marque",
+  "comportement": "Des mains d'ombre étranglent toutes les cibles Liées par l'ombre : dégâts continus ; sans cible liée, étreint la plus proche à 50 %.",
+  "valeurs": "12 par tick de 0,5 s ; durée 2 s ; délai 4 s",
+  "visuel": "Mains plates noires qui grimpent sur la silhouette en 3 frames.",
+  "acces": "CLAN_NARA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_284",
+  "nom": "Kage Nui (Couture de l'ombre)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Aiguilles d'ombre qui piquent puis se prolongent d'ennemi en ennemi via les surfaces OMBRE (portée doublée sur l'ombre).",
+  "valeurs": "16 ; 5 cibles ; portée 3 m (6 m sur OMBRE) ; délai 2 s",
+  "visuel": "Fils d'ombre à pointe, tracés en courbes nettes.",
+  "acces": "CLAN_NARA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_285",
+  "nom": "Nikudan Sensha (Char d'assaut humain)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT",
+   "REBOND"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Une boule roulante (image de Chōji agrandi) traverse les groupes et ricoche 2 fois sur le décor.",
+  "valeurs": "30 ; recul 1,5 m ; délai 4,0 s ; vitesse 9 m/s",
+  "visuel": "Boule de 24 px roulante (4 frames), traces au sol.",
+  "acces": "CLAN_AKIMICHI",
+  "limites": "Le joueur ne se déplace pas."
+ },
+ {
+  "id": "JUT_286",
+  "nom": "Bubun Baika (Expansion partielle)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Le bras grossit et écrase un cône de 4 m ; très lourd, lent.",
+  "valeurs": "55 ; recul 2 m ; délai 3,5 s",
+  "visuel": "Main géante de 40 px en anticipation 3 frames, impact avec déformation du sol.",
+  "acces": "CLAN_AKIMICHI",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_287",
+  "nom": "Chō Baika (Super expansion)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "aucune",
+  "comportement": "Le joueur grandit brièvement (sprite ×1,5, hitbox inchangée) et s'écrase : onde de 5 m.",
+  "valeurs": "48 ; délai 10 s",
+  "visuel": "Agrandissement par sprite dédié (pas de mise à l'échelle), anneau de poussière.",
+  "acces": "CLAN_AKIMICHI",
+  "limites": "Hitbox du joueur toujours 0,375 m."
+ },
+ {
+  "id": "JUT_288",
+  "nom": "Shintenshin no Jutsu (Transfert d'esprit)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Prend le contrôle d'une élite 4 s : elle combat pour le joueur (sans modificateur).",
+  "valeurs": "Contrôle 4 s ; délai 16 s",
+  "visuel": "Rayon de ciblage en losange, élite recolorée en couleur alliée.",
+  "acces": "CLAN_YAMANAKA",
+  "limites": "Boss : Étourdi 0,5 s (résistance normale)."
+ },
+ {
+  "id": "JUT_289",
+  "nom": "Shinranshin no Jutsu (Confusion de l'esprit)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Cône de 50° : jusqu'à 4 ennemis deviennent Confus 3 s.",
+  "valeurs": "0 ; délai 6 s",
+  "visuel": "Ondes en losanges, spirale au-dessus des cibles.",
+  "acces": "CLAN_YAMANAKA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_290",
+  "nom": "Barrière sensorielle",
+  "statut": "AV",
+  "famille": "CLAN",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "SENSEUR",
+   "MARQUE"
+  ],
+  "cible": "aucune",
+  "comportement": "Détecte les ennemis à 14 m (y compris hors écran) et Marque les 3 plus menaçants : +10 % de chance critique contre eux.",
+  "valeurs": "Marque 6 s ; délai 6 s",
+  "visuel": "Indicateurs de bord d'écran en losange, marques sur cibles.",
+  "acces": "CLAN_YAMANAKA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_291",
+  "nom": "Kikaichū (Essaim d'insectes)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "INVOCATION",
+  "tags": [
+   "E_NEUTRE",
+   "UNITE_ALLIEE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un essaim organisé (1 unité logique, 30 insectes décoratifs) enveloppe un groupe et Parasite.",
+  "valeurs": "3 par tick de 0,5 s + Parasité +1 ; rayon 1,5 m ; permanente",
+  "visuel": "Nuée en formation (boids décoratifs), sons de bourdonnement groupés.",
+  "acces": "CLAN_ABURAME",
+  "limites": "Les insectes ne sont pas des objets physiques (§G5)."
+ },
+ {
+  "id": "JUT_292",
+  "nom": "Mushi Kame (Dôme d'insectes)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Une coque d'insectes absorbe 3 projectiles puis se disperse en Parasitant à 2 m.",
+  "valeurs": "3 charges ; dispersion Parasité +2 ; délai 9 s",
+  "visuel": "Coque granuleuse sombre à contour clair, dispersion en nuée.",
+  "acces": "CLAN_ABURAME",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_293",
+  "nom": "Mushidama (Balles d'insectes)",
+  "statut": "AV",
+  "famille": "CLAN",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "3 balles d'insectes compactes ; à l'impact, elles se déploient et Parasitent en zone.",
+  "valeurs": "12 + Parasité +1 (r 1 m) ; délai 1,6 s",
+  "visuel": "Boules noires à scintillement, éclatement en points.",
+  "acces": "CLAN_ABURAME",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_294",
+  "nom": "Gatsūga (Double crocs perforants)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Deux tornades-vrilles (images de Kiba et d'Akamaru) traversent les groupes en X. Si Akamaru est possédé, la seconde vrille part d'Akamaru.",
+  "valeurs": "2 × 26 ; longueur 7 m ; délai 3,0 s",
+  "visuel": "Deux vrilles grises à traînée, croisement lisible.",
+  "acces": "CLAN_INUZUKA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_295",
+  "nom": "Garōga (Crocs du loup bicéphale)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "PERCANT",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Une vrille géante à deux têtes de loup fore en ligne sur 9 m puis creuse un cratère.",
+  "valeurs": "60 ; cratère 30 (r 2,5 m) ; délai 9 s",
+  "visuel": "Vrille de 32 px à deux gueules, sol labouré.",
+  "acces": "CHR_023",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_296",
+  "nom": "Jūken (Poing souple)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Frappes de paume qui ferment les points de chakra : −20 % dégâts infligés par la cible 3 s.",
+  "valeurs": "3 × 9 ; délai 1,0 s",
+  "visuel": "Paumes avec onde fine, points bleus sur la cible.",
+  "acces": "CLAN_HYUGA",
+  "limites": "Boss : −10 %."
+ },
+ {
+  "id": "JUT_297",
+  "nom": "Hakkeshō Kaiten (Rotation céleste)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Dôme de chakra en rotation (2,2 m) qui repousse et détruit les projectiles ordinaires.",
+  "valeurs": "24 ; recul 2,5 m ; délai 6 s",
+  "visuel": "Dôme bleu clair strié en rotation (4 frames), sol creusé en cercle.",
+  "acces": "CLAN_HYUGA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_298",
+  "nom": "Hakke Rokujūyon Shō (Soixante-quatre paumes)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "64 frappes en 1,6 s dans le champ des trigrammes (2 m) ; la dernière projette ; la cible principale est Étourdie.",
+  "valeurs": "64 × 2 (cible principale), 16 × 2 aux autres ; Étourdi 1 s ; délai 9 s",
+  "visuel": "Octogone de trigrammes au sol, compteur visuel 2-4-8-16-32-64 en chiffres stylisés.",
+  "acces": "CLAN_HYUGA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_299",
+  "nom": "Hakke Kūshō (Paume du vide)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Paume qui projette une onde d'air compacte à 8 m.",
+  "valeurs": "28 ; recul 2 m ; délai 1,8 s",
+  "visuel": "Onde en demi-lune translucide.",
+  "acces": "CLAN_HYUGA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_300",
+  "nom": "Jūho Sōshiken (Poings jumeaux du lion)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Deux têtes de lion de chakra prolongent les poings (allonge 2,5 m) ; chaque coup draine 0,5 chakra.",
+  "valeurs": "2 × 18 ; délai 1,2 s",
+  "visuel": "Têtes de lion bleues au contour net autour des mains.",
+  "acces": "CHR_018",
+  "limites": "Plafond de chakra global."
+ },
+ {
+  "id": "JUT_301",
+  "nom": "Kongō Fūsa (Chaînes de scellement adamantines)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CHAINE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Des chaînes jaillissent du dos, harponnent 3 cibles et les Entravent 2 s.",
+  "valeurs": "22 ; 3 cibles ; délai 6 s",
+  "visuel": "Chaînes dorées à maillons carrés, point d'ancrage sur le dos du personnage.",
+  "acces": "CLAN_UZUMAKI+APT_FUIN",
+  "limites": "Boss : Entravé réduit par résistance."
+ },
+ {
+  "id": "JUT_302",
+  "nom": "Tsubaki no Mai (Danse du camélia)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Épée d'os : estocades rapides en série (4) avec parade intégrée (annule 1 projectile par série).",
+  "valeurs": "4 × 11 ; délai 1,2 s",
+  "visuel": "Épée blanche ivoire, estocs en traits nets.",
+  "acces": "CLAN_KAGUYA",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_303",
+  "nom": "Sawarabi no Mai (Danse des fougères)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "PERSISTANT"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Une forêt d'os jaillit sur 5 m : dégâts à l'émergence, puis les os restent 3 s comme obstacles tranchants.",
+  "valeurs": "40 ; contact 8 par tick de 0,5 s ; délai 14 s",
+  "visuel": "Pics d'os blancs à ombre grise, émergence en vague.",
+  "acces": "CLAN_KAGUYA",
+  "limites": "Jamais sur le joueur (cercle libre de 1,5 m)."
+ },
+ {
+  "id": "JUT_304",
+  "nom": "Mizu Teppō (Pistolet à eau)",
+  "statut": "OA",
+  "famille": "CLAN",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_SUITON",
+   "PERCANT"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Tir d'eau très rapide depuis le doigt, perce 3 et Trempe ; le corps liquéfié du joueur réduit de 20 % les dégâts de contact.",
+  "valeurs": "14 ; délai 0,7 s ; vitesse 22 m/s",
+  "visuel": "Goutte allongée, main aqueuse.",
+  "acces": "CLAN_HOZUKI",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_305",
+  "nom": "Sharingan — Œil copieur",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "PROJECTILE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Mémorise le dernier projectile ennemi vu et en tire une copie alliée plus puissante vers son auteur.",
+  "valeurs": "Dégâts de l'original × 1,5 (min 15) ; délai 3 s",
+  "visuel": "Tomoe qui tournent sur l'icône, copie recolorée en couleur alliée.",
+  "acces": "DOJ_SHARINGAN",
+  "limites": "Sans projectile vu : tir de chakra 15."
+ },
+ {
+  "id": "JUT_306",
+  "nom": "Sharingan — Contre prédictif",
+  "statut": "CO",
+  "famille": "OCULAIRE",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Quand un ennemi commence un télégraphe vers le joueur, une image de frappe l'interrompt (sauf boss majeur).",
+  "valeurs": "35 ; délai interne 3 s",
+  "visuel": "Éclair rouge dans l'œil du portrait, image rouge qui frappe.",
+  "acces": "DOJ_SHARINGAN",
+  "limites": "Boss : dégâts seulement."
+ },
+ {
+  "id": "JUT_307",
+  "nom": "Sharingan — Hypnose",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "CONE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "direction",
+  "comportement": "Les ennemis qui font face au joueur dans un cône de 60° (6 m) sont Étourdis 1,5 s (5 max).",
+  "valeurs": "6 ; délai 6 s",
+  "visuel": "Motif de tomoe en spirale dans le cône (répétition graphique).",
+  "acces": "DOJ_SHARINGAN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_308",
+  "nom": "Tsukuyomi",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Une élite plonge dans une illusion : Étourdie 3 s et subit des dégâts continus massifs.",
+  "valeurs": "20 par tick de 0,5 s ; délai 14 s",
+  "visuel": "Cible en négatif (palette inversée localement) avec lune rouge au-dessus.",
+  "acces": "DOJ_MANGEKYO+CHR_031|DOJ_MANGEKYO+CHR_032",
+  "limites": "Boss : 0,5 s d'étourdissement max ; dégâts conservés."
+ },
+ {
+  "id": "JUT_309",
+  "nom": "Amaterasu",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Flammes noires sur la cible (Brûlure noire 5 cumuls, ×2) ; à sa mort, elles passent à l'ennemi le plus proche.",
+  "valeurs": "Brûlure noire 5 cumuls ; 2 transmissions max ; délai 8 s",
+  "visuel": "Flammes noires à contour blanc 1 px et liseré rouge ; restent lisibles sur fond sombre.",
+  "acces": "DOJ_MANGEKYO+CHR_031|DOJ_MANGEKYO+CHR_032|DOJ_MANGEKYO+CHR_006",
+  "limites": "Ne compte pas comme Katon (famille OCULAIRE, tag E_NEUTRE)."
+ },
+ {
+  "id": "JUT_310",
+  "nom": "Kamui (Distorsion à distance)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Spirale d'espace sur une zone de 1,5 m : élimine les ordinaires sous 40 % de PV, blesse les autres.",
+  "valeurs": "50 ; délai d'impact 0,8 s ; délai 7 s",
+  "visuel": "Spirale qui aspire les pixels vers son centre, silhouette déformée.",
+  "acces": "DOJ_MANGEKYO+CHR_009|CHR_061|CHR_062",
+  "limites": "Élites et boss : dégâts uniquement."
+ },
+ {
+  "id": "JUT_311",
+  "nom": "Kamui (Intangibilité)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Toutes les 6 s, le premier coup qui toucherait le joueur le traverse ; l'agresseur au contact subit une distorsion.",
+  "valeurs": "Distorsion 20 ; délai 6 s",
+  "visuel": "Joueur qui se tord en spirale 0,3 s (reste visible, contour conservé).",
+  "acces": "CHR_061|CHR_062",
+  "limites": "Compte comme invulnérabilité de 0,3 s."
+ },
+ {
+  "id": "JUT_312",
+  "nom": "Byakugan — Points vitaux",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "ZONE",
+  "tags": [
+   "E_NEUTRE",
+   "SENSEUR",
+   "MARQUE"
+  ],
+  "cible": "aucune",
+  "comportement": "Vision à 360° (12 m) : Marque 3 ennemis ; les 3 prochains coups sur chacun font +40 %.",
+  "valeurs": "Bonus +40 % additif ; délai 5 s",
+  "visuel": "Veines autour des yeux du portrait, marques en réseau de points.",
+  "acces": "DOJ_BYAKUGAN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_313",
+  "nom": "Rinnegan — Shinra Tensei (Répulsion divine)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "ONDE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Onde de répulsion de 6 m qui repousse fortement, détruit tous les projectiles ordinaires et blesse.",
+  "valeurs": "30 ; recul 4 m ; délai 10 s",
+  "visuel": "Anneau blanc qui plie le décor (distorsion), débris projetés.",
+  "acces": "DOJ_RINNEGAN",
+  "limites": "Recul réduit dans les zones alliées."
+ },
+ {
+  "id": "JUT_314",
+  "nom": "Rinnegan — Bansho Ten'in (Attraction universelle)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "RAYON",
+  "tags": [
+   "E_NEUTRE",
+   "ATTRACTION"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Attire violemment un groupe vers un point à 2 m devant le joueur ; ceux qui s'entrechoquent subissent des dégâts.",
+  "valeurs": "Collision 20 ; délai 7 s",
+  "visuel": "Lignes de force convergentes, impact au point focal.",
+  "acces": "DOJ_RINNEGAN",
+  "limites": "Ordinaires uniquement ; point focal jamais sur le joueur."
+ },
+ {
+  "id": "JUT_315",
+  "nom": "Rinnegan — Gakidō (Absorption)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "ORBITE",
+  "tags": [
+   "E_NEUTRE",
+   "BOUCLIER"
+  ],
+  "cible": "aucune",
+  "comportement": "Absorbe les projectiles ennemis de nature ninjutsu à 1,5 m et les convertit en bouclier.",
+  "valeurs": "Bouclier +3 par projectile (max 30) ; permanente",
+  "visuel": "Cercle de symboles tournant, projectiles aspirés dans la paume.",
+  "acces": "DOJ_RINNEGAN",
+  "limites": "Plafond de bouclier §B4.5."
+ },
+ {
+  "id": "JUT_316",
+  "nom": "Rinnegan — Ningendō (Extraction d'âme)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_proche",
+  "comportement": "Arrache l'âme d'un ennemi ordinaire sous 50 % de PV (élimination), blesse les autres.",
+  "valeurs": "30 ; délai 2,5 s",
+  "visuel": "Silhouette lumineuse tirée hors du corps en 4 frames.",
+  "acces": "DOJ_RINNEGAN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_317",
+  "nom": "Rinnegan — Shuradō (Missiles)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "SALVE",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "4 missiles à tête chercheuse depuis le bras mécanique, explosion en zone.",
+  "valeurs": "22 (r 1,6 m) ; délai 3,5 s",
+  "visuel": "Missiles gris à fumée courte, bras qui s'ouvre en 3 frames.",
+  "acces": "DOJ_RINNEGAN",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_318",
+  "nom": "Bras de Susanoo",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "CONTACT",
+  "tags": [
+   "E_NEUTRE"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Un bras spectral géant balaie un arc de 120° à 5 m.",
+  "valeurs": "42 ; délai 3,0 s",
+  "visuel": "Bras de chakra translucide (couleur du porteur) à contour épais, dessiné au-dessus du sol mais sous les télégraphes.",
+  "acces": "DOJ_MANGEKYO",
+  "limites": "—"
+ },
+ {
+  "id": "JUT_319",
+  "nom": "Kotoamatsukami",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "CONTROLE"
+  ],
+  "cible": "plus_menacant",
+  "comportement": "Convertit une élite en alliée jusqu'à sa mort (1 à la fois).",
+  "valeurs": "Élite alliée, dégâts × 0,8 ; délai 45 s",
+  "visuel": "Corbeau lumineux, élite recolorée en couleur alliée.",
+  "acces": "CHR_078",
+  "limites": "Boss : Étourdi 1 s (résistance normale)."
+ },
+ {
+  "id": "JUT_320",
+  "nom": "Tengai Shinsei (Chute de météore)",
+  "statut": "OA",
+  "famille": "OCULAIRE",
+  "livraison": "DIFFERE",
+  "tags": [
+   "E_NEUTRE",
+   "EXPLOSIF"
+  ],
+  "cible": "plus_dense",
+  "comportement": "Ombre croissante pendant 2,5 s, puis un météore s'écrase sur 5 m.",
+  "valeurs": "140 ; délai 24 s",
+  "visuel": "Ombre au sol qui grandit par paliers, rocher de 64 px ; onde sans flash plein écran.",
+  "acces": "CHR_044",
+  "limites": "Micro-pause locale uniquement."
+ }
+]

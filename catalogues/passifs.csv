@@ -1,0 +1,61 @@
+id;nom;statut;acces;stat;par_niveau;applique_a
+PAS_001;Entraînement intensif;CO;LIBRE;Puissance;+10 % Puissance;TOUT
+PAS_002;Rythme du shinobi;CO;LIBRE;Cadence;+7 % Cadence (niv. 5 : +35 %, délai −26 %);TOUT
+PAS_003;Maîtrise de la forme;CO;LIBRE;Zone;+8 % Zone (dimensions linéaires);CONE, ONDE, ZONE, PIEGE, RAYON, ORBITE, DIFFERE, CONTACT, PROJECTILE
+PAS_004;Chakra dense;CO;LIBRE;Puissance conditionnelle;+5 % dégâts des techniques CONTACT et ONDE;CONTACT, ONDE
+PAS_005;Endurance du chakra;CO;LIBRE;Durée;+8 % Durée;ZONE, ORBITE, PIEGE, INVOCATION, RAYON
+PAS_006;Sceau de multiplication;CO;LIBRE;Quantité;"niv. 2 : +1 Quantité ; niv. 4 : +1 (total +2) ; niv. 1/3/5 : +4 % Puissance";PROJECTILE, SALVE, ONDE, ZONE, PIEGE, ORBITE, INVOCATION, DIFFERE, CHAINE
+PAS_007;Poignet vif;CO;LIBRE;Vitesse des projectiles;+12 % vitesse des projectiles;PROJECTILE, SALVE, CHAINE
+PAS_008;Œil aiguisé;CO;LIBRE;Chance critique;+4 % chance critique;TOUT
+PAS_009;Frappe vitale;CO;LIBRE;Dégâts critiques;+0,12 au multiplicateur critique;TOUT
+PAS_010;Jambes légères;CO;LIBRE;Déplacement;+6 % déplacement;JOUEUR
+PAS_011;Gilet de chūnin;CO;LIBRE;Armure;+1 Armure;JOUEUR
+PAS_012;Sceaux rapides;CO;LIBRE;Réduction du délai;−4 % de délai des techniques SCEAU et PIEGE (appliqué après la Cadence, max −20 %);SCEAU, PIEGE
+PAS_013;Pilules de soldat;CO;LIBRE;Régénération;+0,2 PV/s;JOUEUR
+PAS_014;Aimant de chakra;CO;LIBRE;Rayon de collecte;+20 % rayon de collecte;JOUEUR
+PAS_015;Vitalité;CO;LIBRE;PV max;+10 % PV max;JOUEUR
+PAS_016;Méditation;CO;LIBRE;Gain de chakra;+10 % gain de chakra;JOUEUR
+PAS_017;Talent précoce;CO;LIBRE;Gain d'XP;+6 % gain d'XP;JOUEUR
+PAS_018;Chance du débutant;CO;LIBRE;Chance;+10 % Chance (rareté des Rouleaux, coffres triples);JOUEUR
+PAS_019;Réflexes;CO;LIBRE;Réduction des dégâts;+3 % réduction des dégâts;JOUEUR
+PAS_020;Précision;CO;LIBRE;Perce;"niv. 3 : +1 perce ; niv. 5 : +1 perce ; niv. 1/2/4 : +3 % Puissance des projectiles";PROJECTILE, SALVE
+PAS_021;Flamme intérieure;CO;ELEM_KATON;Affinité Katon;"+6 % dégâts E_KATON ; Brûlure +0,3 s";E_KATON
+PAS_022;Source vive;CO;ELEM_SUITON;Affinité Suiton;"+6 % dégâts E_SUITON ; Trempé +0,3 s";E_SUITON
+PAS_023;Nerfs de foudre;CO;ELEM_RAITON;Affinité Raiton;"+6 % dégâts E_RAITON ; délai interne d'Électrisé −0,1 s (min 0,5 s)";E_RAITON
+PAS_024;Souffle tranchant;CO;ELEM_FUTON;Affinité Fūton;"+6 % dégâts E_FUTON ; niv. 5 : Entaillé cumul max 4";E_FUTON
+PAS_025;Racines profondes;CO;ELEM_DOTON;Affinité Doton;"+6 % dégâts E_DOTON ; +2 % Armure effective près d'une structure de terre";E_DOTON
+PAS_026;Lignée héritée;CO;KG_MOKUTON|KG_HYOTON|KG_SABLE|KG_JITON|KG_SHAKUTON|KG_YOTON|KG_BAKUTON|KG_RANTON|KG_ENTON|KG_FUTTON|KG_JINTON;Affinité rare;+6 % dégâts des techniques de famille RARE;RARE
+PAS_027;Corps d'acier;CO;LIBRE;Taijutsu;"+5 % dégâts CONTACT ; +10 % recul";CONTACT
+PAS_028;Étui bien garni;CO;LIBRE;Outils;"+5 % dégâts OUTIL ; niv. 5 : +1 Quantité aux OUTIL";OUTIL
+PAS_029;Contrat de sang;CO;LIBRE;Invocations;"+10 % durée des unités ; +4 % dégâts des unités";UNITE_ALLIEE
+PAS_030;Esprit d'équipe;CO;LIBRE;Clones;"+6 % dégâts des CLONE ; niv. 5 : +1 au plafond de clones de chaque technique";CLONE
+PAS_031;Pas de l'ombre;CO;LIBRE;Esquive;"−6 % recharge d'esquive ; niv. 3 : +1 charge";JOUEUR
+PAS_032;Voile d'illusion;CO;APT_GEN;Genjutsu;+8 % durée des contrôles GENJUTSU;GENJUTSU
+PAS_033;Encre de sceau;CO;APT_FUIN;Sceaux;"+1 s durée de Marqué ; +6 % dégâts SCEAU";SCEAU
+PAS_034;Sang du clan;CO;CLAN_UCHIHA|CLAN_HYUGA|CLAN_NARA|CLAN_AKIMICHI|CLAN_YAMANAKA|CLAN_ABURAME|CLAN_INUZUKA|CLAN_UZUMAKI|CLAN_KAGUYA|CLAN_HOZUKI|APT_RASEN;Clan;+6 % dégâts CLAN;CLAN
+PAS_035;Pupilles éveillées;CO;DOJ_SHARINGAN|DOJ_BYAKUGAN|DOJ_RINNEGAN;Oculaire;−4 % délai des techniques OCULAIRE (après Cadence);OCULAIRE
+PAS_036;Huile de crapaud;CO;LIBRE;Terrain;Toutes les (10 − niv) s, la prochaine technique CONE, ONDE ou ZONE dépose une nappe d'HUILE sur sa zone;CONE, ONDE, ZONE
+PAS_037;Conducteur de chakra;CO;LIBRE;Conduction;"Trempé +0,2 s ; niv. 5 : Conduction crée 3 arcs au lieu de 2";E_SUITON, E_RAITON
+PAS_038;Nature du vent;CO;ELEM_FUTON;Transformation de nature;"+0,3 m portée Fūton ; niv. 3 : les techniques CLAN d'héritage (Rasengan) gagnent le tag E_FUTON";E_FUTON, CLAN
+PAS_039;Kawarimi (Substitution);OA;LIBRE;Survie;"Un coup qui ferait passer sous 1 PV est remplacé par une bûche ; délai 90/80/70/60/50 s";JOUEUR
+PAS_040;Chakra de réserve;CO;LIBRE;Bouclier;Toutes les 12 s : bouclier de 5 % PV max par niveau;JOUEUR
+PAS_041;Absorption;CO;LIBRE;Vol de vie;0,2 % des dégâts infligés rendus en PV (plafond 2 PV/s);JOUEUR
+PAS_042;Frénésie;CO;LIBRE;Cadence conditionnelle;Chaque élimination : +1 % Cadence 3 s (max +2 % × niv × 5);TOUT
+PAS_043;Tueur d'élites;CO;LIBRE;Dégâts ciblés;+8 % dégâts contre élites et boss;TOUT
+PAS_044;Nettoyeur de horde;CO;LIBRE;Dégâts ciblés;+6 % dégâts contre ennemis ordinaires;TOUT
+PAS_045;Poison concentré;CO;LIBRE;Poison;"+2 cumuls max d'Empoisonné ; +5 % dégâts du poison";POISON
+PAS_046;Maître des fils;CO;APT_MARIO;Marionnettes;"+1 m portée des fils ; +5 % dégâts MARIONNETTE";MARIONNETTE
+PAS_047;Perception;CO;LIBRE;Détection;"+2 m de détection hors écran ; +3 % chance critique contre Marqués";MARQUE
+PAS_048;Terrain favorable;CO;LIBRE;Terrain;+15 % durée des surfaces créées par le joueur;TERRAIN
+PAS_049;Explosifs instables;CO;LIBRE;Explosifs;"+6 % dégâts EXPLOSIF ; +5 % rayon d'explosion";EXPLOSIF
+PAS_050;Contrôle absolu;CO;LIBRE;Contrôle;"+6 % durée des contrôles ; résistance ajoutée aux boss −0,8 point par niveau (20 → 16)";CONTROLE
+PAS_051;Bouclier de chakra;CO;LIBRE;Bouclier;+10 % valeur des boucliers et +10 % durée des barrières;BOUCLIER
+PAS_052;Cycle de l'ultime;CO;LIBRE;Ultime;Après un ultime : +4 % Puissance par niveau pendant 10 s;JOUEUR
+PAS_053;Instinct animal;CO;LIBRE;Animaux;"+6 % dégâts ANIMAL ; +5 % vitesse des unités";ANIMAL
+PAS_054;Volonté du Feu;OA;LIBRE;Défense conditionnelle;Sous 50 % PV : +4 % réduction des dégâts et +3 % Puissance;JOUEUR
+PAS_055;Énergie naturelle;OA;APT_SENJ;Senjutsu;Immobile 1 s : +4 % dégâts (perdu après 2 s de mouvement);TOUT
+PAS_056;Chakra de bijū;CO;APT_JINCH;Jinchūriki;"+0,3 PV/s ; +6 % gain de chakra";JOUEUR
+PAS_057;Corps modifié;CO;APT_CORPS;Corps;"+6 % PV max ; −8 % coûts en PV (SACRIFICE)";JOUEUR
+PAS_058;Lame affûtée;CO;APT_KENJ;Kenjutsu;"+6 % dégâts CONTACT de famille OUTIL ; Entaillé +1 à niv. 3";OUTIL
+PAS_059;Médecine ninja;CO;APT_MED;Soins;+10 % soins reçus et prodigués;SOIN
+PAS_060;Main de chakra rotatif;CO;APT_RASEN;Lignée du Rasengan;"+0,3 m au rayon d'onde des techniques d'héritage ; +5 % dégâts";CLAN
