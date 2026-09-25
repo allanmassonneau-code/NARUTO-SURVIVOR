@@ -1,6 +1,6 @@
 # NARUTO: SHINOBI SURVIVORS — dossier de préproduction
 
-Projet créatif **non officiel** : dossier de conception d'un roguelite de type « survivors » en pixel art dans l'univers de *Naruto* et *Naruto Shippuden*. Ce dépôt ne contient **pas** de jeu : il contient la conception (règles, bible artistique, catalogues, architecture, plan de production) et un outillage qui vérifie la cohérence des catalogues. Tous les chiffres sont des hypothèses à tester. Les droits d'exploitation de la licence sont un prérequis non traité (risque R-01).
+Projet créatif **non officiel** : dossier de conception d'un roguelite de type « survivors » en pixel art dans l'univers de *Naruto* et *Naruto Shippuden*. Ce dépôt ne contient **pas** le jeu : il contient la conception (règles, bible artistique, catalogues, architecture, plan de production) et un outillage qui vérifie la cohérence des catalogues. Tous les chiffres sont des hypothèses à tester. Les droits d'exploitation de la licence sont un prérequis non traité (risque R-01).
 
 ## Lire le dossier
 
@@ -17,6 +17,14 @@ Projet créatif **non officiel** : dossier de conception d'un roguelite de type 
 | H | Production et validation | [`dossier/H_production.md`](dossier/H_production.md) |
 | Z | Audit synthétique (comptes réels, contradictions résolues, reste à faire) | [`dossier/Z_audit.md`](dossier/Z_audit.md) |
 
+## Prototype technique jouable
+
+[`prototype/index.html`](prototype/index.html) : un seul fichier, sans dépendance, à ouvrir dans un navigateur (clavier, manette ou écran tactile). Il met en œuvre la première étape du plan de production (§A, §H) : Naruto (CHR_001) avec Kage Bunshin (JUT_217), Rasengan (JUT_281) et Kunai en éventail (JUT_185) aux valeurs des fiches sur 8 niveaux, la signature des clones, l'évolution EVO_069 (coffre d'élite), l'ultime ULT_001, 11 passifs, le tirage des cartes du §B6.4 (filet §B6.6, relances), les fenêtres d'invulnérabilité du §B1.5, les ennemis ENM_002/003/011/019/020/076 et Zabuza (BOS_001) avec ses 5 attaques télégraphiées, ses 3 phases et la brume.
+
+Écarts assumés du prototype : chronologie compressée (Zabuza à 05:00 au lieu de 20:00), fragments d'XP ×2, 5 000 PV pour Zabuza (90 000 au format complet), terrain gris générique, sprites provisoires (PH), sons synthétiques. Réglage vérifié par des parties automatiques (robot d'évitement, premier choix de carte) : environ 2 victoires sur 3, combat de boss de 1 min 30 à 2 min 15.
+
+Commandes : ZQSD/WASD/flèches (ou glisser au doigt), Espace = esquive, E = ultime, Échap = pause, M = son. L'adresse `index.html#test-boss` démarre à 04:48 avec un build de fin de partie (raccourci de test).
+
 ## Contenu du catalogue
 
 80 entrées jouables (56 personnages + 24 variantes) · 320 techniques · 120 évolutions, fusions et éveils · 80 synergies · 60 passifs · 40 équipements · 24 transformations · 44 ultimes · 20 cartes · 40 boss · 100 ennemis (25 élites) · 200 missions · 60 secrets · 40 builds · 48 fiches de techniques sur 8 niveaux · 24 fiches de personnages · 20 fiches VFX · 12 briefs d'écrans.
@@ -27,6 +35,7 @@ Projet créatif **non officiel** : dossier de conception d'un roguelite de type 
 data/          Source de vérité (YAML) + schémas JSON (data/schemas/)
 catalogues/    Exports générés : CSV (séparateur « ; ») et JSON
 dossier/       Documents de conception ; E_catalogues/ contient les tableaux générés et les fiches rédigées
+prototype/     Prototype technique jouable (index.html)
 outils/        commun.py, valider.py, generer.py, sauvegarde.py, tests_validateur.py
 ```
 
