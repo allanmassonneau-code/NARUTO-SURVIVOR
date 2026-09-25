@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "naruto-survivors/technique",
+  "title": "Technique de base (JUT)",
+  "type": "object",
+  "required": ["id", "nom", "statut", "famille", "livraison", "tags", "cible", "comportement", "valeurs", "visuel", "acces"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^JUT_\\d{3}$"},
+    "nom": {"type": "string", "minLength": 3},
+    "statut": {"enum": ["OA", "CO", "AV"]},
+    "famille": {"enum": ["KATON", "SUITON", "RAITON", "FUTON", "DOTON", "RARE", "TAIJUTSU", "OUTIL", "INVOC", "GENJUTSU", "SCEAU", "CLAN", "OCULAIRE"]},
+    "livraison": {"enum": ["PROJECTILE", "SALVE", "CONE", "ONDE", "CONTACT", "ORBITE", "ZONE", "PIEGE", "RAYON", "CHAINE", "INVOCATION", "DIFFERE"]},
+    "tags": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[A-Z_]+$"}, "contains": {"pattern": "^E_"}},
+    "cible": {"enum": ["plus_proche", "plus_dense", "plus_menacant", "direction", "aleatoire_pondere", "marque", "chemin", "aucune"]},
+    "comportement": {"type": "string"},
+    "valeurs": {"type": "string"},
+    "visuel": {"type": "string"},
+    "acces": {"type": "string", "pattern": "^[A-Z0-9_+|]+$"},
+    "limites": {"type": "string"},
+    "hook": {"type": "string"},
+    "niveaux": {
+      "description": "Format de production : 8 niveaux de valeurs numériques (unités : m, s, points).",
+      "type": "array", "minItems": 8, "maxItems": 8,
+      "items": {"type": "object", "properties": {
+        "degats": {"type": "number", "minimum": 0}, "delai": {"type": "number", "minimum": 0.1},
+        "portee": {"type": "number", "minimum": 0}, "rayon": {"type": "number", "minimum": 0},
+        "duree": {"type": "number", "minimum": 0}, "nombre": {"type": "integer", "minimum": 0},
+        "plafond": {"type": "integer", "minimum": 0}}}
+    }
+  },
+  "additionalProperties": true
+}

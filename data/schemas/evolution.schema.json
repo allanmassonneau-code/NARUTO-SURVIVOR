@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "naruto-survivors/evolution",
+  "title": "Recette (EVO) : évolution, fusion ou éveil",
+  "type": "object",
+  "required": ["id", "nom", "statut", "type", "sources", "catalyseurs", "comportement", "valeurs", "limites", "visuel"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^EVO_\\d{3}$"},
+    "nom": {"type": "string"},
+    "statut": {"enum": ["OA", "CO", "AV"]},
+    "type": {"enum": ["EVOLUTION", "FUSION", "EVEIL"]},
+    "sources": {"type": "array", "minItems": 1, "maxItems": 2, "items": {"type": "string", "pattern": "^(JUT|EVO)_\\d{3}$"}},
+    "catalyseurs": {"type": "array", "items": {"type": "string", "pattern": "^(PAS|EQP)_\\d{3}$"}},
+    "condition_tardive": {"type": "string", "pattern": "^((TRF|EQP)_\\d{3})(\\|(TRF|EQP)_\\d{3})*$"},
+    "comportement": {"type": "string"}, "valeurs": {"type": "string"}, "limites": {"type": "string"}, "visuel": {"type": "string"}
+  },
+  "allOf": [
+    {"if": {"properties": {"type": {"const": "EVOLUTION"}}}, "then": {"properties": {"sources": {"maxItems": 1, "items": {"pattern": "^JUT_"}}, "catalyseurs": {"minItems": 1}}}},
+    {"if": {"properties": {"type": {"const": "FUSION"}}}, "then": {"properties": {"sources": {"minItems": 2, "items": {"pattern": "^JUT_"}}}}},
+    {"if": {"properties": {"type": {"const": "EVEIL"}}}, "then": {"required": ["condition_tardive"], "properties": {"sources": {"maxItems": 1, "items": {"pattern": "^EVO_"}}}}}
+  ]
+}
