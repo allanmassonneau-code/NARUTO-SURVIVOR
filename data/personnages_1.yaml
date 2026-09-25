@@ -115,7 +115,7 @@
   cpx: {nom: "Copie du Sharingan", effet: "Une fois par run, après avoir vu 3 fois une technique d'élite, le joueur reçoit une carte bonus pour une technique de base admissible de même famille."}
   faiblesse: "Chakra limité : ultime gagne −15 % de chakra."
   signature: "Peut équiper 2 techniques de familles élémentaires différentes avec +10 % de Puissance chacune (bonus « Polyvalence »)."
-  aptitudes: [ELEM_RAITON, ELEM_DOTON, ELEM_SUITON, ELEM_KATON, DOJ_SHARINGAN, CTR_CHIEN, APT_KENJ]
+  aptitudes: [ELEM_RAITON, ELEM_DOTON, ELEM_SUITON, ELEM_KATON, DOJ_SHARINGAN, CTR_CHIEN, APT_KENJ, APT_GEN]
   ultime: ULT_008
   transformations: []
   deblocage: {type: PREMIERE_RUN}
