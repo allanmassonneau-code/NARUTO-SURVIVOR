@@ -85,7 +85,7 @@ Une technique indique une **expression d'accès** : `LIBRE`, un code, une conjon
 | Affinités rares | `KG_MOKUTON`, `KG_HYOTON`, `KG_SABLE`, `KG_JITON`, `KG_SHAKUTON`, `KG_YOTON`, `KG_BAKUTON`, `KG_RANTON`, `KG_ENTON`, `KG_FUTTON`, `KG_JINTON` |
 | Clans | `CLAN_UCHIHA`, `CLAN_HYUGA`, `CLAN_NARA`, `CLAN_AKIMICHI`, `CLAN_YAMANAKA`, `CLAN_ABURAME`, `CLAN_INUZUKA`, `CLAN_UZUMAKI`, `CLAN_SENJU`, `CLAN_KAGUYA`, `CLAN_HOZUKI`, `CLAN_SARUTOBI` |
 | Dōjutsu | `DOJ_SHARINGAN`, `DOJ_MANGEKYO`, `DOJ_BYAKUGAN`, `DOJ_RINNEGAN` |
-| Aptitudes | `APT_FUIN` (sceaux), `APT_GEN` (genjutsu), `APT_MED` (médical), `APT_KENJ` (kenjutsu), `APT_MARIO` (marionnettes), `APT_SENJ` (senjutsu), `APT_PORTES` (Portes internes), `APT_JINCH` (jinchūriki), `APT_ENCRE` (encre de Sai), `APT_PAPIER` (papier de Konan), `APT_CORPS` (techniques corporelles d'Orochimaru/Kakuzu/Hidan) |
+| Aptitudes | `APT_FUIN` (sceaux), `APT_GEN` (genjutsu), `APT_MED` (médical), `APT_KENJ` (kenjutsu), `APT_MARIO` (marionnettes), `APT_SENJ` (senjutsu), `APT_PORTES` (Portes internes), `APT_JINCH` (jinchūriki), `APT_ENCRE` (encre de Sai), `APT_PAPIER` (papier de Konan), `APT_CORPS` (techniques corporelles d'Orochimaru/Kakuzu/Hidan), `APT_RASEN` (lignée du Rasengan : techniques transmises de maître à élève) |
 | Contrats | `CTR_CRAPAUD`, `CTR_SERPENT`, `CTR_LIMACE`, `CTR_CHIEN`, `CTR_SINGE`, `CTR_FAUCON`, `CTR_BELETTE`, `CTR_REQUIN`, `CTR_CORBEAU`, `CTR_PALOURDE` |
 | Personnel | `CHR_NNN` (réservé à une entrée) |
 
@@ -104,7 +104,7 @@ Une technique indique une **expression d'accès** : `LIBRE`, un code, une conjon
 | Invocations et clones | `INVOC` | 217–248 | 32 |
 | Genjutsu | `GENJUTSU` | 249–264 | 16 |
 | Sceaux | `SCEAU` | 265–280 | 16 |
-| Clan | `CLAN` | 281–304 | 24 |
+| Clan et héritage | `CLAN` | 281–304 | 24 |
 | Oculaire | `OCULAIRE` | 305–320 | 16 |
 | **Total** | | | **320** |
 
