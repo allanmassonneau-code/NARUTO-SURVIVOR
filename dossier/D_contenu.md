@@ -249,7 +249,7 @@ Les rangs ajoutent surtout **comportements, contraintes spatiales, événements 
 | **Draft** | 6 techniques choisies parmi 12 avant la run, aucune nouvelle technique en jeu | Pool |
 | **Défis de clan** | Pool ou objectif centré sur un clan (MIS_021–032) | Pool, tags |
 | **Défis élémentaires** | Pool restreint à un élément + outils (MIS_033–042) | Pool |
-| **Expérimental** (optionnel) | Compatibilités levées ; résultats marqués ; ne compte pas pour les succès « Épreuve » | Tout |
+| **Expérimental** (optionnel) | Compatibilités levées ; résultats marqués ; ne compte ni pour les missions expertes (MIS_181–200) ni pour les déblocages de personnages | Tout |
 
 ## D10. Endgame et prestige
 

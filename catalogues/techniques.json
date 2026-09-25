@@ -960,7 +960,7 @@
  {
   "id": "JUT_058",
   "nom": "Raiton — Shichū Shibari (Prison des quatre piliers)",
-  "statut": "AV",
+  "statut": "OA",
   "famille": "RAITON",
   "livraison": "PIEGE",
   "tags": [
@@ -1108,8 +1108,8 @@
  },
  {
   "id": "JUT_067",
-  "nom": "Raiton — Sandā Gēto (Porte du tonnerre)",
-  "statut": "AV",
+  "nom": "Porte du tonnerre",
+  "statut": "CO",
   "famille": "RAITON",
   "livraison": "DIFFERE",
   "tags": [
@@ -1240,7 +1240,7 @@
  {
   "id": "JUT_075",
   "nom": "Fūton — Shinkū Gyoku (Sphères de vide)",
-  "statut": "AV",
+  "statut": "OA",
   "famille": "FUTON",
   "livraison": "SALVE",
   "tags": [
@@ -1274,7 +1274,7 @@
  {
   "id": "JUT_077",
   "nom": "Fūton — Shinkū Taigyoku (Grande sphère de vide)",
-  "statut": "AV",
+  "statut": "OA",
   "famille": "FUTON",
   "livraison": "PROJECTILE",
   "tags": [
@@ -1307,7 +1307,7 @@
  },
  {
   "id": "JUT_079",
-  "nom": "Fūton — Renkūdan (Balle d'air)",
+  "nom": "Fūton — Renkūdan (Balle d'air perforante)",
   "statut": "AV",
   "famille": "FUTON",
   "livraison": "PROJECTILE",
@@ -1319,7 +1319,7 @@
   "valeurs": "26 ; cône arrière 12 (45°, 3 m) ; délai 1,8 s ; vitesse 16 m/s",
   "visuel": "Balle compacte à traînée en cône, éclat de pression en éventail derrière la cible.",
   "acces": "ELEM_FUTON",
-  "limites": "Cône arrière = SECONDAIRE."
+  "limites": "Cône arrière = SECONDAIRE. Dans l'œuvre, balle d'air associée à Shukaku (correspondance du nom japonais à vérifier) ; ici technique Fūton générique (adaptation)."
  },
  {
   "id": "JUT_080",
@@ -2167,7 +2167,7 @@
  {
   "id": "JUT_130",
   "nom": "Hyōton — Tsubame Fubuki (Blizzard d'hirondelles)",
-  "statut": "AV",
+  "statut": "OA",
   "famille": "RARE",
   "livraison": "SALVE",
   "tags": [
@@ -2178,7 +2178,7 @@
   "valeurs": "11 ; délai 2,4 s ; vitesse 10 m/s",
   "visuel": "Oiseaux de glace de 8 px à ailes en 2 frames, traînée de neige.",
   "acces": "KG_HYOTON",
-  "limites": "—"
+  "limites": "Attribution vérifiée (Narutopedia) : technique de Fubuki Kakuyoku (film « Le Pays des neiges ») ; Haku ne l'utilise que dans des jeux vidéo. Son accès par Hyōton est ici une adaptation de gameplay."
  },
  {
   "id": "JUT_131",
@@ -2284,7 +2284,7 @@
  },
  {
   "id": "JUT_137",
-  "nom": "Jiton — Satetsu Kaihō (Libération du sable de fer)",
+  "nom": "Jiton — Satetsu Kaihō (Sable de fer : ordre du monde)",
   "statut": "OA",
   "famille": "RARE",
   "livraison": "DIFFERE",
@@ -2300,8 +2300,8 @@
  },
  {
   "id": "JUT_138",
-  "nom": "Jiton — Sakin Kaihō (Libération de la poudre d'or)",
-  "statut": "AV",
+  "nom": "Jiton — Sakin Taisō (Enterrement impérial de poudre d'or)",
+  "statut": "OA",
   "famille": "RARE",
   "livraison": "ONDE",
   "tags": [
@@ -4942,8 +4942,8 @@
  },
  {
   "id": "JUT_293",
-  "nom": "Mushidama (Balles d'insectes)",
-  "statut": "AV",
+  "nom": "Balles d'insectes",
+  "statut": "CO",
   "famille": "CLAN",
   "livraison": "SALVE",
   "tags": [

@@ -144,8 +144,8 @@
   acces: CLAN_ABURAME
   limites: "—"
 - id: JUT_293
-  nom: "Mushidama (Balles d'insectes)"
-  statut: AV
+  nom: "Balles d'insectes"
+  statut: CO
   famille: CLAN
   livraison: SALVE
   tags: [E_NEUTRE]

@@ -193,7 +193,7 @@
   "effet": "La cellule devient verre 4 s : les ennemis qui la traversent sont Entaillés.",
   "limite": "1 conversion par cellule / 4 s.",
   "plafond": "3 cumuls d'Entaillé.",
-  "compatibilite": "Sable + Katon (Pakura, via pool rare ; Sasori Troisième Kazekage non concerné).",
+  "compatibilite": "Tout porteur de Katon sur une surface SABLE (sable naturel de MAP_017, ou sable créé par les techniques de sable) ; aucune entrée ne possède à la fois le sable et le Katon.",
   "contrepartie": "Le sable vitrifié ne ralentit plus.",
   "manifestation": "Cellule brillante à reflets, fissures blanches.",
   "boss_isole": "Boss : +1 Entaillé par seconde passée sur le verre."
@@ -490,7 +490,7 @@
   "effet": "Consomme Trempé : dégâts ×1,5 sur ce coup et nuage de Vapeur (r 1,5 m).",
   "limite": "1 fois / 0,5 s par cible.",
   "plafond": "—",
-  "compatibilite": "Pakura.",
+  "compatibilite": "Pakura (cibles Trempées par la pluie de MAP_012, la crue de MAP_006 ou les surfaces EAU).",
   "contrepartie": "Interaction négative intentionnelle avec Conduction (SYN_001) : l'état est consommé. Affiché sur les cartes des deux côtés.",
   "manifestation": "Sifflement et vapeur blanche, cible qui pâlit.",
   "boss_isole": "Inchangé."

@@ -25,7 +25,7 @@
   limites: "Intervalle interne 0,1 s entre les 3 coupes."
 - id: JUT_075
   nom: "Fūton — Shinkū Gyoku (Sphères de vide)"
-  statut: AV
+  statut: OA
   famille: FUTON
   livraison: SALVE
   tags: [E_FUTON, PERCANT]
@@ -49,7 +49,7 @@
   limites: "—"
 - id: JUT_077
   nom: "Fūton — Shinkū Taigyoku (Grande sphère de vide)"
-  statut: AV
+  statut: OA
   famille: FUTON
   livraison: PROJECTILE
   tags: [E_FUTON, PERCANT]
@@ -72,7 +72,7 @@
   acces: ELEM_FUTON
   limites: "—"
 - id: JUT_079
-  nom: "Fūton — Renkūdan (Balle d'air)"
+  nom: "Fūton — Renkūdan (Balle d'air perforante)"
   statut: AV
   famille: FUTON
   livraison: PROJECTILE
@@ -82,7 +82,7 @@
   valeurs: "26 ; cône arrière 12 (45°, 3 m) ; délai 1,8 s ; vitesse 16 m/s"
   visuel: "Balle compacte à traînée en cône, éclat de pression en éventail derrière la cible."
   acces: ELEM_FUTON
-  limites: "Cône arrière = SECONDAIRE."
+  limites: "Cône arrière = SECONDAIRE. Dans l'œuvre, balle d'air associée à Shukaku (correspondance du nom japonais à vérifier) ; ici technique Fūton générique (adaptation)."
 - id: JUT_080
   nom: "Lames de vent"
   statut: CO

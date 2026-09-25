@@ -451,8 +451,8 @@
   limites: "Télégraphes majeurs : réduits de 50 %."
   visuel: "Flux de sable plus dense, silhouette de tanuki esquissée au blocage."
 - id: EVO_046
-  nom: "Satetsu Kekkai (Barrière de sable de fer)"
-  statut: AV
+  nom: "Réseau de sable de fer"
+  statut: CO
   type: EVOLUTION
   sources: [JUT_136]
   catalyseurs: [PAS_026]

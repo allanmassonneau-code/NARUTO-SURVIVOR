@@ -61,7 +61,7 @@ Chaque technique déclare une **règle de ciblage** (codes de données : `plus_p
 
 ### B1.6 Assistance
 
-Distincte des rangs de difficulté, affichée dans l'écran de résultat (icône « Assisté »), n'invalide aucun déblocage **sauf** les secrets marqués « Épreuve ».
+Distincte des rangs de difficulté, affichée dans l'écran de résultat (icône « Assisté »), n'invalide aucun déblocage **sauf** les missions expertes (MIS_181–200), qui exigent l'absence d'assistance.
 
 | Aide | Effet |
 |---|---|

@@ -109,7 +109,7 @@
   limites: "Étourdissement soumis à la résistance de contrôle."
 - id: JUT_058
   nom: "Raiton — Shichū Shibari (Prison des quatre piliers)"
-  statut: AV
+  statut: OA
   famille: RAITON
   livraison: PIEGE
   tags: [E_RAITON, CONTROLE]
@@ -216,8 +216,8 @@
   acces: ELEM_RAITON
   limites: "Une cible ne reçoit qu'une branche."
 - id: JUT_067
-  nom: "Raiton — Sandā Gēto (Porte du tonnerre)"
-  statut: AV
+  nom: "Porte du tonnerre"
+  statut: CO
   famille: RAITON
   livraison: DIFFERE
   tags: [E_RAITON]

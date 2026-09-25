@@ -111,7 +111,7 @@
   limites: "—"
 - id: JUT_130
   nom: "Hyōton — Tsubame Fubuki (Blizzard d'hirondelles)"
-  statut: AV
+  statut: OA
   famille: RARE
   livraison: SALVE
   tags: [E_HYOTON]
@@ -120,7 +120,7 @@
   valeurs: "11 ; délai 2,4 s ; vitesse 10 m/s"
   visuel: "Oiseaux de glace de 8 px à ailes en 2 frames, traînée de neige."
   acces: KG_HYOTON
-  limites: "—"
+  limites: "Attribution vérifiée (Narutopedia) : technique de Fubuki Kakuyoku (film « Le Pays des neiges ») ; Haku ne l'utilise que dans des jeux vidéo. Son accès par Hyōton est ici une adaptation de gameplay."
 - id: JUT_131
   nom: "Sabaku Kyū (Cercueil de sable)"
   statut: OA
@@ -194,7 +194,7 @@
   acces: KG_JITON
   limites: "—"
 - id: JUT_137
-  nom: "Jiton — Satetsu Kaihō (Libération du sable de fer)"
+  nom: "Jiton — Satetsu Kaihō (Sable de fer : ordre du monde)"
   statut: OA
   famille: RARE
   livraison: DIFFERE
@@ -206,8 +206,8 @@
   acces: KG_JITON
   limites: "—"
 - id: JUT_138
-  nom: "Jiton — Sakin Kaihō (Libération de la poudre d'or)"
-  statut: AV
+  nom: "Jiton — Sakin Taisō (Enterrement impérial de poudre d'or)"
+  statut: OA
   famille: RARE
   livraison: ONDE
   tags: [E_JITON, CONTROLE]
