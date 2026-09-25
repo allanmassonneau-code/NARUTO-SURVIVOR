@@ -17,6 +17,7 @@
 - id: CHR_029
   nom: "Tsunade"
   type: BASE
+  prioritaire: true
   identite: "Force sannin et longévité : soigne en frappant, gagne en encaissant."
   depart: JUT_174
   stats: {pv: 150, depl: 4.2, notes: "Régénération +0,5/s"}
@@ -31,6 +32,7 @@
 - id: CHR_030
   nom: "Orochimaru"
   type: BASE
+  prioritaire: true
   identite: "Serpents et corps modifié : poison, mues et invocations interdites."
   depart: JUT_227
   stats: {pv: 110, depl: 4.4, notes: "—"}
@@ -45,6 +47,7 @@
 - id: CHR_031
   nom: "Itachi Uchiha"
   type: BASE
+  prioritaire: true
   identite: "Illusionniste économe : leurres, corbeaux, frappes rares et décisives."
   depart: JUT_223
   stats: {pv: 95, depl: 4.6, notes: "Chance critique +10 %"}
@@ -74,6 +77,7 @@
 - id: CHR_033
   nom: "Kisame Hoshigaki"
   type: BASE
+  prioritaire: true
   identite: "Réserve de chakra infinie : dévorer le chakra ennemi au contact."
   depart: JUT_198
   stats: {pv: 140, depl: 4.3, notes: "Gain de chakra +20 %"}
@@ -103,6 +107,7 @@
 - id: CHR_035
   nom: "Deidara"
   type: BASE
+  prioritaire: true
   identite: "L'art est une explosion : créatures d'argile et bombes différées."
   depart: JUT_147
   stats: {pv: 95, depl: 4.5, notes: "—"}
@@ -132,6 +137,7 @@
 - id: CHR_037
   nom: "Sasori"
   type: BASE
+  prioritaire: true
   identite: "Poison absolu : marionnettes humaines et aiguilles."
   depart: JUT_205
   stats: {pv: 100, depl: 4.1, notes: "—"}
@@ -161,6 +167,7 @@
 - id: CHR_039
   nom: "Pain (Chemin des Dieux)"
   type: BASE
+  prioritaire: true
   identite: "Répulsion et attraction : contrôler l'espace autour de soi."
   depart: JUT_313
   stats: {pv: 115, depl: 4.2, notes: "—"}
@@ -190,6 +197,7 @@
 - id: CHR_041
   nom: "Minato Namikaze"
   type: BASE
+  prioritaire: true
   identite: "Éclair jaune : kunai de marquage et téléportation volontaire."
   depart: JUT_265
   stats: {pv: 105, depl: 5.0, notes: "Recharge d'esquive −25 %"}
@@ -219,6 +227,7 @@
 - id: CHR_043
   nom: "Madara Uchiha"
   type: BASE
+  prioritaire: true
   identite: "Légende armée : feu de masse, éventail de guerre, Susanoo."
   depart: JUT_007
   stats: {pv: 130, depl: 4.5, notes: "Puissance +10 %"}
@@ -248,6 +257,7 @@
 - id: CHR_045
   nom: "Might Guy"
   type: BASE
+  prioritaire: true
   identite: "Bête verte : ouvrir les Portes au bon moment, puis tout balayer."
   depart: JUT_166
   stats: {pv: 135, depl: 5.1, notes: "Pas d'accès aux éléments"}

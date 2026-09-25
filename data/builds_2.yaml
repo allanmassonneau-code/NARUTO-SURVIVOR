@@ -1,0 +1,261 @@
+# Builds BLD_021 à BLD_040.
+- id: BLD_021
+  nom: "Nids de serpents et réanimés"
+  personnage: CHR_030
+  techniques: [JUT_227, JUT_226, JUT_243, JUT_244, JUT_271, JUT_199]
+  evolutions: [EVO_076, EVO_067]
+  passifs: [PAS_057, PAS_058, PAS_045, PAS_029, PAS_033, PAS_015]
+  equipements: [EQP_004, EQP_025]
+  transformation: null
+  ordre: "Mains-serpents ; Kusanagi vers 3 min ; Edo Tensei à la première élite ; Rashōmon avant le lieutenant ; Gogyō Fūin contre les élites à modificateur ; Manda pour le boss ; évolutions vers 13–15 min."
+  remplacements: ["JUT_271 → JUT_267 (Fūja Hōin)", "EQP_025 → EQP_022"]
+  fenetre: "Faible tôt, fort après les premières élites."
+  faiblesse: "Inactif sans élite vaincue (Edo Tensei) ; démarrage lent."
+  difficulte: 4
+- id: BLD_022
+  nom: "Corbeaux et flammes noires"
+  personnage: CHR_031
+  techniques: [JUT_223, JUT_309, JUT_308, JUT_001, JUT_219, JUT_307]
+  evolutions: [EVO_091, EVO_001, EVO_116]
+  passifs: [PAS_035, PAS_021, PAS_008, PAS_032, PAS_009, PAS_016]
+  equipements: [EQP_035, EQP_025]
+  transformation: TRF_007
+  ordre: "Clones de corbeaux (leurres) ; Gōkakyū ; Amaterasu vers 5 min ; Hypnose ; Clone explosif ; Tsukuyomi sur les élites ; évolutions vers 13 min ; éveil sous Susanoo."
+  remplacements: ["JUT_307 → JUT_305 (Œil copieur)", "EQP_025 → EQP_022 (compense la maladie)"]
+  fenetre: "Économe mais décisif ; fort contre élites."
+  faiblesse: "PV faibles (maladie) ; horde dense avant Amaterasu évolué."
+  difficulte: 4
+- id: BLD_023
+  nom: "Arène aquatique de Kisame"
+  personnage: CHR_033
+  techniques: [JUT_198, JUT_029, JUT_046, JUT_032, JUT_233, JUT_027]
+  evolutions: [EVO_066, EVO_017, EVO_013]
+  passifs: [PAS_041, PAS_053, PAS_022, PAS_048, PAS_016, PAS_015]
+  equipements: [EQP_023, EQP_017]
+  transformation: TRF_018
+  ordre: "Samehada au contact ; Requin missile ; inondation (Bakusui) vers 6 min ; requins invoqués dans l'eau ; Grand requin vers 9 min ; Prison aqueuse sur les élites ; trois évolutions vers 12–16 min."
+  remplacements: ["JUT_027 → JUT_030", "EQP_017 → EQP_022"]
+  fenetre: "Fort dès l'inondation ; très résistant."
+  faiblesse: "Hors de l'eau, les bonus tombent ; les ennemis Raiton profitent eux aussi de l'eau (Kumo, Amegakure)."
+  difficulte: 2
+- id: BLD_024
+  nom: "Tapis de mines"
+  personnage: CHR_035
+  techniques: [JUT_147, JUT_149, JUT_189, JUT_209, JUT_148, JUT_105]
+  evolutions: [EVO_047, EVO_048, EVO_062]
+  passifs: [PAS_049, PAS_026, PAS_006, PAS_003, PAS_012, PAS_001]
+  equipements: [EQP_007, EQP_008]
+  transformation: null
+  ordre: "C1 ; étiquettes explosives ; kunai piégés ; Ligne de pics pour la frontale ; C2 vers 8 min ; C3 vers 10 min ; évolutions vers 12–16 min."
+  remplacements: ["JUT_105 → JUT_118 (Rocher rebondissant)", "EQP_008 → EQP_034"]
+  fenetre: "Moyenne tôt ; excellente contre les hordes au milieu."
+  faiblesse: "Explosions retardées contre chargeurs rapides."
+  difficulte: 3
+- id: BLD_025
+  nom: "Poison maximal"
+  personnage: CHR_037
+  techniques: [JUT_205, JUT_206, JUT_202, JUT_203, JUT_208, JUT_025]
+  evolutions: [EVO_064, EVO_063]
+  passifs: [PAS_045, PAS_046, PAS_029, PAS_005, PAS_019, PAS_022]
+  equipements: [EQP_004, EQP_030]
+  transformation: null
+  ordre: "Hiruko ; Aiguilles ; Karasu vers 4 min (SYN_021) ; Kuroari ; Fils de chakra ; Dragon d'eau pour la ligne ; évolutions vers 12–15 min."
+  remplacements: ["JUT_025 → JUT_086 (Croix de vent)", "EQP_030 → EQP_008"]
+  fenetre: "Lente mais implacable ; excellente contre boss (poison ignore la résistance)."
+  faiblesse: "Dégâts directs faibles contre les élites « Vampire » purgées."
+  difficulte: 3
+- id: BLD_026
+  nom: "Répulsion-attraction"
+  personnage: CHR_039
+  techniques: [JUT_313, JUT_314, JUT_317, JUT_316, JUT_237, JUT_315, JUT_238]
+  evolutions: [EVO_112]
+  passifs: [PAS_035, PAS_050, PAS_051, PAS_029, PAS_001, PAS_049]
+  equipements: [EQP_025, EQP_035]
+  transformation: null
+  ordre: "Shinra Tensei ; Bansho Ten'in ; missiles ; Ningendō ; Cerbère vers 7 min ; Gakidō ; fusion Ten'in-Tensei vers 14 min (libère → Rhinocéros)."
+  remplacements: ["JUT_316 → JUT_313 évolué (EVO_093) si la fusion est refusée", "EQP_035 → EQP_031"]
+  fenetre: "Créneaux ; contrôle de l'espace fort au milieu."
+  faiblesse: "Intervalle de 5 s entre répulsions (CPX) à gérer."
+  difficulte: 3
+- id: BLD_027
+  nom: "Réseau de kunai"
+  personnage: CHR_041
+  techniques: [JUT_265, JUT_266, JUT_281, JUT_185, JUT_189, JUT_059]
+  evolutions: [EVO_081, EVO_060, EVO_084]
+  passifs: [PAS_033, PAS_060, PAS_031, PAS_028, PAS_002, PAS_008]
+  equipements: [EQP_002, EQP_024]
+  transformation: null
+  ordre: "Kunai de marquage ; esquive Hiraishin ; Rasengan (SYN_069) ; kunai en éventail qui marquent (SYN_051) ; étiquettes ; Arc en chaîne ; évolutions vers 12–16 min."
+  remplacements: ["JUT_059 → JUT_272", "EQP_024 → EQP_034"]
+  fenetre: "Forte mobilité dès 3 min ; pic avec le réseau céleste."
+  faiblesse: "Champ vide de kunai = efficacité réduite après une grande dispersion."
+  difficulte: 4
+- id: BLD_028
+  nom: "Extinction par le feu"
+  personnage: CHR_043
+  techniques: [JUT_007, JUT_216, JUT_001, JUT_006, JUT_318, JUT_073, JUT_004]
+  evolutions: [EVO_095, EVO_097]
+  passifs: [PAS_051, PAS_021, PAS_043, PAS_001, PAS_003, PAS_035]
+  equipements: [EQP_018, EQP_025]
+  transformation: TRF_008
+  ordre: "Gōka Mekkyaku ; Gunbai ; Gōkakyū ; Gōryūka ; Bras de Susanoo vers 8 min ; Daitoppa ; fusion Tempête de feu vers 14 min (libère → Karyū Endan) ; EVO_095 vers 16 min ; Susanoo parfait au boss."
+  remplacements: ["JUT_004 → JUT_022", "EQP_025 → EQP_033"]
+  fenetre: "Montée continue (Danse : +5 % par élite)."
+  faiblesse: "Délais longs ; mobilité défensive faible."
+  difficulte: 3
+- id: BLD_029
+  nom: "Paon, tigre et éléphant"
+  personnage: CHR_045
+  techniques: [JUT_166, JUT_167, JUT_168, JUT_169, JUT_162, JUT_201, JUT_239]
+  evolutions: [EVO_110, EVO_056, EVO_055]
+  passifs: [PAS_042, PAS_054, PAS_027, PAS_004, PAS_010, PAS_013]
+  equipements: [EQP_010, EQP_022]
+  transformation: TRF_009
+  ordre: "Entrée dynamique ; nunchaku ; Paon vers 4 min ; Lotus ; Hirudora et Sekizō (délais longs) ; fusion Tigre et éléphant vers 15 min (libère → Tortue) ; Portes à chaque élite ; Porte de la mort (TRF_010) en dernier recours manuel."
+  remplacements: ["JUT_201 → JUT_161", "EQP_010 → EQP_005"]
+  fenetre: "En créneaux (Portes) ; pic démesuré au boss."
+  faiblesse: "Coûts en PV ; peu de contrôle à distance."
+  difficulte: 4
+- id: BLD_030
+  nom: "Invocations de crapauds"
+  personnage: CHR_001
+  techniques: [JUT_217, JUT_224, JUT_225, JUT_245, JUT_073, JUT_081]
+  evolutions: [EVO_071, EVO_030]
+  passifs: [PAS_029, PAS_005, PAS_053, PAS_030, PAS_056, PAS_024]
+  equipements: [EQP_004, EQP_032]
+  transformation: TRF_001
+  ordre: "Kage Bunshin ; crapauds de combat vers 3 min (SYN_043) ; clones illusoires ; Tornade errante ; Gamabunta vers 10 min ; évolutions vers 13–16 min."
+  remplacements: ["JUT_245 → JUT_218", "EQP_032 → EQP_036 (si débloqué)"]
+  fenetre: "Moyenne ; très forte lors des arrivées de Gamabunta."
+  faiblesse: "Plafond d'unités ; peu de dégâts personnels."
+  difficulte: 2
+- id: BLD_031
+  nom: "Brasier noir façonné"
+  personnage: CHR_006
+  techniques: [JUT_154, JUT_309, JUT_318, JUT_155, JUT_156, JUT_054, JUT_049]
+  evolutions: [EVO_111, EVO_095]
+  passifs: [PAS_026, PAS_035, PAS_051, PAS_021, PAS_008, PAS_023]
+  equipements: [EQP_018, EQP_034]
+  transformation: TRF_006
+  ordre: "Lame de flammes noires ; Amaterasu ; Bras de Susanoo ; Pointes et Magatama ; Kirin vers 9 min ; fusion Brasier façonné vers 14 min (libère → Chidori) ; EVO_095 vers 16 min."
+  remplacements: ["JUT_155 → JUT_307", "EQP_034 → EQP_035"]
+  fenetre: "Lente au début, dévastatrice après la fusion."
+  faiblesse: "Délais longs au départ."
+  difficulte: 4
+- id: BLD_032
+  nom: "Cercle de miroirs"
+  personnage: CHR_053
+  techniques: [JUT_128, JUT_127, JUT_129, JUT_190, JUT_043, JUT_080]
+  evolutions: [EVO_043, EVO_016]
+  passifs: [PAS_050, PAS_008, PAS_026, PAS_022, PAS_002, PAS_031]
+  equipements: [EQP_011, EQP_015]
+  transformation: null
+  ordre: "Aiguilles de glace ; Senbon (SYN_033) ; Makyō vers 5 min ; Prison de givre ; Mille aiguilles d'eau ; Lames de vent (SYN_030 blizzard) ; évolutions vers 13 min."
+  remplacements: ["JUT_080 → JUT_026", "EQP_015 → EQP_031"]
+  fenetre: "Contrôle excellent au milieu."
+  faiblesse: "Fragile ; élites « Brasier »."
+  difficulte: 3
+- id: BLD_033
+  nom: "Démon de la brume"
+  personnage: CHR_054
+  techniques: [JUT_197, JUT_028, JUT_025, JUT_027, JUT_220, JUT_200]
+  evolutions: [EVO_065, EVO_012, EVO_009]
+  passifs: [PAS_058, PAS_022, PAS_008, PAS_009, PAS_015, PAS_027]
+  equipements: [EQP_016, EQP_017]
+  transformation: null
+  ordre: "Couperet ; brume (CPX +30 % sur aveuglés) ; Dragon d'eau ; Prison ; clones d'eau ; tantō ; évolutions vers 12–16 min."
+  remplacements: ["JUT_200 → JUT_035", "EQP_017 → EQP_006"]
+  fenetre: "Forte au contact dans la brume."
+  faiblesse: "Tireurs hors de la brume."
+  difficulte: 2
+- id: BLD_034
+  nom: "Forêt vivante"
+  personnage: CHR_059
+  techniques: [JUT_121, JUT_122, JUT_123, JUT_125, JUT_126, JUT_240, JUT_124]
+  evolutions: [EVO_041, EVO_109, EVO_120]
+  passifs: [PAS_048, PAS_026, PAS_013, PAS_050, PAS_055, PAS_015]
+  equipements: [EQP_027, EQP_030]
+  transformation: TRF_016
+  ordre: "Jukai Kōtan ; Rempart ; Prison ; Monde des arbres en fleurs ; Dragon de bois ; Clone de bois ; fusion Forteresse-prison vers 13 min (libère → Pieux) ; Forêt profonde vers 15 min ; éveil Forêt primordiale en Mode Ermite."
+  remplacements: ["JUT_240 → JUT_097", "EQP_030 → EQP_022"]
+  fenetre: "Sûr, puis domination de terrain."
+  faiblesse: "Boss mobiles qui sortent de la forêt."
+  difficulte: 3
+- id: BLD_035
+  nom: "Champ de lave"
+  personnage: CHR_068
+  techniques: [JUT_143, JUT_144, JUT_146, JUT_157, JUT_158, JUT_032]
+  evolutions: [EVO_051]
+  passifs: [PAS_048, PAS_026, PAS_005, PAS_003, PAS_022, PAS_001]
+  equipements: [EQP_017, EQP_033]
+  transformation: null
+  ordre: "Crachat de lave ; Mur de lave ; brume corrosive (SYN_027) ; Geysers ; inondation (SYN_017 obsidienne) ; Pluie de scories ; EVO_051 vers 13 min."
+  remplacements: ["JUT_032 → JUT_026", "EQP_033 → EQP_034"]
+  fenetre: "Moyenne ; très forte contre les boss résistants (Corrosion)."
+  faiblesse: "Chargeurs rapides qui traversent les zones."
+  difficulte: 3
+- id: BLD_036
+  nom: "Armée de réanimés"
+  personnage: CHR_064
+  techniques: [JUT_243, JUT_254, JUT_227, JUT_206, JUT_226, JUT_107]
+  evolutions: [EVO_076]
+  passifs: [PAS_057, PAS_029, PAS_032, PAS_045, PAS_059, PAS_055]
+  equipements: [EQP_004, EQP_022]
+  transformation: TRF_013
+  ordre: "Edo Tensei (2 réanimés, CPX) ; Temple du Nirvana ; serpents ; aiguilles ; Manda ; Poing de pierre ; EVO_076 vers 13 min."
+  remplacements: ["JUT_107 → JUT_244", "EQP_022 → EQP_025"]
+  fenetre: "Dépend des élites ; très forte après 12 min."
+  faiblesse: "Cartes pauvres en élites (Expédition courte)."
+  difficulte: 4
+- id: BLD_037
+  nom: "Sept sabres en rythme"
+  personnage: CHR_058
+  techniques: [JUT_212, JUT_172, JUT_246, JUT_059, JUT_198, JUT_068]
+  evolutions: [EVO_059, EVO_066]
+  passifs: [PAS_023, PAS_041, PAS_058, PAS_027, PAS_056, PAS_002]
+  equipements: [EQP_028, EQP_023]
+  transformation: TRF_014
+  ordre: "Sept sabres (rythme) ; Lariat ; Clone de tentacule ; Arc en chaîne ; Samehada (Bee l'a portée) ; Paume foudroyante ; évolutions vers 13–16 min ; Version 2 au boss."
+  remplacements: ["JUT_068 → JUT_176 (Contre-attaque) pour une riposte plus sûre", "EQP_023 → EQP_034"]
+  fenetre: "Forte dès 5 min pour un joueur rythmé ; assistée sinon."
+  faiblesse: "Couverture arrière avant la Version 2."
+  difficulte: 3
+- id: BLD_038
+  nom: "Mer d'étiquettes"
+  personnage: CHR_055
+  techniques: [JUT_247, JUT_270, JUT_189, JUT_279, JUT_274, JUT_095]
+  evolutions: [EVO_082, EVO_062]
+  passifs: [PAS_049, PAS_033, PAS_012, PAS_030, PAS_024, PAS_001]
+  equipements: [EQP_007, EQP_024]
+  transformation: TRF_023
+  ordre: "Clones de papier ; étiquettes (CPX : 2 impacts) ; Réseau d'étiquettes ; Sceau d'héritage (marques) ; Sceau de résonance ; Vent arrière (SYN_023) ; évolutions vers 12–15 min."
+  remplacements: ["JUT_095 → JUT_268", "EQP_024 → EQP_031"]
+  fenetre: "Moyenne tôt ; explosions massives au milieu."
+  faiblesse: "Sensible au feu ennemi (Konoha nocturne, Brasier)."
+  difficulte: 3
+- id: BLD_039
+  nom: "Malédiction ciblée"
+  personnage: CHR_056
+  techniques: [JUT_195, JUT_177, JUT_176, JUT_181, JUT_164, JUT_210]
+  evolutions: [EVO_057]
+  passifs: [PAS_057, PAS_002, PAS_015, PAS_019, PAS_054, PAS_027]
+  equipements: [EQP_040, EQP_006]
+  transformation: TRF_019
+  ordre: "Faux (Lien maudit) ; Mille poings ; Contre-attaque ; Posture de fer ; Médaillon de Jashin (débloqué par SEC_011) ; EVO_057 vers 13 min ; Rituel au boss (rester dans le cercle)."
+  remplacements: ["EQP_040 → EQP_025 si non débloqué", "JUT_210 → JUT_191"]
+  fenetre: "Faible contre les hordes, énorme contre boss et élites liées."
+  faiblesse: "Aucune régénération ; hordes denses."
+  difficulte: 5
+- id: BLD_040
+  nom: "Contagion d'illusions"
+  personnage: CHR_066
+  techniques: [JUT_250, JUT_264, JUT_249, JUT_251, JUT_253, JUT_263]
+  evolutions: [EVO_080, EVO_079, EVO_078]
+  passifs: [PAS_032, PAS_050, PAS_005, PAS_003, PAS_016, PAS_052]
+  equipements: [EQP_016, EQP_030]
+  transformation: null
+  ordre: "Arbre enserrant ; Contagion ; Vision de l'enfer ; Chemin des ténèbres ; Genjutsu sonore ; Marque de cauchemar sur les élites ; trois évolutions vers 12–17 min."
+  remplacements: ["JUT_253 → JUT_256 (Faux reflets)", "EQP_016 → EQP_034"]
+  fenetre: "Faible tôt, domination par discorde au milieu."
+  faiblesse: "Boss isolé : dépend de la conversion en vulnérabilité (+8 % pour Kurenai)."
+  difficulte: 4

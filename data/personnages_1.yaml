@@ -3,6 +3,7 @@
 - id: CHR_001
   nom: "Naruto Uzumaki"
   type: BASE
+  prioritaire: true
   identite: "Submerger par le nombre : clones, Rasengan porté par les clones, crapauds."
   depart: JUT_217
   stats: {pv: 120, depl: 4.5, notes: "Régénération +0,3/s de base (vitalité Uzumaki)"}
@@ -47,6 +48,7 @@
 - id: CHR_004
   nom: "Sasuke Uchiha"
   type: BASE
+  prioritaire: true
   identite: "Précision Uchiha : flammes à distance, foudre en réponse au danger."
   depart: JUT_001
   stats: {pv: 100, depl: 4.7, notes: "Chance critique +5 %"}
@@ -91,6 +93,7 @@
 - id: CHR_007
   nom: "Sakura Haruno"
   type: BASE
+  prioritaire: true
   identite: "Force contrôlée et médecine : peu de coups, chacun décisif, soins mesurés."
   depart: JUT_175
   stats: {pv: 110, depl: 4.4, notes: "Soins reçus +20 %"}
@@ -105,6 +108,7 @@
 - id: CHR_008
   nom: "Kakashi Hatake"
   type: BASE
+  prioritaire: true
   identite: "Ninja aux mille techniques : copie et polyvalence élémentaire."
   depart: JUT_050
   stats: {pv: 105, depl: 4.6, notes: "Pool élargi : +1 technique admissible par élément possédé"}
@@ -164,6 +168,7 @@
 - id: CHR_012
   nom: "Gaara"
   type: BASE
+  prioritaire: true
   identite: "Défense mobile automatique puis contrôle de zone par le sable."
   depart: JUT_131
   stats: {pv: 110, depl: 4.1, notes: "Armure +2"}
@@ -193,6 +198,7 @@
 - id: CHR_014
   nom: "Rock Lee"
   type: BASE
+  prioritaire: true
   identite: "Vitesse et engagement : mêlée continue sans ninjutsu."
   depart: JUT_161
   stats: {pv: 125, depl: 5.2, notes: "Pas d'accès aux éléments"}
@@ -222,6 +228,7 @@
 - id: CHR_016
   nom: "Neji Hyūga"
   type: BASE
+  prioritaire: true
   identite: "Défense rotative et points vitaux : sanctuaire à 360°."
   depart: JUT_297
   stats: {pv: 110, depl: 4.5, notes: "—"}
@@ -236,6 +243,7 @@
 - id: CHR_017
   nom: "Hinata Hyūga"
   type: BASE
+  prioritaire: true
   identite: "Protectrice : coups souples qui affaiblissent et protègent."
   depart: JUT_296
   stats: {pv: 105, depl: 4.5, notes: "Réduction des dégâts +5 %"}
@@ -265,6 +273,7 @@
 - id: CHR_019
   nom: "Shikamaru Nara"
   type: BASE
+  prioritaire: true
   identite: "Stratège : immobiliser, puis exécuter les cibles liées."
   depart: JUT_282
   stats: {pv: 100, depl: 4.3, notes: "—"}
@@ -294,6 +303,7 @@
 - id: CHR_021
   nom: "Shino Aburame"
   type: BASE
+  prioritaire: true
   identite: "Essaim patient : parasiter, puis multiplier la nuée."
   depart: JUT_291
   stats: {pv: 105, depl: 4.2, notes: "—"}
@@ -308,6 +318,7 @@
 - id: CHR_022
   nom: "Kiba Inuzuka"
   type: BASE
+  prioritaire: true
   identite: "Duo mobile : Akamaru et vrilles en X."
   depart: JUT_294
   stats: {pv: 115, depl: 4.8, notes: "—"}
@@ -337,6 +348,7 @@
 - id: CHR_024
   nom: "Kankurō"
   type: BASE
+  prioritaire: true
   identite: "Marionnettiste : trois marionnettes spécialisées et poison."
   depart: JUT_202
   stats: {pv: 100, depl: 4.2, notes: "Portée des fils +2 m"}
@@ -366,6 +378,7 @@
 - id: CHR_026
   nom: "Temari"
   type: BASE
+  prioritaire: true
   identite: "Contrôle au vent : grandes faux, recul, champ dégagé."
   depart: JUT_074
   stats: {pv: 100, depl: 4.5, notes: "Zone +10 %"}
@@ -380,6 +393,7 @@
 - id: CHR_027
   nom: "Jiraiya"
   type: BASE
+  prioritaire: true
   identite: "Sannin polyvalent : huile, feu, crapauds, cheveux."
   depart: JUT_010
   stats: {pv: 130, depl: 4.3, notes: "—"}

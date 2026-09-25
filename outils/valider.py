@@ -299,7 +299,8 @@ def verifier_builds(cat, idx, r: Rapport) -> None:
         tech = b.get("techniques", [])
         pas = b.get("passifs", [])
         eqp = b.get("equipements", [])
-        if len(tech) > 6 or len(pas) > 6 or len(eqp) > 2:
+        n_fusions = sum(1 for ev in b.get("evolutions", []) if idx.get(ev, {}).get("type") == "FUSION")
+        if len(tech) - n_fusions > 6 or len(pas) > 6 or len(eqp) > 2:
             r.err(f"{bid} dépasse les emplacements ({len(tech)}/{len(pas)}/{len(eqp)})")
         if tech and tech[0] != p.get("depart"):
             r.err(f"{bid} la première technique doit être la signature {p.get('depart')}")
@@ -436,6 +437,31 @@ def verifier_cartes_boss_ennemis(cat, idx, r: Rapport) -> None:
                 r.err(f"{s['id']} référence inexistante {ref}")
 
 
+def verifier_vagues(cat, idx, r: Rapport) -> None:
+    for v in cat["vagues"]:
+        if v.get("carte") not in idx:
+            r.err(f"{v['id']} carte inexistante")
+        precedent = 0
+        for sgm in v.get("segments", []):
+            if sgm["fin"] <= sgm["debut"]:
+                r.err(f"{v['id']} segment de durée nulle ou négative ({sgm['debut']}–{sgm['fin']})")
+            if sgm["debut"] < precedent - 30:
+                r.warn(f"{v['id']} segments non ordonnés près de {sgm['debut']} s")
+            precedent = sgm["debut"]
+            comp = sgm.get("composition", {})
+            if comp and sum(comp.values()) != 100:
+                r.err(f"{v['id']} composition à {sgm['debut']} s : poids total {sum(comp.values())} ≠ 100")
+            for e in comp:
+                if e not in idx:
+                    r.err(f"{v['id']} ennemi inexistant {e}")
+            refs = [x["id"] for x in sgm.get("elites", [])] + [sgm[k]["id"] for k in ("boss", "lieutenant") if k in sgm]
+            for x in refs:
+                if x not in idx:
+                    r.err(f"{v['id']} référence inexistante {x}")
+            if sgm.get("taux", 0) < 0 or sgm.get("plafond", 0) < 0:
+                r.err(f"{v['id']} valeur négative")
+
+
 def verifier_valeurs(cat, r: Rapport) -> None:
     for p in cat["personnages"]:
         st = p.get("stats", {})
@@ -477,6 +503,7 @@ def main() -> int:
     verifier_builds(cat, idx, r)
     verifier_missions_deblocages(cat, idx, r)
     verifier_cartes_boss_ennemis(cat, idx, r)
+    verifier_vagues(cat, idx, r)
     verifier_valeurs(cat, r)
     verifier_probabilites(r)
     lignes = ["# Rapport de validation", "", f"Erreurs : {len(r.erreurs)} — Avertissements : {len(r.avert)}", ""]
