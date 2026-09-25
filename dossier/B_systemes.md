@@ -416,7 +416,7 @@ Quand il ne reste **aucune** carte admissible : trois cartes de secours — « R
 | **Coffre simple** | Élite | 1 amélioration pertinente **ou** 1 évolution admissible (prioritaire) | Coffre au sol → écran compact | 1,2 s / 0,4 s rapide / désactivable |
 | **Coffre de lieutenant** | Lieutenant 09:30, boss d'Endless | 1 (70 %) ou 3 (30 %) éléments ; +1 Relance | Idem, cartes révélées en éventail | 1,8 s / 0,6 s |
 | **Rouleau** | Point d'intérêt de carte (2–3 par run) | **Choix** de 1 équipement parmi 3 (ordinaire 72 %, rare 28 % ; Chance modifie jusqu'à 55/45) | Écran de choix | 0,6 s |
-| **Rouleau interdit** | Événement ≥ 12:00 (1 par run max) | Choix entre transformation admissible et objet interdit ; **coût affiché avant** | Écran de choix avec coût en rouge | 1,0 s |
+| **Rouleau interdit** | Événement ≥ 12:00 (1 par run max) | Choix entre transformation admissible et objet interdit (sans transformation admissible : deux objets interdits) ; **coût affiché avant** ; refuser est toujours possible | Écran de choix avec coût en rouge | 1,0 s |
 
 Un coffre **ne donne jamais** de nouvelle technique ; un rouleau ne donne jamais d'amélioration. Garantie : si une évolution est admissible depuis 90 s sans coffre, l'élite suivante apparaît dans les 20 s.
 
