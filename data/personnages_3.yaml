@@ -1,0 +1,367 @@
+# Entrées jouables CHR_055 à CHR_080
+- id: CHR_055
+  nom: "Konan"
+  type: BASE
+  identite: "Papier : clones qui se dispersent, nuées et mer d'étiquettes."
+  depart: JUT_247
+  stats: {pv: 100, depl: 4.6, notes: "—"}
+  cpx: {nom: "Ange de papier", effet: "Toutes les 12 s, le joueur se disperse en papier 0,4 s au premier coup reçu (invulnérable) et reforme son corps 2 m plus loin dans la direction de déplacement (déplacement uniquement si le joueur bouge)."}
+  faiblesse: "Papier vulnérable au feu ennemi : +20 % dégâts subis des sources Katon ennemies (affiché)."
+  signature: "Les étiquettes explosives créées par le joueur sont deux fois plus nombreuses (1 étiquette = 2 impacts à 60 %)."
+  aptitudes: [APT_PAPIER, APT_FUIN, ELEM_FUTON]
+  ultime: ULT_038
+  transformations: [TRF_023]
+  deblocage: {type: MISSION, ref: MIS_155}
+  orientations: ["Nuée de papier", "Mer d'étiquettes"]
+- id: CHR_056
+  nom: "Hidan"
+  type: BASE
+  identite: "Immortel sacrificiel : se blesser pour maudire."
+  depart: JUT_195
+  stats: {pv: 160, depl: 4.3, notes: "Aucune régénération"}
+  cpx: {nom: "Immortalité de Jashin", effet: "Les coûts en PV (tag SACRIFICE) ne descendent jamais sous 1 PV et chaque PV sacrifié donne 0,5 chakra."}
+  faiblesse: "Aucun soin régulier ; dépend de la malédiction pour tuer vite."
+  signature: "Le Lien maudit (STA_20) est posé sur la cible de la faux ; les dégâts que le joueur s'inflige sont reproduits sur elle (×2)."
+  aptitudes: [APT_CORPS]
+  ultime: ULT_017
+  transformations: [TRF_019]
+  deblocage: {type: MISSION, ref: MIS_156}
+  orientations: ["Malédiction ciblée", "Faux et contact"]
+- id: CHR_057
+  nom: "Kakuzu"
+  type: BASE
+  identite: "Cinq cœurs, cinq affinités : masques élémentaires autonomes."
+  depart: JUT_056
+  stats: {pv: 145, depl: 4.1, notes: "Armure +3"}
+  cpx: {nom: "Cœurs volés", effet: "Chaque élite éliminée ajoute 1 cœur (max 5) : +5 % PV max et +1 élément temporaire admissible pour la prochaine carte."}
+  faiblesse: "Très lent ; les cœurs se perdent (1 par coup lourd reçu)."
+  signature: "Les masques (TRF_020) sont des unités ANIMAL lançant des techniques de leur élément."
+  aptitudes: [ELEM_KATON, ELEM_RAITON, ELEM_FUTON, ELEM_SUITON, ELEM_DOTON, APT_CORPS]
+  ultime: ULT_039
+  transformations: [TRF_020]
+  deblocage: {type: MISSION, ref: MIS_157}
+  orientations: ["Cinq masques", "Durcissement et contre"]
+- id: CHR_058
+  nom: "Killer Bee"
+  type: BASE
+  identite: "Rythme et sabres : jinchūriki qui frappe en cadence."
+  depart: JUT_212
+  stats: {pv: 140, depl: 4.6, notes: "—"}
+  cpx: {nom: "Rime de la victoire", effet: "Les coups qui tombent sur le 4e temps du cycle (indicateur de rythme au HUD) font ×2 ; pour le mode assisté, le cycle est automatique."}
+  faiblesse: "Couverture arrière faible sans tentacules."
+  signature: "Tentacules (TRF_014) : 8 extensions qui frappent dans toutes les directions."
+  aptitudes: [ELEM_RAITON, APT_JINCH, APT_KENJ]
+  ultime: ULT_003
+  transformations: [TRF_014]
+  deblocage: {type: MISSION, ref: MIS_158}
+  orientations: ["Sept sabres en rythme", "Lariat et Hachibi"]
+- id: CHR_059
+  nom: "Hashirama Senju"
+  type: BASE
+  identite: "Dieu des shinobi : forêts qui naissent et soignent."
+  depart: JUT_121
+  stats: {pv: 150, depl: 4.4, notes: "Régénération +1,0/s"}
+  cpx: {nom: "Régénération Senju", effet: "Les soins de Régénération ne sont pas comptés dans le plafond de soin (mais Régénération reste plafonnée à 3/s)."}
+  faiblesse: "Dégâts de base modestes : puissance en surface et en contrôle."
+  signature: "Les surfaces BOIS soignent le joueur de 0,5 PV/s quand il s'y tient."
+  aptitudes: [KG_MOKUTON, ELEM_DOTON, ELEM_SUITON, CLAN_SENJU, APT_SENJ]
+  ultime: ULT_034
+  transformations: [TRF_016]
+  deblocage: {type: MISSION, ref: MIS_159}
+  orientations: ["Forêt vivante", "Mode Ermite Mokuton"]
+- id: CHR_060
+  nom: "Tobirama Senju"
+  type: BASE
+  identite: "Suiton sans source d'eau et Hiraishin inventé : précision tactique."
+  depart: JUT_034
+  stats: {pv: 115, depl: 4.8, notes: "—"}
+  cpx: {nom: "Créateur", effet: "Les techniques Suiton ne nécessitent jamais de surface EAU pour leurs bonus « sur eau » : elles comptent comme sur eau."}
+  faiblesse: "Aucune technique de zone large au départ."
+  signature: "Accès à Hiraishin (JUT_265/266) et à Edo Tensei (JUT_243)."
+  aptitudes: [ELEM_SUITON, ELEM_FUTON, ELEM_RAITON, CLAN_SENJU, APT_FUIN]
+  ultime: ULT_027
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_160}
+  orientations: ["Suiton de précision", "Hiraishin et réanimés"]
+- id: CHR_061
+  nom: "Obito Uchiha (Tobi)"
+  type: BASE
+  identite: "Intangibilité : traverser le danger, aspirer l'ennemi."
+  depart: JUT_311
+  stats: {pv: 110, depl: 4.5, notes: "—"}
+  cpx: {nom: "Dimension de Kamui", effet: "Les ennemis ordinaires éliminés par une technique Kamui sont « aspirés » : leurs fragments sont remplacés par du chakra (+2 chacun)."}
+  faiblesse: "Peu de dégâts de zone continue."
+  signature: "Intangibilité régulière (JUT_311) : lecture claire du danger requise pour l'exploiter."
+  aptitudes: [ELEM_KATON, CLAN_UCHIHA, DOJ_SHARINGAN, DOJ_MANGEKYO, KG_MOKUTON]
+  ultime: ULT_009
+  transformations: [TRF_022]
+  deblocage: {type: MISSION, ref: MIS_161}
+  orientations: ["Intangible et aspirant", "Mokuton et Katon"]
+- id: CHR_062
+  nom: "Obito — Jinchūriki du Dix-Queues"
+  type: VARIANTE
+  base: CHR_061
+  identite: "Puissance cosmique : orbes, gunbai, Dix-Queues."
+  depart: JUT_216
+  stats: {pv: 150, depl: 4.6, notes: "—"}
+  cpx: {nom: "Orbes chercheuses de vérité", effet: "4 orbes noires orbitent en permanence (unité logique d'orbite, 8 dégâts) et bloquent 1 projectile/2 s."}
+  faiblesse: "Sans Mangekyō Kamui dans cette version (Kamui retiré du pool)."
+  signature: "Gunbai + Dix-Queues."
+  aptitudes: [ELEM_KATON, CLAN_UCHIHA, DOJ_SHARINGAN, DOJ_RINNEGAN, KG_MOKUTON, APT_JINCH]
+  ultime: ULT_003
+  transformations: [TRF_017]
+  deblocage: {type: MAITRISE, niveau: 7, ref: MIS_162}
+  orientations: ["Orbes et gunbai", "Mokuton cosmique"]
+- id: CHR_063
+  nom: "Kabuto Yakushi"
+  type: BASE
+  identite: "Médecin espion : poison, soins, sommeil."
+  depart: JUT_206
+  stats: {pv: 110, depl: 4.6, notes: "Soins reçus +15 %"}
+  cpx: {nom: "Scalpel de chakra", effet: "Les coups de contact ralentissent de 10 % (nerfs coupés) et les aiguilles empoisonnées ont +1 cumul."}
+  faiblesse: "Dégâts faibles contre les boss (poison lent)."
+  signature: "Temple du Nirvana (JUT_254) accessible dès le niveau 2."
+  aptitudes: [APT_MED, APT_GEN, CTR_SERPENT, ELEM_DOTON]
+  ultime: ULT_020
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_163}
+  orientations: ["Sommeil et poison", "Serpents médicaux"]
+- id: CHR_064
+  nom: "Kabuto — Mode Ermite serpent"
+  type: VARIANTE
+  base: CHR_063
+  identite: "Nécromancien : réanimer les élites vaincues, serpents blancs."
+  depart: JUT_243
+  stats: {pv: 125, depl: 4.5, notes: "—"}
+  cpx: {nom: "Réanimateur", effet: "Edo Tensei peut maintenir 2 réanimés simultanés (au lieu de 1)."}
+  faiblesse: "Dépend des élites vaincues."
+  signature: "Mode Ermite serpent : perçoit les ennemis invisibles et les assassins hors écran."
+  aptitudes: [APT_MED, APT_GEN, CTR_SERPENT, ELEM_DOTON, APT_SENJ, APT_CORPS]
+  ultime: ULT_020
+  transformations: [TRF_013]
+  deblocage: {type: MAITRISE, niveau: 6, ref: MIS_164}
+  orientations: ["Armée de réanimés", "Serpents ermites"]
+- id: CHR_065
+  nom: "Hiruzen Sarutobi"
+  type: BASE
+  identite: "Le Professeur : cinq éléments, Enma et savoir encyclopédique."
+  depart: JUT_231
+  stats: {pv: 110, depl: 4.2, notes: "—"}
+  cpx: {nom: "Le Professeur", effet: "Pool de départ enrichi : +4 techniques élémentaires admissibles supplémentaires ; les recettes inconnues affichent leur indice complet."}
+  faiblesse: "PV modestes, peu de mobilité (âge)."
+  signature: "Maîtrise de l'ultime : Déluge des cinq éléments frappe une fois de plus."
+  aptitudes: [ELEM_KATON, ELEM_SUITON, ELEM_RAITON, ELEM_FUTON, ELEM_DOTON, CTR_SINGE, APT_FUIN, CLAN_SARUTOBI]
+  ultime: ULT_039
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_165}
+  orientations: ["Cinq éléments tournants", "Enma et sceaux"]
+- id: CHR_066
+  nom: "Kurenai Yūhi"
+  type: BASE
+  identite: "Maîtresse du genjutsu : les ennemis s'entravent et s'entretuent."
+  depart: JUT_250
+  stats: {pv: 100, depl: 4.5, notes: "Durée des contrôles +15 %"}
+  cpx: {nom: "Illusion de la forêt", effet: "Chaque ennemi Confus inflige +30 % de dégâts aux autres ennemis."}
+  faiblesse: "Peu efficace contre les boss seuls (compensé par conversion en vulnérabilité)."
+  signature: "Les contrôles de genjutsu convertis en vulnérabilité donnent +8 % au lieu de +5 %."
+  aptitudes: [APT_GEN]
+  ultime: ULT_030
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_166}
+  orientations: ["Contagion d'illusions", "Arbres et coups de grâce"]
+- id: CHR_067
+  nom: "Kimimaro Kaguya"
+  type: BASE
+  identite: "Danse des os : lames, parades, forêt d'os."
+  depart: JUT_302
+  stats: {pv: 125, depl: 4.6, notes: "Armure +2"}
+  cpx: {nom: "Os durcis", effet: "Chaque projectile paré par Tsubaki no Mai donne +1 Armure 3 s (max +5)."}
+  faiblesse: "Maladie : la transformation coûte 10 % de PV max pour la run."
+  signature: "Les danses enchaînées (2 techniques Kaguya en 1 s) font +20 %."
+  aptitudes: [CLAN_KAGUYA]
+  ultime: ULT_041
+  transformations: [TRF_005]
+  deblocage: {type: MISSION, ref: MIS_167}
+  orientations: ["Danses d'os", "Marque maudite de la terre"]
+- id: CHR_068
+  nom: "Mei Terumī"
+  type: BASE
+  identite: "Lave et brume acide : corroder puis faire fondre."
+  depart: JUT_143
+  stats: {pv: 115, depl: 4.4, notes: "—"}
+  cpx: {nom: "Double kekkei genkai", effet: "Les cibles Corrodées subissent +20 % de dégâts Yōton et Futton."}
+  faiblesse: "Zones persistantes lentes à rentabiliser contre les chargeurs."
+  signature: "Les flaques de LAVE et la brume acide se renforcent mutuellement (SYN_027)."
+  aptitudes: [KG_YOTON, KG_FUTTON, ELEM_SUITON, ELEM_KATON, ELEM_DOTON]
+  ultime: ULT_042
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_168}
+  orientations: ["Champ de lave", "Brume corrosive"]
+- id: CHR_069
+  nom: "Ōnoki"
+  type: BASE
+  identite: "Poids et poussière : alourdir, alléger, désintégrer."
+  depart: JUT_102
+  stats: {pv: 100, depl: 4.0, notes: "Vole à basse altitude : ignore les surfaces"}
+  cpx: {nom: "Mal de dos", effet: "Après 60 s sans être touché, +20 % Puissance ; se réinitialise au premier coup lourd reçu."}
+  faiblesse: "Lent, fragile au contact."
+  signature: "Accès exclusif au golem et à Chōkeijūgan ; Jinton disponible."
+  aptitudes: [ELEM_DOTON, ELEM_FUTON, KG_JINTON]
+  ultime: ULT_035
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_169}
+  orientations: ["Gravité (alourdir/alléger)", "Désintégration Jinton"]
+- id: CHR_070
+  nom: "A (Quatrième Raikage)"
+  type: BASE
+  identite: "Force et vitesse brute sous armure de foudre."
+  depart: JUT_172
+  stats: {pv: 150, depl: 5.0, notes: "—"}
+  cpx: {nom: "Poing du Raikage", effet: "Les coups CONTACT détruisent les boucliers ennemis en 1 coup."}
+  faiblesse: "Aucune attaque à distance hors foudre."
+  signature: "Armure de foudre (TRF_015) : le déplacement électrise les ennemis traversés."
+  aptitudes: [ELEM_RAITON, APT_PORTES]
+  ultime: ULT_040
+  transformations: [TRF_015]
+  deblocage: {type: MISSION, ref: MIS_170}
+  orientations: ["Charge électrique", "Guillotine et Lariat"]
+- id: CHR_071
+  nom: "Darui"
+  type: BASE
+  identite: "Foudre noire et Ranton : panthères et faisceaux."
+  depart: JUT_057
+  stats: {pv: 115, depl: 4.5, notes: "—"}
+  cpx: {nom: "Paresse efficace", effet: "Si le joueur n'a pas bougé depuis 1 s, la prochaine technique Raiton ou Ranton fait +25 %."}
+  faiblesse: "Récompense l'immobilité ponctuelle."
+  signature: "Techniques Ranton : comptent comme Suiton et Raiton pour Conduction."
+  aptitudes: [ELEM_RAITON, ELEM_SUITON, KG_RANTON, APT_KENJ]
+  ultime: ULT_040
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_171}
+  orientations: ["Cirque laser", "Panthères noires"]
+- id: CHR_072
+  nom: "Pakura"
+  type: BASE
+  identite: "Héroïne de Suna : orbes brûlants qui assèchent."
+  depart: JUT_140
+  stats: {pv: 105, depl: 4.6, notes: "—"}
+  cpx: {nom: "Chaleur torride", effet: "Les cibles sous effet Shakuton ne peuvent pas être soignées par les soigneurs ennemis."}
+  faiblesse: "Peu de contrôle."
+  signature: "Les orbes Shakuton traquent automatiquement une nouvelle cible à la mort de la leur."
+  aptitudes: [KG_SHAKUTON, ELEM_KATON, ELEM_FUTON]
+  ultime: ULT_043
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_172}
+  orientations: ["Orbes traqueurs", "Évaporation (anti-Suiton)"]
+- id: CHR_073
+  nom: "Rasa (Quatrième Kazekage)"
+  type: BASE
+  identite: "Poudre d'or : alourdir le monde et l'attirer à soi."
+  depart: JUT_138
+  stats: {pv: 120, depl: 4.2, notes: "—"}
+  cpx: {nom: "Fortune de Suna", effet: "+15 % Ryō gagnés ; les ennemis Aimantés lâchent 1 fragment supplémentaire à 10 %."}
+  faiblesse: "Aucune technique rapide."
+  signature: "Poudre d'or : les zones de Jiton sont plus lourdes (ralentissement +10 %)."
+  aptitudes: [KG_JITON, ELEM_FUTON]
+  ultime: ULT_044
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_173}
+  orientations: ["Aimantation lourde", "Vagues d'or"]
+- id: CHR_074
+  nom: "Chiyo"
+  type: BASE
+  identite: "Grand-mère marionnettiste : dix marionnettes et soin."
+  depart: JUT_207
+  stats: {pv: 95, depl: 4.0, notes: "—"}
+  cpx: {nom: "Contrôle de l'allié", effet: "Les marionnettes gagnent +20 % de dégâts ; une fois par run, Chiyo peut « contrôler » le joueur pour annuler un coup fatal (1 PV, 1 s d'invulnérabilité)."}
+  faiblesse: "Très fragile."
+  signature: "Antidote : immunité aux poisons ennemis."
+  aptitudes: [APT_MARIO, APT_MED]
+  ultime: ULT_025
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_174}
+  orientations: ["Dix marionnettes", "Poison et antidotes"]
+- id: CHR_075
+  nom: "Karin"
+  type: BASE
+  identite: "Senseur et soigneuse : chaînes et morsure de soin."
+  depart: JUT_301
+  stats: {pv: 115, depl: 4.6, notes: "Rayon de collecte +30 %"}
+  cpx: {nom: "Morsure de soin", effet: "Une fois toutes les 30 s, sous 40 % de PV : soin de 30 % des PV max (compté dans le plafond de soin, étalé sur 3 s)."}
+  faiblesse: "Dégâts faibles ; les chaînes sont son unique contrôle de départ."
+  signature: "Voit les élites et les pièges hors écran (sensorielle)."
+  aptitudes: [CLAN_UZUMAKI, APT_FUIN, APT_MED]
+  ultime: ULT_013
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_175}
+  orientations: ["Chaînes et survie", "Sceaux de soutien"]
+- id: CHR_076
+  nom: "Suigetsu Hōzuki"
+  type: BASE
+  identite: "Corps d'eau : esquiver par liquéfaction, frapper au couperet."
+  depart: JUT_304
+  stats: {pv: 110, depl: 4.7, notes: "Dégâts de contact subis −20 %"}
+  cpx: {nom: "Liquéfaction", effet: "Esquive : le joueur devient liquide 0,4 s (invulnérable 0,4 s au lieu de 0,25 s) mais la recharge passe à 5 s."}
+  faiblesse: "Raiton ennemi : +25 % de dégâts subis (affiché)."
+  signature: "Accès au Grand couperet (JUT_197)."
+  aptitudes: [CLAN_HOZUKI, ELEM_SUITON, APT_KENJ]
+  ultime: ULT_037
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_176}
+  orientations: ["Pistolet à eau", "Couperet liquide"]
+- id: CHR_077
+  nom: "Kushina Uzumaki"
+  type: BASE
+  identite: "Chaînes de scellement : attacher, puis tout broyer."
+  depart: JUT_301
+  stats: {pv: 125, depl: 4.6, notes: "—"}
+  cpx: {nom: "Habanero sanglant", effet: "Les chaînes Entravent 1 cible de plus et les cibles Entravées subissent +20 %."}
+  faiblesse: "Peu d'aire sans chaînes."
+  signature: "Chaînes sur boss : la résistance de contrôle monte de 10 points au lieu de 20."
+  aptitudes: [CLAN_UZUMAKI, APT_FUIN, ELEM_SUITON, ELEM_FUTON, APT_JINCH]
+  ultime: ULT_013
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_177}
+  orientations: ["Réseau de chaînes", "Sceaux et Suiton"]
+- id: CHR_078
+  nom: "Shisui Uchiha"
+  type: BASE
+  identite: "Shunshin : le plus rapide, attaques d'apparition."
+  depart: JUT_002
+  stats: {pv: 100, depl: 5.4, notes: "—"}
+  cpx: {nom: "Shisui du Shunshin", effet: "Toutes les 6 s, la prochaine esquive laisse 3 images qui frappent chacune l'ennemi le plus proche (15)."}
+  faiblesse: "PV faibles ; puissance dispersée."
+  signature: "Accès exclusif à Kotoamatsukami (JUT_319)."
+  aptitudes: [ELEM_KATON, CLAN_UCHIHA, DOJ_SHARINGAN, DOJ_MANGEKYO, APT_GEN, CTR_CORBEAU]
+  ultime: ULT_027
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_178}
+  orientations: ["Apparitions", "Élites retournées"]
+- id: CHR_079
+  nom: "Konohamaru Sarutobi"
+  type: BASE
+  identite: "Petit-fils du Hokage : Rasengan précoce et clones taquins."
+  depart: JUT_281
+  stats: {pv: 105, depl: 4.8, notes: "Gain d'XP +10 %"}
+  cpx: {nom: "Apprenti", effet: "Les 3 premières montées de niveau offrent 4 cartes au lieu de 3."}
+  faiblesse: "Plafond de puissance tardive plus bas (Puissance max +250 %)."
+  signature: "Kage Bunshin accessible ; les clones font un Rasengan réduit (comme Naruto, à 40 %)."
+  aptitudes: [ELEM_FUTON, ELEM_KATON, APT_RASEN, CLAN_SARUTOBI, CTR_SINGE]
+  ultime: ULT_001
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_179}
+  orientations: ["Rasengan précoce", "Clones et Katon"]
+- id: CHR_080
+  nom: "Mū (Deuxième Tsuchikage)"
+  type: BASE
+  identite: "L'invisible : désintégration Jinton à long délai, division."
+  depart: JUT_159
+  stats: {pv: 110, depl: 4.3, notes: "—"}
+  cpx: {nom: "Division", effet: "Délais des techniques Jinton −40 % ; toutes les 20 s, le joueur devient invisible 2 s (les ennemis perdent la cible, le joueur reste visible à l'écran avec contour pointillé)."}
+  faiblesse: "Début très lent : peu de techniques rapides."
+  signature: "Les techniques Jinton ignorent la résistance."
+  aptitudes: [KG_JINTON, ELEM_DOTON, ELEM_FUTON]
+  ultime: ULT_035
+  transformations: []
+  deblocage: {type: MISSION, ref: MIS_180}
+  orientations: ["Désintégration", "Terre et vent de soutien"]
