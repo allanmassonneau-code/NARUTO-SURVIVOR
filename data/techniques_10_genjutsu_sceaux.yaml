@@ -1,0 +1,386 @@
+# Famille primaire GENJUTSU — JUT_249 à JUT_264 ; SCEAU — JUT_265 à JUT_280
+# Genjutsu : effets de contrôle ou de perception, toujours lisibles par un motif de répétition/déformation localisée.
+- id: JUT_249
+  nom: "Magen — Narakumi no Jutsu (Vision de l'enfer)"
+  statut: OA
+  famille: GENJUTSU
+  livraison: CONE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_dense
+  comportement: "Les ennemis d'un cône de 70° (5 m) sont figés d'effroi 1 s ; les coups suivants ×1,2 pendant l'effroi."
+  valeurs: "5 ; Étourdi 1 s ; délai 5 s"
+  visuel: "Feuilles qui tourbillonnent autour des cibles (répétition localisée), silhouettes tremblantes."
+  acces: APT_GEN
+  limites: "—"
+- id: JUT_250
+  nom: "Magen — Jubaku Satsu (Mort par l'arbre enserrant)"
+  statut: OA
+  famille: GENJUTSU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Un arbre illusoire enserre la cible 2 s ; à la fin, coup de grâce (×2 si la cible est sous 50 % de PV)."
+  valeurs: "Coup 40 (80) ; Entravé 2 s ; délai 6 s"
+  visuel: "Branches qui poussent autour de la cible avec contour violet pâle (illusion), silhouette de Kurenai fugace."
+  acces: "APT_GEN+CHR_066"
+  limites: "—"
+- id: JUT_251
+  nom: "Kokuangyō no Jutsu (Chemin des ténèbres)"
+  statut: OA
+  famille: GENJUTSU
+  livraison: ZONE
+  tags: [E_NEUTRE, CONTROLE, PERSISTANT]
+  cible: plus_dense
+  comportement: "Zone d'obscurité de 4 m : ennemis Aveuglés et ralentis de 20 %."
+  valeurs: "3 par tick de 0,5 s ; durée 4 s ; délai 9 s"
+  visuel: "Zone assombrie en tramage, ennemis dessinés avec contour clair (la lisibilité joueur est conservée)."
+  acces: APT_GEN
+  limites: "Les télégraphes ennemis restent au-dessus de l'obscurité."
+- id: JUT_252
+  nom: "Magen — Kyōten Chiten (Retournement)"
+  statut: OA
+  famille: GENJUTSU
+  livraison: CONTACT
+  tags: [E_NEUTRE, CONTROLE]
+  cible: aucune
+  comportement: "Réactif : un ennemi qui touche le joueur au contact devient Confus 2 s et subit un contre."
+  valeurs: "Contre 16 ; Confus 2 s ; délai interne 1,5 s"
+  visuel: "Image du joueur qui se dédouble en miroir sur l'agresseur."
+  acces: APT_GEN
+  limites: "—"
+- id: JUT_253
+  nom: "Genjutsu sonore"
+  statut: CO
+  famille: GENJUTSU
+  livraison: ONDE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: aucune
+  comportement: "Onde sonore de 4 m : 1 ennemi sur 3 touché (déterministe par ordre de contact) devient Confus 2 s ; les autres ralentissent 1 s."
+  valeurs: "8 ; délai 4 s"
+  visuel: "Anneaux de portée musicale (lignes parallèles), notes stylisées sur les confus."
+  acces: APT_GEN
+  limites: "—"
+- id: JUT_254
+  nom: "Nehan Shōja no Jutsu (Temple du Nirvana)"
+  statut: OA
+  famille: GENJUTSU
+  livraison: ZONE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: aucune
+  comportement: "Plumes qui tombent sur 7 m : les ennemis ordinaires s'endorment 3 s (réveillés par les dégâts)."
+  valeurs: "0 ; Étourdi 3 s ; délai 20 s"
+  visuel: "Plumes blanches lentes en 3 plans, ennemis endormis avec bulle de sommeil."
+  acces: "APT_GEN+CHR_063|APT_GEN+CHR_064"
+  limites: "Élites : ralenties 40 % ; boss : Vulnérable +10 %."
+- id: JUT_255
+  nom: "Magen — Gamarinshō (Chant des crapauds)"
+  statut: OA
+  famille: GENJUTSU
+  livraison: ONDE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: aucune
+  comportement: "Chant de 2 s (visible) puis tous les ennemis à 6 m sont paralysés 3 s."
+  valeurs: "Paralysie (Étourdi) 3 s ; délai 25 s"
+  visuel: "Notes qui s'accumulent en cercle, cage d'illusion translucide sur les cibles."
+  acces: "APT_SENJ+CTR_CRAPAUD"
+  limites: "Boss : 1 s puis résistance normale."
+- id: JUT_256
+  nom: "Faux reflets"
+  statut: CO
+  famille: GENJUTSU
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CONTROLE]
+  cible: aucune
+  comportement: "Trois reflets illusoires du joueur ; un ennemi qui en frappe un devient Confus 2 s et le reflet se brise."
+  valeurs: "0 ; délai 10 s"
+  visuel: "Copies en silhouette violette pâle, bris en éclats de verre."
+  acces: APT_GEN
+  limites: "Ne sont pas des clones (aucun dégât)."
+- id: JUT_257
+  nom: "Hallucination de discorde"
+  statut: CO
+  famille: GENJUTSU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, CONTROLE, MARQUE]
+  cible: plus_menacant
+  comportement: "Une élite marquée croit voir le joueur parmi ses alliés : elle attaque les ordinaires voisins 3 s."
+  valeurs: "Confus renforcé 3 s ; délai 12 s"
+  visuel: "Masque du joueur superposé aux têtes des ordinaires voisins (vu par l'élite)."
+  acces: APT_GEN
+  limites: "Boss : Vulnérable +10 %."
+- id: JUT_258
+  nom: "Distorsion d'espace"
+  statut: CO
+  famille: GENJUTSU
+  livraison: ZONE
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Zone de 3 m : les projectiles ennemis ordinaires qui y entrent sont déviés de 40° loin du joueur."
+  valeurs: "0 ; durée 4 s ; délai 11 s"
+  visuel: "Grille déformée en lentille autour du joueur."
+  acces: APT_GEN
+  limites: "Télégraphes de boss non déviés."
+- id: JUT_259
+  nom: "Illusion de terreur"
+  statut: CO
+  famille: GENJUTSU
+  livraison: ONDE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: aucune
+  comportement: "Les ennemis à 4 m fuient le joueur 2 s (sans recul physique)."
+  valeurs: "6 ; fuite 2 s ; délai 8 s"
+  visuel: "Ombre gigantesque du joueur projetée au sol 0,5 s."
+  acces: APT_GEN
+  limites: "—"
+- id: JUT_260
+  nom: "Pétales hypnotiques"
+  statut: CO
+  famille: GENJUTSU
+  livraison: ZONE
+  tags: [E_NEUTRE, CONTROLE, MOBILE]
+  cible: plus_dense
+  comportement: "Pétales qui dérivent vers un groupe : dégâts légers, ralentissement 25 % et Confus 1,5 s à l'entrée."
+  valeurs: "4 par tick de 0,5 s ; durée 5 s ; délai 8 s"
+  visuel: "Pétales roses de 2 px à rotation, couche légère."
+  acces: APT_GEN
+  limites: "Confus 1 fois par cible par zone."
+- id: JUT_261
+  nom: "Rembobinage"
+  statut: CO
+  famille: GENJUTSU
+  livraison: ONDE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: aucune
+  comportement: "Les ennemis à 5 m rejouent à l'envers leurs 1,5 dernières secondes de déplacement (ils reculent)."
+  valeurs: "0 ; délai 10 s"
+  visuel: "Images rémanentes inversées et lignes de balayage horizontales."
+  acces: APT_GEN
+  limites: "Boss : Vulnérable +5 %."
+- id: JUT_262
+  nom: "Faille illusoire"
+  statut: CO
+  famille: GENJUTSU
+  livraison: RAYON
+  tags: [E_NEUTRE, CONTROLE]
+  cible: direction
+  comportement: "Une fausse crevasse de 8 m apparaît : les ennemis ordinaires qui l'atteignent s'arrêtent 2 s au bord."
+  valeurs: "0 ; Entravé 2 s ; durée 3 s ; délai 7 s"
+  visuel: "Crevasse dessinée avec contour violet pâle (marqueur d'illusion)."
+  acces: APT_GEN
+  limites: "—"
+- id: JUT_263
+  nom: "Marque de cauchemar"
+  statut: CO
+  famille: GENJUTSU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, MARQUE]
+  cible: plus_menacant
+  comportement: "La cible marquée devient Vulnérable +25 % pendant 3 s."
+  valeurs: "Vulnérable +25 % ; délai 5 s"
+  visuel: "Œil stylisé au-dessus de la cible, contour violet."
+  acces: APT_GEN
+  limites: "Plafond global de vulnérabilité +50 %."
+- id: JUT_264
+  nom: "Contagion d'illusion"
+  statut: CO
+  famille: GENJUTSU
+  livraison: CHAINE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: marque
+  comportement: "Toutes les 3 s, chaque ennemi Confus propage la confusion à 1 voisin (portée 2,5 m)."
+  valeurs: "Confus 1,5 s ; 1 propagation par confus ; délai 3 s"
+  visuel: "Fil violet entre les cibles, spirale au-dessus des têtes."
+  acces: APT_GEN
+  limites: "Propagations max 8 par cycle."
+- id: JUT_265
+  nom: "Hiraishin — Kunai de marquage"
+  statut: OA
+  famille: SCEAU
+  livraison: CHAINE
+  tags: [E_NEUTRE, MARQUE]
+  cible: plus_dense
+  comportement: "Lance des kunai à formule qui restent plantés ; toutes les 3 s, une image-éclair saute de kunai en kunai et frappe autour de chacun."
+  valeurs: "22 par kunai (r 1,5 m) ; max 3 kunai ; délai de lancer 2 s"
+  visuel: "Kunai à trois pointes avec formule, traînée jaune-blanche en zigzag entre eux."
+  acces: "CHR_041|CHR_042|CHR_060"
+  limites: "L'image-éclair n'est pas une unité."
+- id: JUT_266
+  nom: "Hiraishin Giri (Coupe du dieu du tonnerre)"
+  statut: AV
+  famille: SCEAU
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: marque
+  comportement: "Déplacement volontaire : l'esquive téléporte le joueur au kunai marqué le plus proche dans sa direction et tranche autour."
+  valeurs: "45 (r 2 m) ; délai = esquive"
+  visuel: "Éclair jaune de 1 frame, pose d'arrivée, arc de coupe."
+  acces: "CHR_041|CHR_042|CHR_060"
+  limites: "Sans kunai : esquive normale."
+- id: JUT_267
+  nom: "Fūja Hōin (Sceau du mal)"
+  statut: OA
+  famille: SCEAU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, CONTROLE, MARQUE]
+  cible: plus_menacant
+  comportement: "Scelle une élite : −40 % dégâts et vitesse 6 s."
+  valeurs: "10 ; affaiblissement 6 s ; délai 12 s"
+  visuel: "Formule en cercle qui se referme sur la cible, glyphes noirs."
+  acces: APT_FUIN
+  limites: "Boss : −20 % dégâts 4 s (résistance normale)."
+- id: JUT_268
+  nom: "Barrière de sceaux"
+  statut: CO
+  famille: SCEAU
+  livraison: ZONE
+  tags: [E_NEUTRE, BOUCLIER, PERSISTANT]
+  cible: aucune
+  comportement: "Carré de 5 m autour du joueur 3 s : projectiles ennemis ordinaires effacés en entrant ; ennemis qui entrent brûlés."
+  valeurs: "14 à l'entrée ; délai 16 s"
+  visuel: "4 étiquettes aux coins, parois de lumière violette."
+  acces: APT_FUIN
+  limites: "Ne suit pas le joueur."
+- id: JUT_269
+  nom: "Rouleau de scellement"
+  statut: CO
+  famille: SCEAU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Aspire les projectiles ennemis à 2,5 m pendant 1 s, puis les relâche 2 s plus tard en couleur alliée vers les ennemis."
+  valeurs: "Relâche : 12 par projectile (max 15) ; délai 10 s"
+  visuel: "Rouleau qui se déroule, projectiles absorbés en spirale, relâchés en éventail."
+  acces: APT_FUIN
+  limites: "—"
+- id: JUT_270
+  nom: "Réseau d'étiquettes"
+  statut: CO
+  famille: SCEAU
+  livraison: PIEGE
+  tags: [E_NEUTRE, EXPLOSIF]
+  cible: chemin
+  comportement: "Pose 3 × 3 étiquettes en grille ; le déclenchement d'une étiquette fait exploser ses voisines en cascade."
+  valeurs: "20 par étiquette (r 1,3 m) ; écart de cascade 0,08 s ; délai 8 s"
+  visuel: "Grille d'étiquettes reliées par lignes fines, explosions en vague."
+  acces: APT_FUIN
+  limites: "1 grille active."
+- id: JUT_271
+  nom: "Gogyō Fūin (Sceau des cinq éléments)"
+  statut: OA
+  famille: SCEAU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, MARQUE]
+  cible: plus_menacant
+  comportement: "Retire à une élite son modificateur d'élite pendant 8 s."
+  valeurs: "15 ; suppression 8 s ; délai 14 s"
+  visuel: "Cinq doigts lumineux, pentagramme qui s'imprime sur la cible."
+  acces: APT_FUIN
+  limites: "Sans effet sur les boss (Vulnérable +10 % 4 s)."
+- id: JUT_272
+  nom: "Hakke no Fūin Shiki (Sceau à huit trigrammes)"
+  statut: OA
+  famille: SCEAU
+  livraison: ONDE
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "Stocke 20 % des dégâts subis ; toutes les 8 s, les relâche en onde de 4 m (minimum 10)."
+  valeurs: "Onde = max(10 ; stock × 3) ; délai 8 s ; plafond 150"
+  visuel: "Spirale et trigrammes lumineux sur le ventre, anneau à 8 segments."
+  acces: "CLAN_UZUMAKI|CHR_041|CHR_042"
+  limites: "—"
+- id: JUT_273
+  nom: "Cercle de sceaux temporisé"
+  statut: CO
+  famille: SCEAU
+  livraison: DIFFERE
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "6 glyphes apparaissent autour du joueur (3 m) et s'activent l'un après l'autre en sens horaire (colonne de lumière)."
+  valeurs: "18 par glyphe (r 1,2 m) ; écart 0,25 s ; délai 5 s"
+  visuel: "Glyphes au sol qui s'allument en horloge, colonnes violettes brèves."
+  acces: APT_FUIN
+  limites: "Les glyphes restent fixes quand le joueur bouge."
+- id: JUT_274
+  nom: "Sceau d'héritage"
+  statut: CO
+  famille: SCEAU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, MARQUE]
+  cible: plus_proche
+  comportement: "Marque un ennemi ; s'il meurt Marqué, la marque passe à 3 voisins (max 2 générations)."
+  valeurs: "8 ; Marqué 6 s ; délai 3 s"
+  visuel: "Sceau qui se divise en trois lignes vers les voisins."
+  acces: APT_FUIN
+  limites: "Profondeur 2 (règle §B8.2)."
+- id: JUT_275
+  nom: "Shishō Fūin (Sceau des quatre symboles)"
+  statut: AV
+  famille: SCEAU
+  livraison: ZONE
+  tags: [E_NEUTRE, PERSISTANT]
+  cible: plus_dense
+  comportement: "Cercle de 4 m : les invocateurs dedans ne peuvent plus invoquer, les soigneurs ne soignent plus."
+  valeurs: "6 par tick de 0,5 s ; durée 5 s ; délai 12 s"
+  visuel: "Quatre symboles aux points cardinaux, cercle lent."
+  acces: APT_FUIN
+  limites: "—"
+- id: JUT_276
+  nom: "Étiquette de silence"
+  statut: CO
+  famille: SCEAU
+  livraison: PROJECTILE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Étiquette qui interrompt et empêche les attaques à distance d'un tireur ou contrôleur 3 s (priorité à ceux qui télégraphient)."
+  valeurs: "10 ; silence 3 s ; délai 4 s"
+  visuel: "Étiquette collée sur la bouche/l'arme, trait barré."
+  acces: APT_FUIN
+  limites: "Boss : interrompt un télégraphe mineur, jamais un majeur."
+- id: JUT_277
+  nom: "Gyaku Kuchiyose (Rappel des invocations)"
+  statut: OA
+  famille: SCEAU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, MARQUE]
+  cible: plus_menacant
+  comportement: "Toutes les 6 s, toutes les unités alliées se téléportent sur l'ennemi Marqué le plus menaçant et frappent ensemble (+30 % sur cette frappe)."
+  valeurs: "Marque 6 ; bonus +30 % ; délai 6 s"
+  visuel: "Sceau d'invocation au sol, bouffées de fumée synchrones."
+  acces: APT_FUIN
+  limites: "Sans unité alliée : marque seule (carte avertit)."
+- id: JUT_278
+  nom: "Rouleau de barrière à sens unique"
+  statut: CO
+  famille: SCEAU
+  livraison: ZONE
+  tags: [E_NEUTRE, BOUCLIER, PERSISTANT]
+  cible: aucune
+  comportement: "Déroule une barrière de 6 m derrière le joueur : les ennemis ne la franchissent pas, le joueur et ses projectiles oui."
+  valeurs: "10 au contact ; durée 5 s ; délai 12 s"
+  visuel: "Rouleau au sol, paroi de caractères verticaux, flèche de sens discrète."
+  acces: APT_FUIN
+  limites: "Jamais fermée sur un obstacle (brèches de 2 m aux extrémités)."
+- id: JUT_279
+  nom: "Sceau de résonance"
+  statut: CO
+  famille: SCEAU
+  livraison: DIFFERE
+  tags: [E_NEUTRE, MARQUE, EXPLOSIF]
+  cible: marque
+  comportement: "Quand 5 ennemis ou plus sont Marqués, toutes les marques détonent ensemble."
+  valeurs: "30 par marque (r 1,5 m) ; délai interne 4 s"
+  visuel: "Les marques vibrent à l'unisson puis éclatent simultanément (son unique groupé)."
+  acces: APT_FUIN
+  limites: "Consomme les marques."
+- id: JUT_280
+  nom: "Sceau de lien"
+  statut: CO
+  famille: SCEAU
+  livraison: CHAINE
+  tags: [E_NEUTRE, MARQUE]
+  cible: plus_menacant
+  comportement: "Lie la cible la plus menaçante à 2 voisins : 40 % des dégâts qu'elle subit sont copiés sur eux."
+  valeurs: "Copie 40 % (SECONDAIRE) ; durée 5 s ; délai 8 s"
+  visuel: "Chaînes de caractères reliant les cibles."
+  acces: APT_FUIN
+  limites: "Les dégâts copiés ne se recopient pas."

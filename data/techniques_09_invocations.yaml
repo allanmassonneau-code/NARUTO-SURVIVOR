@@ -1,0 +1,386 @@
+# Famille primaire INVOC (invocations et clones) — JUT_217 à JUT_248
+# Règle commune : un clone ne crée jamais de clone ; héritage selon registre §R9 ; plafond global 8 unités.
+- id: JUT_217
+  nom: "Kage Bunshin no Jutsu (Multiclonage)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CLONE]
+  cible: plus_proche
+  comportement: "Invoque un clone toutes les 5 s ; il dure 4 s et frappe la cible proche. Au plafond : la nouvelle invocation RAFRAÎCHIT la durée du clone le plus ancien (pas de remplacement, pas d'attente)."
+  valeurs: "18 par frappe ; intervalle 0,9 s ; durée 4 s ; délai 5 s ; plafond 1"
+  visuel: "Nuage de fumée bref (6 frames), silhouette révélée, bandeau et couleurs du personnage ; contour bleu clair 1 px et palette désaturée de 15 % pour distinguer le clone."
+  acces: "CHR_001|CHR_002|CHR_003|CHR_008|CHR_009|CHR_010|CHR_027|CHR_028|CHR_031|CHR_032|CHR_079"
+  limites: "Ne peut ni invoquer un clone ni reproduire un effet qui s'auto-déclenche."
+- id: JUT_218
+  nom: "Tajū Kage Bunshin (Multiclonage de masse)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CLONE]
+  cible: plus_dense
+  comportement: "Libère une vague de 6 clones fragiles qui chargent le groupe le plus dense, frappent une fois et disparaissent."
+  valeurs: "6 clones × 14 ; délai 9 s ; durée max 2 s"
+  visuel: "Explosion de fumée en rangée, silhouettes en course (4 frames), disparitions en chaîne."
+  acces: "CHR_001|CHR_002|CHR_003"
+  limites: "Clones éphémères : comptent 1 seul emplacement du plafond d'unités."
+- id: JUT_219
+  nom: "Bunshin Daibakuha (Clone explosif)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CLONE, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Un clone court vers le groupe le plus dense et explose au contact."
+  valeurs: "Explosion 45 (r 2,5 m) ; délai 6 s"
+  visuel: "Clone qui se gonfle de lumière 3 frames avant l'explosion ; contour clignotant d'avertissement allié."
+  acces: "CHR_031|CHR_032"
+  limites: "L'explosion est SECONDAIRE."
+- id: JUT_220
+  nom: "Mizu Bunshin (Clone d'eau)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_SUITON, UNITE_ALLIEE, CLONE, TERRAIN]
+  cible: plus_proche
+  comportement: "2 clones d'eau frappent et Trempent ; à leur disparition, ils laissent une flaque d'EAU."
+  valeurs: "12 par frappe ; intervalle 1,0 s ; durée 5 s ; délai 7 s"
+  visuel: "Silhouette bleue translucide, écoulement en bas du sprite ; flaque à la fin."
+  acces: ELEM_SUITON
+  limites: "—"
+- id: JUT_221
+  nom: "Tsuchi Bunshin (Clone de terre)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_DOTON, UNITE_ALLIEE, CLONE, ATTRACTION]
+  cible: plus_dense
+  comportement: "Clone lourd qui attire les ennemis ordinaires à 3 m (provocation) puis s'effondre en boue qui Ensable."
+  valeurs: "Frappe 16 ; effondrement 20 + Ensablé +2 ; durée 6 s ; délai 10 s"
+  visuel: "Clone brun à texture de terre, effondrement en tas."
+  acces: ELEM_DOTON
+  limites: "—"
+- id: JUT_222
+  nom: "Raiton — Kage Bunshin (Clone de foudre)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_RAITON, UNITE_ALLIEE, CLONE]
+  cible: plus_proche
+  comportement: "Clone chargé d'électricité ; quand il est heurté par un ennemi ou expire, il se décharge en zone et Électrise."
+  valeurs: "Frappe 14 ; décharge 30 (r 2,5 m) ; durée 5 s ; délai 8 s"
+  visuel: "Clone traversé d'étincelles, décharge en éclairs radiaux."
+  acces: "ELEM_RAITON+DOJ_SHARINGAN"
+  limites: "—"
+- id: JUT_223
+  nom: "Karasu Bunshin (Clone de corbeaux)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CLONE, CONTROLE]
+  cible: plus_proche
+  comportement: "Leurre qui attire les attaques ; il se disperse ensuite en 8 corbeaux qui Aveuglent les ennemis touchés."
+  valeurs: "Corbeaux 8 × 6 ; Aveuglé 1,5 s ; durée 4 s ; délai 9 s"
+  visuel: "Silhouette qui se défait en corbeaux noirs à contour clair (lisibles sur fond sombre)."
+  acces: CTR_CORBEAU
+  limites: "—"
+- id: JUT_224
+  nom: "Kuchiyose — Gamabunta"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, GEANT]
+  cible: plus_dense
+  comportement: "Invocation géante : le chef crapaud atterrit (onde), donne 2 coups de sabre larges puis repart."
+  valeurs: "Atterrissage 60 (r 4 m) ; sabre 2 × 70 (arc 8 m) ; durée 8 s ; délai 60 s"
+  visuel: "Crapaud de 96 px, pipe et sabre ; transparence 55 % au-dessus des télégraphes (§B9.4)."
+  acces: CTR_CRAPAUD
+  limites: "1 géant ; héritage GEANT."
+- id: JUT_225
+  nom: "Kuchiyose — Crapauds de combat"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: plus_proche
+  comportement: "2 petits crapauds bondissent d'ennemi en ennemi et les frappent de la langue (attraction de 1 m)."
+  valeurs: "10 par coup ; intervalle 0,8 s ; durée 8 s ; délai 10 s"
+  visuel: "Crapauds de 12 px, bonds en arc, langue de 3 frames."
+  acces: CTR_CRAPAUD
+  limites: "—"
+- id: JUT_226
+  nom: "Kuchiyose — Manda"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, GEANT, CONTROLE]
+  cible: plus_dense
+  comportement: "Serpent géant qui encercle un grand groupe puis se resserre (Entravé 1,5 s) et l'écrase."
+  valeurs: "Constriction 80 (anneau de 6 m) ; durée 8 s ; délai 60 s"
+  visuel: "Serpent violet de 128 px de long en anneau ; écailles en 2 tons ; tête télégraphie la fermeture."
+  acces: CTR_SERPENT
+  limites: "1 géant."
+- id: JUT_227
+  nom: "Sen'ei Tajashu (Mains-serpents multiples)"
+  statut: OA
+  famille: INVOC
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Des serpents jaillissent des manches et mordent jusqu'à 4 cibles à 3,5 m ; Empoisonné +1."
+  valeurs: "14 par morsure ; délai 1,6 s"
+  visuel: "Serpents fins à 3 frames de détente, gueules ouvertes."
+  acces: CTR_SERPENT
+  limites: "Pas une unité : extension du joueur."
+- id: JUT_228
+  nom: "Kuchiyose — Katsuyu (Limace)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL, SOIN]
+  cible: plus_proche
+  comportement: "Une petite limace se colle au joueur : soigne 1 PV/s et crache de l'acide qui Corrode."
+  valeurs: "Acide 12 + Corrodé ; intervalle 1,5 s ; soin 1 PV/s ; permanente"
+  visuel: "Limace blanche et bleue de 10 px sur l'épaule, jet d'acide en arc."
+  acces: CTR_LIMACE
+  limites: "Soin soumis au plafond §B4.5."
+- id: JUT_229
+  nom: "Kuchiyose — Meute de ninken"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL, CONTROLE]
+  cible: plus_menacant
+  comportement: "8 chiens surgissent du sol et mordent chacun une cible différente pour l'immobiliser 1,5 s."
+  valeurs: "8 × 12 ; Entravé 1,5 s ; délai 12 s"
+  visuel: "Chiens de 10 px distincts (tailles et couleurs), sortie du sol en poussière."
+  acces: CTR_CHIEN
+  limites: "Compte 1 emplacement du plafond d'unités."
+- id: JUT_230
+  nom: "Akamaru"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: plus_proche
+  comportement: "Compagnon permanent qui suit le joueur, mord et aboie (onde qui repousse, 1 fois/6 s)."
+  valeurs: "Morsure 12 ; intervalle 0,8 s ; aboiement 8 ; permanente"
+  visuel: "Chien blanc de 14 px (24 px en variante adulte), oreilles animées."
+  acces: CLAN_INUZUKA
+  limites: "Ne bloque jamais le joueur."
+- id: JUT_231
+  nom: "Kuchiyose — Enma (Bâton adamantin)"
+  statut: OA
+  famille: INVOC
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Le roi singe se change en bâton qui s'allonge à 6 m et balaie un arc de 90°."
+  valeurs: "40 ; recul 2 m ; délai 3,2 s"
+  visuel: "Bâton noir à anneaux dorés qui s'étire (3 frames), visage de singe gravé."
+  acces: CTR_SINGE
+  limites: "—"
+- id: JUT_232
+  nom: "Kuchiyose — Kirikiri Mai (Danse tranchante de Kamatari)"
+  statut: OA
+  famille: INVOC
+  livraison: PROJECTILE
+  tags: [E_FUTON, PERCANT]
+  cible: plus_dense
+  comportement: "La belette à faux traverse tout l'écran en tornade et entaille tout sur son passage."
+  valeurs: "30 ; Entaillé +2 ; largeur 2 m ; délai 10 s"
+  visuel: "Belette borgne à faux, tornade de lames autour, sillage de feuilles hachées."
+  acces: CTR_BELETTE
+  limites: "—"
+- id: JUT_233
+  nom: "Kuchiyose — Requins"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_SUITON, UNITE_ALLIEE, ANIMAL]
+  cible: plus_proche
+  comportement: "Sur chaque surface EAU, un requin surgit toutes les 2 s pour mordre un ennemi à 2 m de la flaque."
+  valeurs: "22 par morsure ; permanent tant qu'il y a de l'eau"
+  visuel: "Aileron qui fend la flaque, saut hors de l'eau en 3 frames."
+  acces: CTR_REQUIN
+  limites: "Max 3 requins simultanés."
+- id: JUT_234
+  nom: "Kuchiyose — Faucon"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: plus_menacant
+  comportement: "Un faucon plane et pique sur les tireurs et assassins en priorité."
+  valeurs: "26 par piqué ; intervalle 1,6 s ; permanente"
+  visuel: "Rapace de 16 px, ombre au sol distincte, piqué en 3 frames."
+  acces: CTR_FAUCON
+  limites: "—"
+- id: JUT_235
+  nom: "Chōjū Giga (Fauves d'encre)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: plus_dense
+  comportement: "2 lions d'encre bondissent sur les groupes ; à la mort ils éclatent en encre qui Encre les voisins."
+  valeurs: "18 par coup ; intervalle 1,0 s ; durée 6 s ; délai 8 s"
+  visuel: "Fauves noirs au trait de pinceau, éclaboussures d'encre."
+  acces: APT_ENCRE
+  limites: "—"
+- id: JUT_236
+  nom: "Chōjū Giga — Serpents d'encre"
+  statut: AV
+  famille: INVOC
+  livraison: CHAINE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_proche
+  comportement: "Serpents d'encre qui ligotent en chaîne jusqu'à 4 ennemis (Entravé 1 s) et les Encrent."
+  valeurs: "10 ; 4 cibles ; délai 4 s"
+  visuel: "Lignes d'encre ondulantes qui s'enroulent."
+  acces: APT_ENCRE
+  limites: "—"
+- id: JUT_237
+  nom: "Kuchiyose — Cerbère (Chemin animal)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: plus_dense
+  comportement: "Chien à plusieurs têtes ; chaque fois qu'il élimine 5 ennemis, il se divise (max 3 chiens)."
+  valeurs: "20 par morsure ; intervalle 0,9 s ; durée 10 s ; délai 15 s"
+  visuel: "Chien massif aux yeux cerclés, division en fumée."
+  acces: DOJ_RINNEGAN
+  limites: "Les copies sont des ANIMAL (pas des clones)."
+- id: JUT_238
+  nom: "Kuchiyose — Rhinocéros cuirassé"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: direction
+  comportement: "Charge en ligne droite sur 10 m en renversant tout, puis disparaît."
+  valeurs: "36 ; recul 2 m ; délai 7 s"
+  visuel: "Rhinocéros de 32 px, poussière massive, cornes en avant."
+  acces: DOJ_RINNEGAN
+  limites: "—"
+- id: JUT_239
+  nom: "Kuchiyose — Tortue"
+  statut: AV
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL, BOUCLIER]
+  cible: aucune
+  comportement: "Tortue qui suit le joueur et se place devant le plus gros projectile ennemi (bloque 1/1,5 s) ; carapace qui repousse au contact."
+  valeurs: "Contact 10 ; bloque 1 projectile/1,5 s ; permanente"
+  visuel: "Tortue de 16 px au gilet vert, rentrée dans la carapace à chaque blocage."
+  acces: CHR_045
+  limites: "Ne bloque pas les télégraphes de boss."
+- id: JUT_240
+  nom: "Mokuton Bunshin (Clone de bois)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_MOKUTON, UNITE_ALLIEE, CLONE, CONTROLE]
+  cible: plus_proche
+  comportement: "Clone de bois qui combat 6 s puis se fige en arbre qui Entrave les ennemis au contact 2 s."
+  valeurs: "Frappe 16 ; racines 12 + Entravé ; durée 6 s + arbre 4 s ; délai 9 s"
+  visuel: "Clone à texture de fibres, transformation en arbre en 5 frames."
+  acces: KG_MOKUTON
+  limites: "—"
+- id: JUT_241
+  nom: "Suna Bunshin (Clone de sable)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_SABLE, UNITE_ALLIEE, CLONE]
+  cible: plus_proche
+  comportement: "Clone de sable qui frappe ; à sa disparition, il enveloppe l'ennemi le plus proche (Ensablé +3)."
+  valeurs: "Frappe 14 ; enveloppe 25 ; durée 5 s ; délai 8 s"
+  visuel: "Silhouette granuleuse qui s'effrite par le bas."
+  acces: KG_SABLE
+  limites: "—"
+- id: JUT_242
+  nom: "Fukasaku et Shima (Anciens crapauds)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: plus_dense
+  comportement: "Deux anciens sur les épaules lancent en alternance un jet d'eau (Trempé) et une rafale (recul) ; comptent comme Suiton et Fūton."
+  valeurs: "Jet 18 ; rafale 14 ; alternance 1,2 s ; permanente"
+  visuel: "Deux vieux crapauds de 8 px sur les épaules, gestes alternés."
+  acces: "CTR_CRAPAUD+APT_SENJ"
+  limites: "Ne quittent pas le joueur."
+- id: JUT_243
+  nom: "Edo Tensei (Réincarnation des âmes)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE]
+  cible: plus_proche
+  comportement: "Une élite vaincue se relève comme alliée pendant 12 s avec son comportement d'origine (sans son modificateur)."
+  valeurs: "Dégâts de l'élite × 0,6 ; 1 réanimé actif ; délai interne 20 s"
+  visuel: "Corps couvert de fissures grises, cercueil qui s'ouvre (4 frames) ; contour allié."
+  acces: "CHR_030|CHR_060|CHR_063|CHR_064"
+  limites: "Ne fonctionne jamais sur les boss ; inactif sans élite vaincue (carte avertit)."
+- id: JUT_244
+  nom: "Kuchiyose — Rashōmon (Porte des démons)"
+  statut: OA
+  famille: INVOC
+  livraison: ZONE
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Une porte colossale surgit entre le joueur et la plus grande menace et encaisse une attaque lourde (y compris un télégraphe de boss)."
+  valeurs: "Bloque 1 attaque ; 20 aux ennemis écrasés à l'apparition ; délai 30 s"
+  visuel: "Porte de 48 px à visage de démon, fissure qui se propage à l'impact."
+  acces: CHR_030
+  limites: "Seule technique pouvant bloquer un télégraphe de boss : 1 fois / 30 s."
+- id: JUT_245
+  nom: "Bunshin no Jutsu (Clone illusoire)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CLONE]
+  cible: aucune
+  comportement: "Deux clones sans substance attirent l'attention : les ennemis proches les ciblent 2 s (aucun dégât)."
+  valeurs: "0 ; provocation 2 s ; délai 8 s"
+  visuel: "Clones à 70 % d'opacité, sans ombre au sol (signal de non-matérialité)."
+  acces: LIBRE
+  limites: "—"
+- id: JUT_246
+  nom: "Tako Bunshin (Clone de tentacule)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CLONE]
+  cible: plus_proche
+  comportement: "Un clone né d'un tentacule combat ; s'il disparaît de force, il redevient tentacule et fouette en cercle."
+  valeurs: "Frappe 20 ; fouet 26 (r 2 m) ; durée 6 s ; délai 10 s"
+  visuel: "Clone à contour rouge-violet, transformation en tentacule en 4 frames."
+  acces: CHR_058
+  limites: "—"
+- id: JUT_247
+  nom: "Kami Bunshin (Clone de papier)"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, CLONE]
+  cible: plus_proche
+  comportement: "Clone de papier qui, à sa fin, se disperse en 10 shuriken de papier."
+  valeurs: "Frappe 12 ; dispersion 10 × 7 ; durée 5 s ; délai 8 s"
+  visuel: "Silhouette pliée qui se défait en feuilles tournoyantes."
+  acces: APT_PAPIER
+  limites: "—"
+- id: JUT_248
+  nom: "Kuchiyose — Aoda"
+  statut: OA
+  famille: INVOC
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE, ANIMAL]
+  cible: plus_proche
+  comportement: "Grand serpent qui avale un ennemi ordinaire (élimination immédiate) toutes les 3 s ; mord les autres."
+  valeurs: "Avalement : ordinaires < 60 PV ; morsure 24 ; durée 10 s ; délai 14 s"
+  visuel: "Serpent bleu de 48 px, gonflement du corps après avalement."
+  acces: "CTR_SERPENT+CHR_005|CTR_SERPENT+CHR_006"
+  limites: "—"

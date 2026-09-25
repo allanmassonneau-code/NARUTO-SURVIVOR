@@ -1,0 +1,481 @@
+# Famille primaire CLAN (clan et héritage) — JUT_281 à JUT_304 ; OCULAIRE — JUT_305 à JUT_320
+- id: JUT_281
+  nom: "Rasengan (Orbe tourbillonnant)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE, EXPLOSIF]
+  cible: plus_menacant
+  comportement: "Concentre un orbe (0,3 s), puis une image de frappe le projette dans la cible la plus proche (≤ 3 m) : impact et onde de 1,5 m qui repousse."
+  valeurs: "Impact 26 ; onde 10 ; recul 1,5 m ; délai 2,2 s"
+  visuel: "Sphère de 12 px à rotation interne (6 frames), anneaux de pression à l'impact ; le personnage reste visible (orbe tenu devant la main)."
+  acces: APT_RASEN
+  limites: "Voir fiche approfondie (8 niveaux)."
+- id: JUT_282
+  nom: "Kagemane no Jutsu (Imitation d'ombre)"
+  statut: OA
+  famille: CLAN
+  livraison: RAYON
+  tags: [E_NEUTRE, CONTROLE, TERRAIN]
+  cible: plus_menacant
+  comportement: "L'ombre du joueur s'étire jusqu'à 7 m et immobilise la première cible touchée ; se ramifie vers 1 cible supplémentaire à 2 m."
+  valeurs: "Lié par l'ombre 2 s ; délai 5 s ; crée une surface OMBRE sur le trajet"
+  visuel: "Ruban noir plat au sol à bord net (surface graphique), jonction en crochet."
+  acces: CLAN_NARA
+  limites: "Boss : soumis à la résistance de contrôle."
+- id: JUT_283
+  nom: "Kage Kubi Shibari (Étranglement de l'ombre)"
+  statut: OA
+  famille: CLAN
+  livraison: ZONE
+  tags: [E_NEUTRE]
+  cible: marque
+  comportement: "Des mains d'ombre étranglent toutes les cibles Liées par l'ombre : dégâts continus ; sans cible liée, étreint la plus proche à 50 %."
+  valeurs: "12 par tick de 0,5 s ; durée 2 s ; délai 4 s"
+  visuel: "Mains plates noires qui grimpent sur la silhouette en 3 frames."
+  acces: CLAN_NARA
+  limites: "—"
+- id: JUT_284
+  nom: "Kage Nui (Couture de l'ombre)"
+  statut: OA
+  famille: CLAN
+  livraison: CHAINE
+  tags: [E_NEUTRE, PERCANT]
+  cible: plus_proche
+  comportement: "Aiguilles d'ombre qui piquent puis se prolongent d'ennemi en ennemi via les surfaces OMBRE (portée doublée sur l'ombre)."
+  valeurs: "16 ; 5 cibles ; portée 3 m (6 m sur OMBRE) ; délai 2 s"
+  visuel: "Fils d'ombre à pointe, tracés en courbes nettes."
+  acces: CLAN_NARA
+  limites: "—"
+- id: JUT_285
+  nom: "Nikudan Sensha (Char d'assaut humain)"
+  statut: OA
+  famille: CLAN
+  livraison: PROJECTILE
+  tags: [E_NEUTRE, PERCANT, REBOND]
+  cible: plus_dense
+  comportement: "Une boule roulante (image de Chōji agrandi) traverse les groupes et ricoche 2 fois sur le décor."
+  valeurs: "30 ; recul 1,5 m ; délai 4,0 s ; vitesse 9 m/s"
+  visuel: "Boule de 24 px roulante (4 frames), traces au sol."
+  acces: CLAN_AKIMICHI
+  limites: "Le joueur ne se déplace pas."
+- id: JUT_286
+  nom: "Bubun Baika (Expansion partielle)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Le bras grossit et écrase un cône de 4 m ; très lourd, lent."
+  valeurs: "55 ; recul 2 m ; délai 3,5 s"
+  visuel: "Main géante de 40 px en anticipation 3 frames, impact avec déformation du sol."
+  acces: CLAN_AKIMICHI
+  limites: "—"
+- id: JUT_287
+  nom: "Chō Baika (Super expansion)"
+  statut: OA
+  famille: CLAN
+  livraison: ONDE
+  tags: [E_NEUTRE]
+  cible: aucune
+  comportement: "Le joueur grandit brièvement (sprite ×1,5, hitbox inchangée) et s'écrase : onde de 5 m."
+  valeurs: "48 ; délai 10 s"
+  visuel: "Agrandissement par sprite dédié (pas de mise à l'échelle), anneau de poussière."
+  acces: CLAN_AKIMICHI
+  limites: "Hitbox du joueur toujours 0,375 m."
+- id: JUT_288
+  nom: "Shintenshin no Jutsu (Transfert d'esprit)"
+  statut: OA
+  famille: CLAN
+  livraison: DIFFERE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Prend le contrôle d'une élite 4 s : elle combat pour le joueur (sans modificateur)."
+  valeurs: "Contrôle 4 s ; délai 16 s"
+  visuel: "Rayon de ciblage en losange, élite recolorée en couleur alliée."
+  acces: CLAN_YAMANAKA
+  limites: "Boss : Étourdi 0,5 s (résistance normale)."
+- id: JUT_289
+  nom: "Shinranshin no Jutsu (Confusion de l'esprit)"
+  statut: OA
+  famille: CLAN
+  livraison: CONE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_dense
+  comportement: "Cône de 50° : jusqu'à 4 ennemis deviennent Confus 3 s."
+  valeurs: "0 ; délai 6 s"
+  visuel: "Ondes en losanges, spirale au-dessus des cibles."
+  acces: CLAN_YAMANAKA
+  limites: "—"
+- id: JUT_290
+  nom: "Barrière sensorielle"
+  statut: AV
+  famille: CLAN
+  livraison: ZONE
+  tags: [E_NEUTRE, SENSEUR, MARQUE]
+  cible: aucune
+  comportement: "Détecte les ennemis à 14 m (y compris hors écran) et Marque les 3 plus menaçants : +10 % de chance critique contre eux."
+  valeurs: "Marque 6 s ; délai 6 s"
+  visuel: "Indicateurs de bord d'écran en losange, marques sur cibles."
+  acces: CLAN_YAMANAKA
+  limites: "—"
+- id: JUT_291
+  nom: "Kikaichū (Essaim d'insectes)"
+  statut: OA
+  famille: CLAN
+  livraison: INVOCATION
+  tags: [E_NEUTRE, UNITE_ALLIEE]
+  cible: plus_dense
+  comportement: "Un essaim organisé (1 unité logique, 30 insectes décoratifs) enveloppe un groupe et Parasite."
+  valeurs: "3 par tick de 0,5 s + Parasité +1 ; rayon 1,5 m ; permanente"
+  visuel: "Nuée en formation (boids décoratifs), sons de bourdonnement groupés."
+  acces: CLAN_ABURAME
+  limites: "Les insectes ne sont pas des objets physiques (§G5)."
+- id: JUT_292
+  nom: "Mushi Kame (Dôme d'insectes)"
+  statut: OA
+  famille: CLAN
+  livraison: ORBITE
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Une coque d'insectes absorbe 3 projectiles puis se disperse en Parasitant à 2 m."
+  valeurs: "3 charges ; dispersion Parasité +2 ; délai 9 s"
+  visuel: "Coque granuleuse sombre à contour clair, dispersion en nuée."
+  acces: CLAN_ABURAME
+  limites: "—"
+- id: JUT_293
+  nom: "Mushidama (Balles d'insectes)"
+  statut: AV
+  famille: CLAN
+  livraison: SALVE
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "3 balles d'insectes compactes ; à l'impact, elles se déploient et Parasitent en zone."
+  valeurs: "12 + Parasité +1 (r 1 m) ; délai 1,6 s"
+  visuel: "Boules noires à scintillement, éclatement en points."
+  acces: CLAN_ABURAME
+  limites: "—"
+- id: JUT_294
+  nom: "Gatsūga (Double crocs perforants)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE, PERCANT]
+  cible: plus_dense
+  comportement: "Deux tornades-vrilles (images de Kiba et d'Akamaru) traversent les groupes en X. Si Akamaru est possédé, la seconde vrille part d'Akamaru."
+  valeurs: "2 × 26 ; longueur 7 m ; délai 3,0 s"
+  visuel: "Deux vrilles grises à traînée, croisement lisible."
+  acces: CLAN_INUZUKA
+  limites: "—"
+- id: JUT_295
+  nom: "Garōga (Crocs du loup bicéphale)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE, PERCANT, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Une vrille géante à deux têtes de loup fore en ligne sur 9 m puis creuse un cratère."
+  valeurs: "60 ; cratère 30 (r 2,5 m) ; délai 9 s"
+  visuel: "Vrille de 32 px à deux gueules, sol labouré."
+  acces: CHR_023
+  limites: "—"
+- id: JUT_296
+  nom: "Jūken (Poing souple)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Frappes de paume qui ferment les points de chakra : −20 % dégâts infligés par la cible 3 s."
+  valeurs: "3 × 9 ; délai 1,0 s"
+  visuel: "Paumes avec onde fine, points bleus sur la cible."
+  acces: CLAN_HYUGA
+  limites: "Boss : −10 %."
+- id: JUT_297
+  nom: "Hakkeshō Kaiten (Rotation céleste)"
+  statut: OA
+  famille: CLAN
+  livraison: ONDE
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Dôme de chakra en rotation (2,2 m) qui repousse et détruit les projectiles ordinaires."
+  valeurs: "24 ; recul 2,5 m ; délai 6 s"
+  visuel: "Dôme bleu clair strié en rotation (4 frames), sol creusé en cercle."
+  acces: CLAN_HYUGA
+  limites: "—"
+- id: JUT_298
+  nom: "Hakke Rokujūyon Shō (Soixante-quatre paumes)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_menacant
+  comportement: "64 frappes en 1,6 s dans le champ des trigrammes (2 m) ; la dernière projette ; la cible principale est Étourdie."
+  valeurs: "64 × 2 (cible principale), 16 × 2 aux autres ; Étourdi 1 s ; délai 9 s"
+  visuel: "Octogone de trigrammes au sol, compteur visuel 2-4-8-16-32-64 en chiffres stylisés."
+  acces: CLAN_HYUGA
+  limites: "—"
+- id: JUT_299
+  nom: "Hakke Kūshō (Paume du vide)"
+  statut: OA
+  famille: CLAN
+  livraison: PROJECTILE
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Paume qui projette une onde d'air compacte à 8 m."
+  valeurs: "28 ; recul 2 m ; délai 1,8 s"
+  visuel: "Onde en demi-lune translucide."
+  acces: CLAN_HYUGA
+  limites: "—"
+- id: JUT_300
+  nom: "Jūho Sōshiken (Poings jumeaux du lion)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Deux têtes de lion de chakra prolongent les poings (allonge 2,5 m) ; chaque coup draine 0,5 chakra."
+  valeurs: "2 × 18 ; délai 1,2 s"
+  visuel: "Têtes de lion bleues au contour net autour des mains."
+  acces: CHR_018
+  limites: "Plafond de chakra global."
+- id: JUT_301
+  nom: "Kongō Fūsa (Chaînes de scellement adamantines)"
+  statut: OA
+  famille: CLAN
+  livraison: CHAINE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Des chaînes jaillissent du dos, harponnent 3 cibles et les Entravent 2 s."
+  valeurs: "22 ; 3 cibles ; délai 6 s"
+  visuel: "Chaînes dorées à maillons carrés, point d'ancrage sur le dos du personnage."
+  acces: "CLAN_UZUMAKI+APT_FUIN"
+  limites: "Boss : Entravé réduit par résistance."
+- id: JUT_302
+  nom: "Tsubaki no Mai (Danse du camélia)"
+  statut: OA
+  famille: CLAN
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Épée d'os : estocades rapides en série (4) avec parade intégrée (annule 1 projectile par série)."
+  valeurs: "4 × 11 ; délai 1,2 s"
+  visuel: "Épée blanche ivoire, estocs en traits nets."
+  acces: CLAN_KAGUYA
+  limites: "—"
+- id: JUT_303
+  nom: "Sawarabi no Mai (Danse des fougères)"
+  statut: OA
+  famille: CLAN
+  livraison: ZONE
+  tags: [E_NEUTRE, PERSISTANT]
+  cible: plus_dense
+  comportement: "Une forêt d'os jaillit sur 5 m : dégâts à l'émergence, puis les os restent 3 s comme obstacles tranchants."
+  valeurs: "40 ; contact 8 par tick de 0,5 s ; délai 14 s"
+  visuel: "Pics d'os blancs à ombre grise, émergence en vague."
+  acces: CLAN_KAGUYA
+  limites: "Jamais sur le joueur (cercle libre de 1,5 m)."
+- id: JUT_304
+  nom: "Mizu Teppō (Pistolet à eau)"
+  statut: OA
+  famille: CLAN
+  livraison: PROJECTILE
+  tags: [E_SUITON, PERCANT]
+  cible: plus_proche
+  comportement: "Tir d'eau très rapide depuis le doigt, perce 3 et Trempe ; le corps liquéfié du joueur réduit de 20 % les dégâts de contact."
+  valeurs: "14 ; délai 0,7 s ; vitesse 22 m/s"
+  visuel: "Goutte allongée, main aqueuse."
+  acces: CLAN_HOZUKI
+  limites: "—"
+- id: JUT_305
+  nom: "Sharingan — Œil copieur"
+  statut: OA
+  famille: OCULAIRE
+  livraison: PROJECTILE
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Mémorise le dernier projectile ennemi vu et en tire une copie alliée plus puissante vers son auteur."
+  valeurs: "Dégâts de l'original × 1,5 (min 15) ; délai 3 s"
+  visuel: "Tomoe qui tournent sur l'icône, copie recolorée en couleur alliée."
+  acces: DOJ_SHARINGAN
+  limites: "Sans projectile vu : tir de chakra 15."
+- id: JUT_306
+  nom: "Sharingan — Contre prédictif"
+  statut: CO
+  famille: OCULAIRE
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Quand un ennemi commence un télégraphe vers le joueur, une image de frappe l'interrompt (sauf boss majeur)."
+  valeurs: "35 ; délai interne 3 s"
+  visuel: "Éclair rouge dans l'œil du portrait, image rouge qui frappe."
+  acces: DOJ_SHARINGAN
+  limites: "Boss : dégâts seulement."
+- id: JUT_307
+  nom: "Sharingan — Hypnose"
+  statut: OA
+  famille: OCULAIRE
+  livraison: CONE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: direction
+  comportement: "Les ennemis qui font face au joueur dans un cône de 60° (6 m) sont Étourdis 1,5 s (5 max)."
+  valeurs: "6 ; délai 6 s"
+  visuel: "Motif de tomoe en spirale dans le cône (répétition graphique)."
+  acces: DOJ_SHARINGAN
+  limites: "—"
+- id: JUT_308
+  nom: "Tsukuyomi"
+  statut: OA
+  famille: OCULAIRE
+  livraison: DIFFERE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Une élite plonge dans une illusion : Étourdie 3 s et subit des dégâts continus massifs."
+  valeurs: "20 par tick de 0,5 s ; délai 14 s"
+  visuel: "Cible en négatif (palette inversée localement) avec lune rouge au-dessus."
+  acces: "DOJ_MANGEKYO+CHR_031|DOJ_MANGEKYO+CHR_032"
+  limites: "Boss : 0,5 s d'étourdissement max ; dégâts conservés."
+- id: JUT_309
+  nom: "Amaterasu"
+  statut: OA
+  famille: OCULAIRE
+  livraison: DIFFERE
+  tags: [E_NEUTRE]
+  cible: plus_menacant
+  comportement: "Flammes noires sur la cible (Brûlure noire 5 cumuls, ×2) ; à sa mort, elles passent à l'ennemi le plus proche."
+  valeurs: "Brûlure noire 5 cumuls ; 2 transmissions max ; délai 8 s"
+  visuel: "Flammes noires à contour blanc 1 px et liseré rouge ; restent lisibles sur fond sombre."
+  acces: "DOJ_MANGEKYO+CHR_031|DOJ_MANGEKYO+CHR_032|DOJ_MANGEKYO+CHR_006"
+  limites: "Ne compte pas comme Katon (famille OCULAIRE, tag E_NEUTRE)."
+- id: JUT_310
+  nom: "Kamui (Distorsion à distance)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: DIFFERE
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Spirale d'espace sur une zone de 1,5 m : élimine les ordinaires sous 40 % de PV, blesse les autres."
+  valeurs: "50 ; délai d'impact 0,8 s ; délai 7 s"
+  visuel: "Spirale qui aspire les pixels vers son centre, silhouette déformée."
+  acces: "DOJ_MANGEKYO+CHR_009|CHR_061|CHR_062"
+  limites: "Élites et boss : dégâts uniquement."
+- id: JUT_311
+  nom: "Kamui (Intangibilité)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: CONTACT
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Toutes les 6 s, le premier coup qui toucherait le joueur le traverse ; l'agresseur au contact subit une distorsion."
+  valeurs: "Distorsion 20 ; délai 6 s"
+  visuel: "Joueur qui se tord en spirale 0,3 s (reste visible, contour conservé)."
+  acces: "CHR_061|CHR_062"
+  limites: "Compte comme invulnérabilité de 0,3 s."
+- id: JUT_312
+  nom: "Byakugan — Points vitaux"
+  statut: OA
+  famille: OCULAIRE
+  livraison: ZONE
+  tags: [E_NEUTRE, SENSEUR, MARQUE]
+  cible: aucune
+  comportement: "Vision à 360° (12 m) : Marque 3 ennemis ; les 3 prochains coups sur chacun font +40 %."
+  valeurs: "Bonus +40 % additif ; délai 5 s"
+  visuel: "Veines autour des yeux du portrait, marques en réseau de points."
+  acces: DOJ_BYAKUGAN
+  limites: "—"
+- id: JUT_313
+  nom: "Rinnegan — Shinra Tensei (Répulsion divine)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: ONDE
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Onde de répulsion de 6 m qui repousse fortement, détruit tous les projectiles ordinaires et blesse."
+  valeurs: "30 ; recul 4 m ; délai 10 s"
+  visuel: "Anneau blanc qui plie le décor (distorsion), débris projetés."
+  acces: DOJ_RINNEGAN
+  limites: "Recul réduit dans les zones alliées."
+- id: JUT_314
+  nom: "Rinnegan — Bansho Ten'in (Attraction universelle)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: RAYON
+  tags: [E_NEUTRE, ATTRACTION]
+  cible: plus_dense
+  comportement: "Attire violemment un groupe vers un point à 2 m devant le joueur ; ceux qui s'entrechoquent subissent des dégâts."
+  valeurs: "Collision 20 ; délai 7 s"
+  visuel: "Lignes de force convergentes, impact au point focal."
+  acces: DOJ_RINNEGAN
+  limites: "Ordinaires uniquement ; point focal jamais sur le joueur."
+- id: JUT_315
+  nom: "Rinnegan — Gakidō (Absorption)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: ORBITE
+  tags: [E_NEUTRE, BOUCLIER]
+  cible: aucune
+  comportement: "Absorbe les projectiles ennemis de nature ninjutsu à 1,5 m et les convertit en bouclier."
+  valeurs: "Bouclier +3 par projectile (max 30) ; permanente"
+  visuel: "Cercle de symboles tournant, projectiles aspirés dans la paume."
+  acces: DOJ_RINNEGAN
+  limites: "Plafond de bouclier §B4.5."
+- id: JUT_316
+  nom: "Rinnegan — Ningendō (Extraction d'âme)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_proche
+  comportement: "Arrache l'âme d'un ennemi ordinaire sous 50 % de PV (élimination), blesse les autres."
+  valeurs: "30 ; délai 2,5 s"
+  visuel: "Silhouette lumineuse tirée hors du corps en 4 frames."
+  acces: DOJ_RINNEGAN
+  limites: "—"
+- id: JUT_317
+  nom: "Rinnegan — Shuradō (Missiles)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: SALVE
+  tags: [E_NEUTRE, EXPLOSIF]
+  cible: plus_dense
+  comportement: "4 missiles à tête chercheuse depuis le bras mécanique, explosion en zone."
+  valeurs: "22 (r 1,6 m) ; délai 3,5 s"
+  visuel: "Missiles gris à fumée courte, bras qui s'ouvre en 3 frames."
+  acces: DOJ_RINNEGAN
+  limites: "—"
+- id: JUT_318
+  nom: "Bras de Susanoo"
+  statut: OA
+  famille: OCULAIRE
+  livraison: CONTACT
+  tags: [E_NEUTRE]
+  cible: plus_dense
+  comportement: "Un bras spectral géant balaie un arc de 120° à 5 m."
+  valeurs: "42 ; délai 3,0 s"
+  visuel: "Bras de chakra translucide (couleur du porteur) à contour épais, dessiné au-dessus du sol mais sous les télégraphes."
+  acces: DOJ_MANGEKYO
+  limites: "—"
+- id: JUT_319
+  nom: "Kotoamatsukami"
+  statut: OA
+  famille: OCULAIRE
+  livraison: DIFFERE
+  tags: [E_NEUTRE, CONTROLE]
+  cible: plus_menacant
+  comportement: "Convertit une élite en alliée jusqu'à sa mort (1 à la fois)."
+  valeurs: "Élite alliée, dégâts × 0,8 ; délai 45 s"
+  visuel: "Corbeau lumineux, élite recolorée en couleur alliée."
+  acces: CHR_078
+  limites: "Boss : Étourdi 1 s (résistance normale)."
+- id: JUT_320
+  nom: "Tengai Shinsei (Chute de météore)"
+  statut: OA
+  famille: OCULAIRE
+  livraison: DIFFERE
+  tags: [E_NEUTRE, EXPLOSIF]
+  cible: plus_dense
+  comportement: "Ombre croissante pendant 2,5 s, puis un météore s'écrase sur 5 m."
+  valeurs: "140 ; délai 24 s"
+  visuel: "Ombre au sol qui grandit par paliers, rocher de 64 px ; onde sans flash plein écran."
+  acces: "CHR_044"
+  limites: "Micro-pause locale uniquement."
