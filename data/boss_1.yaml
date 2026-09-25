@@ -1,0 +1,246 @@
+# Boss BOS_001 à BOS_012. PV au rang C (§D8 pour les multiplicateurs). Fiches intégrales : BOS_001, BOS_002, BOS_004, BOS_008.
+# Chaque attaque : zone, avertissement (s), active (s), dégâts (rang C), récupération (s), réponse attendue, info (visible = lisible sans l'avoir vue ; apprise = motif à mémoriser).
+- id: BOS_001
+  nom: "Zabuza Momochi"
+  statut: OA
+  niveau_detail: integral
+  cartes: [MAP_002]
+  role_carte: final
+  pv: 90000
+  resistance: 0.20
+  silhouette: "48 × 48 px dans un canevas 96 × 64 ; grand couperet horizontal qui dépasse de 20 px ; bandages sur le bas du visage."
+  hitbox: "Cercle de 0,9 m (corps) ; le couperet n'est dangereux que pendant ses attaques (hitbox d'attaque dédiée)."
+  entree: "2,0 s : la brume se lève, silhouette sur un pilier, couperet planté ; passable."
+  deplacement: "Se déplace de brume en brume : reste à 5–7 m, fonce au contact pour les tranchants, se retire dans la brume après chaque combo."
+  phases:
+    - {seuil: "100–60 %", changements: "Couperet + dragons d'eau ; brume partielle."}
+    - {seuil: "60–25 %", changements: "Brume de Kiri totale (visibilité 9 m, Zabuza toujours contouré) ; 2 clones d'eau (PV 3 % chacun)."}
+    - {seuil: "25–0 %", changements: "Démon de la brume : enchaîne tranchants et prisons, récupérations plus courtes (−25 %)."}
+  attaques:
+    - {nom: "Tranche du couperet", zone: "Arc de 150° à 3,5 m devant lui", avertissement: 0.7, active: 0.2, degats: 28, recuperation: 1.0, reponse: "Esquiver latéralement ou sortir de l'arc", info: visible}
+    - {nom: "Lancer du couperet", zone: "Ligne de 1,2 m de large sur 14 m, aller-retour", avertissement: 0.9, active: 1.4, degats: 24, recuperation: 1.5, reponse: "Sortir de la ligne ; fenêtre de vulnérabilité pendant qu'il est désarmé (dégâts reçus +25 %)", info: visible}
+    - {nom: "Suiryūdan (dragon d'eau)", zone: "Projectile sinueux (amplitude 1 m) de 1 m de large", avertissement: 1.0, active: 1.6, degats: 20, recuperation: 1.2, reponse: "Se placer hors de l'enveloppe sinusoïdale dessinée au sol", info: visible}
+    - {nom: "Suirō (prison aqueuse)", zone: "Cercle de 1,5 m sous le joueur, suit 0,6 s puis se fige", avertissement: 1.2, active: 0.3, degats: 10, recuperation: 2.0, reponse: "Sortir du cercle après qu'il s'est figé ; si pris : 1,5 s d'immobilité, les ennemis ordinaires reculent (aucun combo garanti)", info: apprise}
+    - {nom: "Assassinat silencieux", zone: "Marqueur au sol derrière le joueur (croix blanche) puis tranche de 2 m", avertissement: 0.8, active: 0.2, degats: 34, recuperation: 1.8, reponse: "Esquiver vers l'avant au son de la brume (signal sonore + croix)", info: apprise}
+  vulnerabilites: "Désarmé après le lancer (+25 % 2 s) ; se fige 1 s en sortant de la brume (+15 %)."
+  controle: "Rc de base 20 % ; immunisé au déplacement forcé (conversion en Vulnérable)."
+  conclusion: "Le couperet se plante au sol, Zabuza tombe à genoux ; 1,2 s ; le couperet reste 10 s comme décor."
+- id: BOS_002
+  nom: "Haku"
+  statut: OA
+  niveau_detail: integral
+  cartes: [MAP_002]
+  role_carte: lieutenant
+  pv: 12000
+  resistance: 0.10
+  silhouette: "28 px de haut (humain) + masque de chasseur blanc à contour épais ; miroirs de 16 × 24 px."
+  hitbox: "Cercle de 0,4 m ; dans les miroirs : hitbox déplacée au miroir occupé (le reflet actif est plus lumineux)."
+  entree: "1,5 s : senbon lancés en éventail sur le sol (décor), Haku atterrit."
+  deplacement: "Mobile et distant (6–8 m) ; pendant la phase de miroirs, se téléporte de miroir en miroir."
+  phases:
+    - {seuil: "100–50 %", changements: "Senbon et aiguilles d'eau."}
+    - {seuil: "50–0 %", changements: "Makyō Hyōshō : 12 miroirs en cercle de 7 m autour du joueur (brèches de 1,5 m entre les miroirs pour sortir)."}
+  attaques:
+    - {nom: "Senbon en éventail", zone: "Éventail de 7 aiguilles sur 40°, portée 9 m", avertissement: 0.5, active: 0.4, degats: 8, recuperation: 0.8, reponse: "Bouger perpendiculairement", info: visible}
+    - {nom: "Sensatsu Suishō (aiguilles d'eau)", zone: "Anneau d'aiguilles qui se forme à 2 m autour du joueur puis converge", avertissement: 0.9, active: 0.3, degats: 18, recuperation: 1.5, reponse: "Esquiver hors de l'anneau (le cercle apparaît en premier)", info: visible}
+    - {nom: "Tir de miroir", zone: "Ligne entre le miroir actif et le joueur (1 m de large)", avertissement: 0.6, active: 0.2, degats: 12, recuperation: 0.4, reponse: "Observer le miroir lumineux, se décaler", info: apprise}
+    - {nom: "Tempête de miroirs", zone: "8 lignes simultanées depuis 8 miroirs (lignes pointillées)", avertissement: 1.4, active: 0.3, degats: 14, recuperation: 3.0, reponse: "Trouver l'intervalle sûr (toujours au moins un secteur libre de 30°) ou sortir par une brèche", info: visible}
+  vulnerabilites: "Après la Tempête de miroirs, sort du miroir 3 s (+30 %) ; les miroirs peuvent être brisés (PV 400) pour réduire les lignes."
+  controle: "Rc de base 10 %."
+  conclusion: "Les miroirs fondent en eau ; Haku pose un genou à terre, masque fendu ; 1,0 s."
+- id: BOS_003
+  nom: "Orochimaru"
+  statut: OA
+  niveau_detail: detaille
+  cartes: [MAP_003]
+  role_carte: final
+  pv: 110000
+  resistance: 0.25
+  silhouette: "32 px (humain élancé) ; serpents qui sortent des manches en extension jusqu'à 64 px."
+  hitbox: "Corps 0,45 m ; les serpents sont des hitbox d'attaque, ciblables (PV 1 % chacun) pour interrompre."
+  entree: "2,0 s : sort de la bouche d'un serpent géant (décor) ; passable."
+  deplacement: "Recul et mues : garde 6 m ; se fond dans le sol pour réapparaître (bulle au sol 1 s)."
+  phases:
+    - {seuil: "100–50 %", changements: "Serpents et mues."}
+    - {seuil: "50–0 %", changements: "Manda en arrière-plan (décor) crache des nuées de serpents ; Kusanagi."}
+  attaques:
+    - {nom: "Sen'ei Jashu", zone: "4 lignes de serpents de 7 m vers le joueur", avertissement: 0.8, active: 0.6, degats: 16, recuperation: 1.0, reponse: "Esquive latérale ; les serpents se retirent", info: visible}
+    - {nom: "Mue", zone: "Aucune : restaure 5 % de PV", avertissement: 1.5, active: 0, degats: 0, recuperation: 2.0, reponse: "Interrompre en infligeant 2 % de PV pendant l'avertissement (peau qui se fend)", info: apprise}
+    - {nom: "Kusanagi — Estoc allongé", zone: "Ligne de 12 m, 0,6 m de large", avertissement: 0.9, active: 0.2, degats: 30, recuperation: 1.4, reponse: "Sortir de la ligne", info: visible}
+  vulnerabilites: "Pendant la mue interrompue : Étourdi 1,5 s (+20 %)."
+  controle: "Rc de base 20 %."
+  conclusion: "Se dissout en serpents qui fuient ; 1,2 s."
+- id: BOS_004
+  nom: "Gaara (Shukaku partiel)"
+  statut: OA
+  niveau_detail: integral
+  cartes: [MAP_004]
+  role_carte: final
+  pv: 105000
+  resistance: 0.30
+  silhouette: "Phase 1 : 28 px avec gourde ; phase 2 : bras et queue de sable (64 × 48 px) ; phase 3 : demi-Shukaku (96 px, partie inférieure dans le sable)."
+  hitbox: "Phase 1 : 0,4 m ; phase 2 : corps 0,5 m (la queue est dangereuse mais pas ciblable) ; phase 3 : torse ciblable (cercle 1,8 m), bras = zones dangereuses télégraphiées, reste du sprite décoratif."
+  entree: "1,8 s : le sable s'échappe de la gourde et forme un cercle autour de l'arène."
+  deplacement: "Immobile (défense absolue) en phase 1 ; lent en phase 2 ; fixe au centre en phase 3 (le terrain vient à lui)."
+  phases:
+    - {seuil: "100–65 %", changements: "Défense automatique : un bouclier de sable absorbe les projectiles ; il faut frapper au contact ou par-dessus (DIFFERE) ou en contournant par l'arrière (le bouclier suit à 120°/s)."}
+    - {seuil: "65–30 %", changements: "Shukaku partiel : balles d'air, griffes de sable, sol de sable qui ralentit (surface SABLE ennemie)."}
+    - {seuil: "30–0 %", changements: "Demi-Shukaku : Gaara dort dans le front (point faible lumineux) ; frapper le front accélère la fin."}
+  attaques:
+    - {nom: "Sabaku Kyū", zone: "Cercle de 2 m qui suit le joueur 1 s puis se fige et se referme", avertissement: 1.3, active: 0.4, degats: 30, recuperation: 1.5, reponse: "Continuer de bouger ; sortir après le figement", info: visible}
+    - {nom: "Suna Shuriken", zone: "8 shuriken de sable en arc de 90°", avertissement: 0.6, active: 0.6, degats: 10, recuperation: 0.8, reponse: "Se glisser entre deux shuriken (espacés de 1,2 m au minimum)", info: visible}
+    - {nom: "Griffe de sable", zone: "Rectangle de 8 × 3 m qui balaie depuis Gaara", avertissement: 1.0, active: 0.3, degats: 26, recuperation: 1.2, reponse: "Passer derrière le bras ou reculer hors de portée", info: visible}
+    - {nom: "Balle d'air de Shukaku", zone: "Projectile lent de 1,5 m qui explose en 3 m", avertissement: 1.2, active: 1.5, degats: 32, recuperation: 1.8, reponse: "S'éloigner de la trajectoire ; l'explosion est annoncée par un cercle qui grandit", info: visible}
+    - {nom: "Sabaku Taisō (grand enterrement)", zone: "Arène entière sauf 3 îlots circulaires de 3 m", avertissement: 2.5, active: 1.0, degats: 45, recuperation: 3.0, reponse: "Rejoindre un îlot (toujours au moins un à < 6 m du joueur)", info: apprise}
+  vulnerabilites: "Phase 1 : dos découvert quand le bouclier se reforme (0,5 s) ; phase 3 : front lumineux (+50 %)."
+  controle: "Rc de base 30 % ; en phase 3, immunité au déplacement (conversion en Vulnérable)."
+  conclusion: "Le sable s'effondre, Gaara tombe du front ; 1,5 s ; la gourde reste au sol."
+- id: BOS_005
+  nom: "Shukaku (bête à une queue)"
+  statut: OA
+  niveau_detail: identite
+  cartes: [MAP_004]
+  role_carte: "variante de rang A et plus"
+  pv: 150000
+  resistance: 0.30
+  silhouette: "Tanuki de sable de 192 px ; seul le bas du corps et les bras entrent dans le champ."
+  hitbox: "Ventre (cercle 2,5 m) ciblable ; bras et queue dangereux télégraphiés ; tête décorative."
+  entree: "2,5 s : sortie du sable avec secousse locale (pas de secousse caméra obligatoire)."
+  deplacement: "Fixe ; déplace le terrain (dunes)."
+  mecanique: "Tempête de balles d'air en quadrillage ; le joueur doit lire les colonnes libres."
+  conclusion: "Le sable s'écroule en dune ; 2,0 s."
+- id: BOS_006
+  nom: "Kimimaro Kaguya"
+  statut: OA
+  niveau_detail: identite
+  cartes: [MAP_005]
+  role_carte: final
+  pv: 100000
+  resistance: 0.25
+  silhouette: "30 px ; os saillants ; en phase 2, queue d'os (marque maudite)."
+  hitbox: "0,45 m ; les forêts d'os sont des obstacles dangereux mais destructibles."
+  entree: "1,5 s : sort d'un cercueil (décor)."
+  deplacement: "Agressif au contact ; danse en arcs."
+  mecanique: "Danses successives (camélia, saule, mélèze, clématite) ; chaque danse change la portée ; la forêt d'os (Sawarabi) remodèle l'arène en couloirs."
+  conclusion: "Une lance d'os s'arrête à 1 m du joueur ; il s'effondre ; 1,5 s."
+- id: BOS_007
+  nom: "Kisame Hoshigaki"
+  statut: OA
+  niveau_detail: detaille
+  cartes: [MAP_010]
+  role_carte: final
+  pv: 120000
+  resistance: 0.25
+  silhouette: "36 px, Samehada en diagonale ; en phase 3, forme de requin (48 px)."
+  hitbox: "0,5 m ; dans le dôme d'eau, il nage (hitbox inchangée)."
+  entree: "2,0 s : jaillit du lac."
+  deplacement: "Au contact avec Samehada ; phase 3 dans le dôme d'eau, nage rapide en cercles."
+  phases:
+    - {seuil: "100–60 %", changements: "Samehada ; requins."}
+    - {seuil: "60–30 %", changements: "Bakusui Shōha : l'arène est inondée."}
+    - {seuil: "30–0 %", changements: "Suirō Sameodori : dôme d'eau de 12 m ; le joueur est ralenti mais peut en sortir par 3 brèches."}
+  attaques:
+    - {nom: "Samehada — Balayage", zone: "Arc de 180° à 3 m, vole 5 chakra au joueur", avertissement: 0.8, active: 0.3, degats: 26, recuperation: 1.0, reponse: "Esquiver ; le vol de chakra est affiché", info: visible}
+    - {nom: "Goshokuzame", zone: "5 requins qui partent en étoile puis reviennent", avertissement: 1.0, active: 2.0, degats: 18, recuperation: 1.5, reponse: "Se placer entre deux branches de l'étoile", info: visible}
+    - {nom: "Daikōdan", zone: "Requin géant de 3 m de large sur 16 m", avertissement: 1.6, active: 1.2, degats: 40, recuperation: 2.5, reponse: "Sortir du couloir annoncé ; absorbe les projectiles du joueur (visible)", info: visible}
+  vulnerabilites: "Après Daikōdan (épuisé 2 s, +20 %)."
+  controle: "Rc 25 %."
+  conclusion: "Samehada se détache et rampe hors de l'écran ; 1,5 s."
+- id: BOS_008
+  nom: "Itachi Uchiha"
+  statut: OA
+  niveau_detail: integral
+  cartes: [MAP_009]
+  role_carte: final
+  pv: 115000
+  resistance: 0.30
+  silhouette: "30 px ; manteau à nuages rouges à contour blanc ; Susanoo orange en phase 3 (128 px, translucide)."
+  hitbox: "0,45 m ; en phase 3, Itachi reste au centre du Susanoo (seul Itachi est ciblable ; le Susanoo est décoratif sauf l'épée et le miroir)."
+  entree: "2,0 s : nuée de corbeaux qui se rassemble ; passable."
+  deplacement: "Distance moyenne (5 m) ; clones de corbeaux pour se repositionner ; ne poursuit jamais."
+  phases:
+    - {seuil: "100–65 %", changements: "Katon et clones de corbeaux."}
+    - {seuil: "65–35 %", changements: "Genjutsu et Amaterasu ; l'arène se couvre de flammes noires localisées."}
+    - {seuil: "35–0 %", changements: "Susanoo : Totsuka et Yata ; attaques plus lentes et plus larges."}
+  attaques:
+    - {nom: "Gōkakyū", zone: "Boule de feu de 1,5 m vers le joueur, explosion 3 m", avertissement: 0.9, active: 1.0, degats: 24, recuperation: 1.0, reponse: "Esquiver latéralement", info: visible}
+    - {nom: "Clone de corbeaux", zone: "Leurre : 2 Itachi, le vrai a une ombre au sol, le faux explose en corbeaux (Aveuglé 1 s)", avertissement: 0.5, active: 0, degats: 0, recuperation: 0.5, reponse: "Frapper celui qui a une ombre", info: apprise}
+    - {nom: "Tsukuyomi", zone: "Regard : cône de 60° sur 8 m ; si le joueur y est à la fin, 1,5 s d'illusion (écran figé localement, le joueur continue de bouger : aucune perte de contrôle, les ennemis ralentis)", avertissement: 1.5, active: 0.1, degats: 20, recuperation: 2.0, reponse: "Sortir du cône ou regarder ailleurs (se déplacer dos à lui réduit l'effet de moitié)", info: apprise}
+    - {nom: "Amaterasu", zone: "Flammes noires qui apparaissent sur un point (cercle 1,5 m) après fixation de l'œil", avertissement: 1.0, active: 4.0, degats: 12, recuperation: 1.5, reponse: "Ne pas rester sur le point fixé ; les flammes restent 4 s (surface ennemie)", info: visible}
+    - {nom: "Épée de Totsuka", zone: "Ligne de 10 m, 1,5 m de large ; scelle 20 chakra", avertissement: 1.4, active: 0.3, degats: 38, recuperation: 2.2, reponse: "Sortir de la ligne", info: visible}
+    - {nom: "Miroir de Yata", zone: "Aucune : renvoie les projectiles du joueur 2 s (miroir brillant)", avertissement: 0.6, active: 2.0, degats: 0, recuperation: 1.0, reponse: "Cesser de viser le miroir (attaques DIFFERE et CONTACT non renvoyées)", info: visible}
+  vulnerabilites: "Toux (maladie) : toutes les 45 s, 2 s d'arrêt (+30 %) annoncées par un sprite plié."
+  controle: "Rc de base 30 % ; genjutsu joueur réduit de 50 % (rendement décroissant, jamais immunité)."
+  conclusion: "Le Susanoo se défait en plumes, Itachi tend deux doigts vers le joueur puis s'effondre ; 1,5 s (animation unique, raccourcie à 0,5 s dès la 2e fois)."
+- id: BOS_009
+  nom: "Deidara"
+  statut: OA
+  niveau_detail: detaille
+  cartes: [MAP_008]
+  role_carte: lieutenant
+  pv: 14000
+  resistance: 0.15
+  silhouette: "28 px sur oiseau d'argile de 48 px (vol : ombre au sol toujours visible)."
+  hitbox: "Deidara (0,4 m) ciblable ; l'oiseau est décoratif."
+  entree: "1,5 s : l'oiseau descend en piqué."
+  deplacement: "Vole en cercle à 8 m ; ne se pose que pour recharger (fenêtre)."
+  phases:
+    - {seuil: "100–0 %", changements: "Bombardement ; recharge au sol toutes les 25 s."}
+  attaques:
+    - {nom: "C1 — Araignées", zone: "6 araignées marchent vers le joueur et explosent (1,3 m)", avertissement: 0.5, active: 3.0, degats: 14, recuperation: 0.5, reponse: "Les tuer à distance ou esquiver", info: visible}
+    - {nom: "Bombardement d'oiseaux", zone: "Cercles d'ombre qui grandissent sur 1 s, explosion 2 m", avertissement: 1.0, active: 0.3, degats: 22, recuperation: 1.0, reponse: "Sortir des ombres", info: visible}
+    - {nom: "C2 — Dragon", zone: "Dragon qui traverse en ligne et largue 4 bombes", avertissement: 1.4, active: 2.0, degats: 26, recuperation: 2.0, reponse: "Suivre la ligne en quinconce", info: visible}
+  vulnerabilites: "Au sol pendant la recharge 3 s (+30 %)."
+  controle: "Rc 15 % ; en vol : Entravé impossible (converti en Vulnérable)."
+  conclusion: "L'oiseau explose en petites bombes inoffensives, Deidara s'éclipse (lieutenant) ; 1,0 s."
+- id: BOS_010
+  nom: "Sasori (Hiruko puis vraie forme)"
+  statut: OA
+  niveau_detail: detaille
+  cartes: [MAP_008]
+  role_carte: final
+  pv: 115000
+  resistance: 0.25
+  silhouette: "Phase 1 : Hiruko (32 × 24 px, voûté) ; phase 2 : Troisième Kazekage (marionnette 32 px) ; phase 3 : corps de marionnette de Sasori + cent marionnettes."
+  hitbox: "Hiruko : carapace (0,8 m) ; phase 2 : la marionnette est ciblable, Sasori (derrière, 0,4 m) aussi ; phase 3 : seul le cœur (noyau lumineux sur Sasori) inflige les dégâts au boss, les marionnettes sont des ennemis séparés."
+  entree: "1,5 s : Hiruko avance en claquant sa queue."
+  deplacement: "Phase 1 : lent ; phase 2 : Sasori reste à 8 m derrière la marionnette ; phase 3 : fixe, les marionnettes encerclent."
+  phases:
+    - {seuil: "100–70 %", changements: "Queue de scorpion, aiguilles."}
+    - {seuil: "70–35 %", changements: "Sable de fer : pointes et réseaux."}
+    - {seuil: "35–0 %", changements: "Cent marionnettes : vagues d'ennemis mécaniques, le cœur est exposé 2 s après chaque vague."}
+  attaques:
+    - {nom: "Queue empoisonnée", zone: "Ligne de 5 m, Empoisonné +3", avertissement: 0.8, active: 0.2, degats: 20, recuperation: 1.0, reponse: "Esquiver ; soigner/purger le poison", info: visible}
+    - {nom: "Satetsu Shigure", zone: "Pluie d'aiguilles noires sur 5 m (tramage au sol 1 s)", avertissement: 1.0, active: 1.0, degats: 16, recuperation: 1.5, reponse: "Sortir de la zone tramée", info: visible}
+    - {nom: "Satetsu Kaihō", zone: "Sphère de fer au-dessus du joueur, puis pointes en étoile (8 branches)", avertissement: 1.4, active: 0.4, degats: 30, recuperation: 2.0, reponse: "Se placer entre deux branches ou loin", info: apprise}
+  vulnerabilites: "Cœur exposé 2 s après chaque vague de marionnettes (+50 %)."
+  controle: "Rc 25 %."
+  conclusion: "Les marionnettes tombent en même temps (son groupé), le cœur s'éteint ; 1,5 s."
+- id: BOS_011
+  nom: "Hidan"
+  statut: OA
+  niveau_detail: identite
+  cartes: [MAP_011]
+  role_carte: lieutenant
+  pv: 13000
+  resistance: 0.10
+  silhouette: "30 px, faux à trois lames reliée à un câble."
+  hitbox: "0,45 m."
+  entree: "1,2 s : prière au sol."
+  deplacement: "Poursuit ; trace son cercle rituel quand il obtient le sang du joueur."
+  mecanique: "S'il touche le joueur avec la faux, il trace un cercle : tant qu'il y reste, les dégâts qu'il s'inflige sont reproduits sur le joueur (plafonné à 5 % PV max/coup). Le sortir du cercle (recul, contrôle) ou le frapper hors cercle annule le lien. Ne peut pas tuer par le lien seul (plancher 1 PV côté joueur)."
+  conclusion: "Il tombe en jurant (texte bref), le cercle s'efface ; 1,0 s."
+- id: BOS_012
+  nom: "Kakuzu"
+  statut: OA
+  niveau_detail: identite
+  cartes: [MAP_011]
+  role_carte: final
+  pv: 125000
+  resistance: 0.30
+  silhouette: "32 px ; 4 masques animaux qui sortent du dos (unités de 24 px)."
+  hitbox: "Corps 0,5 m ; chaque masque est un ennemi séparé (PV 8 %)."
+  entree: "1,8 s : compte des billets, fils noirs."
+  deplacement: "Lent, défensif."
+  mecanique: "Cinq cœurs : chaque masque détruit retire 1 cœur et 20 % de PV max au boss ; les masques lancent Katon, Fūton, Raiton, Suiton. Le combo Katon+Fūton (Zukokku + Atsugai) est télégraphié par un lien entre les masques 2 s avant."
+  conclusion: "Les fils se relâchent, les masques se fendent ; 1,5 s."

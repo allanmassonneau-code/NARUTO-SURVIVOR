@@ -1,0 +1,282 @@
+# Cartes MAP_001 à MAP_020. Fiches intégrales pour MAP_001, MAP_002, MAP_006, MAP_012 dans D_contenu.md.
+# taille : dimensions jouables en mètres (1 m = 16 px) ; « boucle » = bords qui se rejoignent (tore) ou « bornée ».
+- id: MAP_001
+  nom: "Konoha — Terrains d'entraînement"
+  statut: OA
+  trace: "Clairière centrale (3 poteaux d'entraînement), anneau de forêt claire, rivière est-ouest avec 3 gués, colline au nord."
+  taille: "160 × 160 m, bornée (bords en falaises douces)"
+  palette: "Verts tendres désaturés, terre ocre, eau turquoise pâle ; actions plus saturées que le décor."
+  obstacles: "Faible : troncs (1 m), rochers (1,5 m), 3 poteaux centraux ; couloirs ≥ 3 m"
+  ressources: "Rations dans les souches, 2 Rouleaux (colline, gué ouest), coffres d'élite"
+  ennemis: [ENM_001, ENM_002, ENM_010, ENM_019, ENM_028, ENM_055, ENM_076]
+  evenement: "Test des clochettes (08:00) : 3 clochettes apparaissent sur des ennemis ; les récupérer toutes en 60 s donne un coffre de lieutenant."
+  boss: BOS_035
+  boss_secondaires: []
+  secret: "Frapper les 3 poteaux dans l'ordre gauche-centre-droite avec une technique CONTACT révèle un passage vers la stèle aux héros (SEC_001)."
+  contrainte: "Rivière : −25 % déplacement dans l'eau hors gués ; les gués sont des goulets à surveiller."
+- id: MAP_002
+  nom: "Pays des Vagues — Pont inachevé"
+  statut: OA
+  trace: "Pont long (bande de 24 m de large) orienté est-ouest au-dessus de la mer, échafaudages, deux îlots aux extrémités, brume périodique."
+  taille: "320 × 60 m, bords nord et sud = rambardes (bornée), extrémités en boucle"
+  palette: "Bois gris-brun, mer bleu-gris, brume blanche ; contrastes renforcés sur les silhouettes."
+  obstacles: "Moyenne : piles de planches destructibles, grues, trous du pont (vide infranchissable, bordé d'une rambarde visible)"
+  ressources: "Caisses d'outils (Rations), 2 Rouleaux (échafaudages), eau autour des piles (surface EAU permanente sur les bords)"
+  ennemis: [ENM_002, ENM_003, ENM_011, ENM_019, ENM_020, ENM_029, ENM_037, ENM_047, ENM_072, ENM_077]
+  evenement: "Brume de Kiri (06:00, 16:30) : visibilité réduite à 9 m pour 45 s ; les ennemis restent contourés et les télégraphes restent visibles."
+  boss: BOS_001
+  boss_secondaires: [BOS_002]
+  secret: "Détruire les 4 grues avant 12:00 révèle le coffre du constructeur Tazuna (SEC_002)."
+  contrainte: "Couloir long et étroit : on ne peut pas tourner en rond, il faut remonter le pont et gérer les deux côtés."
+- id: MAP_003
+  nom: "Forêt de la Mort"
+  statut: OA
+  trace: "Forêt dense à arbres géants, racines formant des ponts, tour centrale, rivière à sangsues."
+  taille: "200 × 200 m, en boucle"
+  palette: "Verts sombres et bruns, champignons phosphorescents ; ennemis contourés clair."
+  obstacles: "Élevée : troncs géants (4 m), racines basses franchissables"
+  ressources: "Rouleaux « Ciel/Terre » (2), Rations, champignons (soin 10, poison si élite Brasier proche)"
+  ennemis: [ENM_004, ENM_010, ENM_013, ENM_021, ENM_030, ENM_038, ENM_056, ENM_061, ENM_078]
+  evenement: "Épreuve des rouleaux (10:30) : porter le rouleau Ciel à la tour en 90 s (les ennemis ciblent le porteur) pour un coffre."
+  boss: BOS_003
+  boss_secondaires: []
+  secret: "Ramasser les deux rouleaux et les ouvrir hors de la tour déclenche une embuscade unique et révèle SEC_003."
+  contrainte: "Visibilité coupée par la canopée : les troncs géants deviennent translucides autour du joueur (rayon 5 m)."
+- id: MAP_004
+  nom: "Stade de l'examen chūnin"
+  statut: OA
+  trace: "Arène circulaire de 70 m, gradins inaccessibles, 4 couloirs d'entrée, arbres au centre."
+  taille: "70 m de diamètre (arène) + couloirs, bornée"
+  palette: "Terre claire, murs beige, public stylisé en aplats ; ennemis colorés."
+  obstacles: "Faible au centre, couloirs étroits"
+  ressources: "Rations lancées depuis les gradins (événement), 1 Rouleau par couloir"
+  ennemis: [ENM_001, ENM_005, ENM_014, ENM_021, ENM_022, ENM_031, ENM_038, ENM_039, ENM_079]
+  evenement: "Invasion du Son (12:00) : plumes de sommeil (genjutsu ennemi) — zones au sol annoncées 1,5 s avant, ennemis endormis compris."
+  boss: BOS_004
+  boss_secondaires: [BOS_005]
+  secret: "Survivre 3 minutes sans quitter le centre après 05:00 : SEC_004."
+  contrainte: "Espace circulaire fermé : les vagues arrivent par les 4 couloirs (annoncés par des flèches au bord de l'écran)."
+- id: MAP_005
+  nom: "Forêt frontalière — Poursuite de Sasuke"
+  statut: OA
+  trace: "Couloir forestier qui défile lentement vers l'est (caméra et zone de sécurité avancent à 0,4 m/s)."
+  taille: "infini horizontal, 50 m de large"
+  palette: "Verts d'automne, bruns, lumière rasante."
+  obstacles: "Moyenne : rochers, arbres, falaises latérales"
+  ressources: "Rations sur la route, Rouleaux aux clairières"
+  ennemis: [ENM_005, ENM_014, ENM_021, ENM_023, ENM_030, ENM_031, ENM_039, ENM_048, ENM_080]
+  evenement: "Barrière des Quatre (09:30) : un des Quatre du Son (tirage) dresse une arène temporaire 40 × 40 m."
+  boss: BOS_006
+  boss_secondaires: [BOS_020, BOS_021, BOS_022, BOS_023]
+  secret: "Ne jamais reculer derrière la ligne de départ pendant 15 min : SEC_005."
+  contrainte: "Défilement forcé : rester en arrière inflige 5 PV/s dans la zone rouge clairement marquée (jamais sans avertissement de 3 s)."
+- id: MAP_006
+  nom: "Vallée de la Fin"
+  statut: OA
+  trace: "Cascade centrale entre les statues de Hashirama et Madara, bassin, rives rocheuses, plateaux supérieurs."
+  taille: "180 × 140 m, bornée"
+  palette: "Gris-bleu, eau blanche, statues ocre ; ciel orageux."
+  obstacles: "Moyenne : rochers, bassin (eau profonde −40 % déplacement, surface EAU permanente)"
+  ressources: "2 Rouleaux (têtes des statues), Rations sur les rives"
+  ennemis: [ENM_005, ENM_007, ENM_016, ENM_024, ENM_033, ENM_047, ENM_049, ENM_081]
+  evenement: "Crue (07:00 et 15:00) : le bassin s'étend pendant 30 s ; bord de la crue annoncé par une ligne d'écume 2 s avant."
+  boss: BOS_025
+  boss_secondaires: [BOS_026]
+  secret: "Toucher les deux statues avec l'ultime dans la même run : SEC_006."
+  contrainte: "Eau profonde au centre : combat de rives, les synergies d'eau sont omniprésentes (Raiton favorisé)."
+- id: MAP_007
+  nom: "Repaire d'Orochimaru"
+  statut: OA
+  trace: "Couloirs souterrains en grille, salles de laboratoire, cellules, bassin de serpents."
+  taille: "150 × 150 m de couloirs (4 m) et salles (20 m), bornée"
+  palette: "Pierre violet sombre, torches orange, vapeurs vertes ; ennemis contourés clair."
+  obstacles: "Élevée : murs, portes coulissantes"
+  ressources: "Laboratoires (coffres), fioles (Ration), Rouleau interdit garanti à 12:00"
+  ennemis: [ENM_004, ENM_017, ENM_034, ENM_040, ENM_048, ENM_057, ENM_061, ENM_082]
+  evenement: "Évasion des sujets (13:00) : les cellules s'ouvrent, 30 sujets maudits (marque) chargent ; les portes restent ouvertes."
+  boss: BOS_017
+  boss_secondaires: [BOS_040, BOS_031]
+  secret: "Ouvrir les 6 cellules avant 13:00 (bouton-pression) : SEC_007."
+  contrainte: "Couloirs : l'encerclement est plus rapide ; les portes coulissantes se ferment toutes les 90 s (annoncées), jamais sur le joueur."
+- id: MAP_008
+  nom: "Suna — Désert et remparts"
+  statut: OA
+  trace: "Village encaissé entre falaises, désert ouvert au sud, dunes mobiles."
+  taille: "220 × 180 m, en boucle"
+  palette: "Sables ocre, bâtiments beige arrondis, ciel blanc ; ombres bleutées pour la lisibilité."
+  obstacles: "Faible dans le désert, élevée dans le village"
+  ressources: "Oasis (soin 1 PV/s), 3 Rouleaux, gourdes (Rations)"
+  ennemis: [ENM_009, ENM_022, ENM_025, ENM_035, ENM_041, ENM_050, ENM_066, ENM_083]
+  evenement: "Tempête de sable (10:00, 17:00) : vent latéral qui pousse le joueur de 0,5 m/s (compensable) et dévie les projectiles légers des deux camps."
+  boss: BOS_010
+  boss_secondaires: [BOS_009]
+  secret: "Réparer la marionnette brisée (3 pièces) : SEC_008."
+  contrainte: "Sable profond : −15 % déplacement hors pistes ; les pistes pavées dessinent des routes."
+- id: MAP_009
+  nom: "Ruines du repaire Uchiha"
+  statut: OA
+  trace: "Salles en ruine, toits effondrés, grande salle du trône à éventails."
+  taille: "160 × 160 m, bornée"
+  palette: "Bois noir, rouges profonds, nuages d'orage ; ennemis contourés blanc."
+  obstacles: "Moyenne : piliers, gravats destructibles"
+  ressources: "Rouleaux de clan (2), Rations"
+  ennemis: [ENM_006, ENM_032, ENM_036, ENM_042, ENM_051, ENM_058, ENM_064, ENM_084]
+  evenement: "Nuée de corbeaux (11:00) : des corbeaux traversent l'écran (décoratif) et 1 sur 5 est un ennemi Aveuglant, contour rouge."
+  boss: BOS_008
+  boss_secondaires: []
+  secret: "Frapper le mur aux éventails avec Amaterasu : SEC_009."
+  contrainte: "Toits effondrés : zones d'ombre à passage derrière (transparence) — lisibilité à tester."
+- id: MAP_010
+  nom: "Kiri — Lacs brumeux"
+  statut: OA
+  trace: "Archipel de plates-formes reliées par des passerelles au-dessus d'un lac."
+  taille: "200 × 200 m, en boucle"
+  palette: "Bleus froids, gris, brume ; actions chaudes contrastées."
+  obstacles: "Eau entre les îles : praticable à −40 % (surface EAU)"
+  ressources: "Coffres sur îlots isolés (risque), Rouleaux"
+  ennemis: [ENM_003, ENM_024, ENM_029, ENM_037, ENM_052, ENM_059, ENM_065, ENM_072, ENM_074, ENM_085]
+  evenement: "Brume sanglante (09:00, 18:00) : assassins invisibles hors 6 m (révélés par un scintillement à 6 m, jamais invisibles au contact)."
+  boss: BOS_007
+  boss_secondaires: []
+  secret: "Traverser le lac entier à la nage sans être touché : SEC_010."
+  contrainte: "Passerelles étroites : choix d'itinéraire entre îlots."
+- id: MAP_011
+  nom: "Cimetière du Temple du Feu"
+  statut: OA
+  trace: "Cimetière en terrasses, forêt de pins, temple en ruine."
+  taille: "180 × 180 m, bornée"
+  palette: "Gris pierre, pins sombres, lanternes ; ciel crépusculaire."
+  obstacles: "Moyenne : tombes (basses), pins"
+  ressources: "Primes (Ryō +50 % sur élites), Rouleaux"
+  ennemis: [ENM_002, ENM_008, ENM_028, ENM_044, ENM_049, ENM_053, ENM_066, ENM_070, ENM_086]
+  evenement: "Chasse aux primes (08:00) : 3 cibles de prime marquées d'une pièce ; les éliminer donne des Ryō et une Relance."
+  boss: BOS_012
+  boss_secondaires: [BOS_011]
+  secret: "Enterrer une élite dans le Yomi Numa près du temple : SEC_011."
+  contrainte: "Terrasses : escaliers-goulots entre niveaux."
+- id: MAP_012
+  nom: "Amegakure — Tour de pluie"
+  statut: OA
+  trace: "Ville industrielle verticale : toits, tuyaux, place centrale sous la tour de Pain ; pluie permanente."
+  taille: "200 × 200 m, en boucle"
+  palette: "Gris-bleus, métal rouillé, pluie en traits clairs ; lumières industrielles."
+  obstacles: "Moyenne : cheminées, conduites (basses), bâtiments"
+  ressources: "Rouleaux sur les toits, Rations dans les ateliers"
+  ennemis: [ENM_008, ENM_018, ENM_026, ENM_045, ENM_054, ENM_062, ENM_071, ENM_087]
+  evenement: "Pluie sensorielle (permanente) : tous les ennemis et le joueur sont Trempés en extérieur toutes les 3 s ; Conduction omniprésente (des deux côtés : les ennemis Raiton aussi)."
+  boss: BOS_013
+  boss_secondaires: [BOS_014, BOS_030]
+  secret: "Trouver le papier de Konan plié en fleur sur 3 toits : SEC_012."
+  contrainte: "Pluie : les techniques Katon perdent 10 % de rayon en extérieur (affiché) ; les abris couverts suppriment la pluie."
+- id: MAP_013
+  nom: "Konoha — Nuit du Kyūbi"
+  statut: OA
+  trace: "Village nocturne en flammes, rues, toits, falaise des Hokage."
+  taille: "220 × 180 m, bornée"
+  palette: "Bleus nuit, orange des incendies ; valeurs claires sur les ennemis."
+  obstacles: "Élevée : maisons, gravats en feu (surface feu ennemie annoncée)"
+  ressources: "Réfugiés à escorter (objectif secondaire), Rouleaux"
+  ennemis: [ENM_006, ENM_017, ENM_019, ENM_032, ENM_046, ENM_053, ENM_055, ENM_067, ENM_072, ENM_088]
+  evenement: "Queue de renard (toutes les 3 min) : une queue géante balaie une rue ; ombre au sol 2,5 s avant, rue signalée par des flèches."
+  boss: BOS_018
+  boss_secondaires: []
+  secret: "Sauver 10 réfugiés : SEC_013."
+  contrainte: "Incendies : zones de feu ennemies qui se déplacent lentement."
+- id: MAP_014
+  nom: "Pays du Fer — Sommet des Kage"
+  statut: OA
+  trace: "Forteresse enneigée, pont de glace, salle du sommet."
+  taille: "180 × 160 m, bornée"
+  palette: "Blancs et bleus, bois sombre ; les ennemis portent des couleurs vives."
+  obstacles: "Moyenne : colonnes, congères"
+  ressources: "Braseros (réchauffent : −1 Refroidi/s), Rouleaux"
+  ennemis: [ENM_006, ENM_012, ENM_027, ENM_032, ENM_046, ENM_063, ENM_067, ENM_069, ENM_074, ENM_089, ENM_090]
+  evenement: "Blizzard (07:00, 15:00) : Refroidi +1 toutes les 5 s au joueur hors braseros (jamais Gelé : ralentissement max −20 %)."
+  boss: BOS_024
+  boss_secondaires: [BOS_028]
+  secret: "Éteindre tous les braseros sauf un et survivre 2 minutes : SEC_014."
+  contrainte: "Neige profonde : −10 % déplacement ; les sillages dessinent des pistes rapides."
+- id: MAP_015
+  nom: "Kumo — Falaises foudroyées"
+  statut: OA
+  trace: "Pics rocheux reliés par des ponts, plateau sommital."
+  taille: "180 × 180 m, bornée"
+  palette: "Gris ardoise, ciel orageux violet, éclairs blancs."
+  obstacles: "Moyenne : pics, gouffres bordés"
+  ressources: "Paratonnerres naturels (bonus Raiton +10 % à proximité), Rouleaux"
+  ennemis: [ENM_002, ENM_015, ENM_027, ENM_043, ENM_064, ENM_070, ENM_075, ENM_091]
+  evenement: "Orage (toutes les 2 min) : 6 éclairs tombent sur des cercles annoncés 1,5 s avant (dégâts aux deux camps)."
+  boss: BOS_032
+  boss_secondaires: [BOS_033]
+  secret: "Rapper avec Killer Bee : terminer sa mission avec le compteur de rime parfait : SEC_015."
+  contrainte: "Ponts étroits entre pics."
+- id: MAP_016
+  nom: "Plaine de la guerre — Division combinée"
+  statut: OA
+  trace: "Immense plaine vallonnée, tranchées, camps."
+  taille: "300 × 300 m, en boucle"
+  palette: "Verts jaunis, terre, fumées ; drapeaux de l'Alliance."
+  obstacles: "Faible : tranchées (goulots), rochers"
+  ressources: "Ravitaillement de l'Alliance (Rations, Relances), 3 Rouleaux"
+  ennemis: [ENM_007, ENM_015, ENM_023, ENM_045, ENM_060, ENM_071, ENM_073, ENM_092, ENM_093]
+  evenement: "Réanimés (12:00) : des shinobi réanimés (élites Edo) arrivent en groupe ; les sceller (Fūinjutsu) donne un coffre."
+  boss: BOS_027
+  boss_secondaires: [BOS_034]
+  secret: "Réunir les 5 bandeaux de l'Alliance : SEC_016."
+  contrainte: "Hordes massives : densité la plus élevée du jeu (test de performance de référence)."
+- id: MAP_017
+  nom: "Désert de la guerre"
+  statut: OA
+  trace: "Désert rocheux, canyons, champ de bataille de la division de Gaara."
+  taille: "240 × 240 m, en boucle"
+  palette: "Ocres, rouges, poussière ; ennemis en tons froids."
+  obstacles: "Moyenne : canyons, piliers"
+  ressources: "Sable (surface SABLE naturelle), Rouleaux"
+  ennemis: [ENM_009, ENM_016, ENM_023, ENM_025, ENM_033, ENM_043, ENM_050, ENM_067, ENM_094]
+  evenement: "Division des Kage (14:00) : 5 cubes de désintégration ennemis apparaissent (télégraphe 2,5 s, silhouette de cube visible)."
+  boss: BOS_029
+  boss_secondaires: [BOS_030, BOS_037]
+  secret: "Protéger la gourde de Gaara jusqu'au boss : SEC_017."
+  contrainte: "Canyons en couloirs, sable ralentissant."
+- id: MAP_018
+  nom: "Lac de la tortue à trois queues"
+  statut: OA
+  trace: "Lac circulaire, berges marécageuses, îlot central où dort la créature."
+  taille: "200 × 200 m, bornée"
+  palette: "Verts glauques, eau sombre à reflets, brume légère."
+  obstacles: "Marais (surface EAU, −20 %), roseaux (masquent partiellement : transparence)"
+  ressources: "Coffres sur les berges, Rouleaux"
+  ennemis: [ENM_003, ENM_024, ENM_037, ENM_052, ENM_059, ENM_065, ENM_095]
+  evenement: "Réveil (10:00) : la créature se retourne ; vague circulaire annoncée par un anneau d'écume 3 s avant."
+  boss: BOS_036
+  boss_secondaires: []
+  secret: "Ne jamais entrer dans l'eau profonde : SEC_018."
+  contrainte: "Berges étroites autour de l'eau profonde."
+- id: MAP_019
+  nom: "Dimension de Kamui"
+  statut: OA
+  trace: "Blocs cubiques flottants reliés, vide infini, gravité uniforme."
+  taille: "160 × 160 m de plates-formes, bords = vide (rambardes lumineuses)"
+  palette: "Gris neutres, lignes blanches, ciel vide gris ; seule la couleur des actions ressort."
+  obstacles: "Structure en cubes : couloirs de 3 à 6 m"
+  ressources: "Rouleaux en haut des cubes, Rations rares"
+  ennemis: [ENM_007, ENM_018, ENM_036, ENM_068, ENM_096, ENM_097]
+  evenement: "Aspiration (toutes les 4 min) : des cubes changent de position (annoncé 3 s, contour clignotant) ; jamais sous le joueur."
+  boss: BOS_015
+  boss_secondaires: []
+  secret: "Retrouver le bureau de l'enfance d'Obito : SEC_019."
+  contrainte: "Plates-formes : aucune chute mortelle (les bords sont bloqués), mais les couloirs changent."
+- id: MAP_020
+  nom: "Champ final de la guerre"
+  statut: OA
+  trace: "Cratère immense, racines de l'Arbre divin, plateaux fracturés."
+  taille: "260 × 260 m, en boucle"
+  palette: "Violets et gris, lueur de la lune rouge ; actions très contrastées."
+  obstacles: "Moyenne : racines (basses), cratères"
+  ressources: "Chakra des bijū (Relances), Rouleaux interdits (2)"
+  ennemis: [ENM_007, ENM_060, ENM_068, ENM_073, ENM_074, ENM_092, ENM_093, ENM_096, ENM_097, ENM_098, ENM_099, ENM_100]
+  evenement: "Passage du Dix-Queues (11:00, 17:00) : une créature géante traverse la carte (silhouette annoncée au bord 4 s avant, bande de danger au sol)."
+  boss: BOS_016
+  boss_secondaires: [BOS_019, BOS_038, BOS_039]
+  secret: "Vaincre Madara en rang S+ sans transformation : SEC_020 (révèle Kaguya)."
+  contrainte: "Racines : ralentissements localisés et lignes de vue coupées."

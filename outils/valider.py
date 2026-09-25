@@ -401,8 +401,23 @@ def verifier_cartes_boss_ennemis(cat, idx, r: Rapport) -> None:
             if ref and ref not in idx:
                 r.err(f"{c['id']} référence inexistante {ref}")
     for b in cat["boss"]:
-        if b.get("carte") and b["carte"] not in idx:
-            r.err(f"{b['id']} carte inexistante {b['carte']}")
+        for c in b.get("cartes", []):
+            if c not in idx:
+                r.err(f"{b['id']} carte inexistante {c}")
+        for a in b.get("attaques", []):
+            for champ in ("zone", "avertissement", "active", "degats", "recuperation", "reponse", "info"):
+                if champ not in a:
+                    r.err(f"{b['id']} attaque {a.get('nom')} : champ {champ} manquant")
+            if a.get("avertissement", 1) < 0.5 and a.get("degats", 0) >= 20:
+                r.warn(f"{b['id']} {a.get('nom')} : avertissement < 0,5 s pour une attaque lourde")
+    places = {c.get("boss") for c in cat["cartes"]} | {x for c in cat["cartes"] for x in c.get("boss_secondaires", [])}
+    for b in cat["boss"]:
+        if cat["cartes"] and b["id"] not in places:
+            r.err(f"{b['id']} n'apparaît sur aucune carte")
+    integraux = [b["id"] for b in cat["boss"] if b.get("niveau_detail") == "integral"]
+    if cat["boss"] and len(integraux) < 6:
+        r.err(f"seulement {len(integraux)} boss intégralement développés (< 6)")
+    r.info(f"boss intégraux : {integraux}")
     elites = [e for e in cat["ennemis"] if e.get("elite")]
     for e in cat["ennemis"]:
         n = int(e["id"][4:])

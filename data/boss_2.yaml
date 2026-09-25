@@ -1,0 +1,136 @@
+# Boss BOS_013 à BOS_040. Fiches intégrales : BOS_013 (Pain), BOS_016 (Madara). Détaillées : BOS_015, BOS_017.
+- id: BOS_013
+  nom: "Pain (Six Chemins)"
+  statut: OA
+  niveau_detail: integral
+  cartes: [MAP_012]
+  role_carte: final
+  pv: 130000
+  resistance: 0.25
+  silhouette: "Six corps de 30 px à piercings et manteaux distincts (couleur de bordure par chemin) ; Tendō au centre."
+  hitbox: "Chaque corps 0,45 m ; les 6 partagent une barre de PV commune ; un corps vaincu est « rappelé » par Jigokudō s'il vit encore."
+  entree: "2,5 s : les six corps atterrissent un à un autour du joueur à 10 m (jamais à moins de 8 m)."
+  deplacement: "Formation en anneau à 8–10 m ; seul le chemin actif (surligné) attaque ; rotation toutes les 6 s."
+  phases:
+    - {seuil: "100–70 %", changements: "Rotation des chemins Animal, Asura, Pretas."}
+    - {seuil: "70–35 %", changements: "Jigokudō ressuscite les corps : il faut éliminer l'Enfer (corps à bordure verte) pour réduire les soins."}
+    - {seuil: "35–0 %", changements: "Tendō seul : Shinra Tensei et Bansho Ten'in en alternance ; Chibaku Tensei à 10 %."}
+  attaques:
+    - {nom: "Chemin animal — Invocations", zone: "Rhinocéros en ligne (2 m × 14 m) et chiens qui se divisent", avertissement: 1.0, active: 1.5, degats: 24, recuperation: 1.5, reponse: "Sortir de la ligne ; tuer les chiens avant division (ils se divisent à chaque coup, max 4)", info: visible}
+    - {nom: "Chemin d'Asura — Missiles", zone: "6 missiles à tête chercheuse lente (virage 90°/s), explosion 2 m", avertissement: 0.8, active: 3.0, degats: 18, recuperation: 1.2, reponse: "Faire des virages serrés (les missiles décrochent)", info: visible}
+    - {nom: "Chemin des Pretas — Absorption", zone: "Bulle de 3 m autour du corps : absorbe les projectiles du joueur (le soigne 0,5 % par projectile)", avertissement: 0.6, active: 3.0, degats: 0, recuperation: 1.0, reponse: "Frapper au contact ou avec DIFFERE ; ne pas tirer dans la bulle", info: visible}
+    - {nom: "Shinra Tensei", zone: "Onde de 7 m autour de Tendō : repousse le joueur de 4 m (déplacement annoncé) et détruit ses projectiles", avertissement: 1.2, active: 0.2, degats: 28, recuperation: 5.0, reponse: "S'éloigner avant l'onde ; la recharge de 5 s est la fenêtre d'attaque (compteur visible sur le boss)", info: visible}
+    - {nom: "Bansho Ten'in", zone: "Attire le joueur de 5 m vers Tendō (ligne de force visible), puis coup de tige", avertissement: 1.0, active: 0.5, degats: 22, recuperation: 1.5, reponse: "Esquiver au moment de l'attraction (l'esquive annule la traction)", info: apprise}
+    - {nom: "Chibaku Tensei", zone: "Noyau au-dessus de la place : attire tout ce qui n'est pas ancré ; zones sûres : 4 piliers de rue (cercles de 2 m)", avertissement: 3.0, active: 4.0, degats: 12, recuperation: 6.0, reponse: "Se placer près d'un pilier ; attaquer Tendō immobile pendant la canalisation", info: apprise}
+  vulnerabilites: "Recharge de 5 s après Shinra Tensei (+25 %) ; Tendō immobile pendant Chibaku Tensei."
+  controle: "Rc 25 % ; chaque corps a sa propre résistance (les contrôles tournent)."
+  conclusion: "Les corps tombent un par un (0,2 s d'écart), la pluie s'arrête ; 1,8 s (raccourcissable)."
+- id: BOS_014
+  nom: "Konan"
+  statut: OA
+  niveau_detail: identite
+  cartes: [MAP_012]
+  role_carte: lieutenant
+  pv: 14000
+  resistance: 0.15
+  silhouette: "28 px, ailes de papier de 48 px."
+  hitbox: "0,4 m ; se disperse en papier (invulnérable 0,5 s visible)."
+  entree: "1,5 s : feuilles qui s'assemblent."
+  deplacement: "Vole à distance, se disperse quand elle est touchée 5 fois."
+  mecanique: "Nuées de papier en lignes ; mer d'étiquettes annoncée par un tapis de feuilles au sol (3 s) avec des couloirs sûrs ; le Katon du joueur la blesse ×1,5."
+  conclusion: "Une fleur de papier tombe au sol ; 1,0 s."
+- id: BOS_015
+  nom: "Obito Uchiha (Tobi)"
+  statut: OA
+  niveau_detail: detaille
+  cartes: [MAP_019]
+  role_carte: final
+  pv: 125000
+  resistance: 0.30
+  silhouette: "32 px, masque orange en spirale puis masque de guerre ; gunbai en phase 3."
+  hitbox: "0,45 m ; intangible pendant les phases Kamui (silhouette en spirale, aucun dégât possible, durée affichée)."
+  entree: "2,0 s : sort d'une spirale."
+  deplacement: "Téléportations entre cubes ; se rapproche pour saisir."
+  phases:
+    - {seuil: "100–60 %", changements: "Intangibilité alternée (3 s intangible / 3 s tangible, rythme visible)."}
+    - {seuil: "60–25 %", changements: "Mokuton : racines et Katon."}
+    - {seuil: "25–0 %", changements: "Gunbai et orbes chercheuses (6 orbes en orbite)."}
+  attaques:
+    - {nom: "Saisie de Kamui", zone: "Main tendue : cône de 2 m ; si le joueur est saisi, il est déplacé de 6 m (annoncé) et subit des dégâts", avertissement: 1.0, active: 0.3, degats: 26, recuperation: 1.5, reponse: "Garder > 2 m pendant la main tendue", info: visible}
+    - {nom: "Racines de Mokuton", zone: "5 lignes de racines depuis le sol en éventail", avertissement: 1.1, active: 0.6, degats: 20, recuperation: 1.2, reponse: "Se placer entre deux lignes", info: visible}
+    - {nom: "Orbes chercheuses", zone: "Orbe tirée en ligne droite (0,8 m × 14 m) ; 2 par salve", avertissement: 0.9, active: 0.6, degats: 30, recuperation: 1.0, reponse: "Sortir des deux couloirs", info: visible}
+  vulnerabilites: "Rythme d'intangibilité : attaquer pendant la fenêtre tangible (+15 % les 0,5 premières secondes)."
+  controle: "Rc 30 % ; les contrôles appliqués pendant l'intangibilité sont annulés sans hausse de Rc (aucun gaspillage)."
+  conclusion: "Le masque se fend en deux ; 1,5 s."
+- id: BOS_016
+  nom: "Madara Uchiha (Edo Tensei)"
+  statut: OA
+  niveau_detail: integral
+  cartes: [MAP_020]
+  role_carte: final
+  pv: 150000
+  resistance: 0.35
+  silhouette: "32 px, armure rouge, gunbai et kama ; Susanoo parfait en phase 3 : seules les jambes et les sabres entrent dans l'écran (le corps reste hors champ)."
+  hitbox: "0,5 m ; phase 3 : Madara au centre du Susanoo (ciblable), jambes du Susanoo = zones dangereuses à l'impact seulement, sabres = attaques télégraphiées, le reste est décoratif."
+  entree: "2,5 s : cercueil de réanimation qui s'ouvre, fissures qui se referment."
+  deplacement: "Mêlée agressive en phase 1 (dash volontaire vers le joueur, marqueur au sol), distance en phase 2, fixe en phase 3."
+  phases:
+    - {seuil: "100–70 %", changements: "Gunbai, kama et Katon."}
+    - {seuil: "70–40 %", changements: "Mokuton : forêt et dragons de bois ; Tengai Shinsei (1 météore)."}
+    - {seuil: "40–0 %", changements: "Susanoo parfait : sabres, double météore ; les ordinaires disparaissent (duel)."}
+  attaques:
+    - {nom: "Gunbai — Renvoi", zone: "Aucune : renvoie les projectiles du joueur 1,5 s (éventail brillant)", avertissement: 0.5, active: 1.5, degats: 0, recuperation: 1.0, reponse: "Utiliser CONTACT/DIFFERE pendant le renvoi", info: visible}
+    - {nom: "Gōka Mekkyaku", zone: "Mur de feu de 16 m de large qui avance de 12 m ; 2 brèches de 2 m", avertissement: 1.5, active: 2.0, degats: 34, recuperation: 2.0, reponse: "Rejoindre une brèche (marquée par l'absence de flammes au sol)", info: visible}
+    - {nom: "Mokuton — Jukai Kōtan", zone: "Arbres qui jaillissent dans un cercle de 8 m sauf 3 cercles sûrs", avertissement: 1.8, active: 1.0, degats: 30, recuperation: 2.0, reponse: "Rejoindre un cercle sûr", info: visible}
+    - {nom: "Tengai Shinsei", zone: "Ombre de 6 m qui grandit sur 3 s, impact massif", avertissement: 3.0, active: 0.5, degats: 60, recuperation: 4.0, reponse: "Sortir de l'ombre ; ombre toujours placée à ≥ 4 m du bord de la zone de jeu (sortie garantie)", info: visible}
+    - {nom: "Susanoo — Sabre", zone: "Ligne de 20 m, 3 m de large, puis retour en arc", avertissement: 1.6, active: 0.5, degats: 42, recuperation: 2.5, reponse: "Sortir de la ligne puis de l'arc de retour (dessiné en pointillé dès l'avertissement)", info: apprise}
+    - {nom: "Double météore", zone: "Deux ombres décalées de 1,5 s", avertissement: 3.0, active: 0.5, degats: 60, recuperation: 5.0, reponse: "Anticiper le second en ne revenant pas dans la première ombre", info: apprise}
+  vulnerabilites: "Après Tengai Shinsei : 4 s de canalisation (+25 %) ; en phase 3, Madara exposé quand les sabres sont plantés (+30 % 2 s)."
+  controle: "Rc 35 % ; résistance maximale atteinte plus vite, mais la conversion en Vulnérable reste active."
+  conclusion: "Le Susanoo se désagrège en plumes bleues, Madara s'agenouille ; 2,0 s (0,6 s après la première victoire)."
+- id: BOS_017
+  nom: "Kabuto (Mode Ermite serpent)"
+  statut: OA
+  niveau_detail: detaille
+  cartes: [MAP_007]
+  role_carte: final
+  pv: 120000
+  resistance: 0.30
+  silhouette: "32 px, capuche à cornes, queue de serpent de 48 px."
+  hitbox: "Corps 0,45 m ; la queue est dangereuse pendant ses attaques."
+  entree: "2,0 s : mue qui tombe au sol."
+  deplacement: "Mobile ; se fond dans le sol (bulle 1 s)."
+  phases:
+    - {seuil: "100–60 %", changements: "Serpents blancs et scalpel de chakra."}
+    - {seuil: "60–30 %", changements: "Réanimés : 3 élites réanimées (à sceller ou tuer par EXPLOSIF)."}
+    - {seuil: "30–0 %", changements: "Izanami (boucle) : un motif d'attaques se répète ; le rompre en esquivant différemment 2 fois (indicateur de boucle affiché)."}
+  attaques:
+    - {nom: "Serpents blancs", zone: "3 serpents en arc qui se croisent", avertissement: 0.9, active: 1.2, degats: 20, recuperation: 1.0, reponse: "Se placer au point de croisement déjà passé", info: visible}
+    - {nom: "Scalpel de chakra", zone: "Dash marqué au sol puis entaille de 2 m ; ralentit 20 % 3 s", avertissement: 0.8, active: 0.2, degats: 24, recuperation: 1.2, reponse: "Esquiver en travers du marqueur", info: visible}
+    - {nom: "Chant du serpent (sonore)", zone: "Anneau de 6 m qui se contracte", avertissement: 1.2, active: 1.0, degats: 18, recuperation: 2.0, reponse: "Sortir avant la contraction ou traverser l'anneau à la fin", info: apprise}
+  vulnerabilites: "Rupture de la boucle : Étourdi 3 s (+30 %)."
+  controle: "Rc 30 %."
+  conclusion: "La queue se détache, Kabuto tombe à genoux, lunettes brisées ; 1,5 s."
+- {id: BOS_018, nom: "Kurama (Nuit du Kyūbi)", statut: OA, niveau_detail: identite, cartes: [MAP_013], role_carte: final, pv: 160000, resistance: 0.30, silhouette: "Renard de 256 px dont seules les pattes avant, la tête (haut d'écran) et 3 queues entrent dans le champ.", hitbox: "Pattes : zones dangereuses à l'impact ; museau (cercle 2 m) ciblable quand il rugit ; queues : bandes de danger télégraphiées ; le reste décoratif.", entree: "2,5 s : yeux dans la fumée.", deplacement: "Fixe au nord, frappe le champ.", mecanique: "Coups de pattes (ombres), balayages de queues (bandes), Bijūdama en couloir ; les réfugiés sauvés donnent des sceaux qui le ralentissent.", conclusion: "Sceau du Quatrième qui se referme en spirale ; 2,0 s."}
+- {id: BOS_019, nom: "Dix-Queues", statut: OA, niveau_detail: identite, cartes: [MAP_020], role_carte: "événement / Endless", pv: 200000, resistance: 0.35, silhouette: "Créature gigantesque hors échelle : seules les jambes et les queues traversent le champ.", hitbox: "Uniquement les queues au moment de leur impact ; non ciblable hors mode Endless (ciblable : œil au sol lors de l'orbe).", entree: "Passage annoncé 4 s au bord de l'écran.", deplacement: "Traverse la carte.", mecanique: "Événement de passage à survivre ; en Endless, boss tournant avec œil exposé après chaque orbe.", conclusion: "La créature s'éloigne dans la brume ; 1,5 s."}
+- {id: BOS_020, nom: "Jirōbō", statut: OA, niveau_detail: identite, cartes: [MAP_005], role_carte: "lieutenant (tirage)", pv: 13000, resistance: 0.20, silhouette: "36 px massif.", hitbox: "0,6 m.", entree: "1,2 s.", deplacement: "Lent, arène de terre.", mecanique: "Dôme absorbant : enferme le joueur dans un dôme de 12 m (brèches ouvertes par 3 coups) ; draine 2 chakra/s tant qu'il est dedans.", conclusion: "1,0 s."}
+- {id: BOS_021, nom: "Tayuya", statut: OA, niveau_detail: identite, cartes: [MAP_005], role_carte: "lieutenant (tirage)", pv: 12000, resistance: 0.15, silhouette: "28 px, flûte ; 3 démons invoqués de 40 px.", hitbox: "Tayuya 0,4 m ; démons ciblables.", entree: "1,2 s.", deplacement: "Distance.", mecanique: "Chaque mélodie (visible en notes colorées) dirige un démon ; interrompre la flûte (3 coups) fige les démons 3 s.", conclusion: "1,0 s."}
+- {id: BOS_022, nom: "Sakon et Ukon", statut: OA, niveau_detail: identite, cartes: [MAP_005], role_carte: "lieutenant (tirage)", pv: 12000, resistance: 0.15, silhouette: "28 px, seconde tête.", hitbox: "0,4 m ; se séparent en deux corps (PV partagés).", entree: "1,2 s.", deplacement: "Encerclement à deux.", mecanique: "Fusion/séparation : séparés, ils attaquent en tenaille (deux télégraphes opposés) ; les frapper en même temps (zone) inflige +50 %.", conclusion: "1,0 s."}
+- {id: BOS_023, nom: "Kidōmaru", statut: OA, niveau_detail: identite, cartes: [MAP_005], role_carte: "lieutenant (tirage)", pv: 12000, resistance: 0.15, silhouette: "28 px, six bras.", hitbox: "0,4 m.", entree: "1,2 s.", deplacement: "En hauteur dans les arbres (ombre au sol), descend pour tirer.", mecanique: "Toiles qui ralentissent et flèche d'or chargée 2,5 s (ligne annoncée) ; couper la toile d'ancrage le fait tomber (Étourdi 2 s).", conclusion: "1,0 s."}
+- {id: BOS_024, nom: "Danzō Shimura", statut: OA, niveau_detail: identite, cartes: [MAP_014], role_carte: final, pv: 120000, resistance: 0.30, silhouette: "30 px, bras bandé ; bras aux Sharingan en phase 2.", hitbox: "0,45 m.", entree: "2,0 s.", deplacement: "Distance moyenne, Fūton.", mecanique: "Izanagi : 10 yeux sur le bras (compteur visible) ; chaque « mort » consomme un œil et le fait réapparaître 1 s plus tard à 4 m (jamais sur le joueur) ; ses PV réels ne baissent qu'aux derniers yeux — le compteur rend la règle lisible.", conclusion: "Le bras se referme, sceau d'autodestruction annoncé 3 s (cercle rouge de 6 m) puis dissipation sans dégâts si le joueur est hors du cercle ; 2,0 s."}
+- {id: BOS_025, nom: "Sasuke (Marque maudite, Vallée de la Fin)", statut: OA, niveau_detail: identite, cartes: [MAP_006], role_carte: "final (si le joueur n'est pas une entrée de Sasuke)", pv: 115000, resistance: 0.25, silhouette: "30 px ; ailes-mains en phase 2.", hitbox: "0,45 m.", entree: "2,0 s : sur la tête de la statue de Madara.", deplacement: "Duel mobile.", mecanique: "Miroir : Chidori et Gōkakyū ; en phase 2, Chidori noir en charge (ligne annoncée) ; collision de techniques : si l'ultime du joueur est lancé pendant son Chidori chargé, les deux s'annulent et il est Étourdi 3 s.", conclusion: "Pluie, bandeau rayé qui tombe ; 2,0 s."}
+- {id: BOS_026, nom: "Naruto (Manteau du Kyūbi, Vallée de la Fin)", statut: OA, niveau_detail: identite, cartes: [MAP_006], role_carte: "final (si le joueur est une entrée de Sasuke)", pv: 115000, resistance: 0.25, silhouette: "30 px, manteau d'une queue.", hitbox: "0,45 m.", entree: "2,0 s : sur la tête de la statue de Hashirama.", deplacement: "Charge et clones.", mecanique: "Clones ennemis (contour rouge) et Rasengan ; la collision ultime contre Rasengan chargé l'étourdit 3 s.", conclusion: "2,0 s."}
+- {id: BOS_027, nom: "Kinkaku et Ginkaku", statut: OA, niveau_detail: identite, cartes: [MAP_016], role_carte: final, pv: 140000, resistance: 0.30, silhouette: "Deux corps de 34 px en manteau de chakra.", hitbox: "0,5 m chacun, PV séparés à 50 % du total.", entree: "2,0 s.", deplacement: "En paire, l'un tire, l'autre charge.", mecanique: "Trésors du Sage (adaptation) : Kōkinjō — si le joueur déclenche 3 fois la même famille de technique en 3 s, il est lié 1 s (compteur visible au-dessus de Kinkaku) ; Benihisago — gourde qui aspire dans une zone de traction annoncée 1,5 s ; tuer les deux frères à moins de 10 s d'intervalle, sinon le survivant regagne 20 %.", conclusion: "2,0 s."}
+- {id: BOS_028, nom: "A (Quatrième Raikage)", statut: OA, niveau_detail: identite, cartes: [MAP_014], role_carte: lieutenant, pv: 16000, resistance: 0.20, silhouette: "36 px, armure de foudre.", hitbox: "0,6 m.", entree: "1,2 s : traverse un mur.", deplacement: "Charges très rapides mais toujours télégraphiées (ligne + éclair 0,8 s).", mecanique: "Lariat et Liger Bomb ; se fige 1 s après chaque charge ratée.", conclusion: "1,0 s."}
+- {id: BOS_029, nom: "Mū (Deuxième Tsuchikage)", statut: OA, niveau_detail: identite, cartes: [MAP_017], role_carte: final, pv: 125000, resistance: 0.35, silhouette: "30 px bandé ; invisible (contour pointillé visible pour le joueur).", hitbox: "0,45 m.", entree: "2,0 s.", deplacement: "Invisible, apparaît pour attaquer.", mecanique: "Division : se sépare en deux (un grand, un petit) ; Genkai Hakuri en cube (silhouette du cube 2,5 s) ; les deux moitiés doivent tomber à 10 s d'intervalle.", conclusion: "Les bandages retombent vides ; 1,5 s."}
+- {id: BOS_030, nom: "Hanzō de la Salamandre", statut: OA, niveau_detail: identite, cartes: [MAP_012, MAP_017], role_carte: lieutenant, pv: 15000, resistance: 0.20, silhouette: "32 px, kusarigama, salamandre Ibuse (64 px) en arrière.", hitbox: "0,45 m ; salamandre décorative sauf nuage de poison.", entree: "1,5 s.", deplacement: "Distance moyenne.", mecanique: "Nuage de poison (zone mobile) et kusarigama ; attaquer la salamandre dissipe le nuage.", conclusion: "1,0 s."}
+- {id: BOS_031, nom: "Manda", statut: OA, niveau_detail: identite, cartes: [MAP_007], role_carte: "événement 16:30", pv: 40000, resistance: 0.30, silhouette: "Serpent géant de 320 px de long, circule sous et hors écran.", hitbox: "Tête (cercle 2 m) ciblable quand elle sort ; corps dangereux uniquement quand il émerge (bande annoncée).", entree: "Sol qui bombe 2 s.", deplacement: "Traverse le sol en arcs.", mecanique: "Émergences en arcs ; si non vaincu en 60 s, il repart (pas de défaite).", conclusion: "1,0 s."}
+- {id: BOS_032, nom: "Hachibi (Gyūki)", statut: OA, niveau_detail: identite, cartes: [MAP_015], role_carte: final, pv: 160000, resistance: 0.30, silhouette: "Taureau-poulpe de 256 px ; 8 tentacules qui entrent dans le champ.", hitbox: "Tentacules ciblables (8 × 6 %) ; tête hors champ.", entree: "2,5 s.", deplacement: "Fixe.", mecanique: "Tentacules en séquence (ombres), encre (Aveuglé), Bijūdama en couloir ; chaque tentacule coupé réduit la fréquence.", conclusion: "Encre qui se dissipe ; 2,0 s."}
+- {id: BOS_033, nom: "Killer Bee", statut: OA, niveau_detail: identite, cartes: [MAP_015], role_carte: lieutenant, pv: 16000, resistance: 0.20, silhouette: "34 px, 7 sabres.", hitbox: "0,5 m.", entree: "1,2 s : rime (texte bref).", deplacement: "Mêlée rythmique.", mecanique: "Attaques sur un rythme de 4 temps affiché (métronome au sol) : le 4e temps est toujours la plus forte, permettant d'anticiper.", conclusion: "1,0 s."}
+- {id: BOS_034, nom: "Armée de Zetsu blancs", statut: OA, niveau_detail: identite, cartes: [MAP_016], role_carte: lieutenant, pv: 20000, resistance: 0.10, silhouette: "Masse de Zetsu autour d'un « Zetsu mère » de 40 px.", hitbox: "Zetsu mère 0,8 m.", entree: "1,5 s.", deplacement: "Avance comme une marée.", mecanique: "Tant que la mère vit, les Zetsu renaissent ; elle se cache derrière la marée (percer la ligne).", conclusion: "1,0 s."}
+- {id: BOS_035, nom: "Kakashi Hatake (Test des clochettes)", statut: OA, niveau_detail: identite, cartes: [MAP_001], role_carte: final, pv: 90000, resistance: 0.20, silhouette: "30 px, livre à la main (phase 1), bandeau relevé (phase 2).", hitbox: "0,45 m.", entree: "1,5 s : lit son livre, lève la main.", deplacement: "Substitutions (bûches visibles), distance moyenne.", mecanique: "Deux clochettes à sa ceinture : chaque clochette volée (frapper sa ceinture de dos, ou 10 % de PV) désactive une technique de Kakashi ; Chidori annoncé par un chant d'oiseaux 1,5 s ; Doton — Shinjū Zanshu (cercle sous le joueur, 1 s).", conclusion: "Kakashi referme son livre et fait un pouce levé ; 1,2 s (fin de l'expédition d'introduction : « Examen réussi »)."}
+- {id: BOS_036, nom: "Sanbi (Isobu)", statut: OA, niveau_detail: identite, cartes: [MAP_018], role_carte: final, pv: 150000, resistance: 0.35, silhouette: "Tortue à trois queues de 256 px ; carapace à pointes.", hitbox: "Tête (2 m) ciblable pendant les charges ; carapace décorative ; queues dangereuses télégraphiées.", entree: "2,5 s : bulles.", deplacement: "Roule en boule autour du lac (trajet annoncé par une ligne d'écume).", mecanique: "Roulades, vagues circulaires, brume hallucinogène (faux ennemis contour violet, sans hitbox).", conclusion: "2,0 s."}
+- {id: BOS_037, nom: "Ōnoki (Tsuchikage)", statut: OA, niveau_detail: identite, cartes: [MAP_017], role_carte: "final de mission (MIS_076)", pv: 120000, resistance: 0.30, silhouette: "24 px (petit, vole) ; golem de 64 px.", hitbox: "0,35 m (petite cible, compensée par vitesse faible).", entree: "1,5 s.", deplacement: "Vole haut et lent.", mecanique: "Alourdissement (cube), allègement du joueur (déplacement +20 % mais glisse), Jinton en cube (silhouette 2,5 s).", conclusion: "Mal de dos : il se tient les reins ; 1,2 s."}
+- {id: BOS_038, nom: "Madara (Jinchūriki du Dix-Queues)", statut: OA, niveau_detail: identite, cartes: [MAP_020], role_carte: "final au rang S+", pv: 200000, resistance: 0.40, silhouette: "34 px, blanc, orbes chercheuses, bâton.", hitbox: "0,5 m.", entree: "2,5 s.", deplacement: "Vol, mêlée soudaine télégraphiée.", mecanique: "Orbes chercheuses qui annulent les ninjutsu du joueur (les projectiles touchant une orbe disparaissent, sauf taijutsu et senjutsu : règle affichée) ; Rinbo Hengoku (ombres invisibles : pointillés visibles 1 s avant chaque frappe).", conclusion: "2,5 s (1,0 s après la première fois)."}
+- {id: BOS_039, nom: "Kaguya Ōtsutsuki", statut: OA, niveau_detail: identite, cartes: [MAP_020], role_carte: "boss secret (SEC_020)", pv: 220000, resistance: 0.40, silhouette: "36 px, cheveux immenses (48 px) qui servent d'attaques.", hitbox: "0,5 m ; cheveux dangereux télégraphiés.", entree: "3,0 s (secret, non passable la première fois seulement).", deplacement: "Téléporte l'arène : 4 dimensions (lave, glace, gravité, désert) de 45 s chacune, annoncées 3 s avant.", mecanique: "Chaque dimension change une contrainte (lave : sol danger en damier ; glace : glissade ; gravité : −30 % déplacement mais projectiles joueur +30 % ; désert : sable ralentissant) ; os de cendre (projectile qui désintègre, ligne annoncée).", conclusion: "Scellement lunaire stylisé, 3,0 s."}
+- {id: BOS_040, nom: "Jūgo (Marque maudite)", statut: OA, niveau_detail: identite, cartes: [MAP_007], role_carte: lieutenant, pv: 14000, resistance: 0.20, silhouette: "36 px, bras transformé en arme (48 px).", hitbox: "0,55 m.", entree: "1,2 s : cellule qui explose.", deplacement: "Rage : charge le plus proche (peut charger les ennemis).", mecanique: "Oiseaux calmants : ramasser 3 plumes au sol le calme 4 s (fenêtre de dégâts +40 %).", conclusion: "Il s'endort ; 1,0 s."}
