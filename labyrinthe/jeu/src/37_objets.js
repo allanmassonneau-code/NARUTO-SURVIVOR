@@ -31,6 +31,8 @@ function calculerStats(J) {
     S[k] = borne(v, mi, ma);
   }
   if (J.drapeaux.obstination) S.degats += 1;
+  if (J._plein && J.drapeaux.pleineVitalite) S.degats += 0.5;
+  if (J.sage && J.drapeaux.energieNaturelle) S.degats *= J.drapeaux.sageFort ? 1.6 : 1.5;
   S.degats = Math.round(S.degats * 100) / 100;
   return S;
 }

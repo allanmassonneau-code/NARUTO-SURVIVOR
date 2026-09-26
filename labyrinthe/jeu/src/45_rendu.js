@@ -244,7 +244,7 @@ function dessinerObstacle(g, t, tx, ty, X, Y, D, s) {
 }
 function dessinerBattants(g, s, p, X, Y) {
   const x = X(p.tx * TUILE), y = Y(p.ty * TUILE);
-  if (p.etat === 'secrete') { if (p.indice || (G.joueur.transformations.includes('TRF_005')) || possede(G.joueur, 'PSV_114')) { g.fillStyle = 'rgba(255,240,200,0.5)'; g.fillRect(x + 12, y + 10, 1, 8); g.fillRect(x + 13, y + 17, 5, 1); g.fillRect(x + 17, y + 12, 1, 5); } return; }
+  if (p.etat === 'secrete') { if (p.indice || G.joueur.drapeaux.indicesSecrets) { g.fillStyle = 'rgba(255,240,200,0.5)'; g.fillRect(x + 12, y + 10, 1, 8); g.fillRect(x + 13, y + 17, 5, 1); g.fillRect(x + 17, y + 12, 1, 5); } return; }
   const ferme = s.combat && G.portesFermeesDans <= 0 || p.etat === 'verrouillee' || (p.etat === 'conditionnelle' && !conditionPorte(s, p));
   if (!ferme) return;
   const C = CADRES_PORTE[p.type] || CADRES_PORTE.normale;

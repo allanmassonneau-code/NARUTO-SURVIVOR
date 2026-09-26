@@ -500,7 +500,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   TA('TAL_008', 'Bandeau rayé', '#6a6a78', 'Dégâts +10 % contre les boss.', [{ drapeau: 'bonusBoss' }]);
   TA('TAL_009', 'Grelot du flair', '#e8c050', 'Signale les murs secrets de la salle en entrant.', [{ quand: 'entree_salle', faire: { type: 'revelation' } }]);
   TA('TAL_010', 'Poignée de sable', '#d8b070', 'Un orbital de sable temporaire à chaque salle de combat.', [{ quand: 'entree_salle', si: 'combat', faire: { type: 'familier', familier: 'FAM_SABLE', salle: true } }]);
-  TA('TAL_011', 'Mèche courte', '#f07820', 'Vos explosifs explosent plus vite… et vous y survivez mieux (dégâts subis inchangés).', [{ drapeau: 'mecheCourte' }]);
+  TA('TAL_011', 'Mèche courte', '#f07820', 'Vos explosifs explosent plus vite (mèche de 0,85 s au lieu de 1,4 s).', [{ drapeau: 'mecheCourte' }]);
   TA('TAL_012', 'Mèche longue', '#8a6a3a', 'Explosions 50 % plus larges ; délai +0,5 s.', [{ drapeau: 'mecheLongue' }, { drapeau: 'grandeExplosion' }]);
   TA('TAL_013', 'Charme du plein', '#6ae07a', 'À pleine vitalité, dégâts +0,5.', [{ drapeau: 'pleineVitalite' }]);
   TA('TAL_014', 'Gourde de saké', '#8a6a4a', 'Identifie les pilules ; les pilules négatives deviennent leur contraire.', []);
@@ -597,10 +597,10 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   F('FAM_AKAMARU', 'Akamaru', 'contact', { degats: 6, coefJoueur: 0.5, recharge: 1.2, sprite: { carte: 'rat', couleurs: { g: '#f0ece4', d: '#c8c0b0', p: '#e0a0a8' } } });
   F('FAM_INSECTES', 'Kikaichū', 'collecteur', { degats: 1.5, sprite: { carte: 'moustique' } });
   F('FAM_OISEAU_ARGILE', 'Oiseau d’argile', 'kamikaze', { recharge: 4, sprite: { carte: 'oiseau_argile' } });
-  F('FAM_KARASU_ATT', 'Karasu', 'chasseur', { degats: 4, cadence: 1.6, vitesse: 3.5, statut: 'poison', sprite: { carte: 'marionnette' } });
-  F('FAM_KARASU', 'Karasu (marionnette)', 'marionnette', { bloque: true, rBloc: 7, sprite: { carte: 'marionnette' } });
-  F('FAM_KUROARI', 'Kuroari', 'pieges', { recharge: 8, sprite: { carte: 'marionnette', couleurs: { m: '#2a2a30', d: '#1a1a20' } } });
-  F('FAM_SANSHOUO', 'Sanshōuo', 'bloqueur', { bloque: true, rBloc: 12, sprite: { carte: 'statue', couleurs: { s: '#6a6a78', l: '#8a8a98' } } });
+  F('FAM_KARASU_ATT', 'Karasu', 'chasseur', { marionnette: true, degats: 4, cadence: 1.6, vitesse: 3.5, statut: 'poison', sprite: { carte: 'marionnette' } });
+  F('FAM_KARASU', 'Karasu (marionnette)', 'marionnette', { marionnette: true, bloque: true, rBloc: 7, sprite: { carte: 'marionnette' } });
+  F('FAM_KUROARI', 'Kuroari', 'pieges', { marionnette: true, recharge: 8, sprite: { carte: 'marionnette', couleurs: { m: '#2a2a30', d: '#1a1a20' } } });
+  F('FAM_SANSHOUO', 'Sanshōuo', 'bloqueur', { marionnette: true, bloque: true, rBloc: 12, sprite: { carte: 'statue', couleurs: { s: '#6a6a78', l: '#8a8a98' } } });
   F('FAM_TIGRE_ENCRE', 'Fauve d’encre', 'chasseur', { degats: 4, cadence: 1.5, vitesse: 4, sprite: { carte: 'tigre', couleurs: { o: '#2a2a3a', d: '#1a1a24', w: '#e8e0d0' } } });
   F('FAM_SERPENT_BLANC', 'Serpent blanc', 'chasseur', { degats: 3, cadence: 1.2, vitesse: 3, sprite: { carte: 'serpenteau' } });
   F('FAM_LUCIOLE', 'Luciole', 'luciole', { sprite: { carte: 'moustique', couleurs: { b: '#f0f060' } } });
@@ -682,9 +682,9 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   E('ENM_071', 'Oiseau d’argile', 'v', 'kamikaze', 12, 2.4, K('oiseau_argile'), { declenche: 1.4, meche: 0.6 }, { vol: true, r: 8, tache: 'argile', desc: 'Plonge et explose (il clignote avant).' });
   E('ENM_072', 'Araignée d’argile', 'n', 'kamikaze', 6, 2.6, K('araignee_argile'), { declenche: 1.1, meche: 0.5 }, { r: 6, tache: 'argile', desc: 'Explose au contact (mèche visible).' });
   E('ENM_073', 'Marionnette humaine', 'l', 'lourd', 44, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true }), { cadence: 2.2, rOnde: 2.2, tele: 0.6, anneau: true }, { r: 12, desc: 'Écrase le sol et projette du sable de fer.' });
-  E('ENM_074', 'Bête invoquée', 'p', 'poursuivant', 26, 2.2, K('bete'), {}, { r: 11, desc: 'Rapide et massive.' });
+  E('ENM_074', 'Bête invoquée', 'p', 'poursuivant', 20, 2.1, K('bete'), {}, { r: 11, desc: 'Rapide et massive.' });
   E('ENM_075', 'Sentinelle de la pluie', 'q', 'tireur_predictif', 22, 1.4, N('ame', { t: '#3a4a5a', T: '#26323e' }), { cadence: 1.8, vProj: 6.5, tele: 0.4 });
-  E('ENM_076', 'Invocateur aux tiges', 'i', 'invocateur', 30, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#e87a2a' } }), { intervalle: 3.4, max: 2, invocation: 'ENM_074', liees: true }, { desc: 'Invoque des bêtes.' });
+  E('ENM_076', 'Invocateur aux tiges', 'i', 'invocateur', 30, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#e87a2a' } }), { intervalle: 5.0, max: 2, invocation: 'ENM_074', liees: true }, { desc: 'Invoque des bêtes.' });
   E('ENM_077', 'Masque élémentaire', 'f', 'tourelle', 26, 0, K('masque'), { motif: 'anneau', cadence: 2.8, vProj: 3.8, tele: 0.45, proj: 'feu' }, { fixe: true, vol: true, r: 10, contact: 0, desc: 'Flotte, émet des anneaux de feu (un espace toujours libre).' });
   E('ENM_078', 'Shinobi de l’Alliance égaré', 'c', 'chargeur', 24, 1.6, N('alliance', { t: '#5e7e3e', T: '#46612c' }, { arme: true }), { vCharge: 10, tele: 0.35, recup: 0.6 });
   E('ENM_079', 'Poseur d’argile', 'm', 'poseur', 20, 1.3, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#f0d060' } }), { piege: 'parchemin', intervalle: 2.8, max: 3 });
@@ -941,7 +941,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     '.............',
     '.c...........',
     '.............',
-    '^^^^^...^^^^^',
+    '.^^^^...^^^^.',
     '.............',
     '...........c.',
     '.............'], { etages: [2, 9] });
@@ -4087,6 +4087,10 @@ function dessinerJoueur(g, J, x, y) {
   if (J.intangible) g.globalAlpha = 0.45;
   const M = J.mutations;
   if (M.aura) dessinerAura(g, M.aura, x, y);
+  if (J.sage) { // énergie naturelle accumulée : pigment orange autour des yeux et lueur au sol
+    g.globalAlpha *= 0.5; g.drawImage(ellipse(12, 5, 'rgba(240,138,36,0.6)'), x - 12, y - 5); g.globalAlpha = J.intangible ? 0.45 : 1;
+    if (Math.random() < 0.15) G.particules.push({ x: J.x + (Math.random() - 0.5) * 18, y: J.y - Math.random() * 24, vx: 0, vy: -20, age: 0, duree: 0.4, couleur: '#f0a040', taille: 1 });
+  }
   let etatTete = J.tCligne < 0 ? 'cligne' : 'normal';
   if (J.tir.anim > 0.05 || J.tir.charge > 0) etatTete = 'tir';
   const frame = J.dash ? 1 : J.frame;
@@ -4209,15 +4213,15 @@ function dessinerPiedestal(g, p, X, Y) {
     g.drawImage(ic, x - 10, y - 26 + flotte);
   }
   if (p.prix) {
-    const t = p.prix.type === 'ryo' ? String(p.prix.n) : p.prix.type === 'pacte' ? prixPacteTexte(p) : '';
-    g.fillStyle = p.solde ? '#c83a2a' : '#1c1420'; const l = Police.largeur(t) + (p.prix.type === 'ryo' ? 10 : 2);
+    const n = p.prix.type === 'ryo' ? prixRyo(p) : 0; const t = p.prix.type === 'ryo' ? (n === 0 ? 'Gratuit' : String(n)) : p.prix.type === 'pacte' ? prixPacteTexte(p) : '';
+    g.fillStyle = p.solde || (p.prix.type === 'ryo' && n < p.prix.n) ? '#c83a2a' : '#1c1420'; const l = Police.largeur(t) + (p.prix.type === 'ryo' ? 10 : 2);
     g.fillRect(x - l / 2 - 2, y + 9, l + 4, 10);
     if (p.prix.type === 'ryo') { g.drawImage(ICONES.ryo, x - l / 2, y + 10); Police.ecrire(g, t, x - l / 2 + 10, y + 11, '#f8e8b0', { ombre: null }); }
     else Police.ecrire(g, t, x, y + 11, '#ff9a9a', { a: 'c', ombre: null });
   }
 }
 function prixPacteTexte(p) {
-  const J = G.joueur; if (J.drapeaux.pacteRyo) return p.prix.n * J.drapeaux.pacteRyo + ' Ryō';
+  const J = G.joueur; if (J.drapeaux.pacteRyoOption && J.ryo >= 20 * p.prix.n) return 20 * p.prix.n + ' Ryō'; if (J.drapeaux.pacteRyo) return p.prix.n * J.drapeaux.pacteRyo + ' Ryō';
   if (J.drapeaux.serment) return 3 * p.prix.n + ' instable';
   if (nbVit(J.sante) === 0) return 4 * p.prix.n / 2 + ' ♥ chakra';
   return p.prix.n + ' ♥ vitalité';
@@ -4340,6 +4344,7 @@ function dessinerEffet(g, e, X, Y) {
     case 'cercle_danger': { const r = Math.round(e.r); const cl = Math.floor(e.age * 10) % 2; g.globalAlpha = 0.25 + 0.35 * k; g.drawImage(disque(r, 'rgba(255,40,40,0.35)'), x - r, y - r); g.globalAlpha = 0.8; g.drawImage(anneau(r, cl ? 2 : 1, '#ff5040'), x - r - 1, y - r - 1); g.globalAlpha = 1; break; }
     case 'ligne_danger': { g.save(); g.translate(x, y); g.rotate(e.a); g.globalAlpha = 0.2 + 0.4 * k; g.fillStyle = '#ff3a3a'; g.fillRect(0, -e.largeur / 2, e.l, e.largeur); g.globalAlpha = 0.9; g.fillStyle = '#ffb0a0'; for (let i = 0; i < e.l; i += 16) g.fillRect(i + ((e.age * 120) % 16), -1, 6, 2); g.restore(); g.globalAlpha = 1; break; }
     case 'arc_danger': case 'balayage': { g.save(); g.globalAlpha = e.type === 'balayage' ? 1 - k : 0.3 + 0.4 * k; g.fillStyle = e.type === 'balayage' ? '#f0f0ff' : 'rgba(255,50,50,0.5)'; g.beginPath(); g.moveTo(x, y); g.arc(x, y, e.r, e.a - e.arc / 2, e.a + e.arc / 2); g.closePath(); g.fill(); g.restore(); g.globalAlpha = 1; break; }
+    case 'aura_sage': { const r = Math.round(8 + 18 * k); g.globalAlpha = 1 - k; g.drawImage(anneau(r, 2, '#f08a24'), x - r - 1, y - 12 - r - 1); g.globalAlpha = 1; break; }
     case 'aura_tele': { const r = Math.round(e.r + 4 * Math.sin(e.age * 20)); g.globalAlpha = 0.6; g.drawImage(anneau(r, 2, '#ffd040'), x - r - 1, y - r - 1); g.globalAlpha = 1; break; }
     case 'impact_sol': { const r = Math.round(e.r * (0.6 + 0.4 * k)); g.globalAlpha = 1 - k; g.drawImage(anneau(r, 3, '#c8b8a0'), x - r - 1, y - r - 1); g.globalAlpha = 1; break; }
     case 'meteore': { const r = Math.round(e.r * (0.5 + 0.5 * k)); g.globalAlpha = 1 - k; g.drawImage(disque(r, '#ff7a2a'), x - r, y - r); g.drawImage(anneau(r + 4, 3, '#3a2a2a'), x - r - 5, y - r - 5); g.globalAlpha = 1; break; }
@@ -5032,7 +5037,7 @@ function creerProjectileJoueur(J, x, y, a, deg, cycleId, budget, o = {}) {
   const p = {
     x, y, z: 12, vx, vy, vitesse: Math.hypot(vx, vy), age: 0, porteePx: portee, dureeVie: portee / vit, proprio: 'joueur', source: J.def.id,
     degats: deg, recul: 2.2 * P.recul * TUILE, taille, rTouche: 4 + 2 * Math.sqrt(deg / 3.5) * taille, rObs: 2,
-    perce: P.perce, touches: new Set(), rebonds: P.rebonds, spectral: P.spectral, traj: Object.assign({}, P.traj),
+    perce: P.perce, touches: new Set(), rebonds: P.rebonds, spectral: P.spectral || (J.drapeaux.spectralParfois && Math.random() < 0.1), traj: Object.assign({}, P.traj),
     impacts: P.impacts.slice(), statuts: P.statuts.slice(), apparence: P.apparence, elements: P.elements, gen: 0, budget, cycleId, angle: a,
     orbiteA: Math.atan2(y - J.y, x - J.x), depart: { x, y },
   };
@@ -5076,7 +5081,7 @@ function majProjectiles(dt) {
     else if (TR.retour && p.age > p.dureeVie * 0.45) {
       const a = angleVers(p.x, p.y, J.x, J.y - 10); const v = Math.max(Math.hypot(p.vx, p.vy), 6 * TUILE); p.vx = lerp(p.vx, Math.cos(a) * v, 0.18); p.vy = lerp(p.vy, Math.sin(a) * v, 0.18);
       if (!p.retourne) { p.retourne = true; p.touches.clear(); }
-      if (dist(p.x, p.y, R.x, R.y - 10) < 10) { p.mort = true; continue; }
+      if (dist(p.x, p.y, J.x, J.y - 10) < 10) { p.mort = true; continue; }
       p.age = Math.min(p.age, p.dureeVie * 0.9);
       if (p.proprio === 'ennemi') { p.x += p.vx * dt; p.y += p.vy * dt; }
     } else {
@@ -5320,6 +5325,7 @@ function cibleDevant(J, dir, portee) {
 // ── Explosions, ondes, chaînes, mines ──
 function explosion(x, y, r, deg, o = {}) {
   const J = G.joueur;
+  if ((o.proprio || 'joueur') === 'joueur' && J && J.drapeaux.explosionPlus) deg += 5;
   G.effets.push({ type: o.petite ? 'explosion_petite' : 'explosion', x, y, r, age: 0, duree: o.petite ? 0.3 : 0.5, elements: o.elements });
   if (!o.petite) { Son.jouer('explosion'); secousse(6, null); Entrees.vibrer('explosion'); } else Son.jouer('impact', 0.8, 0.7);
   for (const e of G.ennemis) {
@@ -5443,12 +5449,13 @@ function infligerDegats(e, deg, src = {}) {
   // bouclier frontal (protecteur) : bloque les projectiles venant de face
   if (e.def.params && e.def.params.bouclier === 'frontal' && src.type === 'projectile' && !e.statuts.immobilise) {
     const aFace = Math.atan2(DIRS[e.dir][1], DIRS[e.dir][0]); const aVenue = Math.atan2(-(src.vy || 0), -(src.vx || 0));
-    if (Math.abs(diffAngle(aFace, aVenue)) < Math.PI / 3) { G.effets.push({ type: 'etincelle', x: e.x + DIRS[e.dir][0] * 10, y: e.y - 10, age: 0, duree: 0.2 }); Son.jouer('impact_mur'); return false; }
+    if (Math.abs(diffAngle(aFace, aVenue)) < Math.PI * 0.28) { G.effets.push({ type: 'etincelle', x: e.x + DIRS[e.dir][0] * 10, y: e.y - 10, age: 0, duree: 0.2 }); Son.jouer('impact_mur'); return false; }
   }
   // aura d'un protecteur voisin : dégâts ×0,5
   for (const p of G.ennemis) if (p !== e && !p.mort && p.def.params && p.def.params.bouclier === 'aura' && dist(p.x, p.y, e.x, e.y) < 2.5 * TUILE) { deg *= 0.5; break; }
   if (G.joueur.drapeaux.bonusBoss && e.boss) deg *= 1.1;
   e.pv -= deg; e.dernierCoup = G.temps;
+  if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
   if (!src.sansFlash) e.flash = 0.08;
   G.stats.degats += deg;
   if (!src.sansRecul && src.recul && !e.boss && !e.def.lourd && !e.def.fixe) {
@@ -5470,7 +5477,7 @@ function tuerEnnemi(e, src = {}) {
   if (e.statuts.gel && G.joueur.drapeaux.eclatsGlace) { for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; const q = creerSousProjectile({ x: e.x, y: e.y - 8, vitesse: 7 * TUILE, degats: G.joueur.stats.degats, recul: 30, taille: 0.8, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 6 }, cycleId: 0 }, a, G.joueur.stats.degats * 0.5); q.dureeVie = 0.5; } }
   const mortDef = e.def.mort;
   if (mortDef === 'division' || (C && C.mort === 'division')) {
-    if (!e.parentDivision) for (let i = 0; i < 2; i++) { const f = creerEnnemi(e.def.enfant || e.def.id, e.x + (i ? 8 : -8), e.y, { sansApparition: true, pvMult: 0.45, echelle: 0.75 }); f.parentDivision = true; f.vx = (i ? 1 : -1) * 60; }
+    if (!e.parentDivision) for (let i = 0; i < 2; i++) { const f = creerEnnemi(e.def.enfant || e.def.id, e.x + (i ? 8 : -8), e.y, { sansApparition: true, pvMult: 0.45, echelle: 0.75 }); f.parentDivision = true; f.vx = (i ? 1 : -1) * 60; if (e.parent) f.parent = e.parent; }
   }
   if (mortDef === 'salve8' || (C && C.mort === 'salve8')) for (let i = 0; i < 8; i++) tirEnnemi(e.x, e.y - 8, i * Math.PI / 4, 4.5);
   if (mortDef === 'explose') explosion(e.x, e.y, 1.3 * TUILE, 10, { proprio: 'ennemi', blesseJoueur: true, degatsJoueur: 2 });
@@ -5632,8 +5639,8 @@ const IA = {
     const J = cibleEnnemi(e);
     if (!e.ia.tele) { const d = dist(e.x, e.y, J.x, J.y); const [dx, dy] = normaliser(J.x - e.x, J.y - e.y); if (d < 3.5 * TUILE) deplacerEnnemi(e, -dx, -dy, P.vitesse, dt); else IA.errant(e, dt, { vitesse: P.vitesse * 0.5 }); } else { e.vx *= 0.7; e.vy *= 0.7; }
     e.tAtt -= dt;
-    const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length;
-    if (e.tAtt <= 0 && !e.ia.tele && n < (P.max || 3)) { const [tx, ty] = tuileLibreProche(G.salle, e.x + (Math.random() - 0.5) * 70, e.y + (Math.random() - 0.5) * 50); const [cx, cy] = centreTuile(tx, ty); telegraphe(e, 'sceau', 0.6, { x: cx, y: cy }); G.effets.push({ type: 'cercle_sceau', x: cx, y: cy, r: 14, age: 0, duree: 0.6 }); }
+    const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length; const total = G.ennemis.filter(f => !f.mort).length;
+    if (e.tAtt <= 0 && !e.ia.tele && n < (P.max || 3) && total < 14) { const [tx, ty] = tuileLibreProche(G.salle, e.x + (Math.random() - 0.5) * 70, e.y + (Math.random() - 0.5) * 50); const [cx, cy] = centreTuile(tx, ty); telegraphe(e, 'sceau', 0.6, { x: cx, y: cy }); G.effets.push({ type: 'cercle_sceau', x: cx, y: cy, r: 14, age: 0, duree: 0.6 }); }
     if (e.ia.tele && e.ia.tele.t <= 0) { const T0 = e.ia.tele; e.ia.tele = null; e.tAtt = P.intervalle; const f = creerEnnemi(P.invocation, T0.x, T0.y, { parent: e.uid }); f.parent = e.uid; Son.jouer('invocation', 0.6); }
   },
   embusque(e, dt, P) {
@@ -5641,7 +5648,10 @@ const IA = {
     if (I.phase === 'cache') {
       e.cache = true; e.vx = 0; e.vy = 0; I.t = (I.t || 0) - dt;
       if (P.suit) { const [dx, dy] = normaliser(J.x - e.x, J.y - e.y); const v = P.vitesse * TUILE * 0.8; const nx = e.x + dx * v * dt, ny = e.y + dy * v * dt; if (!solidePour(G.salle, Math.floor(nx / TUILE), Math.floor(ny / TUILE), 'marche')) { e.x = nx; e.y = ny; } }
-      if (I.t <= 0 && dist(e.x, e.y, J.x, J.y) < (P.detection || 4) * TUILE) {
+      // surgit quand le joueur approche, ou de lui-même après une attente (jamais de salle bloquée)
+      I.attente = (I.attente || 0) + dt;
+      if (I.t <= 0 && (dist(e.x, e.y, J.x, J.y) < (P.detection || 4) * TUILE || I.attente > 3.5)) {
+        I.attente = 0;
         // sortie à distance raisonnable du joueur (jamais sur lui)
         let px = e.x, py = e.y;
         if (P.surgitPres) { const a = Math.random() * Math.PI * 2; const [tx, ty] = tuileLibreProche(G.salle, J.x + Math.cos(a) * 2 * TUILE, J.y + Math.sin(a) * 2 * TUILE); [px, py] = centreTuile(tx, ty); }
@@ -5665,7 +5675,8 @@ const IA = {
   tourelle(e, dt, P) { e.vx = 0; e.vy = 0; IA.tireur(e, dt, Object.assign({}, P, { vitesse: 0 })); },
   protecteur(e, dt, P) {
     const J = cibleEnnemi(e);
-    if (P.bouclier === 'frontal') { orienter(e, J.x, J.y); const [dx, dy] = directionFlux(e); deplacerEnnemi(e, dx, dy, P.vitesse, dt); }
+    // le bouclier pivote avec retard (0,9 s) : on peut le contourner
+    if (P.bouclier === 'frontal') { e.ia.tPivot = (e.ia.tPivot || 0) - dt; if (e.ia.tPivot <= 0) { e.ia.tPivot = 0.9; orienter(e, J.x, J.y); } const [dx, dy] = directionFlux(e); deplacerEnnemi(e, dx, dy, P.vitesse, dt); }
     else { // reste près de ses alliés
       const alli = ennemiLePlusProche(e.x, e.y, 9999, x => x !== e && x.def.params && x.def.params.bouclier !== 'aura');
       const cx = alli ? alli.x : J.x, cy = alli ? alli.y : J.y; const [dx, dy] = normaliser(cx - e.x, cy - e.y); if (dist(e.x, e.y, cx, cy) > 1.5 * TUILE) deplacerEnnemi(e, dx, dy, P.vitesse, dt); else { e.vx *= 0.8; e.vy *= 0.8; }
@@ -5740,11 +5751,13 @@ function majEnnemis(dt) {
     }
     // séparation douce entre ennemis
     for (const f of G.ennemis) { if (f === e || f.mort || f.cache || e.cache) continue; const d = dist(e.x, e.y, f.x, f.y); const m = e.r + f.r - 4; if (d < m && d > 0.01) { const k = (m - d) / d * 0.25; e.x += (e.x - f.x) * k; e.y += (e.y - f.y) * k; } }
-    if (Math.abs(e.vx) + Math.abs(e.vy) > 5 && !e.ia.tele && e.def.comportement !== 'tourelle') { e.dir = dirDepuisVecteur(e.vx, e.vy); e.frame = Math.floor(e.tAnim * 8) % 2; }
+    if (Math.abs(e.vx) + Math.abs(e.vy) > 5 && !e.ia.tele && e.def.comportement !== 'tourelle' && !(e.def.params && e.def.params.bouclier === 'frontal')) { e.dir = dirDepuisVecteur(e.vx, e.vy); e.frame = Math.floor(e.tAnim * 8) % 2; }
     // Dégâts de contact (pas pendant l'apparition, caché, charmé)
     if (!e.cache && !e.statuts.charme && !e.allie && !J.intangible && (e.contact || 0) > 0 && !(e.z > 10)) {
       if (dist(e.x, e.y, J.x, J.y) < e.r + J.r - 1) blesserJoueur(e.contact === 1 ? G.degatsContact : e.contact, { type: 'contact', source: e.id, x: e.x, y: e.y });
     }
+    // Manteau du renard : l'aura brûle les ennemis au contact (toutes les 0,5 s)
+    if (J.drapeaux.auraContact && !e.cache && !e.allie && dist(e.x, e.y, J.x, J.y) < e.r + J.r + 8 && G.temps - (e.ia.dernierAura || -9) > 0.5) { e.ia.dernierAura = G.temps; appliquerStatut(e, 'brulure', 2, J.stats.degats); infligerDegats(e, J.stats.degats * 0.3, { proprio: 'joueur', type: 'aura', sansRecul: true, sansFlash: true }); }
     // ennemi charmé : blesse ses anciens alliés au contact
     if (e.statuts.charme || e.allie) for (const f of G.ennemis) if (f !== e && !f.mort && !f.statuts.charme && !f.allie && dist(e.x, e.y, f.x, f.y) < e.r + f.r) { if (G.temps - (e.ia.dernierCharme || 0) > 0.5) { e.ia.dernierCharme = G.temps; infligerDegats(f, 3.5, { proprio: 'allie', type: 'contact' }); } }
   }
@@ -5842,6 +5855,15 @@ function majDeplacementJoueur(J, dt) {
   if (!Entrees.visee.dir && J.tir.anim <= 0 && m > 12) J.dirTete = J.dirCorps;
   J.tir.anim -= dt;
   J.tCligne -= dt; if (J.tCligne < -0.12) J.tCligne = 2 + Math.random() * 4;
+  // Énergie naturelle : immobile 1 s (0,6 s en Sage imparfait) → dégâts ×1,5 (×1,6) jusqu'au prochain pas
+  if (J.drapeaux.energieNaturelle) {
+    const seuil = J.drapeaux.sageFort ? 0.6 : 1.0;
+    if (Math.hypot(mx, my) < 0.2 && m < 6 && J.etat === 'normal') { J.tImmobile = (J.tImmobile || 0) + dt; if (!J.sage && J.tImmobile >= seuil) { J.sage = true; recalculer(J); Son.jouer('charge_pleine', 0.5); G.effets.push({ type: 'aura_sage', x: J.x, y: J.y, age: 0, duree: 0.5 }); } }
+    else { J.tImmobile = 0; if (J.sage) { J.sage = false; recalculer(J); } }
+  } else if (J.sage) { J.sage = false; recalculer(J); }
+  // Charme du plein : dégâts +0,5 à pleine vitalité
+  const plein = !!J.drapeaux.pleineVitalite && rougeMax(J.sante) > 0 && rougeTotal(J.sante) >= rougeMax(J.sante);
+  if (plein !== !!J._plein) { J._plein = plein; recalculer(J); }
 }
 function aideAlignementPorte(J, mx, my, dt) {
   const s = G.salle; if (!s || Math.hypot(mx, my) < 0.4) return;
@@ -5955,6 +5977,8 @@ function calculerStats(J) {
     S[k] = borne(v, mi, ma);
   }
   if (J.drapeaux.obstination) S.degats += 1;
+  if (J._plein && J.drapeaux.pleineVitalite) S.degats += 0.5;
+  if (J.sage && J.drapeaux.energieNaturelle) S.degats *= J.drapeaux.sageFort ? 1.6 : 1.5;
   S.degats = Math.round(S.degats * 100) / 100;
   return S;
 }
@@ -6253,6 +6277,8 @@ function entrerSalle(id, depuisDir) {
   if (solidePour(s, Math.floor(J.x / TUILE), Math.floor(J.y / TUILE), J.vol ? 'vol' : 'marche')) { const [tx, ty] = tuileLibreProche(s, J.x, J.y); [J.x, J.y] = centreTuile(tx, ty); }
   for (const f of J.familiers) { f.x = J.x + (Math.random() - 0.5) * 12; f.y = J.y + 6; f.vx = 0; f.vy = 0; }
   if (premiere) { genererContenuSalle(s); }
+  // ne jamais apparaître sur un piédestal (téléportation au centre)
+  for (const p of s.piedestaux) if (p.id && dist(p.x, p.y, J.x, J.y) < 24) { const [tx, ty] = tuileLibreProche(s, J.x, p.y + 48); [J.x, J.y] = centreTuile(tx, ty); }
   if (J.def.regleCode === 'bouclier_sable') J.bouclierSable = !s.nettoyee && (s.ennemisDef.length > 0 || s.type === 'boss');
   // ennemis : seulement si la salle n'est pas nettoyée
   s.combat = false;
@@ -6291,7 +6317,7 @@ function quitterSalle(s) {
   const J = G.joueur;
   s.etat = s.nettoyee ? 'quittee' : s.etat;
   s.zonesPersistantes = G.zones.filter(z => z.persistante);
-  finSalleBonus(J);
+  finSalleBonus(J); retirerFamiliersSalle(J);
   // les ennemis d'une salle quittée pendant un combat (téléportation) sont conservés
   if (!s.nettoyee && G.ennemis.length) s.ennemisDef = G.ennemis.filter(e => !e.boss && !e.parent).map(e => ({ id: e.id, x: e.x, y: e.y, champion: e.champion }));
   if (s.type === 'boss' && G.ennemis.some(e => e.boss)) s.bossPvRestant = G.ennemis.filter(e => e.boss).map(e => e.pv / e.pvMax);
@@ -6394,6 +6420,7 @@ function verifierPortes(dt) {
   }
 }
 function demarrerTransition(dir, vers, type = 'porte') {
+  if (G.modeTest) (G.modeTest.transitions || (G.modeTest.transitions = [])).push({ dir, vers, type, de: G.salle && G.salle.id, pile: String(new Error().stack).split('\n').slice(2, 6).map(l => l.trim().replace(/\(.*index.html:/, '(')).join(' < ') });
   G.transition = { dir, vers, t: 0, duree: G.reglages.confort ? 0.18 : 0.26, image: capturerVue(), type };
   Entrees.consommer();
 }
@@ -6414,6 +6441,8 @@ const RAMASSABLES = {
   coffre: { cat: 'coffre' }, coffre_verrouille: { cat: 'coffre' }, coffre_piege: { cat: 'coffre' }, coffre_pierre: { cat: 'coffre' },
 };
 function creerRamassable(type, x, y, o = {}) {
+  if (!type || type === 'rien') return null;
+  if (!RAMASSABLES[type]) { console.warn('ramassable inconnu : ' + type); type = 'ryo'; }
   const s = G.salle; const al = G.alea.recomp;
   const r = { type, x, y, z: o.depuisSol ? 0 : 6, vx: o.immobile ? 0 : (Math.random() - 0.5) * 90, vy: o.immobile ? 0 : (Math.random() - 0.5) * 90, vz: o.immobile ? 0 : 80, age: 0, uid: Math.random().toString(36).slice(2) };
   if (type === 'rouleau') r.id = al.pondere(DON.consommables.filter(c => Progression.estDebloque(c.id)), c => c.poids || 1).id;
@@ -6491,7 +6520,7 @@ function prendreTalisman(J, id) {
 // ── Coffres ──
 function ouvrirCoffre(r) {
   const J = G.joueur; const al = G.alea.recomp;
-  if (r.type === 'coffre_verrouille' && !J.drapeaux.crochetage) { if (J.cles <= 0 && !J.clesDorees) { if (!r.refus || G.temps - r.refus > 1) { r.refus = G.temps; Son.jouer('refus'); } return; } if (!J.clesDorees) J.cles--; }
+  if (r.type === 'coffre_verrouille' && !J.drapeaux.crochetage && !J.drapeaux.crochetageCoffres) { if (J.cles <= 0 && !J.clesDorees) { if (!r.refus || G.temps - r.refus > 1) { r.refus = G.temps; Son.jouer('refus'); } return; } if (!J.clesDorees) J.cles--; }
   if (r.type === 'coffre_pierre') { if (!r.fissure) return; }
   r.pris = true; Son.jouer('coffre');
   G.effets.push({ type: 'coffre_ouvert', x: r.x, y: r.y, age: 0, duree: 0.6, sorte: r.type });
@@ -6515,7 +6544,7 @@ function poserExplosif() {
   const J = G.joueur;
   if (J.explosifs <= 0 && !J.explosifsDores) { Son.jouer('refus'); return; }
   if (!J.explosifsDores) J.explosifs--;
-  G.bombes.push({ x: J.x, y: J.y + 2, age: 0, meche: J.drapeaux.mecheLongue ? 1.9 : 1.4, r: 1.6 * TUILE * (J.drapeaux.grandeExplosion ? 1.5 : 1), deg: 30 + (J.drapeaux.grandeExplosion ? 10 : 0), vx: J.vx * 0.3, vy: J.vy * 0.3, poseParJoueur: true });
+  G.bombes.push({ x: J.x, y: J.y + 2, age: 0, meche: J.drapeaux.mecheCourte ? 0.85 : J.drapeaux.mecheLongue ? 1.9 : 1.4, r: 1.6 * TUILE * (J.drapeaux.grandeExplosion ? 1.5 : 1), deg: 30 + (J.drapeaux.grandeExplosion ? 10 : 0), vx: J.vx * 0.3, vy: J.vy * 0.3, poseParJoueur: true });
   Son.jouer('meche'); evenement('explosif_pose', {});
 }
 function majBombes(dt) {
@@ -6657,6 +6686,13 @@ function prixObjet(id, sorte) {
   if (sorte === 'pacte') return { type: 'pacte', n: q >= 3 ? 2 : 1 };
   return { type: 'ryo', n: [10, 10, 15, 20, 25][q] || 15 };
 }
+// Prix effectif en Ryō : soldes (moitié, arrondi au-dessus) puis coupon (premier achat de l'étage gratuit)
+function prixRyo(p) {
+  const J = G.joueur; let n = p.prix.n;
+  if (J.drapeaux.soldes) n = Math.max(1, Math.ceil(n / 2));
+  if (J.drapeaux.coupon && G.etage && !G.etage.couponUtilise) n = 0;
+  return n;
+}
 const PRIX_RAMASSABLES = { coeur: 3, cle: 5, explosif: 5, rouleau: 5, protection: 5, pilule: 4, condensateur: 6, coeur_double: 5 };
 
 function preparerSalleSpeciale(s) {
@@ -6721,8 +6757,9 @@ function majPiedestaux(dt) {
 }
 function peutPayer(p) {
   const J = G.joueur, pr = p.prix; if (!pr) return { ok: true };
-  if (pr.type === 'ryo') return { ok: J.ryo >= pr.n, manque: 'Ryō insuffisants' };
+  if (pr.type === 'ryo') return { ok: J.ryo >= prixRyo(p), manque: 'Ryō insuffisants' };
   if (pr.type === 'pacte') {
+    if (J.drapeaux.pacteRyoOption && J.ryo >= 20 * pr.n) return { ok: true, ryo: 20 * pr.n };
     if (J.drapeaux.pacteRyo) return { ok: J.ryo >= pr.n * J.drapeaux.pacteRyo, manque: 'Ryō insuffisants', ryo: pr.n * J.drapeaux.pacteRyo };
     if (J.drapeaux.serment) return { ok: J.sante.prot.filter(x => x === 'n').length >= 3 * pr.n, manque: 'Chakra instable insuffisant', instable: 3 * pr.n };
     const d = prixPacteDetail(J.sante, pr.n);
@@ -6734,7 +6771,7 @@ function acheter(p) {
   const J = G.joueur, P = G.partie; const v = peutPayer(p);
   if (!v.ok) { Son.jouer('refus'); G.textes.push({ x: p.x, y: p.y - 30, t: v.manque, age: 0, duree: 1, couleur: '#ff8a6a' }); return; }
   if (v.mortel && !p.confirmeMortel) { p.confirmeMortel = true; Son.jouer('telegraphe'); G.textes.push({ x: p.x, y: p.y - 34, t: 'Ce paiement vous tuera. Confirmer à nouveau ?', age: 0, duree: 2, couleur: '#ff4a4a' }); return; }
-  if (p.prix.type === 'ryo') { J.ryo -= p.prix.n; G.stats.depenses += p.prix.n; evenement('achat', { p }); Son.jouer('achat'); }
+  if (p.prix.type === 'ryo') { const n = prixRyo(p); J.ryo -= n; G.stats.depenses += n; if (J.drapeaux.coupon && !G.etage.couponUtilise) G.etage.couponUtilise = true; evenement('achat', { p }); Son.jouer('achat'); }
   else if (p.prix.type === 'pacte') {
     if (v.ryo) J.ryo -= v.ryo;
     else if (v.instable) { for (let i = 0; i < v.instable; i++) { const k = J.sante.prot.lastIndexOf('n'); if (k >= 0) J.sante.prot.splice(k, 1); } }
@@ -6952,9 +6989,9 @@ function majDispositifs() {
 function utiliserMachine(m) {
   const J = G.joueur; const al = G.alea.recomp; const sortie = t => creerRamassable(t, m.x + (Math.random() - 0.5) * 16, m.y + 22, {});
   switch (m.type) {
-    case 'loterie': // 1 Ryō ; issues publiques (registre §R24)
+    case 'loterie': // 1 Ryō ; issues publiques (registre §R24) ; Dés de la grande perdante : gains doublés
       if (J.ryo < 1) { Son.jouer('refus'); return; } J.ryo--; m.usages++;
-      { const r = al.suivant(); const k = J.talisman === 'TAL_022' ? 1.1 : 1;
+      { const r = al.suivant(); const k = J.talisman === 'TAL_022' ? 1.1 : 1; const sortie1 = sortie; const sortie = t => { sortie1(t); if (J.drapeaux.loterieDouble) sortie1(t); };
         if (r < 0.62 / k) { G.textes.push({ x: m.x, y: m.y - 24, t: 'Perdu', age: 0, duree: 0.7, couleur: '#a0a0a0' }); }
         else if (r < 0.80) sortie('ryo'), sortie('ryo');
         else if (r < 0.88) sortie(al.choix(['cle', 'explosif', 'coeur']));
@@ -7278,13 +7315,20 @@ function ajouterFamilier(J, id, source) {
   J.familiers.push(f);
   return f;
 }
+// Multiplicateur de dégâts d'un familier : talisman, « familiers forts » (Chakra partagé, Meute),
+// marionnettes renforcées (Arsenal), Gamakichi à l'arrêt avec la Nature du sage (Sage des crapauds).
+function bonusFamilier(J, f) {
+  let k = (J.talisman === 'TAL_020' || J.talisman2 === 'TAL_020' ? 1.2 : 1) * (J.drapeaux.familiersForts ? 1.25 : 1);
+  if (J.drapeaux.marionnettesFortes && f.def.marionnette) k *= 1.5;
+  if (J.sage && f.def.id === 'FAM_GAMAKICHI' && synergiesActives(J).some(x => x.id === 'SYN_052')) k *= 1.5;
+  return k;
+}
 function retirerFamiliersSalle(J) { J.familiers = J.familiers.filter(f => !f.dureeSalle && !(f.etage && G.etage && f.etage !== G.etage.numero)); }
 
 function majFamiliers(J, dt) {
   const suiveurs = J.familiers.filter(f => ['suiveur_tireur', 'copieur', 'soutien', 'collecteur_suiveur', 'pakkun', 'luciole', 'clone_temp', 'clone_res'].includes(f.def.comportement));
   const orbitaux = J.familiers.filter(f => f.def.comportement === 'orbital');
   const dir = Entrees.visee.dir;
-  const bonusFam = (J.talisman === 'TAL_020' ? 1.2 : 1) * (J.transformations.includes('TRF_011') ? 1.25 : 1) * (J.transformations.includes('TRF_004') && ['marionnette'].includes(J.familiers[0] && 'x') ? 1 : 1);
   // chaîne de suiveurs
   let prec = { x: J.x, y: J.y };
   for (const f of suiveurs) {
@@ -7294,11 +7338,11 @@ function majFamiliers(J, dt) {
   }
   let io = 0;
   for (const f of J.familiers) {
-    const D = f.def; f.t += dt; f.cd -= dt;
+    const D = f.def; f.t += dt; f.cd -= dt; const bonusFam = bonusFamilier(J, f);
     switch (D.comportement) {
       case 'suiveur_tireur': case 'clone_res':
         if (dir && f.cd <= 0) { f.cd = 1 / (D.cadence || 1.8); const a = Math.atan2(DIRS[dir][1], DIRS[dir][0]);
-          const deg = D.coefJoueur ? J.stats.degats * D.coefJoueur : (D.degats || 3.5) * bonusFam;
+          const deg = (D.coefJoueur ? J.stats.degats * D.coefJoueur : (D.degats || 3.5)) * bonusFam;
           const p = tirFamilier(f, a, deg, D); if (D.statut) p.statuts = [{ statut: D.statut, chance: D.chanceStatut || 0.3 }]; }
         break;
       case 'copieur': case 'clone_temp':
@@ -7347,13 +7391,13 @@ function majFamiliers(J, dt) {
         const tx = J.x + Math.cos(a) * 22, ty = J.y - 6 + Math.sin(a) * 18; f.x = lerp(f.x, tx, 10 * dt); f.y = lerp(f.y, ty, 10 * dt); break;
       }
       case 'kamikaze': {
-        if (f.plonge) { const c = f.plonge; if (c.mort) { f.plonge = null; break; } const [dx, dy] = normaliser(c.x - f.x, c.y - 8 - f.y); f.x += dx * 300 * dt; f.y += dy * 300 * dt; if (dist(f.x, f.y, c.x, c.y - 8) < 10) { explosion(f.x, f.y, 1.2 * TUILE, J.stats.degats * 3 * bonusFam, { proprio: 'joueur', petite: false, blesseJoueur: false, decor: false }); f.plonge = null; f.cd = D.recharge || 4; f.x = J.x; f.y = J.y - 20; } }
+        if (f.plonge) { const c = f.plonge; if (c.mort) { f.plonge = null; break; } const [dx, dy] = normaliser(c.x - f.x, c.y - 8 - f.y); f.x += dx * 300 * dt; f.y += dy * 300 * dt; if (dist(f.x, f.y, c.x, c.y - 8) < 10) { explosion(f.x, f.y, 1.2 * TUILE, J.stats.degats * 3 * bonusFam, { proprio: 'joueur', petite: false, blesseJoueur: false, decor: false }); f.plonge = null; f.cd = (D.recharge || 4) * (J.drapeaux.oiseauRapide ? 0.5 : 1); f.x = J.x; f.y = J.y - 20; } }
         else { f.x = lerp(f.x, J.x - 10, 5 * dt); f.y = lerp(f.y, J.y - 26, 5 * dt); if (f.cd <= 0) { const c = ennemiLePlusProche(f.x, f.y, 9999); if (c) f.plonge = c; } }
         break;
       }
       case 'pieges': {
         f.x = lerp(f.x, J.x + 14, 5 * dt); f.y = lerp(f.y, J.y + 4, 5 * dt);
-        if (f.cd <= 0) { const c = ennemiLePlusProche(f.x, f.y, 9999, e => !e.boss); if (c) { f.cd = D.recharge || 8; appliquerStatut(c, 'immobilise', 3, 0); G.effets.push({ type: 'kuroari', cible: c, x: c.x, y: c.y, age: 0, duree: 3 }); setTimeoutJeu(() => !c.mort && infligerDegats(c, J.stats.degats * 4, { proprio: 'familier', type: 'piege' }), 2.9); } else f.cd = 1; }
+        if (f.cd <= 0) { const c = ennemiLePlusProche(f.x, f.y, 9999, e => !e.boss); if (c) { f.cd = D.recharge || 8; appliquerStatut(c, 'immobilise', 3, 0); G.effets.push({ type: 'kuroari', cible: c, x: c.x, y: c.y, age: 0, duree: 3 }); setTimeoutJeu(() => !c.mort && infligerDegats(c, J.stats.degats * 4 * bonusFam, { proprio: 'familier', type: 'piege' }), 2.9); } else f.cd = 1; }
         break;
       }
       case 'aveugleur': {
@@ -8105,7 +8149,7 @@ function dessinerObstacle(g, t, tx, ty, X, Y, D, s) {
 }
 function dessinerBattants(g, s, p, X, Y) {
   const x = X(p.tx * TUILE), y = Y(p.ty * TUILE);
-  if (p.etat === 'secrete') { if (p.indice || (G.joueur.transformations.includes('TRF_005')) || possede(G.joueur, 'PSV_114')) { g.fillStyle = 'rgba(255,240,200,0.5)'; g.fillRect(x + 12, y + 10, 1, 8); g.fillRect(x + 13, y + 17, 5, 1); g.fillRect(x + 17, y + 12, 1, 5); } return; }
+  if (p.etat === 'secrete') { if (p.indice || G.joueur.drapeaux.indicesSecrets) { g.fillStyle = 'rgba(255,240,200,0.5)'; g.fillRect(x + 12, y + 10, 1, 8); g.fillRect(x + 13, y + 17, 5, 1); g.fillRect(x + 17, y + 12, 1, 5); } return; }
   const ferme = s.combat && G.portesFermeesDans <= 0 || p.etat === 'verrouillee' || (p.etat === 'conditionnelle' && !conditionPorte(s, p));
   if (!ferme) return;
   const C = CADRES_PORTE[p.type] || CADRES_PORTE.normale;
@@ -8249,7 +8293,7 @@ function dessinerIntroBoss(g) {
 function dessinerPanneauAchat(g, p) {
   const J = G.joueur; const v = peutPayer(p); const nom = p.ramassable ? ({ coeur: 'Cœur de vitalité', cle: 'Clé de sceau', explosif: 'Parchemin explosif', rouleau: 'Rouleau tactique', protection: 'Réserve de chakra', pilule: 'Pilule militaire', condensateur: 'Condensateur de chakra', coeur_double: 'Double cœur' }[p.ramassable]) : INDEX[p.id].nom;
   const L = [nom];
-  if (p.prix.type === 'ryo') L.push('Prix : ' + p.prix.n + ' Ryō (vous : ' + J.ryo + ')');
+  if (p.prix.type === 'ryo') { const n = prixRyo(p); L.push('Prix : ' + (n === 0 ? 'gratuit (coupon)' : n + ' Ryō' + (n < p.prix.n ? ' (au lieu de ' + p.prix.n + ')' : '')) + ' (vous : ' + J.ryo + ')'); }
   else { // pacte : résultat exact avant confirmation
     const S = J.sante; const apres = copieSante(S);
     if (v.ryo) L.push('Prix : ' + v.ryo + ' Ryō');
@@ -8959,7 +9003,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

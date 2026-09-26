@@ -123,7 +123,7 @@ function creerProjectileJoueur(J, x, y, a, deg, cycleId, budget, o = {}) {
   const p = {
     x, y, z: 12, vx, vy, vitesse: Math.hypot(vx, vy), age: 0, porteePx: portee, dureeVie: portee / vit, proprio: 'joueur', source: J.def.id,
     degats: deg, recul: 2.2 * P.recul * TUILE, taille, rTouche: 4 + 2 * Math.sqrt(deg / 3.5) * taille, rObs: 2,
-    perce: P.perce, touches: new Set(), rebonds: P.rebonds, spectral: P.spectral, traj: Object.assign({}, P.traj),
+    perce: P.perce, touches: new Set(), rebonds: P.rebonds, spectral: P.spectral || (J.drapeaux.spectralParfois && Math.random() < 0.1), traj: Object.assign({}, P.traj),
     impacts: P.impacts.slice(), statuts: P.statuts.slice(), apparence: P.apparence, elements: P.elements, gen: 0, budget, cycleId, angle: a,
     orbiteA: Math.atan2(y - J.y, x - J.x), depart: { x, y },
   };
@@ -167,7 +167,7 @@ function majProjectiles(dt) {
     else if (TR.retour && p.age > p.dureeVie * 0.45) {
       const a = angleVers(p.x, p.y, J.x, J.y - 10); const v = Math.max(Math.hypot(p.vx, p.vy), 6 * TUILE); p.vx = lerp(p.vx, Math.cos(a) * v, 0.18); p.vy = lerp(p.vy, Math.sin(a) * v, 0.18);
       if (!p.retourne) { p.retourne = true; p.touches.clear(); }
-      if (dist(p.x, p.y, R.x, R.y - 10) < 10) { p.mort = true; continue; }
+      if (dist(p.x, p.y, J.x, J.y - 10) < 10) { p.mort = true; continue; }
       p.age = Math.min(p.age, p.dureeVie * 0.9);
       if (p.proprio === 'ennemi') { p.x += p.vx * dt; p.y += p.vy * dt; }
     } else {
@@ -411,6 +411,7 @@ function cibleDevant(J, dir, portee) {
 // ── Explosions, ondes, chaînes, mines ──
 function explosion(x, y, r, deg, o = {}) {
   const J = G.joueur;
+  if ((o.proprio || 'joueur') === 'joueur' && J && J.drapeaux.explosionPlus) deg += 5;
   G.effets.push({ type: o.petite ? 'explosion_petite' : 'explosion', x, y, r, age: 0, duree: o.petite ? 0.3 : 0.5, elements: o.elements });
   if (!o.petite) { Son.jouer('explosion'); secousse(6, null); Entrees.vibrer('explosion'); } else Son.jouer('impact', 0.8, 0.7);
   for (const e of G.ennemis) {

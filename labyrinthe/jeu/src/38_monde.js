@@ -96,6 +96,8 @@ function entrerSalle(id, depuisDir) {
   if (solidePour(s, Math.floor(J.x / TUILE), Math.floor(J.y / TUILE), J.vol ? 'vol' : 'marche')) { const [tx, ty] = tuileLibreProche(s, J.x, J.y); [J.x, J.y] = centreTuile(tx, ty); }
   for (const f of J.familiers) { f.x = J.x + (Math.random() - 0.5) * 12; f.y = J.y + 6; f.vx = 0; f.vy = 0; }
   if (premiere) { genererContenuSalle(s); }
+  // ne jamais apparaître sur un piédestal (téléportation au centre)
+  for (const p of s.piedestaux) if (p.id && dist(p.x, p.y, J.x, J.y) < 24) { const [tx, ty] = tuileLibreProche(s, J.x, p.y + 48); [J.x, J.y] = centreTuile(tx, ty); }
   if (J.def.regleCode === 'bouclier_sable') J.bouclierSable = !s.nettoyee && (s.ennemisDef.length > 0 || s.type === 'boss');
   // ennemis : seulement si la salle n'est pas nettoyée
   s.combat = false;
@@ -134,7 +136,7 @@ function quitterSalle(s) {
   const J = G.joueur;
   s.etat = s.nettoyee ? 'quittee' : s.etat;
   s.zonesPersistantes = G.zones.filter(z => z.persistante);
-  finSalleBonus(J);
+  finSalleBonus(J); retirerFamiliersSalle(J);
   // les ennemis d'une salle quittée pendant un combat (téléportation) sont conservés
   if (!s.nettoyee && G.ennemis.length) s.ennemisDef = G.ennemis.filter(e => !e.boss && !e.parent).map(e => ({ id: e.id, x: e.x, y: e.y, champion: e.champion }));
   if (s.type === 'boss' && G.ennemis.some(e => e.boss)) s.bossPvRestant = G.ennemis.filter(e => e.boss).map(e => e.pv / e.pvMax);
@@ -237,6 +239,7 @@ function verifierPortes(dt) {
   }
 }
 function demarrerTransition(dir, vers, type = 'porte') {
+  if (G.modeTest) (G.modeTest.transitions || (G.modeTest.transitions = [])).push({ dir, vers, type, de: G.salle && G.salle.id, pile: String(new Error().stack).split('\n').slice(2, 6).map(l => l.trim().replace(/\(.*index.html:/, '(')).join(' < ') });
   G.transition = { dir, vers, t: 0, duree: G.reglages.confort ? 0.18 : 0.26, image: capturerVue(), type };
   Entrees.consommer();
 }
@@ -257,6 +260,8 @@ const RAMASSABLES = {
   coffre: { cat: 'coffre' }, coffre_verrouille: { cat: 'coffre' }, coffre_piege: { cat: 'coffre' }, coffre_pierre: { cat: 'coffre' },
 };
 function creerRamassable(type, x, y, o = {}) {
+  if (!type || type === 'rien') return null;
+  if (!RAMASSABLES[type]) { console.warn('ramassable inconnu : ' + type); type = 'ryo'; }
   const s = G.salle; const al = G.alea.recomp;
   const r = { type, x, y, z: o.depuisSol ? 0 : 6, vx: o.immobile ? 0 : (Math.random() - 0.5) * 90, vy: o.immobile ? 0 : (Math.random() - 0.5) * 90, vz: o.immobile ? 0 : 80, age: 0, uid: Math.random().toString(36).slice(2) };
   if (type === 'rouleau') r.id = al.pondere(DON.consommables.filter(c => Progression.estDebloque(c.id)), c => c.poids || 1).id;
@@ -334,7 +339,7 @@ function prendreTalisman(J, id) {
 // ── Coffres ──
 function ouvrirCoffre(r) {
   const J = G.joueur; const al = G.alea.recomp;
-  if (r.type === 'coffre_verrouille' && !J.drapeaux.crochetage) { if (J.cles <= 0 && !J.clesDorees) { if (!r.refus || G.temps - r.refus > 1) { r.refus = G.temps; Son.jouer('refus'); } return; } if (!J.clesDorees) J.cles--; }
+  if (r.type === 'coffre_verrouille' && !J.drapeaux.crochetage && !J.drapeaux.crochetageCoffres) { if (J.cles <= 0 && !J.clesDorees) { if (!r.refus || G.temps - r.refus > 1) { r.refus = G.temps; Son.jouer('refus'); } return; } if (!J.clesDorees) J.cles--; }
   if (r.type === 'coffre_pierre') { if (!r.fissure) return; }
   r.pris = true; Son.jouer('coffre');
   G.effets.push({ type: 'coffre_ouvert', x: r.x, y: r.y, age: 0, duree: 0.6, sorte: r.type });
@@ -358,7 +363,7 @@ function poserExplosif() {
   const J = G.joueur;
   if (J.explosifs <= 0 && !J.explosifsDores) { Son.jouer('refus'); return; }
   if (!J.explosifsDores) J.explosifs--;
-  G.bombes.push({ x: J.x, y: J.y + 2, age: 0, meche: J.drapeaux.mecheLongue ? 1.9 : 1.4, r: 1.6 * TUILE * (J.drapeaux.grandeExplosion ? 1.5 : 1), deg: 30 + (J.drapeaux.grandeExplosion ? 10 : 0), vx: J.vx * 0.3, vy: J.vy * 0.3, poseParJoueur: true });
+  G.bombes.push({ x: J.x, y: J.y + 2, age: 0, meche: J.drapeaux.mecheCourte ? 0.85 : J.drapeaux.mecheLongue ? 1.9 : 1.4, r: 1.6 * TUILE * (J.drapeaux.grandeExplosion ? 1.5 : 1), deg: 30 + (J.drapeaux.grandeExplosion ? 10 : 0), vx: J.vx * 0.3, vy: J.vy * 0.3, poseParJoueur: true });
   Son.jouer('meche'); evenement('explosif_pose', {});
 }
 function majBombes(dt) {

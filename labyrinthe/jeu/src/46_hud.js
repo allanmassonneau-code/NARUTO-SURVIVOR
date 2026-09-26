@@ -103,7 +103,7 @@ function dessinerIntroBoss(g) {
 function dessinerPanneauAchat(g, p) {
   const J = G.joueur; const v = peutPayer(p); const nom = p.ramassable ? ({ coeur: 'Cœur de vitalité', cle: 'Clé de sceau', explosif: 'Parchemin explosif', rouleau: 'Rouleau tactique', protection: 'Réserve de chakra', pilule: 'Pilule militaire', condensateur: 'Condensateur de chakra', coeur_double: 'Double cœur' }[p.ramassable]) : INDEX[p.id].nom;
   const L = [nom];
-  if (p.prix.type === 'ryo') L.push('Prix : ' + p.prix.n + ' Ryō (vous : ' + J.ryo + ')');
+  if (p.prix.type === 'ryo') { const n = prixRyo(p); L.push('Prix : ' + (n === 0 ? 'gratuit (coupon)' : n + ' Ryō' + (n < p.prix.n ? ' (au lieu de ' + p.prix.n + ')' : '')) + ' (vous : ' + J.ryo + ')'); }
   else { // pacte : résultat exact avant confirmation
     const S = J.sante; const apres = copieSante(S);
     if (v.ryo) L.push('Prix : ' + v.ryo + ' Ryō');

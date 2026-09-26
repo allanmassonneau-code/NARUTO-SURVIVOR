@@ -63,6 +63,15 @@ function majDeplacementJoueur(J, dt) {
   if (!Entrees.visee.dir && J.tir.anim <= 0 && m > 12) J.dirTete = J.dirCorps;
   J.tir.anim -= dt;
   J.tCligne -= dt; if (J.tCligne < -0.12) J.tCligne = 2 + Math.random() * 4;
+  // Énergie naturelle : immobile 1 s (0,6 s en Sage imparfait) → dégâts ×1,5 (×1,6) jusqu'au prochain pas
+  if (J.drapeaux.energieNaturelle) {
+    const seuil = J.drapeaux.sageFort ? 0.6 : 1.0;
+    if (Math.hypot(mx, my) < 0.2 && m < 6 && J.etat === 'normal') { J.tImmobile = (J.tImmobile || 0) + dt; if (!J.sage && J.tImmobile >= seuil) { J.sage = true; recalculer(J); Son.jouer('charge_pleine', 0.5); G.effets.push({ type: 'aura_sage', x: J.x, y: J.y, age: 0, duree: 0.5 }); } }
+    else { J.tImmobile = 0; if (J.sage) { J.sage = false; recalculer(J); } }
+  } else if (J.sage) { J.sage = false; recalculer(J); }
+  // Charme du plein : dégâts +0,5 à pleine vitalité
+  const plein = !!J.drapeaux.pleineVitalite && rougeMax(J.sante) > 0 && rougeTotal(J.sante) >= rougeMax(J.sante);
+  if (plein !== !!J._plein) { J._plein = plein; recalculer(J); }
 }
 function aideAlignementPorte(J, mx, my, dt) {
   const s = G.salle; if (!s || Math.hypot(mx, my) < 0.4) return;

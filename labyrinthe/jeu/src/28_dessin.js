@@ -98,6 +98,10 @@ function dessinerJoueur(g, J, x, y) {
   if (J.intangible) g.globalAlpha = 0.45;
   const M = J.mutations;
   if (M.aura) dessinerAura(g, M.aura, x, y);
+  if (J.sage) { // énergie naturelle accumulée : pigment orange autour des yeux et lueur au sol
+    g.globalAlpha *= 0.5; g.drawImage(ellipse(12, 5, 'rgba(240,138,36,0.6)'), x - 12, y - 5); g.globalAlpha = J.intangible ? 0.45 : 1;
+    if (Math.random() < 0.15) G.particules.push({ x: J.x + (Math.random() - 0.5) * 18, y: J.y - Math.random() * 24, vx: 0, vy: -20, age: 0, duree: 0.4, couleur: '#f0a040', taille: 1 });
+  }
   let etatTete = J.tCligne < 0 ? 'cligne' : 'normal';
   if (J.tir.anim > 0.05 || J.tir.charge > 0) etatTete = 'tir';
   const frame = J.dash ? 1 : J.frame;
@@ -220,15 +224,15 @@ function dessinerPiedestal(g, p, X, Y) {
     g.drawImage(ic, x - 10, y - 26 + flotte);
   }
   if (p.prix) {
-    const t = p.prix.type === 'ryo' ? String(p.prix.n) : p.prix.type === 'pacte' ? prixPacteTexte(p) : '';
-    g.fillStyle = p.solde ? '#c83a2a' : '#1c1420'; const l = Police.largeur(t) + (p.prix.type === 'ryo' ? 10 : 2);
+    const n = p.prix.type === 'ryo' ? prixRyo(p) : 0; const t = p.prix.type === 'ryo' ? (n === 0 ? 'Gratuit' : String(n)) : p.prix.type === 'pacte' ? prixPacteTexte(p) : '';
+    g.fillStyle = p.solde || (p.prix.type === 'ryo' && n < p.prix.n) ? '#c83a2a' : '#1c1420'; const l = Police.largeur(t) + (p.prix.type === 'ryo' ? 10 : 2);
     g.fillRect(x - l / 2 - 2, y + 9, l + 4, 10);
     if (p.prix.type === 'ryo') { g.drawImage(ICONES.ryo, x - l / 2, y + 10); Police.ecrire(g, t, x - l / 2 + 10, y + 11, '#f8e8b0', { ombre: null }); }
     else Police.ecrire(g, t, x, y + 11, '#ff9a9a', { a: 'c', ombre: null });
   }
 }
 function prixPacteTexte(p) {
-  const J = G.joueur; if (J.drapeaux.pacteRyo) return p.prix.n * J.drapeaux.pacteRyo + ' Ryō';
+  const J = G.joueur; if (J.drapeaux.pacteRyoOption && J.ryo >= 20 * p.prix.n) return 20 * p.prix.n + ' Ryō'; if (J.drapeaux.pacteRyo) return p.prix.n * J.drapeaux.pacteRyo + ' Ryō';
   if (J.drapeaux.serment) return 3 * p.prix.n + ' instable';
   if (nbVit(J.sante) === 0) return 4 * p.prix.n / 2 + ' ♥ chakra';
   return p.prix.n + ' ♥ vitalité';

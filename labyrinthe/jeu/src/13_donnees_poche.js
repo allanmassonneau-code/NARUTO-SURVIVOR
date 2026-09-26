@@ -14,7 +14,7 @@
   TA('TAL_008', 'Bandeau rayé', '#6a6a78', 'Dégâts +10 % contre les boss.', [{ drapeau: 'bonusBoss' }]);
   TA('TAL_009', 'Grelot du flair', '#e8c050', 'Signale les murs secrets de la salle en entrant.', [{ quand: 'entree_salle', faire: { type: 'revelation' } }]);
   TA('TAL_010', 'Poignée de sable', '#d8b070', 'Un orbital de sable temporaire à chaque salle de combat.', [{ quand: 'entree_salle', si: 'combat', faire: { type: 'familier', familier: 'FAM_SABLE', salle: true } }]);
-  TA('TAL_011', 'Mèche courte', '#f07820', 'Vos explosifs explosent plus vite… et vous y survivez mieux (dégâts subis inchangés).', [{ drapeau: 'mecheCourte' }]);
+  TA('TAL_011', 'Mèche courte', '#f07820', 'Vos explosifs explosent plus vite (mèche de 0,85 s au lieu de 1,4 s).', [{ drapeau: 'mecheCourte' }]);
   TA('TAL_012', 'Mèche longue', '#8a6a3a', 'Explosions 50 % plus larges ; délai +0,5 s.', [{ drapeau: 'mecheLongue' }, { drapeau: 'grandeExplosion' }]);
   TA('TAL_013', 'Charme du plein', '#6ae07a', 'À pleine vitalité, dégâts +0,5.', [{ drapeau: 'pleineVitalite' }]);
   TA('TAL_014', 'Gourde de saké', '#8a6a4a', 'Identifie les pilules ; les pilules négatives deviennent leur contraire.', []);
@@ -111,10 +111,10 @@
   F('FAM_AKAMARU', 'Akamaru', 'contact', { degats: 6, coefJoueur: 0.5, recharge: 1.2, sprite: { carte: 'rat', couleurs: { g: '#f0ece4', d: '#c8c0b0', p: '#e0a0a8' } } });
   F('FAM_INSECTES', 'Kikaichū', 'collecteur', { degats: 1.5, sprite: { carte: 'moustique' } });
   F('FAM_OISEAU_ARGILE', 'Oiseau d’argile', 'kamikaze', { recharge: 4, sprite: { carte: 'oiseau_argile' } });
-  F('FAM_KARASU_ATT', 'Karasu', 'chasseur', { degats: 4, cadence: 1.6, vitesse: 3.5, statut: 'poison', sprite: { carte: 'marionnette' } });
-  F('FAM_KARASU', 'Karasu (marionnette)', 'marionnette', { bloque: true, rBloc: 7, sprite: { carte: 'marionnette' } });
-  F('FAM_KUROARI', 'Kuroari', 'pieges', { recharge: 8, sprite: { carte: 'marionnette', couleurs: { m: '#2a2a30', d: '#1a1a20' } } });
-  F('FAM_SANSHOUO', 'Sanshōuo', 'bloqueur', { bloque: true, rBloc: 12, sprite: { carte: 'statue', couleurs: { s: '#6a6a78', l: '#8a8a98' } } });
+  F('FAM_KARASU_ATT', 'Karasu', 'chasseur', { marionnette: true, degats: 4, cadence: 1.6, vitesse: 3.5, statut: 'poison', sprite: { carte: 'marionnette' } });
+  F('FAM_KARASU', 'Karasu (marionnette)', 'marionnette', { marionnette: true, bloque: true, rBloc: 7, sprite: { carte: 'marionnette' } });
+  F('FAM_KUROARI', 'Kuroari', 'pieges', { marionnette: true, recharge: 8, sprite: { carte: 'marionnette', couleurs: { m: '#2a2a30', d: '#1a1a20' } } });
+  F('FAM_SANSHOUO', 'Sanshōuo', 'bloqueur', { marionnette: true, bloque: true, rBloc: 12, sprite: { carte: 'statue', couleurs: { s: '#6a6a78', l: '#8a8a98' } } });
   F('FAM_TIGRE_ENCRE', 'Fauve d’encre', 'chasseur', { degats: 4, cadence: 1.5, vitesse: 4, sprite: { carte: 'tigre', couleurs: { o: '#2a2a3a', d: '#1a1a24', w: '#e8e0d0' } } });
   F('FAM_SERPENT_BLANC', 'Serpent blanc', 'chasseur', { degats: 3, cadence: 1.2, vitesse: 3, sprite: { carte: 'serpenteau' } });
   F('FAM_LUCIOLE', 'Luciole', 'luciole', { sprite: { carte: 'moustique', couleurs: { b: '#f0f060' } } });

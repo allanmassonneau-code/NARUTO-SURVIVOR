@@ -17,6 +17,13 @@ function prixObjet(id, sorte) {
   if (sorte === 'pacte') return { type: 'pacte', n: q >= 3 ? 2 : 1 };
   return { type: 'ryo', n: [10, 10, 15, 20, 25][q] || 15 };
 }
+// Prix effectif en Ryō : soldes (moitié, arrondi au-dessus) puis coupon (premier achat de l'étage gratuit)
+function prixRyo(p) {
+  const J = G.joueur; let n = p.prix.n;
+  if (J.drapeaux.soldes) n = Math.max(1, Math.ceil(n / 2));
+  if (J.drapeaux.coupon && G.etage && !G.etage.couponUtilise) n = 0;
+  return n;
+}
 const PRIX_RAMASSABLES = { coeur: 3, cle: 5, explosif: 5, rouleau: 5, protection: 5, pilule: 4, condensateur: 6, coeur_double: 5 };
 
 function preparerSalleSpeciale(s) {
@@ -81,8 +88,9 @@ function majPiedestaux(dt) {
 }
 function peutPayer(p) {
   const J = G.joueur, pr = p.prix; if (!pr) return { ok: true };
-  if (pr.type === 'ryo') return { ok: J.ryo >= pr.n, manque: 'Ryō insuffisants' };
+  if (pr.type === 'ryo') return { ok: J.ryo >= prixRyo(p), manque: 'Ryō insuffisants' };
   if (pr.type === 'pacte') {
+    if (J.drapeaux.pacteRyoOption && J.ryo >= 20 * pr.n) return { ok: true, ryo: 20 * pr.n };
     if (J.drapeaux.pacteRyo) return { ok: J.ryo >= pr.n * J.drapeaux.pacteRyo, manque: 'Ryō insuffisants', ryo: pr.n * J.drapeaux.pacteRyo };
     if (J.drapeaux.serment) return { ok: J.sante.prot.filter(x => x === 'n').length >= 3 * pr.n, manque: 'Chakra instable insuffisant', instable: 3 * pr.n };
     const d = prixPacteDetail(J.sante, pr.n);
@@ -94,7 +102,7 @@ function acheter(p) {
   const J = G.joueur, P = G.partie; const v = peutPayer(p);
   if (!v.ok) { Son.jouer('refus'); G.textes.push({ x: p.x, y: p.y - 30, t: v.manque, age: 0, duree: 1, couleur: '#ff8a6a' }); return; }
   if (v.mortel && !p.confirmeMortel) { p.confirmeMortel = true; Son.jouer('telegraphe'); G.textes.push({ x: p.x, y: p.y - 34, t: 'Ce paiement vous tuera. Confirmer à nouveau ?', age: 0, duree: 2, couleur: '#ff4a4a' }); return; }
-  if (p.prix.type === 'ryo') { J.ryo -= p.prix.n; G.stats.depenses += p.prix.n; evenement('achat', { p }); Son.jouer('achat'); }
+  if (p.prix.type === 'ryo') { const n = prixRyo(p); J.ryo -= n; G.stats.depenses += n; if (J.drapeaux.coupon && !G.etage.couponUtilise) G.etage.couponUtilise = true; evenement('achat', { p }); Son.jouer('achat'); }
   else if (p.prix.type === 'pacte') {
     if (v.ryo) J.ryo -= v.ryo;
     else if (v.instable) { for (let i = 0; i < v.instable; i++) { const k = J.sante.prot.lastIndexOf('n'); if (k >= 0) J.sante.prot.splice(k, 1); } }
@@ -312,9 +320,9 @@ function majDispositifs() {
 function utiliserMachine(m) {
   const J = G.joueur; const al = G.alea.recomp; const sortie = t => creerRamassable(t, m.x + (Math.random() - 0.5) * 16, m.y + 22, {});
   switch (m.type) {
-    case 'loterie': // 1 Ryō ; issues publiques (registre §R24)
+    case 'loterie': // 1 Ryō ; issues publiques (registre §R24) ; Dés de la grande perdante : gains doublés
       if (J.ryo < 1) { Son.jouer('refus'); return; } J.ryo--; m.usages++;
-      { const r = al.suivant(); const k = J.talisman === 'TAL_022' ? 1.1 : 1;
+      { const r = al.suivant(); const k = J.talisman === 'TAL_022' ? 1.1 : 1; const sortie1 = sortie; const sortie = t => { sortie1(t); if (J.drapeaux.loterieDouble) sortie1(t); };
         if (r < 0.62 / k) { G.textes.push({ x: m.x, y: m.y - 24, t: 'Perdu', age: 0, duree: 0.7, couleur: '#a0a0a0' }); }
         else if (r < 0.80) sortie('ryo'), sortie('ryo');
         else if (r < 0.88) sortie(al.choix(['cle', 'explosif', 'coeur']));

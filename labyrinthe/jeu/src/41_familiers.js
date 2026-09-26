@@ -13,13 +13,20 @@ function ajouterFamilier(J, id, source) {
   J.familiers.push(f);
   return f;
 }
+// Multiplicateur de dégâts d'un familier : talisman, « familiers forts » (Chakra partagé, Meute),
+// marionnettes renforcées (Arsenal), Gamakichi à l'arrêt avec la Nature du sage (Sage des crapauds).
+function bonusFamilier(J, f) {
+  let k = (J.talisman === 'TAL_020' || J.talisman2 === 'TAL_020' ? 1.2 : 1) * (J.drapeaux.familiersForts ? 1.25 : 1);
+  if (J.drapeaux.marionnettesFortes && f.def.marionnette) k *= 1.5;
+  if (J.sage && f.def.id === 'FAM_GAMAKICHI' && synergiesActives(J).some(x => x.id === 'SYN_052')) k *= 1.5;
+  return k;
+}
 function retirerFamiliersSalle(J) { J.familiers = J.familiers.filter(f => !f.dureeSalle && !(f.etage && G.etage && f.etage !== G.etage.numero)); }
 
 function majFamiliers(J, dt) {
   const suiveurs = J.familiers.filter(f => ['suiveur_tireur', 'copieur', 'soutien', 'collecteur_suiveur', 'pakkun', 'luciole', 'clone_temp', 'clone_res'].includes(f.def.comportement));
   const orbitaux = J.familiers.filter(f => f.def.comportement === 'orbital');
   const dir = Entrees.visee.dir;
-  const bonusFam = (J.talisman === 'TAL_020' ? 1.2 : 1) * (J.transformations.includes('TRF_011') ? 1.25 : 1) * (J.transformations.includes('TRF_004') && ['marionnette'].includes(J.familiers[0] && 'x') ? 1 : 1);
   // chaîne de suiveurs
   let prec = { x: J.x, y: J.y };
   for (const f of suiveurs) {
@@ -29,11 +36,11 @@ function majFamiliers(J, dt) {
   }
   let io = 0;
   for (const f of J.familiers) {
-    const D = f.def; f.t += dt; f.cd -= dt;
+    const D = f.def; f.t += dt; f.cd -= dt; const bonusFam = bonusFamilier(J, f);
     switch (D.comportement) {
       case 'suiveur_tireur': case 'clone_res':
         if (dir && f.cd <= 0) { f.cd = 1 / (D.cadence || 1.8); const a = Math.atan2(DIRS[dir][1], DIRS[dir][0]);
-          const deg = D.coefJoueur ? J.stats.degats * D.coefJoueur : (D.degats || 3.5) * bonusFam;
+          const deg = (D.coefJoueur ? J.stats.degats * D.coefJoueur : (D.degats || 3.5)) * bonusFam;
           const p = tirFamilier(f, a, deg, D); if (D.statut) p.statuts = [{ statut: D.statut, chance: D.chanceStatut || 0.3 }]; }
         break;
       case 'copieur': case 'clone_temp':
@@ -82,13 +89,13 @@ function majFamiliers(J, dt) {
         const tx = J.x + Math.cos(a) * 22, ty = J.y - 6 + Math.sin(a) * 18; f.x = lerp(f.x, tx, 10 * dt); f.y = lerp(f.y, ty, 10 * dt); break;
       }
       case 'kamikaze': {
-        if (f.plonge) { const c = f.plonge; if (c.mort) { f.plonge = null; break; } const [dx, dy] = normaliser(c.x - f.x, c.y - 8 - f.y); f.x += dx * 300 * dt; f.y += dy * 300 * dt; if (dist(f.x, f.y, c.x, c.y - 8) < 10) { explosion(f.x, f.y, 1.2 * TUILE, J.stats.degats * 3 * bonusFam, { proprio: 'joueur', petite: false, blesseJoueur: false, decor: false }); f.plonge = null; f.cd = D.recharge || 4; f.x = J.x; f.y = J.y - 20; } }
+        if (f.plonge) { const c = f.plonge; if (c.mort) { f.plonge = null; break; } const [dx, dy] = normaliser(c.x - f.x, c.y - 8 - f.y); f.x += dx * 300 * dt; f.y += dy * 300 * dt; if (dist(f.x, f.y, c.x, c.y - 8) < 10) { explosion(f.x, f.y, 1.2 * TUILE, J.stats.degats * 3 * bonusFam, { proprio: 'joueur', petite: false, blesseJoueur: false, decor: false }); f.plonge = null; f.cd = (D.recharge || 4) * (J.drapeaux.oiseauRapide ? 0.5 : 1); f.x = J.x; f.y = J.y - 20; } }
         else { f.x = lerp(f.x, J.x - 10, 5 * dt); f.y = lerp(f.y, J.y - 26, 5 * dt); if (f.cd <= 0) { const c = ennemiLePlusProche(f.x, f.y, 9999); if (c) f.plonge = c; } }
         break;
       }
       case 'pieges': {
         f.x = lerp(f.x, J.x + 14, 5 * dt); f.y = lerp(f.y, J.y + 4, 5 * dt);
-        if (f.cd <= 0) { const c = ennemiLePlusProche(f.x, f.y, 9999, e => !e.boss); if (c) { f.cd = D.recharge || 8; appliquerStatut(c, 'immobilise', 3, 0); G.effets.push({ type: 'kuroari', cible: c, x: c.x, y: c.y, age: 0, duree: 3 }); setTimeoutJeu(() => !c.mort && infligerDegats(c, J.stats.degats * 4, { proprio: 'familier', type: 'piege' }), 2.9); } else f.cd = 1; }
+        if (f.cd <= 0) { const c = ennemiLePlusProche(f.x, f.y, 9999, e => !e.boss); if (c) { f.cd = D.recharge || 8; appliquerStatut(c, 'immobilise', 3, 0); G.effets.push({ type: 'kuroari', cible: c, x: c.x, y: c.y, age: 0, duree: 3 }); setTimeoutJeu(() => !c.mort && infligerDegats(c, J.stats.degats * 4 * bonusFam, { proprio: 'familier', type: 'piege' }), 2.9); } else f.cd = 1; }
         break;
       }
       case 'aveugleur': {

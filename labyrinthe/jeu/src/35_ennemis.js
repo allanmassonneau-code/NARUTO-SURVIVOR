@@ -85,12 +85,13 @@ function infligerDegats(e, deg, src = {}) {
   // bouclier frontal (protecteur) : bloque les projectiles venant de face
   if (e.def.params && e.def.params.bouclier === 'frontal' && src.type === 'projectile' && !e.statuts.immobilise) {
     const aFace = Math.atan2(DIRS[e.dir][1], DIRS[e.dir][0]); const aVenue = Math.atan2(-(src.vy || 0), -(src.vx || 0));
-    if (Math.abs(diffAngle(aFace, aVenue)) < Math.PI / 3) { G.effets.push({ type: 'etincelle', x: e.x + DIRS[e.dir][0] * 10, y: e.y - 10, age: 0, duree: 0.2 }); Son.jouer('impact_mur'); return false; }
+    if (Math.abs(diffAngle(aFace, aVenue)) < Math.PI * 0.28) { G.effets.push({ type: 'etincelle', x: e.x + DIRS[e.dir][0] * 10, y: e.y - 10, age: 0, duree: 0.2 }); Son.jouer('impact_mur'); return false; }
   }
   // aura d'un protecteur voisin : dégâts ×0,5
   for (const p of G.ennemis) if (p !== e && !p.mort && p.def.params && p.def.params.bouclier === 'aura' && dist(p.x, p.y, e.x, e.y) < 2.5 * TUILE) { deg *= 0.5; break; }
   if (G.joueur.drapeaux.bonusBoss && e.boss) deg *= 1.1;
   e.pv -= deg; e.dernierCoup = G.temps;
+  if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
   if (!src.sansFlash) e.flash = 0.08;
   G.stats.degats += deg;
   if (!src.sansRecul && src.recul && !e.boss && !e.def.lourd && !e.def.fixe) {
@@ -112,7 +113,7 @@ function tuerEnnemi(e, src = {}) {
   if (e.statuts.gel && G.joueur.drapeaux.eclatsGlace) { for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; const q = creerSousProjectile({ x: e.x, y: e.y - 8, vitesse: 7 * TUILE, degats: G.joueur.stats.degats, recul: 30, taille: 0.8, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 6 }, cycleId: 0 }, a, G.joueur.stats.degats * 0.5); q.dureeVie = 0.5; } }
   const mortDef = e.def.mort;
   if (mortDef === 'division' || (C && C.mort === 'division')) {
-    if (!e.parentDivision) for (let i = 0; i < 2; i++) { const f = creerEnnemi(e.def.enfant || e.def.id, e.x + (i ? 8 : -8), e.y, { sansApparition: true, pvMult: 0.45, echelle: 0.75 }); f.parentDivision = true; f.vx = (i ? 1 : -1) * 60; }
+    if (!e.parentDivision) for (let i = 0; i < 2; i++) { const f = creerEnnemi(e.def.enfant || e.def.id, e.x + (i ? 8 : -8), e.y, { sansApparition: true, pvMult: 0.45, echelle: 0.75 }); f.parentDivision = true; f.vx = (i ? 1 : -1) * 60; if (e.parent) f.parent = e.parent; }
   }
   if (mortDef === 'salve8' || (C && C.mort === 'salve8')) for (let i = 0; i < 8; i++) tirEnnemi(e.x, e.y - 8, i * Math.PI / 4, 4.5);
   if (mortDef === 'explose') explosion(e.x, e.y, 1.3 * TUILE, 10, { proprio: 'ennemi', blesseJoueur: true, degatsJoueur: 2 });
@@ -274,8 +275,8 @@ const IA = {
     const J = cibleEnnemi(e);
     if (!e.ia.tele) { const d = dist(e.x, e.y, J.x, J.y); const [dx, dy] = normaliser(J.x - e.x, J.y - e.y); if (d < 3.5 * TUILE) deplacerEnnemi(e, -dx, -dy, P.vitesse, dt); else IA.errant(e, dt, { vitesse: P.vitesse * 0.5 }); } else { e.vx *= 0.7; e.vy *= 0.7; }
     e.tAtt -= dt;
-    const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length;
-    if (e.tAtt <= 0 && !e.ia.tele && n < (P.max || 3)) { const [tx, ty] = tuileLibreProche(G.salle, e.x + (Math.random() - 0.5) * 70, e.y + (Math.random() - 0.5) * 50); const [cx, cy] = centreTuile(tx, ty); telegraphe(e, 'sceau', 0.6, { x: cx, y: cy }); G.effets.push({ type: 'cercle_sceau', x: cx, y: cy, r: 14, age: 0, duree: 0.6 }); }
+    const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length; const total = G.ennemis.filter(f => !f.mort).length;
+    if (e.tAtt <= 0 && !e.ia.tele && n < (P.max || 3) && total < 14) { const [tx, ty] = tuileLibreProche(G.salle, e.x + (Math.random() - 0.5) * 70, e.y + (Math.random() - 0.5) * 50); const [cx, cy] = centreTuile(tx, ty); telegraphe(e, 'sceau', 0.6, { x: cx, y: cy }); G.effets.push({ type: 'cercle_sceau', x: cx, y: cy, r: 14, age: 0, duree: 0.6 }); }
     if (e.ia.tele && e.ia.tele.t <= 0) { const T0 = e.ia.tele; e.ia.tele = null; e.tAtt = P.intervalle; const f = creerEnnemi(P.invocation, T0.x, T0.y, { parent: e.uid }); f.parent = e.uid; Son.jouer('invocation', 0.6); }
   },
   embusque(e, dt, P) {
@@ -283,7 +284,10 @@ const IA = {
     if (I.phase === 'cache') {
       e.cache = true; e.vx = 0; e.vy = 0; I.t = (I.t || 0) - dt;
       if (P.suit) { const [dx, dy] = normaliser(J.x - e.x, J.y - e.y); const v = P.vitesse * TUILE * 0.8; const nx = e.x + dx * v * dt, ny = e.y + dy * v * dt; if (!solidePour(G.salle, Math.floor(nx / TUILE), Math.floor(ny / TUILE), 'marche')) { e.x = nx; e.y = ny; } }
-      if (I.t <= 0 && dist(e.x, e.y, J.x, J.y) < (P.detection || 4) * TUILE) {
+      // surgit quand le joueur approche, ou de lui-même après une attente (jamais de salle bloquée)
+      I.attente = (I.attente || 0) + dt;
+      if (I.t <= 0 && (dist(e.x, e.y, J.x, J.y) < (P.detection || 4) * TUILE || I.attente > 3.5)) {
+        I.attente = 0;
         // sortie à distance raisonnable du joueur (jamais sur lui)
         let px = e.x, py = e.y;
         if (P.surgitPres) { const a = Math.random() * Math.PI * 2; const [tx, ty] = tuileLibreProche(G.salle, J.x + Math.cos(a) * 2 * TUILE, J.y + Math.sin(a) * 2 * TUILE); [px, py] = centreTuile(tx, ty); }
@@ -307,7 +311,8 @@ const IA = {
   tourelle(e, dt, P) { e.vx = 0; e.vy = 0; IA.tireur(e, dt, Object.assign({}, P, { vitesse: 0 })); },
   protecteur(e, dt, P) {
     const J = cibleEnnemi(e);
-    if (P.bouclier === 'frontal') { orienter(e, J.x, J.y); const [dx, dy] = directionFlux(e); deplacerEnnemi(e, dx, dy, P.vitesse, dt); }
+    // le bouclier pivote avec retard (0,9 s) : on peut le contourner
+    if (P.bouclier === 'frontal') { e.ia.tPivot = (e.ia.tPivot || 0) - dt; if (e.ia.tPivot <= 0) { e.ia.tPivot = 0.9; orienter(e, J.x, J.y); } const [dx, dy] = directionFlux(e); deplacerEnnemi(e, dx, dy, P.vitesse, dt); }
     else { // reste près de ses alliés
       const alli = ennemiLePlusProche(e.x, e.y, 9999, x => x !== e && x.def.params && x.def.params.bouclier !== 'aura');
       const cx = alli ? alli.x : J.x, cy = alli ? alli.y : J.y; const [dx, dy] = normaliser(cx - e.x, cy - e.y); if (dist(e.x, e.y, cx, cy) > 1.5 * TUILE) deplacerEnnemi(e, dx, dy, P.vitesse, dt); else { e.vx *= 0.8; e.vy *= 0.8; }
@@ -382,11 +387,13 @@ function majEnnemis(dt) {
     }
     // séparation douce entre ennemis
     for (const f of G.ennemis) { if (f === e || f.mort || f.cache || e.cache) continue; const d = dist(e.x, e.y, f.x, f.y); const m = e.r + f.r - 4; if (d < m && d > 0.01) { const k = (m - d) / d * 0.25; e.x += (e.x - f.x) * k; e.y += (e.y - f.y) * k; } }
-    if (Math.abs(e.vx) + Math.abs(e.vy) > 5 && !e.ia.tele && e.def.comportement !== 'tourelle') { e.dir = dirDepuisVecteur(e.vx, e.vy); e.frame = Math.floor(e.tAnim * 8) % 2; }
+    if (Math.abs(e.vx) + Math.abs(e.vy) > 5 && !e.ia.tele && e.def.comportement !== 'tourelle' && !(e.def.params && e.def.params.bouclier === 'frontal')) { e.dir = dirDepuisVecteur(e.vx, e.vy); e.frame = Math.floor(e.tAnim * 8) % 2; }
     // Dégâts de contact (pas pendant l'apparition, caché, charmé)
     if (!e.cache && !e.statuts.charme && !e.allie && !J.intangible && (e.contact || 0) > 0 && !(e.z > 10)) {
       if (dist(e.x, e.y, J.x, J.y) < e.r + J.r - 1) blesserJoueur(e.contact === 1 ? G.degatsContact : e.contact, { type: 'contact', source: e.id, x: e.x, y: e.y });
     }
+    // Manteau du renard : l'aura brûle les ennemis au contact (toutes les 0,5 s)
+    if (J.drapeaux.auraContact && !e.cache && !e.allie && dist(e.x, e.y, J.x, J.y) < e.r + J.r + 8 && G.temps - (e.ia.dernierAura || -9) > 0.5) { e.ia.dernierAura = G.temps; appliquerStatut(e, 'brulure', 2, J.stats.degats); infligerDegats(e, J.stats.degats * 0.3, { proprio: 'joueur', type: 'aura', sansRecul: true, sansFlash: true }); }
     // ennemi charmé : blesse ses anciens alliés au contact
     if (e.statuts.charme || e.allie) for (const f of G.ennemis) if (f !== e && !f.mort && !f.statuts.charme && !f.allie && dist(e.x, e.y, f.x, f.y) < e.r + f.r) { if (G.temps - (e.ia.dernierCharme || 0) > 0.5) { e.ia.dernierCharme = G.temps; infligerDegats(f, 3.5, { proprio: 'allie', type: 'contact' }); } }
   }

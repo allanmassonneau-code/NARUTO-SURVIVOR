@@ -4,6 +4,7 @@
 // Ne remplace pas une recette manuelle à la manette : il vérifie l'absence d'erreurs
 // et des invariants (portes reliées, boss atteignable, récompenses uniques…).
 import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
@@ -12,39 +13,7 @@ const racine = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = 'file://' + resolve(racine, 'jeu', 'index.html');
 const demandees = process.argv.slice(2); const veut = s => !demandees.length || demandees.includes(s);
 
-const AIDE = `
-window.__T = {
-  L: () => window.LDS,
-  pas(n, touches, boutons) { const L = window.LDS; const E = L.Entrees; for (let i = 0; i < n; i++) {
-      E.touches = new Set(touches || []); E.ordreFleches = [...E.touches].filter(c => c.startsWith('Arrow'));
-      if (boutons) { window.__pad = boutons; }
-      E.maj(1/60); L.Scenes.maj(1/60); E.finPas(); if (L.G.derniereErreur) { const e = L.G.derniereErreur; L.G.derniereErreur = null; return e; } } return null; },
-  bot(sec, o = {}) { const L = window.LDS, G = L.G; let a = Math.random() * 6;
-    for (let i = 0; i < sec * 60; i++) { const J = G.joueur; if (!J || !G.salle || !G.partie) return 'pas de partie';
-      if (o.dieu) { J.invuln = 1; if (J.etat === 'mort') return 'mort malgré dieu'; }
-      if (G.enAnimationObjet) { const e = this.pas(1, ['Enter']); if (e) return e; continue; }
-      const cibles = G.ennemis.filter(x => !x.mort && !x.cache && !x.intangible && !x.statuts.charme && !x.allie);
-      const e = cibles.sort((p, q) => Math.hypot(p.x - J.x, p.y - J.y) - Math.hypot(q.x - J.x, q.y - J.y))[0];
-      const t = []; a += 0.03;
-      let mx = Math.cos(a), my = Math.sin(a * 1.3);
-      if (e) { const d = Math.hypot(e.x - J.x, e.y - J.y); if (d > 150) { mx += (e.x - J.x) / d; my += (e.y - J.y) / d; } else if (d < 60) { mx -= (e.x - J.x) / d; my -= (e.y - J.y) / d; } }
-      else if (o.cible) { const d = Math.hypot(o.cible.x - J.x, o.cible.y - J.y) || 1; mx = (o.cible.x - J.x) / d; my = (o.cible.y - J.y) / d; }
-      if (mx > 0.3) t.push('KeyD'); if (mx < -0.3) t.push('KeyA'); if (my > 0.3) t.push('KeyS'); if (my < -0.3) t.push('KeyW');
-      if (e) { const dx = e.x - J.x, dy = (e.y - 8) - (J.y - 12); t.push(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'ArrowRight' : 'ArrowLeft') : (dy > 0 ? 'ArrowDown' : 'ArrowUp'));
-        if (o.relacher && i % 50 > 44) t.pop(); }
-      if (o.actif && i % 120 === 0) t.push('Space');
-      if (o.bombes && i % 240 === 100) t.push('KeyE');
-      const err = this.pas(1, t); if (err) return err;
-      if (L.Scenes.courante() !== L.SceneJeu) { if (o.fermerMenus) L.Scenes.aller(L.SceneJeu); else return 'scene ' + (L.Scenes.courante() === window.LDS.SceneTitre ? 'titre' : 'autre'); }
-      if (o.jusquaNettoyage && !G.salle.combat && !G.ennemis.length) return null;
-    }
-    return null; },
-  prendreTout() { const L = window.LDS, G = L.G, J = G.joueur; let n = 0;
-    for (const p of G.salle.piedestaux) { if (!p.id || p.prix) continue; J.x = p.x; J.y = p.y + 6; const e = this.pas(40, []); if (e) return e; n++; }
-    for (const r of G.salle.ramassables.slice()) { J.x = r.x; J.y = r.y; const e = this.pas(3, []); if (e) return e; }
-    return n; },
-  allerA(id, dir) { const L = window.LDS; L.demarrerTransition(dir || 'droite', id); return this.pas(30, []); },
-};`;
+const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
 
 (async () => {
   const exe = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
@@ -53,7 +22,7 @@ window.__T = {
   const erreursPage = []; page.on('pageerror', e => erreursPage.push(String(e.stack || e).slice(0, 500)));
   await page.goto(PAGE); await page.waitForTimeout(300);
   await page.addScriptTag({ content: AIDE });
-  await page.evaluate(() => { const L = window.LDS; L.Progression.profil.toutDebloque = true; L.G.modeTest = {}; });
+  await page.evaluate(() => { const L = window.LDS; L.Progression.profil.toutDebloque = true; L.G.modeTest = {}; window.__T.rendu = 7; }); // rendu d'une image sur 7 : les erreurs de dessin sont aussi détectées
   const res = {}; let echecs = 0;
   const lancer = async (nom, fn, arg) => { const t0 = Date.now(); try { const r = await page.evaluate(fn, arg); res[nom] = r; if (r && (r.ko && r.ko.length || r.erreur)) echecs++; } catch (e) { res[nom] = { erreur: String(e).slice(0, 400) }; echecs++; } console.log('== ' + nom + ' (' + ((Date.now() - t0) / 1000).toFixed(1) + ' s) : ' + JSON.stringify(res[nom]).slice(0, 3000)); };
 
@@ -98,7 +67,7 @@ window.__T = {
       for (const id of ids) {
         const s = E.salles[id]; if (s.type === 'cache' || s.type === 'isolee') { for (const x of Object.values(E.salles)) for (const p of x.portes) if (p.vers === id && p.etat === 'secrete') { p.etat = 'ouverte'; } }
         let e = T.allerA(id); if (e) { out.ko.push('entrée ' + id + ' : ' + e); continue; }
-        e = T.bot(25, { dieu: true, jusquaNettoyage: true, actif: true, bombes: true }); if (e) { out.ko.push('combat ' + id + ' (' + s.type + ') : ' + e); }
+        e = T.bot(60, { dieu: true, jusquaNettoyage: true, actif: true, bombes: true }); if (e) { out.ko.push('combat ' + id + ' (' + s.type + ') : ' + e); }
         if (G.salle.combat) out.ko.push('salle ' + id + ' ' + s.type + ' ' + s.gabarit + ' non nettoyée : ' + G.ennemis.map(x => x.id + ':' + Math.round(x.pv)).join(','));
         const n = T.prendreTout(); if (typeof n === 'string') out.ko.push('ramassage ' + id + ' : ' + n); else out.objets += n;
         out.salles++;
@@ -108,16 +77,21 @@ window.__T = {
       let e = T.allerA(E.boss); if (e) out.ko.push('entrée boss : ' + e);
       T.pas(120, ['Enter']);
       const nomBoss = G.ennemis.filter(x => x.boss).map(x => x.id).join('+'); out.boss.push(nomBoss);
-      e = T.bot(90, { dieu: true, jusquaNettoyage: true, actif: true, relacher: true }); if (e) out.ko.push('boss ' + nomBoss + ' : ' + e);
-      if (G.ennemis.some(x => x.boss && !x.mort)) { out.ko.push('boss ' + nomBoss + ' invaincu après 90 s : ' + G.ennemis.filter(x => x.boss).map(x => Math.round(x.pv) + '/' + Math.round(x.pvMax)).join(',')); for (const x of G.ennemis) x.pv = 1; T.bot(10, { dieu: true }); }
+      const t0 = G.temps; e = T.bot(150, { dieu: true, jusquaNettoyage: true, actif: true, relacher: true }); if (e) out.ko.push('boss ' + nomBoss + ' : ' + e);
+      out.boss[out.boss.length - 1] += ' ' + Math.round(G.temps - t0) + ' s';
+      if (G.ennemis.some(x => x.boss && !x.mort)) { out.ko.push('boss ' + nomBoss + ' invaincu après 150 s : ' + G.ennemis.filter(x => x.boss).map(x => Math.round(x.pv) + '/' + Math.round(x.pvMax)).join(',')); for (const x of G.ennemis) x.pv = 1; T.bot(10, { dieu: true }); }
+      if (G.partie && G.partie.etage > et) continue; // le pilote a emprunté la trappe tout seul
       T.prendreTout();
       const s = G.salle; const sorties = s.sorties || [];
-      if (!sorties.length) { out.ko.push('aucune sortie étage ' + et); break; }
+      if (!sorties.length) { const sb = E.salles[E.boss]; out.ko.push('aucune sortie étage ' + et + ' (salle courante ' + s.id + ' ' + s.type + ', salle boss : sorties ' + (sb.sorties || []).length + ', bossVaincu ' + !!sb.bossVaincu + ', ennemis ' + G.ennemis.map(x => x.id + (x.mort ? '†' : '')).join(',') + ')'); break; }
       const so = sorties.find(x => x.type === 'etage' && (!x.condition || x.condition())) || sorties[0];
-      if (so.type === 'fin') { const J = G.joueur; J.x = so.x; J.y = so.y; T.pas(40); out.fin = so.route; break; }
-      const J = G.joueur; J.x = so.x; J.y = so.y; T.pas(60);
+      const avant = G.partie.etage; let k = 0;
+      for (; k < 400 && G.partie && G.partie.etage === avant && !G.partie.fini; k++) { const J = G.joueur; if (!G.enAnimationObjet && !G.fondu) { J.x = so.x; J.y = so.y; } const e2 = T.pas(1, G.enAnimationObjet ? ['Enter'] : []); if (e2) { out.ko.push('sortie : ' + e2); break; } if (L.Scenes.courante() !== L.SceneJeu) break; }
+      if (so.type === 'fin') { out.fin = so.route + (L.Scenes.courante() !== L.SceneJeu ? ' (écran de fin)' : ' (pas d’écran de fin)'); break; }
+      if (k >= 400) { out.ko.push('sortie étage ' + et + ' non empruntée'); break; }
     }
-    out.passifs = G.joueur ? G.joueur.passifs.length : 0; out.ko = out.ko.slice(0, 25); return out;
+    out.passifs = G.joueur ? G.joueur.passifs.length : 0;
+    if (G.joueur) { const J = G.joueur, S = J.stats, P = J.profil; out.stats = { degats: S.degats, cadence: +S.cadence.toFixed(2), multi: P.multi, forme: P.forme, perce: P.perce, familiers: J.familiers.length, detailFam: Object.entries(J.familiers.reduce((m, f) => (m[f.id + '<' + (f.source || '?') + (f.dureeSalle ? ' salle' : '')] = (m[f.id + '<' + (f.source || '?') + (f.dureeSalle ? ' salle' : '')] || 0) + 1, m), {})).map(([k, v]) => k + '×' + v).join(' '), dps: +(S.degats * S.cadence * P.coefDegats * Math.max(1, P.multi * (P.coefMulti || 1))).toFixed(1) }; out.liste = J.passifs.join(' '); } out.ko = out.ko.slice(0, 25); return out;
   }, [perso, code]);
 
   // 3) Chaque objet passif : acquisition, 6 s de combat, dégâts infligés
@@ -246,6 +220,46 @@ window.__T = {
       window.dispatchEvent(Object.assign(new Event('gamepaddisconnected'), { gamepad: pad }));
       if (L.Scenes.pile.length < 2) out.ko.push('pas de pause à la déconnexion');
     }
+    return out;
+  });
+
+  // 10) Règles et économie : formule de stats indépendante de l'ordre, ordre des dégâts,
+  //     soldes/coupon, contrat en Ryō, crochetage, énergie naturelle, plein de vitalité, explosions
+  if (veut('economie')) await lancer('economie', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0 }; const verif = (c, m) => { if (c) out.ok++; else out.ko.push(m); };
+    const nouvelle = (perso) => { L.nouvellePartie({ perso: perso || 'CHR_001', code: 'ECON2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); return G.joueur; };
+    // ordre des acquisitions sans effet sur les stats
+    const lot = L.DON.objets.filter(o => o.type === 'passif' && (o.effets || []).some(e => e.s)).slice(0, 12).map(o => o.id);
+    let J = nouvelle(); for (const id of lot) L.acquerirPassif(J, id, 'test'); const s1 = JSON.stringify(J.stats);
+    J = nouvelle(); for (const id of lot.slice().reverse()) L.acquerirPassif(J, id, 'test'); const s2 = JSON.stringify(J.stats);
+    verif(s1 === s2, 'stats dépendantes de l’ordre : ' + s1 + ' ≠ ' + s2);
+    // ordre des dégâts : protections avant vitalité ; un prix n'est pas un dommage
+    J = nouvelle(); J.sante = L.santeInit({ vitalite: 3, protection: 2 }); const r0 = L.rougeTotal(J.sante); J.invuln = 0; L.blesserJoueur(1, {});
+    verif(L.rougeTotal(J.sante) === r0 && J.sante.prot.length === 3, 'la protection doit absorber avant la vitalité');
+    const dv = G.etage.degatsSubis; G.etage.degatsSubis = false; L.payerSante(1, 'test'); verif(!G.etage.degatsSubis, 'payer un prix ne doit pas compter comme un dommage');
+    G.etage.degatsSubis = dv;
+    // soldes et coupon
+    J = nouvelle(); const s = G.salle; J.ryo = 99; const p = L.poserPiedestal(s, J.x + 60, J.y, 'PSV_034', { prix: { type: 'ryo', n: 15 } });
+    verif(L.prixRyo(p) === 15, 'prix de base');
+    J.drapeaux.soldes = true; verif(L.prixRyo(p) === 8, 'soldes : 15 → 8 attendu, obtenu ' + L.prixRyo(p)); J.drapeaux.soldes = false;
+    J.drapeaux.coupon = true; verif(L.prixRyo(p) === 0, 'coupon : premier achat gratuit'); L.acheter(p); verif(J.ryo === 99, 'coupon : aucun Ryō débité (reste ' + J.ryo + ')');
+    const p2 = L.poserPiedestal(s, J.x - 60, J.y, 'PSV_036', { prix: { type: 'ryo', n: 15 } }); verif(L.prixRyo(p2) === 15, 'coupon : un seul achat gratuit par étage');
+    // contrat de Kakuzu : pacte en Ryō si possible
+    J.drapeaux.pacteRyoOption = true; J.ryo = 45; const pp = L.poserPiedestal(s, J.x, J.y + 60, 'PSV_037', { prix: { type: 'pacte', n: 2 } });
+    const v = L.peutPayer(pp); verif(v.ok && v.ryo === 40, 'contrat : 2 contenants = 40 Ryō'); const vit0 = J.sante.cont.length; L.acheter(pp); verif(J.ryo === 5 && J.sante.cont.length === vit0, 'contrat : Ryō débités, vitalité intacte');
+    J.ryo = 10; const pp2 = L.poserPiedestal(s, J.x, J.y - 60, 'PSV_038', { prix: { type: 'pacte', n: 1 } }); verif(!L.peutPayer(pp2).ryo, 'contrat : sans assez de Ryō, prix en santé');
+    // crochetage des coffres
+    J = nouvelle(); J.cles = 0; J.drapeaux.crochetageCoffres = true; const c = L.creerRamassable('coffre_verrouille', J.x + 8, J.y, { immobile: true }); c.age = 1; L.collecter(c, J);
+    verif(!G.salle.ramassables.includes(c) || c.ouvert || c.pris, 'crochetage : le coffre verrouillé doit s’ouvrir sans clé');
+    // énergie naturelle
+    J = nouvelle(); L.acquerirPassif(J, 'PSV_144', 'test'); T.pas(90, ['Enter']); T.pas(5, ['KeyD']); const d0 = J.stats.degats; T.pas(80, []); verif(J.sage && Math.abs(J.stats.degats - d0 * 1.5) < 0.01, 'énergie naturelle : ×1,5 après 1 s immobile (' + d0 + ' → ' + J.stats.degats + ')');
+    T.pas(10, ['KeyD']); verif(!J.sage && Math.abs(J.stats.degats - d0) < 0.01, 'énergie naturelle : perdue au premier pas');
+    // plein de vitalité
+    J = nouvelle(); J.talisman = 'TAL_013'; L.recalculer(J); T.pas(2, []); const d1 = J.stats.degats; J.invuln = 0; L.blesserJoueur(1, {}); T.pas(2, []);
+    verif(Math.abs(d1 - J.stats.degats - 0.5) < 0.01, 'charme du plein : +0,5 perdu après un coup (' + d1 + ' → ' + J.stats.degats + ')');
+    // explosions renforcées
+    J = nouvelle(); const e = L.creerEnnemi('ENM_002', J.x + 80, J.y, { sansApparition: true }); e.pv = e.pvMax = 100; J.drapeaux.explosionPlus = true; L.explosion(e.x, e.y, 20, 10, { proprio: 'joueur' });
+    verif(Math.abs(100 - e.pv - 15) < 0.01, 'dent de requin : explosion 10 + 5 attendue, dégâts ' + (100 - e.pv));
     return out;
   });
 

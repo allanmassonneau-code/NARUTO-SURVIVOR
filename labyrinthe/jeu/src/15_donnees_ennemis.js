@@ -72,9 +72,9 @@
   E('ENM_071', 'Oiseau d’argile', 'v', 'kamikaze', 12, 2.4, K('oiseau_argile'), { declenche: 1.4, meche: 0.6 }, { vol: true, r: 8, tache: 'argile', desc: 'Plonge et explose (il clignote avant).' });
   E('ENM_072', 'Araignée d’argile', 'n', 'kamikaze', 6, 2.6, K('araignee_argile'), { declenche: 1.1, meche: 0.5 }, { r: 6, tache: 'argile', desc: 'Explose au contact (mèche visible).' });
   E('ENM_073', 'Marionnette humaine', 'l', 'lourd', 44, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true }), { cadence: 2.2, rOnde: 2.2, tele: 0.6, anneau: true }, { r: 12, desc: 'Écrase le sol et projette du sable de fer.' });
-  E('ENM_074', 'Bête invoquée', 'p', 'poursuivant', 26, 2.2, K('bete'), {}, { r: 11, desc: 'Rapide et massive.' });
+  E('ENM_074', 'Bête invoquée', 'p', 'poursuivant', 20, 2.1, K('bete'), {}, { r: 11, desc: 'Rapide et massive.' });
   E('ENM_075', 'Sentinelle de la pluie', 'q', 'tireur_predictif', 22, 1.4, N('ame', { t: '#3a4a5a', T: '#26323e' }), { cadence: 1.8, vProj: 6.5, tele: 0.4 });
-  E('ENM_076', 'Invocateur aux tiges', 'i', 'invocateur', 30, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#e87a2a' } }), { intervalle: 3.4, max: 2, invocation: 'ENM_074', liees: true }, { desc: 'Invoque des bêtes.' });
+  E('ENM_076', 'Invocateur aux tiges', 'i', 'invocateur', 30, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#e87a2a' } }), { intervalle: 5.0, max: 2, invocation: 'ENM_074', liees: true }, { desc: 'Invoque des bêtes.' });
   E('ENM_077', 'Masque élémentaire', 'f', 'tourelle', 26, 0, K('masque'), { motif: 'anneau', cadence: 2.8, vProj: 3.8, tele: 0.45, proj: 'feu' }, { fixe: true, vol: true, r: 10, contact: 0, desc: 'Flotte, émet des anneaux de feu (un espace toujours libre).' });
   E('ENM_078', 'Shinobi de l’Alliance égaré', 'c', 'chargeur', 24, 1.6, N('alliance', { t: '#5e7e3e', T: '#46612c' }, { arme: true }), { vCharge: 10, tele: 0.35, recup: 0.6 });
   E('ENM_079', 'Poseur d’argile', 'm', 'poseur', 20, 1.3, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#f0d060' } }), { piege: 'parchemin', intervalle: 2.8, max: 3 });
