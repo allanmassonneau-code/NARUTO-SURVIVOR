@@ -1,0 +1,1873 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Labyrinthe des Sceaux</title>
+<style>
+  :root { --fond: #07060a; }
+  html, body { margin: 0; height: 100%; background: var(--fond); overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas#ecran { image-rendering: pixelated; image-rendering: crisp-edges; display: block; outline: none; }
+  #aide { position: fixed; bottom: 6px; left: 0; right: 0; text-align: center; color: #7a7088; font: 12px system-ui, sans-serif; pointer-events: none; }
+</style>
+</head>
+<body>
+<canvas id="ecran" width="640" height="360" tabindex="0" aria-label="Naruto — Le Labyrinthe des Sceaux (jeu)"></canvas>
+<noscript><p style="color:#ddd">Ce jeu nécessite JavaScript.</p></noscript>
+<script>
+(function(){'use strict';
+
+// ─── 00_noyau.js ───
+// ═══════════════════════════════════════════════════════════════════════════
+// NARUTO — LE LABYRINTHE DES SCEAUX
+// Noyau : constantes de grille, mathématiques, hasard reproductible (flux séparés).
+// Ce fichier n'utilise pas le DOM : il est aussi chargé par les outils Node.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const VERSION_JEU = '1.0.0';
+const VERSION_DONNEES = 12;          // incrémentée à chaque changement des pools / salles (codes de mission)
+const VERSION_SAUVEGARDE = 3;
+
+// ── Grille de référence (registre §R1) ──────────────────────────────────────
+const ECRAN_L = 640, ECRAN_H = 360;  // résolution interne
+const TUILE = 32;                     // pixels par tuile
+const CEL_L = 13, CEL_H = 7;          // intérieur d'une cellule de salle (tuiles)
+const ORIGINE_X = 80, ORIGINE_Y = 40; // coin haut-gauche du mur d'une salle 1×1 à l'écran
+const DT = 1 / 60;                    // pas fixe de simulation (s)
+
+// ── Petits outils mathématiques ──────────────────────────────────────────────
+const borne = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+const signe = v => (v > 0 ? 1 : v < 0 ? -1 : 0);
+const dist = (ax, ay, bx, by) => Math.hypot(bx - ax, by - ay);
+const dist2 = (ax, ay, bx, by) => { const dx = bx - ax, dy = by - ay; return dx * dx + dy * dy; };
+const angleVers = (ax, ay, bx, by) => Math.atan2(by - ay, bx - ax);
+const approche = (v, cible, pas) => (v < cible ? Math.min(cible, v + pas) : Math.max(cible, v - pas));
+const arrondi = (v, n = 2) => { const f = Math.pow(10, n); return Math.round(v * f) / f; };
+const DIRS = { haut: [0, -1], bas: [0, 1], gauche: [-1, 0], droite: [1, 0] };
+const DIR_OPPOSEE = { haut: 'bas', bas: 'haut', gauche: 'droite', droite: 'gauche' };
+const DIR_LISTE = ['haut', 'droite', 'bas', 'gauche'];
+function dirDepuisVecteur(x, y) { return Math.abs(x) >= Math.abs(y) ? (x >= 0 ? 'droite' : 'gauche') : (y >= 0 ? 'bas' : 'haut'); }
+function normaliser(x, y) { const m = Math.hypot(x, y); return m > 1e-9 ? [x / m, y / m] : [0, 0]; }
+function diffAngle(a, b) { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; }
+function formatNombre(v) { // nombres affichés « à la française »
+  if (Number.isInteger(v)) return String(v);
+  return String(arrondi(v, 2)).replace('.', ',');
+}
+function formatTemps(s) { s = Math.max(0, Math.floor(s)); const m = Math.floor(s / 60), r = s % 60; return m + ':' + String(r).padStart(2, '0'); }
+
+// ── Hasard reproductible ─────────────────────────────────────────────────────
+// sfc32 : générateur 32 bits à état explicite (4 entiers), sérialisable.
+function hacher(chaine) { // cyrb128 → 4 entiers 32 bits
+  let h1 = 1779033703, h2 = 3144134277, h3 = 1013904242, h4 = 2773480762;
+  for (let i = 0; i < chaine.length; i++) {
+    const k = chaine.charCodeAt(i);
+    h1 = h2 ^ Math.imul(h1 ^ k, 597399067); h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+    h3 = h4 ^ Math.imul(h3 ^ k, 951274213); h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+  }
+  h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067); h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+  h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213); h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+  return [(h1 ^ h2 ^ h3 ^ h4) >>> 0, (h2 ^ h1) >>> 0, (h3 ^ h1) >>> 0, (h4 ^ h1) >>> 0];
+}
+class Alea {
+  constructor(graine) { this.s = Array.isArray(graine) ? graine.slice() : hacher(String(graine)); for (let i = 0; i < 12; i++) this.suivant(); }
+  suivant() { // [0,1)
+    let [a, b, c, d] = this.s;
+    a >>>= 0; b >>>= 0; c >>>= 0; d >>>= 0;
+    const t = (a + b | 0) + d | 0;
+    d = d + 1 | 0; a = b ^ b >>> 9; b = c + (c << 3) | 0; c = c << 21 | c >>> 11; c = c + t | 0;
+    this.s = [a, b, c, d];
+    return (t >>> 0) / 4294967296;
+  }
+  entier(n) { return Math.floor(this.suivant() * n); }            // [0, n)
+  entre(a, b) { return a + this.suivant() * (b - a); }
+  entierEntre(a, b) { return a + this.entier(b - a + 1); }         // [a, b]
+  chance(p) { return this.suivant() < p; }
+  choix(t) { return t.length ? t[this.entier(t.length)] : undefined; }
+  melanger(t) { for (let i = t.length - 1; i > 0; i--) { const j = this.entier(i + 1); [t[i], t[j]] = [t[j], t[i]]; } return t; }
+  // Sélection pondérée : poids nuls ou négatifs exclus ; renvoie undefined si la masse est vide.
+  pondere(liste, poids) {
+    let total = 0; const w = liste.map(x => { const p = Math.max(0, poids(x) || 0); total += p; return p; });
+    if (total <= 0) return undefined;
+    let r = this.suivant() * total;
+    for (let i = 0; i < liste.length; i++) { r -= w[i]; if (r < 0 && w[i] > 0) return liste[i]; }
+    for (let i = liste.length - 1; i >= 0; i--) if (w[i] > 0) return liste[i];
+    return undefined;
+  }
+  etat() { return this.s.slice(); }
+}
+
+// Codes de mission : 8 caractères sans I, O, 0, 1 (confusions visuelles).
+const ALPHABET_CODE = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function codeAleatoire(sourceHasard) {
+  let c = ''; for (let i = 0; i < 8; i++) c += ALPHABET_CODE[Math.floor(sourceHasard() * 32)];
+  return c;
+}
+function codeValide(c) { return typeof c === 'string' && c.length === 8 && [...c].every(ch => ALPHABET_CODE.includes(ch)); }
+function codeAffiche(c) { return c.slice(0, 4) + ' ' + c.slice(4); }
+// Flux séparés : topologie, butin, récompenses, ennemis, combat, cosmétique.
+// Chaque flux d'étage dérive de (code, version des données, étage, nom du flux).
+function fluxEtage(code, etage, nom) { return new Alea(code + '|' + VERSION_DONNEES + '|' + etage + '|' + nom); }
+
+// ── Registres de données (remplis par les fichiers 1x_donnees_*.js) ─────────
+const DON = {
+  personnages: [], objets: [], talismans: [], consommables: [], pilules: [],
+  ennemis: [], boss: [], salles: [], themes: [], etages: [], routes: [],
+  transformations: [], synergies: [], objectifs: [], defis: [], secrets: [],
+  champions: [], pools: {}, prix: {},
+};
+const INDEX = {}; // INDEX[id] → définition (rempli par indexerDonnees)
+function indexerDonnees() {
+  for (const k of Object.keys(INDEX)) delete INDEX[k];
+  const listes = ['personnages', 'objets', 'talismans', 'consommables', 'pilules', 'ennemis', 'boss', 'salles',
+    'themes', 'etages', 'routes', 'transformations', 'synergies', 'objectifs', 'defis', 'secrets', 'champions'];
+  for (const l of listes) for (const d of DON[l]) {
+    if (!d.id) throw new Error('Entrée sans identifiant dans ' + l);
+    if (INDEX[d.id]) throw new Error('Identifiant en double : ' + d.id);
+    INDEX[d.id] = d;
+  }
+}
+function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inconnu : ' + id); return d; }
+
+
+// ─── 20_police.js ───
+// ═══════════════════════════════════════════════════════════════════════════
+// Police bitmap originale (5×7, bas de casse 5 lignes, accents français et macrons).
+// Chaque glyphe : [ligne de départ, [lignes]] ; lignes 0-1 = accents des capitales,
+// 2-8 = hauteur de capitale (ligne de base après 8), 9-10 = jambages.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const GLYPHES = {
+  'A': [2, ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#']],
+  'B': [2, ['####.', '#...#', '#...#', '####.', '#...#', '#...#', '####.']],
+  'C': [2, ['.###.', '#...#', '#....', '#....', '#....', '#...#', '.###.']],
+  'D': [2, ['####.', '#...#', '#...#', '#...#', '#...#', '#...#', '####.']],
+  'E': [2, ['#####', '#....', '#....', '####.', '#....', '#....', '#####']],
+  'F': [2, ['#####', '#....', '#....', '####.', '#....', '#....', '#....']],
+  'G': [2, ['.###.', '#...#', '#....', '#.###', '#...#', '#...#', '.####']],
+  'H': [2, ['#...#', '#...#', '#...#', '#####', '#...#', '#...#', '#...#']],
+  'I': [2, ['###', '.#.', '.#.', '.#.', '.#.', '.#.', '###']],
+  'J': [2, ['..###', '...#.', '...#.', '...#.', '#..#.', '#..#.', '.##..']],
+  'K': [2, ['#...#', '#..#.', '#.#..', '##...', '#.#..', '#..#.', '#...#']],
+  'L': [2, ['#....', '#....', '#....', '#....', '#....', '#....', '#####']],
+  'M': [2, ['#...#', '##.##', '#.#.#', '#.#.#', '#...#', '#...#', '#...#']],
+  'N': [2, ['#...#', '##..#', '#.#.#', '#..##', '#...#', '#...#', '#...#']],
+  'O': [2, ['.###.', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.']],
+  'P': [2, ['####.', '#...#', '#...#', '####.', '#....', '#....', '#....']],
+  'Q': [2, ['.###.', '#...#', '#...#', '#...#', '#.#.#', '#..#.', '.##.#']],
+  'R': [2, ['####.', '#...#', '#...#', '####.', '#.#..', '#..#.', '#...#']],
+  'S': [2, ['.####', '#....', '#....', '.###.', '....#', '....#', '####.']],
+  'T': [2, ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..']],
+  'U': [2, ['#...#', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.']],
+  'V': [2, ['#...#', '#...#', '#...#', '#...#', '#...#', '.#.#.', '..#..']],
+  'W': [2, ['#...#', '#...#', '#...#', '#.#.#', '#.#.#', '#.#.#', '.#.#.']],
+  'X': [2, ['#...#', '#...#', '.#.#.', '..#..', '.#.#.', '#...#', '#...#']],
+  'Y': [2, ['#...#', '#...#', '.#.#.', '..#..', '..#..', '..#..', '..#..']],
+  'Z': [2, ['#####', '....#', '...#.', '..#..', '.#...', '#....', '#####']],
+  'a': [4, ['.###.', '....#', '.####', '#...#', '.####']],
+  'b': [2, ['#....', '#....', '####.', '#...#', '#...#', '#...#', '####.']],
+  'c': [4, ['.###.', '#....', '#....', '#....', '.###.']],
+  'd': [2, ['....#', '....#', '.####', '#...#', '#...#', '#...#', '.####']],
+  'e': [4, ['.###.', '#...#', '#####', '#....', '.###.']],
+  'f': [2, ['..##', '.#..', '####', '.#..', '.#..', '.#..', '.#..']],
+  'g': [4, ['.####', '#...#', '#...#', '.####', '....#', '....#', '.###.']],
+  'h': [2, ['#....', '#....', '####.', '#...#', '#...#', '#...#', '#...#']],
+  'i': [2, ['#', '.', '#', '#', '#', '#', '#']],
+  'ı': [4, ['.#.', '.#.', '.#.', '.#.', '.#.']],
+  'j': [2, ['..#', '...', '..#', '..#', '..#', '..#', '..#', '#.#', '.#.']],
+  'k': [2, ['#...', '#...', '#..#', '#.#.', '##..', '#.#.', '#..#']],
+  'l': [2, ['#.', '#.', '#.', '#.', '#.', '#.', '.#']],
+  'm': [4, ['##.#.', '#.#.#', '#.#.#', '#.#.#', '#.#.#']],
+  'n': [4, ['####.', '#...#', '#...#', '#...#', '#...#']],
+  'o': [4, ['.###.', '#...#', '#...#', '#...#', '.###.']],
+  'p': [4, ['####.', '#...#', '#...#', '#...#', '####.', '#....', '#....']],
+  'q': [4, ['.####', '#...#', '#...#', '#...#', '.####', '....#', '....#']],
+  'r': [4, ['#.##', '##..', '#...', '#...', '#...']],
+  's': [4, ['.####', '#....', '.###.', '....#', '####.']],
+  't': [2, ['.#..', '.#..', '####', '.#..', '.#..', '.#..', '..##']],
+  'u': [4, ['#...#', '#...#', '#...#', '#...#', '.####']],
+  'v': [4, ['#...#', '#...#', '#...#', '.#.#.', '..#..']],
+  'w': [4, ['#...#', '#.#.#', '#.#.#', '#.#.#', '.#.#.']],
+  'x': [4, ['#...#', '.#.#.', '..#..', '.#.#.', '#...#']],
+  'y': [4, ['#...#', '#...#', '#...#', '.####', '....#', '....#', '.###.']],
+  'z': [4, ['#####', '...#.', '..#..', '.#...', '#####']],
+  '0': [2, ['.###.', '#...#', '#..##', '#.#.#', '##..#', '#...#', '.###.']],
+  '1': [2, ['.#.', '##.', '.#.', '.#.', '.#.', '.#.', '###']],
+  '2': [2, ['.###.', '#...#', '....#', '...#.', '..#..', '.#...', '#####']],
+  '3': [2, ['####.', '....#', '....#', '.###.', '....#', '....#', '####.']],
+  '4': [2, ['...#.', '..##.', '.#.#.', '#..#.', '#####', '...#.', '...#.']],
+  '5': [2, ['#####', '#....', '####.', '....#', '....#', '#...#', '.###.']],
+  '6': [2, ['.###.', '#....', '#....', '####.', '#...#', '#...#', '.###.']],
+  '7': [2, ['#####', '....#', '...#.', '..#..', '..#..', '..#..', '..#..']],
+  '8': [2, ['.###.', '#...#', '#...#', '.###.', '#...#', '#...#', '.###.']],
+  '9': [2, ['.###.', '#...#', '#...#', '.####', '....#', '....#', '.###.']],
+  '.': [8, ['#']],
+  ',': [8, ['.#', '#.']],
+  ':': [5, ['#', '.', '.', '#']],
+  ';': [5, ['.#', '..', '..', '.#', '#.']],
+  '!': [2, ['#', '#', '#', '#', '#', '.', '#']],
+  '?': [2, ['.###.', '#...#', '....#', '...#.', '..#..', '.....', '..#..']],
+  "'": [2, ['#', '#']],
+  '"': [2, ['#.#', '#.#']],
+  '-': [5, ['###']],
+  '+': [4, ['..#..', '..#..', '#####', '..#..', '..#..']],
+  '×': [4, ['#...#', '.#.#.', '..#..', '.#.#.', '#...#']],
+  '%': [2, ['##..#', '##.#.', '...#.', '..#..', '.#...', '.#.##', '#..##']],
+  '/': [2, ['....#', '...#.', '...#.', '..#..', '.#...', '.#...', '#....']],
+  '(': [2, ['.#', '#.', '#.', '#.', '#.', '#.', '.#']],
+  ')': [2, ['#.', '.#', '.#', '.#', '.#', '.#', '#.']],
+  '[': [2, ['##', '#.', '#.', '#.', '#.', '#.', '##']],
+  ']': [2, ['##', '.#', '.#', '.#', '.#', '.#', '##']],
+  '<': [2, ['...#', '..#.', '.#..', '#...', '.#..', '..#.', '...#']],
+  '>': [2, ['#...', '.#..', '..#.', '...#', '..#.', '.#..', '#...']],
+  '=': [4, ['####', '....', '####']],
+  '_': [9, ['#####']],
+  '#': [2, ['.#.#.', '#####', '.#.#.', '.#.#.', '#####', '.#.#.']],
+  '*': [3, ['#.#.#', '.###.', '#####', '.###.', '#.#.#']],
+  '°': [2, ['.#.', '#.#', '.#.']],
+  '«': [4, ['..#.#', '.#.#.', '#.#..', '.#.#.', '..#.#']],
+  '»': [4, ['#.#..', '.#.#.', '..#.#', '.#.#.', '#.#..']],
+  '→': [4, ['..#..', '...#.', '#####', '...#.', '..#..']],
+  '←': [4, ['..#..', '.#...', '#####', '.#...', '..#..']],
+  '↑': [3, ['..#..', '.###.', '#.#.#', '..#..', '..#..', '..#..']],
+  '↓': [3, ['..#..', '..#..', '..#..', '#.#.#', '.###.', '..#..']],
+  '♥': [3, ['.#.#.', '#####', '#####', '.###.', '..#..']],
+  '·': [5, ['#']],
+  '|': [2, ['#', '#', '#', '#', '#', '#', '#']],
+  '&': [2, ['.##..', '#..#.', '.##..', '.#...', '#.#.#', '#..#.', '.##.#']],
+  '@': [2, ['.###.', '#...#', '#.###', '#.#.#', '#.###', '#....', '.###.']],
+  '$': [2, ['..#..', '.####', '#.#..', '.###.', '..#.#', '####.', '..#..']],
+  '~': [4, ['.#..#', '#.##.']],
+  '^': [2, ['..#..', '.#.#.']],
+};
+// Accents : motif de 2 lignes (5 de large), posé au-dessus de la base.
+const ACCENTS = {
+  aigu: ['...#.', '..#..'], grave: ['.#...', '..#..'], circ: ['..#..', '.#.#.'],
+  trema: ['.....', '.#.#.'], macron: ['.....', '.###.'],
+};
+(function composerAccents() {
+  const tbl = [
+    ['é', 'e', 'aigu'], ['è', 'e', 'grave'], ['ê', 'e', 'circ'], ['ë', 'e', 'trema'], ['ē', 'e', 'macron'],
+    ['à', 'a', 'grave'], ['â', 'a', 'circ'], ['ä', 'a', 'trema'], ['ā', 'a', 'macron'], ['á', 'a', 'aigu'],
+    ['î', 'ı', 'circ'], ['ï', 'ı', 'trema'], ['ī', 'ı', 'macron'], ['í', 'ı', 'aigu'],
+    ['ô', 'o', 'circ'], ['ö', 'o', 'trema'], ['ō', 'o', 'macron'], ['ó', 'o', 'aigu'],
+    ['ù', 'u', 'grave'], ['û', 'u', 'circ'], ['ü', 'u', 'trema'], ['ū', 'u', 'macron'], ['ú', 'u', 'aigu'],
+    ['É', 'E', 'aigu'], ['È', 'E', 'grave'], ['Ê', 'E', 'circ'], ['À', 'A', 'grave'], ['Â', 'A', 'circ'],
+    ['Ô', 'O', 'circ'], ['Ō', 'O', 'macron'], ['Ū', 'U', 'macron'], ['Û', 'U', 'circ'], ['Î', 'I', 'circ'], ['Ï', 'I', 'trema'],
+  ];
+  for (const [ch, base, acc] of tbl) {
+    const [dep, lignes] = GLYPHES[base];
+    const l = lignes[0].length, motif = ACCENTS[acc].map(r => {
+      // recentrer le motif de 5 colonnes sur la largeur de la base
+      if (l === 5) return r;
+      const dec = Math.floor((5 - l) / 2); return r.slice(dec, dec + l);
+    });
+    const hautDep = dep - 2; // accent posé juste au-dessus
+    const vide = '.'.repeat(l);
+    const toutes = [...motif];
+    for (let i = hautDep + 2; i < dep; i++) toutes.push(vide);
+    GLYPHES[ch] = [hautDep, [...toutes, ...lignes]];
+  }
+  const [dc, lc] = GLYPHES['c']; GLYPHES['ç'] = [dc, [...lc, '..#..', '.#...']];
+  const [dC, lC] = GLYPHES['C']; GLYPHES['Ç'] = [dC, [...lC, '..#..', '.#...']];
+})();
+const SUBSTITUTIONS = { 'œ': 'oe', 'Œ': 'OE', 'æ': 'ae', '’': "'", '‘': "'", '“': '"', '”': '"', '–': '-', '—': '-', '…': '...', ' ': ' ', ' ': ' ' };
+const ESPACE_L = 3, INTERLETTRE = 1, HAUTEUR_LIGNE = 11;
+
+const Police = {
+  atlas: null, cases: {}, teintes: new Map(),
+  preparer() {
+    // atlas blanc de tous les glyphes
+    const chars = Object.keys(GLYPHES);
+    const cw = 7, ch = 12, cols = 32, rows = Math.ceil(chars.length / cols);
+    const c = document.createElement('canvas'); c.width = cols * cw; c.height = rows * ch;
+    const g = c.getContext('2d'); g.fillStyle = '#fff';
+    chars.forEach((k, i) => {
+      const [dep, lignes] = GLYPHES[k]; const ox = (i % cols) * cw, oy = Math.floor(i / cols) * ch;
+      let larg = 0;
+      lignes.forEach((r, y) => { larg = Math.max(larg, r.length); for (let x = 0; x < r.length; x++) if (r[x] === '#') g.fillRect(ox + x, oy + dep + y, 1, 1); });
+      this.cases[k] = { x: ox, y: oy, l: larg };
+    });
+    this.atlas = c;
+  },
+  teinte(couleur) {
+    let t = this.teintes.get(couleur); if (t) return t;
+    t = document.createElement('canvas'); t.width = this.atlas.width; t.height = this.atlas.height;
+    const g = t.getContext('2d'); g.drawImage(this.atlas, 0, 0); g.globalCompositeOperation = 'source-in'; g.fillStyle = couleur; g.fillRect(0, 0, t.width, t.height);
+    this.teintes.set(couleur, t); return t;
+  },
+  normaliser(s) { let o = ''; for (const ch of String(s)) o += SUBSTITUTIONS[ch] !== undefined ? SUBSTITUTIONS[ch] : ch; return o; },
+  largeur(s) {
+    s = this.normaliser(s); let l = 0;
+    for (const ch of s) { if (ch === ' ') { l += ESPACE_L + INTERLETTRE; continue; } const c = this.cases[ch] || this.cases['?']; l += c.l + INTERLETTRE; }
+    return Math.max(0, l - INTERLETTRE);
+  },
+  // Découpe en lignes ne dépassant pas largeurMax (pixels à l'échelle 1).
+  couper(s, largeurMax) {
+    const lignes = [];
+    for (const para of String(s).split('\n')) {
+      let cur = '';
+      for (const mot of para.split(' ')) {
+        const essai = cur ? cur + ' ' + mot : mot;
+        if (this.largeur(essai) <= largeurMax || !cur) cur = essai; else { lignes.push(cur); cur = mot; }
+      }
+      lignes.push(cur);
+    }
+    return lignes;
+  },
+  // options : { e: échelle entière, a: 'g'|'c'|'d', ombre: couleur|null, contour: couleur|null }
+  ecrire(ctx, s, x, y, couleur = '#f4ecd8', o = {}) {
+    if (!this.atlas) this.preparer();
+    s = this.normaliser(s); const e = o.e || 1;
+    const l = this.largeur(s) * e;
+    let px = Math.round(o.a === 'c' ? x - l / 2 : o.a === 'd' ? x - l : x); const py = Math.round(y);
+    if (o.contour) { for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, 1], [-1, 1], [1, -1]]) this._brut(ctx, s, px + dx * e, py + dy * e, o.contour, e); }
+    else if (o.ombre !== null) this._brut(ctx, s, px + e, py + e, o.ombre || '#14101c', e);
+    this._brut(ctx, s, px, py, couleur, e);
+    return l;
+  },
+  _brut(ctx, s, x, y, couleur, e) {
+    const at = this.teinte(couleur);
+    for (const ch of s) {
+      if (ch === ' ') { x += (ESPACE_L + INTERLETTRE) * e; continue; }
+      const c = this.cases[ch] || this.cases['?'];
+      ctx.drawImage(at, c.x, c.y, c.l, 12, x, y - 2 * e, c.l * e, 12 * e);
+      x += (c.l + INTERLETTRE) * e;
+    }
+  },
+  // Paragraphe coupé ; renvoie la hauteur utilisée.
+  paragraphe(ctx, s, x, y, largeurMax, couleur, o = {}) {
+    const e = o.e || 1; const lignes = this.couper(s, largeurMax / e);
+    lignes.forEach((ln, i) => this.ecrire(ctx, ln, x, y + i * (o.interligne || HAUTEUR_LIGNE) * e, couleur, o));
+    return lignes.length * (o.interligne || HAUTEUR_LIGNE) * e;
+  },
+};
+
+// ─── 21_entrees.js ───
+// ═══════════════════════════════════════════════════════════════════════════
+// Entrées : actions logiques, manette (disposition « standard » du navigateur),
+// clavier de secours, zones mortes radiales, visée cardinale avec hystérésis,
+// répétition des menus, consommation des entrées au changement de contexte.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Boutons de la disposition standard (positions, pas de lettres de fabricant).
+const BTN = { BAS: 0, DROITE: 1, GAUCHE: 2, HAUT: 3, LB: 4, RB: 5, LT: 6, RT: 7, VUE: 8, MENU: 9, L3: 10, R3: 11, CR_HAUT: 12, CR_BAS: 13, CR_GAUCHE: 14, CR_DROITE: 15 };
+
+// Actions logiques et liaisons par défaut (registre §R5).
+const ACTIONS_JEU = ['actif', 'explosif', 'poche', 'interagir', 'retour', 'description', 'carte', 'pause', 'echanger', 'deposer'];
+const LIAISONS_DEFAUT = {
+  manette: {
+    actif: [BTN.LT], explosif: [BTN.RB], poche: [BTN.RT], interagir: [BTN.BAS], retour: [BTN.DROITE],
+    description: [BTN.HAUT], carte: [BTN.VUE], pause: [BTN.MENU], echanger: [BTN.LB], deposer: [BTN.GAUCHE],
+  },
+  clavier: {
+    actif: ['Space'], explosif: ['KeyE'], poche: ['KeyQ'], interagir: ['Enter', 'KeyF'], retour: ['Backspace'],
+    description: ['KeyR'], carte: ['Tab'], pause: ['Escape', 'KeyP'], echanger: ['ShiftLeft', 'ShiftRight'], deposer: ['ControlLeft', 'ControlRight'],
+    haut: ['KeyW'], bas: ['KeyS'], gauche: ['KeyA'], droite: ['KeyD'],
+    tirHaut: ['ArrowUp'], tirBas: ['ArrowDown'], tirGauche: ['ArrowLeft'], tirDroite: ['ArrowRight'],
+  },
+};
+const NOMS_ACTIONS = {
+  actif: 'Technique scellée (actif)', explosif: 'Poser un parchemin explosif', poche: 'Utiliser la poche',
+  interagir: 'Interagir / confirmer', retour: 'Retour / annuler', description: 'Description d’un objet proche',
+  carte: 'Carte étendue', pause: 'Pause', echanger: 'Échanger les poches', deposer: 'Déposer (maintenir)',
+  haut: 'Déplacement haut', bas: 'Déplacement bas', gauche: 'Déplacement gauche', droite: 'Déplacement droite',
+  tirHaut: 'Tir haut', tirBas: 'Tir bas', tirGauche: 'Tir gauche', tirDroite: 'Tir droite',
+};
+const DUREE_DEPOT = 0.8; // maintien confirmé pour déposer talisman / poche
+
+const Entrees = {
+  touches: new Set(), touchesAvant: new Set(),
+  manetteIndex: -1, manetteId: '', glyphes: 'clavier', dernierPeripherique: 'clavier',
+  boutons: [], boutonsAvant: [], axes: [0, 0, 0, 0],
+  bloque: {},              // action → vrai tant qu'elle n'a pas été relâchée après consommation
+  maintien: {},            // action → secondes de maintien
+  deplacement: { x: 0, y: 0 },
+  visee: { dir: null, x: 0, y: 0, source: null }, // direction cardinale de tir courante
+  viseeLibre: { x: 0, y: 0 }, // vecteur analogique brut (objets à visée libre)
+  nav: { dx: 0, dy: 0 }, navMaintien: { t: 0, dir: '' },
+  ordreFleches: [],        // ordre d'appui des flèches de tir au clavier
+  deconnexion: false,
+  vibrationsDernier: {},
+  reglages: null,
+
+  init(reglages) {
+    this.reglages = reglages;
+    addEventListener('keydown', e => {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Tab', 'Backspace'].includes(e.code)) e.preventDefault();
+      if (!this.touches.has(e.code)) {
+        this.touches.add(e.code); this.dernierPeripherique = 'clavier'; this.glyphes = 'clavier';
+        if (e.code.startsWith('Arrow')) { this.ordreFleches = this.ordreFleches.filter(c => c !== e.code); this.ordreFleches.push(e.code); }
+        if (this.captureTouche) { const f = this.captureTouche; this.captureTouche = null; f(e.code); }
+      }
+    });
+    addEventListener('keyup', e => { this.touches.delete(e.code); this.ordreFleches = this.ordreFleches.filter(c => c !== e.code); });
+    addEventListener('blur', () => { this.touches.clear(); this.ordreFleches = []; if (this.surPerteFocus) this.surPerteFocus(); });
+    addEventListener('gamepaddisconnected', e => {
+      if (e.gamepad.index === this.manetteIndex) { this.deconnexion = true; this.manetteIndex = -1; if (this.surDeconnexion) this.surDeconnexion(); }
+    });
+    addEventListener('gamepadconnected', e => { if (this.manetteIndex < 0) this.choisirManette(e.gamepad); });
+    // Noms réels des touches (AZERTY → Z/Q/S/D affichés)
+    this.nomsTouches = {};
+    try { if (navigator.keyboard && navigator.keyboard.getLayoutMap) navigator.keyboard.getLayoutMap().then(m => { m.forEach((v, k) => { this.nomsTouches[k] = v.toUpperCase(); }); }).catch(() => {}); } catch (e) { /* facultatif */ }
+  },
+  choisirManette(gp) {
+    this.manetteIndex = gp.index; this.manetteId = gp.id || ''; this.deconnexion = false;
+    const id = this.manetteId.toLowerCase();
+    this.typeManette = /054c|playstation|dualsense|dualshock|wireless controller/.test(id) ? 'playstation'
+      : /057e|nintendo|pro controller|joy-con/.test(id) ? 'nintendo'
+      : /xbox|xinput|045e/.test(id) ? 'xbox' : 'generique';
+  },
+  lireManettes() {
+    let pads = [];
+    try { pads = navigator.getGamepads ? Array.from(navigator.getGamepads()) : []; } catch (e) { pads = []; }
+    // Plusieurs manettes : la dernière qui a produit une entrée devient active (solo).
+    for (const gp of pads) {
+      if (!gp || !gp.connected) continue;
+      const actif = gp.buttons.some((b, i) => (b.pressed || b.value > 0.5) && i < 17) || gp.axes.some(a => Math.abs(a) > 0.6);
+      if (actif && gp.index !== this.manetteIndex) this.choisirManette(gp);
+    }
+    const gp = this.manetteIndex >= 0 ? pads.find(p => p && p.index === this.manetteIndex) : null;
+    this.boutonsAvant = this.boutons;
+    if (gp) {
+      this.boutons = gp.buttons.map((b, i) => (i === BTN.LT || i === BTN.RT) ? b.value > 0.35 || b.pressed : b.pressed);
+      this.axes = [gp.axes[0] || 0, gp.axes[1] || 0, gp.axes[2] || 0, gp.axes[3] || 0];
+      if (this.boutons.some(Boolean) || this.axes.some(a => Math.abs(a) > 0.5)) { this.dernierPeripherique = 'manette'; this.glyphes = this.typeManette; }
+      this.pad = gp;
+    } else { this.boutons = []; this.axes = [0, 0, 0, 0]; this.pad = null; }
+  },
+  bouton(i) { return !!this.boutons[i]; },
+  boutonAvant(i) { return !!this.boutonsAvant[i]; },
+  liaisonsManette(a) { return (this.reglages && this.reglages.liaisons.manette[a]) || LIAISONS_DEFAUT.manette[a] || []; },
+  liaisonsClavier(a) { return (this.reglages && this.reglages.liaisons.clavier[a]) || LIAISONS_DEFAUT.clavier[a] || []; },
+  brutEnfonce(a) {
+    for (const b of this.liaisonsManette(a)) if (this.bouton(b)) return true;
+    for (const k of this.liaisonsClavier(a)) if (this.touches.has(k)) return true;
+    return false;
+  },
+  brutAvant(a) {
+    for (const b of this.liaisonsManette(a)) if (this.boutonAvant(b)) return true;
+    for (const k of this.liaisonsClavier(a)) if (this.touchesAvant.has(k)) return true;
+    return false;
+  },
+  // État d'une action de jeu (en tenant compte de la consommation).
+  enfonce(a) { return this.brutEnfonce(a) && !this.bloque[a]; },
+  vientEnfonce(a) { return this.brutEnfonce(a) && !this.brutAvant(a) && !this.bloque[a]; },
+  vientRelache(a) { return !this.brutEnfonce(a) && this.brutAvant(a); },
+  // Consomme toutes les entrées maintenues : elles devront être relâchées avant d'agir à nouveau.
+  consommer() {
+    for (const a of [...ACTIONS_JEU, 'tir', 'nav']) this.bloque[a] = true;
+    this.maintien = {};
+  },
+
+  // ── Traitement des sticks ──
+  traiterStick(x, y, zm, courbe, ext = 0.96) {
+    const m = Math.hypot(x, y);
+    if (m < zm) return { x: 0, y: 0, m: 0 };
+    let n = borne((m - zm) / (ext - zm), 0, 1); n = Math.pow(n, courbe);
+    return { x: x / m * n, y: y / m * n, m: n };
+  },
+  // Quantification cardinale avec hystérésis (registre §R6).
+  quantifier(x, y) {
+    const R = this.reglages || {};
+    const m = Math.hypot(x, y), actif = R.seuilVisee || 0.5, repos = R.seuilRepos || 0.35;
+    const cur = this.visee.source === 'stick' ? this.visee.dir : null;
+    if (!cur) { if (m < actif) return null; }
+    else if (m < repos) return null;
+    const ax = Math.abs(x), ay = Math.abs(y);
+    const k = Math.tan((45 + (R.hysteresisAngle || 12)) * Math.PI / 180); // ≈1,54 pour 12°
+    if (cur) {
+      const horizontal = cur === 'gauche' || cur === 'droite';
+      if (horizontal && ay > ax * k) return y > 0 ? 'bas' : 'haut';
+      if (!horizontal && ax > ay * k) return x > 0 ? 'droite' : 'gauche';
+      if (horizontal) return x > 0 ? 'droite' : x < 0 ? 'gauche' : cur;
+      return y > 0 ? 'bas' : y < 0 ? 'haut' : cur;
+    }
+    if (ax >= ay) return x >= 0 ? 'droite' : 'gauche'; // égalité exacte : axe horizontal
+    return y > 0 ? 'bas' : 'haut';
+  },
+
+  // Appelé une fois par pas de simulation (60 Hz).
+  maj(dt) {
+    this.lireManettes();
+    const R = this.reglages || {};
+    // Levée des blocages : une action consommée redevient utilisable après relâchement.
+    for (const a of ACTIONS_JEU) if (this.bloque[a] && !this.brutEnfonce(a)) this.bloque[a] = false;
+    // Maintiens
+    for (const a of ACTIONS_JEU) this.maintien[a] = this.enfonce(a) ? (this.maintien[a] || 0) + dt : 0;
+
+    // Déplacement : stick gauche + clavier
+    const sg = this.traiterStick(this.axes[0], this.axes[1], R.zoneMorteG ?? 0.18, R.courbeG ?? 1.0);
+    let kx = 0, ky = 0;
+    const kc = a => this.liaisonsClavier(a).some(k => this.touches.has(k));
+    if (kc('gauche')) kx -= 1; if (kc('droite')) kx += 1; if (kc('haut')) ky -= 1; if (kc('bas')) ky += 1;
+    let mx = sg.x + kx, my = sg.y + ky; const mm = Math.hypot(mx, my); if (mm > 1) { mx /= mm; my /= mm; } // diagonales normalisées
+    this.deplacement.x = mx; this.deplacement.y = my;
+
+    // Visée : stick droit (profil stick), croix directionnelle (profil croix), flèches clavier
+    const profil = R.profilTir || 'stick+croix';
+    const sd = this.traiterStick(this.axes[2], this.axes[3], R.zoneMorteD ?? 0.12, 1.0);
+    this.viseeLibre.x = sd.x; this.viseeLibre.y = sd.y;
+    let dir = null, source = null;
+    if (profil.includes('croix')) {
+      const cr = [[BTN.CR_HAUT, 'haut'], [BTN.CR_BAS, 'bas'], [BTN.CR_GAUCHE, 'gauche'], [BTN.CR_DROITE, 'droite']];
+      // la dernière direction enfoncée de la croix garde la priorité
+      for (const [b, d] of cr) if (this.bouton(b) && !this.boutonAvant(b)) this.croixDerniere = d;
+      const tenues = cr.filter(([b]) => this.bouton(b)).map(([, d]) => d);
+      if (tenues.length) { dir = tenues.includes(this.croixDerniere) ? this.croixDerniere : tenues[0]; source = 'croix'; }
+    }
+    if (!dir && profil.includes('stick')) {
+      const q = this.quantifier(this.axes[2], this.axes[3]);
+      if (q) { dir = q; source = 'stick'; }
+    }
+    if (!dir && this.ordreFleches.length) {
+      const map = { ArrowUp: 'haut', ArrowDown: 'bas', ArrowLeft: 'gauche', ArrowRight: 'droite' };
+      // liaisons clavier personnalisées pour le tir
+      for (let i = this.ordreFleches.length - 1; i >= 0 && !dir; i--) { const c = this.ordreFleches[i]; if (map[c]) { dir = map[c]; source = 'clavier'; } }
+    }
+    if (!dir) {
+      for (const [a, d] of [['tirHaut', 'haut'], ['tirBas', 'bas'], ['tirGauche', 'gauche'], ['tirDroite', 'droite']]) {
+        if (this.liaisonsClavier(a).some(k => this.touches.has(k) && !k.startsWith('Arrow'))) { dir = d; source = 'clavier'; }
+      }
+    }
+    // Le tir consommé (changement de contexte) exige un retour au repos.
+    if (this.bloque.tir) { if (!dir) this.bloque.tir = false; dir = null; }
+    this.visee.dir = dir; this.visee.source = source;
+    if (dir) { this.visee.x = DIRS[dir][0]; this.visee.y = DIRS[dir][1]; }
+
+    // Navigation des menus avec répétition contrôlée
+    let nx = 0, ny = 0;
+    const s = this.axes, seuil = 0.55;
+    if (s[0] < -seuil || this.bouton(BTN.CR_GAUCHE) || this.touches.has('ArrowLeft') || kc('gauche')) nx = -1;
+    if (s[0] > seuil || this.bouton(BTN.CR_DROITE) || this.touches.has('ArrowRight') || kc('droite')) nx = 1;
+    if (s[1] < -seuil || this.bouton(BTN.CR_HAUT) || this.touches.has('ArrowUp') || kc('haut')) ny = -1;
+    if (s[1] > seuil || this.bouton(BTN.CR_BAS) || this.touches.has('ArrowDown') || kc('bas')) ny = 1;
+    if (Math.abs(nx) && Math.abs(ny)) { if (Math.abs(s[0]) >= Math.abs(s[1])) ny = 0; else nx = 0; }
+    const cle = nx + ',' + ny;
+    this.nav.dx = 0; this.nav.dy = 0;
+    if (this.bloque.nav) { if (!nx && !ny) this.bloque.nav = false; }
+    else if (nx || ny) {
+      if (this.navMaintien.dir !== cle) { this.navMaintien = { t: 0, dir: cle }; this.nav.dx = nx; this.nav.dy = ny; }
+      else {
+        const t0 = this.navMaintien.t; this.navMaintien.t += dt;
+        const delai = 0.38, rep = 0.085;
+        if (t0 < delai && this.navMaintien.t >= delai) { this.nav.dx = nx; this.nav.dy = ny; }
+        else if (t0 >= delai && Math.floor((t0 - delai) / rep) !== Math.floor((this.navMaintien.t - delai) / rep)) { this.nav.dx = nx; this.nav.dy = ny; }
+      }
+    } else this.navMaintien = { t: 0, dir: '' };
+    this.touchesAvantSuivantes = new Set(this.touches);
+  },
+  finPas() { this.touchesAvant = this.touchesAvantSuivantes || new Set(this.touches); },
+  // Menus : confirmer / annuler (bouton de face inférieur / droit, Entrée / Échap)
+  menuConfirmer() { return this.vientEnfonce('interagir') || (this.touches.has('Space') && !this.touchesAvant.has('Space') && !this.bloque.interagir); },
+  menuRetour() { return this.vientEnfonce('retour') || (this.touches.has('Escape') && !this.touchesAvant.has('Escape')); },
+
+  // ── Vibrations : distinctes, limitées en fréquence, réglables, jamais seules porteuses d'information ──
+  vibrer(type) {
+    const R = this.reglages || {}; const k = R.vibrations ?? 0.7;
+    if (!k || !this.pad || !this.pad.vibrationActuator) return;
+    const P = { degats: [220, 0.7, 0.5, 350], charge: [70, 0.0, 0.35, 250], explosion: [260, 0.9, 0.4, 200], objet: [160, 0.2, 0.6, 500], boss: [400, 0.8, 0.8, 900] }[type];
+    if (!P) return;
+    const now = performance.now(); if (now - (this.vibrationsDernier[type] || 0) < P[3]) return;
+    this.vibrationsDernier[type] = now;
+    try { this.pad.vibrationActuator.playEffect('dual-rumble', { duration: P[0], strongMagnitude: P[1] * k, weakMagnitude: P[2] * k }); } catch (e) { /* facultatif */ }
+  },
+
+  // ── Glyphes affichés (position d'abord, fabricant ensuite) ──
+  nomBouton(i) {
+    const t = this.glyphes;
+    const X = ['A', 'B', 'X', 'Y', 'LB', 'RB', 'LT', 'RT', 'View', 'Menu', 'L3', 'R3', 'Croix ↑', 'Croix ↓', 'Croix ←', 'Croix →'];
+    const P = ['Croix', 'Rond', 'Carré', 'Triangle', 'L1', 'R1', 'L2', 'R2', 'Create', 'Options', 'L3', 'R3', 'Croix ↑', 'Croix ↓', 'Croix ←', 'Croix →'];
+    const N = ['B', 'A', 'Y', 'X', 'L', 'R', 'ZL', 'ZR', '-', '+', 'L3', 'R3', 'Croix ↑', 'Croix ↓', 'Croix ←', 'Croix →'];
+    const G = ['Face bas', 'Face droite', 'Face gauche', 'Face haut', 'Haut gauche', 'Haut droit', 'Gâchette G', 'Gâchette D', 'Vue', 'Menu', 'Stick G', 'Stick D', 'Croix ↑', 'Croix ↓', 'Croix ←', 'Croix →'];
+    const L = t === 'playstation' ? P : t === 'nintendo' ? N : t === 'xbox' ? X : G;
+    return L[i] || ('B' + i);
+  },
+  nomTouche(code) {
+    if (this.nomsTouches && this.nomsTouches[code]) return this.nomsTouches[code];
+    const m = { Space: 'Espace', Enter: 'Entrée', Escape: 'Échap', Backspace: 'Retour', Tab: 'Tab', ShiftLeft: 'Maj', ShiftRight: 'Maj D', ControlLeft: 'Ctrl', ControlRight: 'Ctrl D', ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→', AltLeft: 'Alt' };
+    if (m[code]) return m[code];
+    if (code.startsWith('Key')) return code.slice(3);
+    if (code.startsWith('Digit')) return code.slice(5);
+    return code;
+  },
+  // Libellé court de la première liaison d'une action pour le périphérique courant.
+  libelle(a) {
+    if (this.dernierPeripherique === 'manette') { const b = this.liaisonsManette(a)[0]; return b === undefined ? '—' : this.nomBouton(b); }
+    const k = this.liaisonsClavier(a)[0]; return k ? this.nomTouche(k) : '—';
+  },
+};
+
+// ─── 22_audio.js ───
+// ═══════════════════════════════════════════════════════════════════════════
+// Audio original, entièrement synthétisé (WebAudio) : effets à budget de voix,
+// priorités et variations ; musique par couches (ambiance + percussions de combat),
+// gammes japonaises (in / yo) et motifs générés depuis une graine fixe par thème.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const Son = {
+  ctx: null, maitre: null, busEffets: null, busMusique: null, bruit: null,
+  voix: [], dernier: {}, actif: false,
+  reglages: null,
+  init(reglages) { this.reglages = reglages; },
+  demarrer() { // doit suivre une activation utilisateur (clic / touche)
+    if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    this.ctx = new AC();
+    this.maitre = this.ctx.createDynamicsCompressor(); this.maitre.threshold.value = -14; this.maitre.ratio.value = 4; this.maitre.connect(this.ctx.destination);
+    this.busEffets = this.ctx.createGain(); this.busEffets.connect(this.maitre);
+    this.busMusique = this.ctx.createGain(); this.busMusique.connect(this.maitre);
+    this.appliquerVolumes();
+    const n = this.ctx.sampleRate * 1.5, b = this.ctx.createBuffer(1, n, this.ctx.sampleRate), d = b.getChannelData(0);
+    let s = 12345; for (let i = 0; i < n; i++) { s = (s * 1103515245 + 12345) & 0x7fffffff; d[i] = (s / 0x3fffffff) - 1; }
+    this.bruit = b; this.actif = true;
+    Musique.init(this);
+  },
+  suspendu() { return !this.ctx || this.ctx.state !== 'running'; },
+  appliquerVolumes() {
+    if (!this.ctx || !this.reglages) return;
+    this.busEffets.gain.value = (this.reglages.volEffets ?? 0.8) * 0.9;
+    this.busMusique.gain.value = (this.reglages.volMusique ?? 0.6) * 0.55;
+  },
+  // ── primitives ──
+  osc(type, f0, f1, t0, dur, vol, dest, attaque = 0.004) {
+    const c = this.ctx, o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.setValueAtTime(f0, t0); if (f1 && f1 !== f0) o.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, vol), t0 + attaque); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(dest); o.start(t0); o.stop(t0 + dur + 0.02);
+    return o;
+  },
+  souffle(t0, dur, vol, filtre, f0, f1, q, dest) {
+    const c = this.ctx, s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+    s.buffer = this.bruit; s.loop = true; f.type = filtre; f.frequency.setValueAtTime(f0, t0); if (f1) f.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t0 + dur); f.Q.value = q || 0.8;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, vol), t0 + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    s.connect(f); f.connect(g); g.connect(dest); s.start(t0, Math.random()); s.stop(t0 + dur + 0.02);
+    return s;
+  },
+  // ── effets nommés ──
+  // limites : [intervalle minimal (s), voix simultanées max, priorité]
+  LIMITES: {
+    tir: [0.045, 3, 1], impact: [0.03, 4, 1], impact_mur: [0.05, 2, 0], ennemi_mort: [0.03, 4, 2], degat_joueur: [0.2, 1, 5],
+    explosion: [0.06, 3, 4], ryo: [0.05, 2, 2], cle: [0.08, 1, 2], coeur: [0.08, 1, 2], protection: [0.08, 1, 2], objet: [0.3, 1, 5],
+    objet_mineur: [0.1, 1, 3], porte_ferme: [0.2, 1, 3], porte_ouvre: [0.2, 1, 3], secret: [0.5, 1, 5], achat: [0.1, 1, 4], refus: [0.15, 1, 3],
+    charge_pleine: [0.2, 1, 2], actif: [0.2, 1, 4], pilule: [0.2, 1, 3], boss_intro: [1, 1, 6], boss_mort: [1, 1, 6], rocher: [0.05, 2, 1],
+    jarre: [0.05, 2, 1], coffre: [0.15, 1, 3], menu: [0.03, 2, 2], valider: [0.05, 1, 3], annuler: [0.05, 1, 3], transformation: [1, 1, 6],
+    telegraphe: [0.12, 2, 5], laser: [0.08, 2, 2], eclair: [0.05, 2, 2], eau: [0.06, 2, 1], feu: [0.06, 2, 1], vent: [0.08, 2, 1],
+    sable: [0.06, 2, 1], fumee: [0.08, 2, 1], invocation: [0.2, 1, 3], meche: [0.15, 2, 1], pics: [0.2, 1, 3], tir_ennemi: [0.06, 3, 1],
+    charge: [0.3, 1, 2], lame: [0.05, 2, 1], pas_lourd: [0.12, 1, 1], rire: [0.5, 1, 3], gong: [0.8, 1, 5], sceau: [0.3, 1, 4],
+  },
+  jouer(nom, vol = 1, hauteur = 1) {
+    if (!this.actif || !this.ctx || this.ctx.state !== 'running') return;
+    const L = this.LIMITES[nom] || [0.03, 3, 1];
+    const t = this.ctx.currentTime;
+    if (t - (this.dernier[nom] || -1) < L[0]) return;
+    this.voix = this.voix.filter(v => v.fin > t);
+    if (this.voix.filter(v => v.nom === nom).length >= L[1]) return;
+    if (this.voix.length >= 22) { // budget global : on n'écrase jamais une voix plus prioritaire
+      const moins = this.voix.reduce((a, v) => (!a || v.prio < a.prio ? v : a), null);
+      if (!moins || moins.prio > L[2]) return;
+    }
+    this.dernier[nom] = t;
+    const d = this.busEffets, v = vol, h = hauteur * (0.94 + Math.random() * 0.12);
+    let duree = 0.2;
+    switch (nom) {
+      case 'tir': this.souffle(t, 0.07, 0.16 * v, 'bandpass', 2600 * h, 1500 * h, 1.2, d); this.osc('square', 880 * h, 560 * h, t, 0.05, 0.05 * v, d); duree = 0.08; break;
+      case 'tir_ennemi': this.osc('triangle', 520 * h, 300 * h, t, 0.09, 0.07 * v, d); this.souffle(t, 0.05, 0.05 * v, 'highpass', 1800, 0, 1, d); duree = 0.1; break;
+      case 'impact': this.osc('sine', 190 * h, 80, t, 0.08, 0.22 * v, d); this.souffle(t, 0.04, 0.08 * v, 'lowpass', 1400, 400, 1, d); duree = 0.09; break;
+      case 'impact_mur': this.souffle(t, 0.035, 0.06 * v, 'highpass', 2500, 0, 1, d); duree = 0.04; break;
+      case 'ennemi_mort': this.osc('sine', 420 * h, 70, t, 0.14, 0.24 * v, d); this.souffle(t, 0.12, 0.12 * v, 'lowpass', 1800, 200, 1, d); duree = 0.15; break;
+      case 'degat_joueur': { const o = this.osc('square', 330, 140, t, 0.22, 0.1 * v, d); this.souffle(t, 0.14, 0.12 * v, 'bandpass', 900, 300, 2, d); duree = 0.23; break; }
+      case 'explosion': this.souffle(t, 0.55, 0.5 * v, 'lowpass', 1400, 120, 0.7, d); this.osc('sine', 95, 38, t, 0.45, 0.5 * v, d); this.souffle(t, 0.08, 0.3 * v, 'highpass', 3000, 0, 1, d); duree = 0.56; break;
+      case 'meche': this.souffle(t, 0.3, 0.05 * v, 'highpass', 4200, 0, 2, d); duree = 0.3; break;
+      case 'ryo': this.osc('triangle', 1318, 0, t, 0.07, 0.12 * v, d); this.osc('triangle', 1760, 0, t + 0.06, 0.16, 0.12 * v, d); duree = 0.22; break;
+      case 'cle': this.osc('square', 2093, 0, t, 0.05, 0.05 * v, d); this.osc('square', 2637, 0, t + 0.05, 0.12, 0.05 * v, d); this.osc('triangle', 1568, 0, t + 0.1, 0.2, 0.08 * v, d); duree = 0.3; break;
+      case 'coeur': this.osc('triangle', 523, 0, t, 0.1, 0.16 * v, d); this.osc('triangle', 784, 0, t + 0.08, 0.22, 0.14 * v, d); duree = 0.3; break;
+      case 'protection': this.osc('sine', 880, 1320, t, 0.3, 0.12 * v, d, 0.05); this.osc('sine', 1320, 1760, t + 0.05, 0.3, 0.07 * v, d, 0.05); duree = 0.35; break;
+      case 'objet': {
+        const n = [523, 659, 784, 1046, 1318];
+        n.forEach((f, i) => this.osc('triangle', f, 0, t + i * 0.07, 0.35, 0.13 * v, d));
+        this.osc('sine', 261, 0, t, 0.8, 0.12 * v, d, 0.08); this.osc('sine', 392, 0, t + 0.1, 0.7, 0.08 * v, d, 0.08); duree = 0.8; break;
+      }
+      case 'objet_mineur': this.osc('triangle', 784, 0, t, 0.1, 0.12 * v, d); this.osc('triangle', 1046, 0, t + 0.07, 0.18, 0.12 * v, d); duree = 0.25; break;
+      case 'porte_ferme': this.osc('sine', 110, 55, t, 0.25, 0.35 * v, d); this.souffle(t, 0.15, 0.2 * v, 'lowpass', 600, 100, 1, d); duree = 0.26; break;
+      case 'porte_ouvre': this.souffle(t, 0.3, 0.12 * v, 'bandpass', 300, 1200, 1.5, d); this.osc('triangle', 392, 523, t, 0.25, 0.06 * v, d); duree = 0.3; break;
+      case 'secret': { const n = [587, 698, 880, 1174, 1046]; n.forEach((f, i) => this.osc('triangle', f, 0, t + i * 0.11, 0.4, 0.13 * v, d)); duree = 0.9; break; }
+      case 'achat': this.osc('triangle', 1318, 0, t, 0.08, 0.12 * v, d); this.osc('triangle', 1976, 0, t + 0.07, 0.2, 0.12 * v, d); this.osc('sine', 659, 0, t, 0.3, 0.08 * v, d); duree = 0.3; break;
+      case 'refus': this.osc('square', 150, 130, t, 0.18, 0.08 * v, d); duree = 0.2; break;
+      case 'charge_pleine': this.osc('sine', 1568, 0, t, 0.12, 0.1 * v, d); this.osc('sine', 2093, 0, t + 0.05, 0.15, 0.07 * v, d); duree = 0.2; break;
+      case 'charge': this.osc('sine', 220, 660, t, 0.5, 0.05 * v, d, 0.2); duree = 0.5; break;
+      case 'actif': this.souffle(t, 0.3, 0.14 * v, 'bandpass', 600, 2400, 1.2, d); this.osc('triangle', 392, 784, t, 0.3, 0.1 * v, d); duree = 0.32; break;
+      case 'pilule': this.osc('sine', 260, 520, t, 0.12, 0.15 * v, d); this.osc('sine', 330, 660, t + 0.13, 0.12, 0.12 * v, d); duree = 0.27; break;
+      case 'boss_intro': this.taiko(t, 1.0 * v); this.taiko(t + 0.25, 0.8 * v); this.taiko(t + 0.5, 1.1 * v); this.gong(t + 0.5, 0.5 * v); duree = 2; break;
+      case 'gong': this.gong(t, 0.5 * v); duree = 2; break;
+      case 'boss_mort': this.souffle(t, 1.2, 0.5 * v, 'lowpass', 2000, 80, 0.7, d); this.osc('sine', 120, 30, t, 1.1, 0.5 * v, d); this.gong(t + 0.2, 0.4 * v); duree = 1.3; break;
+      case 'rocher': this.souffle(t, 0.18, 0.22 * v, 'lowpass', 900, 200, 1, d); this.osc('sine', 140, 60, t, 0.12, 0.2 * v, d); duree = 0.2; break;
+      case 'jarre': this.souffle(t, 0.12, 0.18 * v, 'highpass', 1800, 0, 1, d); this.osc('triangle', 1400 * h, 900, t, 0.1, 0.08 * v, d); duree = 0.15; break;
+      case 'coffre': this.osc('square', 180, 240, t, 0.12, 0.06 * v, d); this.osc('triangle', 523, 0, t + 0.12, 0.2, 0.12 * v, d); this.osc('triangle', 784, 0, t + 0.18, 0.25, 0.12 * v, d); duree = 0.45; break;
+      case 'menu': this.osc('square', 1046, 0, t, 0.025, 0.04 * v, d); duree = 0.03; break;
+      case 'valider': this.osc('triangle', 784, 0, t, 0.06, 0.1 * v, d); this.osc('triangle', 1175, 0, t + 0.05, 0.1, 0.1 * v, d); duree = 0.16; break;
+      case 'annuler': this.osc('triangle', 784, 0, t, 0.06, 0.1 * v, d); this.osc('triangle', 523, 0, t + 0.05, 0.1, 0.1 * v, d); duree = 0.16; break;
+      case 'transformation': { const n = [392, 523, 659, 784, 1046, 1318, 1568]; n.forEach((f, i) => this.osc('sawtooth', f, 0, t + i * 0.05, 0.6, 0.04 * v, d)); this.souffle(t, 1.0, 0.1 * v, 'bandpass', 800, 5000, 0.8, d); this.gong(t, 0.3 * v); duree = 1.2; break; }
+      case 'telegraphe': this.osc('square', 1760, 1760, t, 0.06, 0.05 * v, d); this.osc('square', 1760, 1760, t + 0.09, 0.06, 0.05 * v, d); duree = 0.16; break;
+      case 'laser': this.osc('sawtooth', 220 * h, 110, t, 0.3, 0.07 * v, d); this.osc('square', 440 * h, 220, t, 0.3, 0.03 * v, d); duree = 0.3; break;
+      case 'eclair': for (let i = 0; i < 4; i++) this.souffle(t + i * 0.025, 0.03, 0.12 * v, 'highpass', 3000 + i * 500, 0, 1, d); this.osc('square', 1200, 300, t, 0.1, 0.04 * v, d); duree = 0.12; break;
+      case 'eau': this.souffle(t, 0.18, 0.14 * v, 'lowpass', 1600, 400, 2, d); this.osc('sine', 600, 250, t, 0.1, 0.06 * v, d); duree = 0.2; break;
+      case 'feu': this.souffle(t, 0.25, 0.14 * v, 'bandpass', 700, 300, 0.8, d); duree = 0.25; break;
+      case 'vent': this.souffle(t, 0.25, 0.12 * v, 'bandpass', 900, 3200, 3, d); duree = 0.25; break;
+      case 'sable': this.souffle(t, 0.2, 0.12 * v, 'highpass', 2200, 800, 0.7, d); duree = 0.2; break;
+      case 'fumee': case 'invocation': this.souffle(t, 0.3, 0.2 * v, 'lowpass', 2500, 300, 0.7, d); this.osc('sine', 300, 120, t, 0.2, 0.1 * v, d); duree = 0.3; break;
+      case 'pics': this.osc('square', 600, 300, t, 0.08, 0.06 * v, d); this.souffle(t, 0.06, 0.1 * v, 'highpass', 3000, 0, 1, d); duree = 0.1; break;
+      case 'lame': this.souffle(t, 0.09, 0.14 * v, 'bandpass', 3400 * h, 1200, 2.5, d); duree = 0.1; break;
+      case 'pas_lourd': this.osc('sine', 80, 40, t, 0.2, 0.3 * v, d); duree = 0.2; break;
+      case 'rire': for (let i = 0; i < 4; i++) this.osc('square', 300 - i * 20, 260 - i * 20, t + i * 0.1, 0.08, 0.04 * v, d); duree = 0.45; break;
+      case 'sceau': this.osc('triangle', 440, 880, t, 0.25, 0.1 * v, d); this.osc('sine', 1320, 0, t + 0.2, 0.3, 0.08 * v, d); duree = 0.5; break;
+      default: this.osc('sine', 660, 0, t, 0.1, 0.08 * v, d); duree = 0.1;
+    }
+    this.voix.push({ nom, fin: t + duree, prio: L[2] });
+  },
+  taiko(t, v, dest) {
+    dest = dest || this.busEffets;
+    this.osc('sine', 150, 48, t, 0.45, 0.55 * v, dest, 0.003);
+    this.souffle(t, 0.07, 0.22 * v, 'lowpass', 900, 200, 1, dest);
+  },
+  gong(t, v, dest) {
+    dest = dest || this.busEffets;
+    [110, 164.8, 220.5, 277, 392.4].forEach((f, i) => this.osc('sine', f, f * 0.995, t, 2.2 - i * 0.25, (0.16 - i * 0.025) * v, dest, 0.01));
+  },
+};
+
+// ── Musique : séquenceur à anticipation, couches dynamiques ──
+const GAMMES = {
+  in: [0, 1, 5, 7, 8],        // miyako-bushi : étrange, tendu
+  yo: [0, 2, 5, 7, 9],        // plus ouvert
+  ryukyu: [0, 4, 5, 7, 11],
+  sombre: [0, 1, 3, 7, 8],
+};
+const Musique = {
+  A: null, piste: null, pas: 0, prochain: 0, minuteur: null, couches: null, combat: 0, cibleCombat: 0,
+  init(A) {
+    this.A = A;
+    const c = A.ctx;
+    this.gAmb = c.createGain(); this.gPerc = c.createGain(); this.gAmb.gain.value = 1; this.gPerc.gain.value = 0;
+    this.gAmb.connect(A.busMusique); this.gPerc.connect(A.busMusique);
+    this.minuteur = setInterval(() => this.planifier(), 25);
+  },
+  // Une piste est générée de façon déterministe depuis son nom : mélodie originale.
+  jouerPiste(nom, opts = {}) {
+    if (this.piste && this.piste.nom === nom) return;
+    const r = new Alea('musique|' + nom);
+    const gamme = GAMMES[opts.gamme || 'in'];
+    const racine = opts.racine || 50; // MIDI
+    const tempo = opts.tempo || 84;
+    const mesures = 8, pasParMesure = 16;
+    // motif rythmique et mélodie en marche aléatoire bornée
+    const melodie = [];
+    let deg = 7;
+    for (let m = 0; m < mesures; m++) {
+      const rythme = r.choix([[0, 4, 6, 8, 12], [0, 3, 6, 10, 12, 14], [0, 8, 10, 12], [0, 2, 4, 8, 11, 12], [0, 6, 8, 14]]);
+      for (const p of rythme) {
+        if (m % 4 === 3 && p > 8) continue; // respiration en fin de phrase
+        deg = borne(deg + r.choix([-2, -1, -1, 1, 1, 2, 0, 3, -3]), 2, 13);
+        melodie.push({ pas: m * pasParMesure + p, deg, dur: r.choix([2, 2, 3, 4, 6]) });
+      }
+    }
+    const basse = []; for (let m = 0; m < mesures; m++) basse.push({ pas: m * pasParMesure, deg: r.choix([0, 0, 3, 4, 1]) , dur: 14 });
+    const perc = opts.perc || [0, 6, 8, 11]; // taiko
+    this.piste = { nom, gamme, racine, tempo, mesures, pasParMesure, melodie, basse, perc, timbre: opts.timbre || 'koto', intensite: opts.intensite || 1, boss: !!opts.boss };
+    this.pas = 0; if (this.A.ctx) this.prochain = this.A.ctx.currentTime + 0.1;
+  },
+  arreter() { this.piste = null; },
+  freq(deg) { const p = this.piste; const g = p.gamme; const oct = Math.floor(deg / g.length), i = ((deg % g.length) + g.length) % g.length; return 440 * Math.pow(2, (p.racine + 12 * oct + g[i] - 69) / 12); },
+  planifier() {
+    const A = this.A; if (!A || !A.ctx || !this.piste || A.ctx.state !== 'running') return;
+    const p = this.piste, spb = 60 / p.tempo / 4; // secondes par double-croche
+    // fondu des percussions selon l'état de combat
+    const cible = this.cibleCombat, g = this.gPerc.gain;
+    this.combat = approche(this.combat, cible, 0.02);
+    g.setTargetAtTime(this.combat * p.intensite, A.ctx.currentTime, 0.3);
+    while (this.prochain < A.ctx.currentTime + 0.15) {
+      const t = this.prochain, total = p.mesures * p.pasParMesure, s = this.pas % total;
+      for (const n of p.melodie) if (n.pas === s) this.note(n.deg, t, n.dur * spb, p.timbre);
+      for (const n of p.basse) if (n.pas === s) this.basse(n.deg, t, n.dur * spb);
+      const dans = s % p.pasParMesure;
+      if (p.perc.includes(dans)) A.taiko(t, (dans === 0 ? 0.55 : 0.32) * (p.boss ? 1.2 : 1), this.gPerc);
+      if (dans % 2 === 1 && p.boss) A.souffle(t, 0.03, 0.05, 'highpass', 6000, 0, 1, this.gPerc);
+      if (dans === 4 || dans === 12) A.souffle(t, 0.04, 0.06, 'highpass', 5000, 0, 1, this.gPerc);
+      this.pas++; this.prochain += spb;
+    }
+  },
+  note(deg, t, dur, timbre) {
+    const A = this.A, f = this.freq(deg);
+    if (timbre === 'koto') { A.osc('triangle', f, f * 0.998, t, Math.min(1.2, dur + 0.5), 0.1, this.gAmb, 0.002); A.osc('sine', f * 2, 0, t, 0.25, 0.03, this.gAmb, 0.002); }
+    else if (timbre === 'flute') { A.osc('sine', f, f, t, dur + 0.1, 0.07, this.gAmb, 0.06); A.souffle(t, dur * 0.8, 0.012, 'bandpass', f * 2, 0, 6, this.gAmb); }
+    else { A.osc('square', f, f, t, dur * 0.9, 0.035, this.gAmb, 0.01); }
+  },
+  basse(deg, t, dur) { const f = this.freq(deg - 10); this.A.osc('triangle', f, f, t, dur, 0.09, this.gAmb, 0.05); },
+  etatCombat(v) { this.cibleCombat = v ? 1 : 0; },
+};
+
+// ─── 23_pixel.js ───
+// ═══════════════════════════════════════════════════════════════════════════
+// Outils pixel art : cartes de caractères → toiles, contour automatique,
+// miroirs, silhouettes, rotations au plus proche voisin, formes nettes.
+// Tout est pré-rendu au chargement ; le jeu dessine des toiles, jamais des
+// images agrandies par filtrage.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const CONTOUR = '#1c1420';   // contour sombre commun à tous les sprites
+function toile(l, h) { const c = document.createElement('canvas'); c.width = Math.max(1, l | 0); c.height = Math.max(1, h | 0); const g = c.getContext('2d'); g.imageSmoothingEnabled = false; return c; }
+function ctxDe(c) { const g = c.getContext('2d'); g.imageSmoothingEnabled = false; return g; }
+
+// lignes : tableau de chaînes ; couleurs : { caractère: '#rrggbb' } ; '.' et ' ' = transparent
+function peindre(lignes, couleurs, l, h) {
+  l = l || Math.max(...lignes.map(r => r.length)); h = h || lignes.length;
+  const c = toile(l, h), g = ctxDe(c); const img = g.createImageData(l, h);
+  const cache = {};
+  const rgb = k => cache[k] || (cache[k] = hexRgb(couleurs[k]));
+  for (let y = 0; y < lignes.length && y < h; y++) {
+    const r = lignes[y];
+    for (let x = 0; x < r.length && x < l; x++) {
+      const k = r[x]; if (k === '.' || k === ' ' || !couleurs[k]) continue;
+      const [R, G, B, A] = rgb(k), i = (y * l + x) * 4;
+      img.data[i] = R; img.data[i + 1] = G; img.data[i + 2] = B; img.data[i + 3] = A;
+    }
+  }
+  g.putImageData(img, 0, 0); return c;
+}
+function hexRgb(h) {
+  if (!h) return [255, 0, 255, 255];
+  if (h.startsWith('rgba')) { const m = h.match(/[\d.]+/g).map(Number); return [m[0], m[1], m[2], Math.round((m[3] ?? 1) * 255)]; }
+  h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(x => x + x).join('');
+  const n = parseInt(h.slice(0, 6), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255, h.length === 8 ? parseInt(h.slice(6), 16) : 255];
+}
+function rgbHex(r, g, b) { return '#' + [r, g, b].map(v => borne(Math.round(v), 0, 255).toString(16).padStart(2, '0')).join(''); }
+function nuancer(hex, k) { // k<1 assombrit, k>1 éclaircit (vers le blanc)
+  const [r, g, b] = hexRgb(hex);
+  if (k <= 1) return rgbHex(r * k, g * k, b * k);
+  const t = k - 1; return rgbHex(r + (255 - r) * t, g + (255 - g) * t, b + (255 - b) * t);
+}
+function melange(a, b, t) { const A = hexRgb(a), B = hexRgb(b); return rgbHex(lerp(A[0], B[0], t), lerp(A[1], B[1], t), lerp(A[2], B[2], t)); }
+
+// Contour automatique : tout pixel transparent voisin (4-connexité) d'un pixel opaque.
+function contourner(c, couleur = CONTOUR, diagonales = false) {
+  const l = c.width, h = c.height, src = ctxDe(c).getImageData(0, 0, l, h), d = src.data;
+  const out = toile(l, h), g = ctxDe(out); g.drawImage(c, 0, 0);
+  const o = g.getImageData(0, 0, l, h), od = o.data; const [R, G, B] = hexRgb(couleur);
+  const opaque = (x, y) => x >= 0 && y >= 0 && x < l && y < h && d[(y * l + x) * 4 + 3] > 40;
+  for (let y = 0; y < h; y++) for (let x = 0; x < l; x++) {
+    if (opaque(x, y)) continue;
+    let n = opaque(x - 1, y) || opaque(x + 1, y) || opaque(x, y - 1) || opaque(x, y + 1);
+    if (!n && diagonales) n = opaque(x - 1, y - 1) || opaque(x + 1, y - 1) || opaque(x - 1, y + 1) || opaque(x + 1, y + 1);
+    if (n) { const i = (y * l + x) * 4; od[i] = R; od[i + 1] = G; od[i + 2] = B; od[i + 3] = 255; }
+  }
+  g.putImageData(o, 0, 0); return out;
+}
+function miroir(c) { const m = toile(c.width, c.height), g = ctxDe(m); g.translate(c.width, 0); g.scale(-1, 1); g.drawImage(c, 0, 0); return m; }
+function silhouette(c, couleur) {
+  const s = toile(c.width, c.height), g = ctxDe(s); g.drawImage(c, 0, 0); g.globalCompositeOperation = 'source-in'; g.fillStyle = couleur; g.fillRect(0, 0, s.width, s.height); return s;
+}
+// Rotation au plus proche voisin (pas de flou) dans une toile carrée.
+function tourner(c, angle) {
+  const n = Math.ceil(Math.hypot(c.width, c.height)) | 1; const out = toile(n, n), g = ctxDe(out);
+  const sd = ctxDe(c).getImageData(0, 0, c.width, c.height).data, o = g.createImageData(n, n);
+  const cx = (n - 1) / 2, cy = (n - 1) / 2, sx0 = (c.width - 1) / 2, sy0 = (c.height - 1) / 2, co = Math.cos(-angle), si = Math.sin(-angle);
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const dx = x - cx, dy = y - cy; const sx = Math.round(sx0 + dx * co - dy * si), sy = Math.round(sy0 + dx * si + dy * co);
+    if (sx < 0 || sy < 0 || sx >= c.width || sy >= c.height) continue;
+    const i = (sy * c.width + sx) * 4, j = (y * n + x) * 4;
+    o.data[j] = sd[i]; o.data[j + 1] = sd[i + 1]; o.data[j + 2] = sd[i + 2]; o.data[j + 3] = sd[i + 3];
+  }
+  g.putImageData(o, 0, 0); return out;
+}
+// Jeu de rotations pré-calculées (n angles) pour les projectiles orientés.
+function rotations(c, n = 16) { const t = []; for (let i = 0; i < n; i++) t.push(tourner(c, i * 2 * Math.PI / n)); return t; }
+function indexAngle(a, n = 16) { return ((Math.round(a / (2 * Math.PI / n)) % n) + n) % n; }
+
+// Disques et ellipses nets (pré-rendus par rayon)
+const _disques = new Map();
+function disque(r, couleur) {
+  const k = r + '|' + couleur; let c = _disques.get(k); if (c) return c;
+  const d = Math.max(1, Math.round(r * 2)); c = toile(d, d); const g = ctxDe(c); g.fillStyle = couleur;
+  const rr = d / 2;
+  for (let y = 0; y < d; y++) { const dy = y + 0.5 - rr; const w = Math.sqrt(Math.max(0, rr * rr - dy * dy)); const x0 = Math.round(rr - w), x1 = Math.round(rr + w); if (x1 > x0) g.fillRect(x0, y, x1 - x0, 1); }
+  _disques.set(k, c); return c;
+}
+const _ellipses = new Map();
+function ellipse(rx, ry, couleur) {
+  rx = Math.max(1, Math.round(rx)); ry = Math.max(1, Math.round(ry));
+  const k = rx + '|' + ry + '|' + couleur; let c = _ellipses.get(k); if (c) return c;
+  c = toile(rx * 2, ry * 2); const g = ctxDe(c); g.fillStyle = couleur;
+  for (let y = 0; y < ry * 2; y++) { const dy = (y + 0.5 - ry) / ry; const w = rx * Math.sqrt(Math.max(0, 1 - dy * dy)); const x0 = Math.round(rx - w), x1 = Math.round(rx + w); if (x1 > x0) g.fillRect(x0, y, x1 - x0, 1); }
+  _ellipses.set(k, c); return c;
+}
+const _anneaux = new Map();
+function anneau(r, ep, couleur) {
+  r = Math.max(1, Math.round(r)); const k = r + '|' + ep + '|' + couleur; let c = _anneaux.get(k); if (c) return c;
+  const d = r * 2 + 2; c = toile(d, d); const g = ctxDe(c); g.fillStyle = couleur;
+  for (let y = 0; y < d; y++) for (let x = 0; x < d; x++) { const q = Math.hypot(x + 0.5 - d / 2, y + 0.5 - d / 2); if (q <= r && q > r - ep) g.fillRect(x, y, 1, 1); }
+  _anneaux.set(k, c); return c;
+}
+// Ligne de Bresenham (tracés anguleux de foudre, fils, rayons fins)
+function lignePixel(g, x0, y0, x1, y1, couleur, ep = 1) {
+  x0 |= 0; y0 |= 0; x1 |= 0; y1 |= 0; g.fillStyle = couleur;
+  const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1; let e = dx + dy, n = 0;
+  for (;;) { g.fillRect(x0 - (ep >> 1), y0 - (ep >> 1), ep, ep); if ((x0 === x1 && y0 === y1) || n++ > 2000) break; const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; } }
+}
+// Dessin centré sur un point entier (évite le tremblement de sous-pixels)
+function poser(g, c, x, y, ax = 0.5, ay = 0.5) { g.drawImage(c, Math.round(x - c.width * ax), Math.round(y - c.height * ay)); }
+
+// ─── 24_sprites_persos.js ───
+// ═══════════════════════════════════════════════════════════════════════════
+// Sprites des personnages : grandes têtes expressives (26×22) + petits corps
+// procéduraux (14×11), assemblés en toiles 32×32 (ancre aux pieds : 16, 31).
+// La tête et le corps sont séparés : on tire dans une direction en marchant
+// dans une autre. Coiffures dessinées à la main ; contour automatique.
+// Codes des cartes de tête : h/g/H cheveux (base/lumière/ombre), b bandeau,
+// p/P plaque, k/K masque, r rouge, v violet, m traits sombres, s peau,
+// e/w œil/éclat (surcharge), c/C couleurs propres au personnage.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const PEAU = { s: '#f4c8a2', d: '#d69a78', l: '#fde2cc' };
+const TETE_RANGS = { 6: [10, 15], 7: [8, 17], 8: [7, 18], 9: [6, 19], 10: [5, 20], 11: [5, 20], 12: [4, 21], 13: [4, 21], 14: [4, 21], 15: [4, 21], 16: [4, 21], 17: [5, 20], 18: [5, 20], 19: [6, 19], 20: [8, 17] };
+
+function carteTeteBase(vue) {
+  const L = []; for (let y = 0; y < 22; y++) L.push(Array(26).fill('.'));
+  for (const [y, [a, b]] of Object.entries(TETE_RANGS)) for (let x = a; x <= b; x++) {
+    let k = 's';
+    if (x >= b - 1 && y >= 11) k = 'd';
+    if (y >= 19) k = 'd';
+    if (y <= 8 && x <= a + 2 && x >= a) k = 'l';
+    L[y][x] = k;
+  }
+  const oeil = (x0) => { L[13][x0] = 'w'; L[13][x0 + 1] = 'e'; L[13][x0 + 2] = 'e'; for (let x = x0; x < x0 + 3; x++) { L[14][x] = 'e'; L[15][x] = 'e'; } L[16][x0 + 1] = 'e'; };
+  if (vue === 'face') { oeil(7); oeil(16); L[18][12] = 'm'; L[18][13] = 'm'; }
+  else if (vue === 'cote') { oeil(16); L[18][19] = 'm'; L[18][18] = 'm'; L[14][6] = 'd'; L[15][6] = 'd'; L[15][7] = 'd'; }
+  return L;
+}
+
+// Coiffures (26 colonnes × 22 lignes ; « . » = rien)
+const COIFFURES = {
+  naruto: {
+    face: [
+      '..........................',
+      '.......h....h.....h.......',
+      '....h..hh..hhh...hh..h....',
+      '....hh.hgh.hggh.hhg.hh....',
+      '...hhhhhgghhgghhhgghhhh...',
+      '..hhhgggggghgggghgggghhh..',
+      '.hhhhgggggggggggggggghhhh.',
+      '..hhhhhgggggggggggghhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhbbbbbPppppPbbbbbhh...',
+      '...hhbbbbbPpPPpPbbbbbhh...',
+      '...hh..hh...hh...hh..hh...',
+      '...h.........h........h...',
+      '...h..................h...',
+      '..........................',
+      '..........................',
+      '....mm..............mm....',
+      '....mm..............mm....'],
+    cote: [
+      '..........................',
+      '........h.....h...........',
+      '.....h..hh...hhh...h......',
+      '....hhh.hgh.hggh..hhg.....',
+      '...hhhhhhgghhgghhhhhgh....',
+      '..hhhhhhggggggggghhhhhh...',
+      '.hhhhhhhgggggggggghhhhhh..',
+      '.hhhhhhhhhggggggghhhhhhh..',
+      'hhhhhhhhhhhhhhhhhhhhhhh...',
+      '.hhhhhhhhhhhhhhhhhhhhhh...',
+      'bbhhhhbbbbbbbbbbbbPppP....',
+      '.bbhhhbbbbbbbbbbbbPpPP....',
+      '.b.hhhhh....h....hh.......',
+      '...hhhh.......h...........',
+      '...hhh....................',
+      '....h.....................',
+      '..........................',
+      '..........................',
+      '...................mm.....',
+      '...................mm.....'],
+    dos: [
+      '..........................',
+      '.......h....h.....h.......',
+      '....h..hh..hhh...hh..h....',
+      '....hh.hgh.hggh.hhg.hh....',
+      '...hhhhhgghhgghhhgghhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhhhhhhhhhhhhhhhhhhhhh.',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhbbbbbbbbbbbbbbbbhh...',
+      '...hhbbbbbbbbbbbbbbbbhh...',
+      '...hhhhhhhhbbbbhhhhhhhh...',
+      '...hhhhhhhhbhhbhhhhhhhh...',
+      '....hhhhhhbhhhhbhhhhhh....',
+      '.....hhhhhhhhhhhhhhhh.....',
+      '......hhhhhhhhhhhhhh......'],
+  },
+  sasuke: {
+    face: [
+      '..........................',
+      '................h..h......',
+      '.........hhhhhhhhhhh......',
+      '......hhhhhhhhhhhhhhhh....',
+      '....hhhhggggggghhhhhhhh...',
+      '...hhhhggggggggghhhhhh....',
+      '..hhhhgggggggggggghhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '.hhhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhbbbbbPppppPbbbbbhhhh.',
+      '.hhhhbbbbbPpPPpPbbbbbhhhh.',
+      '.hhhhh..hh...h....hh.hhhh.',
+      '..hhh.................hhh.',
+      '..hhh.................hhh.',
+      '..hhh.................hh..',
+      '..hh..................hh..',
+      '...h..................h...',
+      '...h..................h...'],
+    cote: [
+      '..........................',
+      '.h..h.....................',
+      '.hh.hh.hhhhhhh............',
+      '..hhhhhhhhhhhhhhh.........',
+      'hhhhhhhhhgggggghhhh.......',
+      '.hhhhhhhhggggggghhhhh.....',
+      'hhhhhhhhggggggggghhhhh....',
+      '.hhhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..bbhhhbbbbbbbbbbbbPppP...',
+      '..bbhhhbbbbbbbbbbbbPpPP...',
+      '..b.hhhhhh........hh.hh...',
+      '....hhhhh.............h...',
+      '....hhhh..............h...',
+      '....hhh...................',
+      '.....h....................'],
+    dos: [
+      '..........................',
+      '....h..h....h...h..h......',
+      '....hh.hh..hhh.hh.hh......',
+      '.....hhhhhhhhhhhhhhh......',
+      '...hhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhbbbbbbbbbbbbbbbbhhhh.',
+      '.hhhhbbbbbbbbbbbbbbbbhhhh.',
+      '..hhhhhhhhhbbbbhhhhhhhhh..',
+      '..hhhhhhhhhbhhbhhhhhhhhh..',
+      '...hhhhhhhbhhhhbhhhhhhh...',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '.....hhhhhhhhhhhhhhhh.....'],
+  },
+  sakura: {
+    face: [
+      '..........................',
+      '..........................',
+      '..........hhhhhh..........',
+      '.......hhhhhhhhhhhh.......',
+      '.....hhhhhggggghhhhhh.....',
+      '....hhhhggggggggghhhhh....',
+      '...hhhbbbbbPppPbbbbbhhh...',
+      '...hhbbbbbbPpPPbbbbbbhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhh..hhhhhhhhhhh..',
+      '..hhhhhhh......hhhhhhhhh..',
+      '.hhhhh...........hh.hhhhh.',
+      '.hhhh.................hhh.',
+      '.hhhh.................hhh.',
+      '.hhh..................hhh.',
+      '.hhh..................hhh.',
+      '.hhh..................hhh.',
+      '..hh..................hh..',
+      '..h....................h..'],
+    cote: [
+      '..........................',
+      '..........................',
+      '.........hhhhhh...........',
+      '......hhhhhhhhhhhh........',
+      '....hhhhhhgggggghhhh......',
+      '...hhhhhhgggggggghhhh.....',
+      '..hhhhbbbbbbbbbbPppPhh....',
+      '..hhhbbbbbbbbbbbPpPPhh....',
+      '.hhhhhhhhhhhhhhhhhhhhhh...',
+      '.hhhhhhhhhhhhhhhhhhhhhh...',
+      '.hhhhhhhhhhhhhhhhhh.hhh...',
+      '.hhhhhhhhhhhhhhhh.........',
+      '.hhhhhhhhh................',
+      '.hhhhhhhhh................',
+      '.hhhhhhhh.................',
+      '.hhhhhhhh.................',
+      '.hhhhhhh..................',
+      '..hhhhhh..................',
+      '..hhhhh...................',
+      '...hhh....................'],
+    dos: [
+      '..........................',
+      '..........................',
+      '..........hhhhhh..........',
+      '.......hhhhhhhhhhhh.......',
+      '.....hhhhhhhhhhhhhhhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhbbbbbbbbbbbbbbhhh...',
+      '...hhbbbbbbbbbbbbbbbbhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '.hhhhhhhhhhhhhhhhhhhhhhhh.',
+      '.hhhhhhhhhhhhhhhhhhhhhhhh.',
+      '.hhhhhhhhhhhhhhhhhhhhhhhh.',
+      '.hhhhhhhhhhhhhhhhhhhhhhhh.',
+      '.hhhhhhhhhhhhhhhhhhhhhhhh.',
+      '.hhhhhhhhhhhhhhhhhhhhhhhh.',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...'],
+  },
+  kakashi: {
+    face: [
+      '..h.......................',
+      '..hh.....h................',
+      '..hgh...hh...h............',
+      '..hggh.hgh..hh....h.......',
+      '...hgghhgghhgh...hh.......',
+      '...hhgggggggghhhhgh.......',
+      '..hhhggggggggggghhhh......',
+      '..hhhhhggggggggghhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hbbbbbbbbPppPbbbbbbh...',
+      '...hhbbbbbbbPpPPbbbbbbbh..',
+      '...h....hh...bbbbbbbbbbb..',
+      '..............bbbbbbbbb...',
+      '...............bbbbbbb....',
+      '................bbbbb.....',
+      '..........................',
+      '....kkkkkkkkkkkkkkkkkk....',
+      '....kkkkkkkkkkkkkkkkkK....',
+      '.....kkkkkkkkkkkkkkkK.....',
+      '.......kkkkkkkkkkkK.......'],
+    cote: [
+      'h.........................',
+      'hh....h...................',
+      'hgh..hh...h...............',
+      'hggh.hgh.hh...............',
+      '.hgghhgghhgh..............',
+      '.hhhgggggggghhhh..........',
+      '..hhhgggggggggghhhh.......',
+      '..hhhhhhggggggghhhhhh.....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhh....',
+      '..bbhhbbbbbbbbbbbbbbPpP...',
+      '..bbhhbbbbbbbbbbbbbbPPP...',
+      '..b.hhhh......bbbbbbbb....',
+      '....hhh.........bbbbb.....',
+      '....hh....................',
+      '..........................',
+      '..........................',
+      '....kkkkkkkkkkkkkkkkkk....',
+      '....kkkkkkkkkkkkkkkkkkK...',
+      '.....kkkkkkkkkkkkkkkkK....',
+      '.......kkkkkkkkkkkK.......'],
+    dos: [
+      '..h.......................',
+      '..hh.....h................',
+      '..hgh...hh...h............',
+      '..hggh.hgh..hh....h.......',
+      '...hgghhgghhgh...hh.......',
+      '...hhhhhhhhhhhhhhhhh......',
+      '..hhhhhhhhhhhhhhhhhhh.....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hbbbbbbbbbbbbbbbbbbh...',
+      '...hhbbbbbbbbbbbbbbbbbh...',
+      '...hhhhhhhhbbbbhhhhhhhh...',
+      '....hhhhhhhbhhbhhhhhhh....',
+      '.....hhhhhbhhhhbhhhhh.....',
+      '......hhhhhhhhhhhhhhh.....',
+      '..........................',
+      '....kkkkkkkkkkkkkkkkkk....',
+      '....kkkkkkkkkkkkkkkkkk....',
+      '.....kkkkkkkkkkkkkkkk.....',
+      '.......kkkkkkkkkkkk.......'],
+  },
+  lee: {
+    face: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '..........................',
+      '........hhhhhhhhhh........',
+      '......hhhhhhhhhhhhhh......',
+      '.....hhhgggggggggghhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhh.hhhhh....hhhhh.hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '...hh................hh...',
+      '...h..................h...'],
+    cote: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '..........................',
+      '.......hhhhhhhhhh.........',
+      '.....hhhhhhhhhhhhhh.......',
+      '....hhhhgggggggggghh......',
+      '...hhhhhhhhhhhhhhhhhh.....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhh......hhhhh.....',
+      '..hhhhhhh.................',
+      '..hhhhhh..................',
+      '...hhhh...................',
+      '....hh....................'],
+    dos: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '..........................',
+      '........hhhhhhhhhh........',
+      '......hhhhhhhhhhhhhh......',
+      '.....hhhgggggggggghhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '....hhhhhhhhhhhhhhhhhh....'],
+  },
+  hinata: {
+    face: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '........hhhhhhhhh.........',
+      '......hhhhgggghhhhh.......',
+      '.....hhhggggggggghhhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhh..............hhhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '...hh................hh...',
+      '...h..................h...'],
+    cote: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '.......hhhhhhhhh..........',
+      '.....hhhhhgggghhhh........',
+      '....hhhhhggggggghhhh......',
+      '...hhhhhhhhhhhhhhhhhh.....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '.hhhhhhhhhhhhhhhhhhhhhh...',
+      '.hhhhhhhhhhhhhhhhhhhhhh...',
+      '.hhhhhhhhhhhhhhhhhhhhhh...',
+      '.hhhhhhhhhhhhhhh..hhhh....',
+      '.hhhhhhhhhhh..............',
+      '.hhhhhhhhhh...............',
+      '.hhhhhhhhhh...............',
+      '.hhhhhhhhh................',
+      '.hhhhhhhhh................',
+      '.hhhhhhhhh................',
+      '..hhhhhhhh................',
+      '..hhhhhhh.................',
+      '...hhhhh..................'],
+    dos: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '........hhhhhhhhh.........',
+      '......hhhhhhhhhhhhh.......',
+      '.....hhhhhhhhhhhhhhhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '....hhhhhhhhhhhhhhhhhh....'],
+  },
+  shikamaru: {
+    face: [
+      '...........h..h...........',
+      '..........hhhhhh..........',
+      '.........hhghhhhh.........',
+      '..........hhhhhh..........',
+      '...........hhhh...........',
+      '..........hhhhhh..........',
+      '.......hhhhhhhhhhhh.......',
+      '......hhhhhgggghhhhhh.....',
+      '.....hhhhhhhhhhhhhhhhh....',
+      '....hhhhhhhhhhhhhhhhhhh...',
+      '....hhh............hhh....',
+      '....hh..............hh....',
+      '....h................h....'],
+    cote: [
+      '..........................',
+      '..h..h....................',
+      '..hhhhhh..................',
+      '...hhghhh.................',
+      '....hhhhh.................',
+      '.....hhhhhhhhhhh..........',
+      '....hhhhhhhhhhhhhhh.......',
+      '...hhhhhhhhgggghhhhhh.....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhh...........',
+      '..hhhhhhhhh...............',
+      '...hhhhh..................',
+      '....hh....................'],
+    dos: [
+      '...........h..h...........',
+      '..........hhhhhh..........',
+      '.........hhghhhhh.........',
+      '..........hhhhhh..........',
+      '...........hhhh...........',
+      '..........hhhhhh..........',
+      '.......hhhhhhhhhhhh.......',
+      '......hhhhhhhhhhhhhh......',
+      '.....hhhhhhhhhhhhhhhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '.....hhhhhhhhhhhhhhhh.....',
+      '......hhhhhhhhhhhhhh......'],
+  },
+  gaara: {
+    face: [
+      '..........................',
+      '...........h..............',
+      '.......h..hh...h..........',
+      '......hh.hhhh.hh...h......',
+      '.....hhhhhgghhhh..hh......',
+      '....hhhhhggggghhhhhh......',
+      '...hhhhhggggggghhhhhh.....',
+      '...hhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhh.hhhhh.hhhh.hhhhhh..',
+      '..hhh...hhh...hh...r.hhh..',
+      '..hh.....h........rrr.hh..',
+      '..h................r......',
+      '..h.......................'],
+    cote: [
+      '..........................',
+      '.........h................',
+      '.....h..hh...h............',
+      '....hh.hhhh.hh............',
+      '...hhhhhhgghhhh...........',
+      '..hhhhhhggggghhhhh........',
+      '.hhhhhhhgggggghhhhhh......',
+      '.hhhhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhh.hhhh.hhhh....',
+      '..hhhhhhhh...hh.....r.....',
+      '..hhhhhh...........rrr....',
+      '...hhhh.............r.....',
+      '....hh....................'],
+    dos: [
+      '..........................',
+      '...........h..............',
+      '.......h..hh...h..........',
+      '......hh.hhhh.hh...h......',
+      '.....hhhhhhhhhhh..hh......',
+      '....hhhhhhhhhhhhhhhh......',
+      '...hhhhhhhhhhhhhhhhhh.....',
+      '...hhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '......hhhhhhhhhhhhhh......'],
+  },
+  kankuro: {
+    face: [
+      '...h..................h...',
+      '...hh................hh...',
+      '...hhh..............hhh...',
+      '...hhhh............hhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhggggggggghhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhbbbbbPppPbbbbbhhhh..',
+      '..hhhhbbbbbPpPPbbbbbhhhh..',
+      '..hhhh..............hhhh..',
+      '..hhh....v......v....hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh..vv........vv..hhh..',
+      '..hhh...v...vv...v...hhh..',
+      '..hhhh..............hhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '.....hhhhhhhhhhhhhhhh.....'],
+    cote: [
+      '......h..........h........',
+      '......hh........hh........',
+      '......hhh......hhh........',
+      '.....hhhhhhhhhhhhhh.......',
+      '....hhhhhhhhhhhhhhhhh.....',
+      '...hhhhhgggggggggghhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhbbbbbbbbbbbPpPh...',
+      '..hhhhhhbbbbbbbbbbbPPPh...',
+      '..hhhhhhhhhhh.............',
+      '..hhhhhhhhhh.....v........',
+      '..hhhhhhhhh...............',
+      '..hhhhhhhhh...............',
+      '..hhhhhhhhh...............',
+      '..hhhhhhhhh...............',
+      '..hhhhhhhhh.......vv......',
+      '..hhhhhhhhh........v......',
+      '..hhhhhhhhhh..............',
+      '...hhhhhhhhhhh............',
+      '.....hhhhhhhh.............'],
+    dos: [
+      '...h..................h...',
+      '...hh................hh...',
+      '...hhh..............hhh...',
+      '...hhhh............hhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhbbbbbbbbbbbbbbhhhh..',
+      '..hhhhbbbbbbbbbbbbbbhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '.....hhhhhhhhhhhhhhhh.....'],
+  },
+  kiba: {
+    face: [
+      '..........................',
+      '.......h.....h.....h......',
+      '.....h.hh...hhh...hh.h....',
+      '.....hhhhh.hhhhh.hhhhh....',
+      '....hhhhhhhhgghhhhhhhhh...',
+      '...hhhhhhgggggggghhhhhh...',
+      '..hhhhhhggggggggggghhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhbbbbbPppppPbbbbbhh...',
+      '...hhbbbbbPpPPpPbbbbbhh...',
+      '...hh.h..hh....hh..h.hh...',
+      '...h..................h...',
+      '..........................',
+      '..........................',
+      '.....r................r...',
+      '.....rr..............rr...',
+      '.....r................r...'],
+    cote: [
+      '..........................',
+      '........h.....h...........',
+      '......h.hh...hhh..........',
+      '.....hhhhhh.hhhhh.........',
+      '....hhhhhhhhhgghhhh.......',
+      '...hhhhhhhhggggggghhh.....',
+      '..hhhhhhhhhgggggggghhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhh....',
+      '..bbhhhhbbbbbbbbbbbPppP...',
+      '..bbhhhhbbbbbbbbbbbPpPP...',
+      '..b.hhhhh.....h..h.hh.....',
+      '....hhhh..................',
+      '....hhh...................',
+      '..........................',
+      '...................r......',
+      '...................rr.....',
+      '...................r......'],
+    dos: [
+      '..........................',
+      '.......h.....h.....h......',
+      '.....h.hh...hhh...hh.h....',
+      '.....hhhhh.hhhhh.hhhhh....',
+      '....hhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhbbbbbbbbbbbbbbbbhh...',
+      '...hhbbbbbbbbbbbbbbbbhh...',
+      '...hhhhhhhhbbbbhhhhhhhh...',
+      '...hhhhhhhhbhhbhhhhhhhh...',
+      '....hhhhhhbhhhhbhhhhhh....',
+      '.....hhhhhhhhhhhhhhhh.....'],
+  },
+  sasori: {
+    face: [
+      '..........................',
+      '..........................',
+      '..........h....h..........',
+      '.......h..hh..hh..h.......',
+      '......hhhhhhhhhhhhhh......',
+      '.....hhhhhggggghhhhhh.....',
+      '....hhhhggggggggghhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhh.hhhhh..hhhh.hhhh..',
+      '..hhh....hhh....hh...hhh..',
+      '..hh.................hhh..',
+      '..hh..................hh..',
+      '...h..................h...'],
+    cote: [
+      '..........................',
+      '..........................',
+      '.........h....h...........',
+      '......h..hh..hh...........',
+      '.....hhhhhhhhhhhhh........',
+      '....hhhhhhhgggghhhhh......',
+      '...hhhhhhhggggggghhhhh....',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhh..hhhh.hh...',
+      '..hhhhhhhhh.....hh........',
+      '..hhhhhhh.................',
+      '...hhhhh..................',
+      '....hhh...................'],
+    dos: [
+      '..........................',
+      '..........................',
+      '..........h....h..........',
+      '.......h..hh..hh..h.......',
+      '......hhhhhhhhhhhhhh......',
+      '.....hhhhhhhhhhhhhhhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '.....hhhhhhhhhhhhhhhh.....'],
+  },
+  kakuzu: {
+    face: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '.........hhhhhhhh.........',
+      '.......hhhhhhhhhhhh.......',
+      '.....hhhhhhgggghhhhhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhbbbbbPppppPbbbbbhh...',
+      '..hhhbbbbbPpPPpPbbbbbhhh..',
+      '..hhhbbbbbbbbbbbbbbbbhhh..',
+      '..hhhh..............hhhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhh................hhh..',
+      '..hhhkkkkkkkkkkkkkkkkhhh..',
+      '..hhhkkkkkkkkkkkkkkkkhhh..',
+      '..hhhkkkkkkkkkkkkkkkkhhh..',
+      '...hhhkkkkkkkkkkkkkkhhh...',
+      '....hhhhkkkkkkkkkkhhhh....',
+      '......hhhhhhhhhhhhhh......'],
+    cote: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '........hhhhhhhh..........',
+      '......hhhhhhhhhhhh........',
+      '....hhhhhhhhgggghhhh......',
+      '...hhhhhhhhhhhhhhhhhh.....',
+      '..hhhhhhhhhhhhhhhhhhhh....',
+      '..hhhhhbbbbbbbbbbbPppP....',
+      '..hhhhhbbbbbbbbbbbPpPP....',
+      '..hhhhhbbbbbbbbbbbbbbb....',
+      '..hhhhhhhhhhhhh...........',
+      '..hhhhhhhhhhh.............',
+      '..hhhhhhhhhhh.............',
+      '..hhhhhhhhhhh.............',
+      '..hhhhhhhhhhh.............',
+      '..hhhhhhhhhhhkkkkkkkkkk...',
+      '..hhhhhhhhhhhkkkkkkkkkk...',
+      '..hhhhhhhhhhhkkkkkkkkkk...',
+      '...hhhhhhhhhhkkkkkkkkk....',
+      '....hhhhhhhhhkkkkkkkk.....',
+      '......hhhhhhhhhhhh........'],
+    dos: [
+      '..........................',
+      '..........................',
+      '..........................',
+      '.........hhhhhhhh.........',
+      '.......hhhhhhhhhhhh.......',
+      '.....hhhhhhhhhhhhhhhh.....',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '...hhbbbbbbbbbbbbbbbbhh...',
+      '..hhhbbbbbbbbbbbbbbbbhhh..',
+      '..hhhbbbbbbbbbbbbbbbbhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '..hhhhhhhhhhhhhhhhhhhhhh..',
+      '...hhhhhhhhhhhhhhhhhhhh...',
+      '....hhhhhhhhhhhhhhhhhh....',
+      '......hhhhhhhhhhhhhh......'],
+  },
+};
+
+// Corps procéduraux (14 × 11) : modes standard / combinaison / veste / manteau
+function carteCorps(vue, frame, mode) {
+  const vide = () => Array(14).fill('.');
+  const L = []; for (let y = 0; y < 11; y++) L.push(vide());
+  const set = (y, s) => { for (let x = 0; x < s.length; x++) if (s[x] !== '.') L[y][x] = s[x]; };
+  const pas = frame % 2 === 1; const cotePas = frame === 1 ? 1 : frame === 3 ? -1 : 0;
+  if (vue === 'face' || vue === 'dos') {
+    set(0, '....cccccc....');
+    set(1, '..tttttttttt..');
+    set(2, '.atttttttttTA.');
+    set(3, '.atttttttttTA.');
+    set(4, '.atttttttttTA.');
+    set(5, vue === 'face' ? '.kttttttttttk.' : '.kTTTTTTTTTTk.');
+    set(6, '..eeeeeeeeee..');
+    if (mode === 'manteau') {
+      for (let y = 1; y <= 9; y++) for (let x = 2; x <= 11; x++) L[y][x] = (x >= 10 ? 'T' : 't');
+      set(5, '.kttttttttttk.'); for (let x = 2; x <= 11; x++) L[6][x] = 't';
+      set(9, pas ? '..tttttttttt..' : '..tttttttttt..');
+      set(10, cotePas > 0 ? '...ff....fff..' : cotePas < 0 ? '..fff....ff...' : '..fff....fff..');
+      return L;
+    }
+    const jambe = (x0, leve) => { const y0 = leve ? 6 : 7; for (let y = y0; y <= y0 + 2; y++) for (let x = x0; x < x0 + 4; x++) L[y][x] = (x === x0 + 3 ? 'P' : 'p'); for (let x = x0; x < x0 + 4; x++) L[y0 + 3][x] = 'f'; };
+    jambe(2, cotePas === 1); jambe(8, cotePas === -1);
+    if (mode === 'veste') { for (const y of [1, 2, 3, 4]) { L[y][2] = 'v'; L[y][3] = 'v'; L[y][10] = 'v'; L[y][11] = 'V'; } L[1][4] = 'v'; L[1][9] = 'v'; }
+  } else { // côté, tourné vers la droite
+    set(0, '.....cccc.....');
+    set(1, '....tttttt....');
+    set(2, '....tttttTT...');
+    set(3, '....ttttttT...');
+    set(4, '....ttttttT...');
+    set(5, '....tttttTT...');
+    set(6, '....eeeeeee...');
+    if (mode === 'manteau') {
+      for (let y = 1; y <= 9; y++) for (let x = 4; x <= 10; x++) L[y][x] = x >= 9 ? 'T' : 't';
+      set(10, pas ? '...ff....ff...' : '....fffff.....');
+      const bx = pas ? (frame === 1 ? 8 : 5) : 7; L[3][bx] = 'a'; L[4][bx] = 'a'; L[5][bx] = 'k';
+      return L;
+    }
+    if (!pas) { set(7, '.....ppppP....'); set(8, '.....ppppP....'); set(9, '.....ppppP....'); set(10, '.....fffff....'); }
+    else { set(7, '....pP..pP....'); set(8, '...pP....pP...'); set(9, '..pP......pP..'); set(10, '..ff......fff.'); }
+    const bx = pas ? (frame === 1 ? 9 : 5) : 7; const by = pas ? 2 : 3;
+    L[by][bx] = 'a'; L[by + 1][bx] = 'a'; L[by + 2][bx] = 'a'; L[Math.min(6, by + 3)][bx] = 'k';
+    if (mode === 'veste') { for (const y of [1, 2, 3, 4, 5]) { L[y][4] = 'v'; L[y][9] = 'V'; } }
+  }
+  return L;
+}
+
+// Définitions visuelles des personnages (couleurs + coiffure + corps + options)
+const VISUELS = {
+  naruto: { coiffure: 'naruto', c: { h: '#f6cf3e', g: '#fff19c', H: '#c99a26', b: '#28407c', p: '#cfd2de', P: '#6a7088', m: '#6a3424' },
+    corps: { mode: 'combinaison', t: '#f28a22', T: '#c8661a', a: '#f28a22', A: '#c8661a', c: '#243458', e: '#243458', p: '#f28a22', P: '#c8661a', f: '#28407c' } },
+  sasuke: { coiffure: 'sasuke', c: { h: '#2c2e4a', g: '#505a8a', H: '#191a2c', b: '#28407c', p: '#cfd2de', P: '#6a7088' },
+    corps: { mode: 'standard', t: '#34406e', T: '#262f54', a: '#34406e', A: '#262f54', c: '#34406e', e: '#e6e1d4', p: '#e6e1d4', P: '#b8b2a4', f: '#28407c' } },
+  sakura: { coiffure: 'sakura', c: { h: '#f39ab8', g: '#ffcadb', H: '#cf6a90', b: '#28407c', p: '#cfd2de', P: '#6a7088' },
+    corps: { mode: 'standard', t: '#c83442', T: '#96222e', a: '#c83442', A: '#96222e', c: '#f0e8e0', e: '#3a3a4a', p: '#3a3a4a', P: '#26262f', f: '#28407c' } },
+  kakashi: { coiffure: 'kakashi', c: { h: '#d9dde6', g: '#f6f7fb', H: '#9aa1b0', b: '#28407c', p: '#cfd2de', P: '#6a7088', k: '#2c3346', K: '#1c2231' }, yeux: 'etroit',
+    corps: { mode: 'veste', t: '#2c3450', T: '#1f253b', a: '#2c3450', A: '#1f253b', c: '#2c3346', e: '#1f253b', p: '#2c3450', P: '#1f253b', f: '#1f253b', v: '#5e7e3e', V: '#46612c' } },
+  lee: { coiffure: 'lee', c: { h: '#16161c', g: '#4e4e68', H: '#08080c' }, sourcils: true, yeux: 'rond',
+    corps: { mode: 'combinaison', t: '#3c9a3c', T: '#2a782a', a: '#3c9a3c', A: '#2a782a', c: '#3c9a3c', e: '#c83442', p: '#3c9a3c', P: '#2a782a', f: '#f28a22' } },
+  hinata: { coiffure: 'hinata', c: { h: '#2e2e62', g: '#4c4c90', H: '#1a1a3c' }, yeux: 'byakugan',
+    corps: { mode: 'standard', t: '#d6cce8', T: '#a89cc8', a: '#d6cce8', A: '#a89cc8', c: '#28407c', e: '#a89cc8', p: '#2c3050', P: '#1e2238', f: '#28407c' } },
+  shikamaru: { coiffure: 'shikamaru', c: { h: '#2a2420', g: '#4c4038', H: '#15110e' }, yeux: 'etroit',
+    corps: { mode: 'veste', t: '#3e4a5a', T: '#2e3846', a: '#3e4a5a', A: '#2e3846', c: '#5e7e3e', e: '#2e3846', p: '#2c3450', P: '#1f253b', f: '#1f253b', v: '#5e7e3e', V: '#46612c' } },
+  gaara: { coiffure: 'gaara', c: { h: '#c63a2a', g: '#ea6a4c', H: '#8a2418', r: '#a0202a' }, yeux: 'cerne',
+    corps: { mode: 'manteau', t: '#7c3a2c', T: '#5a2a20', a: '#7c3a2c', A: '#5a2a20', c: '#a8a090', e: '#a8a090', p: '#5a2a20', P: '#3e1c16', f: '#3a2a22' }, dos: 'gourde' },
+  kankuro: { coiffure: 'kankuro', c: { h: '#27272f', g: '#3e3e50', H: '#16161c', b: '#28407c', p: '#cfd2de', P: '#6a7088', v: '#9a3ab8' },
+    corps: { mode: 'combinaison', t: '#27272f', T: '#18181e', a: '#27272f', A: '#18181e', c: '#27272f', e: '#6a5a40', p: '#27272f', P: '#18181e', f: '#28407c' }, dos: 'marionnette' },
+  kiba: { coiffure: 'kiba', c: { h: '#5c3a26', g: '#7e5838', H: '#3a2418', b: '#28407c', p: '#cfd2de', P: '#6a7088', r: '#c8303a' }, yeux: 'fente',
+    corps: { mode: 'standard', t: '#6c6c7a', T: '#50505c', a: '#6c6c7a', A: '#50505c', c: '#d8d0c0', e: '#3a3a48', p: '#2c3450', P: '#1f253b', f: '#1f253b' } },
+  sasori: { coiffure: 'sasori', c: { h: '#c63a2a', g: '#e86048', H: '#8a2418' }, yeux: 'etroit',
+    corps: { mode: 'manteau', t: '#1e1e28', T: '#121218', a: '#1e1e28', A: '#121218', c: '#d8d4cc', e: '#1e1e28', p: '#1e1e28', P: '#121218', f: '#3a2a4a' }, nuages: true },
+  kakuzu: { coiffure: 'kakuzu', c: { h: '#3a3a4e', g: '#56566e', H: '#26263a', b: '#30303e', p: '#b8bcc8', P: '#5a6070', k: '#2c3040', K: '#1c2030' }, yeux: 'kakuzu',
+    corps: { mode: 'manteau', t: '#1e1e28', T: '#121218', a: '#1e1e28', A: '#121218', c: '#d8d4cc', e: '#1e1e28', p: '#1e1e28', P: '#121218', f: '#3a2a4a' }, nuages: true },
+};
+
+// Couleurs d'yeux par style
+function couleursYeux(style) {
+  switch (style) {
+    case 'byakugan': return { e: '#c9c2e6', w: '#ffffff' };
+    case 'cerne': return { e: '#2a8a84', w: '#d8fff4' };
+    case 'kakuzu': return { e: '#3aa060', w: '#c8303a' };
+    case 'sharingan': return { e: '#c81e28', w: '#ffd0d0' };
+    case 'rinnegan': return { e: '#8a78c8', w: '#e8e0ff' };
+    default: return { e: '#1c1420', w: '#ffffff' };
+  }
+}
+
+// Assemble une tête (vue, état) → toile 26×22 contournée
+function construireTete(V, vue, etat) {
+  const base = carteTeteBase(vue === 'dos' ? 'dos' : vue);
+  const co = COIFFURES[V.coiffure][vue];
+  for (let y = 0; y < co.length; y++) for (let x = 0; x < co[y].length && x < 26; x++) { const k = co[y][x]; if (k !== '.') base[y][x] = k; }
+  // Style des yeux (avant clignement)
+  if (vue !== 'dos') {
+    const st = V.yeux || 'normal';
+    if (st === 'etroit') for (let y = 13; y <= 14; y++) for (let x = 0; x < 26; x++) if (base[y][x] === 'e' || base[y][x] === 'w') base[y][x] = y === 13 ? 'm' : 's';
+    if (st === 'cerne') { for (let y = 12; y <= 17; y++) for (let x = 0; x < 26; x++) if ((base[y][x] === 's' || base[y][x] === 'd') && [[0, 1], [0, -1], [1, 0], [-1, 0]].some(([dx, dy]) => { const q = (base[y + dy] || [])[x + dx]; return q === 'e' || q === 'w'; })) base[y][x] = 'C'; }
+    if (st === 'fente') for (let y = 13; y <= 16; y++) for (let x = 0; x < 26; x++) if (base[y][x] === 'e' && (x === 7 || x === 9 || x === 16 || x === 18)) base[y][x] = 'Y';
+    if (V.sourcils) { for (const [x0, x1] of [[6, 10], [15, 19]]) for (let x = x0; x <= x1; x++) { if (vue === 'cote' && x < 14) continue; base[12][x] = 'h'; base[11][x] = x === x0 || x === x1 ? base[11][x] : 'h'; } }
+  }
+  if (etat === 'cligne' || etat === 'tir') {
+    // yeux fermés : on garde la ligne la plus basse de chaque œil
+    for (let x = 0; x < 26; x++) {
+      let bas = -1; for (let y = 12; y <= 17; y++) if (['e', 'w', 'Y'].includes(base[y][x])) bas = y;
+      if (bas < 0) continue;
+      for (let y = 12; y <= 17; y++) if (['e', 'w', 'Y'].includes(base[y][x])) base[y][x] = (etat === 'tir' ? y === bas - 1 : y === bas) ? 'e' : 's';
+    }
+    if (etat === 'tir' && vue === 'face') { base[18][12] = 'm'; base[18][13] = 'm'; base[19][12] = 'M'; base[19][13] = 'M'; }
+  }
+  const yeux = couleursYeux(V.yeux);
+  const couleurs = Object.assign({ s: PEAU.s, d: PEAU.d, l: PEAU.l, m: '#6a3424', M: '#a04040', C: '#1c1420', Y: '#e8e0d0' }, yeux, V.c);
+  if (V.yeux === 'fente') couleurs.Y = '#f0e6c8';
+  return contourner(peindre(base.map(r => r.join('')), couleurs, 26, 22));
+}
+function construireCorps(V, vue, frame) {
+  const P = V.corps; const L = carteCorps(vue, frame, P.mode);
+  const couleurs = Object.assign({ k: PEAU.s }, P);
+  if (V.nuages) { couleurs.n = '#c8303a'; couleurs.N = '#f0ece4'; // nuages rouges bordés de blanc sur le manteau
+    const pos = vue === 'cote' ? [[5, 3], [7, 7]] : [[3, 3], [9, 6], [5, 8]];
+    for (const [x, y] of pos) if (L[y] && (L[y][x] === 't' || L[y][x] === 'T')) { L[y][x] = 'n'; if (L[y][x + 1] === 't') L[y][x + 1] = 'N'; }
+  }
+  return contourner(peindre(L.map(r => r.join('')), couleurs, 14, 11));
+}
+function construireDos(V, vue) {
+  if (!V.dos) return null;
+  if (V.dos === 'gourde') {
+    const face = ['...oo...', '..oppo..', '.oppppo.', '.opppPo.', '..oPPo..', '.oppppo.', 'oppppppo', 'opppppPo', 'oppppPPo', '.oPPPPo.', '..oooo..'];
+    return contourner(peindre(face, { o: '#8a6a3a', p: '#d0a868', P: '#a8844a' }, 8, 11));
+  }
+  if (V.dos === 'marionnette') {
+    const m = ['..wwww..', '.wWwwWw.', '.wwwwww.', 'wWwwwwWw', 'wwwwwwww', 'wwWwwWww', '.wwwwww.', '.wWwwWw.', '..wwww..'];
+    return contourner(peindre(m, { w: '#e6dcc4', W: '#b8a888' }, 8, 9));
+  }
+  return null;
+}
+
+// Construit toutes les images d'un personnage : tetes[vue][etat], corps[vue][frame]
+const _cachePersos = {};
+function spritesPerso(cle) {
+  if (_cachePersos[cle]) return _cachePersos[cle];
+  const V = VISUELS[cle] || VISUELS.naruto; const S = { tetes: {}, corps: {}, dos: {} };
+  for (const vue of ['face', 'cote', 'dos']) {
+    S.tetes[vue] = {}; for (const e of ['normal', 'cligne', 'tir']) S.tetes[vue][e] = construireTete(V, vue, e);
+    S.corps[vue] = []; for (let f = 0; f < 4; f++) S.corps[vue].push(construireCorps(V, vue, f));
+  }
+  S.tetes.gauche = {}; for (const e of ['normal', 'cligne', 'tir']) S.tetes.gauche[e] = miroir(S.tetes.cote[e]);
+  S.corps.gauche = S.corps.cote.map(miroir);
+  S.dosAcc = construireDos(V, 'dos');
+  _cachePersos[cle] = S; return S;
+}
+// Dessine un personnage : dirCorps / dirTete ∈ haut|bas|gauche|droite
+function dessinerPerso(g, cle, x, y, o = {}) {
+  const S = spritesPerso(cle);
+  const vueDe = d => d === 'haut' ? 'dos' : d === 'bas' ? 'face' : d === 'gauche' ? 'gauche' : 'cote';
+  const vc = vueDe(o.dirCorps || 'bas'), vt = vueDe(o.dirTete || o.dirCorps || 'bas');
+  const f = o.frame || 0; const bob = (f % 2 === 1) ? -1 : 0;
+  const corps = S.corps[vc][f], tete = S.tetes[vt][o.etatTete || 'normal'];
+  const X = Math.round(x), Y = Math.round(y);
+  // accessoire de dos : derrière le corps sauf vue de dos
+  if (S.dosAcc && vc !== 'dos') g.drawImage(S.dosAcc, X - 4 + (vc === 'cote' ? -5 : vc === 'gauche' ? 5 : 5), Y - 16);
+  g.drawImage(corps, X - 7, Y - 11 + (o.dy || 0));
+  if (S.dosAcc && vc === 'dos') g.drawImage(S.dosAcc, X - 4, Y - 13);
+  g.drawImage(tete, X - 13, Y - 32 + bob + (o.etatTete === 'tir' ? 1 : 0) + (o.dy || 0));
+}
+
+// ─── 99_apercu_tmp.js ───
+// temporaire : planche de sprites
+(function(){
+  const c = document.getElementById('ecran'); c.width = 640; c.height = 360; const g = c.getContext('2d'); g.imageSmoothingEnabled=false;
+  g.fillStyle = '#3a3530'; g.fillRect(0,0,640,360);
+  const cles = Object.keys(VISUELS); let i = 0;
+  for (const k of cles) {
+    const col = i % 6, row = Math.floor(i / 6);
+    const bx = 20 + col * 104, by = 50 + row * 150;
+    Police.ecrire(g, k, bx, by - 40, '#fff');
+    dessinerPerso(g, k, bx + 12, by, {dirCorps:'bas'});
+    dessinerPerso(g, k, bx + 44, by, {dirCorps:'droite', frame:1});
+    dessinerPerso(g, k, bx + 76, by, {dirCorps:'haut'});
+    dessinerPerso(g, k, bx + 12, by + 40, {dirCorps:'bas', frame:1, etatTete:'tir'});
+    dessinerPerso(g, k, bx + 44, by + 40, {dirCorps:'gauche', frame:3});
+    dessinerPerso(g, k, bx + 76, by + 40, {dirCorps:'droite', dirTete:'bas', frame:2, etatTete:'cligne'});
+    i++;
+  }
+  Police.ecrire(g, 'Éé àâ çÇ ōū Ō — «Labyrinthe» 0123456789 ?!%', 10, 340, '#ffd060');
+  window.__pret = true;
+})();
+
+})();
+</script>
+</body>
+</html>
