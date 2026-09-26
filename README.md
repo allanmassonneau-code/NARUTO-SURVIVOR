@@ -17,13 +17,21 @@ Projet créatif **non officiel** : dossier de conception d'un roguelite de type 
 | H | Production et validation | [`dossier/H_production.md`](dossier/H_production.md) |
 | Z | Audit synthétique (comptes réels, contradictions résolues, reste à faire) | [`dossier/Z_audit.md`](dossier/Z_audit.md) |
 
-## Prototype technique jouable
+## Jeu jouable (tout le catalogue)
 
-[`prototype/index.html`](prototype/index.html) : un seul fichier, sans dépendance, à ouvrir dans un navigateur (clavier, manette ou écran tactile). Il met en œuvre la première étape du plan de production (§A, §H) : Naruto (CHR_001) avec Kage Bunshin (JUT_217), Rasengan (JUT_281) et Kunai en éventail (JUT_185) aux valeurs des fiches sur 8 niveaux, la signature des clones, l'évolution EVO_069 (coffre d'élite), l'ultime ULT_001, 11 passifs, le tirage des cartes du §B6.4 (filet §B6.6, relances), les fenêtres d'invulnérabilité du §B1.5, les ennemis ENM_002/003/011/019/020/076 et Zabuza (BOS_001) avec ses 5 attaques télégraphiées, ses 3 phases et la brume.
+[`prototype/index.html`](prototype/index.html) : un seul fichier, à ouvrir dans un navigateur (clavier, manette ou tactile). Il est **construit à partir des données du dossier** par `python3 outils/construire_jeu.py`, qui lit `data/*.yaml`, extrait les paramètres chiffrés des textes et assemble `prototype/src/*.js`.
 
-Écarts assumés du prototype : chronologie compressée (Zabuza à 05:00 au lieu de 20:00), fragments d'XP ×2, 5 000 PV pour Zabuza (90 000 au format complet), terrain gris générique, sprites provisoires (PH), sons synthétiques. Réglage vérifié par des parties automatiques (robot d'évitement, premier choix de carte) : environ 2 victoires sur 3, combat de boss de 1 min 30 à 2 min 15.
+Contenu jouable : village, 80 entrées jouables, 320 techniques, 120 évolutions, fusions et éveils, 80 synergies, 60 passifs, 40 équipements, 24 transformations, 44 ultimes, 20 cartes, 100 ennemis (9 rôles, 25 modificateurs d'élite), 40 boss, 5 modes (Standard, Expédition, Endless, Boss Rush, Draft), 6 rangs, 200 missions (191 suivies automatiquement), 60 secrets, boutique et maîtrise, Archives, sauvegarde v3 avec migrations.
 
-Commandes : ZQSD/WASD/flèches (ou glisser au doigt), Espace = esquive, E = ultime, Échap = pause, M = son. L'adresse `index.html#test-boss` démarre à 04:48 avec un build de fin de partie (raccourci de test).
+Ce qui est générique ou approché (affiché aussi dans l'onglet « Couverture » des Archives) :
+- les techniques passent par 12 comportements de livraison paramétrés par leurs valeurs ; 48 ont leur table de 8 niveaux, les 272 autres un barème générique ; Kage Bunshin, Rasengan, Kunai en éventail et EVO_069 ont un code sur mesure ;
+- 12 boss exécutent leurs attaques du dossier, les 28 boss « fiche d'identité » reçoivent un kit générique tiré de leur mécanique ; PV des boss ×0,24 en Standard (calibrage de ce moteur) ;
+- synergies, ultimes et CPX : effet classé automatiquement à partir du texte ; beaucoup de CPX restent descriptifs ;
+- non implémentés : Entraînement, doctrines, cosmétiques, reprise de run, déplacement au village, reconfiguration des touches.
+
+Tests : `node outils/tests_jeu.js` (Playwright) exerce chaque personnage, technique, recette, ultime, transformation, boss, élite et mode. L'équilibrage n'a été réglé qu'avec un robot, pas avec des joueurs.
+
+Le prototype technique d'origine (Naruto contre Zabuza) reste disponible : [`prototype/prototype_technique.html`](prototype/prototype_technique.html).
 
 ## Contenu du catalogue
 
@@ -35,7 +43,7 @@ Commandes : ZQSD/WASD/flèches (ou glisser au doigt), Espace = esquive, E = ulti
 data/          Source de vérité (YAML) + schémas JSON (data/schemas/)
 catalogues/    Exports générés : CSV (séparateur « ; ») et JSON
 dossier/       Documents de conception ; E_catalogues/ contient les tableaux générés et les fiches rédigées
-prototype/     Prototype technique jouable (index.html)
+prototype/     Jeu jouable (index.html, généré depuis src/ et data/) et prototype technique
 outils/        commun.py, valider.py, generer.py, sauvegarde.py, tests_validateur.py
 ```
 
@@ -47,6 +55,8 @@ Prérequis : Python 3.10+ et PyYAML.
 python3 outils/valider.py            # cohérence : identifiants, références, accès, recettes, cycles, déblocages, builds, vagues
 python3 outils/tests_validateur.py   # tests négatifs du validateur + migration de sauvegarde
 python3 outils/generer.py            # régénère dossier/E_catalogues/*.md et catalogues/*.csv|json
+python3 outils/construire_jeu.py     # reconstruit prototype/index.html depuis data/ et prototype/src/
+node outils/tests_jeu.js             # tests automatiques du jeu (Playwright + Chromium)
 ```
 
 Règle de modification (registre §R13) : modifier le registre si nécessaire, puis `data/`, lancer la validation, puis la génération ; ne jamais éditer à la main les fichiers générés.
