@@ -145,7 +145,7 @@ const GAMMES = {
 const Musique = {
   A: null, piste: null, pas: 0, prochain: 0, minuteur: null, couches: null, combat: 0, cibleCombat: 0,
   init(A) {
-    this.A = A;
+    this.A = A; if (this.piste) this.prochain = A.ctx.currentTime + 0.1;
     const c = A.ctx;
     this.gAmb = c.createGain(); this.gPerc = c.createGain(); this.gAmb.gain.value = 1; this.gPerc.gain.value = 0;
     this.gAmb.connect(A.busMusique); this.gPerc.connect(A.busMusique);
@@ -173,7 +173,7 @@ const Musique = {
     const basse = []; for (let m = 0; m < mesures; m++) basse.push({ pas: m * pasParMesure, deg: r.choix([0, 0, 3, 4, 1]) , dur: 14 });
     const perc = opts.perc || [0, 6, 8, 11]; // taiko
     this.piste = { nom, gamme, racine, tempo, mesures, pasParMesure, melodie, basse, perc, timbre: opts.timbre || 'koto', intensite: opts.intensite || 1, boss: !!opts.boss };
-    this.pas = 0; if (this.A.ctx) this.prochain = this.A.ctx.currentTime + 0.1;
+    this.pas = 0; if (this.A && this.A.ctx) this.prochain = this.A.ctx.currentTime + 0.1;
   },
   arreter() { this.piste = null; },
   freq(deg) { const p = this.piste; const g = p.gamme; const oct = Math.floor(deg / g.length), i = ((deg % g.length) + g.length) % g.length; return 440 * Math.pow(2, (p.racine + 12 * oct + g[i] - 69) / 12); },

@@ -1,0 +1,122 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// Talismans ninja (TAL), consommables (CON : rouleaux tactiques et sceaux),
+// pilules militaires non identifiées (PIL), familiers (FAM).
+// ═══════════════════════════════════════════════════════════════════════════
+(function () {
+  const TA = (id, nom, couleur, desc, effets, x = {}) => DON.talismans.push(Object.assign({ id, nom, type: 'talisman', couleur, desc, effets, statut: 'création originale', poids: 1 }, x));
+  TA('TAL_001', 'Ryō cousu dans la manche', '#e8c050', 'Blessé, vous perdez un Ryō… qui tombe à vos pieds (et un autre avec).', [{ quand: 'degat_recu', faire: { type: 'ramassable', ramassable: 'ryo' } }]);
+  TA('TAL_002', 'Épingle à cheveux', '#c8ccd8', 'Les coffres verrouillés s’ouvrent sans clé (pas les portes).', [{ drapeau: 'crochetageCoffres' }]);
+  TA('TAL_003', 'Pile de chakra', '#3aa0f0', 'Les actifs demandent une charge de moins.', []);
+  TA('TAL_004', 'Perles du moine', '#e8e0c0', 'Les sanctuaires sont plus probables (+0,15 au poids).', [], { statut: 'création originale' });
+  TA('TAL_005', 'Baguettes d’Ichiraku', '#c8a060', '8 % de soigner une demi-unité à chaque salle nettoyée.', [{ quand: 'salle_nettoyee', chance: 0.08, faire: { type: 'soin', demis: 1 } }]);
+  TA('TAL_006', 'Masque d’oni', '#c83a2a', 'Toucher un ennemi le terrifie parfois (25 %).', [{ quand: 'degat_recu', chance: 0.25, faire: { type: 'statut_proches', statut: 'peur', r: 2, duree: 2 } }]);
+  TA('TAL_007', 'Talisman de protection', '#f0f0f0', 'Blessé : 10 % (+2 % par chance) d’une réserve de chakra en demi.', [{ quand: 'degat_recu', chance: 0.1, chanceParChance: 0.02, max: 0.3, faire: { type: 'protection', demis: 1 } }]);
+  TA('TAL_008', 'Bandeau rayé', '#6a6a78', 'Dégâts +10 % contre les boss.', [{ drapeau: 'bonusBoss' }]);
+  TA('TAL_009', 'Grelot du flair', '#e8c050', 'Signale les murs secrets de la salle en entrant.', [{ quand: 'entree_salle', faire: { type: 'revelation' } }]);
+  TA('TAL_010', 'Poignée de sable', '#d8b070', 'Un orbital de sable temporaire à chaque salle de combat.', [{ quand: 'entree_salle', si: 'combat', faire: { type: 'familier', familier: 'FAM_SABLE', salle: true } }]);
+  TA('TAL_011', 'Mèche courte', '#f07820', 'Vos explosifs explosent plus vite… et vous y survivez mieux (dégâts subis inchangés).', [{ drapeau: 'mecheCourte' }]);
+  TA('TAL_012', 'Mèche longue', '#8a6a3a', 'Explosions 50 % plus larges ; délai +0,5 s.', [{ drapeau: 'mecheLongue' }, { drapeau: 'grandeExplosion' }]);
+  TA('TAL_013', 'Charme du plein', '#6ae07a', 'À pleine vitalité, dégâts +0,5.', [{ drapeau: 'pleineVitalite' }]);
+  TA('TAL_014', 'Gourde de saké', '#8a6a4a', 'Identifie les pilules ; les pilules négatives deviennent leur contraire.', []);
+  TA('TAL_015', 'Bague de l’organisation', '#c8303a', 'Les pactes sont plus fréquents (+5 %).', []);
+  TA('TAL_016', 'Plume de la pluie', '#a8b8c8', '10 % de tirs spectraux.', [{ drapeau: 'spectralParfois' }]);
+  TA('TAL_017', 'Écaille de requin', '#4a6a8a', '3 % des coups portés soignent une demi-unité.', [{ quand: 'impact', chance: 0.03, faire: { type: 'soin', demis: 1 } }]);
+  TA('TAL_018', 'Gant d’armurière', '#c83a2a', '10 % d’un tir supplémentaire.', [{ quand: 'emission_primaire', chance: 0.1, faire: { type: 'tir_bonus' } }]);
+  TA('TAL_019', 'Bandage de lutteur', '#e8e0d0', 'Vitesse +0,3.', [{ s: 'vitesse', a: 0.3 }]);
+  TA('TAL_020', 'Lunettes noires', '#2a2a2a', 'Vos familiers infligent 20 % de plus.', []);
+  TA('TAL_021', 'Fleur de la boutique', '#e8a0d0', '5 % de charmer 3 s.', [{ statut: 'charme', chance: 0.05, duree: 3 }]);
+  TA('TAL_022', 'Jeton de tripot', '#f0c040', 'Loteries un peu plus généreuses (+10 %).', []);
+  TA('TAL_023', 'Dent de requin', '#e8f0f8', 'Vos explosions infligent 5 dégâts de plus.', [{ drapeau: 'explosionPlus' }]);
+  TA('TAL_024', 'Kunai rouillé', '#8a5a3a', '8 % de brûler.', [{ statut: 'brulure', chance: 0.08, chanceParChance: 0.02, max: 0.3 }]);
+  TA('TAL_025', 'Clochette du chat fugueur', '#e8c050', 'Chance +1 pour les récompenses de fin de salle.', [{ s: 'chance', a: 1 }], { statut: 'clin d’œil (mission du chat)' });
+  TA('TAL_026', 'Graine de bois', '#6a9a3a', 'Toutes les 10 salles nettoyées, un contenant vide.', [{ quand: 'salle_nettoyee', tousLes: 10, faire: { type: 'contenant_vide' } }]);
+  TA('TAL_027', 'Sceau d’eau', '#4a8ae8', 'Immunité aux flaques et sables mouvants.', [{ drapeau: 'immuniteSol' }]);
+  TA('TAL_028', 'Poids d’entraînement', '#6a6a78', 'Vitesse −0,3, dégâts +0,5.', [{ s: 'vitesse', a: -0.3 }, { s: 'degats', a: 0.5 }]);
+  TA('TAL_029', 'Pétale de papier', '#f4f0e8', 'Vos explosions projettent des papiers tranchants.', [{ drapeau: 'explosifsCroix' }]);
+  TA('TAL_030', 'Mèche de cheveux blancs', '#e8e8e8', 'Chance +1.', [{ s: 'chance', a: 1 }]);
+  TA('TAL_031', 'Encre sèche', '#1a1a2a', '15 % de ne pas consommer un rouleau ou une pilule.', []);
+  TA('TAL_032', 'Médaille de l’examen', '#e8c050', 'Les portes d’épreuve s’ouvrent toujours.', []);
+  TA('TAL_033', 'Omamori', '#c83a4a', 'Une fois par étage, annule un coup.', []);
+  TA('TAL_034', 'Tatouage de l’ANBU', '#3a3a44', 'Dégâts +10 % dans les salles de boss.', [{ drapeau: 'bonusBoss' }]);
+  TA('TAL_035', 'Masque de chat', '#e8e4dc', 'Portes secrètes : une fissure est visible en passant.', [{ drapeau: 'indicesSecrets' }]);
+
+  // ── Consommables : rouleaux tactiques (22) et sceaux (8) ──
+  const C = (id, nom, famille, couleur, effet, params, desc, x = {}) => DON.consommables.push(Object.assign({ id, nom, type: 'consommable', famille, couleur, effet, params, desc, statut: 'création originale', poids: 1 }, x));
+  C('CON_001', 'Rouleau du retour', 'rouleau', '#8a7ab0', 'teleport', { cible: 'depart' }, 'Vous renvoie à la salle de départ.');
+  C('CON_002', 'Rouleau du marionnettiste', 'rouleau', '#6a5a4a', 'bonus_salle', { bonus: { tir: { traj: 'guidage', force: 2 } } }, 'Pour la salle : vos tirs se guident.');
+  C('CON_003', 'Rouleau de l’ombre', 'rouleau', '#2a2238', 'immobiliser', { duree: 4 }, 'Immobilise tous les ennemis 4 s.');
+  C('CON_004', 'Rouleau du chef de village', 'rouleau', '#c83a2a', 'bonus_salle', { bonus: { s: 'degats', a: 1.5 } }, 'Pour la salle : dégâts +1,5.');
+  C('CON_005', 'Rouleau d’escorte', 'rouleau', '#5a1a1a', 'teleport', { cible: 'boss' }, 'Vous téléporte devant le boss de l’étage.');
+  C('CON_006', 'Rouleau de soin', 'rouleau', '#4a8ae8', 'ressources', { prot: 4 }, 'Deux réserves de chakra protecteur.');
+  C('CON_007', 'Rouleau du ramen', 'rouleau', '#c8a060', 'poser', { types: ['coeur', 'coeur'] }, 'Deux cœurs de vitalité apparaissent.');
+  C('CON_008', 'Rouleau de la jeunesse', 'rouleau', '#3c9a3c', 'bonus_temps', { duree: 6, invuln: true, bonus: { s: 'vitesse', a: 1 } }, '6 s : invulnérable et rapide.');
+  C('CON_009', 'Rouleau de l’équilibre', 'rouleau', '#c8c0a0', 'ressources', { res: { ryo: 1, cles: 1, explosifs: 1 }, soin: 1 }, 'Un Ryō, une clé, un explosif et une demi-unité de soin.');
+  C('CON_010', 'Rouleau du colporteur', 'rouleau', '#e0d070', 'teleport', { cible: 'boutique' }, 'Vous téléporte à l’échoppe.');
+  C('CON_011', 'Rouleau du tripot', 'rouleau', '#c83a2a', 'machine', { type: 'loterie' }, 'Fait apparaître une machine de loterie.');
+  C('CON_012', 'Rouleau de la force', 'rouleau', '#e05a2a', 'bonus_salle', { bonus: { s: 'degats', m: 1.5 } }, 'Pour la salle : dégâts ×1,5.');
+  C('CON_013', 'Rouleau de lévitation', 'rouleau', '#e0e8ff', 'bonus_salle', { bonus: { vol: true } }, 'Pour la salle : lévitation.');
+  C('CON_014', 'Rouleau funeste', 'rouleau', '#1c1420', 'degats_tous', { degats: 40 }, '40 dégâts à tous les ennemis de la salle.');
+  C('CON_015', 'Rouleau de l’autel', 'rouleau', '#8a1a2a', 'machine', { type: 'don_vital' }, 'Fait apparaître un autel de don vital.');
+  C('CON_016', 'Rouleau interdit', 'rouleau', '#6a2a8a', 'bonus_salle', { bonus: { s: 'degats', a: 2 } }, 'Pour la salle : dégâts +2.');
+  C('CON_017', 'Rouleau explosif', 'rouleau', '#c82a2a', 'explosions', { n: 6 }, 'Six explosions éclatent dans la salle (elles ne vous blessent pas).');
+  C('CON_018', 'Rouleau de l’héritage', 'rouleau', '#f0c040', 'teleport', { cible: 'heritage' }, 'Vous téléporte à la salle d’héritage.');
+  C('CON_019', 'Rouleau de la lune', 'rouleau', '#a090a0', 'teleport', { cible: 'cache' }, 'Vous téléporte à la cache de renseignements.');
+  C('CON_020', 'Rouleau du soleil', 'rouleau', '#f0d060', 'reveler', { soin: true, degats: 3 }, 'Soin complet, plan révélé, 3 dégâts à tous.');
+  C('CON_021', 'Rouleau du mendiant', 'rouleau', '#8a7a6a', 'pnj', { type: 'voyageur' }, 'Fait apparaître un voyageur.');
+  C('CON_022', 'Rouleau du monde', 'rouleau', '#6a9a3a', 'reveler', {}, 'Révèle le plan de l’étage.');
+  C('CON_023', 'Sceau de destruction', 'sceau', '#8a7a9a', 'detruire_obstacles', {}, 'Détruit tous les obstacles et révèle les murs secrets de la salle.');
+  C('CON_024', 'Sceau de réécriture', 'sceau', '#e8dcc0', 'relancer', {}, 'Relance les objets sur piédestal de la salle.');
+  C('CON_025', 'Sceau de duplication', 'sceau', '#6ac8e8', 'dupliquer', {}, 'Double les ressources au sol dans la salle.');
+  C('CON_026', 'Sceau de clairvoyance', 'sceau', '#c9c2e6', 'reveler', { secrets: true }, 'Révèle tout l’étage, secrets compris.');
+  C('CON_027', 'Sceau de multiplication', 'sceau', '#f6cf3e', 'clones', { n: 3 }, 'Trois clones pour la salle.');
+  C('CON_028', 'Sceau de permutation', 'sceau', '#6a2a8a', 'permutation', {}, 'Relance tous vos passifs (hors objets-clés).', { poids: 0.3 });
+  C('CON_029', 'Sceau protecteur', 'sceau', '#f0f0f0', 'bonus_temps', { duree: 6, invuln: true, bonus: { s: 'degats', a: 0 } }, '6 s d’invulnérabilité.');
+  C('CON_030', 'Sceau de passage', 'sceau', '#5a4a3a', 'passage', {}, 'Ouvre une trappe vers l’étage suivant (sans récompense de boss).', { poids: 0.5 });
+
+  // ── Pilules non identifiées ──
+  const PI = (id, nom, desc, effet, x = {}) => DON.pilules.push(Object.assign({ id, nom, type: 'pilule', famille: 'pilule', desc, effet, statut: 'création originale' }, x));
+  PI('PIL_01', 'Pilule de régénération', 'Soin complet.', { soinTotal: true });
+  PI('PIL_02', 'Pilule de force', 'Dégâts +0,5.', { s: 'degats', a: 0.5 });
+  PI('PIL_03', 'Pilule de faiblesse', 'Dégâts −0,3.', { s: 'degats', a: -0.3 }, { negatif: true, contraire: 'PIL_02' });
+  PI('PIL_04', 'Pilule de vitesse', 'Vitesse +0,2.', { s: 'vitesse', a: 0.2 });
+  PI('PIL_05', 'Pilule de lenteur', 'Vitesse −0,15.', { s: 'vitesse', a: -0.15 }, { negatif: true, contraire: 'PIL_04' });
+  PI('PIL_06', 'Pilule de cadence', 'Cadence +0,25.', { s: 'cadence', a: 0.25 });
+  PI('PIL_07', 'Pilule de portée', 'Portée +1.', { s: 'portee', a: 1 });
+  PI('PIL_08', 'Pilule de myopie', 'Portée −1.', { s: 'portee', a: -1 }, { negatif: true, contraire: 'PIL_07' });
+  PI('PIL_09', 'Pilule de chance', 'Chance +1.', { s: 'chance', a: 1 });
+  PI('PIL_10', 'Pilule de malchance', 'Chance −1.', { s: 'chance', a: -1 }, { negatif: true, contraire: 'PIL_09' });
+  PI('PIL_11', 'Pilule de chakra', 'Recharge complète de l’actif.', { recharge: true });
+  PI('PIL_12', 'Pilule amère', 'Coûte une demi-unité (jamais mortelle).', { prix: true }, { negatif: true, contraire: 'PIL_01' });
+  PI('PIL_13', 'Pilule de l’ermite', 'Révèle le plan.', { reveler: true });
+  PI('PIL_14', 'Pilule d’oubli', 'Efface les salles non visitées de la carte.', { oubli: true }, { negatif: true, contraire: 'PIL_13' });
+  PI('PIL_15', 'Pilule volcanique', 'Trois explosions autour de vous (sans vous blesser).', { volcan: true });
+
+  // ── Familiers ──
+  const F = (id, nom, comportement, o = {}) => DON.familiers.push(Object.assign({ id, nom, comportement }, o));
+  F('FAM_CLONE', 'Clone de l’ombre', 'suiveur_tireur', { degats: 3.5, cadence: 1.8, apparence: 'kunai', sprite: { icone: 'PSV_061' } });
+  F('FAM_RELAIS', 'Clone de relais', 'copieur', { coef: 0.75, sprite: { icone: 'PSV_023' } });
+  F('FAM_CLONE_TEMP', 'Clone (salle)', 'clone_temp', { coef: 0.5 });
+  F('FAM_CLONE_RES', 'Clone de réserve', 'clone_res', { coefJoueur: 0.35, cadence: 2.2, apparence: 'kunai' });
+  F('FAM_CLONE_SABLE', 'Clone de sable', 'copieur', { coef: 0.6, sprite: { carte: 'esprit_sable' } });
+  F('FAM_GAMAKICHI', 'Gamakichi', 'suiveur_tireur', { degats: 3, cadence: 1.3, apparence: 'paume', statut: 'ralenti', chanceStatut: 0.5, vitesseTir: 6, sprite: { carte: 'crapaud', couleurs: { g: '#d86a2a', l: '#f0a060' } } });
+  F('FAM_KATSUYU', 'Katsuyu miniature', 'soutien', { tousLes: 5, donne: 'coeur', sprite: { carte: 'sangsue', couleurs: { s: '#e8e8f0', l: '#ffffff', d: '#6a8ae8' } } });
+  F('FAM_CRAPAUD_CLE', 'Crapaud messager', 'soutien', { tousLes: 6, donne: 'cle', sprite: { carte: 'crapaud' } });
+  F('FAM_SERPENT', 'Serpent', 'orbital', { degats: 5, rayon: 1.2, vitesseRot: 3.2, bloque: true, sprite: { carte: 'serpenteau', couleurs: { s: '#7a9a4a' } } });
+  F('FAM_SABLE', 'Sable protecteur', 'orbital', { degats: 2, rayon: 1.0, vitesseRot: 2.6, bloque: true, rBloc: 8, sprite: { icone: 'PSV_065' } });
+  F('FAM_KUNAI_ORB', 'Kunai tournoyant', 'orbital', { degats: 2, rayon: 0.9, vitesseRot: 6, bloque: false, sprite: { icone: 'PSV_034' } });
+  F('FAM_PAPIER', 'Papillon de papier', 'orbital', { degats: 1.5, rayon: 1.5, vitesseRot: 2.2, bloque: true, sprite: { carte: 'papier' } });
+  F('FAM_MIROIR', 'Miroir de glace', 'orbital', { degats: 0, rayon: 1.4, vitesseRot: 1.6, bloque: true, reflet: true, rBloc: 9, sprite: { icone: 'PSV_081' } });
+  F('FAM_CORBEAU', 'Corbeau', 'aveugleur', { statut: 'confus', degats: 2, recharge: 3, sprite: { carte: 'corbeau' } });
+  F('FAM_PAKKUN', 'Pakkun', 'pakkun', { sprite: { carte: 'rat', couleurs: { g: '#c8a870', d: '#8a6a4a', p: '#3a2a1a' } } });
+  F('FAM_AKAMARU', 'Akamaru', 'contact', { degats: 6, coefJoueur: 0.5, recharge: 1.2, sprite: { carte: 'rat', couleurs: { g: '#f0ece4', d: '#c8c0b0', p: '#e0a0a8' } } });
+  F('FAM_INSECTES', 'Kikaichū', 'collecteur', { degats: 1.5, sprite: { carte: 'moustique' } });
+  F('FAM_OISEAU_ARGILE', 'Oiseau d’argile', 'kamikaze', { recharge: 4, sprite: { carte: 'oiseau_argile' } });
+  F('FAM_KARASU_ATT', 'Karasu', 'chasseur', { degats: 4, cadence: 1.6, vitesse: 3.5, statut: 'poison', sprite: { carte: 'marionnette' } });
+  F('FAM_KARASU', 'Karasu (marionnette)', 'marionnette', { bloque: true, rBloc: 7, sprite: { carte: 'marionnette' } });
+  F('FAM_KUROARI', 'Kuroari', 'pieges', { recharge: 8, sprite: { carte: 'marionnette', couleurs: { m: '#2a2a30', d: '#1a1a20' } } });
+  F('FAM_SANSHOUO', 'Sanshōuo', 'bloqueur', { bloque: true, rBloc: 12, sprite: { carte: 'statue', couleurs: { s: '#6a6a78', l: '#8a8a98' } } });
+  F('FAM_TIGRE_ENCRE', 'Fauve d’encre', 'chasseur', { degats: 4, cadence: 1.5, vitesse: 4, sprite: { carte: 'tigre', couleurs: { o: '#2a2a3a', d: '#1a1a24', w: '#e8e0d0' } } });
+  F('FAM_SERPENT_BLANC', 'Serpent blanc', 'chasseur', { degats: 3, cadence: 1.2, vitesse: 3, sprite: { carte: 'serpenteau' } });
+  F('FAM_LUCIOLE', 'Luciole', 'luciole', { sprite: { carte: 'moustique', couleurs: { b: '#f0f060' } } });
+  F('FAM_POUPEE', 'Poupée d’entraînement', 'bloqueur', { bloque: true, rBloc: 10, sprite: { carte: 'poupee' } });
+})();

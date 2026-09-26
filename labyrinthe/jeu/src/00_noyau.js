@@ -94,7 +94,7 @@ const DON = {
   personnages: [], objets: [], talismans: [], consommables: [], pilules: [],
   ennemis: [], boss: [], salles: [], themes: [], etages: [], routes: [],
   transformations: [], synergies: [], objectifs: [], defis: [], secrets: [],
-  champions: [], pools: {}, prix: {},
+  champions: [], familiers: [], pools: {}, prix: {},
 };
 const INDEX = {}; // INDEX[id] → définition (rempli par indexerDonnees)
 function indexerDonnees() {

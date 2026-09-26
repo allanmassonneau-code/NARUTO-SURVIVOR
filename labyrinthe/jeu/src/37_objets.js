@@ -15,6 +15,7 @@ function modificateursStats(J) {
   for (const id of J.passifs) { const d = INDEX[id]; if (d && d.effets) d.effets.forEach(appliquer); }
   if (J.talisman && INDEX[J.talisman]) (INDEX[J.talisman].effets || []).forEach(appliquer);
   for (const t of J.transformations) (INDEX[t].effets || []).forEach(appliquer);
+  for (const sy of synergiesActives(J)) (sy.effets || []).forEach(appliquer);
   for (const b of J.bonus) appliquer(b);                // bonus temporaires (salle, secondes, étage)
   for (const b of J.bonusPermanents) appliquer(b);      // pilules, sacrifices, pactes spéciaux
   return M;
@@ -55,6 +56,7 @@ function calculerProfil(J) {
   for (const id of J.passifs) { const d = INDEX[id]; if (d && d.effets) for (const e of d.effets) tous.push([e, d]); }
   for (const t of J.transformations) for (const e of (INDEX[t].effets || [])) tous.push([e, INDEX[t]]);
   if (J.talisman && INDEX[J.talisman]) for (const e of (INDEX[J.talisman].effets || [])) tous.push([e, INDEX[J.talisman]]);
+  for (const sy of synergiesActives(J)) for (const e of (sy.effets || [])) tous.push([e, sy]);
   for (const b of J.bonus) if (b.tir) tous.push([b.tir, { id: 'bonus' }]);
   for (const [e, d] of tous) {
     if (e.forme) { P.formes.add(e.forme); P.params[e.forme] = Object.assign({}, P.params[e.forme] || {}, e); }
@@ -100,6 +102,12 @@ function calculerProfil(J) {
 function possede(J, id) { return J.passifs.includes(id); }
 function nbCopies(J, id) { return J.passifs.filter(x => x === id).length; }
 function recalculer(J) {
+  // drapeaux : ceux du personnage, puis ceux des objets, talismans et transformations
+  const obst = J.drapeaux && J.drapeaux.obstination;
+  J.drapeaux = Object.assign({}, J.drapeauxBase || {}); if (obst) J.drapeaux.obstination = true;
+  const sources = J.passifs.map(id => INDEX[id]).concat(J.transformations.map(t => INDEX[t]), J.talisman ? [INDEX[J.talisman]] : [], J.talisman2 ? [INDEX[J.talisman2]] : [], synergiesActives(J));
+  for (const d of sources) for (const e of (d && d.effets) || []) if (e.drapeau) J.drapeaux[e.drapeau] = e.valeur === undefined ? true : e.valeur;
+  J.maxPoches = 1 + (J.drapeaux.pocheDouble ? 1 : 0); J.maxTalismans = 1 + (J.drapeaux.talismanDouble ? 1 : 0);
   J.stats = calculerStats(J); J.profil = calculerProfil(J);
   J.vol = J.passifs.some(id => (INDEX[id].effets || []).some(e => e.vol)) || J.transformations.some(t => (INDEX[t].effets || []).some(e => e.vol)) || J.bonus.some(b => b.vol);
   majMutations(J);
@@ -114,6 +122,7 @@ function acquerirPassif(J, id, source = 'piedestal') {
   for (const e of d.effets || []) appliquerEffetImmediat(J, e, d);
   if (premiere && d.ensemble) verifierTransformations(J);
   recalculer(J);
+  if (G.etage && (d.effets || []).some(e => e.drapeau === 'plan' || e.drapeau === 'boussole' || e.drapeau === 'byakugan')) revelerPlan(J);
   evenement('objet_acquis', { id, source });
   Progression.decouvrir(id);
 }
@@ -208,4 +217,15 @@ function tirerObjet(partie, pool, alea, options = {}) {
   if (!o) return 'PSV_083';
   partie.retires.push(o.id);
   return o.id;
+}
+
+// Exploration : plan (salles), boussole (icônes spéciales), Byakugan (tout, secrets compris)
+function revelerPlan(J) {
+  for (const s of Object.values(G.etage.salles)) {
+    if (s.id === 'opp') continue;
+    const secret = s.type === 'cache' || s.type === 'isolee';
+    if (J.drapeaux.byakugan) s.apercue = true;
+    else if (J.drapeaux.plan && !secret) s.apercue = true;
+    else if (J.drapeaux.boussole && !secret && s.type !== 'combat') s.apercue = true;
+  }
 }

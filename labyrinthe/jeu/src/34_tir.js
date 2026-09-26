@@ -159,6 +159,7 @@ function majProjectiles(dt) {
       const c = ennemiLePlusProche(p.x, p.y, 6 * TUILE, e => !e.intangible);
       if (c) { const ac = Math.atan2(p.vy, p.vx), at = angleVers(p.x, p.y, c.x, c.y - 8); const d = diffAngle(ac, at); const k = Math.min(Math.abs(d), 5 * TR.guidage * dt) * signe(d); const na = ac + k; const v = Math.hypot(p.vx, p.vy); p.vx = Math.cos(na) * v; p.vy = Math.sin(na) * v; }
     }
+    if (TR.guidageEnnemi && p.proprio === 'ennemi') { const ac = Math.atan2(p.vy, p.vx), at = angleVers(p.x, p.y, J.x, J.y - 8); const d = diffAngle(ac, at); const k = Math.min(Math.abs(d), 2 * TR.guidageEnnemi * dt) * signe(d); const na = ac + k; const v = Math.hypot(p.vx, p.vy); p.vx = Math.cos(na) * v; p.vy = Math.sin(na) * v; }
     if (TR.onde) { const n = Math.hypot(p.vx, p.vy) || 1; const px = -p.vy / n, py = p.vx / n; const w = Math.cos(p.age * 16) * 16 * 16 * dt; p.x += px * w * 0.25; p.y += py * w * 0.25; }
     if (TR.acceleration) { const k = 1 + 1.2 * dt; p.vx *= k; p.vy *= k; }
     if (p.accel) { const k = 1 + p.accel * dt; p.vx *= k; p.vy *= k; }
@@ -166,8 +167,9 @@ function majProjectiles(dt) {
     else if (TR.retour && p.age > p.dureeVie * 0.45) {
       const a = angleVers(p.x, p.y, J.x, J.y - 10); const v = Math.max(Math.hypot(p.vx, p.vy), 6 * TUILE); p.vx = lerp(p.vx, Math.cos(a) * v, 0.18); p.vy = lerp(p.vy, Math.sin(a) * v, 0.18);
       if (!p.retourne) { p.retourne = true; p.touches.clear(); }
-      if (dist(p.x, p.y, J.x, J.y - 10) < 10) { p.mort = true; continue; }
+      if (dist(p.x, p.y, R.x, R.y - 10) < 10) { p.mort = true; continue; }
       p.age = Math.min(p.age, p.dureeVie * 0.9);
+      if (p.proprio === 'ennemi') { p.x += p.vx * dt; p.y += p.vy * dt; }
     } else {
       const nx = p.x + p.vx * dt, ny = p.y + p.vy * dt;
       // Collision avec le décor
@@ -210,9 +212,9 @@ function majProjectiles(dt) {
       // blocage par orbitaux / familiers bloqueurs / marionnette
       let bloquePar = null;
       for (const f of J.familiers) if (f.bloque && dist(p.x, p.y, f.x, f.y - 8) < p.rTouche + (f.rBloc || 7)) { bloquePar = f; break; }
-      if (bloquePar) { bloquePar.surBlocage && bloquePar.surBlocage(p); detruireProjectile(p, 'bloque'); continue; }
+      if (bloquePar) { if (bloquePar.def.reflet) { const q = creerSousProjectile({ x: p.x, y: p.y, vitesse: 7 * TUILE, degats: J.stats.degats, recul: 30, taille: 1, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 2 }, cycleId: 0, impacts: [] }, Math.atan2(-p.vy, -p.vx), J.stats.degats); q.dureeVie = 1; } detruireProjectile(p, 'bloque'); continue; }
       if (J.profil.deviation && Entrees.visee.dir && dist(p.x, p.y, J.x, J.y - 10) < 30) { detruireProjectile(p, 'devie'); continue; }
-      if (!J.intangible && dist(p.x, p.y, J.x, J.y - 9) < p.rTouche + J.rTouche && p.z < 20) { blesserJoueur(p.degats, { type: 'projectile', source: p.source }); detruireProjectile(p, 'joueur'); }
+      if (!J.intangible && dist(p.x, p.y, J.x, J.y - 9) < p.rTouche + J.rTouche && p.z < 20) { if (blesserJoueur(p.degats, { type: 'projectile', source: p.source, x: p.x - p.vx * 0.05, y: p.y - p.vy * 0.05 }) && p.marqueJashin) { G.marqueJashin = G.temps + 8; G.textes.push({ x: J.x, y: J.y - 34, t: 'Marqué par le rituel !', age: 0, duree: 1.5, couleur: '#ff4a4a' }); } detruireProjectile(p, 'joueur'); }
     }
   }
   G.proj = G.proj.filter(p => !p.mort);
