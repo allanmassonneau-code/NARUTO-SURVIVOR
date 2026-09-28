@@ -142,7 +142,7 @@ const SceneVictoire = {
     Police.ecrire(g, R.nom, 320, 40, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
     let y = 90; for (const l of TEXTES_FINS[this.route] || []) y += Police.paragraphe(g, l, 120, y, 400, '#e0d8e8') + 10;
     Police.ecrire(g, 'Marque obtenue pour ' + G.joueur.def.nom + ' : ' + (R.marque || ''), 320, y + 20, '#c0e0a0', { a: 'c' });
-    if (R.recompense) Police.ecrire(g, R.recompense, 320, y + 36, '#a8a0b8', { a: 'c' });
+    if (R.recompense) Police.couper(R.recompense, 540).forEach((l, i) => Police.ecrire(g, l, 320, y + 36 + i * 12, '#a8a0b8', { a: 'c' }));
     if (G.partie.defi) Police.ecrire(g, 'Contrat « ' + INDEX[G.partie.defi].nom + ' » : ' + (G.partie.defiEchoue ? 'non rempli (conditions non tenues)' : 'rempli'), 320, 284, G.partie.defiEchoue ? '#e0a080' : '#a0e0a0', { a: 'c' });
     Police.ecrire(g, 'Temps ' + formatTemps(G.partie.temps) + '   Code ' + codeAffiche(G.partie.code), 320, 300, '#8a8098', { a: 'c' });
     if (this.t > 1.5) aideBoutons(g, [['interagir', 'Continuer']]);
@@ -174,5 +174,5 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }

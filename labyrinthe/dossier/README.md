@@ -14,7 +14,7 @@ Ce dossier accompagne un jeu **réellement jouable** (`../jeu/index.html`). Il d
 | D | [D_pixel_art.md](D_pixel_art.md) | Bible pixel art, animations, mutations, langage des jutsu, effets, interface, audio, confort |
 | E | [E_contenu.md](E_contenu.md) · [E_fiches.md](E_fiches.md) | Roster, ennemis, boss, thèmes, routes, pactes, économie, secrets, contrats ; fiches générées (18 personnages, 24 boss attaque par attaque, ennemis par fonction, thèmes) |
 | F | [F_catalogues.md](F_catalogues.md) · [F_salles.md](F_salles.md) | Catalogues **générés depuis les données du jeu** (compteurs, tables complètes, grilles de salles) |
-| G | [G_builds_parties_briefs.md](G_builds_parties_briefs.md) | Builds, trois parties commentées, seize briefs d’écrans |
+| G | [G_builds_parties_briefs.md](G_builds_parties_briefs.md) · [G_journaux.md](G_journaux.md) | 64 builds, trois parties commentées (missions à code réelles, journaux bruts reproductibles), seize briefs d’écrans illustrés ([images/](images/)) |
 | H | [H_technique.md](H_technique.md) | Architecture, données, pseudocode, tests (exécutés), performances, sauvegarde, production |
 | I | [I_audit.md](I_audit.md) | Contradictions résolues, hypothèses, références manquantes, quantités réellement produites |
 

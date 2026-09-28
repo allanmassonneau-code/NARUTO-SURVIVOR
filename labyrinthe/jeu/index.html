@@ -8419,7 +8419,29 @@ function decorSalle(g, s, V) {
     case 'coffres': { g.globalAlpha = 0.18; g.fillStyle = '#e8c050'; for (let ty = 2; ty < s.H - 2; ty++) for (let tx = 2; tx < s.W - 2; tx++) if ((tx + ty) % 2 === 0) g.fillRect(tx * TUILE + 2, ty * TUILE + 2, 28, 28); g.globalAlpha = 1; break; }
     case 'malediction': { g.fillStyle = 'rgba(120,20,40,0.35)'; const al = new Alea('fissures' + s.id); for (let k = 0; k < 14; k++) { let x = 40 + al.entier(larg - 80), y = 40 + al.entier(s.H * TUILE - 80); for (let n = 0; n < 12; n++) { g.fillRect(x, y, 2, 2); x += al.entier(5) - 2; y += al.entier(5) - 2; } } break; }
     case 'repos': { cercleSceau(g, cx, cy, 44, '#6ac8e8'); break; }
+    case 'pacte': { // empreinte interdite : pénombre violette, sceau serpentin sous les offres, bougies noires
+      const H = s.H * TUILE; g.drawImage(ellipse(larg * 0.42, H * 0.34, 'rgba(40,10,50,0.35)'), Math.round(cx - larg * 0.42), Math.round(cy - H * 0.34));
+      const I = pts('I'); cercleSceau(g, cx, I.length ? I[0][1] : cy, 64, '#7a3a9a');
+      for (const [x, y] of [[48, 48], [larg - 56, 48], [48, H - 64], [larg - 56, H - 64]]) bougie(g, x, y);
+      break;
+    }
+    case 'sanctuaire': { // ermites : halo doré, corde sacrée et papiers, mousse
+      const H = s.H * TUILE; g.drawImage(ellipse(larg * 0.4, H * 0.32, 'rgba(255,240,170,0.12)'), Math.round(cx - larg * 0.4), Math.round(cy - H * 0.32));
+      cercleSceau(g, cx, cy, 56, '#d8c060'); shimenawa(g, 40, 36, larg - 80);
+      const al = new Alea('mousse' + s.id); for (let k = 0; k < 18; k++) { g.fillStyle = k % 2 ? 'rgba(90,140,60,0.5)' : 'rgba(120,170,80,0.45)'; g.fillRect(40 + al.entier(larg - 80), 48 + al.entier(H - 96), 3 + al.entier(4), 2); }
+      break;
+    }
   }
+}
+function bougie(g, x, y) {
+  g.globalAlpha = 0.18; g.drawImage(disque(9, '#ffb040'), x - 7, y - 12); g.globalAlpha = 1;
+  g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 1, 6, 11); g.fillStyle = '#2a2230'; g.fillRect(x, y, 4, 9);
+  g.fillStyle = '#ffb040'; g.fillRect(x + 1, y - 4, 2, 3); g.fillStyle = '#fff0a0'; g.fillRect(x + 1, y - 3, 2, 1);
+}
+function shimenawa(g, x, y, l) { // corde tressée en arc et papiers shide en zigzag
+  const o = i => Math.round(Math.sin(i / l * Math.PI) * 6);
+  for (let i = 0; i < l; i += 4) { g.fillStyle = '#8a6a3a'; g.fillRect(x + i, y + o(i), 4, 3); g.fillStyle = '#c8a870'; g.fillRect(x + i + ((i / 4) % 2 ? 2 : 0), y + o(i), 2, 1); }
+  for (let i = Math.round(l * 0.12); i < l; i += Math.round(l * 0.19)) { const px = x + i, py = y + o(i) + 3; g.fillStyle = '#f4f0e0'; g.fillRect(px, py, 2, 3); g.fillRect(px + 2, py + 2, 2, 3); g.fillRect(px, py + 5, 2, 3); }
 }
 function dessinerDecal(g, d) {
   const al = new Alea('decal' + d.g);
@@ -9440,7 +9462,7 @@ const SceneVictoire = {
     Police.ecrire(g, R.nom, 320, 40, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
     let y = 90; for (const l of TEXTES_FINS[this.route] || []) y += Police.paragraphe(g, l, 120, y, 400, '#e0d8e8') + 10;
     Police.ecrire(g, 'Marque obtenue pour ' + G.joueur.def.nom + ' : ' + (R.marque || ''), 320, y + 20, '#c0e0a0', { a: 'c' });
-    if (R.recompense) Police.ecrire(g, R.recompense, 320, y + 36, '#a8a0b8', { a: 'c' });
+    if (R.recompense) Police.couper(R.recompense, 540).forEach((l, i) => Police.ecrire(g, l, 320, y + 36 + i * 12, '#a8a0b8', { a: 'c' }));
     if (G.partie.defi) Police.ecrire(g, 'Contrat « ' + INDEX[G.partie.defi].nom + ' » : ' + (G.partie.defiEchoue ? 'non rempli (conditions non tenues)' : 'rempli'), 320, 284, G.partie.defiEchoue ? '#e0a080' : '#a0e0a0', { a: 'c' });
     Police.ecrire(g, 'Temps ' + formatTemps(G.partie.temps) + '   Code ' + codeAffiche(G.partie.code), 320, 300, '#8a8098', { a: 'c' });
     if (this.t > 1.5) aideBoutons(g, [['interagir', 'Continuer']]);
@@ -9472,7 +9494,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

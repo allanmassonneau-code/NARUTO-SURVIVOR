@@ -64,7 +64,7 @@ const journal = await page.evaluate(([perso, code, etageMax]) => {
       } else if (offres.length) F.evenements.push(`${s.type} : ${offres.join(' ; ')}`);
       const avant = J0().passifs.length; prendre(F); T.pas(20, []);
       const pris = J0().passifs.slice(avant); if (pris.length) F.evenements.push('  pris : ' + pris.map(id => id + ' ' + nom(id)).join(', '));
-      if (S.machines.length || S.pnj.length) F.evenements.push(`  ${[...S.machines.map(m => 'machine ' + m.type), ...S.pnj.map(n => 'informateur ' + n.type)].join(', ')}`);
+      if (S.machines.length || S.pnj.length) F.evenements.push(`${S.type === 'boutique' || offres.length ? '  ' : S.type + ' : '}${[...S.machines.map(m => 'machine ' + m.type), ...S.pnj.map(n => 'informateur ' + n.type)].join(', ')}`);
       if (G.joueur.etat === 'mort') { F.evenements.push('mort'); break; }
     }
     // boss

@@ -1,5 +1,7 @@
 # NARUTO: SHINOBI SURVIVORS — dossier de préproduction
 
+> **Nouveau : [NARUTO — Le Labyrinthe des Sceaux](labyrinthe/README.md)**, un roguelike de salles à la manette (langage de *The Binding of Isaac*, pas un « Survivors ») : jeu jouable dans un seul fichier, [`labyrinthe/jeu/index.html`](labyrinthe/jeu/index.html), et son dossier de conception complet (sections A à I) dans [`labyrinthe/dossier/`](labyrinthe/dossier/README.md). Le reste de cette page décrit le projet précédent, *Shinobi Survivors*, conservé tel quel.
+
 Projet créatif **non officiel** : dossier de conception d'un roguelite de type « survivors » en pixel art dans l'univers de *Naruto* et *Naruto Shippuden*. Ce dépôt ne contient **pas** le jeu : il contient la conception (règles, bible artistique, catalogues, architecture, plan de production) et un outillage qui vérifie la cohérence des catalogues. Tous les chiffres sont des hypothèses à tester. Les droits d'exploitation de la licence sont un prérequis non traité (risque R-01).
 
 ## Lire le dossier
