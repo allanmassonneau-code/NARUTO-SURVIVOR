@@ -292,22 +292,26 @@ function tirerRayon(J, a, deg, cycleId, budget) {
 }
 function majFaisceauContinu(J, dir, dt) {
   let f = G.faisceaux.find(x => x.type === 'faisceau' && x.attache === J);
-  if (!dir) { if (f) f.age = f.duree; return; }
+  if (!dir) { if (f) f.duree = f.age; return; } // relâcher éteint le faisceau
   if (!f) { f = { attache: J, a: 0, l: 0, largeur: 6, duree: 9999, age: 0, type: 'faisceau', couleur: '#6ad0ff', proprio: 'joueur', tick: 0.1, prochain: 0 }; G.faisceaux.push(f); Son.jouer('laser', 0.5); }
-  f.a = Math.atan2(DIRS[dir][1], DIRS[dir][0]); f.age = 0; J.dirTete = dir;
-  f.degTick = J.stats.degats * J.profil.coefDegats * (J.stats.cadence * J.profil.coefCadence) * f.tick * 0.95 * (J.profil.multi > 1 ? J.profil.coefMulti * J.profil.multi / J.profil.multi : 1);
+  f.a = Math.atan2(DIRS[dir][1], DIRS[dir][0]); J.dirTete = dir;
+  // dégâts par tic = débit d'un tir ordinaire × 0,95 ; le multitir crée plusieurs faisceaux (coefficient par faisceau)
+  f.degTick = J.stats.degats * J.profil.coefDegats * (J.stats.cadence * J.profil.coefCadence) * f.tick * 0.95;
 }
 function majFaisceaux(dt) {
   const s = G.salle;
   for (const f of G.faisceaux) {
     f.age += dt;
-    if (f.attache) { const J = f.attache; f.x = J.x; f.y = J.y - 12; f.l = longueurJusquAuMur(s, f.x, f.y, f.a, true, f.type === 'faisceau' ? (J.stats.portee * TUILE * 1.4) : 2000); }
+    if (f.attache) { const J = f.attache; f.x = J.x; f.y = J.y - 12; const lmax = f.type === 'faisceau' ? (J.stats.portee * TUILE * 1.4) : 2000; f.l = longueurJusquAuMur(s, f.x, f.y, f.a, true, lmax);
+      // multitir : plusieurs faisceaux en éventail (±0,16 rad), chacun arrêté par les murs — dessinés et appliqués à l'identique
+      const n = (f.type === 'rayon' || f.type === 'faisceau') && f.proprio === 'joueur' ? Math.max(1, J.profil.multi) : 1;
+      f.faisceaux = n > 1 ? Array.from({ length: n }, (_, i) => { const a = f.a + (i - (n - 1) / 2) * 0.16; return { a, l: longueurJusquAuMur(s, f.x, f.y, a, true, lmax) }; }) : null; }
     if (f.degTick && f.age >= f.prochain) {
       f.prochain = f.age + f.tick;
-      const n = f.type === 'rayon' ? Math.max(1, G.joueur.profil.multi) : 1;
+      const n = f.faisceaux ? f.faisceaux.length : 1;
       for (let i = 0; i < n; i++) {
-        const a = f.a + (n > 1 ? (i - (n - 1) / 2) * 0.16 : 0);
-        for (const e of ennemisSurSegment(f.x, f.y, a, f.l, f.largeur / 2 + 2)) infligerDegats(e, f.degTick * (n > 1 ? coefMulti(n) : 1), { proprio: 'joueur', x: e.x, y: e.y, vx: Math.cos(a), vy: Math.sin(a), recul: 8, type: f.type, sansFlash: f.type === 'faisceau' });
+        const a = f.faisceaux ? f.faisceaux[i].a : f.a, l = f.faisceaux ? f.faisceaux[i].l : f.l;
+        for (const e of ennemisSurSegment(f.x, f.y, a, l, f.largeur / 2 + 2)) infligerDegats(e, f.degTick * (n > 1 ? coefMulti(n) : 1), { proprio: 'joueur', x: e.x, y: e.y, vx: Math.cos(a), vy: Math.sin(a), recul: 8, type: f.type, sansFlash: f.type === 'faisceau' });
       }
     }
   }

@@ -178,9 +178,9 @@ function genererContenuSalle(s) {
 }
 
 // Récompense de fin de salle (table §R10 ; la chance déplace la masse « rien »)
-function tirerRamassable(al, chance) {
+function tirerRamassable(al, chance, difficile) {
   const c = Math.max(0, Math.min(10, chance || 0));
-  const table = [['rien', 36 - c * 3], ['ryo', 22], ['coeur', 11], ['cle', 8], ['explosif', 8], ['coffre', 5 + c * 0.6], ['consommable', 5 + c * 0.6], ['condensateur', 2], ['talisman', 1.5 + c * 0.3], ['protection', 3]];
+  const table = [['rien', 36 - c * 3 + (difficile ? 12 : 0)], ['ryo', 22], ['coeur', 11], ['cle', 8], ['explosif', 8], ['coffre', 5 + c * 0.6], ['consommable', 5 + c * 0.6], ['condensateur', 2], ['talisman', 1.5 + c * 0.3], ['protection', 3]];
   const r = al.pondere(table, x => x[1]); const t = r ? r[0] : 'rien';
   switch (t) {
     case 'ryo': return al.chance(0.12) ? 'ryo5' : al.chance(0.03) ? 'ryo10' : 'ryo';
@@ -208,7 +208,7 @@ function verifierNettoyage() {
     s.recompensee = true;
     if (s.type !== 'boss') {
       const al = new Alea(G.partie.code + '|' + G.etage.numero + '|' + s.id + '|nettoyage');
-      const r = tirerRamassable(al, J.stats.chance);
+      const r = tirerRamassable(al, J.stats.chance, G.partie.difficile);
       if (r !== 'rien') { const [cx, cy] = centreSalle(s); const [tx, ty] = tuileLibreProche(s, cx, cy, [], true); const [x, y] = centreTuile(tx, ty); creerRamassable(r, x, y, { depuisSol: true }); }
     }
     chargerActif(J, s.forme === '1x1' ? 1 : 2, 'salle');
@@ -247,6 +247,32 @@ function majTransition(dt) {
   const T0 = G.transition; T0.t += dt;
   if (T0.t >= T0.duree * 0.5 && !T0.faite) { T0.faite = true; if (T0.type === 'porte') entrerSalle(T0.vers, T0.dir); else if (T0.type === 'teleport') entrerSalle(T0.vers, null); T0.imageNouvelle = null; }
   if (T0.t >= T0.duree) G.transition = null;
+}
+
+// ── Secours contre un ennemi réellement inaccessible (§R26b) ──
+// Un ennemi terrestre qu'aucun chemin praticable ne relie au joueur pendant 8 s de combat (vérifié
+// chaque seconde) est replacé sur la case libre accessible la plus proche, avec un signal visible.
+// Il n'est ni tué ni affaibli ; chaque secours est compté (G.stats.deblocages) et journalisé en test.
+// Les ennemis volants, cachés, les boss et le joueur en lévitation sont hors de ce secours.
+function secoursEnnemisInaccessibles(dt) {
+  const s = G.salle, J = G.joueur; if (!s.combat || J.vol) return;
+  G.tSecours = (G.tSecours || 0) + dt; if (G.tSecours < 1) return; G.tSecours = 0;
+  const [jx, jy] = tuileLibreProche(s, J.x, J.y); const acc = accessibles(s, jx, jy, 'marche');
+  for (const e of G.ennemis) {
+    if (e.mort || e.vol || e.cache || e.boss || e.allie || e.apparition > 0 || e.def.ignoreNettoyage) continue;
+    const i = Math.floor(e.y / TUILE) * s.W + Math.floor(e.x / TUILE);
+    const voisinAccessible = [0, 1, -1, s.W, -s.W].some(d => acc[i + d] === 1); // collé à une case accessible : atteignable
+    if (voisinAccessible) { e.ia.inaccessible = 0; continue; }
+    e.ia.inaccessible = (e.ia.inaccessible || 0) + 1;
+    if (e.ia.inaccessible < 8) continue;
+    let best = null, bd = 1e9;
+    for (let k = 0; k < acc.length; k++) if (acc[k] === 1) { const x = (k % s.W) * TUILE + TUILE / 2, y = Math.floor(k / s.W) * TUILE + TUILE / 2; const d = dist(x, y, e.x, e.y); if (d < bd && dist(x, y, J.x, J.y) > 2.5 * TUILE) { bd = d; best = [x, y]; } }
+    if (!best) continue;
+    G.effets.push({ type: 'fumee', x: e.x, y: e.y - 8, age: 0, duree: 0.4 }); [e.x, e.y] = best; e.vx = 0; e.vy = 0; e.ia.inaccessible = 0; e.apparition = 0.5;
+    G.effets.push({ type: 'fumee', x: e.x, y: e.y - 8, age: 0, duree: 0.4 });
+    G.stats.deblocages = (G.stats.deblocages || 0) + 1;
+    if (G.modeTest) (G.modeTest.deblocages || (G.modeTest.deblocages = [])).push({ salle: s.id, gabarit: s.gabarit, ennemi: e.id });
+  }
 }
 
 // ── Ramassables ──

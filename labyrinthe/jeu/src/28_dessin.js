@@ -69,6 +69,7 @@ function dessinerProjectile(g, p, x, y) {
   if (p.traj && p.traj.guidage) { g.fillStyle = 'rgba(255,255,255,0.5)'; g.fillRect(x - (p.vx > 0 ? 6 : -4), y, 2, 1); }
 }
 function dessinerFaisceau(g, f, X, Y) {
+  if (f.faisceaux) { for (const b of f.faisceaux) dessinerFaisceau(g, Object.assign({}, f, { faisceaux: null, a: b.a, l: b.l }), X, Y); return; }
   const k = 1 - f.age / f.duree; const w = Math.max(1, Math.round(f.largeur * (f.type === 'laser' ? k : Math.min(1, f.age * 12)) ));
   g.save(); g.translate(X(f.x), Y(f.y)); g.rotate(f.a);
   const ennemi = f.proprio === 'ennemi';

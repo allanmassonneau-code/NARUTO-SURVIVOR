@@ -56,13 +56,13 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
   });
 
   // 2) Parcours complet d'une partie (mode dieu) : étages 1 → 9, boss, objets, trappes
-  if (veut('parcours')) for (const [perso, code] of [['CHR_001', 'PARC2345'], ['CHR_005', 'LEEA2345'], ['CHR_002', 'SASK2345']]) await lancer('parcours ' + perso, ([perso, code]) => {
+  if (veut('parcours')) for (const [perso, code] of (process.env.PERSOS ? process.env.PERSOS.split(',').map(x => x.split(':')) : [['CHR_001', 'PARC2345'], ['CHR_005', 'LEEA2345'], ['CHR_002', 'SASK2345']])) await lancer('parcours ' + perso, ([perso, code]) => {
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], etages: [], boss: [], objets: 0, salles: 0 };
     L.Progression.profil.routes = { RTE_01: true, RTE_02: true };
-    L.nouvellePartie({ perso, code }); L.Scenes.aller(L.SceneJeu); T.pas(10);
+    L.nouvellePartie({ perso, code }); L.Scenes.aller(L.SceneJeu); T.pas(10); G.modeTest.deblocages = [];
     for (let et = 1; et <= 9; et++) {
       if (!G.partie || G.partie.etage !== et) { out.ko.push('étage attendu ' + et + ' obtenu ' + (G.partie && G.partie.etage)); break; }
-      const E = G.etage; out.etages.push(E.cfg.nom);
+      const E = G.etage; out.etages.push(E.cfg.nom); if (et === 1) out.plan1 = Object.values(E.salles).map(s => s.id + ':' + s.gabarit).join(' '); (out.inventaires || (out.inventaires = [])).push(et + ':' + G.joueur.passifs.join(',') + ' actif=' + (G.joueur.actif && G.joueur.actif.id) + ' forme=' + G.joueur.profil.forme + ' tal=' + G.joueur.talisman);
       const ids = Object.values(E.salles).filter(s => s.type !== 'boss' && s.id !== 'opp').map(s => s.id);
       for (const id of ids) {
         const s = E.salles[id]; if (s.type === 'cache' || s.type === 'isolee') { for (const x of Object.values(E.salles)) for (const p of x.portes) if (p.vers === id && p.etat === 'secrete') { p.etat = 'ouverte'; } }
@@ -90,7 +90,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       if (so.type === 'fin') { out.fin = so.route + (L.Scenes.courante() !== L.SceneJeu ? ' (écran de fin)' : ' (pas d’écran de fin)'); break; }
       if (k >= 400) { out.ko.push('sortie étage ' + et + ' non empruntée'); break; }
     }
-    out.passifs = G.joueur ? G.joueur.passifs.length : 0;
+    out.passifs = G.joueur ? G.joueur.passifs.length : 0; out.secours = (G.modeTest.deblocages || []).map(d => d.gabarit + ':' + d.ennemi).join(' ') || 0;
     if (G.joueur) { const J = G.joueur, S = J.stats, P = J.profil; out.stats = { degats: S.degats, cadence: +S.cadence.toFixed(2), multi: P.multi, forme: P.forme, perce: P.perce, familiers: J.familiers.length, detailFam: Object.entries(J.familiers.reduce((m, f) => (m[f.id + '<' + (f.source || '?') + (f.dureeSalle ? ' salle' : '')] = (m[f.id + '<' + (f.source || '?') + (f.dureeSalle ? ' salle' : '')] || 0) + 1, m), {})).map(([k, v]) => k + '×' + v).join(' '), dps: +(S.degats * S.cadence * P.coefDegats * Math.max(1, P.multi * (P.coefMulti || 1))).toFixed(1) }; out.liste = J.passifs.join(' '); } out.ko = out.ko.slice(0, 25); return out;
   }, [perso, code]);
 
@@ -270,6 +270,21 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     pr.toutDebloque = avant.tout; pr.objectifs = avant.obj;
     verif(bloque && parMadara && parBreche, 'Chute céleste : verrouillée puis débloquée par OBJ_028 ou OBJ_049 (' + [bloque, parMadara, parBreche] + ')');
     return out;
+  });
+
+  // 11) Secours d'un ennemi réellement inaccessible : îlot entouré de fosses, joueur immobile
+  if (veut('secours')) await lancer('secours', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [] };
+    L.nouvellePartie({ perso: 'CHR_005', code: 'SECO2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); G.modeTest.dieu = true;
+    const s = Object.values(G.etage.salles).find(x => x.type === 'combat' && x.forme === '1x1');
+    s.visitee = true; s.ennemisDef = [{ id: 'ENM_003', x: 7 * 32 + 16, y: 4 * 32 + 16 }];
+    for (let ty = 2; ty <= 6; ty++) for (let tx = 5; tx <= 9; tx++) if (!(tx === 7 && ty === 4)) s.tuiles[ty * s.W + tx] = L.T.FOSSE;
+    T.allerA(s.id); G.modeTest.deblocages = [];
+    const e0 = G.ennemis[0]; const x0 = e0.x; T.pas(60 * 12, []);
+    if (!G.modeTest.deblocages.length) out.ko.push('aucun secours après 12 s');
+    else if (Math.abs(e0.x - x0) < 16 && !e0.mort) out.ko.push('ennemi non déplacé');
+    if (G.modeTest.deblocages.length > 1) out.ko.push('secours répété : ' + G.modeTest.deblocages.length);
+    out.secours = G.modeTest.deblocages; G.modeTest.dieu = false; return out;
   });
 
   console.log(erreursPage.length ? 'ERREURS PAGE (' + erreursPage.length + '):\n' + erreursPage.slice(0, 8).join('\n') : 'aucune erreur de page');

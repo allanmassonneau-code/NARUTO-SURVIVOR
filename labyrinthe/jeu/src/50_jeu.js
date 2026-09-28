@@ -42,7 +42,7 @@ function majJeu(dt) {
   for (const p of G.proj) if (p.gele > 0) { p.gele -= dt; p.age -= dt; p.x -= p.vx * dt; p.y -= p.vy * dt; }
   majProjectiles(dt); majFaisceaux(dt); majMelees(dt); majBombes(dt); majArcs(dt); majAttraction(dt); majMinuteries(dt);
   majEffets(dt); majRamassables(dt); majPiedestaux(dt); G.machineProche = null; majDispositifs(); majAutel(dt); majSource(); majSorties(dt);
-  majDangersTerrain(dt); verifierBlocsCle(); verifierPortes(dt); verifierNettoyage(); majSecousse(dt);
+  majDangersTerrain(dt); verifierBlocsCle(); verifierPortes(dt); secoursEnnemisInaccessibles(dt); verifierNettoyage(); majSecousse(dt);
   majVarianteContinu(dt);
   if (G.notifications.length) { G.notifications[0].t += dt; if (G.notifications[0].t > 3) G.notifications.shift(); }
 }
