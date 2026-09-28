@@ -355,7 +355,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_084', 'Onigiri', 'sante', 0, 'H1 S2 B1', 'Un contenant de vitalité.', [{ sante: { cont: 1 } }], { icone: ic('onigiri', '#f0f0f0', '#d0d0d0', '#1c2a1c') });
   O('PSV_085', 'Dango', 'sante', 1, 'H1 S2', 'Un contenant de vitalité et un cœur de soin.', [{ sante: { cont: 1, soin: 2 } }], { icone: ic('dango', '#f0a0b8', '#f0f0e0', '#8ad08a') });
   O('PSV_086', 'Pilule écarlate', 'sante', 2, 'H1 P1 B1', 'Dégâts +1 et un contenant, mais un peu plus lent.', [s('degats', 1), { sante: { cont: 1 } }, s('vitesse', -0.2)], { statut: 'création originale', icone: ic('pilule', '#d83a3a', '#8a1a1a', '#ffffff'), contrepartie: 'Vitesse −0,2.' });
-  O('PSV_087', 'Sceau de régénération', 'sante', 3, 'A2 B1', 'Toutes les 3 salles nettoyées, soigne une demi-unité.', [{ quand: 'salle_nettoyee', tousLes: 3, faire: { type: 'soin', demis: 1 } }], { statut: 'adaptation (Byakugō, attribution à vérifier)', icone: ic('sceau', '#a050d0', '#e8d060', '#ffffff'), visuel: { couche: 'peau', motif: 'point_front', couleur: '#a050d0', prio: 2 } });
+  O('PSV_087', 'Sceau de régénération', 'sante', 3, 'A2 B1', 'Toutes les 3 salles nettoyées, soigne une demi-unité.', [{ quand: 'salle_nettoyee', tousLes: 3, faire: { type: 'soin', demis: 1 } }], { exclusion: ['sansVitalite'], statut: 'adaptation (Byakugō, attribution à vérifier)', icone: ic('sceau', '#a050d0', '#e8d060', '#ffffff'), visuel: { couche: 'peau', motif: 'point_front', couleur: '#a050d0', prio: 2 } });
   O('PSV_088', 'Cape de chakra protecteur', 'sante', 1, 'A2 S1 H1', 'Deux réserves de chakra protecteur.', [{ sante: { prot: 4 } }], { icone: ic('bouclier', '#4a8ae8', '#c0e0ff', '#2a4a9a'), visuel: { couche: 'dos', motif: 'cape', couleur: '#3a6ac8', prio: 1 } });
   O('PSV_089', 'Cœur volé', 'sante', 3, 'P1 I1 B1', 'À votre mort, vous vous relevez avec un contenant (l’objet est consommé).', [], { statut: 'adaptation', icone: ic('coeur', '#6a1a2a', '#3a0a14', '#c83a4a'), cumul: 'cumul' });
   O('PSV_090', 'Ossature renforcée', 'sante', 2, 'H1 P1', 'Deux enveloppes osseuses.', [{ sante: { os: 2 } }], { statut: 'adaptation', ensemble: 'experimental', icone: ic('os', '#e8e0cc', '#a89c84', '#6a5a4a') });
@@ -499,7 +499,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   TA('TAL_002', 'Épingle à cheveux', '#c8ccd8', 'Les coffres verrouillés s’ouvrent sans clé (pas les portes).', [{ drapeau: 'crochetageCoffres' }]);
   TA('TAL_003', 'Pile de chakra', '#3aa0f0', 'Les actifs demandent une charge de moins.', []);
   TA('TAL_004', 'Perles du moine', '#e8e0c0', 'Les sanctuaires sont plus probables (+0,15 au poids).', [], { statut: 'création originale' });
-  TA('TAL_005', 'Baguettes d’Ichiraku', '#c8a060', '8 % de soigner une demi-unité à chaque salle nettoyée.', [{ quand: 'salle_nettoyee', chance: 0.08, faire: { type: 'soin', demis: 1 } }]);
+  TA('TAL_005', 'Baguettes d’Ichiraku', '#c8a060', '8 % de soigner une demi-unité à chaque salle nettoyée.', [{ quand: 'salle_nettoyee', chance: 0.08, faire: { type: 'soin', demis: 1 } }], { exclusion: ['sansVitalite'] });
   TA('TAL_006', 'Masque d’oni', '#c83a2a', 'Toucher un ennemi le terrifie parfois (25 %).', [{ quand: 'degat_recu', chance: 0.25, faire: { type: 'statut_proches', statut: 'peur', r: 2, duree: 2 } }]);
   TA('TAL_007', 'Talisman de protection', '#f0f0f0', 'Blessé : 10 % (+2 % par chance) d’une réserve de chakra en demi.', [{ quand: 'degat_recu', chance: 0.1, chanceParChance: 0.02, max: 0.3, faire: { type: 'protection', demis: 1 } }]);
   TA('TAL_008', 'Bandeau rayé', '#6a6a78', 'Dégâts +10 % contre les boss.', [{ drapeau: 'bonusBoss' }]);
@@ -507,11 +507,11 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   TA('TAL_010', 'Poignée de sable', '#d8b070', 'Un orbital de sable temporaire à chaque salle de combat.', [{ quand: 'entree_salle', si: 'combat', faire: { type: 'familier', familier: 'FAM_SABLE', salle: true } }]);
   TA('TAL_011', 'Mèche courte', '#f07820', 'Vos explosifs explosent plus vite (mèche de 0,85 s au lieu de 1,4 s).', [{ drapeau: 'mecheCourte' }]);
   TA('TAL_012', 'Mèche longue', '#8a6a3a', 'Explosions 50 % plus larges ; délai +0,5 s.', [{ drapeau: 'mecheLongue' }, { drapeau: 'grandeExplosion' }]);
-  TA('TAL_013', 'Charme du plein', '#6ae07a', 'À pleine vitalité, dégâts +0,5.', [{ drapeau: 'pleineVitalite' }]);
+  TA('TAL_013', 'Charme du plein', '#6ae07a', 'À pleine vitalité, dégâts +0,5.', [{ drapeau: 'pleineVitalite' }], { exclusion: ['sansVitalite'] });
   TA('TAL_014', 'Gourde de saké', '#8a6a4a', 'Identifie les pilules ; les pilules négatives deviennent leur contraire.', []);
   TA('TAL_015', 'Bague de l’organisation', '#c8303a', 'Les pactes sont plus fréquents (+5 %).', []);
   TA('TAL_016', 'Plume de la pluie', '#a8b8c8', '10 % de tirs spectraux.', [{ drapeau: 'spectralParfois' }]);
-  TA('TAL_017', 'Écaille de requin', '#4a6a8a', '3 % des coups portés soignent une demi-unité.', [{ quand: 'impact', chance: 0.03, faire: { type: 'soin', demis: 1 } }]);
+  TA('TAL_017', 'Écaille de requin', '#4a6a8a', '3 % des coups portés soignent une demi-unité.', [{ quand: 'impact', chance: 0.03, faire: { type: 'soin', demis: 1 } }], { exclusion: ['sansVitalite'] });
   TA('TAL_018', 'Gant d’armurière', '#c83a2a', '10 % d’un tir supplémentaire.', [{ quand: 'emission_primaire', chance: 0.1, faire: { type: 'tir_bonus' } }]);
   TA('TAL_019', 'Bandage de lutteur', '#e8e0d0', 'Vitesse +0,3.', [{ s: 'vitesse', a: 0.3 }]);
   TA('TAL_020', 'Lunettes noires', '#2a2a2a', 'Vos familiers infligent 20 % de plus.', []);
@@ -6437,7 +6437,7 @@ function entrerSalle(id, depuisDir) {
     else { const [cx, cy] = centreSalle(s); J.x = cx; J.y = cy; }
   } else if (G.positionEntree) { J.x = G.positionEntree.x; J.y = G.positionEntree.y; G.positionEntree = null; }
   else { const [cx, cy] = centreSalle(s); J.x = cx; J.y = cy + 16; }
-  J.vx = 0; J.vy = 0;
+  J.vx = 0; J.vy = 0; J.tir.charge = 0; // une charge ne traverse pas les portes
   // zone sûre : jamais sur une fosse ou un obstacle
   if (solidePour(s, Math.floor(J.x / TUILE), Math.floor(J.y / TUILE), J.vol ? 'vol' : 'marche')) { const [tx, ty] = tuileLibreProche(s, J.x, J.y); [J.x, J.y] = centreTuile(tx, ty); }
   for (const f of J.familiers) { f.x = J.x + (Math.random() - 0.5) * 12; f.y = J.y + 6; f.vx = 0; f.vy = 0; }
@@ -6638,7 +6638,7 @@ function creerRamassable(type, x, y, o = {}) {
   const r = { type, x, y, z: o.depuisSol ? 0 : 6, vx: o.immobile ? 0 : (Math.random() - 0.5) * 90, vy: o.immobile ? 0 : (Math.random() - 0.5) * 90, vz: o.immobile ? 0 : 80, age: 0, uid: Math.random().toString(36).slice(2) };
   if (type === 'rouleau') r.id = al.pondere(DON.consommables.filter(c => Progression.estDebloque(c.id)), c => c.poids || 1).id;
   if (type === 'pilule') { const i = al.entier(G.partie.pilules.length); r.id = G.partie.pilules[i]; r.apparence = i; }
-  if (type === 'talisman') r.id = (al.pondere(DON.talismans.filter(t => Progression.estDebloque(t.id) && !G.partie.retires.includes(t.id)), t => t.poids || 1) || DON.talismans[0]).id;
+  if (type === 'talisman') r.id = (al.pondere(DON.talismans.filter(t => Progression.estDebloque(t.id) && !G.partie.retires.includes(t.id) && !(t.exclusion && t.exclusion.some(x => G.joueur.drapeaux[x]))), t => t.poids || 1) || DON.talismans[0]).id;
   if (o.id) r.id = o.id; if (o.charges !== undefined) r.charges = o.charges;
   s.ramassables.push(r); return r;
 }
@@ -7033,7 +7033,12 @@ function relancerPiedestaux(s, o = {}) {
 function permuterPassifs(J) {
   const P = G.partie; const L = J.passifs.filter(id => !INDEX[id].cle);
   J.passifs = J.passifs.filter(id => INDEX[id].cle);
-  for (let i = 0; i < L.length; i++) { const id = tirerObjet(P, 'heritage', G.alea.butin, { passifSeulement: true }); J.passifs.push(id); if (!J.acquis.includes(id)) J.acquis.push(id); }
+  // les compagnons suivent leur objet ; contenants et ressources déjà donnés ne sont ni repris ni redonnés
+  J.familiers = J.familiers.filter(f => !L.includes(f.source));
+  for (let i = 0; i < L.length; i++) {
+    const id = tirerObjet(P, 'heritage', G.alea.butin, { passifSeulement: true }); J.passifs.push(id); if (!J.acquis.includes(id)) J.acquis.push(id);
+    for (const e of INDEX[id].effets || []) if (e.familier) ajouterFamilier(J, e.familier, id);
+  }
   recalculer(J); verifierTransformations(J);
 }
 function reconstruireInventaire(J) { // Kakuzu altéré : un passif remplacé par un autre de même qualité

@@ -91,7 +91,7 @@ function entrerSalle(id, depuisDir) {
     else { const [cx, cy] = centreSalle(s); J.x = cx; J.y = cy; }
   } else if (G.positionEntree) { J.x = G.positionEntree.x; J.y = G.positionEntree.y; G.positionEntree = null; }
   else { const [cx, cy] = centreSalle(s); J.x = cx; J.y = cy + 16; }
-  J.vx = 0; J.vy = 0;
+  J.vx = 0; J.vy = 0; J.tir.charge = 0; // une charge ne traverse pas les portes
   // zone sûre : jamais sur une fosse ou un obstacle
   if (solidePour(s, Math.floor(J.x / TUILE), Math.floor(J.y / TUILE), J.vol ? 'vol' : 'marche')) { const [tx, ty] = tuileLibreProche(s, J.x, J.y); [J.x, J.y] = centreTuile(tx, ty); }
   for (const f of J.familiers) { f.x = J.x + (Math.random() - 0.5) * 12; f.y = J.y + 6; f.vx = 0; f.vy = 0; }
@@ -292,7 +292,7 @@ function creerRamassable(type, x, y, o = {}) {
   const r = { type, x, y, z: o.depuisSol ? 0 : 6, vx: o.immobile ? 0 : (Math.random() - 0.5) * 90, vy: o.immobile ? 0 : (Math.random() - 0.5) * 90, vz: o.immobile ? 0 : 80, age: 0, uid: Math.random().toString(36).slice(2) };
   if (type === 'rouleau') r.id = al.pondere(DON.consommables.filter(c => Progression.estDebloque(c.id)), c => c.poids || 1).id;
   if (type === 'pilule') { const i = al.entier(G.partie.pilules.length); r.id = G.partie.pilules[i]; r.apparence = i; }
-  if (type === 'talisman') r.id = (al.pondere(DON.talismans.filter(t => Progression.estDebloque(t.id) && !G.partie.retires.includes(t.id)), t => t.poids || 1) || DON.talismans[0]).id;
+  if (type === 'talisman') r.id = (al.pondere(DON.talismans.filter(t => Progression.estDebloque(t.id) && !G.partie.retires.includes(t.id) && !(t.exclusion && t.exclusion.some(x => G.joueur.drapeaux[x]))), t => t.poids || 1) || DON.talismans[0]).id;
   if (o.id) r.id = o.id; if (o.charges !== undefined) r.charges = o.charges;
   s.ramassables.push(r); return r;
 }

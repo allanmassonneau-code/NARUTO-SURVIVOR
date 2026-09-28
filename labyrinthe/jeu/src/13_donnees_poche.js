@@ -8,7 +8,7 @@
   TA('TAL_002', 'Épingle à cheveux', '#c8ccd8', 'Les coffres verrouillés s’ouvrent sans clé (pas les portes).', [{ drapeau: 'crochetageCoffres' }]);
   TA('TAL_003', 'Pile de chakra', '#3aa0f0', 'Les actifs demandent une charge de moins.', []);
   TA('TAL_004', 'Perles du moine', '#e8e0c0', 'Les sanctuaires sont plus probables (+0,15 au poids).', [], { statut: 'création originale' });
-  TA('TAL_005', 'Baguettes d’Ichiraku', '#c8a060', '8 % de soigner une demi-unité à chaque salle nettoyée.', [{ quand: 'salle_nettoyee', chance: 0.08, faire: { type: 'soin', demis: 1 } }]);
+  TA('TAL_005', 'Baguettes d’Ichiraku', '#c8a060', '8 % de soigner une demi-unité à chaque salle nettoyée.', [{ quand: 'salle_nettoyee', chance: 0.08, faire: { type: 'soin', demis: 1 } }], { exclusion: ['sansVitalite'] });
   TA('TAL_006', 'Masque d’oni', '#c83a2a', 'Toucher un ennemi le terrifie parfois (25 %).', [{ quand: 'degat_recu', chance: 0.25, faire: { type: 'statut_proches', statut: 'peur', r: 2, duree: 2 } }]);
   TA('TAL_007', 'Talisman de protection', '#f0f0f0', 'Blessé : 10 % (+2 % par chance) d’une réserve de chakra en demi.', [{ quand: 'degat_recu', chance: 0.1, chanceParChance: 0.02, max: 0.3, faire: { type: 'protection', demis: 1 } }]);
   TA('TAL_008', 'Bandeau rayé', '#6a6a78', 'Dégâts +10 % contre les boss.', [{ drapeau: 'bonusBoss' }]);
@@ -16,11 +16,11 @@
   TA('TAL_010', 'Poignée de sable', '#d8b070', 'Un orbital de sable temporaire à chaque salle de combat.', [{ quand: 'entree_salle', si: 'combat', faire: { type: 'familier', familier: 'FAM_SABLE', salle: true } }]);
   TA('TAL_011', 'Mèche courte', '#f07820', 'Vos explosifs explosent plus vite (mèche de 0,85 s au lieu de 1,4 s).', [{ drapeau: 'mecheCourte' }]);
   TA('TAL_012', 'Mèche longue', '#8a6a3a', 'Explosions 50 % plus larges ; délai +0,5 s.', [{ drapeau: 'mecheLongue' }, { drapeau: 'grandeExplosion' }]);
-  TA('TAL_013', 'Charme du plein', '#6ae07a', 'À pleine vitalité, dégâts +0,5.', [{ drapeau: 'pleineVitalite' }]);
+  TA('TAL_013', 'Charme du plein', '#6ae07a', 'À pleine vitalité, dégâts +0,5.', [{ drapeau: 'pleineVitalite' }], { exclusion: ['sansVitalite'] });
   TA('TAL_014', 'Gourde de saké', '#8a6a4a', 'Identifie les pilules ; les pilules négatives deviennent leur contraire.', []);
   TA('TAL_015', 'Bague de l’organisation', '#c8303a', 'Les pactes sont plus fréquents (+5 %).', []);
   TA('TAL_016', 'Plume de la pluie', '#a8b8c8', '10 % de tirs spectraux.', [{ drapeau: 'spectralParfois' }]);
-  TA('TAL_017', 'Écaille de requin', '#4a6a8a', '3 % des coups portés soignent une demi-unité.', [{ quand: 'impact', chance: 0.03, faire: { type: 'soin', demis: 1 } }]);
+  TA('TAL_017', 'Écaille de requin', '#4a6a8a', '3 % des coups portés soignent une demi-unité.', [{ quand: 'impact', chance: 0.03, faire: { type: 'soin', demis: 1 } }], { exclusion: ['sansVitalite'] });
   TA('TAL_018', 'Gant d’armurière', '#c83a2a', '10 % d’un tir supplémentaire.', [{ quand: 'emission_primaire', chance: 0.1, faire: { type: 'tir_bonus' } }]);
   TA('TAL_019', 'Bandage de lutteur', '#e8e0d0', 'Vitesse +0,3.', [{ s: 'vitesse', a: 0.3 }]);
   TA('TAL_020', 'Lunettes noires', '#2a2a2a', 'Vos familiers infligent 20 % de plus.', []);

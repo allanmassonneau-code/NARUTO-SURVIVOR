@@ -264,6 +264,9 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     J = nouvelle(); J.ryo = 200; J.sante = L.santeInit({ vitalite: 6 }); J.drapeaux.loterieDouble = true; const ryo0 = J.ryo;
     for (const type of ['loterie', 'don_vital', 'diseuse', 'soin', 'recharge', 'troc']) { const m = { x: J.x, y: J.y - 40, type, usages: 0, uid: 1 }; G.salle.machines.push(m); for (let i = 0; i < 12; i++) { try { L.utiliserMachine(m); } catch (e) { out.ko.push('machine ' + type + ' : ' + String(e).slice(0, 120)); break; } } }
     verif(J.ryo < ryo0, 'les machines consomment des Ryō');
+    // objets sans fonction exclus avant tirage : Sasori (sans vitalité) ne tire jamais le Sceau de régénération
+    J = nouvelle('CHR_011'); const tirs = []; for (let i = 0; i < 40; i++) tirs.push(L.tirerObjet(G.partie, 'sanctuaire', G.alea.butin));
+    verif(!tirs.includes('PSV_087'), 'Sasori : PSV_087 (soin seul) ne doit pas être tiré');
     // un identifiant débloqué par deux objectifs : l'un ou l'autre suffit
     const Pg = L.Progression, pr = Pg.profil; const avant = { tout: pr.toutDebloque, obj: Object.assign({}, pr.objectifs) };
     pr.toutDebloque = false; pr.objectifs = {}; const bloque = !Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_028: 1 }; const parMadara = Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_049: 1 }; const parBreche = Pg.estDebloque('PSV_020');

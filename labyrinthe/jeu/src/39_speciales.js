@@ -172,7 +172,12 @@ function relancerPiedestaux(s, o = {}) {
 function permuterPassifs(J) {
   const P = G.partie; const L = J.passifs.filter(id => !INDEX[id].cle);
   J.passifs = J.passifs.filter(id => INDEX[id].cle);
-  for (let i = 0; i < L.length; i++) { const id = tirerObjet(P, 'heritage', G.alea.butin, { passifSeulement: true }); J.passifs.push(id); if (!J.acquis.includes(id)) J.acquis.push(id); }
+  // les compagnons suivent leur objet ; contenants et ressources déjà donnés ne sont ni repris ni redonnés
+  J.familiers = J.familiers.filter(f => !L.includes(f.source));
+  for (let i = 0; i < L.length; i++) {
+    const id = tirerObjet(P, 'heritage', G.alea.butin, { passifSeulement: true }); J.passifs.push(id); if (!J.acquis.includes(id)) J.acquis.push(id);
+    for (const e of INDEX[id].effets || []) if (e.familier) ajouterFamilier(J, e.familier, id);
+  }
   recalculer(J); verifierTransformations(J);
 }
 function reconstruireInventaire(J) { // Kakuzu altéré : un passif remplacé par un autre de même qualité
