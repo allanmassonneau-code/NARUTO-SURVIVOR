@@ -10,7 +10,7 @@ const CLES = { reglages: 'lds_reglages', profil: 'lds_profil', partie: 'lds_part
 const REGLAGES_DEFAUT = {
   volMusique: 0.6, volEffets: 0.8, vibrations: 0.7, secousses: 0.7, sansFlash: false, confort: false,
   zoneMorteG: 0.18, zoneMorteD: 0.12, courbeG: 1.0, seuilVisee: 0.5, seuilRepos: 0.35, hysteresisAngle: 12,
-  profilTir: 'stick+croix', chargeAuto: false, afficherStats: true, chiffresDegats: false, echelle: 'entiere',
+  profilTir: 'stick+croix', chargeAuto: false, afficherStats: true, chiffresDegats: false, echelle: 'entiere', eclairage: true,
   liaisons: { manette: {}, clavier: {} }, viseeLibreControle: false, version: 1,
 };
 const Stockage = {

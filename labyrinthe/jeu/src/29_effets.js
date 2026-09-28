@@ -30,6 +30,7 @@ function effetImpact(x, y, app, force, elements) {
   const n = G.reglages.confort ? 2 : 4; const col = app === 'ennemi' ? '#ff9ac0' : app === 'sable' ? '#e0c080' : app === 'poing' ? '#ffb0d0' : app === 'orbe' ? '#c0e8ff' : '#fff4d0';
   for (let i = 0; i < n * force; i++) { const a = Math.random() * Math.PI * 2, v = 30 + Math.random() * 50; G.particules.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, age: 0, duree: 0.18 + Math.random() * 0.1, couleur: col, taille: 1 + (Math.random() < 0.3 ? 1 : 0) }); }
   if (app === 'orbe') G.effets.push({ type: 'anneau_impact', x, y, age: 0, duree: 0.2, r: 10 });
+  if (app !== 'ennemi' && !G.reglages.sansFlash) G.effets.push({ type: 'etoile_impact', x, y, age: 0, duree: 0.1, r: Math.min(9, 4 + force * 2) });
 }
 function dessinerEffet(g, e, X, Y) {
   const k = Math.min(1, e.age / e.duree); const x = X(e.x || 0), y = Y(e.y || 0);
@@ -49,6 +50,7 @@ function dessinerEffet(g, e, X, Y) {
     case 'fumee': { const n = 5; for (let i = 0; i < n; i++) { const a = i * 1.26 + (e.x % 3); const d = 3 + k * 10 * (e.taille || 1); const r = Math.max(1, Math.round((4 + i % 2 * 2) * (e.taille || 1) * (1 - k * 0.6))); g.globalAlpha = 0.8 * (1 - k); g.drawImage(disque(r, i % 2 ? '#e8e4f0' : '#b8b4c8'), Math.round(x + Math.cos(a) * d - r), Math.round(y + Math.sin(a) * d * 0.7 - r - k * 6)); } g.globalAlpha = 1; break; }
     case 'debris': { const n = e.n || 8; for (let i = 0; i < n; i++) { const a = i * 6.28 / n + 0.3; const d = k * 18; g.fillStyle = e.couleur || '#8a8078'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d * 0.6 + k * k * 10 - 4), 2, 2); } break; }
     case 'etincelle': g.fillStyle = '#fff4c0'; g.fillRect(x - 1, y - 1, 3, 3); break;
+    case 'etoile_impact': { const r = Math.max(1, Math.round(e.r * (1 - k))); g.fillStyle = '#fff2c8'; g.fillRect(x - r, y, 2 * r + 1, 1); g.fillRect(x, y - r, 1, 2 * r + 1); g.fillStyle = '#ffffff'; g.fillRect(x - 1, y - 1, 3, 3); if (r > 3) { g.fillStyle = '#ffe8a8'; const q = Math.round(r * 0.5); g.fillRect(x - q, y - q, 1, 1); g.fillRect(x + q, y - q, 1, 1); g.fillRect(x - q, y + q, 1, 1); g.fillRect(x + q, y + q, 1, 1); } break; }
     case 'etincelle_ramassage': { const r = Math.round(3 + 8 * k); g.globalAlpha = 1 - k; g.drawImage(anneau(r, 1, '#fff8d0'), x - r - 1, y - r - 1); g.globalAlpha = 1; break; }
     case 'immunite': Police.ecrire(g, 'immunisé', x, y - k * 6, '#c0c0ff', { a: 'c' }); break;
     case 'frappe_sol': { const r = Math.round(e.r); g.globalAlpha = 0.5 + 0.4 * k; g.drawImage(anneau(r, 1, e.proprio === 'joueur' ? '#ffb060' : '#ff4a4a'), x - r - 1, y - r - 1); g.drawImage(anneau(Math.max(1, Math.round(r * k)), 1, '#ffe0a0'), x - Math.round(r * k) - 1, y - Math.round(r * k) - 1); g.globalAlpha = 1; if (!e.petite) { const h = Math.round((1 - k) * 120); g.fillStyle = '#6a3a2a'; g.fillRect(x - 5, y - h - 10, 10, 10); g.fillStyle = '#ffb040'; g.fillRect(x - 3, y - h - 16, 6, 6); } break; }

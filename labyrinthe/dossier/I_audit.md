@@ -116,6 +116,6 @@ Les écarts plus anciens (pics devant des portes, familiers accumulés, faisceau
 
 1. **Droits d'exploitation** (bloquant pour toute diffusion publique).
 2. **Recette humaine** absente : sensations, lisibilité et difficulté réelles restent à confirmer (H §8).
-3. **Matériel** : manettes réelles, écrans à fréquence élevée, machines modestes (le 99e centile de rendu approche 12 ms sur la scène la plus chargée).
+3. **Matériel** : manettes réelles, écrans à fréquence élevée, machines modestes (en rendu logiciel, le 99e centile approche 21 ms sur la scène la plus chargée avec l'éclairage dynamique, 14 ms sans ; l'option se coupe dans les réglages).
 4. **Accessibilité** : mode confort, sans flash, icônes redondantes et remappage existent ; une revue par des joueurs concernés reste à faire.
 5. **Volume** : l'écart entre la version de travail et la bibliothèque complète est d'un ordre de grandeur ; toute extension doit passer par le validateur et le banc de test, qui restent la condition d'entrée de chaque lot.

@@ -68,6 +68,27 @@ Aucun élément de HUD ne recouvre une porte ; la barre de boss (bas, centre) ne
 
 **Budget de visibilité** : écart de luminance faible entre variantes de sol (≤ 8 %) ; obstacles plus clairs que le sol avec un contour ; ennemis, projectiles et joueur toujours contourés ; les projectiles **ennemis** sont roses ou violets à cœur clair **et pulsent**, ceux du joueur ont un contour clair fixe — le rouge seul ne signifie jamais « ennemi » (un Katon allié est orange à cœur jaune).
 
+### Lumière et ambiance (`45_lumiere.js`)
+
+Une **carte de lumière** à demi-résolution est multipliée sur la salle à chaque image : teinte de pénombre propre au thème loin des sources, lumière d'ensemble de chaque cellule, flaques des feux, lanternes et bougies, **appliques murales animées**, halo du joueur, seuils colorés des portes spéciales, collectes et piédestaux. Viennent ensuite des **éclats additifs** (tirs, explosions, étoiles d'impact, orbes, faisceaux) puis l'**air du thème**.
+
+| Thème | Pénombre | Lampe | Applique murale | Air |
+|---|---|---|---|---|
+| Sous-sols de l’Académie | `#7a6454` | `#ffae50` | torche | poussière |
+| Forêt de la Mort | `#566a5c` | `#b4f070` | champignons luminescents | lucioles |
+| Cavernes de Suna | `#94745c` | `#ffb458` | torche | sable porté par le vent |
+| Ateliers de marionnettes | `#5e5270` | `#e0a0ff` | lanterne de papier | poussière |
+| Laboratoires d’Orochimaru | `#4a5e66` | `#70f0d0` | tube de culture | spores |
+| Canaux de Kiri | `#4a5e78` | `#88ccff` | lanterne de papier | bancs de brume |
+| Repaires de l’Akatsuki | `#54445c` | `#ff6a50` | bougies | braises |
+| Champs de guerre scellés | `#6a6058` | `#ffa458` | torche | cendres |
+| Mont Myōboku (empreinte) | `#76866a` | `#fff0a0` | lanterne de papier | lucioles |
+| Profondeurs du sceau des bijū | `#5e3c44` | `#ff5a3a` | sceau de papier pulsant | braises |
+
+**Règle de lisibilité.** L'ombre ne touche que le décor et les personnages ; les tirs (alliés et ennemis), les effets, les particules, les textes et le HUD sont dessinés après elle, et les télégraphes rouges (cercles, lignes, arcs, frappes au sol) **émettent leur propre lumière** : l'ambiance ne masque jamais un danger. Tout est décoratif (aucun effet de jeu) et se coupe dans Options → *Éclairage dynamique* ; *Sans flash* adoucit les éclats et fige le vacillement des flammes, *Confort* réduit l'air du thème. Les variantes « pénombre » et « brume » gardent leur propre voile, percé par les appliques et les lanternes.
+
+**Matière.** Le sol reçoit des taches d'usure en dégradé doux et des détails du thème (nœuds et clous de planches, touffes d'herbe et feuilles, rides de sable, grilles et flaques d'acide, flaques d'eau, fissures, fleurs, veines rougeoyantes), jamais sous un obstacle ni dans une fosse ; les murs gagnent un volume (face qui s'assombrit vers le sol, arête éclairée), une ombre portée en dégradé sur trois côtés et des détails (lierre, suintements, tuyau continu, dunes au pied du mur, chaînes, avis placardés, fils) ; les obstacles ont une ombre de contact, les fosses une paroi striée. Les tirs alliés laissent deux images fantômes le long de leur vitesse (sauf *Confort*).
+
 ## D5. Animations
 
 | Animation | Règle |
@@ -139,7 +160,8 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 
 ## D9. Interface et menus
 
-- **Titre** : logo, menu (Continuer, Nouvelle partie, Défis, Mission à code, Registre des missions, Options), personnages en bas ; navigation manette complète.
+- **Titre** : scène de crépuscule originale (ciel tramé en Bayer 4×4, lune, trois plans de montagnes, toits d'un village imaginaire aux fenêtres chaudes, nuages, brume, feuilles et pétales), logo en dégradé à reflet et double contour, sceau tournant en lueur, menu (Continuer, Nouvelle partie, Défis, Mission à code, Registre des missions, Options) dans un cadre serti, personnages sur un faîtage ; navigation manette complète. Le même décor, assombri, habille tous les menus.
+- **HUD** : plaques translucides à liseré (santé et actif, ressources et statistiques, minicarte et étage, talisman, poche), écrin de l'actif qui s'illumine quand il est prêt, barre de boss ornée avec **traîne des dégâts récents**, bandeaux à bords estompés (étage, objets, intro de boss), lueur rouge des cœurs en santé critique et vignette rouge au coup reçu (sauf *Sans flash*).
 - **Sélection** : carrousel des 12 personnages ; ▲▼ bascule vers la variante altérée ; fiche (santé, statistiques, actif, règle, faiblesse, marques de fin) ; « Description » bascule Standard/Difficile.
 - **Mission à code** : clavier virtuel de 32 caractères (sans I, O, 0, 1), saisie entièrement à la manette.
 - **Pause** : reprendre, objets et mutations (inventaire par pages avec descriptions à deux niveaux), options, sauvegarder et quitter, abandonner (confirmation) ; la carte étendue reste au maintien de *Carte*.
@@ -163,6 +185,7 @@ Tout est **synthétisé** (WebAudio) ; aucune musique ni aucun son n’est impor
 | Secousses | 0,7 | 0 = désactivées ; plafonnées et directionnelles |
 | Sans flash | non | supprime flashs et clignotements (silhouette pâle) |
 | Confort | non | transitions 0,18 s, animation d’objet 0,55 s, pas de ralenti décoratif |
+| Éclairage dynamique | oui | lumières, halos et air du thème (décoratifs) ; à couper sur une machine modeste |
 | Zones mortes, seuils de visée, hystérésis | B2 | réglables |
 | Profil de tir | stick + croix | stick seul, croix seule |
 | Charge automatique | non | tir à pleine charge sans relâcher |

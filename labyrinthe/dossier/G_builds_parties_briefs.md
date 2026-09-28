@@ -216,12 +216,12 @@ Chaque brief donne la composition, la navigation à la manette, les ressources n
 
 | # | Écran | Composition | Navigation | Ressources | Capture |
 |---|---|---|---|---|---|
-| 1 | Titre | logo « NARUTO » ×4, sous-titre, mention *projet non officiel*, sceau tournant, menu en cadre, six personnages animés au pied | haut/bas, A ; « Continuer » n'apparaît que s'il existe une partie suspendue | police bitmap, 6 sprites, musique « titre » | ![](images/ecran_01_titre.png) |
-| 2 | Sélection | carrousel de 7 silhouettes (verrouillées en ombre et « ? »), fiche : statistiques, règle, faiblesse, difficulté ; variante en bas | gauche/droite personnage, haut/bas variante, Y Difficile | sprites de roster, icônes d'actif | ![](images/ecran_02_selection.png) |
-| 3 | Salle de combat | HUD à gauche (portrait, santé, ressources, statistiques), carte en haut à droite, étage ; salle 13×7 tuiles au centre | stick gauche déplacement, stick droit tir cardinal | tuiles du thème, ennemis, projectiles | ![](images/ecran_03_combat.png) |
+| 1 | Titre | crépuscule original (ciel tramé, lune, montagnes, toits d'un village imaginaire aux fenêtres chaudes, nuages, brume, feuilles et pétales), logo « NARUTO » ×4 en dégradé à double contour, sous-titre orné, mention *projet non officiel*, sceau tournant en lueur, menu en cadre serti, six personnages animés sur un faîtage | haut/bas, A ; « Continuer » n'apparaît que s'il existe une partie suspendue | police bitmap, 6 sprites, musique « titre » | ![](images/ecran_01_titre.png) |
+| 2 | Sélection | décor du titre assombri, carrousel de 7 silhouettes (verrouillées en ombre et « ? ») avec socle et halo sous le personnage choisi, fiche : statistiques, règle, faiblesse, difficulté ; variante en bas | gauche/droite personnage, haut/bas variante, Y Difficile | sprites de roster, icônes d'actif | ![](images/ecran_02_selection.png) |
+| 3 | Salle de combat | HUD en plaques translucides à gauche (actif, santé, ressources, statistiques), carte et étage en haut à droite ; salle 13×7 tuiles au centre, éclairée par ses appliques murales, air du thème | stick gauche déplacement, stick droit tir cardinal | tuiles du thème, ennemis, projectiles | ![](images/ecran_03_combat.png) |
 | 4 | Bandeau d'étage | chapitre, **nom du lieu**, variante, règle de la variante ; 3,2 s | aucune | police ×2 | ![](images/ecran_04_bandeau_etage.png) |
 | 5 | Intro de boss | bande horizontale, titre et nom, 1,6 s (1,0 s en mode confort) | A accélère | sprite du boss ×2, jingle | ![](images/ecran_05_intro_boss.png) |
-| 6 | Combat de boss | barre de vie en bas, télégraphes au sol, mécanique de phase visible (ici la bande de sable de Gaara) | combat | effets et télégraphes | ![](images/ecran_06_combat_boss.png) |
+| 6 | Combat de boss | barre de vie ornée en bas (traîne claire des dégâts récents), télégraphes au sol, mécanique de phase visible (ici la bande de sable de Gaara) | combat | effets et télégraphes | ![](images/ecran_06_combat_boss.png) |
 | 7 | Pause | menu, carte de l'étage, statistiques, temps, code, **chances d'opportunité** à jour | haut/bas, A, B pour reprendre | minicarte | ![](images/ecran_07_pause.png) |
 | 8 | Objets et mutations | grille d'icônes (actif, talismans, passifs, transformations), fiche détaillée à droite | croix / stick, B | icônes d'objets | ![](images/ecran_08_inventaire.png) |
 | 9 | Échoppe | tapis, étals avec prix, tanuki (offrandes), panneau d'achat au contact | A (interagir) pour acheter ou faire l'offrande | icônes, prix, statue | ![](images/ecran_09_boutique.png) |
@@ -229,7 +229,7 @@ Chaque brief donne la composition, la navigation à la manette, les ressources n
 | 11 | Sanctuaire | halo doré, corde sacrée, sceau des ermites, statue du crapaud | contact | décor | ![](images/ecran_11_sanctuaire.png) |
 | 12 | Autel de tribut | sceau rouge, autel, texte du palier atteint | contact | décor, sons | ![](images/ecran_12_autel.png) |
 | 13 | Registre des missions | 4 onglets (Marques, Collection, Missions, **Secrets**) ; indice puis solution | gauche/droite onglets, haut/bas | police | ![](images/ecran_13_registre.png) |
-| 14 | Options | volumes, vibrations, secousses, sans flash, confort, zones mortes, courbe, visée, commandes, profil | haut/bas, gauche/droite valeurs | — | ![](images/ecran_14_options.png) |
+| 14 | Options | volumes, vibrations, secousses, sans flash, confort, éclairage dynamique, zones mortes, courbe, visée, commandes, profil | haut/bas, gauche/droite valeurs | — | ![](images/ecran_14_options.png) |
 | 15 | Mort | cause (source nommée), étage, code, statistiques ; rejouer ou menu | haut/bas, A | — | ![](images/ecran_15_mort.png) |
 | 16 | Victoire | titre de la route, texte original de fin, marque obtenue, récompense de première victoire, temps et code | A | — | ![](images/ecran_16_victoire.png) |
 

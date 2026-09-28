@@ -57,9 +57,12 @@ function dessinerProjectile(g, p, x, y) {
   let img;
   if (L.length === 16) img = L[indexAngle(Math.atan2(p.vy || 0.001, p.vx || 1))];
   else img = L[Math.floor((G.temps * 14 + (p.cycleId || 0)) % L.length)];
-  const t = p.taille || 1;
-  if (t > 1.15 && (app === 'orbe' || app === 'sable' || app === 'poing' || app === 'paume' || app === 'rasenshuriken')) { const w = Math.round(img.width * Math.min(3, t)); g.drawImage(img, x - w / 2, y - w / 2, w, w); }
-  else g.drawImage(img, x - img.width / 2, y - img.height / 2);
+  const t = p.taille || 1; const grand = t > 1.15 && (app === 'orbe' || app === 'sable' || app === 'poing' || app === 'paume' || app === 'rasenshuriken');
+  const w = grand ? Math.round(img.width * Math.min(3, t)) : img.width, h = grand ? w : img.height;
+  // traînée : deux images fantômes le long de la vitesse
+  const v = Math.hypot(p.vx || 0, p.vy || 0);
+  if (v > 60 && !G.reglages.confort) { const ux = p.vx / v, uy = p.vy / v, d = Math.max(4, w * 0.45); g.globalAlpha = 0.3; g.drawImage(img, Math.round(x - w / 2 - ux * d), Math.round(y - h / 2 - uy * d), w, h); g.globalAlpha = 0.12; g.drawImage(img, Math.round(x - w / 2 - ux * d * 2), Math.round(y - h / 2 - uy * d * 2), w, h); g.globalAlpha = 1; }
+  g.drawImage(img, Math.round(x - w / 2), Math.round(y - h / 2), w, h);
   // signature élémentaire (forme, pas seulement couleur)
   if (el === 'katon' && Math.random() < 0.5) G.particules.push({ x: p.x + (Math.random() - 0.5) * 4, y: p.y - p.z, vx: 0, vy: -20, age: 0, duree: 0.25, couleur: Math.random() < 0.5 ? '#ffb040' : '#f05a20', taille: 2 });
   if (el === 'raiton' && Math.random() < 0.4) { g.fillStyle = '#e0f0ff'; g.fillRect(x + (Math.random() * 8 - 4) | 0, y + (Math.random() * 8 - 4) | 0, 1, 3); }

@@ -233,6 +233,9 @@ function textureMur(V, type) { // type : 'face' | 'cote' | 'rebord' | 'coin'
     else if (M.motif === 'metal') { g.fillStyle = M.ombre; g.fillRect(0, 18, 32, 2); g.fillStyle = nuancer(M.face, 1.25); for (const x of [4, 14, 24]) { g.fillRect(x, 10, 2, 2); g.fillRect(x, 24, 2, 2); } }
     else if (M.motif === 'racines') { g.fillStyle = M.ombre; for (let k = 0; k < 4; k++) { const x = 3 + k * 8; g.fillRect(x, 7, 3, 25); g.fillStyle = nuancer(M.face, 1.15); g.fillRect(x, 7, 1, 25); g.fillStyle = M.ombre; } }
     else { g.fillStyle = M.ombre; g.fillRect(4, 12, 10, 1); g.fillRect(18, 20, 11, 1); g.fillRect(8, 26, 8, 1); g.fillRect(22, 10, 1, 6); g.fillStyle = nuancer(M.face, 1.12); g.fillRect(5, 11, 8, 1); g.fillRect(19, 19, 9, 1); }
+    // volume : la face s'assombrit vers le sol, arête haute éclairée
+    [0.03, 0.07, 0.12, 0.18].forEach((o, k) => { g.fillStyle = 'rgba(0,0,0,' + o + ')'; g.fillRect(0, 11 + k * 5, 32, 5); });
+    g.fillStyle = 'rgba(255,245,225,0.12)'; g.fillRect(0, 7, 32, 1);
     g.fillStyle = nuancer(M.ombre, 0.8); g.fillRect(0, 30, 32, 2);
   } else dessinerDessusMur(g, M, type === 'cote' ? 'v' : 'h');
   return c;

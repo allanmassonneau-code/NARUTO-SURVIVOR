@@ -17,7 +17,7 @@
 
 ## H1. Architecture
 
-**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 750 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 42 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture.
+**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 815 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 44 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture.
 
 **Couches** (un module ne dépend que des couches précédentes, sauf la boucle de jeu qui les orchestre) :
 
@@ -28,7 +28,7 @@
 | Présentation de base | `20`–`29` | police bitmap, entrées (manette, clavier), audio synthétisé, outils pixel, sprites, dessin, effets |
 | Simulation | `30`–`38` | salle et collisions, génération d'étage, santé, pipeline de tir, ennemis, joueur, objets et profil, monde (étages, salles, portes, ramassables) |
 | Systèmes | `39`–`44` | salles spéciales et économie, actifs, familiers, événements, boss et mécaniques signatures, variantes d'étage |
-| Interface | `45`–`49` | rendu, HUD, menus, sauvegardes, progression durable |
+| Interface | `45`–`49` | rendu, lumière et ambiance, HUD, décor des menus, menus, sauvegardes, progression durable |
 | Jeu | `50_jeu`, `99_demarrage` | état global `G`, pas de simulation, scènes de jeu, boucle, interface de test |
 
 **Boucle.** `requestAnimationFrame` alimente un accumulateur ; la simulation avance par **pas fixes de 1/60 s** (5 pas au plus par image, l'excédent est abandonné), indépendamment de la fréquence d'affichage. Le rendu se fait sur un écran interne de 640×360 présenté à l'échelle entière (×2, ×3…) sans lissage. Les scènes forment une pile (`aller`, `empiler`, `dépiler`) ; tout changement de scène **consomme** les entrées maintenues, qui doivent être relâchées avant d'agir à nouveau (pas de tir involontaire en fermant un menu).
@@ -201,12 +201,12 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | Mesure | Valeur | Conditions |
 |---|---|---|
 | Simulation d'un pas | ≈ 0,06 ms | combat contre les Dix Queues, 12 objets de tir multiple, 5 familiers, 900 pas |
-| Rendu d'une image | ≈ 1,0 ms en moyenne ; 99e centile 11,7 ms ; pire 17 ms | même scène, écran interne 640×360 |
+| Rendu d'une image | ≈ 2,4 ms en moyenne avec l'éclairage dynamique (≈ 1,5 ms sans) ; 99e centile ≈ 21 ms (≈ 14 ms sans) ; pire ≈ 23 ms | même scène, écran interne 640×360, rendu **logiciel** de Chromium sans écran (un navigateur accéléré par la carte graphique fait mieux) |
 | Génération d'un étage | ≈ 0,75 ms | 400 étages en 0,3 s |
-| Fichier du jeu | ≈ 750 Kio | un seul HTML, sans ressource externe |
+| Fichier du jeu | ≈ 815 Kio | un seul HTML, sans ressource externe |
 | Partie suspendue | ≈ 14 Kio | étage et joueur sérialisés |
 
-**Garde-fous** : particules plafonnées (260, 120 en mode confort) ; budget de 14 réactivations par cycle de tir et générations d'impact bornées (`GEN_MAX`) ; multitir plafonné à 8 ; caches de sprites (par objet sprite et échelle), de silhouettes, de disques, ellipses et anneaux ; fond de salle mis en cache et redessiné seulement quand sa version change ; pas de simulation borné à 5 par image. Les pics du 99e centile viennent surtout de la création paresseuse des sprites au premier affichage.
+**Garde-fous** : particules plafonnées (260, 120 en mode confort) ; budget de 14 réactivations par cycle de tir et générations d'impact bornées (`GEN_MAX`) ; multitir plafonné à 8 ; caches de sprites (par objet sprite et échelle), de silhouettes, de disques, ellipses et anneaux ; fond de salle mis en cache et redessiné seulement quand sa version change ; pas de simulation borné à 5 par image. Éclairage : part fixe de la carte de lumière (pénombre, cellules, sources immobiles) en cache par salle, carte à demi-résolution, multiplication limitée à la salle visible et agrandie au plus proche voisin, halos pré-dimensionnés par paliers (réduire un grand halo avec lissage coûte cher en rendu logiciel), décor des menus pré-rendu une fois ; l'option *Éclairage dynamique* le coupe entièrement. Les pics du 99e centile viennent surtout de la création paresseuse des sprites au premier affichage.
 
 ## H7. Sauvegardes
 

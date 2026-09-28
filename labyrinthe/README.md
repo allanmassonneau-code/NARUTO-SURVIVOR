@@ -23,7 +23,7 @@ Ouvrez **[`jeu/index.html`](jeu/index.html)** dans un navigateur récent (Chrome
 | Carte | Vue | Tab |
 | Pause | Menu | Échap ou P |
 
-Toutes les touches se reconfigurent (Options → Commandes). Réglages de zones mortes, vibrations, secousses, mode confort et « sans flash » dans les Options.
+Toutes les touches se reconfigurent (Options → Commandes). Réglages de zones mortes, vibrations, secousses, mode confort, « sans flash » et éclairage dynamique dans les Options.
 
 ## Ce qu'il y a dans le jeu
 

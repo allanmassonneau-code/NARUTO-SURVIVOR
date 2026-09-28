@@ -64,7 +64,7 @@ const SceneJeu = {
   maj(dt) { majJeu(dt); },
   rendre(g) {
     rendreJeu(g); dessinerHUD(g);
-    if (G.notifications.length) { const n = G.notifications[0]; g.fillStyle = 'rgba(12,8,18,0.85)'; g.fillRect(420, 70, 210, 34); g.fillStyle = '#f0c040'; g.fillRect(420, 70, 210, 1); Police.ecrire(g, n.titre, 426, 74, '#f0c040'); Police.ecrire(g, n.nom, 426, 86, '#fff0d0'); }
+    if (G.notifications.length) { const n = G.notifications[0]; plaqueHUD(g, 420, 76, 210, 34, '#c8a040'); Police.ecrire(g, n.titre, 428, 81, '#f0c040'); Police.ecrire(g, n.nom, 428, 93, '#fff0d0'); }
   },
 };
 const ScenePause = {
@@ -81,7 +81,7 @@ const ScenePause = {
     g.fillStyle = 'rgba(6,4,10,0.72)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
     cadreMenu(g, 40, 40, 220, 150, 'Pause'); this.menu.rendre(g, 56, 74, 188, actif);
     // carte et statistiques consultables en pause
-    g.fillStyle = 'rgba(10,6,16,0.9)'; g.fillRect(280, 40, 320, 280); dessinerMinicarte(g, 0, 0, true);
+    cadreMenu(g, 280, 40, 320, 280); cadreMenu(g, 40, 198, 220, 122); dessinerMinicarte(g, 0, 0, true);
     const J = G.joueur, P = G.partie; Police.ecrire(g, G.etage.cfg.nom, 440, 46, '#e8dcc0', { a: 'c' });
     dessinerStats(g, J, 50, 206); Police.ecrire(g, 'Temps ' + formatTemps(P.temps), 130, 206, '#a8a0b8'); Police.ecrire(g, 'Code ' + codeAffiche(P.code), 130, 218, '#a8a0b8'); Police.ecrire(g, (P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' — ' + INDEX[P.defi].nom : ''), 130, 230, '#a8a0b8');
     Police.ecrire(g, 'Objets : ' + J.passifs.length, 130, 242, '#a8a0b8');
@@ -101,11 +101,11 @@ const SceneInventaire = {
   liste() { const J = G.joueur; const L = []; if (J.actif) L.push(J.actif.id); if (J.actif2) L.push(J.actif2.id); if (J.talisman) L.push(J.talisman); for (const id of J.passifs) L.push(id); for (const t of J.transformations) L.push(t); return L; },
   maj() { const L = this.liste(); const c = 12; if (Entrees.nav.dx) this.i = borne(this.i + Entrees.nav.dx, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dy) this.i = borne(this.i + Entrees.nav.dy * c, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dx || Entrees.nav.dy) Son.jouer('menu'); if (Entrees.menuRetour()) Scenes.depiler(); },
   rendre(g) {
-    g.fillStyle = 'rgba(6,4,10,0.92)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    fondMenu(g); cadreMenu(g, 26, 32, 376, 304); cadreMenu(g, 408, 32, 226, 304);
     Police.ecrire(g, 'Objets, transformations et mutations', 320, 10, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
     const L = this.liste(); const c = 12;
-    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; if (k === this.i) { g.fillStyle = '#f0c870'; g.fillRect(x - 2, y - 2, 24, 24); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : iconeObjet(id), x, y); });
-    const id = L[this.i]; if (id) { const d = INDEX[id]; g.fillStyle = 'rgba(20,14,28,0.95)'; g.fillRect(410, 36, 220, 300); Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + (d.visuel.nom || d.visuel.motif || d.visuel.couche), 420, y + 30, 200, '#8a9aa8'); }
+    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : iconeObjet(id), x, y); });
+    const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + (d.visuel.nom || d.visuel.motif || d.visuel.couche), 420, y + 30, 200, '#8a9aa8'); }
     if (!L.length) Police.ecrire(g, 'Aucun objet pour l’instant.', 320, 160, '#8a8098', { a: 'c' });
     aideBoutons(g, [['retour', 'Retour']]);
   },
@@ -114,7 +114,9 @@ const SceneMort = {
   entrer() { this.menu = menuListe([{ label: 'Rejouer avec ce shinobi', action: () => { const P = G.partie; nouvellePartie({ perso: P.perso, difficile: P.difficile, defi: P.defi }); Scenes.aller(SceneJeu); } }, { label: 'Menu principal', action: () => Scenes.aller(SceneTitre) }]); this.t = 0; },
   maj(dt) { this.t += dt; if (this.t > 0.6) this.menu.maj(); },
   rendre(g) {
-    g.fillStyle = 'rgba(20,4,8,0.88)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    g.fillStyle = 'rgba(20,4,8,0.82)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    const v = g.createRadialGradient(320, 150, 80, 320, 170, 420); v.addColorStop(0, 'rgba(60,0,10,0)'); v.addColorStop(1, 'rgba(60,0,10,0.7)'); g.fillStyle = v; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    bandeau(g, 60, 28, 520, 70, '#a02838', 'rgba(14,4,8,0.7)');
     const P = G.partie, J = G.joueur; const c = G.causeMort || {};
     Police.ecrire(g, 'Vous êtes tombé', 320, 40, '#e05a5a', { a: 'c', e: 3, contour: '#1c1420' });
     const cause = c.type === 'prix' ? 'Un prix payé de trop' : c.type === 'sacrifice' ? 'Un tribut de trop' : c.source && INDEX[c.source] ? INDEX[c.source].nom : c.type === 'explosion' ? 'Une explosion' : 'Le labyrinthe';
@@ -137,9 +139,10 @@ const SceneVictoire = {
   entrer(o) { this.route = o.route; this.t = 0; },
   maj(dt) { this.t += dt; if (this.t > 1.5 && Entrees.menuConfirmer()) { Scenes.aller(SceneTitre); } },
   rendre(g) {
-    g.fillStyle = '#0a0812'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    g.drawImage(fondTitre(), 0, 0); animerFond(g, this.t); g.fillStyle = 'rgba(8,6,14,0.5)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    cadreMenu(g, 90, 26, 460, 290);
     const R = INDEX[this.route] || { nom: 'Victoire' };
-    Police.ecrire(g, R.nom, 320, 40, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
+    titreOrne(g, R.nom, 320, 40, '#f8e0a8');
     let y = 90; for (const l of TEXTES_FINS[this.route] || []) y += Police.paragraphe(g, l, 120, y, 400, '#e0d8e8') + 10;
     Police.ecrire(g, 'Marque obtenue pour ' + G.joueur.def.nom + ' : ' + (R.marque || ''), 320, y + 20, '#c0e0a0', { a: 'c' });
     if (R.recompense) Police.couper(R.recompense, 540).forEach((l, i) => Police.ecrire(g, l, 320, y + 36 + i * 12, '#a8a0b8', { a: 'c' }));
