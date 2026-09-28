@@ -57,7 +57,7 @@ function mortBoss(e) {
       s.recompenseBoss = true;
       const tx = centreTuile(...tuileLibreProche(s, cx, cy - 40))[0];
       poserPiedestal(s, tx, cy - 40, tirerObjet(G.partie, 'boss', G.alea.butin), { pool: 'boss' });
-      creerRamassable(G.alea.recomp.chance(0.5) ? 'coeur' : 'protection', cx - 30, cy + 20, {});
+      const soin = G.alea.recomp.chance(0.5) ? 'coeur' : 'protection'; creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : soin, cx - 30, cy + 20, {}); // soin mesuré, utile à tous
       if (G.joueur.def.regleCode === 'avarice') creerRamassable('ryo5', cx + 30, cy + 20, {});
       poserSortiesBoss(s);
       const opp = tirerOpportunite(); if (opp) ouvrirOpportunite(opp);

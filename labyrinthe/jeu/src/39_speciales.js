@@ -43,7 +43,8 @@ function preparerSalleSpeciale(s) {
       L.forEach(([x, y], i) => {
         let pe;
         if (i < nbObjets) { const id = tirerObjet(P, 'boutique', al); pe = poserPiedestal(s, x, y, id, { prix: prixObjet(id), pool: 'boutique' }); }
-        else { const t = al.choix(['coeur', 'cle', 'explosif', 'rouleau', 'protection', 'pilule', 'condensateur', 'coeur']); pe = poserPiedestal(s, x, y, 'RAM:' + t, { prix: { type: 'ryo', n: PRIX_RAMASSABLES[t] } }); pe.ramassable = t; }
+        else { let t = al.choix(['coeur', 'cle', 'explosif', 'rouleau', 'protection', 'pilule', 'condensateur', 'coeur']); if (t === 'coeur' && J.drapeaux.sansVitalite) t = 'protection'; // l'échoppe ne vend pas de cœur à qui ne peut pas s'en servir
+          pe = poserPiedestal(s, x, y, 'RAM:' + t, { prix: { type: 'ryo', n: PRIX_RAMASSABLES[t] } }); pe.ramassable = t; }
         if (al.chance(0.1 + niveau * 0.04)) { pe.prix.n = Math.max(1, Math.ceil(pe.prix.n / 2)); pe.solde = true; }
       });
       if (niveau >= 2 && L.length) { const [x, y] = L[L.length - 1]; const id = tirerObjet(P, 'boutique', al); poserPiedestal(s, x, y + 40, id, { prix: prixObjet(id), pool: 'boutique' }); }
@@ -259,7 +260,7 @@ function chanceOpportunite() {
   const det = []; let c = 0.20; det.push(['base', 0.20]);
   if (!E.degatsVitalite) { c += 0.15; det.push(['vitalité intacte sur l’étage', 0.15]); }
   if (!E.degatsBoss) { c += 0.10; det.push(['aucun coup reçu au boss', 0.10]); }
-  if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’Akatsuki', 0.05]); }
+  if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’organisation', 0.05]); }
   if (possede(J, 'PSV_091')) { c += 0.20; det.push(['Sceau maudit', 0.20]); }
   if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['faveur de l’autel', E.faveurSanctuaire]); }
   c = borne(c, 0, 0.95);

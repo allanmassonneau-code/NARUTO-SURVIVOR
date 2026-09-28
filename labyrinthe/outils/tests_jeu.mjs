@@ -99,7 +99,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], sansDegats: [], ok: 0 };
     for (const o of L.DON.objets.filter(x => x.type === 'passif')) {
       try {
-        L.nouvellePartie({ perso: 'CHR_001', code: 'OBJT2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+        L.nouvellePartie({ perso: 'CHR_001', code: 'QBJT2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
         const s = Object.values(G.etage.salles).find(x => x.type === 'combat' && x.pointsApparition && x.pointsApparition.length >= 2) || Object.values(G.etage.salles).find(x => x.type === 'combat');
         L.acquerirPassif(G.joueur, o.id, 'test'); T.pas(60, ['Enter']);
         let e = T.allerA(s.id); if (e) { out.ko.push(o.id + ' entrée ' + e); continue; }
@@ -132,7 +132,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], intouchable: [], ok: 0, durees: {} };
     for (const d of L.DON.boss) {
       try {
-        L.nouvellePartie({ perso: 'CHR_001', code: 'BOSS2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+        L.nouvellePartie({ perso: 'CHR_001', code: 'BZSS2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
         const s = G.etage.salles[G.etage.boss]; s.bossDef = d.id; s.visitee = true; s.ennemisDef = [];
         T.allerA(s.id); T.pas(120, ['Enter']);
         const b = G.ennemis.find(x => x.id === d.id); if (!b) { out.ko.push(d.id + ' absent'); continue; }
@@ -173,6 +173,11 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
         out.ok++;
       } catch (err) { out.ko.push(p.id + ' ' + String(err.stack || err).slice(0, 300)); }
     }
+    // table de conversion de Rock Lee : la mêlée reste principale, la frappe céleste devient une contribution
+    L.nouvellePartie({ perso: 'CHR_005', code: 'CQNV2345' }); L.Scenes.aller(L.SceneJeu); T.pas(3); L.acquerirPassif(G.joueur, 'PSV_020', 'test'); L.recalculer(G.joueur);
+    if (G.joueur.profil.forme !== 'lame' || G.joueur.profil.frappeDifferee !== 3) out.ko.push('Lee + Chute céleste : forme ' + G.joueur.profil.forme);
+    L.nouvellePartie({ perso: 'CHR_001', code: 'CQNV2345' }); L.Scenes.aller(L.SceneJeu); T.pas(3); L.acquerirPassif(G.joueur, 'PSV_020', 'test'); L.acquerirPassif(G.joueur, 'PSV_021', 'test'); L.recalculer(G.joueur); T.pas(5, []);
+    if (G.joueur.profil.forme !== 'frappe' || !G.orbes.some(o => o.appoint)) out.ko.push('Naruto + Chute céleste + Sphère téléguidée : forme ' + G.joueur.profil.forme + ', sphère d’appoint ' + G.orbes.some(o => o.appoint));
     return out;
   });
 
@@ -233,7 +238,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
   //     soldes/coupon, contrat en Ryō, crochetage, énergie naturelle, plein de vitalité, explosions
   if (veut('economie')) await lancer('economie', () => {
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0 }; const verif = (c, m) => { if (c) out.ok++; else out.ko.push(m); };
-    const nouvelle = (perso) => { L.nouvellePartie({ perso: perso || 'CHR_001', code: 'ECON2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); return G.joueur; };
+    const nouvelle = (perso) => { L.nouvellePartie({ perso: perso || 'CHR_001', code: 'ECQN2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); return G.joueur; };
     // ordre des acquisitions sans effet sur les stats
     const lot = L.DON.objets.filter(o => o.type === 'passif' && (o.effets || []).some(e => e.s)).slice(0, 12).map(o => o.id);
     let J = nouvelle(); for (const id of lot) L.acquerirPassif(J, id, 'test'); const s1 = JSON.stringify(J.stats);
@@ -278,6 +283,9 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     pr.toutDebloque = false; pr.objectifs = {}; const bloque = !Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_028: 1 }; const parMadara = Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_049: 1 }; const parBreche = Pg.estDebloque('PSV_020');
     pr.toutDebloque = avant.tout; pr.objectifs = avant.obj;
     verif(bloque && parMadara && parBreche, 'Chute céleste : verrouillée puis débloquée par OBJ_028 ou OBJ_049 (' + [bloque, parMadara, parBreche] + ')');
+    // contrepartie en contenants payée en réserves quand il n'y a pas de contenant (Sasori)
+    J = nouvelle('CHR_011'); const pr0 = J.sante.prot.length; L.acquerirPassif(J, 'PSV_092', 'test');
+    verif(J.sante.prot.length === pr0 - 4, 'Porte de la Vie gratuite pour Sasori : réserve ' + pr0 + ' → ' + J.sante.prot.length);
     // offrande au tanuki de l'échoppe : 1 Ryō → +1 au cumul du profil (paliers de boutique)
     J = nouvelle(); const sb = Object.values(G.etage.salles).find(x => x.type === 'boutique');
     if (sb) { T.allerA(sb.id); const st = G.salle.statue; if (!st) out.ko.push('boutique sans tanuki');
@@ -289,7 +297,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
   // 11) Secours d'un ennemi réellement inaccessible : îlot entouré de fosses, joueur immobile
   if (veut('secours')) await lancer('secours', () => {
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [] };
-    L.nouvellePartie({ perso: 'CHR_005', code: 'SECO2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); G.modeTest.dieu = true;
+    L.nouvellePartie({ perso: 'CHR_005', code: 'SECQ2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); G.modeTest.dieu = true;
     const s = Object.values(G.etage.salles).find(x => x.type === 'combat' && x.forme === '1x1');
     s.visitee = true; s.ennemisDef = [{ id: 'ENM_003', x: 7 * 32 + 16, y: 4 * 32 + 16 }];
     for (let ty = 2; ty <= 6; ty++) for (let tx = 5; tx <= 9; tx++) if (!(tx === 7 && ty === 4)) s.tuiles[ty * s.W + tx] = L.T.FOSSE;
@@ -305,7 +313,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
   // (un décalage non numérique rend un sprite invisible sans erreur)
   if (veut('visibilite')) await lancer('visibilite', () => {
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0 };
-    L.nouvellePartie({ perso: 'CHR_001', code: 'VISI2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+    L.nouvellePartie({ perso: 'CHR_001', code: 'VYSY2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
     const c = document.createElement('canvas'); c.width = 160; c.height = 160; const g = c.getContext('2d');
     for (const d of L.DON.ennemis.concat(L.DON.boss)) {
       try {
@@ -357,7 +365,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       out.susanoo = actifs + '/390 images dressé';
     }
     // Cristaux (« Galeries de verre ») : un tir rebondit sur un cristal, au plus 3 fois
-    L.nouvellePartie({ perso: 'CHR_001', code: 'CRIS2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+    L.nouvellePartie({ perso: 'CHR_001', code: 'CRYS2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
     const sc = Object.values(G.etage.salles).find(x => x.type === 'combat' && x.forme === '1x1'); sc.visitee = true; sc.ennemisDef = []; T.allerA(sc.id);
     const s2 = G.salle; for (let tx = 5; tx <= 9; tx++) s2.tuiles[4 * s2.W + tx] = L.T.SOL; const ic = 4 * s2.W + 10; s2.tuiles[ic] = L.T.BLOC; s2.cristaux = [ic]; s2.fondSale = true; G.ennemis = [];
     G.joueur.x = 3 * 32 + 16; G.joueur.y = 6 * 32 + 16;
@@ -409,7 +417,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
   // 15) Contrats (défis) : règles imposées et conditions de réussite réellement vérifiées
   if (veut('defis')) await lancer('defis', () => {
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0 }; const verif = (c, m) => { if (c) out.ok++; else out.ko.push(m); };
-    const partie = (defi, perso) => { L.nouvellePartie({ perso: perso || 'CHR_003', code: 'DEFI2345', defi }); L.Scenes.aller(L.SceneJeu); T.pas(3); return G.partie; };
+    const partie = (defi, perso) => { L.nouvellePartie({ perso: perso || 'CHR_003', code: 'DEFY2345', defi }); L.Scenes.aller(L.SceneJeu); T.pas(3); return G.partie; };
     let P = partie('DEF_001'); verif(G.joueur.def.id === 'CHR_005', 'DEF_001 : Rock Lee non imposé'); verif(!Object.values(G.etage.salles).some(s => s.type === 'heritage'), 'DEF_001 : salle d’héritage présente');
     P = partie('DEF_002'); verif((G.variante.obscurite || 0) >= 0.55, 'DEF_002 : pas de pénombre');
     P = partie('DEF_006'); verif(G.joueur.def.id === 'CHR_001' && G.joueur.stats.degats < 3.5 * 0.75, 'DEF_006 : dégâts ' + G.joueur.stats.degats);

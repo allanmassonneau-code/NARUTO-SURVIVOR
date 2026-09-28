@@ -14,6 +14,7 @@ function delaiTir(J) { return 1 / Math.max(0.4, J.stats.cadence * J.profil.coefC
 
 function majTirJoueur(J, dt) {
   const P = J.profil, TI = J.tir; TI.cooldown -= dt; TI.salveT -= dt;
+  majOrbeAppoint(J, dt);
   // salves en attente
   while (TI.salveFile.length && TI.salveT <= 0) { const s = TI.salveFile.shift(); emettre(J, s.dir, s.mult, s.cycleId, true); TI.salveT = 0.07; }
   if (J.bloqueTir > 0 || J.etat === 'objet' || J.etat === 'mort') { TI.charge = 0; return; }
@@ -393,6 +394,21 @@ function majControle(J, dt) {
     o.touches.set(e, G.temps);
     infligerDegats(e, J.stats.degats * J.profil.coefDegats * (J.profil.multi > 1 ? J.profil.coefMulti * J.profil.multi : 1), { proprio: 'joueur', x: e.x, y: e.y, vx: 0, vy: 0, recul: 10, type: 'controle' });
     for (const st of J.profil.statuts) if (Math.random() < Math.min(st.max || 1, st.chance + (st.chanceParChance || 0) * J.stats.chance)) appliquerStatut(e, st.statut, st.duree || 2, J.stats.degats);
+  }
+}
+// Sphère contrôlée d'appoint (contribution secondaire de la forme « contrôle ») : elle orbite
+// autour du joueur et frappe au contact à ×0,5 ; le stick reste à l'attaque principale.
+function majOrbeAppoint(J, dt) {
+  let o = G.orbes.find(x => x.attache === J && x.appoint);
+  if (!J.profil.orbeAppoint || J.profil.forme === 'controle') { if (o) G.orbes = G.orbes.filter(x => x !== o); return; }
+  if (!o) { o = { attache: J, appoint: true, x: J.x, y: J.y - 30, r: 7, a: 0, touches: new Map() }; G.orbes.push(o); }
+  o.a += dt * 2.6; o.x = J.x + Math.cos(o.a) * 30; o.y = J.y - 12 + Math.sin(o.a) * 22;
+  o.r = 6 + 2 * Math.sqrt(J.stats.degats / 3.5);
+  for (const e of G.ennemis) {
+    if (e.mort || e.intangible || e.cache || dist(o.x, o.y, e.x, e.y - 8) > o.r + e.r) continue;
+    const t = o.touches.get(e) || 0; if (G.temps - t < 0.3) continue;
+    o.touches.set(e, G.temps);
+    infligerDegats(e, J.stats.degats * J.profil.coefDegats * 0.5, { proprio: 'joueur', x: e.x, y: e.y, vx: 0, vy: 0, recul: 6, type: 'controle' });
   }
 }
 // ── Rotation (attaque circulaire) ──

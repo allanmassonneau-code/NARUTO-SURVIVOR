@@ -174,7 +174,7 @@ Deux logiques concurrentes : la puissance immédiate payée en santé (pacte), e
 | base | +20 % |
 | aucune perte de **vitalité** sur l'étage | +15 % |
 | aucun coup reçu dans la salle du boss | +10 % |
-| Bague de l'Akatsuki (TAL_015) | +5 % |
+| Bague de l'organisation (TAL_015) | +5 % |
 | Sceau maudit (PSV_091) | +20 % |
 | faveur de l'autel (palier 6 du tribut) | +30 % |
 | étage 1 ou 9 | aucune opportunité |
@@ -242,7 +242,7 @@ Une mort pendant le paiement passe par les résurrections dans l'ordre (cœur de
 
 ### Cinq parties sauvées par l'économie plutôt que par un objet de dégâts
 
-1. **Les clés du receleur.** Trois clés sans coffre à ouvrir deviennent un coffre verrouillé et un talisman : la Bague de l'Akatsuki (+5 % d'opportunité) fait basculer l'étage suivant dans le pacte voulu.
+1. **Les clés du receleur.** Trois clés sans coffre à ouvrir deviennent un coffre verrouillé et un talisman : la Bague de l'organisation (+5 % d'opportunité) fait basculer l'étage suivant dans le pacte voulu.
 2. **Le tribut patient.** Six passages à l'autel sur un étage propre (3 unités) donnent la faveur (+30 %) : avec un étage sans coup, l'opportunité passe de 45 % à 75 % et le sanctuaire garde 30 % pour lui.
 3. **La loterie outillée.** Avec les Dés de la grande perdante, la loterie rend en moyenne 1,07 Ryō par Ryō misé, sans compter clés, cœurs, pilules et objets ; les Ryō paient la recharge d'un actif lourd (5 Ryō pour 2 charges) juste avant un boss.
 4. **Refuser pour ouvrir.** Un pacte médiocre refusé à l'étage 3 fait passer la part du sanctuaire de 40 % à 52 % des opportunités suivantes, et garde la branche de la Lumière ouverte.

@@ -76,8 +76,10 @@ function calculerProfil(J) {
     if (e.element) P.elements.add(e.element);
     if (e.apparence) P.apparence = e.apparence;
   }
-  // Forme principale : la plus prioritaire présente
-  for (const f of PRIORITE_FORMES) if (P.formes.has(f)) { P.forme = f; break; }
+  // Forme principale : la plus prioritaire présente. Rock Lee (taijutsu) garde toujours une mêlée :
+  // ses objets de tir deviennent des contributions secondaires (table de conversion §R17b).
+  const candidates = J.def.regleCode === 'taijutsu' ? PRIORITE_FORMES.filter(f => f === 'lame_longue' || f === 'lame') : PRIORITE_FORMES;
+  for (const f of candidates) if (P.formes.has(f)) { P.forme = f; break; }
   P.secondaires = [...P.formes].filter(f => f !== P.forme && f !== 'projectile');
   // Contributions secondaires (table §R17b) : chaque forme non principale se convertit
   for (const f of P.secondaires) {
@@ -149,7 +151,11 @@ function appliquerEffetImmediat(J, e, d) {
     if (s.os) ajouterOs(S, s.os);
     if (s.partiel) ajouterPartiel(S);
     if (s.cicatrice) ajouterCicatrice(S, s.cicatrice);
-    if (s.retraitCont) retirerConteneur(S, s.retraitCont);
+    if (s.retraitCont) { // contrepartie : sans assez de contenants, 4 demis de réserve par contenant manquant (même règle que les pactes)
+      const manque = s.retraitCont - retirerConteneur(S, s.retraitCont);
+      for (let i = 0; i < 4 * manque && S.prot.length; i++) S.prot.pop();
+      if (santeTotale(S) <= 0) verifierMort(J, { type: 'prix', raison: 'objet' });
+    }
   }
   if (e.res) { for (const [k, v] of Object.entries(e.res)) ajouterRessource(J, k, v); }
   if (e.familier) ajouterFamilier(J, e.familier, d.id);

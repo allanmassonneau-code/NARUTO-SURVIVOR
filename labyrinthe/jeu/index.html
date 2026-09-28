@@ -5132,6 +5132,7 @@ function delaiTir(J) { return 1 / Math.max(0.4, J.stats.cadence * J.profil.coefC
 
 function majTirJoueur(J, dt) {
   const P = J.profil, TI = J.tir; TI.cooldown -= dt; TI.salveT -= dt;
+  majOrbeAppoint(J, dt);
   // salves en attente
   while (TI.salveFile.length && TI.salveT <= 0) { const s = TI.salveFile.shift(); emettre(J, s.dir, s.mult, s.cycleId, true); TI.salveT = 0.07; }
   if (J.bloqueTir > 0 || J.etat === 'objet' || J.etat === 'mort') { TI.charge = 0; return; }
@@ -5511,6 +5512,21 @@ function majControle(J, dt) {
     o.touches.set(e, G.temps);
     infligerDegats(e, J.stats.degats * J.profil.coefDegats * (J.profil.multi > 1 ? J.profil.coefMulti * J.profil.multi : 1), { proprio: 'joueur', x: e.x, y: e.y, vx: 0, vy: 0, recul: 10, type: 'controle' });
     for (const st of J.profil.statuts) if (Math.random() < Math.min(st.max || 1, st.chance + (st.chanceParChance || 0) * J.stats.chance)) appliquerStatut(e, st.statut, st.duree || 2, J.stats.degats);
+  }
+}
+// Sphère contrôlée d'appoint (contribution secondaire de la forme « contrôle ») : elle orbite
+// autour du joueur et frappe au contact à ×0,5 ; le stick reste à l'attaque principale.
+function majOrbeAppoint(J, dt) {
+  let o = G.orbes.find(x => x.attache === J && x.appoint);
+  if (!J.profil.orbeAppoint || J.profil.forme === 'controle') { if (o) G.orbes = G.orbes.filter(x => x !== o); return; }
+  if (!o) { o = { attache: J, appoint: true, x: J.x, y: J.y - 30, r: 7, a: 0, touches: new Map() }; G.orbes.push(o); }
+  o.a += dt * 2.6; o.x = J.x + Math.cos(o.a) * 30; o.y = J.y - 12 + Math.sin(o.a) * 22;
+  o.r = 6 + 2 * Math.sqrt(J.stats.degats / 3.5);
+  for (const e of G.ennemis) {
+    if (e.mort || e.intangible || e.cache || dist(o.x, o.y, e.x, e.y - 8) > o.r + e.r) continue;
+    const t = o.touches.get(e) || 0; if (G.temps - t < 0.3) continue;
+    o.touches.set(e, G.temps);
+    infligerDegats(e, J.stats.degats * J.profil.coefDegats * 0.5, { proprio: 'joueur', x: e.x, y: e.y, vx: 0, vy: 0, recul: 6, type: 'controle' });
   }
 }
 // ── Rotation (attaque circulaire) ──
@@ -6232,8 +6248,10 @@ function calculerProfil(J) {
     if (e.element) P.elements.add(e.element);
     if (e.apparence) P.apparence = e.apparence;
   }
-  // Forme principale : la plus prioritaire présente
-  for (const f of PRIORITE_FORMES) if (P.formes.has(f)) { P.forme = f; break; }
+  // Forme principale : la plus prioritaire présente. Rock Lee (taijutsu) garde toujours une mêlée :
+  // ses objets de tir deviennent des contributions secondaires (table de conversion §R17b).
+  const candidates = J.def.regleCode === 'taijutsu' ? PRIORITE_FORMES.filter(f => f === 'lame_longue' || f === 'lame') : PRIORITE_FORMES;
+  for (const f of candidates) if (P.formes.has(f)) { P.forme = f; break; }
   P.secondaires = [...P.formes].filter(f => f !== P.forme && f !== 'projectile');
   // Contributions secondaires (table §R17b) : chaque forme non principale se convertit
   for (const f of P.secondaires) {
@@ -6305,7 +6323,11 @@ function appliquerEffetImmediat(J, e, d) {
     if (s.os) ajouterOs(S, s.os);
     if (s.partiel) ajouterPartiel(S);
     if (s.cicatrice) ajouterCicatrice(S, s.cicatrice);
-    if (s.retraitCont) retirerConteneur(S, s.retraitCont);
+    if (s.retraitCont) { // contrepartie : sans assez de contenants, 4 demis de réserve par contenant manquant (même règle que les pactes)
+      const manque = s.retraitCont - retirerConteneur(S, s.retraitCont);
+      for (let i = 0; i < 4 * manque && S.prot.length; i++) S.prot.pop();
+      if (santeTotale(S) <= 0) verifierMort(J, { type: 'prix', raison: 'objet' });
+    }
   }
   if (e.res) { for (const [k, v] of Object.entries(e.res)) ajouterRessource(J, k, v); }
   if (e.familier) ajouterFamilier(J, e.familier, d.id);
@@ -6964,7 +6986,8 @@ function preparerSalleSpeciale(s) {
       L.forEach(([x, y], i) => {
         let pe;
         if (i < nbObjets) { const id = tirerObjet(P, 'boutique', al); pe = poserPiedestal(s, x, y, id, { prix: prixObjet(id), pool: 'boutique' }); }
-        else { const t = al.choix(['coeur', 'cle', 'explosif', 'rouleau', 'protection', 'pilule', 'condensateur', 'coeur']); pe = poserPiedestal(s, x, y, 'RAM:' + t, { prix: { type: 'ryo', n: PRIX_RAMASSABLES[t] } }); pe.ramassable = t; }
+        else { let t = al.choix(['coeur', 'cle', 'explosif', 'rouleau', 'protection', 'pilule', 'condensateur', 'coeur']); if (t === 'coeur' && J.drapeaux.sansVitalite) t = 'protection'; // l'échoppe ne vend pas de cœur à qui ne peut pas s'en servir
+          pe = poserPiedestal(s, x, y, 'RAM:' + t, { prix: { type: 'ryo', n: PRIX_RAMASSABLES[t] } }); pe.ramassable = t; }
         if (al.chance(0.1 + niveau * 0.04)) { pe.prix.n = Math.max(1, Math.ceil(pe.prix.n / 2)); pe.solde = true; }
       });
       if (niveau >= 2 && L.length) { const [x, y] = L[L.length - 1]; const id = tirerObjet(P, 'boutique', al); poserPiedestal(s, x, y + 40, id, { prix: prixObjet(id), pool: 'boutique' }); }
@@ -7180,7 +7203,7 @@ function chanceOpportunite() {
   const det = []; let c = 0.20; det.push(['base', 0.20]);
   if (!E.degatsVitalite) { c += 0.15; det.push(['vitalité intacte sur l’étage', 0.15]); }
   if (!E.degatsBoss) { c += 0.10; det.push(['aucun coup reçu au boss', 0.10]); }
-  if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’Akatsuki', 0.05]); }
+  if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’organisation', 0.05]); }
   if (possede(J, 'PSV_091')) { c += 0.20; det.push(['Sceau maudit', 0.20]); }
   if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['faveur de l’autel', E.faveurSanctuaire]); }
   c = borne(c, 0, 0.95);
@@ -7855,7 +7878,7 @@ function mortBoss(e) {
       s.recompenseBoss = true;
       const tx = centreTuile(...tuileLibreProche(s, cx, cy - 40))[0];
       poserPiedestal(s, tx, cy - 40, tirerObjet(G.partie, 'boss', G.alea.butin), { pool: 'boss' });
-      creerRamassable(G.alea.recomp.chance(0.5) ? 'coeur' : 'protection', cx - 30, cy + 20, {});
+      const soin = G.alea.recomp.chance(0.5) ? 'coeur' : 'protection'; creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : soin, cx - 30, cy + 20, {}); // soin mesuré, utile à tous
       if (G.joueur.def.regleCode === 'avarice') creerRamassable('ryo5', cx + 30, cy + 20, {});
       poserSortiesBoss(s);
       const opp = tirerOpportunite(); if (opp) ouvrirOpportunite(opp);
