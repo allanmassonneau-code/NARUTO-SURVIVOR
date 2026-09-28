@@ -55,7 +55,7 @@ function victoire(route) {
   const P = G.partie; P.fini = true; effacerPartieSuspendue(); Progression.finPartie('victoire', route); Scenes.empiler(SceneVictoire, { route });
 }
 function entrerBreche() { G.fondu = { t: 0, duree: 0.8, action: () => { const s = creerSalle({ id: 'breche', type: 'boss', forme: '2x2', cx: -2, cy: -2 }); appliquerGabarit(s, DON.salles.find(g => g.forme === '2x2' && g.type === 'combat'), null); s.pointsApparition = []; s.bossDef = 'BOS_022'; s.visitee = false; G.etage.salles.breche = s; entrerSalle('breche', null); G.partie.brecheOuverte = true; } }; }
-function entrerConseil() { G.conseil = { liste: new Alea(G.partie.code + 'conseil').melanger(DON.boss.filter(b => !b.mini && !b.terminal && b.etage <= 6).map(b => b.id)).slice(0, 6), i: 0 }; G.fondu = { t: 0, duree: 0.8, action: () => { const s = creerSalle({ id: 'conseil', type: 'boss', forme: '1x1', cx: -3, cy: -3 }); appliquerGabarit(s, DON.salles.find(g => g.id === 'ROM_121'), null); s.visitee = true; s.nettoyee = false; s.recompenseBoss = true; G.etage.salles.conseil = s; entrerSalle('conseil', null); conseilSuivant(); } }; }
+function entrerConseil() { Progression.secret('SEC_009'); G.conseil = { liste: new Alea(G.partie.code + 'conseil').melanger(DON.boss.filter(b => !b.mini && !b.terminal && b.etage <= 6).map(b => b.id)).slice(0, 6), i: 0 }; G.fondu = { t: 0, duree: 0.8, action: () => { const s = creerSalle({ id: 'conseil', type: 'boss', forme: '1x1', cx: -3, cy: -3 }); appliquerGabarit(s, DON.salles.find(g => g.id === 'ROM_121'), null); s.visitee = true; s.nettoyee = false; s.recompenseBoss = true; G.etage.salles.conseil = s; entrerSalle('conseil', null); conseilSuivant(); } }; }
 function conseilSuivant() { const C = G.conseil; if (!C) return; if (C.i >= C.liste.length) { G.conseil = null; const s = G.salle; const [cx, cy] = centreSalle(s); s.sorties = [{ type: 'fin', x: cx, y: cy + 10, route: 'RTE_05' }]; s.combat = false; s.nettoyee = true; return; } const id = C.liste[C.i++]; const [cx, cy] = centreSalle(G.salle); creerBoss(id, cx, cy - 40, { pvMult: 0.7, sansIntro: true }); G.salle.combat = true; Son.jouer('gong'); }
 
 // ── Scènes de jeu ──
@@ -85,6 +85,14 @@ const ScenePause = {
     const J = G.joueur, P = G.partie; Police.ecrire(g, G.etage.cfg.nom, 440, 46, '#e8dcc0', { a: 'c' });
     dessinerStats(g, J, 50, 206); Police.ecrire(g, 'Temps ' + formatTemps(P.temps), 130, 206, '#a8a0b8'); Police.ecrire(g, 'Code ' + codeAffiche(P.code), 130, 218, '#a8a0b8'); Police.ecrire(g, (P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' — ' + INDEX[P.defi].nom : ''), 130, 230, '#a8a0b8');
     Police.ecrire(g, 'Objets : ' + J.passifs.length, 130, 242, '#a8a0b8');
+    // opportunité après le boss (E §6) : recalculée à chaque affichage, donc à jour après chaque événement
+    const O = chanceOpportunite(), pc = v => Math.round(v * 100) + ' %';
+    if (O.chance <= 0) Police.ecrire(g, 'Pas d’opportunité à cet étage', 50, 274, '#8a8098');
+    else {
+      Police.ecrire(g, 'Après le boss : ' + pc(O.chance), 50, 274, '#e8dcc0');
+      Police.ecrire(g, 'pacte ' + pc(O.pacte) + ' · sanctuaire ' + pc(O.sanctuaire), 50, 286, '#c8a0b0');
+      Police.paragraphe(g, O.detail.map(([n, v]) => n + ' ' + (v >= 1 ? '' : '+' + pc(v))).join(' · ') + (P.pactesAchetes ? ' · pacte conclu : plus de sanctuaire' : P.pactesRefuses ? ' · pactes refusés : ' + P.pactesRefuses : ''), 50, 298, 222, '#8a8098');
+    }
     aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Reprendre']]);
   },
 };
@@ -135,6 +143,7 @@ const SceneVictoire = {
     let y = 90; for (const l of TEXTES_FINS[this.route] || []) y += Police.paragraphe(g, l, 120, y, 400, '#e0d8e8') + 10;
     Police.ecrire(g, 'Marque obtenue pour ' + G.joueur.def.nom + ' : ' + (R.marque || ''), 320, y + 20, '#c0e0a0', { a: 'c' });
     if (R.recompense) Police.ecrire(g, R.recompense, 320, y + 36, '#a8a0b8', { a: 'c' });
+    if (G.partie.defi) Police.ecrire(g, 'Contrat « ' + INDEX[G.partie.defi].nom + ' » : ' + (G.partie.defiEchoue ? 'non rempli (conditions non tenues)' : 'rempli'), 320, 284, G.partie.defiEchoue ? '#e0a080' : '#a0e0a0', { a: 'c' });
     Police.ecrire(g, 'Temps ' + formatTemps(G.partie.temps) + '   Code ' + codeAffiche(G.partie.code), 320, 300, '#8a8098', { a: 'c' });
     if (this.t > 1.5) aideBoutons(g, [['interagir', 'Continuer']]);
   },
@@ -165,5 +174,5 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }

@@ -66,7 +66,7 @@ function mortBoss(e) {
     }
   } else if (s.type === 'pacte' || s.type === 'sanctuaire') { // gardien de statue
     const [cx, cy] = [e.x, e.y];
-    if (s.type === 'sanctuaire') { poserPiedestal(s, cx, cy, G.partie.fragments >= 1 ? 'PSV_900' : 'PSV_901', {}); G.partie.fragments++; }
+    if (s.type === 'sanctuaire') { poserPiedestal(s, cx, cy, G.partie.fragments >= 1 ? 'PSV_900' : 'PSV_901', {}); G.partie.fragments++; if (G.partie.fragments >= 2) Progression.secret('SEC_006'); }
     else poserPiedestal(s, cx, cy, tirerObjet(G.partie, 'pacte', G.alea.butin), { pool: 'pacte' });
   }
   if (G.conseil) conseilSuivant();
@@ -78,12 +78,13 @@ function anneauBoss(e, n, v, o = {}) { const off = o.decalage ?? Math.random() *
 function salveBoss(e, n, v, ecart, o = {}) { const a = ciblerJoueur(e); for (let i = 0; i < n; i++) tirEnnemi(e.x, e.y - e.hauteur, a + (i - (n - 1) / 2) * ecart, v, Object.assign({ source: e.id }, o)); Son.jouer('tir_ennemi'); }
 function allerVersPoint(e, x, y, v, dt) { const d = dist(e.x, e.y, x, y); if (d < 4) { e.vx *= 0.7; e.vy *= 0.7; return true; } const [dx, dy] = normaliser(x - e.x, y - e.y); deplacerEnnemi(e, dx, dy, v * TUILE, dt, 6); return false; }
 function pointAleatoire(s, marge = 2) { const [cx, cy] = centreSalle(s); for (let k = 0; k < 20; k++) { const x = cx + (Math.random() - 0.5) * (CEL_L - marge * 2) * TUILE, y = cy + (Math.random() - 0.5) * (CEL_H - marge) * TUILE; if (tuileLibre(s, Math.floor(x / TUILE), Math.floor(y / TUILE))) return [x, y]; } return [cx, cy]; }
-// Tirage sans répétition immédiate ; une attaque à « recharge » (s) attend ce délai entre deux usages.
+// Tirage sans répétition immédiate ; une attaque à « recharge » (s) attend ce délai entre deux usages,
+// une attaque à « maxUsages » s'épuise pour le combat.
 function choisirAttaque(e, liste) {
-  const U = e.usages || (e.usages = {});
-  const dispo = a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && !(a.recharge && G.temps - (U[a.id] ?? -1e9) < a.recharge);
+  const U = e.usages || (e.usages = {}), N = e.nbUsages || (e.nbUsages = {});
+  const dispo = a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && !(a.recharge && G.temps - (U[a.id] ?? -1e9) < a.recharge) && !(a.maxUsages && (N[a.id] || 0) >= a.maxUsages);
   const L = liste.filter(a => dispo(a) && a.id !== e.derniere), L2 = L.length ? L : liste.filter(dispo);
-  const a = (G.alea.combat || new Alea(1)).pondere(L2.length ? L2 : liste, x => x.poids || 1); e.derniere = a.id; U[a.id] = G.temps; return a;
+  const a = (G.alea.combat || new Alea(1)).pondere(L2.length ? L2 : liste.filter(x => !x.maxUsages), x => x.poids || 1); e.derniere = a.id; U[a.id] = G.temps; N[a.id] = (N[a.id] || 0) + 1; return a;
 }
 function ligneDanger(x0, y0, a, l, largeur, duree) { G.effets.push({ type: 'ligne_danger', x: x0, y: y0, a, l, largeur, age: 0, duree }); }
 function cercleDanger(x, y, r, duree) { G.effets.push({ type: 'cercle_danger', x, y, r, age: 0, duree }); }

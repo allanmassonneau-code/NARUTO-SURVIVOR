@@ -9,7 +9,7 @@ BOS_007;Le trio du Son;Trois épreuves en une;3;95;onde, salve;—;Trois adversa
 BOS_008;Kimimaro;La danse des os;3;340;balles, lances, danse;40 %;Balles d’os, lances qui percent le sol en lignes, danse circulaire.
 BOS_009;Gaara;L’enfermement de sable;4;380;cercueil, shuriken, vague, pluie;50 %;Le sable enferme l’arène : cercueils au sol, vagues avec une brèche, pluie de sable.
 BOS_010;Sasori;Le maître des marionnettes;4;360;queue, aiguilles, sable_fer, anneau;55 %;Carapace blindée puis sable de fer.
-BOS_011;Kabuto;Le médecin des ombres;5;380;scalpel, cadavres, soin, salve;—;"Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets."
+BOS_011;Kabuto;Le médecin des ombres;5;380;scalpel, cadavres, soin, salve;—;"Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; trois fois au plus, espacées de 10 s) ; réanime des sujets."
 BOS_012;Kisame;Le requin de la brume;5;440;requins, inondation, samehada, prison;—;"Inonde l’arène (l’eau vous ralentit, pas lui) ; requins d’eau chercheurs."
 BOS_013;Hidan;Le rituel immortel;5;400;faux, rituel, charge;—;"Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel (25 dégâts pendant sa canalisation)."
 BOS_014;Orochimaru;Les mues du serpent;6;520;serpents, epee, invocation, huit;66 %, 33 %;À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs.

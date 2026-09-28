@@ -64,7 +64,7 @@ Quand plusieurs formes sont possédées, **la plus prioritaire devient le tir pr
 | 7 | lame_longue | coup d’appoint devant soi à chaque cycle |
 | 8 | lame | coup d’appoint devant soi à chaque cycle |
 | 9 | bombe | explosion d’impact (rayon 1 tuile, ×0,5) |
-| 10 | boomerang | les tirs reviennent |
+| 10 | boomerang | les tirs reviennent (demi-tour à 45 % d’une durée allongée ×1,6 : l’aller couvre ~72 % de la portée, comme en forme principale) |
 | 11 | laser | un trait d’appoint par cycle (×0,5) |
 | 12 | rotation | tirer dévie les projectiles ennemis proches |
 | 13 | projectile | — |

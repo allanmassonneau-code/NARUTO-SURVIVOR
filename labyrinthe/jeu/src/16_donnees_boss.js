@@ -69,9 +69,9 @@
     attaques: [
       { id: 'scalpel', type: 'charge', vCharge: 10, tele: 0.45, duree: 0.8, recup: 0.6 },
       { id: 'cadavres', type: 'invocation', ennemi: 'ENM_050', n: 2, max: 3, tele: 0.7, recup: 0.4, recharge: 8 },
-      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5, seuil: 20, soin: 0.1, recharge: 10 },
+      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5, seuil: 20, soin: 0.1, recharge: 10, maxUsages: 3 },
       { id: 'salve', type: 'salve', n: 3, v: 6, ecart: 0.2, rafales: 2, tele: 0.4, recup: 0.5 },
-    ], desc: 'Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets.' });
+    ], desc: 'Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; trois fois au plus, espacées de 10 s) ; réanime des sujets.' });
   B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 440, { sprite: N('kiri', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#3a4a6a' }, peau: '#6a8ab0', visage: 'branchies' }), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'requins', type: 'special', nom: 'requins', tele: 0.5, duree: 1.5, recup: 0.6 },

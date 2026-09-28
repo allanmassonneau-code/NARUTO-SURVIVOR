@@ -484,13 +484,13 @@ Phases :
 
 Étage 5 · 380 PV · déplacement poursuite (1,7 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
-Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets.
+Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; trois fois au plus, espacées de 10 s) ; réanime des sujets.
 
 | Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
 |---|---|---|---|---|---|---|
 | scalpel | charge en ligne droite (10 t/s) jusqu’au mur | 0,45 s | 0,8 s | 0,6 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
 | cadavres — recharge 8 s | appelle 2 × Sujet expérimental (3 au plus) | 0,7 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
-| soin — recharge 10 s | cercle vert : canalise 2 s un soin de 10 % des PV max (20 dégâts l’interrompent) | 0,2 s | 2 s | 0,5 s | — (soin) | concentrer les tirs pendant la canalisation |
+| soin — recharge 10 s — 3 fois au plus | cercle vert : canalise 2 s un soin de 10 % des PV max (20 dégâts l’interrompent) | 0,2 s | 2 s | 0,5 s | — (soin) | concentrer les tirs pendant la canalisation |
 | salve | 3 projectile(s) visé(s) × 2 rafales, écart 0,2 rad, 6 t/s | 0,4 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
 
 ### BOS_012 — Kisame, « Le requin de la brume »

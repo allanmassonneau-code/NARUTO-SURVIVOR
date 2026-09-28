@@ -53,7 +53,7 @@ function majVarianteContinu(dt) {
     if (z.type === 'courant') G.pousse = { x: z.dx * 1.4, y: z.dy * 1.4 };
   }
   if (s.renforts && s.combat && G.ennemis.length >= 1) { s.tRenfort = (s.tRenfort || 0) + dt; if (s.tRenfort > 8 && (s.nbRenforts || 0) < 2) { s.tRenfort = 0; s.nbRenforts = (s.nbRenforts || 0) + 1; const [tx, ty] = tuileLibreLoin(s, J.x, J.y); const [x, y] = centreTuile(tx, ty); G.effets.push({ type: 'fissure', x, y, r: 14, age: 0, duree: 0.7 }); setTimeoutJeu(() => { if (G.salle === s && s.combat) creerEnnemi('ENM_070', x, y); }, 0.7); } }
-  if (s.chainesTemporaires && s.nettoyee) { for (const [tx, ty] of s.chainesTemporaires) s.tuiles[ty * s.W + tx] = T.SOL; s.chainesTemporaires = null; s.fondSale = true; s.version++; Son.jouer('porte_ouvre'); }
+  if (s.chainesTemporaires && s.nettoyee) { for (const [tx, ty] of s.chainesTemporaires) s.tuiles[ty * s.W + tx] = T.SOL; s.chainesTemporaires = null; Progression.secret('SEC_015'); s.fondSale = true; s.version++; Son.jouer('porte_ouvre'); }
   if (s.pluie && Math.random() < 0.5) G.particules.push({ x: J.x + (Math.random() - 0.5) * 640, y: J.y - 200 + Math.random() * 40, vx: -20, vy: 420, age: 0, duree: 0.6, couleur: 'rgba(170,190,230,0.5)', taille: 1 });
   // huile embrasée par le Katon
   for (const z of G.zones) if (z.type === 'huile' && !z.enflamme) for (const p of G.proj) if (p.proprio === 'joueur' && p.elements && p.elements.has('katon') && dist(p.x, p.y, z.x, z.y) < z.r) { z.enflamme = true; z.type = 'feu_allie'; z.dps = 8; z.duree = z.age + 5; z.persistante = false; Son.jouer('feu'); }
@@ -75,6 +75,7 @@ function appliquerDefi(P, id) {
   if (d.ressources) for (const [k, v] of Object.entries(d.ressources)) J[k] = v;
   if (d.sante) J.sante = santeInit(d.sante);
   if (d.drapeaux) Object.assign(J.drapeauxBase, d.drapeaux);
+  if (d.bonus) for (const b of d.bonus) J.bonusPermanents.push(Object.assign({}, b));
   recalculer(J);
 }
 function basculerArene(e) {

@@ -51,12 +51,18 @@
  {
   "id": "DEF_006",
   "nom": "Mille clones",
-  "desc": "Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %.",
+  "desc": "Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %. Première fin.",
   "statut": "création originale",
   "perso": "CHR_001",
   "depart": [
    "PSV_061",
    "PSV_061"
+  ],
+  "bonus": [
+   {
+    "s": "degats",
+    "m": 0.7
+   }
   ],
   "recompenseTexte": "Clone de relais"
  },
@@ -99,7 +105,7 @@
  {
   "id": "DEF_010",
   "nom": "Course de l’examen",
-  "desc": "Première fin en moins de 20 minutes.",
+  "desc": "Première fin en moins de 20 minutes (chronomètre de partie).",
   "statut": "création originale",
   "chrono": 1200,
   "recompenseTexte": "Marque de vitesse"
@@ -107,16 +113,19 @@
  {
   "id": "DEF_011",
   "nom": "Collectionneur pressé",
-  "desc": "Atteindre l’étage 6 avec au moins 10 objets.",
+  "desc": "Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée).",
   "statut": "création originale",
+  "etageCible": 6,
+  "objetsMin": 10,
   "recompenseTexte": "Défi"
  },
  {
   "id": "DEF_012",
   "nom": "Examen de jōnin",
-  "desc": "Mode Difficile imposé, toutes les salles d’épreuve ouvertes.",
+  "desc": "Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin.",
   "statut": "création originale",
   "difficile": true,
+  "epreuves": true,
   "recompenseTexte": "Rasenshuriken"
  }
 ]

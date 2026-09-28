@@ -26,6 +26,8 @@ const Progression = {
     return L.some(o => !!this.profil.objectifs[o]);
   },
   decouvrir(id) { if (!this.profil) return; if (!this.profil.decouverts.includes(id)) { this.profil.decouverts.push(id); } },
+  // Secret trouvé : inscrit au profil (onglet « Secrets » du Registre) et annoncé la première fois
+  secret(id) { if (!this.profil || this.profil.decouverts.includes(id)) return; this.profil.decouverts.push(id); this.sauver(); G.notifications = G.notifications || []; G.notifications.push({ t: 0, titre: 'Secret découvert', nom: (INDEX[id] || {}).nom || id, detail: '' }); },
   voir(id) { if (!this.profil) return; if (!this.profil.vus.includes(id)) this.profil.vus.push(id); },
   compteur(nom, n) { if (!this.profil) return; this.profil.compteurs[nom] = (this.profil.compteurs[nom] || 0) + n; this.verifier({ type: 'compteur', nom }); },
   niveauBoutique() { const d = this.profil ? this.profil.dons : 0; return d >= 300 ? 3 : d >= 150 ? 2 : d >= 50 ? 1 : 0; },
@@ -52,14 +54,18 @@ const Progression = {
     }
   },
   // Fin de partie : marques par personnage et routes
+  // Conditions d'un contrat à la victoire : chronomètre, cible d'étage (déjà validée à l'arrivée)
+  conditionsDefi(P, route) { const D = INDEX[P.defi]; if (!D) return false; if (D.chrono && P.temps > D.chrono) return false; if (D.etageCible && !P.defiValide) return false; return true; },
+  defiReussi(id) { if (!this.profil || this.profil.defis[id]) return; this.profil.defis[id] = true; this.sauver(); G.notifications = G.notifications || []; G.notifications.push({ t: 0, titre: 'Contrat rempli', nom: (INDEX[id] || {}).nom || id, detail: '' }); },
   finPartie(resultat, route) {
     const P = G.partie; const persoId = P.perso; this.profil.morts += resultat === 'mort' ? 1 : 0;
     if (resultat === 'victoire') {
       this.profil.victoires++;
       const cle = P.defi ? 'defi' : P.entrainement || P.graineSaisie ? 'entrainement' : P.difficile ? 'difficile' : 'standard';
       if (cle !== 'entrainement') { this.profil.routes[route] = true; const m = this.profil.marques[persoId] || (this.profil.marques[persoId] = {}); m[route] = m[route] === 'difficile' ? 'difficile' : cle; }
-      if (P.defi) this.profil.defis[P.defi] = true;
-      this.verifier({ type: 'fin', route, perso: persoId, difficile: P.difficile, defi: P.defi });
+      const ok = P.defi && this.conditionsDefi(P, route);
+      if (ok) this.profil.defis[P.defi] = true; else if (P.defi) P.defiEchoue = true;
+      this.verifier({ type: 'fin', route, perso: persoId, difficile: P.difficile, defi: ok ? P.defi : null });
     }
     const b = this.profil.meilleurs[persoId] || { etage: 0, temps: null };
     if (P.etage > b.etage) b.etage = P.etage; if (resultat === 'victoire' && (!b.temps || P.temps < b.temps)) b.temps = P.temps; this.profil.meilleurs[persoId] = b;

@@ -474,7 +474,7 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | BOS_008 | Kimimaro | La danse des os | 3 | 340 | balles, lances, danse | 40 % | Balles d’os, lances qui percent le sol en lignes, danse circulaire. |
 | BOS_009 | Gaara | L’enfermement de sable | 4 | 380 | cercueil, shuriken, vague, pluie | 50 % | Le sable enferme l’arène : cercueils au sol, vagues avec une brèche, pluie de sable. |
 | BOS_010 | Sasori | Le maître des marionnettes | 4 | 360 | queue, aiguilles, sable_fer, anneau | 55 % | Carapace blindée puis sable de fer. |
-| BOS_011 | Kabuto | Le médecin des ombres | 5 | 380 | scalpel, cadavres, soin, salve | — | Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets. |
+| BOS_011 | Kabuto | Le médecin des ombres | 5 | 380 | scalpel, cadavres, soin, salve | — | Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; trois fois au plus, espacées de 10 s) ; réanime des sujets. |
 | BOS_012 | Kisame | Le requin de la brume | 5 | 440 | requins, inondation, samehada, prison | — | Inonde l’arène (l’eau vous ralentit, pas lui) ; requins d’eau chercheurs. |
 | BOS_013 | Hidan | Le rituel immortel | 5 | 400 | faux, rituel, charge | — | Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel (25 dégâts pendant sa canalisation). |
 | BOS_014 | Orochimaru | Les mues du serpent | 6 | 520 | serpents, epee, invocation, huit | 66 %, 33 % | À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs. |
@@ -672,13 +672,13 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | DEF_003 | Mains vides | Aucune salle d’héritage ; les boss donnent tout. Première fin. | Parchemin vide |
 | DEF_004 | Un souffle | Un seul contenant, jamais plus ; les contenants deviennent des réserves. | Substitution instinctive |
 | DEF_005 | Artificier | Départ avec Argile explosive et Argile infinie ; première fin. | Parchemins spéciaux |
-| DEF_006 | Mille clones | Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %. | Clone de relais |
+| DEF_006 | Mille clones | Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %. Première fin. | Clone de relais |
 | DEF_007 | Tout s’achète | Départ avec 50 Ryō et la Carte de membre ; aucune salle d’héritage. | Dés de la grande perdante |
 | DEF_008 | Sang pour sang | Chaque boss ouvre un pacte ; aucun sanctuaire. | Chakra du démon |
 | DEF_009 | Tempête du désert | Gaara imposé avec Sable en orbite et Sable protecteur ; première fin. | Tempête de sable |
-| DEF_010 | Course de l’examen | Première fin en moins de 20 minutes. | Marque de vitesse |
-| DEF_011 | Collectionneur pressé | Atteindre l’étage 6 avec au moins 10 objets. | Défi |
-| DEF_012 | Examen de jōnin | Mode Difficile imposé, toutes les salles d’épreuve ouvertes. | Rasenshuriken |
+| DEF_010 | Course de l’examen | Première fin en moins de 20 minutes (chronomètre de partie). | Marque de vitesse |
+| DEF_011 | Collectionneur pressé | Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée). | Défi |
+| DEF_012 | Examen de jōnin | Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin. | Rasenshuriken |
 
 ## Secrets (SEC) — 15
 

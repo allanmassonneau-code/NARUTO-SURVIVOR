@@ -108,7 +108,7 @@ function acheter(p) {
     else if (v.instable) { for (let i = 0; i < v.instable; i++) { const k = J.sante.prot.lastIndexOf('n'); if (k >= 0) J.sante.prot.splice(k, 1); } }
     else { if (v.detail.type === 'contenants') retirerConteneur(J.sante, p.prix.n); else J.sante.prot.splice(-v.detail.n); }
     evenement('cout_paye', { raison: 'pacte', n: p.prix.n });
-    P.pactesAchetes++; if (J.drapeaux.serment) { J.bonusPermanents.push({ s: 'degats', a: 0.5 }); }
+    P.pactesAchetes++; G.etage.pacteAchete = true; if (J.drapeaux.serment) { J.bonusPermanents.push({ s: 'degats', a: 0.5 }); }
     Son.jouer('sceau'); Progression.compteur('pactes', 1);
     if (santeTotale(J.sante) <= 0) { verifierMort(J, { type: 'prix', raison: 'pacte' }); return; }
     // les autres offres du pacte restent achetables (pas de groupe lié)
@@ -224,7 +224,7 @@ function majAutel(dt) {
   if (dist(A.x, A.y, J.x, J.y) > 12 || J.vol || J.invuln > 0) return;
   const n = Math.min(A.paiements + 1, PALIERS_TRIBUT.length - 1); const pal = PALIERS_TRIBUT[n];
   if (pal.r === 'rassasie') { if (!A.msg || G.temps - A.msg > 2) { A.msg = G.temps; G.textes.push({ x: A.x, y: A.y - 30, t: 'L’autel est rassasié.', age: 0, duree: 1.4, couleur: '#c8a0a0' }); } return; }
-  A.paiements = n; G.partie.sacrifices++;
+  A.paiements = n; G.partie.sacrifices++; Progression.secret('SEC_007');
   const res = sacrifier(1);
   if (!res || res.mort) return;
   const al = new Alea(G.partie.code + '|autel|' + G.etage.numero + '|' + n);
@@ -256,18 +256,18 @@ function payerPassageMaudit(moment) {
 function chanceOpportunite() {
   const E = G.etage, P = G.partie, J = G.joueur;
   if (E.numero < 2 || E.numero > 8) return { chance: 0, pacte: 0, sanctuaire: 0, detail: [] };
-  const det = []; let c = 0.20; det.push(['Base', 0.20]);
-  if (!E.degatsVitalite) { c += 0.15; det.push(['Aucun dégât à la vitalité sur l’étage', 0.15]); }
-  if (!E.degatsBoss) { c += 0.10; det.push(['Boss vaincu sans être touché', 0.10]); }
+  const det = []; let c = 0.20; det.push(['base', 0.20]);
+  if (!E.degatsVitalite) { c += 0.15; det.push(['vitalité intacte sur l’étage', 0.15]); }
+  if (!E.degatsBoss) { c += 0.10; det.push(['aucun coup reçu au boss', 0.10]); }
   if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’Akatsuki', 0.05]); }
   if (possede(J, 'PSV_091')) { c += 0.20; det.push(['Sceau maudit', 0.20]); }
-  if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['Faveur de l’autel', E.faveurSanctuaire]); }
+  if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['faveur de l’autel', E.faveurSanctuaire]); }
   c = borne(c, 0, 0.95);
   if (J.drapeaux.serment) return { chance: 1, pacte: 1, sanctuaire: 0, detail: [['Serment de vengeance', 1]] };
   let wP = 0.6, wS = 0.4 + 0.25 * P.pactesRefuses + (aTalisman(J, 'TAL_004') ? 0.15 : 0);
   if (P.pactesAchetes > 0) wS = 0;  // exclusion puis renormalisation : toute l'opportunité devient un pacte
   const tot = wP + wS;
-  return { chance: c, pacte: c * wP / tot, sanctuaire: c * wS / tot, detail: det };
+  return { chance: c, pacte: c * wP / tot, sanctuaire: c * wS / tot, detail: det, poids: { pacte: wP, sanctuaire: wS } };
 }
 function tirerOpportunite() {
   const T0 = chanceOpportunite(); const al = new Alea(G.partie.code + '|opportunite|' + G.etage.numero);
@@ -303,6 +303,7 @@ function preparerOpportunite(s) {
 function frapperStatue(s) {
   const st = s.statue; if (st.detruite) return; st.detruite = true;
   const [cx, cy] = [st.x, st.y + 40];
+  Progression.secret(st.type === 'marchand' ? 'SEC_014' : st.type === 'serpent' ? 'SEC_004' : 'SEC_005');
   if (st.type === 'marchand') { for (let i = 0; i < G.alea.recomp.entierEntre(3, 6); i++) creerRamassable('ryo', st.x + (Math.random() - 0.5) * 30, st.y + 20, {}); Son.jouer('rocher'); return; }
   const id = st.type === 'serpent' ? 'BOS_M01' : 'BOS_M02';
   creerBoss(id, cx, cy, {}); s.combat = true; s.nettoyee = false; G.portesFermeesDans = 0.2; Son.jouer('boss_intro');
@@ -321,6 +322,21 @@ function majDispositifs() {
     G.machineProche = n;
     if (Entrees.vientEnfonce('interagir')) payerInformateur(n);
   }
+  const st = s.statue;
+  if (s.type === 'boutique' && st && st.type === 'marchand' && !st.detruite && dist(st.x, st.y + 8, J.x, J.y) < 18 && !G.achatPropose) {
+    G.machineProche = st;
+    if (Entrees.vientEnfonce('interagir')) donnerMarchand(st);
+  }
+}
+// Offrande au tanuki de l'échoppe : 1 Ryō par don, cumulé dans le profil (progression durable).
+// Paliers 50 / 150 / 300 : soldes plus fréquentes (+4 % par niveau), puis un objet de plus en vitrine.
+const PALIERS_ECHOPPE = [50, 150, 300];
+function donnerMarchand(st) {
+  const J = G.joueur; if (J.ryo < 1) { Son.jouer('refus'); return; }
+  J.ryo--; Progression.donner(1); Son.jouer('ryo');
+  const d = Progression.profil.dons, prochain = PALIERS_ECHOPPE.find(p => p > d);
+  G.textes.push({ x: st.x, y: st.y - 34, t: prochain ? 'Offrandes : ' + d + ' / ' + prochain : 'Échoppe au niveau maximal', age: 0, duree: 1, couleur: '#f0d890' });
+  if (PALIERS_ECHOPPE.includes(d)) { G.textes.push({ x: st.x, y: st.y - 46, t: 'L’échoppe s’agrandira (niveau ' + Progression.niveauBoutique() + ')', age: 0, duree: 2.2, couleur: '#fff0a0' }); Son.jouer('objet_mineur'); }
 }
 function utiliserMachine(m) {
   const J = G.joueur; const al = G.alea.recomp; const sortie = t => creerRamassable(t, m.x + (Math.random() - 0.5) * 16, m.y + 22, {});
@@ -357,7 +373,7 @@ function utiliserMachine(m) {
 }
 function confirmerMortel(m) { if (m.confirme) return true; m.confirme = true; G.textes.push({ x: m.x, y: m.y - 30, t: 'Mortel ! Confirmer à nouveau.', age: 0, duree: 1.6, couleur: '#ff4a4a' }); return false; }
 function detruireMachine(m) {
-  m.detruite = true; Son.jouer('explosion'); const al = G.alea.recomp;
+  m.detruite = true; Progression.secret('SEC_013'); Son.jouer('explosion'); const al = G.alea.recomp;
   for (let i = 0; i < al.entierEntre(2, 4); i++) creerRamassable(al.choix(['ryo', 'ryo', 'ryo', 'coeur_demi']), m.x + (Math.random() - 0.5) * 20, m.y + 16, {});
 }
 // Informateurs : paiements répétés, issue incertaine mais probabilité fixe et publique
@@ -419,5 +435,5 @@ function poserSortiesBoss(s) {
   } else s.sorties.push({ type: 'etage', x: cx, y: cy + 10 });
   // routes chronométrées (chronomètre hors pause et hors écrans de décision)
   if (n === 6 && P.temps <= 20 * 60 && Progression.estDebloque('RTE_05')) s.sorties.push({ type: 'conseil', x: cx, y: cy - 50 });
-  if (n === 8 && P.tempsEntreeBoss !== undefined && P.tempsEntreeBoss <= 30 * 60 && Progression.estDebloque('RTE_06')) s.sorties.push({ type: 'breche', x: cx + 90, y: cy - 40 });
+  if (n === 8 && P.tempsEntreeBoss !== undefined && P.tempsEntreeBoss <= 30 * 60 && Progression.estDebloque('RTE_06')) { s.sorties.push({ type: 'breche', x: cx + 90, y: cy - 40 }); Progression.secret('SEC_008'); }
 }

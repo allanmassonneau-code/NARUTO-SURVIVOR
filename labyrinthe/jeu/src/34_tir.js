@@ -107,7 +107,8 @@ function emettre(J, dir, mult, cycleId, estSalve, budget, o = {}) {
         const p = creerProjectileJoueur(J, ox, oy, g.a, deg, cycleId, budget, o);
         if (P.forme === 'orbe') { const O = P.params.orbe; p.vitesse = (O.vitesse || 8) * TUILE; p.porteePx = (O.portee || 5.5) * TUILE + (S.portee - 6) * TUILE * 0.5; p.degats = deg * (O.mult || 3); p.perce = Math.max(p.perce, (O.perce || 2) - 1); p.taille *= 1.6; p.apparence = 'orbe'; p.dureeVie = p.porteePx / p.vitesse; }
         if (P.forme === 'charge_libre' && o.charge >= 1) { p.perce = Math.max(p.perce, 2); p.impacts = p.impacts.concat([{ impact: 'chaine', sauts: 2, r: 3, coef: 0.5 }]); p.taille *= 1.3; p.foudre = true; }
-        if (P.forme === 'boomerang') { p.traj.retour = 1; p.perce = 99; p.apparence = 'fuma'; p.taille *= 1.4; p.dureeVie *= 1.6; }
+        if (P.forme === 'boomerang') { p.traj.retour = 1; p.perce = 99; p.apparence = 'fuma'; p.taille *= 1.4; }
+        if (p.traj.retour) p.dureeVie *= 1.6; // demi-tour à 45 % de la durée : ×1,6 garde ~72 % de la portée à l'aller, que le retour vienne de la forme ou d'une contribution
         if (P.forme === 'bombe') { p.apparence = 'argile'; p.bombe = { r: 1.3 * TUILE, fixe: 5, coef: 3, blesseJoueur: !J.drapeaux.immuniteExplosion }; p.traj.arc = 1; p.perce = 0; }
       }
     }

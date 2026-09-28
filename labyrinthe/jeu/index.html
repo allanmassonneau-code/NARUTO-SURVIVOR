@@ -777,9 +777,9 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     attaques: [
       { id: 'scalpel', type: 'charge', vCharge: 10, tele: 0.45, duree: 0.8, recup: 0.6 },
       { id: 'cadavres', type: 'invocation', ennemi: 'ENM_050', n: 2, max: 3, tele: 0.7, recup: 0.4, recharge: 8 },
-      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5, seuil: 20, soin: 0.1, recharge: 10 },
+      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5, seuil: 20, soin: 0.1, recharge: 10, maxUsages: 3 },
       { id: 'salve', type: 'salve', n: 3, v: 6, ecart: 0.2, rafales: 2, tele: 0.4, recup: 0.5 },
-    ], desc: 'Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets.' });
+    ], desc: 'Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; trois fois au plus, espacées de 10 s) ; réanime des sujets.' });
   B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 440, { sprite: N('kiri', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#3a4a6a' }, peau: '#6a8ab0', visage: 'branchies' }), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'requins', type: 'special', nom: 'requins', tele: 0.5, duree: 1.5, recup: 0.6 },
@@ -1700,13 +1700,13 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   DE('DEF_003', 'Mains vides', 'Aucune salle d’héritage ; les boss donnent tout. Première fin.', { sansHeritage: true, recompenseTexte: 'Parchemin vide' });
   DE('DEF_004', 'Un souffle', 'Un seul contenant, jamais plus ; les contenants deviennent des réserves.', { sante: { vitalite: 1 }, drapeaux: { plafondVit: 1 }, recompenseTexte: 'Substitution instinctive' });
   DE('DEF_005', 'Artificier', 'Départ avec Argile explosive et Argile infinie ; première fin.', { depart: ['PSV_019', 'PSV_110'], recompenseTexte: 'Parchemins spéciaux' });
-  DE('DEF_006', 'Mille clones', 'Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %.', { perso: 'CHR_001', depart: ['PSV_061', 'PSV_061'], recompenseTexte: 'Clone de relais' });
+  DE('DEF_006', 'Mille clones', 'Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %. Première fin.', { perso: 'CHR_001', depart: ['PSV_061', 'PSV_061'], bonus: [{ s: 'degats', m: 0.7 }], recompenseTexte: 'Clone de relais' });
   DE('DEF_007', 'Tout s’achète', 'Départ avec 50 Ryō et la Carte de membre ; aucune salle d’héritage.', { ressources: { ryo: 50 }, depart: ['PSV_121'], sansHeritage: true, recompenseTexte: 'Dés de la grande perdante' });
   DE('DEF_008', 'Sang pour sang', 'Chaque boss ouvre un pacte ; aucun sanctuaire.', { drapeaux: { serment: true }, recompenseTexte: 'Chakra du démon' });
   DE('DEF_009', 'Tempête du désert', 'Gaara imposé avec Sable en orbite et Sable protecteur ; première fin.', { perso: 'CHR_008', depart: ['PSV_010', 'PSV_065'], recompenseTexte: 'Tempête de sable' });
-  DE('DEF_010', 'Course de l’examen', 'Première fin en moins de 20 minutes.', { chrono: 20 * 60, recompenseTexte: 'Marque de vitesse' });
-  DE('DEF_011', 'Collectionneur pressé', 'Atteindre l’étage 6 avec au moins 10 objets.', { recompenseTexte: 'Défi' });
-  DE('DEF_012', 'Examen de jōnin', 'Mode Difficile imposé, toutes les salles d’épreuve ouvertes.', { difficile: true, recompenseTexte: 'Rasenshuriken' });
+  DE('DEF_010', 'Course de l’examen', 'Première fin en moins de 20 minutes (chronomètre de partie).', { chrono: 20 * 60, recompenseTexte: 'Marque de vitesse' });
+  DE('DEF_011', 'Collectionneur pressé', 'Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée).', { etageCible: 6, objetsMin: 10, recompenseTexte: 'Défi' });
+  DE('DEF_012', 'Examen de jōnin', 'Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin.', { difficile: true, epreuves: true, recompenseTexte: 'Rasenshuriken' });
 
   // ── Secrets documentés (indices consultables) ──
   const SE = (id, nom, indice, solution) => DON.secrets.push({ id, nom, indice, solution });
@@ -1911,7 +1911,14 @@ const Police = {
     const lignes = [];
     for (const para of String(s).split('\n')) {
       let cur = '';
-      for (const mot of para.split(' ')) {
+      // typographie française : « % : ; ! ? » » restent avec le mot précédent, « « » avec le suivant
+      const mots = [];
+      for (const m of para.split(' ')) {
+        if (mots.length && /^[%:;!?»]+[.,]?$/.test(m)) mots[mots.length - 1] += ' ' + m;
+        else if (mots.length && mots[mots.length - 1] === '«') mots[mots.length - 1] += ' ' + m;
+        else mots.push(m);
+      }
+      for (const mot of mots) {
         const essai = cur ? cur + ' ' + mot : mot;
         if (this.largeur(essai) <= largeurMax || !cur) cur = essai; else { lignes.push(cur); cur = mot; }
       }
@@ -4429,12 +4436,16 @@ function dessinerStatue(g, st, x, y) {
   if (st.type === 'marchand') { // tanuki porte-bonheur de l'échoppe (le détruire fait tomber des Ryō)
     const T0 = ['....hhhhhh....', '..hhHhhhhHhh..', '.hhhhhhhhhhhh.', '....ffffff....', '...fwkffkwf...', '...ffkkkkff...', '....ffbbff....', '..ffffffffff..', '.ffbbbbbbbbff.', '.fbbbbbbbbbbfs', 'ffbbbbbbbbbbfs', 'ffbbbbbbbbbbfr', 'ffbbbbbbbbbbff', '.fbbbbbbbbbbf.', '.ffbbbbbbbbff.', '..ffffffffff..', '.FFff....ffFF.', 'FFFF......FFFF'];
     const img = _imgTanuki || (_imgTanuki = contourner(avecMarge(peindre(T0, { h: '#c8a860', H: '#8a6a3a', f: '#8a6a4a', F: '#5a4230', b: '#e8d8b8', k: '#1c1420', w: '#f0e8d8', s: '#d8d0c0', r: '#b83a2a' }))));
-    g.drawImage(img, x - img.width / 2, y - img.height + 12); return;
+    g.drawImage(img, x - img.width / 2, y - img.height + 12);
+    if (G.machineProche === st) Police.ecrire(g, 'Offrande : 1 Ryō (' + Entrees.libelle('interagir') + ')', x, y - img.height + 2, '#f0e8d0', { a: 'c' });
+    return;
   }
+  if (_imgStatues[st.type]) { const im = _imgStatues[st.type]; g.drawImage(im, x - im.width / 2, y - im.height + 12); return; }
   const col = st.type === 'serpent' ? { a: '#5a4a6a', b: '#8a7a9a' } : st.type === 'crapaud' ? { a: '#b0b098', b: '#e0e0c8' } : { a: '#6a5a4a', b: '#9a8a7a' };
   const L = st.type === 'serpent' ? ['....aaaa....', '...abbbba...', '..abkbbkba..', '..abbbbbba..', '...abbbba...', '....abba....', '...aabbaa...', '..aabbbbaa..', '.aabbbbbbaa.', 'aaaaaaaaaaaa'] : st.type === 'crapaud' ? ['..aa....aa..', '.abka..akba.', '.aabbbbbbaa.', 'aabbbbbbbbaa', 'abbbkkkkbbba', 'aabbbbbbbbaa', '.aabbbbbbaa.', 'aa.aaaaaa.aa', 'aaaaaaaaaaaa'] : ['...aaaaaa...', '..abbbbbba..', '..abkbbkba..', '..abbbbbba..', '...abbbba...', '..aabbbbaa..', '.aabbbbbbaa.', 'aaaaaaaaaaaa'];
-  const img = contourner(peindre(L, Object.assign({ k: '#1c1420' }, col))); g.drawImage(img, x - img.width / 2, y - img.height + 12);
+  const img = _imgStatues[st.type] = contourner(peindre(L, Object.assign({ k: '#1c1420' }, col))); g.drawImage(img, x - img.width / 2, y - img.height + 12);
 }
+const _imgStatues = {}; // hors des salles : une toile ne se sauvegarde pas
 function dessinerAutel(g, A, x, y) {
   g.fillStyle = '#3a2226'; g.fillRect(x - 14, y - 4, 28, 14); g.fillStyle = '#6a3a3a'; g.fillRect(x - 13, y - 5, 26, 3);
   for (let i = 0; i < 5; i++) { g.fillStyle = '#d8d0c8'; g.fillRect(x - 10 + i * 5, y - 9, 2, 5); g.fillStyle = '#8a3030'; g.fillRect(x - 10 + i * 5, y - 10, 2, 1); }
@@ -5214,7 +5225,8 @@ function emettre(J, dir, mult, cycleId, estSalve, budget, o = {}) {
         const p = creerProjectileJoueur(J, ox, oy, g.a, deg, cycleId, budget, o);
         if (P.forme === 'orbe') { const O = P.params.orbe; p.vitesse = (O.vitesse || 8) * TUILE; p.porteePx = (O.portee || 5.5) * TUILE + (S.portee - 6) * TUILE * 0.5; p.degats = deg * (O.mult || 3); p.perce = Math.max(p.perce, (O.perce || 2) - 1); p.taille *= 1.6; p.apparence = 'orbe'; p.dureeVie = p.porteePx / p.vitesse; }
         if (P.forme === 'charge_libre' && o.charge >= 1) { p.perce = Math.max(p.perce, 2); p.impacts = p.impacts.concat([{ impact: 'chaine', sauts: 2, r: 3, coef: 0.5 }]); p.taille *= 1.3; p.foudre = true; }
-        if (P.forme === 'boomerang') { p.traj.retour = 1; p.perce = 99; p.apparence = 'fuma'; p.taille *= 1.4; p.dureeVie *= 1.6; }
+        if (P.forme === 'boomerang') { p.traj.retour = 1; p.perce = 99; p.apparence = 'fuma'; p.taille *= 1.4; }
+        if (p.traj.retour) p.dureeVie *= 1.6; // demi-tour à 45 % de la durée : ×1,6 garde ~72 % de la portée à l'aller, que le retour vienne de la forme ou d'une contribution
         if (P.forme === 'bombe') { p.apparence = 'argile'; p.bombe = { r: 1.3 * TUILE, fixe: 5, coef: 3, blesseJoueur: !J.drapeaux.immuniteExplosion }; p.traj.arc = 1; p.perce = 0; }
       }
     }
@@ -6386,8 +6398,10 @@ function revelerPlan(J) {
 // ── Partie ──
 function nouvellePartie(o) {
   const code = codeValide(o.code) ? o.code : codeAleatoire(Math.random);
+  const D = o.defi && INDEX[o.defi]; // contrat : personnage et difficulté imposés
+  if (D && D.perso) o = Object.assign({}, o, { perso: D.perso });
   const P = {
-    code, perso: o.perso, difficile: !!o.difficile, defi: o.defi || null, entrainement: !!o.entrainement, graineSaisie: !!o.graineSaisie,
+    code, perso: o.perso, difficile: !!(o.difficile || (D && D.difficile)), defi: o.defi || null, entrainement: !!o.entrainement, graineSaisie: !!o.graineSaisie,
     etage: 0, route: [], temps: 0, retires: [], vus: [], pilules: null, pilulesIdentifiees: [], pactesAchetes: 0, pactesRefuses: 0, sanctuaireVisite: false,
     opportunitePrecedente: false, marques: [], branche: null, fragments: 0, sacrifices: 0, bossVaincus: [], version: VERSION_DONNEES, histoire: [],
   };
@@ -6421,13 +6435,23 @@ function configEtage(n) {
     grandes: n <= 1 ? 0.1 : 0.2, verrouDes: 2, titre: 'Chapitre ' + nomsChap[pos.chapitre] + ' · Étage ' + n,
   };
   if (P.difficile) { cfg.salles[0]++; cfg.salles[1]++; }
-  if (P.defi && INDEX[P.defi].sansHeritage) delete cfg.speciales.heritage;
+  const Df = P.defi && INDEX[P.defi];
+  if (Df && Df.sansHeritage) delete cfg.speciales.heritage;
+  if (Df && Df.obscurite) cfg.mod = Object.assign({}, cfg.mod, { obscurite: Math.max(cfg.mod.obscurite || 0, 0.55) });
+  if (Df && Df.epreuves && n >= 2) { cfg.speciales.defi = 1; if (n === 4 || n === 6 || n === 8) cfg.speciales.defi_boss = 1; }
   return cfg;
 }
 
 function entrerEtage(n) {
   const P = G.partie, J = G.joueur;
+  // refus : une salle de pacte visitée puis quittée sans rien acheter augmente la part du sanctuaire (E §6)
+  const prec = G.etage;
+  if (n > 1 && prec && prec.numero < n && prec.opportunite === 'pacte' && prec.salles.opp && prec.salles.opp.visitee && !prec.pacteAchete) {
+    P.pactesRefuses++; Progression.secret('SEC_012'); G.textes.push({ x: 0, y: 0, t: 'Pacte refusé : les ermites s’en souviendront', age: 0, duree: 2.2, couleur: '#fff8d0', ecran: true });
+  }
   P.etage = n;
+  const Dc = P.defi && INDEX[P.defi];
+  if (Dc && Dc.etageCible && !P.defiValide && n >= Dc.etageCible && J.passifs.length >= (Dc.objetsMin || 0)) { P.defiValide = true; Progression.defiReussi(P.defi); }
   const cfg = configEtage(n);
   G.etage = genererEtage(P, n, cfg);
   G.etage.cfg = cfg; G.variante = cfg.mod; G.theme = cfg.theme;
@@ -6808,7 +6832,7 @@ function revelerPorteSecrete(s, p) {
   p.etat = 'ouverte'; p.secrete = false; p.revelee = true;
   const v = G.etage.salles[p.vers]; if (v) { v.apercue = true; const q = v.portes.find(k => k.vers === s.id); if (q) { q.etat = 'ouverte'; q.secrete = false; } }
   Son.jouer('secret'); G.effets.push({ type: 'debris', x: (p.tx + 0.5) * TUILE, y: (p.ty + 0.5) * TUILE, age: 0, duree: 0.5, n: 10 });
-  Progression.compteur('secretsTrouves', 1);
+  Progression.compteur('secretsTrouves', 1); const ts = [s.type, v && v.type].find(t => t === 'cache' || t === 'isolee'); if (ts) Progression.secret(ts === 'isolee' ? 'SEC_002' : 'SEC_001');
   evenement('secret_trouve', { s, p });
 }
 function detruireTuile(s, tx, ty, cause, ex, ey) {
@@ -6819,7 +6843,7 @@ function detruireTuile(s, tx, ty, cause, ex, ey) {
     s.tuiles[i] = T.SOL;
     G.effets.push({ type: 'debris', x: cx, y: cy, age: 0, duree: 0.5, n: 8, couleur: t === T.JARRE ? '#b86a44' : t === T.CAISSE ? '#a87448' : null });
     Son.jouer(t === T.JARRE ? 'jarre' : 'rocher');
-    if (t === T.ROCHER_SCEAU) { const r = al.choix(['protection', 'protection', 'cle', 'explosif2', 'ryo5', 'rouleau']); creerRamassable(r, cx, cy, {}); Son.jouer('secret', 0.5); Progression.compteur('rochersSceau', 1); }
+    if (t === T.ROCHER_SCEAU) { const r = al.choix(['protection', 'protection', 'cle', 'explosif2', 'ryo5', 'rouleau']); creerRamassable(r, cx, cy, {}); Son.jouer('secret', 0.5); Progression.secret('SEC_003'); Progression.compteur('rochersSceau', 1); }
     else if (t === T.JARRE && al.chance(0.35)) creerRamassable(al.choix(['ryo', 'ryo', 'coeur_demi', 'explosif', 'cle', 'pilule']), cx, cy, {});
     else if (t === T.CAISSE && al.chance(0.3)) creerRamassable(al.choix(['ryo', 'ryo5', 'explosif', 'rouleau']), cx, cy, {});
     else if (t === T.ROCHER && al.chance(0.02)) creerRamassable('ryo', cx, cy, {});
@@ -6827,7 +6851,7 @@ function detruireTuile(s, tx, ty, cause, ex, ey) {
     if (cause === 'explosion' && (t === T.ROCHER || t === T.TOTEM)) {
       let best = null, bd = 1e9;
       for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (tuileA(s, tx + dx, ty + dy) === T.FOSSE) { const d = dist(cx + dx * TUILE, cy + dy * TUILE, ex, ey); const score = -d; if (score < bd) { bd = score; best = [tx + dx, ty + dy]; } }
-      if (best) { s.tuiles[best[1] * s.W + best[0]] = T.PONT; }
+      if (best) { s.tuiles[best[1] * s.W + best[0]] = T.PONT; Progression.secret('SEC_010'); }
     }
   }
   delete s.pvTuiles[i]; s.version = (s.version || 0) + 1; s.fondSale = true;
@@ -6888,7 +6912,7 @@ function picsSortis() { return (G.temps % 3) < 1.4; }
 
 // ── Pakkun / Kakashi : signalement des murs secrets de la salle ──
 function signalerSecrets(s) {
-  const p = s.portes.find(q => q.etat === 'secrete'); if (!p) return;
+  const p = s.portes.find(q => q.etat === 'secrete'); if (!p) return; Progression.secret('SEC_011');
   const [cx, cy] = centreTuile(...tuileDevantPorte(p));
   G.effets.push({ type: 'indice_secret', x: cx, y: cy, age: 0, duree: 2.2 });
   setTimeoutJeu(() => Son.jouer('rire', 0.4), 0.3);
@@ -7005,7 +7029,7 @@ function acheter(p) {
     else if (v.instable) { for (let i = 0; i < v.instable; i++) { const k = J.sante.prot.lastIndexOf('n'); if (k >= 0) J.sante.prot.splice(k, 1); } }
     else { if (v.detail.type === 'contenants') retirerConteneur(J.sante, p.prix.n); else J.sante.prot.splice(-v.detail.n); }
     evenement('cout_paye', { raison: 'pacte', n: p.prix.n });
-    P.pactesAchetes++; if (J.drapeaux.serment) { J.bonusPermanents.push({ s: 'degats', a: 0.5 }); }
+    P.pactesAchetes++; G.etage.pacteAchete = true; if (J.drapeaux.serment) { J.bonusPermanents.push({ s: 'degats', a: 0.5 }); }
     Son.jouer('sceau'); Progression.compteur('pactes', 1);
     if (santeTotale(J.sante) <= 0) { verifierMort(J, { type: 'prix', raison: 'pacte' }); return; }
     // les autres offres du pacte restent achetables (pas de groupe lié)
@@ -7121,7 +7145,7 @@ function majAutel(dt) {
   if (dist(A.x, A.y, J.x, J.y) > 12 || J.vol || J.invuln > 0) return;
   const n = Math.min(A.paiements + 1, PALIERS_TRIBUT.length - 1); const pal = PALIERS_TRIBUT[n];
   if (pal.r === 'rassasie') { if (!A.msg || G.temps - A.msg > 2) { A.msg = G.temps; G.textes.push({ x: A.x, y: A.y - 30, t: 'L’autel est rassasié.', age: 0, duree: 1.4, couleur: '#c8a0a0' }); } return; }
-  A.paiements = n; G.partie.sacrifices++;
+  A.paiements = n; G.partie.sacrifices++; Progression.secret('SEC_007');
   const res = sacrifier(1);
   if (!res || res.mort) return;
   const al = new Alea(G.partie.code + '|autel|' + G.etage.numero + '|' + n);
@@ -7153,18 +7177,18 @@ function payerPassageMaudit(moment) {
 function chanceOpportunite() {
   const E = G.etage, P = G.partie, J = G.joueur;
   if (E.numero < 2 || E.numero > 8) return { chance: 0, pacte: 0, sanctuaire: 0, detail: [] };
-  const det = []; let c = 0.20; det.push(['Base', 0.20]);
-  if (!E.degatsVitalite) { c += 0.15; det.push(['Aucun dégât à la vitalité sur l’étage', 0.15]); }
-  if (!E.degatsBoss) { c += 0.10; det.push(['Boss vaincu sans être touché', 0.10]); }
+  const det = []; let c = 0.20; det.push(['base', 0.20]);
+  if (!E.degatsVitalite) { c += 0.15; det.push(['vitalité intacte sur l’étage', 0.15]); }
+  if (!E.degatsBoss) { c += 0.10; det.push(['aucun coup reçu au boss', 0.10]); }
   if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’Akatsuki', 0.05]); }
   if (possede(J, 'PSV_091')) { c += 0.20; det.push(['Sceau maudit', 0.20]); }
-  if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['Faveur de l’autel', E.faveurSanctuaire]); }
+  if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['faveur de l’autel', E.faveurSanctuaire]); }
   c = borne(c, 0, 0.95);
   if (J.drapeaux.serment) return { chance: 1, pacte: 1, sanctuaire: 0, detail: [['Serment de vengeance', 1]] };
   let wP = 0.6, wS = 0.4 + 0.25 * P.pactesRefuses + (aTalisman(J, 'TAL_004') ? 0.15 : 0);
   if (P.pactesAchetes > 0) wS = 0;  // exclusion puis renormalisation : toute l'opportunité devient un pacte
   const tot = wP + wS;
-  return { chance: c, pacte: c * wP / tot, sanctuaire: c * wS / tot, detail: det };
+  return { chance: c, pacte: c * wP / tot, sanctuaire: c * wS / tot, detail: det, poids: { pacte: wP, sanctuaire: wS } };
 }
 function tirerOpportunite() {
   const T0 = chanceOpportunite(); const al = new Alea(G.partie.code + '|opportunite|' + G.etage.numero);
@@ -7200,6 +7224,7 @@ function preparerOpportunite(s) {
 function frapperStatue(s) {
   const st = s.statue; if (st.detruite) return; st.detruite = true;
   const [cx, cy] = [st.x, st.y + 40];
+  Progression.secret(st.type === 'marchand' ? 'SEC_014' : st.type === 'serpent' ? 'SEC_004' : 'SEC_005');
   if (st.type === 'marchand') { for (let i = 0; i < G.alea.recomp.entierEntre(3, 6); i++) creerRamassable('ryo', st.x + (Math.random() - 0.5) * 30, st.y + 20, {}); Son.jouer('rocher'); return; }
   const id = st.type === 'serpent' ? 'BOS_M01' : 'BOS_M02';
   creerBoss(id, cx, cy, {}); s.combat = true; s.nettoyee = false; G.portesFermeesDans = 0.2; Son.jouer('boss_intro');
@@ -7218,6 +7243,21 @@ function majDispositifs() {
     G.machineProche = n;
     if (Entrees.vientEnfonce('interagir')) payerInformateur(n);
   }
+  const st = s.statue;
+  if (s.type === 'boutique' && st && st.type === 'marchand' && !st.detruite && dist(st.x, st.y + 8, J.x, J.y) < 18 && !G.achatPropose) {
+    G.machineProche = st;
+    if (Entrees.vientEnfonce('interagir')) donnerMarchand(st);
+  }
+}
+// Offrande au tanuki de l'échoppe : 1 Ryō par don, cumulé dans le profil (progression durable).
+// Paliers 50 / 150 / 300 : soldes plus fréquentes (+4 % par niveau), puis un objet de plus en vitrine.
+const PALIERS_ECHOPPE = [50, 150, 300];
+function donnerMarchand(st) {
+  const J = G.joueur; if (J.ryo < 1) { Son.jouer('refus'); return; }
+  J.ryo--; Progression.donner(1); Son.jouer('ryo');
+  const d = Progression.profil.dons, prochain = PALIERS_ECHOPPE.find(p => p > d);
+  G.textes.push({ x: st.x, y: st.y - 34, t: prochain ? 'Offrandes : ' + d + ' / ' + prochain : 'Échoppe au niveau maximal', age: 0, duree: 1, couleur: '#f0d890' });
+  if (PALIERS_ECHOPPE.includes(d)) { G.textes.push({ x: st.x, y: st.y - 46, t: 'L’échoppe s’agrandira (niveau ' + Progression.niveauBoutique() + ')', age: 0, duree: 2.2, couleur: '#fff0a0' }); Son.jouer('objet_mineur'); }
 }
 function utiliserMachine(m) {
   const J = G.joueur; const al = G.alea.recomp; const sortie = t => creerRamassable(t, m.x + (Math.random() - 0.5) * 16, m.y + 22, {});
@@ -7254,7 +7294,7 @@ function utiliserMachine(m) {
 }
 function confirmerMortel(m) { if (m.confirme) return true; m.confirme = true; G.textes.push({ x: m.x, y: m.y - 30, t: 'Mortel ! Confirmer à nouveau.', age: 0, duree: 1.6, couleur: '#ff4a4a' }); return false; }
 function detruireMachine(m) {
-  m.detruite = true; Son.jouer('explosion'); const al = G.alea.recomp;
+  m.detruite = true; Progression.secret('SEC_013'); Son.jouer('explosion'); const al = G.alea.recomp;
   for (let i = 0; i < al.entierEntre(2, 4); i++) creerRamassable(al.choix(['ryo', 'ryo', 'ryo', 'coeur_demi']), m.x + (Math.random() - 0.5) * 20, m.y + 16, {});
 }
 // Informateurs : paiements répétés, issue incertaine mais probabilité fixe et publique
@@ -7316,7 +7356,7 @@ function poserSortiesBoss(s) {
   } else s.sorties.push({ type: 'etage', x: cx, y: cy + 10 });
   // routes chronométrées (chronomètre hors pause et hors écrans de décision)
   if (n === 6 && P.temps <= 20 * 60 && Progression.estDebloque('RTE_05')) s.sorties.push({ type: 'conseil', x: cx, y: cy - 50 });
-  if (n === 8 && P.tempsEntreeBoss !== undefined && P.tempsEntreeBoss <= 30 * 60 && Progression.estDebloque('RTE_06')) s.sorties.push({ type: 'breche', x: cx + 90, y: cy - 40 });
+  if (n === 8 && P.tempsEntreeBoss !== undefined && P.tempsEntreeBoss <= 30 * 60 && Progression.estDebloque('RTE_06')) { s.sorties.push({ type: 'breche', x: cx + 90, y: cy - 40 }); Progression.secret('SEC_008'); }
 }
 
 // ─── 40_actifs.js ───
@@ -7824,7 +7864,7 @@ function mortBoss(e) {
     }
   } else if (s.type === 'pacte' || s.type === 'sanctuaire') { // gardien de statue
     const [cx, cy] = [e.x, e.y];
-    if (s.type === 'sanctuaire') { poserPiedestal(s, cx, cy, G.partie.fragments >= 1 ? 'PSV_900' : 'PSV_901', {}); G.partie.fragments++; }
+    if (s.type === 'sanctuaire') { poserPiedestal(s, cx, cy, G.partie.fragments >= 1 ? 'PSV_900' : 'PSV_901', {}); G.partie.fragments++; if (G.partie.fragments >= 2) Progression.secret('SEC_006'); }
     else poserPiedestal(s, cx, cy, tirerObjet(G.partie, 'pacte', G.alea.butin), { pool: 'pacte' });
   }
   if (G.conseil) conseilSuivant();
@@ -7836,12 +7876,13 @@ function anneauBoss(e, n, v, o = {}) { const off = o.decalage ?? Math.random() *
 function salveBoss(e, n, v, ecart, o = {}) { const a = ciblerJoueur(e); for (let i = 0; i < n; i++) tirEnnemi(e.x, e.y - e.hauteur, a + (i - (n - 1) / 2) * ecart, v, Object.assign({ source: e.id }, o)); Son.jouer('tir_ennemi'); }
 function allerVersPoint(e, x, y, v, dt) { const d = dist(e.x, e.y, x, y); if (d < 4) { e.vx *= 0.7; e.vy *= 0.7; return true; } const [dx, dy] = normaliser(x - e.x, y - e.y); deplacerEnnemi(e, dx, dy, v * TUILE, dt, 6); return false; }
 function pointAleatoire(s, marge = 2) { const [cx, cy] = centreSalle(s); for (let k = 0; k < 20; k++) { const x = cx + (Math.random() - 0.5) * (CEL_L - marge * 2) * TUILE, y = cy + (Math.random() - 0.5) * (CEL_H - marge) * TUILE; if (tuileLibre(s, Math.floor(x / TUILE), Math.floor(y / TUILE))) return [x, y]; } return [cx, cy]; }
-// Tirage sans répétition immédiate ; une attaque à « recharge » (s) attend ce délai entre deux usages.
+// Tirage sans répétition immédiate ; une attaque à « recharge » (s) attend ce délai entre deux usages,
+// une attaque à « maxUsages » s'épuise pour le combat.
 function choisirAttaque(e, liste) {
-  const U = e.usages || (e.usages = {});
-  const dispo = a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && !(a.recharge && G.temps - (U[a.id] ?? -1e9) < a.recharge);
+  const U = e.usages || (e.usages = {}), N = e.nbUsages || (e.nbUsages = {});
+  const dispo = a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && !(a.recharge && G.temps - (U[a.id] ?? -1e9) < a.recharge) && !(a.maxUsages && (N[a.id] || 0) >= a.maxUsages);
   const L = liste.filter(a => dispo(a) && a.id !== e.derniere), L2 = L.length ? L : liste.filter(dispo);
-  const a = (G.alea.combat || new Alea(1)).pondere(L2.length ? L2 : liste, x => x.poids || 1); e.derniere = a.id; U[a.id] = G.temps; return a;
+  const a = (G.alea.combat || new Alea(1)).pondere(L2.length ? L2 : liste.filter(x => !x.maxUsages), x => x.poids || 1); e.derniere = a.id; U[a.id] = G.temps; N[a.id] = (N[a.id] || 0) + 1; return a;
 }
 function ligneDanger(x0, y0, a, l, largeur, duree) { G.effets.push({ type: 'ligne_danger', x: x0, y: y0, a, l, largeur, age: 0, duree }); }
 function cercleDanger(x, y, r, duree) { G.effets.push({ type: 'cercle_danger', x, y, r, age: 0, duree }); }
@@ -8153,7 +8194,7 @@ function majVarianteContinu(dt) {
     if (z.type === 'courant') G.pousse = { x: z.dx * 1.4, y: z.dy * 1.4 };
   }
   if (s.renforts && s.combat && G.ennemis.length >= 1) { s.tRenfort = (s.tRenfort || 0) + dt; if (s.tRenfort > 8 && (s.nbRenforts || 0) < 2) { s.tRenfort = 0; s.nbRenforts = (s.nbRenforts || 0) + 1; const [tx, ty] = tuileLibreLoin(s, J.x, J.y); const [x, y] = centreTuile(tx, ty); G.effets.push({ type: 'fissure', x, y, r: 14, age: 0, duree: 0.7 }); setTimeoutJeu(() => { if (G.salle === s && s.combat) creerEnnemi('ENM_070', x, y); }, 0.7); } }
-  if (s.chainesTemporaires && s.nettoyee) { for (const [tx, ty] of s.chainesTemporaires) s.tuiles[ty * s.W + tx] = T.SOL; s.chainesTemporaires = null; s.fondSale = true; s.version++; Son.jouer('porte_ouvre'); }
+  if (s.chainesTemporaires && s.nettoyee) { for (const [tx, ty] of s.chainesTemporaires) s.tuiles[ty * s.W + tx] = T.SOL; s.chainesTemporaires = null; Progression.secret('SEC_015'); s.fondSale = true; s.version++; Son.jouer('porte_ouvre'); }
   if (s.pluie && Math.random() < 0.5) G.particules.push({ x: J.x + (Math.random() - 0.5) * 640, y: J.y - 200 + Math.random() * 40, vx: -20, vy: 420, age: 0, duree: 0.6, couleur: 'rgba(170,190,230,0.5)', taille: 1 });
   // huile embrasée par le Katon
   for (const z of G.zones) if (z.type === 'huile' && !z.enflamme) for (const p of G.proj) if (p.proprio === 'joueur' && p.elements && p.elements.has('katon') && dist(p.x, p.y, z.x, z.y) < z.r) { z.enflamme = true; z.type = 'feu_allie'; z.dps = 8; z.duree = z.age + 5; z.persistante = false; Son.jouer('feu'); }
@@ -8175,6 +8216,7 @@ function appliquerDefi(P, id) {
   if (d.ressources) for (const [k, v] of Object.entries(d.ressources)) J[k] = v;
   if (d.sante) J.sante = santeInit(d.sante);
   if (d.drapeaux) Object.assign(J.drapeauxBase, d.drapeaux);
+  if (d.bonus) for (const b of d.bonus) J.bonusPermanents.push(Object.assign({}, b));
   recalculer(J);
 }
 function basculerArene(e) {
@@ -8917,7 +8959,7 @@ const SceneCode = {
 // ── Défis ──
 const SceneDefis = {
   entrer() {
-    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); Scenes.empiler(SceneSelection, { defi: d.id }); } })));
+    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); if (d.perso) { Son.jouer('valider'); effacerPartieSuspendue(); nouvellePartie({ perso: d.perso, defi: d.id }); Scenes.aller(SceneJeu); } else Scenes.empiler(SceneSelection, { defi: d.id }); } })));
   },
   maj() { this.menu.maj(); if (Entrees.menuRetour()) { Son.jouer('annuler'); Scenes.depiler(); } },
   rendre(g) { g.fillStyle = '#0c0812'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); cadreMenu(g, 80, 10, 480, 330, 'Contrats de mission (défis)'); this.menu.rendre(g, 100, 40, 440); aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Retour']]); },
@@ -8994,13 +9036,13 @@ const SceneCommandes = {
 const SceneRegistre = {
   entrer() { this.onglet = 0; this.i = 0; },
   maj() {
-    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 3) % 3; this.i = 0; Son.jouer('menu'); }
+    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 4) % 4; this.i = 0; Son.jouer('menu'); }
     if (Entrees.nav.dy) { this.i = Math.max(0, this.i + Entrees.nav.dy * (this.onglet === 1 ? 14 : 1)); Son.jouer('menu'); }
     if (Entrees.menuRetour()) Scenes.depiler();
   },
   rendre(g) {
     g.fillStyle = '#0c0812'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
-    const titres = ['Marques', 'Collection', 'Missions']; titres.forEach((t, k) => Police.ecrire(g, t, 200 + k * 120, 10, k === this.onglet ? '#ffe0a0' : '#6a6078', { a: 'c', e: k === this.onglet ? 2 : 1 }));
+    const titres = ['Marques', 'Collection', 'Missions', 'Secrets']; titres.forEach((t, k) => Police.ecrire(g, t, 140 + k * 120, 10, k === this.onglet ? '#ffe0a0' : '#6a6078', { a: 'c', e: k === this.onglet ? 2 : 1 }));
     const P = Progression.profil;
     if (this.onglet === 0) {
       const L = DON.personnages; const deb = Math.min(this.i, Math.max(0, L.length - 18));
@@ -9010,6 +9052,15 @@ const SceneRegistre = {
       const L = DON.objets.concat(DON.talismans); const cols = 14; const deb = Math.floor(Math.min(this.i, L.length - 1) / cols) * cols; const vis = L.slice(Math.max(0, deb - cols * 3), Math.max(0, deb - cols * 3) + cols * 12);
       vis.forEach((o, k) => { const x = 40 + (k % cols) * 40, y = 34 + Math.floor(k / cols) * 24; const conn = P.decouverts.includes(o.id); const vu = P.vus.includes(o.id); if (conn) g.drawImage(o.type === 'talisman' ? spriteRamassable('talisman', o.couleur) : iconeObjet(o.id), x, y); else { g.fillStyle = vu ? '#3a3048' : '#1a1622'; g.fillRect(x + 2, y + 2, 16, 16); Police.ecrire(g, '?', x + 10, y + 6, '#5a5268', { a: 'c' }); } });
       Police.ecrire(g, 'Découverts : ' + P.decouverts.filter(id => INDEX[id] && (INDEX[id].type === 'passif' || INDEX[id].type === 'actif' || INDEX[id].type === 'talisman')).length + ' / ' + L.length, 320, 326, '#a8a0b8', { a: 'c' });
+    } else if (this.onglet === 3) { // indices consultables en jeu ; la solution apparaît une fois le secret trouvé
+      const L = DON.secrets; this.i = Math.min(this.i, L.length - 1);
+      L.forEach((sc, k) => { const ok = P.decouverts.includes(sc.id); const y = 36 + k * 18; if (k === this.i) { g.fillStyle = 'rgba(240,200,112,0.18)'; g.fillRect(24, y - 3, 250, 16); } Police.ecrire(g, (ok ? '✓ ' : '· ') + (ok ? sc.nom : 'Secret inconnu'), 30, y, ok ? '#a0e0a0' : '#c8c0d8'); });
+      const sc = L[this.i]; const ok = P.decouverts.includes(sc.id);
+      g.fillStyle = 'rgba(20,14,28,0.95)'; g.fillRect(290, 32, 330, 170);
+      Police.ecrire(g, ok ? sc.nom : 'Indice', 300, 40, '#fff0d0');
+      let y = 56 + Police.paragraphe(g, sc.indice, 300, 56, 310, '#e8dcc0') + 8;
+      if (ok) Police.paragraphe(g, sc.solution, 300, y, 310, '#a8a0b8'); else Police.paragraphe(g, 'La solution s’inscrit ici quand vous le découvrez.', 300, y, 310, '#6a6078');
+      Police.ecrire(g, 'Trouvés : ' + L.filter(x => P.decouverts.includes(x.id)).length + ' / ' + L.length, 455, 214, '#a8a0b8', { a: 'c' });
     } else {
       const L = DON.objectifs; const deb = Math.min(this.i, Math.max(0, L.length - 20));
       L.slice(deb, deb + 20).forEach((o, k) => { const y = 34 + k * 15; const ok = !!P.objectifs[o.id]; Police.ecrire(g, (ok ? '✓ ' : '· ') + o.nom, 30, y, ok ? '#a0e0a0' : '#c8c0d8'); Police.ecrire(g, o.desc, 610, y, '#7a7088', { a: 'd' }); });
@@ -9051,7 +9102,8 @@ const Stockage = {
       return true;
     } catch (e) { return false; }
   },
-  effacer(cle) { try { localStorage.removeItem(cle); localStorage.removeItem(cle + '_tmp'); } catch (e) { /* stockage indisponible */ } },
+  // efface aussi la copie de secours : sinon lire() la ressusciterait (une partie perdue redeviendrait « à continuer »)
+  effacer(cle) { try { localStorage.removeItem(cle); localStorage.removeItem(cle + '_tmp'); localStorage.removeItem(cle + '_bak'); } catch (e) { /* stockage indisponible */ } },
 };
 function chargerReglages() {
   const r = Stockage.lire(CLES.reglages) || {};
@@ -9080,7 +9132,7 @@ function serialiserJoueur(J) {
 function serialiserPartie() {
   const P = G.partie, E = G.etage;
   const p = Object.assign({}, P); delete p.joueur;
-  const e = { numero: E.numero, cfg: E.cfg, grille: E.grille, depart: E.depart, boss: E.boss, secret: E.secret, isolee: E.isolee, courante: E.courante, degatsVitalite: E.degatsVitalite, degatsSubis: E.degatsSubis, degatsBoss: E.degatsBoss, opportunite: E.opportunite, faveurSanctuaire: E.faveurSanctuaire, malediction: E.malediction, charmeUtilise: E.charmeUtilise, couponUtilise: E.couponUtilise, mueUtilisee: E.mueUtilisee, salles: {} };
+  const e = { numero: E.numero, cfg: E.cfg, grille: E.grille, depart: E.depart, boss: E.boss, secret: E.secret, isolee: E.isolee, courante: E.courante, degatsVitalite: E.degatsVitalite, degatsSubis: E.degatsSubis, degatsBoss: E.degatsBoss, opportunite: E.opportunite, pacteAchete: E.pacteAchete, faveurSanctuaire: E.faveurSanctuaire, malediction: E.malediction, charmeUtilise: E.charmeUtilise, couponUtilise: E.couponUtilise, mueUtilisee: E.mueUtilisee, salles: {} };
   for (const [id, s] of Object.entries(E.salles)) e.salles[id] = serialiserSalle(s);
   return { v: VERSION_SAUVEGARDE, donnees: VERSION_DONNEES, jeu: VERSION_JEU, date: Date.now(), partie: p, etage: e, joueur: serialiserJoueur(G.joueur),
     aleas: { butin: G.alea.butin.etat(), recomp: G.alea.recomp.etat(), ennemis: G.alea.ennemis.etat(), combat: G.alea.combat.etat() }, stats: G.stats };
@@ -9150,6 +9202,8 @@ const Progression = {
     return L.some(o => !!this.profil.objectifs[o]);
   },
   decouvrir(id) { if (!this.profil) return; if (!this.profil.decouverts.includes(id)) { this.profil.decouverts.push(id); } },
+  // Secret trouvé : inscrit au profil (onglet « Secrets » du Registre) et annoncé la première fois
+  secret(id) { if (!this.profil || this.profil.decouverts.includes(id)) return; this.profil.decouverts.push(id); this.sauver(); G.notifications = G.notifications || []; G.notifications.push({ t: 0, titre: 'Secret découvert', nom: (INDEX[id] || {}).nom || id, detail: '' }); },
   voir(id) { if (!this.profil) return; if (!this.profil.vus.includes(id)) this.profil.vus.push(id); },
   compteur(nom, n) { if (!this.profil) return; this.profil.compteurs[nom] = (this.profil.compteurs[nom] || 0) + n; this.verifier({ type: 'compteur', nom }); },
   niveauBoutique() { const d = this.profil ? this.profil.dons : 0; return d >= 300 ? 3 : d >= 150 ? 2 : d >= 50 ? 1 : 0; },
@@ -9176,14 +9230,18 @@ const Progression = {
     }
   },
   // Fin de partie : marques par personnage et routes
+  // Conditions d'un contrat à la victoire : chronomètre, cible d'étage (déjà validée à l'arrivée)
+  conditionsDefi(P, route) { const D = INDEX[P.defi]; if (!D) return false; if (D.chrono && P.temps > D.chrono) return false; if (D.etageCible && !P.defiValide) return false; return true; },
+  defiReussi(id) { if (!this.profil || this.profil.defis[id]) return; this.profil.defis[id] = true; this.sauver(); G.notifications = G.notifications || []; G.notifications.push({ t: 0, titre: 'Contrat rempli', nom: (INDEX[id] || {}).nom || id, detail: '' }); },
   finPartie(resultat, route) {
     const P = G.partie; const persoId = P.perso; this.profil.morts += resultat === 'mort' ? 1 : 0;
     if (resultat === 'victoire') {
       this.profil.victoires++;
       const cle = P.defi ? 'defi' : P.entrainement || P.graineSaisie ? 'entrainement' : P.difficile ? 'difficile' : 'standard';
       if (cle !== 'entrainement') { this.profil.routes[route] = true; const m = this.profil.marques[persoId] || (this.profil.marques[persoId] = {}); m[route] = m[route] === 'difficile' ? 'difficile' : cle; }
-      if (P.defi) this.profil.defis[P.defi] = true;
-      this.verifier({ type: 'fin', route, perso: persoId, difficile: P.difficile, defi: P.defi });
+      const ok = P.defi && this.conditionsDefi(P, route);
+      if (ok) this.profil.defis[P.defi] = true; else if (P.defi) P.defiEchoue = true;
+      this.verifier({ type: 'fin', route, perso: persoId, difficile: P.difficile, defi: ok ? P.defi : null });
     }
     const b = this.profil.meilleurs[persoId] || { etage: 0, temps: null };
     if (P.etage > b.etage) b.etage = P.etage; if (resultat === 'victoire' && (!b.temps || P.temps < b.temps)) b.temps = P.temps; this.profil.meilleurs[persoId] = b;
@@ -9272,7 +9330,7 @@ function victoire(route) {
   const P = G.partie; P.fini = true; effacerPartieSuspendue(); Progression.finPartie('victoire', route); Scenes.empiler(SceneVictoire, { route });
 }
 function entrerBreche() { G.fondu = { t: 0, duree: 0.8, action: () => { const s = creerSalle({ id: 'breche', type: 'boss', forme: '2x2', cx: -2, cy: -2 }); appliquerGabarit(s, DON.salles.find(g => g.forme === '2x2' && g.type === 'combat'), null); s.pointsApparition = []; s.bossDef = 'BOS_022'; s.visitee = false; G.etage.salles.breche = s; entrerSalle('breche', null); G.partie.brecheOuverte = true; } }; }
-function entrerConseil() { G.conseil = { liste: new Alea(G.partie.code + 'conseil').melanger(DON.boss.filter(b => !b.mini && !b.terminal && b.etage <= 6).map(b => b.id)).slice(0, 6), i: 0 }; G.fondu = { t: 0, duree: 0.8, action: () => { const s = creerSalle({ id: 'conseil', type: 'boss', forme: '1x1', cx: -3, cy: -3 }); appliquerGabarit(s, DON.salles.find(g => g.id === 'ROM_121'), null); s.visitee = true; s.nettoyee = false; s.recompenseBoss = true; G.etage.salles.conseil = s; entrerSalle('conseil', null); conseilSuivant(); } }; }
+function entrerConseil() { Progression.secret('SEC_009'); G.conseil = { liste: new Alea(G.partie.code + 'conseil').melanger(DON.boss.filter(b => !b.mini && !b.terminal && b.etage <= 6).map(b => b.id)).slice(0, 6), i: 0 }; G.fondu = { t: 0, duree: 0.8, action: () => { const s = creerSalle({ id: 'conseil', type: 'boss', forme: '1x1', cx: -3, cy: -3 }); appliquerGabarit(s, DON.salles.find(g => g.id === 'ROM_121'), null); s.visitee = true; s.nettoyee = false; s.recompenseBoss = true; G.etage.salles.conseil = s; entrerSalle('conseil', null); conseilSuivant(); } }; }
 function conseilSuivant() { const C = G.conseil; if (!C) return; if (C.i >= C.liste.length) { G.conseil = null; const s = G.salle; const [cx, cy] = centreSalle(s); s.sorties = [{ type: 'fin', x: cx, y: cy + 10, route: 'RTE_05' }]; s.combat = false; s.nettoyee = true; return; } const id = C.liste[C.i++]; const [cx, cy] = centreSalle(G.salle); creerBoss(id, cx, cy - 40, { pvMult: 0.7, sansIntro: true }); G.salle.combat = true; Son.jouer('gong'); }
 
 // ── Scènes de jeu ──
@@ -9302,6 +9360,14 @@ const ScenePause = {
     const J = G.joueur, P = G.partie; Police.ecrire(g, G.etage.cfg.nom, 440, 46, '#e8dcc0', { a: 'c' });
     dessinerStats(g, J, 50, 206); Police.ecrire(g, 'Temps ' + formatTemps(P.temps), 130, 206, '#a8a0b8'); Police.ecrire(g, 'Code ' + codeAffiche(P.code), 130, 218, '#a8a0b8'); Police.ecrire(g, (P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' — ' + INDEX[P.defi].nom : ''), 130, 230, '#a8a0b8');
     Police.ecrire(g, 'Objets : ' + J.passifs.length, 130, 242, '#a8a0b8');
+    // opportunité après le boss (E §6) : recalculée à chaque affichage, donc à jour après chaque événement
+    const O = chanceOpportunite(), pc = v => Math.round(v * 100) + ' %';
+    if (O.chance <= 0) Police.ecrire(g, 'Pas d’opportunité à cet étage', 50, 274, '#8a8098');
+    else {
+      Police.ecrire(g, 'Après le boss : ' + pc(O.chance), 50, 274, '#e8dcc0');
+      Police.ecrire(g, 'pacte ' + pc(O.pacte) + ' · sanctuaire ' + pc(O.sanctuaire), 50, 286, '#c8a0b0');
+      Police.paragraphe(g, O.detail.map(([n, v]) => n + ' ' + (v >= 1 ? '' : '+' + pc(v))).join(' · ') + (P.pactesAchetes ? ' · pacte conclu : plus de sanctuaire' : P.pactesRefuses ? ' · pactes refusés : ' + P.pactesRefuses : ''), 50, 298, 222, '#8a8098');
+    }
     aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Reprendre']]);
   },
 };
@@ -9352,6 +9418,7 @@ const SceneVictoire = {
     let y = 90; for (const l of TEXTES_FINS[this.route] || []) y += Police.paragraphe(g, l, 120, y, 400, '#e0d8e8') + 10;
     Police.ecrire(g, 'Marque obtenue pour ' + G.joueur.def.nom + ' : ' + (R.marque || ''), 320, y + 20, '#c0e0a0', { a: 'c' });
     if (R.recompense) Police.ecrire(g, R.recompense, 320, y + 36, '#a8a0b8', { a: 'c' });
+    if (G.partie.defi) Police.ecrire(g, 'Contrat « ' + INDEX[G.partie.defi].nom + ' » : ' + (G.partie.defiEchoue ? 'non rempli (conditions non tenues)' : 'rempli'), 320, 284, G.partie.defiEchoue ? '#e0a080' : '#a0e0a0', { a: 'c' });
     Police.ecrire(g, 'Temps ' + formatTemps(G.partie.temps) + '   Code ' + codeAffiche(G.partie.code), 320, 300, '#8a8098', { a: 'c' });
     if (this.t > 1.5) aideBoutons(g, [['interagir', 'Continuer']]);
   },
@@ -9382,7 +9449,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

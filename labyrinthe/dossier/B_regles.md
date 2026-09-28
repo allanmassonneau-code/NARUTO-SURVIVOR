@@ -215,7 +215,7 @@ Affichage de gauche à droite : vitalité, enveloppes, réserves (bleues), insta
 | Clé de sceau | 99 | portes d’héritage, échoppe, bibliothèque, coffres forts, source chaude (dès l’étage 2), coffres verrouillés, blocs à clé | double ; clés dorées (infinies pour l’étage) |
 | Parchemin explosif | 99 | dégâts (30, rayon 1,6 tuile), rochers, rochers à sceau, murs secrets, coffres de pierre, machines, statues, ponts de débris | double ; explosifs dorés (infinis pour l’étage) |
 
-Aucune conversion automatique des Ryō en statistiques. La **caisse des marchands** (don volontaire depuis l’échoppe) améliore le service entre les parties : paliers à 50, 150 et 300 Ryō donnés ; chaque palier ajoute 4 % de chance de solde par étal (10 % de base), et dès le deuxième palier l’échoppe propose un objet supplémentaire. Jamais un bonus de statistique.
+Aucune conversion automatique des Ryō en statistiques. La **caisse des marchands** (offrande d’un Ryō au tanuki de l’échoppe, bouton d’interaction ; cumul inscrit au profil) améliore le service entre les parties : paliers à 50, 150 et 300 Ryō donnés ; chaque palier ajoute 4 % de chance de solde par étal (10 % de base), et dès le deuxième palier l’échoppe propose un objet supplémentaire. Jamais un bonus de statistique.
 
 ### B6.2 Récompense de fin de salle (§R10) — `38_monde.js`
 

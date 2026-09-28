@@ -181,7 +181,14 @@ const Police = {
     const lignes = [];
     for (const para of String(s).split('\n')) {
       let cur = '';
-      for (const mot of para.split(' ')) {
+      // typographie française : « % : ; ! ? » » restent avec le mot précédent, « « » avec le suivant
+      const mots = [];
+      for (const m of para.split(' ')) {
+        if (mots.length && /^[%:;!?»]+[.,]?$/.test(m)) mots[mots.length - 1] += ' ' + m;
+        else if (mots.length && mots[mots.length - 1] === '«') mots[mots.length - 1] += ' ' + m;
+        else mots.push(m);
+      }
+      for (const mot of mots) {
         const essai = cur ? cur + ' ' + mot : mot;
         if (this.largeur(essai) <= largeurMax || !cur) cur = essai; else { lignes.push(cur); cur = mot; }
       }

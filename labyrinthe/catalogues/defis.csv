@@ -4,10 +4,10 @@ DEF_002;Nuit sans lune;Tous les étages sont plongés dans la pénombre. Premiè
 DEF_003;Mains vides;"Aucune salle d’héritage ; les boss donnent tout. Première fin.";Parchemin vide
 DEF_004;Un souffle;"Un seul contenant, jamais plus ; les contenants deviennent des réserves.";Substitution instinctive
 DEF_005;Artificier;"Départ avec Argile explosive et Argile infinie ; première fin.";Parchemins spéciaux
-DEF_006;Mille clones;"Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %.";Clone de relais
+DEF_006;Mille clones;"Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %. Première fin.";Clone de relais
 DEF_007;Tout s’achète;"Départ avec 50 Ryō et la Carte de membre ; aucune salle d’héritage.";Dés de la grande perdante
 DEF_008;Sang pour sang;"Chaque boss ouvre un pacte ; aucun sanctuaire.";Chakra du démon
 DEF_009;Tempête du désert;"Gaara imposé avec Sable en orbite et Sable protecteur ; première fin.";Tempête de sable
-DEF_010;Course de l’examen;Première fin en moins de 20 minutes.;Marque de vitesse
-DEF_011;Collectionneur pressé;Atteindre l’étage 6 avec au moins 10 objets.;Défi
-DEF_012;Examen de jōnin;Mode Difficile imposé, toutes les salles d’épreuve ouvertes.;Rasenshuriken
+DEF_010;Course de l’examen;Première fin en moins de 20 minutes (chronomètre de partie).;Marque de vitesse
+DEF_011;Collectionneur pressé;Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée).;Défi
+DEF_012;Examen de jōnin;"Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin.";Rasenshuriken

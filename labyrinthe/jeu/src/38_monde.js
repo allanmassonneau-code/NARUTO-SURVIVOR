@@ -7,8 +7,10 @@
 // ── Partie ──
 function nouvellePartie(o) {
   const code = codeValide(o.code) ? o.code : codeAleatoire(Math.random);
+  const D = o.defi && INDEX[o.defi]; // contrat : personnage et difficulté imposés
+  if (D && D.perso) o = Object.assign({}, o, { perso: D.perso });
   const P = {
-    code, perso: o.perso, difficile: !!o.difficile, defi: o.defi || null, entrainement: !!o.entrainement, graineSaisie: !!o.graineSaisie,
+    code, perso: o.perso, difficile: !!(o.difficile || (D && D.difficile)), defi: o.defi || null, entrainement: !!o.entrainement, graineSaisie: !!o.graineSaisie,
     etage: 0, route: [], temps: 0, retires: [], vus: [], pilules: null, pilulesIdentifiees: [], pactesAchetes: 0, pactesRefuses: 0, sanctuaireVisite: false,
     opportunitePrecedente: false, marques: [], branche: null, fragments: 0, sacrifices: 0, bossVaincus: [], version: VERSION_DONNEES, histoire: [],
   };
@@ -42,13 +44,23 @@ function configEtage(n) {
     grandes: n <= 1 ? 0.1 : 0.2, verrouDes: 2, titre: 'Chapitre ' + nomsChap[pos.chapitre] + ' · Étage ' + n,
   };
   if (P.difficile) { cfg.salles[0]++; cfg.salles[1]++; }
-  if (P.defi && INDEX[P.defi].sansHeritage) delete cfg.speciales.heritage;
+  const Df = P.defi && INDEX[P.defi];
+  if (Df && Df.sansHeritage) delete cfg.speciales.heritage;
+  if (Df && Df.obscurite) cfg.mod = Object.assign({}, cfg.mod, { obscurite: Math.max(cfg.mod.obscurite || 0, 0.55) });
+  if (Df && Df.epreuves && n >= 2) { cfg.speciales.defi = 1; if (n === 4 || n === 6 || n === 8) cfg.speciales.defi_boss = 1; }
   return cfg;
 }
 
 function entrerEtage(n) {
   const P = G.partie, J = G.joueur;
+  // refus : une salle de pacte visitée puis quittée sans rien acheter augmente la part du sanctuaire (E §6)
+  const prec = G.etage;
+  if (n > 1 && prec && prec.numero < n && prec.opportunite === 'pacte' && prec.salles.opp && prec.salles.opp.visitee && !prec.pacteAchete) {
+    P.pactesRefuses++; Progression.secret('SEC_012'); G.textes.push({ x: 0, y: 0, t: 'Pacte refusé : les ermites s’en souviendront', age: 0, duree: 2.2, couleur: '#fff8d0', ecran: true });
+  }
   P.etage = n;
+  const Dc = P.defi && INDEX[P.defi];
+  if (Dc && Dc.etageCible && !P.defiValide && n >= Dc.etageCible && J.passifs.length >= (Dc.objetsMin || 0)) { P.defiValide = true; Progression.defiReussi(P.defi); }
   const cfg = configEtage(n);
   G.etage = genererEtage(P, n, cfg);
   G.etage.cfg = cfg; G.variante = cfg.mod; G.theme = cfg.theme;
@@ -429,7 +441,7 @@ function revelerPorteSecrete(s, p) {
   p.etat = 'ouverte'; p.secrete = false; p.revelee = true;
   const v = G.etage.salles[p.vers]; if (v) { v.apercue = true; const q = v.portes.find(k => k.vers === s.id); if (q) { q.etat = 'ouverte'; q.secrete = false; } }
   Son.jouer('secret'); G.effets.push({ type: 'debris', x: (p.tx + 0.5) * TUILE, y: (p.ty + 0.5) * TUILE, age: 0, duree: 0.5, n: 10 });
-  Progression.compteur('secretsTrouves', 1);
+  Progression.compteur('secretsTrouves', 1); const ts = [s.type, v && v.type].find(t => t === 'cache' || t === 'isolee'); if (ts) Progression.secret(ts === 'isolee' ? 'SEC_002' : 'SEC_001');
   evenement('secret_trouve', { s, p });
 }
 function detruireTuile(s, tx, ty, cause, ex, ey) {
@@ -440,7 +452,7 @@ function detruireTuile(s, tx, ty, cause, ex, ey) {
     s.tuiles[i] = T.SOL;
     G.effets.push({ type: 'debris', x: cx, y: cy, age: 0, duree: 0.5, n: 8, couleur: t === T.JARRE ? '#b86a44' : t === T.CAISSE ? '#a87448' : null });
     Son.jouer(t === T.JARRE ? 'jarre' : 'rocher');
-    if (t === T.ROCHER_SCEAU) { const r = al.choix(['protection', 'protection', 'cle', 'explosif2', 'ryo5', 'rouleau']); creerRamassable(r, cx, cy, {}); Son.jouer('secret', 0.5); Progression.compteur('rochersSceau', 1); }
+    if (t === T.ROCHER_SCEAU) { const r = al.choix(['protection', 'protection', 'cle', 'explosif2', 'ryo5', 'rouleau']); creerRamassable(r, cx, cy, {}); Son.jouer('secret', 0.5); Progression.secret('SEC_003'); Progression.compteur('rochersSceau', 1); }
     else if (t === T.JARRE && al.chance(0.35)) creerRamassable(al.choix(['ryo', 'ryo', 'coeur_demi', 'explosif', 'cle', 'pilule']), cx, cy, {});
     else if (t === T.CAISSE && al.chance(0.3)) creerRamassable(al.choix(['ryo', 'ryo5', 'explosif', 'rouleau']), cx, cy, {});
     else if (t === T.ROCHER && al.chance(0.02)) creerRamassable('ryo', cx, cy, {});
@@ -448,7 +460,7 @@ function detruireTuile(s, tx, ty, cause, ex, ey) {
     if (cause === 'explosion' && (t === T.ROCHER || t === T.TOTEM)) {
       let best = null, bd = 1e9;
       for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (tuileA(s, tx + dx, ty + dy) === T.FOSSE) { const d = dist(cx + dx * TUILE, cy + dy * TUILE, ex, ey); const score = -d; if (score < bd) { bd = score; best = [tx + dx, ty + dy]; } }
-      if (best) { s.tuiles[best[1] * s.W + best[0]] = T.PONT; }
+      if (best) { s.tuiles[best[1] * s.W + best[0]] = T.PONT; Progression.secret('SEC_010'); }
     }
   }
   delete s.pvTuiles[i]; s.version = (s.version || 0) + 1; s.fondSale = true;
@@ -509,7 +521,7 @@ function picsSortis() { return (G.temps % 3) < 1.4; }
 
 // ── Pakkun / Kakashi : signalement des murs secrets de la salle ──
 function signalerSecrets(s) {
-  const p = s.portes.find(q => q.etat === 'secrete'); if (!p) return;
+  const p = s.portes.find(q => q.etat === 'secrete'); if (!p) return; Progression.secret('SEC_011');
   const [cx, cy] = centreTuile(...tuileDevantPorte(p));
   G.effets.push({ type: 'indice_secret', x: cx, y: cy, age: 0, duree: 2.2 });
   setTimeoutJeu(() => Son.jouer('rire', 0.4), 0.3);

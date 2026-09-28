@@ -199,15 +199,18 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     const pad = { id: 'Xbox Wireless Controller (STANDARD GAMEPAD Vendor: 045e)', index: 0, connected: true, buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })), axes: [0, 0, 0, 0], vibrationActuator: { playEffect: () => Promise.resolve() } };
     navigator.getGamepads = () => [pad];
     const appui = (b, n = 3) => { pad.buttons[b].pressed = true; pad.buttons[b].value = 1; for (let i = 0; i < n; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); } pad.buttons[b].pressed = false; pad.buttons[b].value = 0; for (let i = 0; i < 3; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); } };
+    L.G.partie = null; L.Stockage.effacer(L.CLES.partie); // aucune partie suspendue : « Nouvelle partie » a le focus
     L.Scenes.aller(L.SceneTitre);
+    for (let i = 0; i < 2; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); } // entrées consommées au changement de scène
     appui(0); // Nouvelle partie
-    if (L.Scenes.courante() !== window.LDS.Scenes.pile[1]) {}
-    appui(15); appui(0); // personnage suivant puis valider
+    if (L.Scenes.pile.length !== 2) out.ko.push('« Nouvelle partie » non ouverte à la manette');
+    appui(15); appui(14); appui(0); // carrousel : suivant puis précédent (Naruto, tir simple), valider
     if (!L.G.partie) out.ko.push('la partie n’a pas démarré à la manette');
     else {
       appui(9); if (L.Scenes.pile.length < 2) out.ko.push('pause non ouverte');
       appui(1); if (L.Scenes.pile.length !== 1) out.ko.push('pause non refermée par Retour');
       // stick droit : tir, puis retour au centre = arrêt
+      pad.axes = [0, 0, 0, 0]; for (let i = 0; i < 2; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); } // la visée consommée à la fermeture du menu se relâche d'abord
       pad.axes = [0, 0, 1, 0]; for (let i = 0; i < 30; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); }
       const nb = L.G.proj.filter(p => p.proprio === 'joueur').length; if (!nb) out.ko.push('le stick droit ne tire pas');
       pad.axes = [0, 0, 0.62, 0.6]; L.Entrees.maj(1 / 60); const d1 = L.Entrees.visee.dir; pad.axes = [0, 0, 0.6, 0.62]; L.Entrees.maj(1 / 60); const d2 = L.Entrees.visee.dir;
@@ -220,6 +223,9 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       window.dispatchEvent(Object.assign(new Event('gamepaddisconnected'), { gamepad: pad }));
       if (L.Scenes.pile.length < 2) out.ko.push('pas de pause à la déconnexion');
     }
+    // effacer une partie suspendue efface aussi sa copie de secours (pas de résurrection d'une partie perdue)
+    L.Stockage.ecrire('lds_test', { v: 1, n: 1 }); L.Stockage.ecrire('lds_test', { v: 1, n: 2 }); L.Stockage.effacer('lds_test');
+    if (L.Stockage.lire('lds_test')) out.ko.push('partie effacée relue depuis la copie de secours');
     return out;
   });
 
@@ -272,6 +278,11 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     pr.toutDebloque = false; pr.objectifs = {}; const bloque = !Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_028: 1 }; const parMadara = Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_049: 1 }; const parBreche = Pg.estDebloque('PSV_020');
     pr.toutDebloque = avant.tout; pr.objectifs = avant.obj;
     verif(bloque && parMadara && parBreche, 'Chute céleste : verrouillée puis débloquée par OBJ_028 ou OBJ_049 (' + [bloque, parMadara, parBreche] + ')');
+    // offrande au tanuki de l'échoppe : 1 Ryō → +1 au cumul du profil (paliers de boutique)
+    J = nouvelle(); const sb = Object.values(G.etage.salles).find(x => x.type === 'boutique');
+    if (sb) { T.allerA(sb.id); const st = G.salle.statue; if (!st) out.ko.push('boutique sans tanuki');
+      else { J.ryo = 3; const d0 = L.Progression.profil.dons; J.x = st.x; J.y = st.y + 14; T.pas(2, []); T.pas(1, ['KeyF']); T.pas(2, []);
+        verif(J.ryo === 2 && L.Progression.profil.dons === d0 + 1, 'offrande : ryo=' + J.ryo + ' dons ' + d0 + '→' + L.Progression.profil.dons); } }
     return out;
   });
 
@@ -283,9 +294,9 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     s.visitee = true; s.ennemisDef = [{ id: 'ENM_003', x: 7 * 32 + 16, y: 4 * 32 + 16 }];
     for (let ty = 2; ty <= 6; ty++) for (let tx = 5; tx <= 9; tx++) if (!(tx === 7 && ty === 4)) s.tuiles[ty * s.W + tx] = L.T.FOSSE;
     T.allerA(s.id); G.modeTest.deblocages = [];
-    const e0 = G.ennemis[0]; const x0 = e0.x; T.pas(60 * 12, []);
+    const e0 = G.ennemis[0]; const x0 = e0.x, y0 = e0.y; T.pas(60 * 12, []);
     if (!G.modeTest.deblocages.length) out.ko.push('aucun secours après 12 s');
-    else if (Math.abs(e0.x - x0) < 16 && !e0.mort) out.ko.push('ennemi non déplacé');
+    else if (Math.hypot(e0.x - x0, e0.y - y0) < 16 && !e0.mort) out.ko.push('ennemi non déplacé');
     if (G.modeTest.deblocages.length > 1) out.ko.push('secours répété : ' + G.modeTest.deblocages.length);
     out.secours = G.modeTest.deblocages; G.modeTest.dieu = false; return out;
   });
@@ -348,7 +359,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     // Cristaux (« Galeries de verre ») : un tir rebondit sur un cristal, au plus 3 fois
     L.nouvellePartie({ perso: 'CHR_001', code: 'CRIS2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
     const sc = Object.values(G.etage.salles).find(x => x.type === 'combat' && x.forme === '1x1'); sc.visitee = true; sc.ennemisDef = []; T.allerA(sc.id);
-    const s2 = G.salle; const ic = 4 * s2.W + 10; s2.tuiles[ic] = L.T.BLOC; s2.cristaux = [ic]; s2.fondSale = true;
+    const s2 = G.salle; for (let tx = 5; tx <= 9; tx++) s2.tuiles[4 * s2.W + tx] = L.T.SOL; const ic = 4 * s2.W + 10; s2.tuiles[ic] = L.T.BLOC; s2.cristaux = [ic]; s2.fondSale = true; G.ennemis = [];
     G.joueur.x = 3 * 32 + 16; G.joueur.y = 6 * 32 + 16;
     const p = L.tirEnnemi(8 * 32 + 16, 4 * 32 + 16, 0, 4); p.dureeVie = 5; T.pas(40, []);
     if (p.mort && !(p.rebondsCristal >= 1)) out.ko.push('tir détruit par le cristal sans rebond');
@@ -356,6 +367,57 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     // Zones ennemies : pas de dégâts pendant leur naissance (télégraphe)
     const avantZ = L.santeTotale(G.joueur.sante); L.creerZone(G.joueur.x, G.joueur.y, 'acide', 3, { r: 20, proprio: 'ennemi', naissance: 0.6 });
     T.pas(20, []); if (L.santeTotale(G.joueur.sante) < avantZ) out.ko.push('zone ennemie blessante avant la fin de sa naissance');
+    return out;
+  });
+
+  // 14) Pactes et sanctuaires : scénarios chiffrés du dossier (E §6), événements comptés, refus, tirage figé
+  if (veut('pactes')) await lancer('pactes', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], scenarios: [] };
+    L.nouvellePartie({ perso: 'CHR_001', code: 'PACT2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); L.entrerEtage(3); T.pas(5);
+    const P = G.partie, J = G.joueur;
+    const propre = () => { const E = G.etage; E.degatsVitalite = false; E.degatsBoss = false; E.faveurSanctuaire = 0; P.pactesAchetes = 0; P.pactesRefuses = 0; J.talisman = null; J.talisman2 = null; J.passifs = J.passifs.filter(x => x !== 'PSV_091'); J.drapeaux.serment = false; };
+    const cas = (nom, prep, attendu) => {
+      propre(); prep(G.etage); const r = L.chanceOpportunite(); const v = [r.chance, r.pacte, r.sanctuaire].map(x => Math.round(x * 1000) / 1000);
+      out.scenarios.push(nom + ' ' + v.join('/'));
+      if (attendu.some((a, i) => Math.abs(a - v[i]) > 0.0015)) out.ko.push(nom + ' : attendu ' + attendu.join('/') + ', obtenu ' + v.join('/'));
+    };
+    cas('A', E => { E.degatsVitalite = true; E.degatsBoss = true; }, [0.2, 0.12, 0.08]);
+    cas('B', E => { E.degatsBoss = true; }, [0.35, 0.21, 0.14]);
+    cas('C', () => {}, [0.45, 0.27, 0.18]);
+    cas('D', () => { P.pactesRefuses = 1; }, [0.45, 0.216, 0.234]);
+    cas('E', () => { P.pactesAchetes = 1; }, [0.45, 0.45, 0]);
+    cas('F', E => { J.passifs.push('PSV_091'); E.faveurSanctuaire = 0.3; }, [0.95, 0.57, 0.38]);
+    cas('G', E => { E.degatsVitalite = true; J.talisman = 'TAL_004'; P.pactesRefuses = 2; }, [0.3, 0.109, 0.191]);
+    cas('H', () => { J.drapeaux.serment = true; }, [1, 1, 0]);
+    // événements : ce qui compte comme dégât à la vitalité
+    propre(); const E = G.etage;
+    J.sante.prot = ['b', 'b']; J.invuln = 0; L.blesserJoueur(1, { type: 'test' }); if (E.degatsVitalite) out.ko.push('protection entamée comptée comme vitalité');
+    J.invuln = 0; L.payerSante(1, 'pacte'); if (E.degatsVitalite) out.ko.push('prix payé compté comme dégât');
+    J.invuln = 0; L.sacrifier(1); if (E.degatsVitalite) out.ko.push('sacrifice compté comme dégât');
+    L.soignerJoueur(J, 4); J.sante.prot = []; J.invuln = 0; L.explosion(J.x, J.y, 32, 0, { proprio: 'joueur', blesseJoueur: true, degatsJoueur: 1 }); if (!E.degatsVitalite) out.ko.push('explosion du joueur non comptée');
+    L.soignerJoueur(J, 4); if (!E.degatsVitalite) out.ko.push('un soin efface le dégât à la vitalité');
+    // refus : salle de pacte visitée, quittée sans achat
+    const quitter = (visitee, achat) => { const F = G.etage; F.opportunite = 'pacte'; F.salles.opp = { visitee, portes: [] }; F.pacteAchete = achat; const avant = P.pactesRefuses; L.entrerEtage(G.etage.numero + 1); return P.pactesRefuses - avant; };
+    propre(); if (quitter(true, false) !== 1) out.ko.push('refus non compté'); else if (!L.Progression.profil.decouverts.includes('SEC_012')) out.ko.push('refus non inscrit comme secret (SEC_012)');
+    if (quitter(true, true) !== 0) out.ko.push('achat compté comme refus');
+    if (quitter(false, false) !== 0) out.ko.push('pacte non visité compté comme refus');
+    // tirage figé par étage : recharger ne permet pas de retenter
+    propre(); const t1 = L.tirerOpportunite(), t2 = L.tirerOpportunite(); if (t1 !== t2) out.ko.push('tirage d’opportunité non déterministe');
+    return out;
+  });
+
+  // 15) Contrats (défis) : règles imposées et conditions de réussite réellement vérifiées
+  if (veut('defis')) await lancer('defis', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0 }; const verif = (c, m) => { if (c) out.ok++; else out.ko.push(m); };
+    const partie = (defi, perso) => { L.nouvellePartie({ perso: perso || 'CHR_003', code: 'DEFI2345', defi }); L.Scenes.aller(L.SceneJeu); T.pas(3); return G.partie; };
+    let P = partie('DEF_001'); verif(G.joueur.def.id === 'CHR_005', 'DEF_001 : Rock Lee non imposé'); verif(!Object.values(G.etage.salles).some(s => s.type === 'heritage'), 'DEF_001 : salle d’héritage présente');
+    P = partie('DEF_002'); verif((G.variante.obscurite || 0) >= 0.55, 'DEF_002 : pas de pénombre');
+    P = partie('DEF_006'); verif(G.joueur.def.id === 'CHR_001' && G.joueur.stats.degats < 3.5 * 0.75, 'DEF_006 : dégâts ' + G.joueur.stats.degats);
+    P = partie('DEF_010'); P.temps = 21 * 60; L.Progression.finPartie('victoire', 'RTE_01'); verif(P.defiEchoue && !L.Progression.profil.defis.DEF_010, 'DEF_010 : réussi hors délai');
+    P = partie('DEF_010'); P.temps = 12 * 60; L.Progression.finPartie('victoire', 'RTE_01'); verif(!P.defiEchoue && L.Progression.profil.defis.DEF_010, 'DEF_010 : non réussi dans les temps');
+    P = partie('DEF_011'); L.entrerEtage(6); verif(!P.defiValide, 'DEF_011 : validé sans 10 objets');
+    P = partie('DEF_011'); for (const id of L.DON.objets.filter(o => o.type === 'passif').slice(0, 10).map(o => o.id)) G.joueur.passifs.push(id); L.entrerEtage(6); verif(P.defiValide && L.Progression.profil.defis.DEF_011, 'DEF_011 : non validé à l’étage 6 avec 10 objets');
+    P = partie('DEF_012'); verif(P.difficile, 'DEF_012 : Difficile non imposé'); L.entrerEtage(2); verif(G.etage.cfg.speciales.defi === 1, 'DEF_012 : pas de salle d’épreuve à l’étage 2');
     return out;
   });
 

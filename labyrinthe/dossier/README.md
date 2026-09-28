@@ -12,7 +12,7 @@ Ce dossier accompagne un jeu **réellement jouable** (`../jeu/index.html`). Il d
 | B | [B_regles.md](B_regles.md) | Commandes, sticks, combat, statistiques, santé, ressources, salles, génération, progression |
 | C | [C_objets.md](C_objets.md) | Pipeline de tir, priorités et compatibilités, pools, inventaire, actifs, talismans, consommables, familiers, synergies, transformations, exemples chiffrés |
 | D | [D_pixel_art.md](D_pixel_art.md) | Bible pixel art, animations, mutations, langage des jutsu, effets, interface, audio, confort |
-| E | [E_contenu.md](E_contenu.md) | Roster, ennemis, boss, thèmes, routes, pactes, secrets, déblocages |
+| E | [E_contenu.md](E_contenu.md) · [E_fiches.md](E_fiches.md) | Roster, ennemis, boss, thèmes, routes, pactes, économie, secrets, contrats ; fiches générées (18 personnages, 24 boss attaque par attaque, ennemis par fonction, thèmes) |
 | F | [F_catalogues.md](F_catalogues.md) · [F_salles.md](F_salles.md) | Catalogues **générés depuis les données du jeu** (compteurs, tables complètes, grilles de salles) |
 | G | [G_builds_parties_briefs.md](G_builds_parties_briefs.md) | Builds, trois parties commentées, seize briefs d’écrans |
 | H | [H_technique.md](H_technique.md) | Architecture, données, pseudocode, tests (exécutés), performances, sauvegarde, production |

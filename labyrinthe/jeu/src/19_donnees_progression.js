@@ -153,13 +153,13 @@
   DE('DEF_003', 'Mains vides', 'Aucune salle d’héritage ; les boss donnent tout. Première fin.', { sansHeritage: true, recompenseTexte: 'Parchemin vide' });
   DE('DEF_004', 'Un souffle', 'Un seul contenant, jamais plus ; les contenants deviennent des réserves.', { sante: { vitalite: 1 }, drapeaux: { plafondVit: 1 }, recompenseTexte: 'Substitution instinctive' });
   DE('DEF_005', 'Artificier', 'Départ avec Argile explosive et Argile infinie ; première fin.', { depart: ['PSV_019', 'PSV_110'], recompenseTexte: 'Parchemins spéciaux' });
-  DE('DEF_006', 'Mille clones', 'Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %.', { perso: 'CHR_001', depart: ['PSV_061', 'PSV_061'], recompenseTexte: 'Clone de relais' });
+  DE('DEF_006', 'Mille clones', 'Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %. Première fin.', { perso: 'CHR_001', depart: ['PSV_061', 'PSV_061'], bonus: [{ s: 'degats', m: 0.7 }], recompenseTexte: 'Clone de relais' });
   DE('DEF_007', 'Tout s’achète', 'Départ avec 50 Ryō et la Carte de membre ; aucune salle d’héritage.', { ressources: { ryo: 50 }, depart: ['PSV_121'], sansHeritage: true, recompenseTexte: 'Dés de la grande perdante' });
   DE('DEF_008', 'Sang pour sang', 'Chaque boss ouvre un pacte ; aucun sanctuaire.', { drapeaux: { serment: true }, recompenseTexte: 'Chakra du démon' });
   DE('DEF_009', 'Tempête du désert', 'Gaara imposé avec Sable en orbite et Sable protecteur ; première fin.', { perso: 'CHR_008', depart: ['PSV_010', 'PSV_065'], recompenseTexte: 'Tempête de sable' });
-  DE('DEF_010', 'Course de l’examen', 'Première fin en moins de 20 minutes.', { chrono: 20 * 60, recompenseTexte: 'Marque de vitesse' });
-  DE('DEF_011', 'Collectionneur pressé', 'Atteindre l’étage 6 avec au moins 10 objets.', { recompenseTexte: 'Défi' });
-  DE('DEF_012', 'Examen de jōnin', 'Mode Difficile imposé, toutes les salles d’épreuve ouvertes.', { difficile: true, recompenseTexte: 'Rasenshuriken' });
+  DE('DEF_010', 'Course de l’examen', 'Première fin en moins de 20 minutes (chronomètre de partie).', { chrono: 20 * 60, recompenseTexte: 'Marque de vitesse' });
+  DE('DEF_011', 'Collectionneur pressé', 'Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée).', { etageCible: 6, objetsMin: 10, recompenseTexte: 'Défi' });
+  DE('DEF_012', 'Examen de jōnin', 'Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin.', { difficile: true, epreuves: true, recompenseTexte: 'Rasenshuriken' });
 
   // ── Secrets documentés (indices consultables) ──
   const SE = (id, nom, indice, solution) => DON.secrets.push({ id, nom, indice, solution });

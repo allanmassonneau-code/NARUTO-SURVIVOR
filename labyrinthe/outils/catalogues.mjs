@@ -337,7 +337,7 @@ for (const b of DON.boss) {
   if (b.phases && b.phases.length) de += `Phases :\n\n` + b.phases.map(p => `- à ${Math.round(p.seuil * 100)} % des PV — « ${p.message} » : ${ACTION_TXT[p.action] || '—'}${p.invulnerable ? ' ; invulnérable ' + p.invulnerable + ' s (anneau visible)' : ''}.`).join('\n') + '\n\n';
   de += tableMd(['Attaque', 'Zone', 'Prépa.', 'Active', 'Récup.', 'Dégâts', 'Réponse attendue'], (b.attaques || []).map(a => {
     const S = a.type === 'special' ? SPECIAUX_TXT[a.nom] || ['?', '?', '?'] : null;
-    return [a.id + (a.phase ? ' (phase ' + (a.phase + 1) + ')' : '') + (a.recharge ? ' — recharge ' + a.recharge + ' s' : ''), S ? remplir(S[0], a) : zoneAttaque(a), (a.tele ?? 0.5) + ' s', (a.duree ?? 0.5) + ' s', (a.recup ?? 0.6) + ' s', S ? remplir(S[1], a) : degatsAttaque(a), S ? remplir(S[2], a) : reponseAttaque(a)];
+    return [a.id + (a.phase ? ' (phase ' + (a.phase + 1) + ')' : '') + (a.recharge ? ' — recharge ' + a.recharge + ' s' : '') + (a.maxUsages ? ' — ' + a.maxUsages + ' fois au plus' : ''), S ? remplir(S[0], a) : zoneAttaque(a), (a.tele ?? 0.5) + ' s', (a.duree ?? 0.5) + ' s', (a.recup ?? 0.6) + ' s', S ? remplir(S[1], a) : degatsAttaque(a), S ? remplir(S[2], a) : reponseAttaque(a)];
   })) + '\n';
 }
 de += `## 3. Ennemis par fonction — ${DON.ennemis.length} archétypes\n\n`;

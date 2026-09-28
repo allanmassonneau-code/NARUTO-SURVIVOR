@@ -168,7 +168,7 @@ const SceneCode = {
 // ── Défis ──
 const SceneDefis = {
   entrer() {
-    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); Scenes.empiler(SceneSelection, { defi: d.id }); } })));
+    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); if (d.perso) { Son.jouer('valider'); effacerPartieSuspendue(); nouvellePartie({ perso: d.perso, defi: d.id }); Scenes.aller(SceneJeu); } else Scenes.empiler(SceneSelection, { defi: d.id }); } })));
   },
   maj() { this.menu.maj(); if (Entrees.menuRetour()) { Son.jouer('annuler'); Scenes.depiler(); } },
   rendre(g) { g.fillStyle = '#0c0812'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); cadreMenu(g, 80, 10, 480, 330, 'Contrats de mission (défis)'); this.menu.rendre(g, 100, 40, 440); aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Retour']]); },
@@ -245,13 +245,13 @@ const SceneCommandes = {
 const SceneRegistre = {
   entrer() { this.onglet = 0; this.i = 0; },
   maj() {
-    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 3) % 3; this.i = 0; Son.jouer('menu'); }
+    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 4) % 4; this.i = 0; Son.jouer('menu'); }
     if (Entrees.nav.dy) { this.i = Math.max(0, this.i + Entrees.nav.dy * (this.onglet === 1 ? 14 : 1)); Son.jouer('menu'); }
     if (Entrees.menuRetour()) Scenes.depiler();
   },
   rendre(g) {
     g.fillStyle = '#0c0812'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
-    const titres = ['Marques', 'Collection', 'Missions']; titres.forEach((t, k) => Police.ecrire(g, t, 200 + k * 120, 10, k === this.onglet ? '#ffe0a0' : '#6a6078', { a: 'c', e: k === this.onglet ? 2 : 1 }));
+    const titres = ['Marques', 'Collection', 'Missions', 'Secrets']; titres.forEach((t, k) => Police.ecrire(g, t, 140 + k * 120, 10, k === this.onglet ? '#ffe0a0' : '#6a6078', { a: 'c', e: k === this.onglet ? 2 : 1 }));
     const P = Progression.profil;
     if (this.onglet === 0) {
       const L = DON.personnages; const deb = Math.min(this.i, Math.max(0, L.length - 18));
@@ -261,6 +261,15 @@ const SceneRegistre = {
       const L = DON.objets.concat(DON.talismans); const cols = 14; const deb = Math.floor(Math.min(this.i, L.length - 1) / cols) * cols; const vis = L.slice(Math.max(0, deb - cols * 3), Math.max(0, deb - cols * 3) + cols * 12);
       vis.forEach((o, k) => { const x = 40 + (k % cols) * 40, y = 34 + Math.floor(k / cols) * 24; const conn = P.decouverts.includes(o.id); const vu = P.vus.includes(o.id); if (conn) g.drawImage(o.type === 'talisman' ? spriteRamassable('talisman', o.couleur) : iconeObjet(o.id), x, y); else { g.fillStyle = vu ? '#3a3048' : '#1a1622'; g.fillRect(x + 2, y + 2, 16, 16); Police.ecrire(g, '?', x + 10, y + 6, '#5a5268', { a: 'c' }); } });
       Police.ecrire(g, 'Découverts : ' + P.decouverts.filter(id => INDEX[id] && (INDEX[id].type === 'passif' || INDEX[id].type === 'actif' || INDEX[id].type === 'talisman')).length + ' / ' + L.length, 320, 326, '#a8a0b8', { a: 'c' });
+    } else if (this.onglet === 3) { // indices consultables en jeu ; la solution apparaît une fois le secret trouvé
+      const L = DON.secrets; this.i = Math.min(this.i, L.length - 1);
+      L.forEach((sc, k) => { const ok = P.decouverts.includes(sc.id); const y = 36 + k * 18; if (k === this.i) { g.fillStyle = 'rgba(240,200,112,0.18)'; g.fillRect(24, y - 3, 250, 16); } Police.ecrire(g, (ok ? '✓ ' : '· ') + (ok ? sc.nom : 'Secret inconnu'), 30, y, ok ? '#a0e0a0' : '#c8c0d8'); });
+      const sc = L[this.i]; const ok = P.decouverts.includes(sc.id);
+      g.fillStyle = 'rgba(20,14,28,0.95)'; g.fillRect(290, 32, 330, 170);
+      Police.ecrire(g, ok ? sc.nom : 'Indice', 300, 40, '#fff0d0');
+      let y = 56 + Police.paragraphe(g, sc.indice, 300, 56, 310, '#e8dcc0') + 8;
+      if (ok) Police.paragraphe(g, sc.solution, 300, y, 310, '#a8a0b8'); else Police.paragraphe(g, 'La solution s’inscrit ici quand vous le découvrez.', 300, y, 310, '#6a6078');
+      Police.ecrire(g, 'Trouvés : ' + L.filter(x => P.decouverts.includes(x.id)).length + ' / ' + L.length, 455, 214, '#a8a0b8', { a: 'c' });
     } else {
       const L = DON.objectifs; const deb = Math.min(this.i, Math.max(0, L.length - 20));
       L.slice(deb, deb + 20).forEach((o, k) => { const y = 34 + k * 15; const ok = !!P.objectifs[o.id]; Police.ecrire(g, (ok ? '✓ ' : '· ') + o.nom, 30, y, ok ? '#a0e0a0' : '#c8c0d8'); Police.ecrire(g, o.desc, 610, y, '#7a7088', { a: 'd' }); });
