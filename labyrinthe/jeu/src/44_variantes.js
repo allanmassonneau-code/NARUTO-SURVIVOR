@@ -31,7 +31,7 @@ function appliquerVarianteSalle(s, mod, al) {
   if (mod.rochersPlus && al.chance(mod.rochersPlus)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(2, 4)), T.ROCHER);
   if (mod.picsActifs && al.chance(mod.picsActifs)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(3, 6)), T.PICS);
   if (mod.crateres && al.chance(mod.crateres)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(2, 5)), T.FOSSE);
-  if (mod.cristaux && al.chance(mod.cristaux)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(1, 3)), T.BLOC), s.cristaux = true;
+  if (mod.cristaux && al.chance(mod.cristaux)) { const L = tuilesLibresLoinDesPortes(s, al, al.entierEntre(2, 4)); poserTuilesValidees(s, L, T.BLOC); s.cristaux = L.filter(([tx, ty]) => s.tuiles[ty * s.W + tx] === T.BLOC).map(([tx, ty]) => ty * s.W + tx); }
   if (mod.flaques && al.chance(mod.flaques)) zone('eau', { n: al.entierEntre(1, 3), r: 22 });
   if (mod.sablesMouvants && al.chance(mod.sablesMouvants)) zone('sable_mouvant', { n: al.entierEntre(1, 2), r: 26 });
   if (mod.acide && al.chance(mod.acide)) zone('acide', { n: al.entierEntre(1, 2), r: 16 });

@@ -230,8 +230,9 @@
     "proj": "eau"
    },
    {
-    "id": "ENM_062",
+    "id": "clones",
     "type": "invocation",
+    "ennemi": "ENM_062",
     "n": 2,
     "max": 2,
     "tele": 0.6,
@@ -503,13 +504,24 @@
    "type": "ninja",
    "masque": "suna",
    "corps": {
+    "mode": "manteau",
     "t": "#7c3a2c",
-    "T": "#5a2a20"
+    "T": "#5a2a20",
+    "a": "#7c3a2c",
+    "A": "#5a2a20",
+    "c": "#a8a090",
+    "e": "#a8a090",
+    "p": "#5a2a20",
+    "P": "#3e1c16",
+    "f": "#3a2a22"
    },
+   "coiffure": "gaara",
+   "dos": "gourde",
    "cheveux": {
     "h": "#c63a2a",
     "g": "#ea6a4c",
-    "H": "#8a2418"
+    "H": "#8a2418",
+    "r": "#a0202a"
    },
    "yeux": "cerne"
   },
@@ -654,7 +666,7 @@
   "boss": true,
   "r": 18,
   "hauteur": 22,
-  "vitesse": 2,
+  "vitesse": 1.7,
   "ia": "generique",
   "deplacement": "poursuite",
   "statut": "personnage canonique — motifs de combat originaux",
@@ -677,12 +689,14 @@
     "recup": 0.6
    },
    {
-    "id": "ENM_050",
+    "id": "cadavres",
     "type": "invocation",
+    "ennemi": "ENM_050",
     "n": 2,
     "max": 3,
     "tele": 0.7,
-    "recup": 0.4
+    "recup": 0.4,
+    "recharge": 8
    },
    {
     "id": "soin",
@@ -690,7 +704,10 @@
     "nom": "soin_kabuto",
     "tele": 0.2,
     "duree": 2,
-    "recup": 0.5
+    "recup": 0.5,
+    "seuil": 20,
+    "soin": 0.1,
+    "recharge": 10
    },
    {
     "id": "salve",
@@ -703,7 +720,7 @@
     "recup": 0.5
    }
   ],
-  "desc": "Se soigne en canalisant (interrompu par 40 dégâts) ; réanime des sujets.",
+  "desc": "Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets.",
   "comportement": "boss",
   "vol": false
  },
@@ -818,7 +835,8 @@
     "nom": "rituel",
     "tele": 0.3,
     "duree": 2.2,
-    "recup": 0.6
+    "recup": 0.6,
+    "seuil": 25
    },
    {
     "id": "charge",
@@ -829,7 +847,7 @@
     "recup": 0.8
    }
   ],
-  "desc": "Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel.",
+  "desc": "Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel (25 dégâts pendant sa canalisation).",
   "comportement": "boss",
   "vol": false
  },
@@ -881,8 +899,9 @@
     "recup": 0.7
    },
    {
-    "id": "ENM_051",
+    "id": "invocation",
     "type": "invocation",
+    "ennemi": "ENM_051",
     "n": 2,
     "max": 2,
     "tele": 0.6,
@@ -944,16 +963,18 @@
   "vol": true,
   "attaques": [
    {
-    "id": "ENM_072",
+    "id": "araignees",
     "type": "invocation",
+    "ennemi": "ENM_072",
     "n": 3,
     "max": 5,
     "tele": 0.5,
     "recup": 0.4
    },
    {
-    "id": "ENM_071",
+    "id": "oiseaux",
     "type": "invocation",
+    "ennemi": "ENM_071",
     "n": 2,
     "max": 4,
     "tele": 0.5,
@@ -1183,8 +1204,9 @@
     "proj": "kunai_ennemi"
    },
    {
-    "id": "ENM_074",
+    "id": "betes",
     "type": "invocation",
+    "ennemi": "ENM_074",
     "n": 1,
     "max": 2,
     "tele": 0.6,

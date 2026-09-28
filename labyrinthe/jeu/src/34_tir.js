@@ -182,15 +182,15 @@ function majProjectiles(dt) {
         const tx = Math.floor(nx / TUILE), ty = Math.floor(ny / TUILE);
         if (!P.mur && PROP[t].pvTir && p.proprio === 'joueur') endommagerTuile(s, tx, ty, 1);
         if (PROP[t].pvTir && p.proprio === 'ennemi' && p.lourd) endommagerTuile(s, tx, ty, 1);
-        if (p.rebonds > 0) {
-          p.rebonds--;
+        const cristal = s.cristaux && s.cristaux.includes(ty * s.W + tx) && !p.rayon;
+        if (p.rebonds > 0 || cristal) {
+          if (cristal) { p.rebondsCristal = (p.rebondsCristal || 0) + 1; if (p.rebondsCristal > 3) { detruireProjectile(p, 'mur'); continue; } G.effets.push({ type: 'etincelle', x: p.x, y: p.y - 4, age: 0, duree: 0.15 }); } else p.rebonds--;
           const tX = PROP[tuilePx(s, nx, p.y)], tY = PROP[tuilePx(s, p.x, ny)];
           if (tX.mur || (tX.bloqueTir && !p.spectral)) p.vx = -p.vx; if (tY.mur || (tY.bloqueTir && !p.spectral)) p.vy = -p.vy;
           if (!(tX.mur || tX.bloqueTir) && !(tY.mur || tY.bloqueTir)) { p.vx = -p.vx; p.vy = -p.vy; }
           p.touches.clear();
         } else { detruireProjectile(p, 'mur'); continue; }
       } else { p.x = nx; p.y = ny; }
-      if (G.variante && G.variante.cristaux && p.rebonds === 0 && tuilePx(s, p.x, p.y) === T.SOL && estCristal(s, p.x, p.y)) { p.vx = -p.vx; p.vy = -p.vy; }
     }
     // Hauteur : chute en fin de portée
     if (p.arc) { p.z = 8 + Math.sin(Math.min(1, p.age / p.dureeVie) * Math.PI) * 26; }
@@ -219,12 +219,12 @@ function majProjectiles(dt) {
   }
   G.proj = G.proj.filter(p => !p.mort);
 }
-function estCristal(s, x, y) { return false; }
 
 function toucherEnnemi(p, e) {
   const J = G.joueur;
   let deg = p.degats;
-  infligerDegats(e, deg, { proprio: p.proprio, x: p.x, y: p.y, vx: p.vx, vy: p.vy, recul: p.recul, elements: p.elements, type: 'projectile' });
+  const touche = infligerDegats(e, deg, { proprio: p.proprio, x: p.x, y: p.y, vx: p.vx, vy: p.vy, recul: p.recul, elements: p.elements, type: 'projectile' });
+  if (!touche) { declencherImpacts(p, e); return; } // tir arrêté : l'impact physique a lieu, sans statut ni déclencheur
   for (const st of p.statuts) {
     const ch = Math.min(st.max || 1, (st.chance || 0) + (st.chanceParChance || 0) * J.stats.chance);
     if (Math.random() < ch) appliquerStatut(e, st.statut, st.duree || 2, deg);

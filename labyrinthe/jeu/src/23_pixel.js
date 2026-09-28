@@ -72,6 +72,13 @@ function miroir(c) { const m = toile(c.width, c.height), g = ctxDe(m); g.transla
 function silhouette(c, couleur) {
   const s = toile(c.width, c.height), g = ctxDe(s); g.drawImage(c, 0, 0); g.globalCompositeOperation = 'source-in'; g.fillStyle = couleur; g.fillRect(0, 0, s.width, s.height); return s;
 }
+// Variante mémorisée pour les dessins par image (clignotements, teintes d'état) :
+// une toile par (image source, couleur), libérée avec l'image source.
+const _silhouettes = new WeakMap();
+function silhouetteMemo(c, couleur) {
+  let m = _silhouettes.get(c); if (!m) { m = new Map(); _silhouettes.set(c, m); }
+  let s = m.get(couleur); if (!s) { s = silhouette(c, couleur); m.set(couleur, s); } return s;
+}
 // Rotation au plus proche voisin (pas de flou) dans une toile carrée.
 function tourner(c, angle) {
   const n = Math.ceil(Math.hypot(c.width, c.height)) | 1; const out = toile(n, n), g = ctxDe(out);

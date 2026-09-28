@@ -43,6 +43,8 @@ IA_BOSS.generique = function (e, dt, d) {
   }
   if (e.intangibleBase) e.intangible = !(e.etatB === 'tele' || e.etatB === 'actif' || e.etatB === 'recup' || e.materialise > 0); // se matérialise dès l'annonce de l'attaque if (e.materialise > 0) e.materialise -= dt;
   if (e.durci > 0) { e.durci -= dt; }
+  if (e.susanoo) majSusanoo(e, dt);
+  if (e.bouclierSable) e.grainsSable = (e.grainsSable || 0) + dt; // parure de sable (visuelle)
   if (d.deplacement === 'fuite' && e.etatB === 'choix') { const [dx, dy] = normaliser(e.x - J.x, e.y - J.y); if (dist(e.x, e.y, J.x, J.y) < 5 * TUILE) deplacerEnnemi(e, dx, dy, 1.6 * TUILE, dt); else { e.vx *= 0.9; e.vy *= 0.9; } }
   if (e.role === 'dosu' || e.role === 'zaku' || e.role === 'kin') { /* chacun son jeu d'attaques via def */ }
   IA_BOSS.generique_orig(e, dt, e.def);
@@ -51,14 +53,57 @@ IA_BOSS.generique = function (e, dt, d) {
 // Réduction visible (Kakuzu durci, carapace d'Hiruko) appliquée par infligerDegats
 const _infligerOrig = infligerDegats;
 infligerDegats = function (e, deg, src = {}) {
+  if (e.susanoo && susanooBloque(e, src)) return false;
   if (e.durci > 0) deg *= 0.3;
   if (e.hiruko && e.armure) deg *= e.armure;
   if (e.def && e.def.id === 'BOS_006' && e.karasu && !e.karasu.mort) deg *= 1; // le marionnettiste reste vulnérable
-  if (e.rituel && e.rituel.actif) { e.rituel.subis += deg; if (e.rituel.subis >= 40) { e.rituel.actif = false; e.rituel.interrompu = true; G.textes.push({ x: e.x, y: e.y - 40, t: 'Rituel interrompu !', age: 0, duree: 1.2, couleur: '#a0e0a0' }); } }
+  if (e.rituel && e.rituel.actif) { e.rituel.subis += deg; if (e.rituel.subis >= e.rituel.seuil) { e.rituel.actif = false; e.rituel.interrompu = true; G.textes.push({ x: e.x, y: e.y - 40, t: 'Rituel interrompu !', age: 0, duree: 1.2, couleur: '#a0e0a0' }); } }
   const r = _infligerOrig(e, deg, src);
   if (e.karasuDe && e.mort) { /* rien */ }
   return r;
 };
+// Itachi (phase 2) : guerrier spectral — un rempart frontal (±60°) qui pivote
+// lentement vers le joueur et arrête tirs, rayons et frappes venant de face.
+// Cycle lisible : 4 s dressé (il vacille les 0,6 dernières), 2,5 s dissipé.
+// À distance, on ne le contourne pas (1,1 rad/s) : on attend la brèche ou on s'approche.
+const SUSANOO = { actif: 4, repos: 2.5, vacille: 0.6, demiArc: Math.PI / 3, rotation: 1.1, bloque: new Set(['projectile', 'laser', 'faisceau', 'melee']) };
+function majSusanoo(e, dt) {
+  const S = e.susanoo; S.t += dt;
+  const k = S.t % (SUSANOO.actif + SUSANOO.repos), etait = S.actif;
+  S.actif = k < SUSANOO.actif; S.vacille = S.actif && k > SUSANOO.actif - SUSANOO.vacille;
+  if (S.actif && !etait) { S.a = ciblerJoueur(e); Son.jouer('gong', 0.3); }
+  if (etait && !S.actif) G.effets.push({ type: 'fumee', x: e.x + Math.cos(S.a) * 18, y: e.y - 14 + Math.sin(S.a) * 12, age: 0, duree: 0.5, taille: 2 });
+  S.a += borne(diffAngle(S.a, ciblerJoueur(e)), -SUSANOO.rotation * dt, SUSANOO.rotation * dt);
+}
+function susanooBloque(e, src) {
+  const S = e.susanoo; if (!S.actif || !SUSANOO.bloque.has(src.type)) return false;
+  if (Math.abs(diffAngle(S.a, Math.atan2(-(src.vy || 0), -(src.vx || 0)))) >= SUSANOO.demiArc) return false;
+  if (G.temps - (S.dernierBloc || 0) > 0.12) { S.dernierBloc = G.temps; G.effets.push({ type: 'etincelle', x: e.x + Math.cos(S.a) * (e.r + 12), y: e.y - e.hauteur + Math.sin(S.a) * (e.r + 8), age: 0, duree: 0.2 }); Son.jouer('impact_mur', 0.5); }
+  return true;
+}
+// Gaara (phase 2) : le sable se referme — une bande d'une tuile avance depuis les
+// murs en 2,5 s (sans effet pendant l'avancée) ; dedans, on avance à 55 % et, après
+// 1,2 s sans en sortir, le sable se referme (une touche). Il se retire à la mort du boss.
+const SABLE_ARENE = { formation: 2.5, lenteur: 0.55, delai: 1.2 };
+function lancerMursSable(s) {
+  const L = [];
+  for (let ty = 1; ty < s.H - 1; ty++) for (let tx = 1; tx < s.W - 1; tx++) {
+    if (PROP[s.tuiles[ty * s.W + tx]].obstacle) continue;
+    if ([[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => PROP[tuileA(s, tx + dx, ty + dy)].mur)) L.push(ty * s.W + tx);
+  }
+  s._mursSable = { t: 0, tuiles: L, dedans: 0 }; // « _ » : non sauvegardé (la phase se rejoue au retour)
+}
+function majMursSable(dt) {
+  const s = G.salle, m = s && s._mursSable, J = G.joueur; if (!m) return;
+  m.t += dt;
+  if (m.retrait !== undefined) { m.retrait += dt; if (m.retrait > 1) s._mursSable = null; return; }
+  if (!G.ennemis.some(x => x.boss && !x.mort && x.def.init === 'gaara')) { m.retrait = 0; return; }
+  if (m.t < SABLE_ARENE.formation || J.vol || J.drapeaux.immuniteSol) { m.dedans = 0; return; }
+  if (!m.tuiles.includes(Math.floor(J.y / TUILE) * s.W + Math.floor(J.x / TUILE))) { m.dedans = 0; return; }
+  m.dedans += dt;
+  if (m.dedans >= SABLE_ARENE.delai) { m.dedans = 0; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y, r: 14, age: 0, duree: 0.3 }); if (!J.intangible) blesserJoueur(G.degatsEnnemis, { type: 'sable', x: J.x, y: J.y }); Son.jouer('sable'); }
+}
+function dansSableArene(J) { const s = G.salle, m = s && s._mursSable; return !!(m && m.retrait === undefined && m.t >= SABLE_ARENE.formation && !J.vol && !J.drapeaux.immuniteSol && m.tuiles.includes(Math.floor(J.y / TUILE) * s.W + Math.floor(J.x / TUILE))); }
 const _tuerOrig = tuerEnnemi;
 tuerEnnemi = function (e, src) {
   if (e.def && e.def.id === 'BOS_006' && e.karasu && !e.karasu.mort) { e.karasu.mort = true; G.effets.push({ type: 'debris', x: e.karasu.x, y: e.karasu.y, age: 0, duree: 0.6, n: 12, couleur: '#6a5a4a' }); }
@@ -89,17 +134,17 @@ const SPECIAUX_BOSS = {
     if (m === 'debut') { const J = G.joueur; frappeSolEnnemie(J.x, J.y, 26, 0.9, { visuel: 'bouclier_sable', son: 'sable', degats: G.degatsEnnemis * 2 }); }
   },
   vague_sable(e, a, m) { if (m === 'debut') { for (let k = 0; k < 3; k++) setTimeoutJeu(() => { if (!e.mort) G.effets.push({ type: 'anneau_expansif', x: e.x, y: e.y, r: 12, v: 3.2 * TUILE, age: 0, duree: 2.4, trou: ciblerJoueur(e) + (Math.random() - 0.5) * 1.5, largeurTrou: 0.9, proprio: 'ennemi' }); Son.jouer('sable'); }, k * 0.7); } },
-  soin_kabuto(e, a, m, dt) { // canalisation visible, interrompue par 40 dégâts
-    if (m === 'debut') { e.canal = { subis: 0, pv: e.pv }; e.pvAvant = e.pv; G.effets.push({ type: 'cercle_soin', x: e.x, y: e.y, r: 30, age: 0, duree: 2 }); }
-    if (m === 'maj' && e.canal) { if (e.pvAvant !== undefined && e.pv < e.pvAvant) e.canal.subis += e.pvAvant - e.pv; e.pvAvant = e.pv; if (e.canal.subis >= 40) { e.canal = null; e.tB = 0; G.textes.push({ x: e.x, y: e.y - 40, t: 'Soin interrompu !', age: 0, duree: 1, couleur: '#a0e0a0' }); } }
-    if (m === 'fin' && e.canal) { e.pv = Math.min(e.pvMax, e.pv + e.pvMax * 0.12); e.canal = null; Son.jouer('coeur'); }
+  soin_kabuto(e, a, m, dt) { // canalisation visible (2 s), interrompue par a.seuil dégâts ; soin a.soin des PV max
+    if (m === 'debut') { e.canal = { subis: 0, pv: e.pv }; e.pvAvant = e.pv; G.effets.push({ type: 'cercle_soin', x: e.x, y: e.y, r: 30, age: 0, duree: 2 }); G.textes.push({ x: e.x, y: e.y - 44, t: 'Soin : ' + (a.seuil || 20) + ' dégâts l’interrompent', age: 0, duree: 1.4, couleur: '#a0e0a0' }); }
+    if (m === 'maj' && e.canal) { if (e.pvAvant !== undefined && e.pv < e.pvAvant) e.canal.subis += e.pvAvant - e.pv; e.pvAvant = e.pv; if (e.canal.subis >= (a.seuil || 20)) { e.canal = null; e.tB = 0; G.textes.push({ x: e.x, y: e.y - 40, t: 'Soin interrompu !', age: 0, duree: 1, couleur: '#a0e0a0' }); } }
+    if (m === 'fin' && e.canal) { e.pv = Math.min(e.pvMax, e.pv + e.pvMax * (a.soin || 0.1)); e.canal = null; Son.jouer('coeur'); }
   },
   requins(e, a, m) { if (m === 'debut') { for (let i = 0; i < 4; i++) setTimeoutJeu(() => { if (e.mort) return; const p = tirEnnemi(e.x, e.y - 10, ciblerJoueur(e) + (i - 1.5) * 0.4, 3.8, { taille: 1.8, duree: 3, source: e.id, apparence: 'eau' }); p.traj = { guidageEnnemi: 1.4 }; }, i * 0.25); Son.jouer('eau'); } },
   prison_eau(e, a, m) { if (m === 'debut') { const J = G.joueur; frappeSolEnnemie(J.x, J.y, 22, 0.8, { visuel: 'eclaboussure', son: 'eau', apres: () => creerZone(J.x, J.y, 'eau', 5, { r: 26, proprio: 'ennemi' }) }); } },
   faux_hidan(e, a, m) { if (m === 'debut') { const p = tirEnnemi(e.x, e.y - 12, ciblerJoueur(e), 6.5, { taille: 2, duree: 1.4, source: 'BOS_013', apparence: 'kunai_ennemi' }); p.traj = { retour: 1 }; p.retourVers = e; p.marqueJashin = true; } },
-  rituel(e, a, m, dt) { // n'a d'effet que si le joueur est marqué ; interrompu par 40 dégâts pendant la canalisation
+  rituel(e, a, m, dt) { // n'a d'effet que si le joueur est marqué ; interrompu par a.seuil dégâts pendant la canalisation
     const J = G.joueur;
-    if (m === 'debut') { if (!(G.marqueJashin > G.temps)) { e.tB = 0; return; } e.x = e.cercle.x; e.y = e.cercle.y; e.rituel = { actif: true, subis: 0 }; G.textes.push({ x: e.x, y: e.y - 44, t: 'Rituel ! Frappez-le (40 dégâts) pour l’interrompre', age: 0, duree: 2, couleur: '#ff6a6a' }); Son.jouer('rire'); }
+    if (m === 'debut') { if (!(G.marqueJashin > G.temps)) { e.tB = 0; return; } e.x = e.cercle.x; e.y = e.cercle.y; e.rituel = { actif: true, subis: 0, seuil: a.seuil || 25 }; G.textes.push({ x: e.x, y: e.y - 44, t: 'Rituel ! Frappez-le (' + e.rituel.seuil + ' dégâts) pour l’interrompre', age: 0, duree: 2, couleur: '#ff6a6a' }); Son.jouer('rire'); }
     if (m === 'fin' && e.rituel && e.rituel.actif) { e.rituel.actif = false; blesserJoueur(2, { type: 'rituel', source: 'BOS_013' }); G.marqueJashin = 0; }
   },
   epee_extensible(e, a, m) { if (m === 'debut') { const ang = ciblerJoueur(e); ligneDanger(e.x, e.y - 10, ang, 400, 10, 0.5); setTimeoutJeu(() => { if (e.mort) return; G.faisceaux.push({ x: e.x, y: e.y - 10, a: ang, l: longueurJusquAuMur(G.salle, e.x, e.y - 10, ang, true), largeur: 6, duree: 0.25, age: 0, type: 'rayon_ennemi', couleur: '#c8ccd8', proprio: 'ennemi' }); Son.jouer('lame'); }, 0.5); } },

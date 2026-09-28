@@ -467,21 +467,21 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | BOS_001 | Mizuki | Le traître de l’Académie | 1 | 170 | salve, fuma, charge | 50 % | Kunai en éventail, grand shuriken revenant, charges. |
 | BOS_002 | Serpent géant | Gardien de la Forêt de la Mort | 1 | 200 | charge, terrier, crachat | — | Charges, plongée sous terre et crachats en éventail. |
 | BOS_003 | Les frères démons | Duo aux griffes enchaînées | 1 | 110 | charge, griffe | — | Deux adversaires reliés par une chaîne dangereuse quand elle se tend. |
-| BOS_004 | Zabuza | Le démon du brouillard | 2 | 300 | sabre, brume, dragon, ENM_062 | 45 % | Disparaît dans la brume (yeux visibles) et réapparaît sabre levé. |
+| BOS_004 | Zabuza | Le démon du brouillard | 2 | 300 | sabre, brume, dragon, clones | 45 % | Disparaît dans la brume (yeux visibles) et réapparaît sabre levé. |
 | BOS_005 | Haku | Les miroirs de glace | 2 | 260 | saut, senbon, salve | 50 % | Passe de miroir en miroir ; les miroirs se brisent sous les coups. |
 | BOS_006 | Kankurō et Karasu | Le marionnettiste | 3 | 140 | gaz, salve | — | Frappez le marionnettiste caché : sa marionnette tombera. |
 | BOS_007 | Le trio du Son | Trois épreuves en une | 3 | 95 | onde, salve | — | Trois adversaires aux rôles distincts : ondes, souffle, clochettes. |
 | BOS_008 | Kimimaro | La danse des os | 3 | 340 | balles, lances, danse | 40 % | Balles d’os, lances qui percent le sol en lignes, danse circulaire. |
 | BOS_009 | Gaara | L’enfermement de sable | 4 | 380 | cercueil, shuriken, vague, pluie | 50 % | Le sable enferme l’arène : cercueils au sol, vagues avec une brèche, pluie de sable. |
 | BOS_010 | Sasori | Le maître des marionnettes | 4 | 360 | queue, aiguilles, sable_fer, anneau | 55 % | Carapace blindée puis sable de fer. |
-| BOS_011 | Kabuto | Le médecin des ombres | 5 | 380 | scalpel, ENM_050, soin, salve | — | Se soigne en canalisant (interrompu par 40 dégâts) ; réanime des sujets. |
+| BOS_011 | Kabuto | Le médecin des ombres | 5 | 380 | scalpel, cadavres, soin, salve | — | Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets. |
 | BOS_012 | Kisame | Le requin de la brume | 5 | 440 | requins, inondation, samehada, prison | — | Inonde l’arène (l’eau vous ralentit, pas lui) ; requins d’eau chercheurs. |
-| BOS_013 | Hidan | Le rituel immortel | 5 | 400 | faux, rituel, charge | — | Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel. |
-| BOS_014 | Orochimaru | Les mues du serpent | 6 | 520 | serpents, epee, ENM_051, huit | 66 %, 33 % | À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs. |
-| BOS_015 | Deidara | L’art est une explosion | 7 | 460 | ENM_072, ENM_071, bombes, c3 | 35 % | Argile explosive sous toutes ses formes ; C3 : mettez-vous à l’abri derrière un bloc. |
+| BOS_013 | Hidan | Le rituel immortel | 5 | 400 | faux, rituel, charge | — | Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel (25 dégâts pendant sa canalisation). |
+| BOS_014 | Orochimaru | Les mues du serpent | 6 | 520 | serpents, epee, invocation, huit | 66 %, 33 % | À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs. |
+| BOS_015 | Deidara | L’art est une explosion | 7 | 460 | araignees, oiseaux, bombes, c3 | 35 % | Argile explosive sous toutes ses formes ; C3 : mettez-vous à l’abri derrière un bloc. |
 | BOS_016 | Itachi | Les illusions du corbeau | 7 | 480 | clones, boule, flammes, tsukuyomi | 40 % | Seul le vrai Itachi projette une ombre ; ses clones éclatent en corbeaux. |
 | BOS_017 | Kakuzu | Les cinq cœurs | 7 | 300 | poing, durcir, fils | — | Trois masques élémentaires l’accompagnent ; sa peau durcie (grise) réduit les dégâts de 70 % pendant 1,8 s, visiblement. |
-| BOS_018 | Pain | Les forces d’attraction | 8 | 560 | repulsion, attraction, tiges, ENM_074, sphere | 50 % | Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction. |
+| BOS_018 | Pain | Les forces d’attraction | 8 | 560 | repulsion, attraction, tiges, betes, sphere | 50 % | Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction. |
 | BOS_019 | Obito | Les changements de présence | 8 | 460 | saisie, boule, vortex, chaines | 50 % | Intangible sauf quand il se matérialise pour attaquer (annonce, attaque, récupération). |
 | BOS_020 | Le Gardien du Sceau | Celui qui tient le labyrinthe | 9 | 800 | chaines, anneaux, spirale, arene | 66 %, 33 % | Arène évolutive : des blocs apparaissent entre les phases ; chaînes balayantes. |
 | BOS_021 | Madara (empreinte) | L’ancien rival | 9 | 900 | meteore, feu, bois, sabre | 50 % | Attaques massives : météore (abri : loin du centre marqué), dragons de bois, grands balayages. |

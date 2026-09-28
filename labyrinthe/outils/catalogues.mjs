@@ -2,7 +2,7 @@
 // Lit les fichiers de données du jeu (jeu/src/00_noyau.js + 1x_donnees_*.js), sans navigateur,
 // vérifie identifiants, références, pools, valeurs et navigabilité des gabarits de salles,
 // puis écrit catalogues/*.json, catalogues/*.csv, catalogues/compteurs.json et
-// dossier/F_catalogues.md + dossier/F_salles.md.
+// dossier/F_catalogues.md + dossier/F_salles.md + dossier/E_fiches.md (fiches de roster, boss, ennemis, thèmes).
 // Usage : node labyrinthe/outils/catalogues.mjs [--verifier]   (--verifier : n'écrit rien, code 1 si erreur)
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -93,7 +93,7 @@ for (const b of DON.boss) {
   nombreFini(b.pv, `${b.id} : pv`);
   for (const a of b.attaques || []) {
     if (a.type === 'special' && !speciauxBoss.has(a.nom)) err(`${b.id} : attaque spéciale « ${a.nom} » non implémentée`);
-    if (a.type === 'invocation' && !existe(a.id)) err(`${b.id} : invocation inconnue ${a.id}`);
+    if (a.type === 'invocation' && !existe(a.ennemi)) err(`${b.id} : invocation inconnue ${a.ennemi}`);
     for (const k of ['tele', 'recup']) if (a[k] !== undefined && !(a[k] >= 0.15)) avert(`${b.id}/${a.id} : ${k} très court (${a[k]} s)`);
   }
   if (b.init && !speciauxBoss.has(b.init)) err(`${b.id} : initialisation « ${b.init} » non implémentée`);
@@ -215,6 +215,146 @@ const tables = {
   secrets: { titre: 'Secrets (SEC)', col: ['ID', 'Nom', 'Indice en jeu', 'Solution'], lignes: DON.secrets.map(s => [s.id, s.nom, s.indice, s.solution]) },
 };
 
+// ── E bis : fiches de contenu générées (roster, boss attaque par attaque, ennemis par fonction, thèmes) ──
+// Les réponses attendues des attaques spéciales sont écrites ici ; une attaque spéciale sans texte est une erreur.
+const SPECIAUX_TXT = {
+  fuma_boss: ['grand shuriken (2,2×) vers vous, 1,6 s, qui revient vers le lanceur', 'coup d’étage', 'esquiver l’aller, puis le retour qui recoupe la salle'],
+  terrier: ['le boss s’enfouit et vous suit sous terre (90 px/s) ; fissure 0,5 s avant la sortie, puis anneau de 8', 'coup d’étage', 'bouger dès que le sol se fend ; traverser l’anneau'],
+  disparition_brume: ['invisible et intangible (seuls les yeux rouges trahissent sa position) ; réapparaît derrière vous et enchaîne une attaque annoncée 0,6 s', 'selon l’attaque enchaînée', 'suivre les yeux ; se retourner et sortir de l’arc annoncé'],
+  saut_miroir: ['passe d’un miroir intact à un autre', '—', 'briser les miroirs (22 PV) réduit ses positions'],
+  senbon_miroirs: ['chaque miroir intact tire un senbon vers vous (5,5 t/s), un toutes les 0,15 s', 'coup d’étage', 'se placer pour que les tirs viennent du même côté ; briser des miroirs'],
+  lances_os: ['7 impacts en ligne vers vous (210 px, r 14 px, préavis 0,55 s), puis 5 sur une seconde ligne décalée', 'coup d’étage', 'sortir latéralement de la ligne'],
+  cercueil_sable: ['cercle de 26 px sous vos pieds, se referme en 0,9 s', '2 coups d’étage', 'sortir du cercle avant la fermeture'],
+  vague_sable: ['3 anneaux de sable en expansion sur toute la salle, 0,7 s d’écart, chacun avec une brèche', 'coup d’étage', 'passer par la brèche (orientée vers vous, ± aléa)'],
+  soin_kabuto: ['cercle vert : canalise 2 s un soin de {soin} des PV max ({seuil} dégâts l’interrompent)', '— (soin)', 'concentrer les tirs pendant la canalisation'],
+  requins: ['4 requins d’eau chercheurs (guidage 1,4 rad/s, 3 s), 0,25 s d’écart', 'coup d’étage', 'tourner autour, les faire percuter les obstacles'],
+  prison_eau: ['cercle de 22 px sous vous (préavis 0,8 s), puis flaque lente 5 s', 'coup d’étage, puis ralentissement', 'sortir du cercle ; éviter la flaque ensuite'],
+  faux_hidan: ['faux lancée vers vous, aller-retour ; si elle touche, vous êtes marqué 8 s', 'coup d’étage + marque', 'esquiver aller et retour ; sans marque, le rituel échoue'],
+  rituel: ['si vous êtes marqué : canalisation de 2,2 s dans son cercle ({seuil} dégâts l’interrompent)', '1 unité à terme', 'frapper le boss pendant la canalisation, ou éviter la marque'],
+  epee_extensible: ['ligne annoncée 0,5 s puis lame jusqu’au mur (6 px)', 'coup d’étage', 'sortir de la ligne'],
+  huit_tetes: ['8 lignes de serpents en étoile (18 px × 300 px), une toutes les 0,22 s, préavis 0,55 s chacune', 'coup d’étage', 'se placer entre deux lignes annoncées'],
+  c3: ['cercle sur toute la salle 2,8 s ; des blocs apparaissent aux quatre coins', '2 unités si le boss vous voit', 'se cacher derrière un bloc (ligne de vue coupée)'],
+  clones_corbeaux: ['3 illusions (1 PV, sans ombre) tirent des projectiles visés ; le vrai se téléporte', 'coup d’étage (tirs des illusions)', 'repérer celui qui projette une ombre'],
+  lune_rouge: ['écran rouge 3 s ; 5 anneaux de 12 à brèche, un toutes les 0,55 s', 'coup d’étage', 'enchaîner les brèches'],
+  durcissement: ['peau grise 1,8 s : dégâts subis ×0,3 (visible)', '—', 'esquiver, garder ses ressources pour après'],
+  chibaku: ['noyau central (60 PV) qui vous attire pendant 3,2 s ; s’il survit, il explose (2 tuiles)', '1 unité (explosion)', 'marcher contre la force, détruire le noyau ou s’éloigner en fin'],
+  saisie_obito: ['se matérialise près de vous 1,4 s ; cercle de 34 px 0,35 s plus tard (préavis 0,45 s)', 'coup d’étage', 'sortir du cercle puis le frapper tant qu’il est matériel'],
+  vortex: ['matérialisé 2 s, absorbe vos tirs à moins de 40 px puis les renvoie en anneau (3 + absorbés, 12 au plus)', 'coup d’étage', 'cesser de tirer à bout portant ; passer entre les tirs renvoyés'],
+  arene_change: ['les blocs de l’arène sont redistribués (jamais à moins de 2 tuiles de vous)', '—', 'se repositionner, rechercher les nouvelles lignes de tir'],
+  dragons_bois: ['3 dragons de bois chercheurs (2,4×, guidage 1 rad/s, 3,2 s), ils brisent les obstacles', 'coup d’étage', 'les attirer en arc large ; ne pas compter sur la couverture'],
+  balayage_queues: ['3 balayages de queue (arc 40°, 200 px) décalés de 0,35 s, préavis 0,5 s chacun', '1 unité', 'sortir des arcs annoncés, se rapprocher entre deux'],
+};
+// Préparations d'arène (init) et effets de phase (action) : texte obligatoire pour chaque mécanique utilisée
+const INIT_TXT = {
+  serpent: 'corps de 6 anneaux qui suivent la tête et blessent au contact (dessinés, avec ombre)',
+  freres: 'deux frères liés par une chaîne : grise au repos, orange au-delà de 90 px, rouge clignotant et blessante au-delà de 110 px',
+  brume: 'se fond dans la brume pendant son attaque de disparition (yeux rouges visibles)',
+  miroirs: '6 miroirs de glace (22 PV, sans contact) disposés en cercle ; ils ne comptent pas pour nettoyer la salle',
+  kankuro: 'Kankurō se cache loin de vous ; Karasu (marionnette, 5× PV) attaque ; vaincre Kankurō fait tomber Karasu',
+  trio: 'trois boss liés : Dosu (ondes), Zaku (souffle en spirale), Kin (clochettes acides, senbon) ; la salle se termine quand les trois tombent',
+  gaara: 'parure de sable en orbite (visuelle ; aucune réduction de dégâts)',
+  hiruko: 'carapace d’Hiruko : dégâts subis ×0,5 (teinte brune visible) jusqu’à sa rupture',
+  hidan: 'cercle rituel au centre de l’arène',
+  itachi: 'seul le vrai Itachi projette une ombre ; les illusions n’en ont pas',
+  kakuzu: '3 masques élémentaires (feu en anneau, vent en éventail, foudre visée) ; la peau durcie grise signale la réduction ×0,3',
+  obito: 'intangible hors de ses attaques : il se matérialise dès l’annonce et jusqu’à la fin de la récupération',
+};
+const ACTION_TXT = {
+  accelerer: 'le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25',
+  murs_sable: 'une bande de sable d’une tuile avance depuis les murs en 2,5 s (sans effet pendant l’avancée) ; dedans, vitesse ×0,55 et, après 1,2 s sans en sortir, une touche (un anneau se referme sous les pieds) ; elle se retire à la mort de Gaara',
+  susanoo: 'rempart spectral frontal (±60°) qui arrête tirs, rayons et frappes venant de face (pas les explosions) ; il pivote vers vous à 1,1 rad/s ; dressé 4 s (vacille les 0,6 dernières), dissipé 2,5 s',
+  mue: 'la peau abandonnée devient une Mue hostile (30 PV) ; le boss réapparaît ailleurs, invulnérable 0,8 s',
+  fin_hiruko: 'la carapace se brise : plus de réduction de dégâts, nouvelles attaques de sable de fer',
+  c3: 'débloque la grande œuvre C3',
+  arene: 'les blocs de l’arène sont redistribués (jamais à moins de 2 tuiles de vous)',
+  invoquer: 'appelle des renforts',
+};
+const zoneAttaque = a => ({
+  salve: `${a.n || 3} projectile(s) visé(s)${a.rafales > 1 ? ' × ' + a.rafales + ' rafales' : ''}, écart ${a.ecart ?? 0.22} rad, ${a.v || 5} t/s`,
+  anneau: `anneau de ${a.n || 12}${a.trou ? ' à brèche' : ''}${a.vagues > 1 ? ' × ' + a.vagues + ' vagues' : ''}, ${a.v || 5} t/s`,
+  spirale: `spirale à ${a.bras || 2} bras, un tir toutes les ${a.intervalle || 0.09} s`,
+  charge: `charge en ligne droite (${a.vCharge || 9} t/s) jusqu’au mur${a.impact === 'anneau' ? ', anneau à l’impact' : ''}`,
+  saut: `saut sur votre position, cercle de ${a.r || 1.6} tuiles${a.anneau ? ', anneau de ' + a.anneau + ' à l’atterrissage' : ''}`,
+  lame: `arc de ${a.arc || 150}° à ${a.portee || 2.6} tuiles${a.vague ? ' + 3 lames projetées' : ''}`,
+  rayon: `rayon jusqu’au mur (14 px)${a.balaye ? ', balayage ' + a.balaye + ' rad/s' : ''}`,
+  meteore: `cercle de ${a.r || 3} tuiles sur votre position, 10 projectiles à l’impact`,
+  zone: `${a.n || 3} flaque(s) ${a.zone || 'acide'} de ${a.r || 0.9} tuile(s), ${a.dureeZone || 6} s${a.surJoueur ? ', la première sous vous' : ''}`,
+  pluie: `${a.n || 8} impacts (r ${a.r || 0.8} t, préavis ${a.delai || 0.8} s), un sur trois sur vous`,
+  onde: `${a.n || 1} onde(s) en expansion à brèche (${a.vOnde || 3.5} t/s)`,
+  invocation: `appelle ${a.n || 2} × ${nomDe(a.ennemi)} (${a.max || 4} au plus)`,
+  teleport: `disparaît puis réapparaît${a.pres ? ' près de vous' : ''}`,
+  attraction: `vous attire (force ${a.force || 2.2}) et tire des anneaux de 10`,
+  repulsion: 'vous repousse, efface vos tirs en vol ; touche à moins de 2 tuiles',
+}[a.type]);
+const reponseAttaque = a => ({
+  salve: 'se décaler perpendiculairement', anneau: a.trou ? 'passer par la brèche' : 'se glisser entre deux projectiles', spirale: 'tourner dans le sens de la spirale à distance',
+  charge: 'sortir de la ligne annoncée ; frapper pendant la récupération', saut: 'quitter le cercle annoncé', lame: 'reculer hors de l’arc', rayon: 'sortir de la ligne' + (a.balaye ? ', puis devancer le balayage' : ''),
+  meteore: 'quitter le cercle, puis esquiver les éclats', zone: 'éviter les flaques (elles blessent après 0,6 s de formation)', pluie: 'rester mobile hors des cercles', onde: 'traverser par la brèche',
+  invocation: 'éliminer ou contourner les invocations', teleport: 'anticiper la réapparition', attraction: 'marcher contre la force entre les anneaux', repulsion: 'ne pas rester collé au boss',
+}[a.type]);
+const degatsAttaque = a => a.type === 'meteore' ? '2 unités' : a.type === 'invocation' || a.type === 'teleport' ? '—' : a.degats ? a.degats + ' demi(s)' : 'coup d’étage';
+const remplir = (t, a) => t.replace(/\{(\w+)\}/g, (m, k) => k === 'soin' ? Math.round((a.soin || 0.1) * 100) + ' %' : a[k] ?? m);
+for (const b of DON.boss) {
+  if (b.init && !INIT_TXT[b.init]) err(`${b.id} : préparation « ${b.init} » sans texte (INIT_TXT)`);
+  for (const ph of b.phases || []) if (ph.action && !ACTION_TXT[ph.action]) err(`${b.id} : effet de phase « ${ph.action} » sans texte (ACTION_TXT)`);
+}
+for (const b of DON.boss) for (const a of b.attaques || []) {
+  if (a.type === 'special' && !SPECIAUX_TXT[a.nom]) err(`${b.id} : attaque spéciale « ${a.nom} » sans fiche (SPECIAUX_TXT)`);
+  if (a.type !== 'special' && !zoneAttaque(a)) err(`${b.id} : type d’attaque « ${a.type} » sans description`);
+}
+const etoiles = n => '★'.repeat(n) + '☆'.repeat(Math.max(0, 3 - n));
+const santeTxt = s => [s.vitalite ? s.vitalite + ' contenant(s) de vitalité' : 'aucun contenant de vitalité', s.protection ? s.protection * 2 + ' demis de protection' : '', s.instable ? s.instable * 2 + ' demis de chakra instable' : ''].filter(Boolean).join(', ');
+const tirTxt = t => [t.apparence, t.forme ? 'forme ' + t.forme : 'projectile simple', t.multi ? t.multi + ' tirs en éventail' : '', t.source ? 'émis depuis la ' + t.source : '', t.differe ? 'tir différé' : ''].filter(Boolean).join(', ');
+const statsTxt = s => `Dég. ${s.degats} · Cad. ${s.cadence} tirs/s · Portée ${s.portee} t · Vit. tir ${s.vitesseTir} t/s · Vit. ${s.vitesse} t/s · Chance ${s.chance}`;
+const ficheMd = lignes => '| | |\n|---|---|\n' + lignes.filter(([, v]) => v !== undefined && v !== null && v !== '').map(([k, v]) => `| ${k} | ${md(v)} |`).join('\n') + '\n\n';
+const objectifTxt = id => { const o = DON.objectifs.find(x => x.id === id); return o ? `${o.id} « ${o.nom} » : ${condTxt(o.condition)}` : id; };
+
+let de = `# E bis — Fiches de contenu générées\n\n> Produit par \`outils/catalogues.mjs\` depuis les données du jeu (v${VERSION.donnees}). Ne pas éditer : modifier les données puis relancer. `;
+de += `Le texte d’analyse (pactes, économie, routes, secrets) est dans \`E_contenu.md\`.\n\n`;
+de += `Unités : santé en demis (1 contenant = 2 demis) ; distances en tuiles de 32 px (t) ; vitesses en tuiles par seconde ; durées en secondes. `;
+de += `« Coup d’étage » = ½ unité aux étages 1 à 4, 1 unité aux étages 5 et plus.\n\n`;
+de += `## 1. Roster jouable — ${DON.personnages.filter(p => !p.parent).length} personnages et ${DON.personnages.filter(p => p.parent).length} variantes altérées\n\n`;
+for (const p of DON.personnages) {
+  const par = p.parent ? INDEX[p.parent] : null;
+  de += `### ${p.id} — ${p.nom}${par ? ' (variante de ' + par.nom + ')' : ''}\n\n`;
+  de += ficheMd([
+    ['Statut', p.statut], ['Santé initiale', santeTxt(p.sante)], ['Ressources', `${p.ressources.ryo} Ryō, ${p.ressources.cles} clé(s), ${p.ressources.explosifs} explosif(s)`],
+    ['Tir principal', tirTxt(p.tir)], ['Statistiques', statsTxt(p.stats)], ['Actif de départ', p.actif ? p.actif + ' ' + nomDe(p.actif) : 'aucun'],
+    ['Départ', [...(p.passifs || []).map(id => id + ' ' + nomDe(id)), ...(p.familiersDepart || []).map(id => id + ' ' + nomDe(id))].join(', ')],
+    [p.parent ? 'Règle nouvelle' : 'Règle exclusive', p.regle], ['Faiblesse', p.faiblesse], ['Difficulté', etoiles(p.difficulte || 1) + (p.expert ? ' (expert)' : '')],
+    ['Déblocage', p.deblocage ? objectifTxt(p.deblocage.objectif) : 'disponible dès le départ'], ['Identité visuelle', p.identite || (par && 'Silhouette de ' + par.nom + ', teinte ' + p.teinte)],
+    ['Directions de build', (p.builds || []).map((b, i) => (i + 1) + '. ' + b).join(' ')],
+  ]);
+}
+de += `## 2. Boss — ${DON.boss.length} fiches, attaque par attaque\n\n`;
+de += `Chaque attaque suit le même cycle : **préparation** (télégraphe visible et sonore), **phase active**, **récupération** (boss vulnérable et immobile), puis une pause de ${'0,6'} s par défaut. `;
+de += `Aucune attaque n’exige un objet : toutes s’esquivent à la vitesse de base (4,5 t/s) et avec le tir de départ. Les attaques ne se répètent jamais deux fois de suite ; une « recharge » impose un délai minimal entre deux usages.\n\n`;
+for (const b of DON.boss) {
+  de += `### ${b.id} — ${b.nom}, « ${b.titre} »\n\n`;
+  de += `${b.mini ? 'Mini-boss de statue' : 'Étage ' + b.etage}${b.terminal ? ' (terminal)' : ''} · ${b.pv} PV · déplacement ${b.deplacement}${b.vitesse ? ' (' + b.vitesse + ' t/s)' : ''}${b.vol ? ' · volant' : ''} · contact ${b.contact === 2 ? '1 unité' : 'coup d’étage'} · ${b.statut}.\n\n`;
+  if (b.desc) de += `${b.desc}\n\n`;
+  if (b.init) de += `Mise en place : ${INIT_TXT[b.init]}.\n\n`;
+  if (b.phases && b.phases.length) de += `Phases :\n\n` + b.phases.map(p => `- à ${Math.round(p.seuil * 100)} % des PV — « ${p.message} » : ${ACTION_TXT[p.action] || '—'}${p.invulnerable ? ' ; invulnérable ' + p.invulnerable + ' s (anneau visible)' : ''}.`).join('\n') + '\n\n';
+  de += tableMd(['Attaque', 'Zone', 'Prépa.', 'Active', 'Récup.', 'Dégâts', 'Réponse attendue'], (b.attaques || []).map(a => {
+    const S = a.type === 'special' ? SPECIAUX_TXT[a.nom] || ['?', '?', '?'] : null;
+    return [a.id + (a.phase ? ' (phase ' + (a.phase + 1) + ')' : '') + (a.recharge ? ' — recharge ' + a.recharge + ' s' : ''), S ? remplir(S[0], a) : zoneAttaque(a), (a.tele ?? 0.5) + ' s', (a.duree ?? 0.5) + ' s', (a.recup ?? 0.6) + ' s', S ? remplir(S[1], a) : degatsAttaque(a), S ? remplir(S[2], a) : reponseAttaque(a)];
+  })) + '\n';
+}
+de += `## 3. Ennemis par fonction — ${DON.ennemis.length} archétypes\n\n`;
+de += `La silhouette annonce la fonction (voir D §3). Les chiffres sont ceux des données : PV bruts avant multiplicateurs de champion.\n\n`;
+const parComp = {}; for (const e of DON.ennemis) (parComp[e.comportement] = parComp[e.comportement] || []).push(e);
+de += tableMd(['Comportement', 'Nombre', 'PV', 'Vitesse (t/s)', 'Archétypes'], Object.entries(parComp).sort((a, b) => b[1].length - a[1].length).map(([c, L]) => [c, L.length, Math.min(...L.map(e => e.pv)) + '–' + Math.max(...L.map(e => e.pv)), Math.min(...L.map(e => e.vitesse)) + '–' + Math.max(...L.map(e => e.vitesse)), L.map(e => e.id + ' ' + e.nom).join(', ')]));
+de += `\n## 4. Thèmes et variantes d’étage — ${DON.themes.length} thèmes, ${DON.etages.length} variantes\n\n`;
+for (const t of DON.themes) {
+  de += `### ${t.id} — ${t.nom} (chapitre ${t.chapitre})\n\n`;
+  de += ficheMd([
+    ['Sol / murs', t.visuel.sol.motif + ' / ' + t.visuel.mur.motif + ' ; obstacles : ' + t.visuel.rocher.forme + ' ; lumière ' + t.visuel.lumiere],
+    ['Décor', t.visuel.deco.join(', ')], ['Musique', `gamme ${t.musique.gamme}, ${t.musique.tempo} bpm, timbre ${t.musique.timbre}`],
+    ['Ennemis par rôle', Object.entries(t.roles).map(([r, L]) => r + ' : ' + L.join('/')).join(' · ')],
+    ['Variantes', DON.etages.filter(f => f.theme === t.id).map(f => `${f.id} « ${f.nom} » — ${f.desc || ''}`).join(' ; ')],
+  ]);
+}
+
 // ── Rapport ──
 console.log(`Données v${VERSION.donnees} (jeu ${VERSION.jeu}) : ${Object.keys(INDEX).length} identifiants.`);
 for (const a of avertissements) console.log('  avertissement : ' + a);
@@ -249,4 +389,5 @@ ds += `chiffres = ressource, \`I\` piédestal, \`S\` étal, \`M\` machine, \`N\`
 ds += tableMd(tables.salles.col, tables.salles.lignes) + '\n';
 for (const s of DON.salles) ds += `### ${s.id} — ${s.nom}\n\nType ${s.type}, forme ${s.forme}${s.etages ? ', étages ' + s.etages.join('–') : ''}${s.portes ? ', portes imposées : ' + s.portes.join(', ') : ''}${s.poids ? ', poids ' + s.poids : ''}.\n\n\`\`\`text\n${s.grille.join('\n')}\n\`\`\`\n\n`;
 writeFileSync(join(dDos, 'F_salles.md'), ds);
-console.log('Écrit : catalogues/*.json, catalogues/*.csv, catalogues/compteurs.json, dossier/F_catalogues.md, dossier/F_salles.md');
+writeFileSync(join(dDos, 'E_fiches.md'), de.replace(/(\d)\.(\d)/g, '$1,$2')); // virgule décimale française
+console.log('Écrit : catalogues/*.json, catalogues/*.csv, catalogues/compteurs.json, dossier/F_catalogues.md, dossier/F_salles.md, dossier/E_fiches.md');

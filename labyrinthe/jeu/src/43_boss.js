@@ -78,9 +78,12 @@ function anneauBoss(e, n, v, o = {}) { const off = o.decalage ?? Math.random() *
 function salveBoss(e, n, v, ecart, o = {}) { const a = ciblerJoueur(e); for (let i = 0; i < n; i++) tirEnnemi(e.x, e.y - e.hauteur, a + (i - (n - 1) / 2) * ecart, v, Object.assign({ source: e.id }, o)); Son.jouer('tir_ennemi'); }
 function allerVersPoint(e, x, y, v, dt) { const d = dist(e.x, e.y, x, y); if (d < 4) { e.vx *= 0.7; e.vy *= 0.7; return true; } const [dx, dy] = normaliser(x - e.x, y - e.y); deplacerEnnemi(e, dx, dy, v * TUILE, dt, 6); return false; }
 function pointAleatoire(s, marge = 2) { const [cx, cy] = centreSalle(s); for (let k = 0; k < 20; k++) { const x = cx + (Math.random() - 0.5) * (CEL_L - marge * 2) * TUILE, y = cy + (Math.random() - 0.5) * (CEL_H - marge) * TUILE; if (tuileLibre(s, Math.floor(x / TUILE), Math.floor(y / TUILE))) return [x, y]; } return [cx, cy]; }
+// Tirage sans répétition immédiate ; une attaque à « recharge » (s) attend ce délai entre deux usages.
 function choisirAttaque(e, liste) {
-  const L = liste.filter(a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && a.id !== e.derniere);
-  const a = (G.alea.combat || new Alea(1)).pondere(L.length ? L : liste, x => x.poids || 1); e.derniere = a.id; return a;
+  const U = e.usages || (e.usages = {});
+  const dispo = a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && !(a.recharge && G.temps - (U[a.id] ?? -1e9) < a.recharge);
+  const L = liste.filter(a => dispo(a) && a.id !== e.derniere), L2 = L.length ? L : liste.filter(dispo);
+  const a = (G.alea.combat || new Alea(1)).pondere(L2.length ? L2 : liste, x => x.poids || 1); e.derniere = a.id; U[a.id] = G.temps; return a;
 }
 function ligneDanger(x0, y0, a, l, largeur, duree) { G.effets.push({ type: 'ligne_danger', x: x0, y: y0, a, l, largeur, age: 0, duree }); }
 function cercleDanger(x, y, r, duree) { G.effets.push({ type: 'cercle_danger', x, y, r, age: 0, duree }); }
@@ -93,10 +96,10 @@ const ACTIONS_PHASE = {
     const m = creerEnnemi('ENM_055', e.x, e.y, { sansApparition: true, parent: e.uid }); m.mue = true; m.pv = m.pvMax = 30;
     G.effets.push({ type: 'mue', x: e.x, y: e.y, age: 0, duree: 0.8 }); const [x, y] = pointAleatoire(G.salle, 3); e.x = x; e.y = y; e.invulnerable = true; setTimeoutJeu(() => { e.invulnerable = false; }, 0.8); Son.jouer('fumee');
   },
-  murs_sable(e) { G.salle.mursSable = true; },
+  murs_sable(e) { lancerMursSable(G.salle); Son.jouer('sable'); },
   accelerer(e) { e.acceleration = (e.acceleration || 1) * 1.25; },
   fin_hiruko(e) { e.def = Object.assign({}, e.def, { ia: 'sasori2' }); e.hiruko = false; G.effets.push({ type: 'debris', x: e.x, y: e.y, age: 0, duree: 0.6, n: 20, couleur: '#6a5a4a' }); },
-  susanoo(e) { e.susanoo = true; },
+  susanoo(e) { e.susanoo = { t: 0, a: ciblerJoueur(e), actif: false }; },
   c3(e) { e.c3Pret = true; },
   arene(e) { basculerArene(e); },
 };
@@ -142,7 +145,7 @@ function executerAttaqueBoss(e, a, moment, dt) {
     case 'charge': if (moment === 'maj') { const V = (a.vCharge || 9) * TUILE; e.vx = Math.cos(e.dirCharge) * V; e.vy = Math.sin(e.dirCharge) * V; const r = deplacerCercle(s, e, 0, 0, e.vol ? 'vol' : 'marche'); const tx = Math.floor((e.x + Math.cos(e.dirCharge) * (e.r + 6)) / TUILE), ty = Math.floor((e.y + Math.sin(e.dirCharge) * (e.r + 6)) / TUILE); if (solidePour(s, tx, ty, 'marche')) { e.tB = 0; if (a.impact === 'anneau') anneauBoss(e, 10, 4.5); secousse(6, e.dirCharge); Son.jouer('pas_lourd'); } } if (moment === 'fin') { e.vx = 0; e.vy = 0; } break;
     case 'saut': if (moment === 'debut') { e.sautDe = [e.x, e.y]; e.intangible = true; } if (moment === 'maj') { const k = Math.min(1, e.sousT / (a.duree || 0.6)); e.x = lerp(e.sautDe[0], e.cibleSaut[0], k); e.y = lerp(e.sautDe[1], e.cibleSaut[1], k); e.z = Math.sin(k * Math.PI) * 50; } if (moment === 'fin') { e.z = 0; e.intangible = false; ondeEnnemie(e.x, e.y, (a.r || 1.6) * TUILE); if (a.anneau) anneauBoss(e, a.anneau, 4.2); secousse(8, null); Son.jouer('pas_lourd'); const [tx, ty] = [Math.floor(e.x / TUILE), Math.floor(e.y / TUILE)]; if (solidePour(s, tx, ty, 'marche')) { const [a2, b2] = tuileLibreProche(s, e.x, e.y); [e.x, e.y] = centreTuile(a2, b2); } } break;
     case 'lame': if (moment === 'debut') { const r = (a.portee || 2.6) * TUILE; if (!J.intangible && dist(e.x, e.y, J.x, J.y) < r + 4 && Math.abs(diffAngle(e.aLame, angleVers(e.x, e.y, J.x, J.y))) < (a.arc || 150) * Math.PI / 360) blesserJoueur(a.degats || G.degatsEnnemis, { type: 'lame', x: e.x, y: e.y }); G.effets.push({ type: 'balayage', x: e.x, y: e.y - 6, a: e.aLame, arc: (a.arc || 150) * Math.PI / 180, r, age: 0, duree: 0.25 }); Son.jouer('lame'); if (a.vague) for (let i = -1; i <= 1; i++) tirEnnemi(e.x, e.y - 8, e.aLame + i * 0.25, 5, { source: e.id, taille: 1.4, apparence: 'lame' }); } break;
-    case 'invocation': if (moment === 'debut') { const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length; for (let i = 0; i < Math.min(a.n || 2, (a.max || 4) - n); i++) { const [x, y] = pointAleatoire(s); G.effets.push({ type: 'cercle_sceau', x, y, r: 14, age: 0, duree: 0.6 }); setTimeoutJeu(() => { if (e.mort) return; const f = creerEnnemi(a.id, x, y, { parent: e.uid }); f.parent = e.uid; }, 0.6); } Son.jouer('invocation'); } break;
+    case 'invocation': if (moment === 'debut') { const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length; for (let i = 0; i < Math.min(a.n || 2, (a.max || 4) - n); i++) { const [x, y] = pointAleatoire(s); G.effets.push({ type: 'cercle_sceau', x, y, r: 14, age: 0, duree: 0.6 }); setTimeoutJeu(() => { if (e.mort) return; const f = creerEnnemi(a.ennemi, x, y, { parent: e.uid }); f.parent = e.uid; }, 0.6); } Son.jouer('invocation'); } break;
     case 'pluie': if (moment === 'debut') { for (let i = 0; i < (a.n || 8); i++) { const cible = i % 3 === 0; const [x, y] = cible ? [J.x + (Math.random() - 0.5) * 30, J.y + (Math.random() - 0.5) * 20] : pointAleatoire(s, 1); setTimeoutJeu(() => !e.mort && frappeSolEnnemie(x, y, (a.r || 0.8) * TUILE, a.delai || 0.8, { visuel: a.visuel, son: a.son }), i * (a.intervalle || 0.12)); } } break;
     case 'rayon': if (moment === 'debut') { const f = { x: e.x, y: e.y - e.hauteur, a: e.aRayon, l: longueurJusquAuMur(s, e.x, e.y - e.hauteur, e.aRayon, true), largeur: 14, duree: a.duree || 0.6, age: 0, type: 'rayon_ennemi', couleur: a.couleur || '#b050e0', proprio: 'ennemi' }; G.faisceaux.push(f); Son.jouer('laser'); secousse(3, e.aRayon); } if (moment === 'maj' && a.balaye) { const f = G.faisceaux.find(x => x.type === 'rayon_ennemi'); if (f) f.a += a.balaye * dt; } break;
     case 'teleport': if (moment === 'debut') { e.intangible = true; e.alpha = 0.2; G.effets.push({ type: 'fumee', x: e.x, y: e.y - 10, age: 0, duree: 0.4, taille: 2 }); } if (moment === 'fin') { const [x, y] = a.pres ? (() => { const an = Math.random() * Math.PI * 2; const [tx, ty] = tuileLibreProche(s, J.x + Math.cos(an) * 3 * TUILE, J.y + Math.sin(an) * 2 * TUILE); return centreTuile(tx, ty); })() : pointAleatoire(s, 2); e.x = x; e.y = y; e.intangible = false; e.alpha = 1; G.effets.push({ type: 'fumee', x, y: y - 10, age: 0, duree: 0.4, taille: 2 }); Son.jouer('fumee'); if (a.puis === 'anneau') anneauBoss(e, 8, 4.5); } break;

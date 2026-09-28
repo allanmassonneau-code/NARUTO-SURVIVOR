@@ -30,7 +30,7 @@
       { id: 'sabre', type: 'lame', portee: 2.8, arc: 150, tele: 0.55, recup: 0.7, vague: true },
       { id: 'brume', type: 'special', nom: 'disparition_brume', tele: 0.4, duree: 1.8, recup: 0.3 },
       { id: 'dragon', type: 'salve', n: 3, v: 4.2, ecart: 0.18, rafales: 3, intervalle: 0.35, tele: 0.6, recup: 0.6, proj: 'eau' },
-      { id: 'clones', type: 'invocation', id: 'ENM_062', n: 2, max: 2, tele: 0.6, recup: 0.4 },
+      { id: 'clones', type: 'invocation', ennemi: 'ENM_062', n: 2, max: 2, tele: 0.6, recup: 0.4 },
     ], phases: [{ seuil: 0.45, message: 'Le brouillard s’épaissit…', action: 'accelerer' }], desc: 'Disparaît dans la brume (yeux visibles) et réapparaît sabre levé.' });
   B('BOS_005', 'Haku', 'Les miroirs de glace', 2, 260, { sprite: N('kiri', { t: '#5a6a8a', T: '#3a4a6a', a: '#e8e4dc', A: '#c8c4bc' }, { cheveux: { h: '#2a2a34' } }), init: 'miroirs', vitesse: 2.2, deplacement: 'aucun',
     attaques: [
@@ -50,7 +50,7 @@
       { id: 'danse', type: 'lame', portee: 2, arc: 360, tele: 0.6, recup: 0.8 },
     ], phases: [{ seuil: 0.4, message: 'Une forêt d’os jaillit !', action: 'accelerer' }], desc: 'Balles d’os, lances qui percent le sol en lignes, danse circulaire.' });
   // ── Étage 4 ──
-  B('BOS_009', 'Gaara', 'L’enfermement de sable', 4, 380, { sprite: N('suna', { t: '#7c3a2c', T: '#5a2a20' }, { cheveux: { h: '#c63a2a', g: '#ea6a4c', H: '#8a2418' }, yeux: 'cerne' }), vitesse: 1.0, deplacement: 'aucun', init: 'gaara',
+  B('BOS_009', 'Gaara', 'L’enfermement de sable', 4, 380, { sprite: N('suna', { mode: 'manteau', t: '#7c3a2c', T: '#5a2a20', a: '#7c3a2c', A: '#5a2a20', c: '#a8a090', e: '#a8a090', p: '#5a2a20', P: '#3e1c16', f: '#3a2a22' }, { coiffure: 'gaara', dos: 'gourde', cheveux: { h: '#c63a2a', g: '#ea6a4c', H: '#8a2418', r: '#a0202a' }, yeux: 'cerne' }), vitesse: 1.0, deplacement: 'aucun', init: 'gaara',
     attaques: [
       { id: 'cercueil', type: 'special', nom: 'cercueil_sable', tele: 0.2, duree: 1.2, recup: 0.6 },
       { id: 'shuriken', type: 'salve', n: 5, v: 4.8, ecart: 0.22, tele: 0.45, recup: 0.5, proj: 'sable_ennemi' },
@@ -65,13 +65,13 @@
       { id: 'anneau', type: 'anneau', n: 14, v: 3.8, trou: true, largeurTrou: 2, vagues: 2, tele: 0.5, recup: 0.7, phase: 1 },
     ], phases: [{ seuil: 0.55, message: 'L’armure d’Hiruko se brise !', action: 'fin_hiruko', invulnerable: 0.6 }], desc: 'Carapace blindée puis sable de fer.' });
   // ── Étage 5 ──
-  B('BOS_011', 'Kabuto', 'Le médecin des ombres', 5, 380, { sprite: N('kabuto', { t: '#6a5a8a', T: '#4a3e6a' }), vitesse: 2.0, deplacement: 'poursuite',
+  B('BOS_011', 'Kabuto', 'Le médecin des ombres', 5, 380, { sprite: N('kabuto', { t: '#6a5a8a', T: '#4a3e6a' }), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'scalpel', type: 'charge', vCharge: 10, tele: 0.45, duree: 0.8, recup: 0.6 },
-      { id: 'cadavres', type: 'invocation', id: 'ENM_050', n: 2, max: 3, tele: 0.7, recup: 0.4 },
-      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5 },
+      { id: 'cadavres', type: 'invocation', ennemi: 'ENM_050', n: 2, max: 3, tele: 0.7, recup: 0.4, recharge: 8 },
+      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5, seuil: 20, soin: 0.1, recharge: 10 },
       { id: 'salve', type: 'salve', n: 3, v: 6, ecart: 0.2, rafales: 2, tele: 0.4, recup: 0.5 },
-    ], desc: 'Se soigne en canalisant (interrompu par 40 dégâts) ; réanime des sujets.' });
+    ], desc: 'Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets.' });
   B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 440, { sprite: N('kiri', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#3a4a6a' }, peau: '#6a8ab0', visage: 'branchies' }), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'requins', type: 'special', nom: 'requins', tele: 0.5, duree: 1.5, recup: 0.6 },
@@ -82,22 +82,22 @@
   B('BOS_013', 'Hidan', 'Le rituel immortel', 5, 400, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#d8d8e0' } }), vitesse: 1.7, deplacement: 'poursuite', init: 'hidan',
     attaques: [
       { id: 'faux', type: 'special', nom: 'faux_hidan', tele: 0.6, duree: 1.4, recup: 0.6 },
-      { id: 'rituel', type: 'special', nom: 'rituel', tele: 0.3, duree: 2.2, recup: 0.6 },
+      { id: 'rituel', type: 'special', nom: 'rituel', tele: 0.3, duree: 2.2, recup: 0.6, seuil: 25 },
       { id: 'charge', type: 'charge', vCharge: 8.5, tele: 0.5, duree: 1, recup: 0.8 },
-    ], desc: 'Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel.' });
+    ], desc: 'Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel (25 dégâts pendant sa canalisation).' });
   // ── Étage 6 (première fin) ──
   B('BOS_014', 'Orochimaru', 'Les mues du serpent', 6, 520, { sprite: N('kabuto', { t: '#e0dcc8', T: '#b8b4a0' }, { cheveux: { h: '#1a1a1e', g: '#3a3a44', H: '#0a0a0e' } }), vitesse: 1.7, deplacement: 'errance',
     attaques: [
       { id: 'serpents', type: 'salve', n: 5, v: 5, ecart: 0.18, rafales: 2, tele: 0.5, recup: 0.6, proj: 'acide' },
       { id: 'epee', type: 'special', nom: 'epee_extensible', tele: 0.7, duree: 0.5, recup: 0.7 },
-      { id: 'invocation', type: 'invocation', id: 'ENM_051', n: 2, max: 2, tele: 0.6, recup: 0.4 },
+      { id: 'invocation', type: 'invocation', ennemi: 'ENM_051', n: 2, max: 2, tele: 0.6, recup: 0.4 },
       { id: 'huit', type: 'special', nom: 'huit_tetes', tele: 0.8, duree: 2.4, recup: 0.8, phase: 2 },
     ], phases: [{ seuil: 0.66, message: 'Orochimaru mue !', action: 'mue' }, { seuil: 0.33, message: 'Il mue encore… huit têtes se dressent !', action: 'mue' }], desc: 'À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs.' });
   // ── Étage 7 ──
   B('BOS_015', 'Deidara', 'L’art est une explosion', 7, 460, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#f0d060', g: '#fff090' } }), vol: true, vitesse: 2.0, deplacement: 'errance',
     attaques: [
-      { id: 'araignees', type: 'invocation', id: 'ENM_072', n: 3, max: 5, tele: 0.5, recup: 0.4 },
-      { id: 'oiseaux', type: 'invocation', id: 'ENM_071', n: 2, max: 4, tele: 0.5, recup: 0.4 },
+      { id: 'araignees', type: 'invocation', ennemi: 'ENM_072', n: 3, max: 5, tele: 0.5, recup: 0.4 },
+      { id: 'oiseaux', type: 'invocation', ennemi: 'ENM_071', n: 2, max: 4, tele: 0.5, recup: 0.4 },
       { id: 'bombes', type: 'pluie', n: 8, delai: 1, r: 1.1, intervalle: 0.15, tele: 0.5, recup: 0.6, son: 'explosion' },
       { id: 'c3', type: 'special', nom: 'c3', tele: 0.4, duree: 3.0, recup: 1.0, phase: 1 },
     ], phases: [{ seuil: 0.35, message: 'Deidara prépare sa grande œuvre (C3) !', action: 'c3' }], desc: 'Argile explosive sous toutes ses formes ; C3 : mettez-vous à l’abri derrière un bloc.' });
@@ -120,7 +120,7 @@
       { id: 'repulsion', type: 'repulsion', tele: 0.8, duree: 0.3, recup: 0.8 },
       { id: 'attraction', type: 'attraction', force: 2.3, tele: 0.6, duree: 2.0, recup: 0.6 },
       { id: 'tiges', type: 'salve', n: 3, v: 7, ecart: 0.15, rafales: 3, intervalle: 0.25, tele: 0.45, recup: 0.5, proj: 'kunai_ennemi' },
-      { id: 'betes', type: 'invocation', id: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
+      { id: 'betes', type: 'invocation', ennemi: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
       { id: 'sphere', type: 'special', nom: 'chibaku', tele: 0.8, duree: 3.2, recup: 1, phase: 1 },
     ], phases: [{ seuil: 0.5, message: 'Une sphère attire les rochers vers le ciel !', action: 'accelerer' }], desc: 'Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction.' });
   B('BOS_019', 'Obito', 'Les changements de présence', 8, 460, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#2a2a34' }, visage: 'spirale' }), init: 'obito', vitesse: 1.6,

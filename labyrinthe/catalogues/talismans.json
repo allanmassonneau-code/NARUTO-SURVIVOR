@@ -68,7 +68,10 @@
    }
   ],
   "statut": "création originale",
-  "poids": 1
+  "poids": 1,
+  "exclusion": [
+   "sansVitalite"
+  ]
  },
  {
   "id": "TAL_006",
@@ -206,7 +209,10 @@
    }
   ],
   "statut": "création originale",
-  "poids": 1
+  "poids": 1,
+  "exclusion": [
+   "sansVitalite"
+  ]
  },
  {
   "id": "TAL_014",
@@ -259,7 +265,10 @@
    }
   ],
   "statut": "création originale",
-  "poids": 1
+  "poids": 1,
+  "exclusion": [
+   "sansVitalite"
+  ]
  },
  {
   "id": "TAL_018",

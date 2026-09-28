@@ -2746,6 +2746,9 @@
   ],
   "cumul": "cumul",
   "statut": "adaptation (Byakugō, attribution à vérifier)",
+  "exclusion": [
+   "sansVitalite"
+  ],
   "icone": {
    "forme": "sceau",
    "a": "#a050d0",

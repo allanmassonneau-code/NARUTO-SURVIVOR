@@ -45,6 +45,7 @@ function majDeplacementJoueur(J, dt) {
   if (J.tir.rotation) v *= 0.6;
   if (!J.vol) { const t = tuilePx(s, J.x, J.y); if (t === T.TOILE && !J.drapeaux.immuniteSol) v *= 0.55; }
   for (const z of G.zones) if (!J.vol && (z.type === 'eau' || z.type === 'sable_mouvant' || z.type === 'toile_zone') && dist(z.x, z.y, J.x, J.y) < z.r && !J.drapeaux.immuniteSol) v *= 0.65;
+  if (dansSableArene(J)) v *= SABLE_ARENE.lenteur;
   const cx = mx * v, cy = my * v;
   // accélération 0,08 s ; freinage 0,07 s (sensation Isaac-like, précise)
   const acc = (Math.hypot(mx, my) > 0.05 ? 12.5 : 14.5) * dt;

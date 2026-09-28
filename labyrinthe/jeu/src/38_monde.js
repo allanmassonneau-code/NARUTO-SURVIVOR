@@ -13,6 +13,9 @@ function nouvellePartie(o) {
     opportunitePrecedente: false, marques: [], branche: null, fragments: 0, sacrifices: 0, bossVaincus: [], version: VERSION_DONNEES, histoire: [],
   };
   G.partie = P;
+  // états transitoires de la partie précédente (une transition entamée finirait dans le nouvel étage)
+  Object.assign(G, { transition: null, introBoss: null, animMort: null, conseil: null, pousse: null, attraction: null, appat: null, gelGlobal: 0, marqueJashin: 0,
+    fondu: null, enAnimationObjet: null, achatPropose: null, flashDegat: 0, causeMort: null, bossActifs: [], bombes: [], banniere: null, banniereEtage: null, dernierePorte: null });
   G.stats = { degats: 0, eliminations: 0, degatsRecus: 0, sallesVisitees: 0, objets: 0, depenses: 0 };
   P.joueur = creerJoueur(o.perso); G.joueur = P.joueur;
   const al = new Alea(code + '|pilules|' + VERSION_DONNEES);
@@ -495,7 +498,7 @@ function majDangersTerrain(dt) {
       case 'eau_alliee': for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, z.x, z.y) < z.r + e.r) appliquerStatut(e, 'ralenti', 0.5, 0); break;
       case 'mine': if (z.armee <= 0) for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { z.fini = true; explosion(z.x, z.y, 0.9 * TUILE, z.deg, { proprio: 'joueur', petite: true, gen: 1 }); break; } break;
       case 'parchemin': if (z.armee <= 0 && (dist(J.x, J.y, z.x, z.y) < 24 || z.age > z.duree - 0.05)) { z.fini = true; explosion(z.x, z.y, 1.2 * TUILE, 8, { proprio: 'ennemi', blesseJoueur: true, degatsJoueur: G.degatsEnnemis }); } break;
-      case 'acide': case 'feu_ennemi': if (!J.vol && dist(J.x, J.y, z.x, z.y) < z.r) blesserJoueur(G.degatsEnnemis, { type: z.type }); break;
+      case 'acide': case 'feu_ennemi': if (!J.vol && !(z.naissance && z.age < z.naissance) && dist(J.x, J.y, z.x, z.y) < z.r) blesserJoueur(G.degatsEnnemis, { type: z.type }); break;
       case 'glace': break;
     }
     if (z.age >= z.duree && !z.persistante) z.fini = true;

@@ -290,6 +290,75 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     out.secours = G.modeTest.deblocages; G.modeTest.dieu = false; return out;
   });
 
+  // 12) Visibilité : chaque ennemi et chaque boss dessine réellement des pixels
+  // (un décalage non numérique rend un sprite invisible sans erreur)
+  if (veut('visibilite')) await lancer('visibilite', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0 };
+    L.nouvellePartie({ perso: 'CHR_001', code: 'VISI2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+    const c = document.createElement('canvas'); c.width = 160; c.height = 160; const g = c.getContext('2d');
+    for (const d of L.DON.ennemis.concat(L.DON.boss)) {
+      try {
+        const e = L.creerEnnemi(d.id, 80, 130, { sansApparition: true }); e.apparition = 0; e.cache = false; // embusqués : on juge le sprite, pas l'indice au sol
+        const sp = L.spriteEnnemi(e);
+        if (typeof (sp.base || 0) !== 'number') { out.ko.push(d.id + ' base ' + typeof sp.base); continue; }
+        g.clearRect(0, 0, 160, 160); L.dessinerEnnemi(g, e, 80, 130);
+        const px = g.getImageData(0, 0, 160, 160).data; let n = 0; for (let i = 3; i < px.length; i += 4) if (px[i] > 40) n++;
+        if (n < Math.min(30, 0.6 * e.r * e.r)) out.ko.push(d.id + ' ' + n + ' px'); else out.ok++;
+        e.mort = true;
+      } catch (err) { out.ko.push(d.id + ' ' + String(err.stack || err).slice(0, 200)); }
+    }
+    G.ennemis = []; return out;
+  });
+
+  // 13) Mécaniques signatures : sable de Gaara, Susanoo d'Itachi, cristaux, zones télégraphiées
+  if (veut('mecaniques')) await lancer('mecaniques', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [] };
+    const boss = id => { L.nouvellePartie({ perso: 'CHR_001', code: 'MECA2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+      const s = G.etage.salles[G.etage.boss]; s.bossDef = id; s.visitee = true; s.ennemisDef = []; T.allerA(s.id); T.pas(120, ['Enter']); T.pas(10, []);
+      const b = G.ennemis.find(x => x.id === id); b.tB = 99; b.etatB = 'choix'; return b; };
+    // Gaara : sous 50 %, une bande de sable se forme ; y rester 1,2 s coûte une touche ; elle se retire à sa mort
+    let b = boss('BOS_009'); const J = G.joueur;
+    b.pv = b.pvMax * 0.52; L.infligerDegats(b, b.pvMax * 0.05, { proprio: 'joueur', type: 'explosion' });
+    const m = G.salle._mursSable; if (!m || !m.tuiles.length) out.ko.push('Gaara : pas de bande de sable');
+    else {
+      const s = G.salle; const i = m.tuiles[0], tx = i % s.W, ty = (i / s.W) | 0;
+      J.x = tx * 32 + 16; J.y = ty * 32 + 20; if (L.dansSableArene(J)) out.ko.push('sable actif pendant sa formation');
+      T.pas(160, []); b.tB = 99;
+      const avant = L.santeTotale(J.sante); let lent = null;
+      for (let k = 0; k < 90; k++) { J.x = tx * 32 + 16; J.y = ty * 32 + 20; if (k === 5) lent = L.dansSableArene(J); b.tB = 99; T.pas(1, []); }
+      if (!lent) out.ko.push('sable formé sans effet');
+      if (!(L.santeTotale(J.sante) < avant)) out.ko.push('rester dans le sable ne coûte rien');
+      b.pv = 1; L.infligerDegats(b, 5, { proprio: 'joueur', type: 'explosion' }); T.pas(90, []);
+      if (G.salle._mursSable) out.ko.push('sable encore là après la mort de Gaara');
+      out.sable = m.tuiles.length + ' tuiles';
+    }
+    // Itachi : sous 40 %, rempart frontal qui arrête les tirs de face, pas de dos ni les explosions ; cycle 4 s / 2,5 s
+    b = boss('BOS_016'); b.pv = b.pvMax * 0.42; L.infligerDegats(b, b.pvMax * 0.05, { proprio: 'joueur', type: 'explosion' }); T.pas(20, []);
+    const S = b.susanoo; if (!S) out.ko.push('Itachi : pas de Susanoo');
+    else {
+      if (!S.actif) out.ko.push('Susanoo inactif au lancement');
+      const face = L.infligerDegats(b, 1, { proprio: 'joueur', type: 'projectile', vx: -Math.cos(S.a), vy: -Math.sin(S.a) });
+      const dos = L.infligerDegats(b, 1, { proprio: 'joueur', type: 'projectile', vx: Math.cos(S.a), vy: Math.sin(S.a) });
+      const expl = L.infligerDegats(b, 1, { proprio: 'joueur', type: 'explosion' });
+      if (face || !dos || !expl) out.ko.push('Susanoo face=' + face + ' dos=' + dos + ' explosion=' + expl);
+      let actifs = 0; for (let k = 0; k < 390; k++) { b.tB = 99; T.pas(1, []); if (S.actif) actifs++; }
+      if (actifs < 200 || actifs > 280) out.ko.push('cycle du Susanoo : ' + actifs + '/390 images actives');
+      out.susanoo = actifs + '/390 images dressé';
+    }
+    // Cristaux (« Galeries de verre ») : un tir rebondit sur un cristal, au plus 3 fois
+    L.nouvellePartie({ perso: 'CHR_001', code: 'CRIS2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+    const sc = Object.values(G.etage.salles).find(x => x.type === 'combat' && x.forme === '1x1'); sc.visitee = true; sc.ennemisDef = []; T.allerA(sc.id);
+    const s2 = G.salle; const ic = 4 * s2.W + 10; s2.tuiles[ic] = L.T.BLOC; s2.cristaux = [ic]; s2.fondSale = true;
+    G.joueur.x = 3 * 32 + 16; G.joueur.y = 6 * 32 + 16;
+    const p = L.tirEnnemi(8 * 32 + 16, 4 * 32 + 16, 0, 4); p.dureeVie = 5; T.pas(40, []);
+    if (p.mort && !(p.rebondsCristal >= 1)) out.ko.push('tir détruit par le cristal sans rebond');
+    else if (!(p.vx < 0)) out.ko.push('tir non renvoyé par le cristal (vx=' + Math.round(p.vx) + ')');
+    // Zones ennemies : pas de dégâts pendant leur naissance (télégraphe)
+    const avantZ = L.santeTotale(G.joueur.sante); L.creerZone(G.joueur.x, G.joueur.y, 'acide', 3, { r: 20, proprio: 'ennemi', naissance: 0.6 });
+    T.pas(20, []); if (L.santeTotale(G.joueur.sante) < avantZ) out.ko.push('zone ennemie blessante avant la fin de sa naissance');
+    return out;
+  });
+
   console.log(erreursPage.length ? 'ERREURS PAGE (' + erreursPage.length + '):\n' + erreursPage.slice(0, 8).join('\n') : 'aucune erreur de page');
   await b.close();
   process.exit(echecs || erreursPage.length ? 1 : 0);

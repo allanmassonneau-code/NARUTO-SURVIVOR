@@ -738,7 +738,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
       { id: 'sabre', type: 'lame', portee: 2.8, arc: 150, tele: 0.55, recup: 0.7, vague: true },
       { id: 'brume', type: 'special', nom: 'disparition_brume', tele: 0.4, duree: 1.8, recup: 0.3 },
       { id: 'dragon', type: 'salve', n: 3, v: 4.2, ecart: 0.18, rafales: 3, intervalle: 0.35, tele: 0.6, recup: 0.6, proj: 'eau' },
-      { id: 'clones', type: 'invocation', id: 'ENM_062', n: 2, max: 2, tele: 0.6, recup: 0.4 },
+      { id: 'clones', type: 'invocation', ennemi: 'ENM_062', n: 2, max: 2, tele: 0.6, recup: 0.4 },
     ], phases: [{ seuil: 0.45, message: 'Le brouillard s’épaissit…', action: 'accelerer' }], desc: 'Disparaît dans la brume (yeux visibles) et réapparaît sabre levé.' });
   B('BOS_005', 'Haku', 'Les miroirs de glace', 2, 260, { sprite: N('kiri', { t: '#5a6a8a', T: '#3a4a6a', a: '#e8e4dc', A: '#c8c4bc' }, { cheveux: { h: '#2a2a34' } }), init: 'miroirs', vitesse: 2.2, deplacement: 'aucun',
     attaques: [
@@ -758,7 +758,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
       { id: 'danse', type: 'lame', portee: 2, arc: 360, tele: 0.6, recup: 0.8 },
     ], phases: [{ seuil: 0.4, message: 'Une forêt d’os jaillit !', action: 'accelerer' }], desc: 'Balles d’os, lances qui percent le sol en lignes, danse circulaire.' });
   // ── Étage 4 ──
-  B('BOS_009', 'Gaara', 'L’enfermement de sable', 4, 380, { sprite: N('suna', { t: '#7c3a2c', T: '#5a2a20' }, { cheveux: { h: '#c63a2a', g: '#ea6a4c', H: '#8a2418' }, yeux: 'cerne' }), vitesse: 1.0, deplacement: 'aucun', init: 'gaara',
+  B('BOS_009', 'Gaara', 'L’enfermement de sable', 4, 380, { sprite: N('suna', { mode: 'manteau', t: '#7c3a2c', T: '#5a2a20', a: '#7c3a2c', A: '#5a2a20', c: '#a8a090', e: '#a8a090', p: '#5a2a20', P: '#3e1c16', f: '#3a2a22' }, { coiffure: 'gaara', dos: 'gourde', cheveux: { h: '#c63a2a', g: '#ea6a4c', H: '#8a2418', r: '#a0202a' }, yeux: 'cerne' }), vitesse: 1.0, deplacement: 'aucun', init: 'gaara',
     attaques: [
       { id: 'cercueil', type: 'special', nom: 'cercueil_sable', tele: 0.2, duree: 1.2, recup: 0.6 },
       { id: 'shuriken', type: 'salve', n: 5, v: 4.8, ecart: 0.22, tele: 0.45, recup: 0.5, proj: 'sable_ennemi' },
@@ -773,13 +773,13 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
       { id: 'anneau', type: 'anneau', n: 14, v: 3.8, trou: true, largeurTrou: 2, vagues: 2, tele: 0.5, recup: 0.7, phase: 1 },
     ], phases: [{ seuil: 0.55, message: 'L’armure d’Hiruko se brise !', action: 'fin_hiruko', invulnerable: 0.6 }], desc: 'Carapace blindée puis sable de fer.' });
   // ── Étage 5 ──
-  B('BOS_011', 'Kabuto', 'Le médecin des ombres', 5, 380, { sprite: N('kabuto', { t: '#6a5a8a', T: '#4a3e6a' }), vitesse: 2.0, deplacement: 'poursuite',
+  B('BOS_011', 'Kabuto', 'Le médecin des ombres', 5, 380, { sprite: N('kabuto', { t: '#6a5a8a', T: '#4a3e6a' }), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'scalpel', type: 'charge', vCharge: 10, tele: 0.45, duree: 0.8, recup: 0.6 },
-      { id: 'cadavres', type: 'invocation', id: 'ENM_050', n: 2, max: 3, tele: 0.7, recup: 0.4 },
-      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5 },
+      { id: 'cadavres', type: 'invocation', ennemi: 'ENM_050', n: 2, max: 3, tele: 0.7, recup: 0.4, recharge: 8 },
+      { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5, seuil: 20, soin: 0.1, recharge: 10 },
       { id: 'salve', type: 'salve', n: 3, v: 6, ecart: 0.2, rafales: 2, tele: 0.4, recup: 0.5 },
-    ], desc: 'Se soigne en canalisant (interrompu par 40 dégâts) ; réanime des sujets.' });
+    ], desc: 'Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; au plus une fois toutes les 10 s) ; réanime des sujets.' });
   B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 440, { sprite: N('kiri', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#3a4a6a' }, peau: '#6a8ab0', visage: 'branchies' }), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'requins', type: 'special', nom: 'requins', tele: 0.5, duree: 1.5, recup: 0.6 },
@@ -790,22 +790,22 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   B('BOS_013', 'Hidan', 'Le rituel immortel', 5, 400, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#d8d8e0' } }), vitesse: 1.7, deplacement: 'poursuite', init: 'hidan',
     attaques: [
       { id: 'faux', type: 'special', nom: 'faux_hidan', tele: 0.6, duree: 1.4, recup: 0.6 },
-      { id: 'rituel', type: 'special', nom: 'rituel', tele: 0.3, duree: 2.2, recup: 0.6 },
+      { id: 'rituel', type: 'special', nom: 'rituel', tele: 0.3, duree: 2.2, recup: 0.6, seuil: 25 },
       { id: 'charge', type: 'charge', vCharge: 8.5, tele: 0.5, duree: 1, recup: 0.8 },
-    ], desc: 'Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel.' });
+    ], desc: 'Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel (25 dégâts pendant sa canalisation).' });
   // ── Étage 6 (première fin) ──
   B('BOS_014', 'Orochimaru', 'Les mues du serpent', 6, 520, { sprite: N('kabuto', { t: '#e0dcc8', T: '#b8b4a0' }, { cheveux: { h: '#1a1a1e', g: '#3a3a44', H: '#0a0a0e' } }), vitesse: 1.7, deplacement: 'errance',
     attaques: [
       { id: 'serpents', type: 'salve', n: 5, v: 5, ecart: 0.18, rafales: 2, tele: 0.5, recup: 0.6, proj: 'acide' },
       { id: 'epee', type: 'special', nom: 'epee_extensible', tele: 0.7, duree: 0.5, recup: 0.7 },
-      { id: 'invocation', type: 'invocation', id: 'ENM_051', n: 2, max: 2, tele: 0.6, recup: 0.4 },
+      { id: 'invocation', type: 'invocation', ennemi: 'ENM_051', n: 2, max: 2, tele: 0.6, recup: 0.4 },
       { id: 'huit', type: 'special', nom: 'huit_tetes', tele: 0.8, duree: 2.4, recup: 0.8, phase: 2 },
     ], phases: [{ seuil: 0.66, message: 'Orochimaru mue !', action: 'mue' }, { seuil: 0.33, message: 'Il mue encore… huit têtes se dressent !', action: 'mue' }], desc: 'À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs.' });
   // ── Étage 7 ──
   B('BOS_015', 'Deidara', 'L’art est une explosion', 7, 460, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#f0d060', g: '#fff090' } }), vol: true, vitesse: 2.0, deplacement: 'errance',
     attaques: [
-      { id: 'araignees', type: 'invocation', id: 'ENM_072', n: 3, max: 5, tele: 0.5, recup: 0.4 },
-      { id: 'oiseaux', type: 'invocation', id: 'ENM_071', n: 2, max: 4, tele: 0.5, recup: 0.4 },
+      { id: 'araignees', type: 'invocation', ennemi: 'ENM_072', n: 3, max: 5, tele: 0.5, recup: 0.4 },
+      { id: 'oiseaux', type: 'invocation', ennemi: 'ENM_071', n: 2, max: 4, tele: 0.5, recup: 0.4 },
       { id: 'bombes', type: 'pluie', n: 8, delai: 1, r: 1.1, intervalle: 0.15, tele: 0.5, recup: 0.6, son: 'explosion' },
       { id: 'c3', type: 'special', nom: 'c3', tele: 0.4, duree: 3.0, recup: 1.0, phase: 1 },
     ], phases: [{ seuil: 0.35, message: 'Deidara prépare sa grande œuvre (C3) !', action: 'c3' }], desc: 'Argile explosive sous toutes ses formes ; C3 : mettez-vous à l’abri derrière un bloc.' });
@@ -828,7 +828,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
       { id: 'repulsion', type: 'repulsion', tele: 0.8, duree: 0.3, recup: 0.8 },
       { id: 'attraction', type: 'attraction', force: 2.3, tele: 0.6, duree: 2.0, recup: 0.6 },
       { id: 'tiges', type: 'salve', n: 3, v: 7, ecart: 0.15, rafales: 3, intervalle: 0.25, tele: 0.45, recup: 0.5, proj: 'kunai_ennemi' },
-      { id: 'betes', type: 'invocation', id: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
+      { id: 'betes', type: 'invocation', ennemi: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
       { id: 'sphere', type: 'special', nom: 'chibaku', tele: 0.8, duree: 3.2, recup: 1, phase: 1 },
     ], phases: [{ seuil: 0.5, message: 'Une sphère attire les rochers vers le ciel !', action: 'accelerer' }], desc: 'Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction.' });
   B('BOS_019', 'Obito', 'Les changements de présence', 8, 460, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#2a2a34' }, visage: 'spirale' }), init: 'obito', vitesse: 1.6,
@@ -2485,6 +2485,13 @@ function miroir(c) { const m = toile(c.width, c.height), g = ctxDe(m); g.transla
 function silhouette(c, couleur) {
   const s = toile(c.width, c.height), g = ctxDe(s); g.drawImage(c, 0, 0); g.globalCompositeOperation = 'source-in'; g.fillStyle = couleur; g.fillRect(0, 0, s.width, s.height); return s;
 }
+// Variante mémorisée pour les dessins par image (clignotements, teintes d'état) :
+// une toile par (image source, couleur), libérée avec l'image source.
+const _silhouettes = new WeakMap();
+function silhouetteMemo(c, couleur) {
+  let m = _silhouettes.get(c); if (!m) { m = new Map(); _silhouettes.set(c, m); }
+  let s = m.get(couleur); if (!s) { s = silhouette(c, couleur); m.set(couleur, s); } return s;
+}
 // Rotation au plus proche voisin (pas de flou) dans une toile carrée.
 function tourner(c, angle) {
   const n = Math.ceil(Math.hypot(c.width, c.height)) | 1; const out = toile(n, n), g = ctxDe(out);
@@ -3669,13 +3676,16 @@ function dessinerVisage(g, type, cx, cy) {
   } else if (type === 'piercings') { for (const [x, y] of [[-5, 3], [5, 3], [-2, 5], [2, 5], [0, -1], [-6, -3], [6, -3]]) px(x, y, '#c8ccd8'); }
   else if (type === 'branchies') { for (const [x, y] of [[-7, 2], [-7, 4], [7, 2], [7, 4]]) { px(x, y, '#2a4a6a'); px(x + (x < 0 ? 1 : -1), y, '#2a4a6a'); } }
 }
-const _spEnn = new WeakMap(); // cache par définition (les variantes créées en combat ont leur propre sprite)
+// Cache par objet « sprite » et par échelle : les copies de définition créées en combat
+// (illusions, masques, miroirs) qui gardent le même objet sprite ne le reconstruisent pas.
+const _spEnn = new WeakMap(), SPRITE_DEFAUT = { type: 'carte', cle: 'poupee' };
 function spriteEnnemi(e) {
-  const d = e.def; const S = d.sprite || { type: 'carte', cle: 'poupee' };
-  if (_spEnn.has(d)) return _spEnn.get(d);
-  let r;
+  const d = e.def; const S = d.sprite || SPRITE_DEFAUT;
   // taille : les boss sont agrandis par Scale2x (×2, ou ×4 pour les géants) ; les autres restent à l'échelle 1
   const k = d.echelleSprite ? (d.echelleSprite >= 3 ? 4 : d.echelleSprite) : (d.boss && !d.mini ? 2 : 1);
+  let cache = _spEnn.get(S); if (!cache) { cache = new Map(); _spEnn.set(S, cache); }
+  if (cache.has(k)) return cache.get(k);
+  let r;
   const agrandir = c => k >= 4 ? agrandir2x(agrandir2x(c)) : k === 2 ? agrandir2x(c) : c;
   if (S.type === 'carte' && CARTES_CREATURES[S.cle]) {
     const C = CARTES_CREATURES[S.cle]; const col = Object.assign({}, C.c, S.couleurs || {});
@@ -3683,13 +3693,13 @@ function spriteEnnemi(e) {
   } else if (S.type === 'ninja') {
     const M = MASQUES_ENNEMIS[S.masque] || MASQUES_ENNEMIS.bandana;
     const cs = Object.assign({}, M.c, S.cheveux || {}); const peau = S.peau || M.peau; if (peau) { cs.s = peau; cs.d = nuancer(peau, 0.82); cs.l = nuancer(peau, 1.12); }
-    const V = { coiffure: M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages };
-    const k = 'enn_' + d.id + '_' + d.nom; VISUELS[k] = V;
-    const P = spritesPerso(k);
-    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, k, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); return c; };
-    r = { frames: [frame(0), frame(1)].map(agrandir), base: k };
-  } else r = { frames: [contourner(disque(e.r || 8, '#a04a6a'))], base: 0 };
-  _spEnn.set(d, r); return r;
+    const V = { coiffure: S.coiffure || M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages, dos: S.dos };
+    const cle = 'enn_' + d.id + '_' + d.nom; VISUELS[cle] = V;
+    const P = spritesPerso(cle);
+    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); return c; };
+    r = { frames: [frame(0), frame(1)].map(agrandir), base: k }; // pieds à 1 px du bas, ×k après agrandissement
+  } else r = { frames: [contourner(disque(d.r || 8, '#a04a6a'))], base: 0 };
+  cache.set(k, r); return r;
 }
 // ── Familiers ──
 const _spFam = {};
@@ -4305,13 +4315,19 @@ function dessinerEnnemi(g, e, x, y) {
   g.globalAlpha = Math.max(0.15, alpha);
   const tele = e.ia.tele; let dx = 0, dy = 0, sc = 1;
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
-  const img = e.flash > 0 ? silhouette(sp.frames[e.frame % sp.frames.length], '#ffffff') : sp.frames[e.frame % sp.frames.length];
+  const base = sp.frames[e.frame % sp.frames.length];
+  const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
   const ech = (e.echelle || 1) * sc;
   const w = Math.round(img.width * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1)), h = Math.round(img.height * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1));
   const miroirG = sp.miroir && e.dir === 'gauche';
-  if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(img, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); }
-  else g.drawImage(img, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h);
+  const poser = im => { if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); } else g.drawImage(im, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); };
+  poser(img);
+  // états de boss lisibles : peau durcie (gris pierre), carapace d'Hiruko (bois cerclé)
+  if (e.durci > 0 && !(e.flash > 0)) { g.globalAlpha = 0.5 + 0.12 * Math.sin(G.temps * 14); poser(silhouetteMemo(base, '#8a8a92')); }
+  if (e.hiruko && !(e.flash > 0)) { g.globalAlpha = 0.42; poser(silhouetteMemo(base, '#6a4a2e')); g.globalAlpha = 1; g.fillStyle = '#c8b070'; for (const k of [-1, 0, 1]) g.fillRect(x + k * 6 - 1, y - Math.round(h * 0.55) + Math.abs(k) * 3, 2, 2); }
   g.globalAlpha = 1;
+  if (e.bouclierSable) { const a = (e.grainsSable || 0) * 2.4; for (let i = 0; i < 8; i++) { const b = a + i * Math.PI / 4; g.fillStyle = i % 2 ? '#d8b070' : '#b08848'; g.fillRect(Math.round(x + Math.cos(b) * (e.r + 7)), Math.round(y - h * 0.45 + Math.sin(b) * (e.r * 0.6 + 4)), 2, 2); } }
+  if (e.susanoo) dessinerSusanoo(g, e, x, y - Math.round(h * 0.5));
   // champion : forme d'aura + icône (pas seulement la couleur)
   if (e.champion) { const C = CHAMPIONS[e.champion]; const t = G.temps * 3; for (let i = 0; i < 4; i++) { const a = t + i * Math.PI / 2; g.fillStyle = C.couleur; g.fillRect(Math.round(x + Math.cos(a) * (e.r + 5)) - 1, Math.round(y - h / 2 + Math.sin(a) * (e.r * 0.7 + 4)) - 1, 3, 3); } dessinerIconeChampion(g, C.icone, x, y - h - 6 + (sp.base || 0), C.couleur); }
   // statuts : symboles redondants
@@ -4322,6 +4338,22 @@ function dessinerEnnemi(g, e, x, y) {
   if (e.def.params && e.def.params.bouclier === 'aura') { g.globalAlpha = 0.25; g.drawImage(anneau(2.5 * TUILE, 1, '#a0c0ff'), x - 2.5 * TUILE - 1, y - 2.5 * TUILE - 1); g.globalAlpha = 1; }
   if (e.invulnerable) { g.globalAlpha = 0.6; g.drawImage(anneau(e.r + 6, 2, '#e0e0ff'), x - e.r - 7, y - h / 2 - e.r - 7); g.globalAlpha = 1; }
   if (G.joueur.transformations.includes('TRF_005') && !e.boss && e.pv < e.pvMax) { g.fillStyle = '#1c1420'; g.fillRect(x - 8, y + 2, 16, 2); g.fillStyle = '#e04a4a'; g.fillRect(x - 8, y + 2, Math.round(16 * e.pv / e.pvMax), 2); }
+}
+// Rempart spectral d'Itachi : arc de côtes (±60°) orienté ; il vacille avant de se dissiper
+function dessinerSusanoo(g, e, x, y) {
+  const S = e.susanoo, A = SUSANOO.demiArc;
+  if (!S.actif) { if (Math.floor(G.temps * 10) % 4 === 0) { g.globalAlpha = 0.18; g.drawImage(anneau(e.r + 12, 1, '#e0506a'), x - e.r - 13, y - e.r - 13); g.globalAlpha = 1; } return; }
+  const al = S.vacille ? (Math.floor(G.temps * 16) % 2 ? 0.25 : 0.7) : 0.85; g.globalAlpha = al;
+  const R = e.r + 14;
+  for (let t = -A; t <= A + 1e-6; t += A / 28) { // bande spectrale : voile, cœur clair, bord sombre (pixels nets)
+    const c = Math.cos(S.a + t), s = Math.sin(S.a + t);
+    for (let q = -6; q <= 3; q += 1) {
+      g.fillStyle = q >= 2 ? '#6a1432' : q >= 0 ? '#ff9aaa' : q >= -2 ? '#e0506a' : 'rgba(224,80,106,0.35)';
+      g.fillRect(Math.round(x + c * (R + q)), Math.round(y + s * (R + q) * 0.8), 2, 2);
+    }
+  }
+  for (let k = -2; k <= 2; k++) { const b = S.a + k * A / 2.5; lignePixel(g, x + Math.cos(b) * (R - 13), y + Math.sin(b) * (R - 13) * 0.8, x + Math.cos(b) * (R - 6), y + Math.sin(b) * (R - 6) * 0.8, '#ff9aaa', 2); }
+  g.globalAlpha = 1;
 }
 function dessinerIconeChampion(g, ic, x, y, c) {
   g.fillStyle = '#1c1420'; g.fillRect(x - 3, y - 3, 7, 7); g.fillStyle = c;
@@ -4424,7 +4456,7 @@ function dessinerSortie(g, s, x, y) {
 function dessinerBombe(g, b, x, y) {
   const k = b.age / b.meche; const cl = Math.floor(b.age * (k > 0.7 ? 16 : 6)) % 2;
   g.fillStyle = '#6a6a70'; g.fillRect(x - 1, y - 14, 2, 10);
-  const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouette(s, '#ff6a4a') : s, x - 4, y - 16);
+  const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouetteMemo(s, '#ff6a4a') : s, x - 4, y - 16);
   g.fillStyle = '#ffd060'; g.fillRect(x - 1 + Math.round(Math.random() * 2), y - 17 - Math.round(Math.random() * 2), 1, 1);
 }
 function dessinerZone(g, z, X, Y) {
@@ -4440,7 +4472,7 @@ function dessinerZone(g, z, X, Y) {
     case 'huile': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(40,30,20,0.55)'), x - z.r, y - z.r * 0.55); g.fillStyle = 'rgba(200,180,120,0.5)'; g.fillRect(x - 3, y - 2, 4, 1); break;
     case 'toile_zone': g.drawImage(decorsTheme(G.theme).toile, x - 16, y - 16); break;
     case 'mine': { const cl = z.armee > 0 ? 0 : Math.floor(G.temps * 6) % 2; g.drawImage(disque(4, '#3a3040'), x - 4, y - 4); g.fillStyle = cl ? '#ff6a4a' : '#8a6a6a'; g.fillRect(x - 1, y - 1, 2, 2); break; }
-    case 'parchemin': { const cl = z.armee > 0 ? 0 : Math.floor(G.temps * 8) % 2; const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouette(s, '#ff4a2a') : s, x - 4, y - 12); g.drawImage(anneau(24, 1, cl ? 'rgba(255,80,40,0.7)' : 'rgba(255,80,40,0.25)'), x - 25, y - 25); break; }
+    case 'parchemin': { const cl = z.armee > 0 ? 0 : Math.floor(G.temps * 8) % 2; const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouetteMemo(s, '#ff4a2a') : s, x - 4, y - 12); g.drawImage(anneau(24, 1, cl ? 'rgba(255,80,40,0.7)' : 'rgba(255,80,40,0.25)'), x - 25, y - 25); break; }
     case 'courant': { g.fillStyle = 'rgba(120,180,220,0.35)'; for (let i = 0; i < 4; i++) { const o = ((G.temps * 40 + i * 12) % 48) - 24; g.fillRect(x + (z.dx ? o : -z.r / 2 + i * 6), y + (z.dy ? o : -z.r / 4 + i * 3), z.dx ? 6 : 1, z.dy ? 6 : 1); } break; }
   }
   g.globalAlpha = 1;
@@ -5257,15 +5289,15 @@ function majProjectiles(dt) {
         const tx = Math.floor(nx / TUILE), ty = Math.floor(ny / TUILE);
         if (!P.mur && PROP[t].pvTir && p.proprio === 'joueur') endommagerTuile(s, tx, ty, 1);
         if (PROP[t].pvTir && p.proprio === 'ennemi' && p.lourd) endommagerTuile(s, tx, ty, 1);
-        if (p.rebonds > 0) {
-          p.rebonds--;
+        const cristal = s.cristaux && s.cristaux.includes(ty * s.W + tx) && !p.rayon;
+        if (p.rebonds > 0 || cristal) {
+          if (cristal) { p.rebondsCristal = (p.rebondsCristal || 0) + 1; if (p.rebondsCristal > 3) { detruireProjectile(p, 'mur'); continue; } G.effets.push({ type: 'etincelle', x: p.x, y: p.y - 4, age: 0, duree: 0.15 }); } else p.rebonds--;
           const tX = PROP[tuilePx(s, nx, p.y)], tY = PROP[tuilePx(s, p.x, ny)];
           if (tX.mur || (tX.bloqueTir && !p.spectral)) p.vx = -p.vx; if (tY.mur || (tY.bloqueTir && !p.spectral)) p.vy = -p.vy;
           if (!(tX.mur || tX.bloqueTir) && !(tY.mur || tY.bloqueTir)) { p.vx = -p.vx; p.vy = -p.vy; }
           p.touches.clear();
         } else { detruireProjectile(p, 'mur'); continue; }
       } else { p.x = nx; p.y = ny; }
-      if (G.variante && G.variante.cristaux && p.rebonds === 0 && tuilePx(s, p.x, p.y) === T.SOL && estCristal(s, p.x, p.y)) { p.vx = -p.vx; p.vy = -p.vy; }
     }
     // Hauteur : chute en fin de portée
     if (p.arc) { p.z = 8 + Math.sin(Math.min(1, p.age / p.dureeVie) * Math.PI) * 26; }
@@ -5294,12 +5326,12 @@ function majProjectiles(dt) {
   }
   G.proj = G.proj.filter(p => !p.mort);
 }
-function estCristal(s, x, y) { return false; }
 
 function toucherEnnemi(p, e) {
   const J = G.joueur;
   let deg = p.degats;
-  infligerDegats(e, deg, { proprio: p.proprio, x: p.x, y: p.y, vx: p.vx, vy: p.vy, recul: p.recul, elements: p.elements, type: 'projectile' });
+  const touche = infligerDegats(e, deg, { proprio: p.proprio, x: p.x, y: p.y, vx: p.vx, vy: p.vy, recul: p.recul, elements: p.elements, type: 'projectile' });
+  if (!touche) { declencherImpacts(p, e); return; } // tir arrêté : l'impact physique a lieu, sans statut ni déclencheur
   for (const st of p.statuts) {
     const ch = Math.min(st.max || 1, (st.chance || 0) + (st.chanceParChance || 0) * J.stats.chance);
     if (Math.random() < ch) appliquerStatut(e, st.statut, st.duree || 2, deg);
@@ -6002,6 +6034,7 @@ function majDeplacementJoueur(J, dt) {
   if (J.tir.rotation) v *= 0.6;
   if (!J.vol) { const t = tuilePx(s, J.x, J.y); if (t === T.TOILE && !J.drapeaux.immuniteSol) v *= 0.55; }
   for (const z of G.zones) if (!J.vol && (z.type === 'eau' || z.type === 'sable_mouvant' || z.type === 'toile_zone') && dist(z.x, z.y, J.x, J.y) < z.r && !J.drapeaux.immuniteSol) v *= 0.65;
+  if (dansSableArene(J)) v *= SABLE_ARENE.lenteur;
   const cx = mx * v, cy = my * v;
   // accélération 0,08 s ; freinage 0,07 s (sensation Isaac-like, précise)
   const acc = (Math.hypot(mx, my) > 0.05 ? 12.5 : 14.5) * dt;
@@ -6359,6 +6392,9 @@ function nouvellePartie(o) {
     opportunitePrecedente: false, marques: [], branche: null, fragments: 0, sacrifices: 0, bossVaincus: [], version: VERSION_DONNEES, histoire: [],
   };
   G.partie = P;
+  // états transitoires de la partie précédente (une transition entamée finirait dans le nouvel étage)
+  Object.assign(G, { transition: null, introBoss: null, animMort: null, conseil: null, pousse: null, attraction: null, appat: null, gelGlobal: 0, marqueJashin: 0,
+    fondu: null, enAnimationObjet: null, achatPropose: null, flashDegat: 0, causeMort: null, bossActifs: [], bombes: [], banniere: null, banniereEtage: null, dernierePorte: null });
   G.stats = { degats: 0, eliminations: 0, degatsRecus: 0, sallesVisitees: 0, objets: 0, depenses: 0 };
   P.joueur = creerJoueur(o.perso); G.joueur = P.joueur;
   const al = new Alea(code + '|pilules|' + VERSION_DONNEES);
@@ -6841,7 +6877,7 @@ function majDangersTerrain(dt) {
       case 'eau_alliee': for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, z.x, z.y) < z.r + e.r) appliquerStatut(e, 'ralenti', 0.5, 0); break;
       case 'mine': if (z.armee <= 0) for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { z.fini = true; explosion(z.x, z.y, 0.9 * TUILE, z.deg, { proprio: 'joueur', petite: true, gen: 1 }); break; } break;
       case 'parchemin': if (z.armee <= 0 && (dist(J.x, J.y, z.x, z.y) < 24 || z.age > z.duree - 0.05)) { z.fini = true; explosion(z.x, z.y, 1.2 * TUILE, 8, { proprio: 'ennemi', blesseJoueur: true, degatsJoueur: G.degatsEnnemis }); } break;
-      case 'acide': case 'feu_ennemi': if (!J.vol && dist(J.x, J.y, z.x, z.y) < z.r) blesserJoueur(G.degatsEnnemis, { type: z.type }); break;
+      case 'acide': case 'feu_ennemi': if (!J.vol && !(z.naissance && z.age < z.naissance) && dist(J.x, J.y, z.x, z.y) < z.r) blesserJoueur(G.degatsEnnemis, { type: z.type }); break;
       case 'glace': break;
     }
     if (z.age >= z.duree && !z.persistante) z.fini = true;
@@ -7800,9 +7836,12 @@ function anneauBoss(e, n, v, o = {}) { const off = o.decalage ?? Math.random() *
 function salveBoss(e, n, v, ecart, o = {}) { const a = ciblerJoueur(e); for (let i = 0; i < n; i++) tirEnnemi(e.x, e.y - e.hauteur, a + (i - (n - 1) / 2) * ecart, v, Object.assign({ source: e.id }, o)); Son.jouer('tir_ennemi'); }
 function allerVersPoint(e, x, y, v, dt) { const d = dist(e.x, e.y, x, y); if (d < 4) { e.vx *= 0.7; e.vy *= 0.7; return true; } const [dx, dy] = normaliser(x - e.x, y - e.y); deplacerEnnemi(e, dx, dy, v * TUILE, dt, 6); return false; }
 function pointAleatoire(s, marge = 2) { const [cx, cy] = centreSalle(s); for (let k = 0; k < 20; k++) { const x = cx + (Math.random() - 0.5) * (CEL_L - marge * 2) * TUILE, y = cy + (Math.random() - 0.5) * (CEL_H - marge) * TUILE; if (tuileLibre(s, Math.floor(x / TUILE), Math.floor(y / TUILE))) return [x, y]; } return [cx, cy]; }
+// Tirage sans répétition immédiate ; une attaque à « recharge » (s) attend ce délai entre deux usages.
 function choisirAttaque(e, liste) {
-  const L = liste.filter(a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && a.id !== e.derniere);
-  const a = (G.alea.combat || new Alea(1)).pondere(L.length ? L : liste, x => x.poids || 1); e.derniere = a.id; return a;
+  const U = e.usages || (e.usages = {});
+  const dispo = a => (!a.phase || e.phase >= a.phase) && (!a.maxPhase || e.phase < a.maxPhase) && !(a.recharge && G.temps - (U[a.id] ?? -1e9) < a.recharge);
+  const L = liste.filter(a => dispo(a) && a.id !== e.derniere), L2 = L.length ? L : liste.filter(dispo);
+  const a = (G.alea.combat || new Alea(1)).pondere(L2.length ? L2 : liste, x => x.poids || 1); e.derniere = a.id; U[a.id] = G.temps; return a;
 }
 function ligneDanger(x0, y0, a, l, largeur, duree) { G.effets.push({ type: 'ligne_danger', x: x0, y: y0, a, l, largeur, age: 0, duree }); }
 function cercleDanger(x, y, r, duree) { G.effets.push({ type: 'cercle_danger', x, y, r, age: 0, duree }); }
@@ -7815,10 +7854,10 @@ const ACTIONS_PHASE = {
     const m = creerEnnemi('ENM_055', e.x, e.y, { sansApparition: true, parent: e.uid }); m.mue = true; m.pv = m.pvMax = 30;
     G.effets.push({ type: 'mue', x: e.x, y: e.y, age: 0, duree: 0.8 }); const [x, y] = pointAleatoire(G.salle, 3); e.x = x; e.y = y; e.invulnerable = true; setTimeoutJeu(() => { e.invulnerable = false; }, 0.8); Son.jouer('fumee');
   },
-  murs_sable(e) { G.salle.mursSable = true; },
+  murs_sable(e) { lancerMursSable(G.salle); Son.jouer('sable'); },
   accelerer(e) { e.acceleration = (e.acceleration || 1) * 1.25; },
   fin_hiruko(e) { e.def = Object.assign({}, e.def, { ia: 'sasori2' }); e.hiruko = false; G.effets.push({ type: 'debris', x: e.x, y: e.y, age: 0, duree: 0.6, n: 20, couleur: '#6a5a4a' }); },
-  susanoo(e) { e.susanoo = true; },
+  susanoo(e) { e.susanoo = { t: 0, a: ciblerJoueur(e), actif: false }; },
   c3(e) { e.c3Pret = true; },
   arene(e) { basculerArene(e); },
 };
@@ -7864,7 +7903,7 @@ function executerAttaqueBoss(e, a, moment, dt) {
     case 'charge': if (moment === 'maj') { const V = (a.vCharge || 9) * TUILE; e.vx = Math.cos(e.dirCharge) * V; e.vy = Math.sin(e.dirCharge) * V; const r = deplacerCercle(s, e, 0, 0, e.vol ? 'vol' : 'marche'); const tx = Math.floor((e.x + Math.cos(e.dirCharge) * (e.r + 6)) / TUILE), ty = Math.floor((e.y + Math.sin(e.dirCharge) * (e.r + 6)) / TUILE); if (solidePour(s, tx, ty, 'marche')) { e.tB = 0; if (a.impact === 'anneau') anneauBoss(e, 10, 4.5); secousse(6, e.dirCharge); Son.jouer('pas_lourd'); } } if (moment === 'fin') { e.vx = 0; e.vy = 0; } break;
     case 'saut': if (moment === 'debut') { e.sautDe = [e.x, e.y]; e.intangible = true; } if (moment === 'maj') { const k = Math.min(1, e.sousT / (a.duree || 0.6)); e.x = lerp(e.sautDe[0], e.cibleSaut[0], k); e.y = lerp(e.sautDe[1], e.cibleSaut[1], k); e.z = Math.sin(k * Math.PI) * 50; } if (moment === 'fin') { e.z = 0; e.intangible = false; ondeEnnemie(e.x, e.y, (a.r || 1.6) * TUILE); if (a.anneau) anneauBoss(e, a.anneau, 4.2); secousse(8, null); Son.jouer('pas_lourd'); const [tx, ty] = [Math.floor(e.x / TUILE), Math.floor(e.y / TUILE)]; if (solidePour(s, tx, ty, 'marche')) { const [a2, b2] = tuileLibreProche(s, e.x, e.y); [e.x, e.y] = centreTuile(a2, b2); } } break;
     case 'lame': if (moment === 'debut') { const r = (a.portee || 2.6) * TUILE; if (!J.intangible && dist(e.x, e.y, J.x, J.y) < r + 4 && Math.abs(diffAngle(e.aLame, angleVers(e.x, e.y, J.x, J.y))) < (a.arc || 150) * Math.PI / 360) blesserJoueur(a.degats || G.degatsEnnemis, { type: 'lame', x: e.x, y: e.y }); G.effets.push({ type: 'balayage', x: e.x, y: e.y - 6, a: e.aLame, arc: (a.arc || 150) * Math.PI / 180, r, age: 0, duree: 0.25 }); Son.jouer('lame'); if (a.vague) for (let i = -1; i <= 1; i++) tirEnnemi(e.x, e.y - 8, e.aLame + i * 0.25, 5, { source: e.id, taille: 1.4, apparence: 'lame' }); } break;
-    case 'invocation': if (moment === 'debut') { const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length; for (let i = 0; i < Math.min(a.n || 2, (a.max || 4) - n); i++) { const [x, y] = pointAleatoire(s); G.effets.push({ type: 'cercle_sceau', x, y, r: 14, age: 0, duree: 0.6 }); setTimeoutJeu(() => { if (e.mort) return; const f = creerEnnemi(a.id, x, y, { parent: e.uid }); f.parent = e.uid; }, 0.6); } Son.jouer('invocation'); } break;
+    case 'invocation': if (moment === 'debut') { const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length; for (let i = 0; i < Math.min(a.n || 2, (a.max || 4) - n); i++) { const [x, y] = pointAleatoire(s); G.effets.push({ type: 'cercle_sceau', x, y, r: 14, age: 0, duree: 0.6 }); setTimeoutJeu(() => { if (e.mort) return; const f = creerEnnemi(a.ennemi, x, y, { parent: e.uid }); f.parent = e.uid; }, 0.6); } Son.jouer('invocation'); } break;
     case 'pluie': if (moment === 'debut') { for (let i = 0; i < (a.n || 8); i++) { const cible = i % 3 === 0; const [x, y] = cible ? [J.x + (Math.random() - 0.5) * 30, J.y + (Math.random() - 0.5) * 20] : pointAleatoire(s, 1); setTimeoutJeu(() => !e.mort && frappeSolEnnemie(x, y, (a.r || 0.8) * TUILE, a.delai || 0.8, { visuel: a.visuel, son: a.son }), i * (a.intervalle || 0.12)); } } break;
     case 'rayon': if (moment === 'debut') { const f = { x: e.x, y: e.y - e.hauteur, a: e.aRayon, l: longueurJusquAuMur(s, e.x, e.y - e.hauteur, e.aRayon, true), largeur: 14, duree: a.duree || 0.6, age: 0, type: 'rayon_ennemi', couleur: a.couleur || '#b050e0', proprio: 'ennemi' }; G.faisceaux.push(f); Son.jouer('laser'); secousse(3, e.aRayon); } if (moment === 'maj' && a.balaye) { const f = G.faisceaux.find(x => x.type === 'rayon_ennemi'); if (f) f.a += a.balaye * dt; } break;
     case 'teleport': if (moment === 'debut') { e.intangible = true; e.alpha = 0.2; G.effets.push({ type: 'fumee', x: e.x, y: e.y - 10, age: 0, duree: 0.4, taille: 2 }); } if (moment === 'fin') { const [x, y] = a.pres ? (() => { const an = Math.random() * Math.PI * 2; const [tx, ty] = tuileLibreProche(s, J.x + Math.cos(an) * 3 * TUILE, J.y + Math.sin(an) * 2 * TUILE); return centreTuile(tx, ty); })() : pointAleatoire(s, 2); e.x = x; e.y = y; e.intangible = false; e.alpha = 1; G.effets.push({ type: 'fumee', x, y: y - 10, age: 0, duree: 0.4, taille: 2 }); Son.jouer('fumee'); if (a.puis === 'anneau') anneauBoss(e, 8, 4.5); } break;
@@ -7923,6 +7962,8 @@ IA_BOSS.generique = function (e, dt, d) {
   }
   if (e.intangibleBase) e.intangible = !(e.etatB === 'tele' || e.etatB === 'actif' || e.etatB === 'recup' || e.materialise > 0); // se matérialise dès l'annonce de l'attaque if (e.materialise > 0) e.materialise -= dt;
   if (e.durci > 0) { e.durci -= dt; }
+  if (e.susanoo) majSusanoo(e, dt);
+  if (e.bouclierSable) e.grainsSable = (e.grainsSable || 0) + dt; // parure de sable (visuelle)
   if (d.deplacement === 'fuite' && e.etatB === 'choix') { const [dx, dy] = normaliser(e.x - J.x, e.y - J.y); if (dist(e.x, e.y, J.x, J.y) < 5 * TUILE) deplacerEnnemi(e, dx, dy, 1.6 * TUILE, dt); else { e.vx *= 0.9; e.vy *= 0.9; } }
   if (e.role === 'dosu' || e.role === 'zaku' || e.role === 'kin') { /* chacun son jeu d'attaques via def */ }
   IA_BOSS.generique_orig(e, dt, e.def);
@@ -7931,14 +7972,57 @@ IA_BOSS.generique = function (e, dt, d) {
 // Réduction visible (Kakuzu durci, carapace d'Hiruko) appliquée par infligerDegats
 const _infligerOrig = infligerDegats;
 infligerDegats = function (e, deg, src = {}) {
+  if (e.susanoo && susanooBloque(e, src)) return false;
   if (e.durci > 0) deg *= 0.3;
   if (e.hiruko && e.armure) deg *= e.armure;
   if (e.def && e.def.id === 'BOS_006' && e.karasu && !e.karasu.mort) deg *= 1; // le marionnettiste reste vulnérable
-  if (e.rituel && e.rituel.actif) { e.rituel.subis += deg; if (e.rituel.subis >= 40) { e.rituel.actif = false; e.rituel.interrompu = true; G.textes.push({ x: e.x, y: e.y - 40, t: 'Rituel interrompu !', age: 0, duree: 1.2, couleur: '#a0e0a0' }); } }
+  if (e.rituel && e.rituel.actif) { e.rituel.subis += deg; if (e.rituel.subis >= e.rituel.seuil) { e.rituel.actif = false; e.rituel.interrompu = true; G.textes.push({ x: e.x, y: e.y - 40, t: 'Rituel interrompu !', age: 0, duree: 1.2, couleur: '#a0e0a0' }); } }
   const r = _infligerOrig(e, deg, src);
   if (e.karasuDe && e.mort) { /* rien */ }
   return r;
 };
+// Itachi (phase 2) : guerrier spectral — un rempart frontal (±60°) qui pivote
+// lentement vers le joueur et arrête tirs, rayons et frappes venant de face.
+// Cycle lisible : 4 s dressé (il vacille les 0,6 dernières), 2,5 s dissipé.
+// À distance, on ne le contourne pas (1,1 rad/s) : on attend la brèche ou on s'approche.
+const SUSANOO = { actif: 4, repos: 2.5, vacille: 0.6, demiArc: Math.PI / 3, rotation: 1.1, bloque: new Set(['projectile', 'laser', 'faisceau', 'melee']) };
+function majSusanoo(e, dt) {
+  const S = e.susanoo; S.t += dt;
+  const k = S.t % (SUSANOO.actif + SUSANOO.repos), etait = S.actif;
+  S.actif = k < SUSANOO.actif; S.vacille = S.actif && k > SUSANOO.actif - SUSANOO.vacille;
+  if (S.actif && !etait) { S.a = ciblerJoueur(e); Son.jouer('gong', 0.3); }
+  if (etait && !S.actif) G.effets.push({ type: 'fumee', x: e.x + Math.cos(S.a) * 18, y: e.y - 14 + Math.sin(S.a) * 12, age: 0, duree: 0.5, taille: 2 });
+  S.a += borne(diffAngle(S.a, ciblerJoueur(e)), -SUSANOO.rotation * dt, SUSANOO.rotation * dt);
+}
+function susanooBloque(e, src) {
+  const S = e.susanoo; if (!S.actif || !SUSANOO.bloque.has(src.type)) return false;
+  if (Math.abs(diffAngle(S.a, Math.atan2(-(src.vy || 0), -(src.vx || 0)))) >= SUSANOO.demiArc) return false;
+  if (G.temps - (S.dernierBloc || 0) > 0.12) { S.dernierBloc = G.temps; G.effets.push({ type: 'etincelle', x: e.x + Math.cos(S.a) * (e.r + 12), y: e.y - e.hauteur + Math.sin(S.a) * (e.r + 8), age: 0, duree: 0.2 }); Son.jouer('impact_mur', 0.5); }
+  return true;
+}
+// Gaara (phase 2) : le sable se referme — une bande d'une tuile avance depuis les
+// murs en 2,5 s (sans effet pendant l'avancée) ; dedans, on avance à 55 % et, après
+// 1,2 s sans en sortir, le sable se referme (une touche). Il se retire à la mort du boss.
+const SABLE_ARENE = { formation: 2.5, lenteur: 0.55, delai: 1.2 };
+function lancerMursSable(s) {
+  const L = [];
+  for (let ty = 1; ty < s.H - 1; ty++) for (let tx = 1; tx < s.W - 1; tx++) {
+    if (PROP[s.tuiles[ty * s.W + tx]].obstacle) continue;
+    if ([[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => PROP[tuileA(s, tx + dx, ty + dy)].mur)) L.push(ty * s.W + tx);
+  }
+  s._mursSable = { t: 0, tuiles: L, dedans: 0 }; // « _ » : non sauvegardé (la phase se rejoue au retour)
+}
+function majMursSable(dt) {
+  const s = G.salle, m = s && s._mursSable, J = G.joueur; if (!m) return;
+  m.t += dt;
+  if (m.retrait !== undefined) { m.retrait += dt; if (m.retrait > 1) s._mursSable = null; return; }
+  if (!G.ennemis.some(x => x.boss && !x.mort && x.def.init === 'gaara')) { m.retrait = 0; return; }
+  if (m.t < SABLE_ARENE.formation || J.vol || J.drapeaux.immuniteSol) { m.dedans = 0; return; }
+  if (!m.tuiles.includes(Math.floor(J.y / TUILE) * s.W + Math.floor(J.x / TUILE))) { m.dedans = 0; return; }
+  m.dedans += dt;
+  if (m.dedans >= SABLE_ARENE.delai) { m.dedans = 0; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y, r: 14, age: 0, duree: 0.3 }); if (!J.intangible) blesserJoueur(G.degatsEnnemis, { type: 'sable', x: J.x, y: J.y }); Son.jouer('sable'); }
+}
+function dansSableArene(J) { const s = G.salle, m = s && s._mursSable; return !!(m && m.retrait === undefined && m.t >= SABLE_ARENE.formation && !J.vol && !J.drapeaux.immuniteSol && m.tuiles.includes(Math.floor(J.y / TUILE) * s.W + Math.floor(J.x / TUILE))); }
 const _tuerOrig = tuerEnnemi;
 tuerEnnemi = function (e, src) {
   if (e.def && e.def.id === 'BOS_006' && e.karasu && !e.karasu.mort) { e.karasu.mort = true; G.effets.push({ type: 'debris', x: e.karasu.x, y: e.karasu.y, age: 0, duree: 0.6, n: 12, couleur: '#6a5a4a' }); }
@@ -7969,17 +8053,17 @@ const SPECIAUX_BOSS = {
     if (m === 'debut') { const J = G.joueur; frappeSolEnnemie(J.x, J.y, 26, 0.9, { visuel: 'bouclier_sable', son: 'sable', degats: G.degatsEnnemis * 2 }); }
   },
   vague_sable(e, a, m) { if (m === 'debut') { for (let k = 0; k < 3; k++) setTimeoutJeu(() => { if (!e.mort) G.effets.push({ type: 'anneau_expansif', x: e.x, y: e.y, r: 12, v: 3.2 * TUILE, age: 0, duree: 2.4, trou: ciblerJoueur(e) + (Math.random() - 0.5) * 1.5, largeurTrou: 0.9, proprio: 'ennemi' }); Son.jouer('sable'); }, k * 0.7); } },
-  soin_kabuto(e, a, m, dt) { // canalisation visible, interrompue par 40 dégâts
-    if (m === 'debut') { e.canal = { subis: 0, pv: e.pv }; e.pvAvant = e.pv; G.effets.push({ type: 'cercle_soin', x: e.x, y: e.y, r: 30, age: 0, duree: 2 }); }
-    if (m === 'maj' && e.canal) { if (e.pvAvant !== undefined && e.pv < e.pvAvant) e.canal.subis += e.pvAvant - e.pv; e.pvAvant = e.pv; if (e.canal.subis >= 40) { e.canal = null; e.tB = 0; G.textes.push({ x: e.x, y: e.y - 40, t: 'Soin interrompu !', age: 0, duree: 1, couleur: '#a0e0a0' }); } }
-    if (m === 'fin' && e.canal) { e.pv = Math.min(e.pvMax, e.pv + e.pvMax * 0.12); e.canal = null; Son.jouer('coeur'); }
+  soin_kabuto(e, a, m, dt) { // canalisation visible (2 s), interrompue par a.seuil dégâts ; soin a.soin des PV max
+    if (m === 'debut') { e.canal = { subis: 0, pv: e.pv }; e.pvAvant = e.pv; G.effets.push({ type: 'cercle_soin', x: e.x, y: e.y, r: 30, age: 0, duree: 2 }); G.textes.push({ x: e.x, y: e.y - 44, t: 'Soin : ' + (a.seuil || 20) + ' dégâts l’interrompent', age: 0, duree: 1.4, couleur: '#a0e0a0' }); }
+    if (m === 'maj' && e.canal) { if (e.pvAvant !== undefined && e.pv < e.pvAvant) e.canal.subis += e.pvAvant - e.pv; e.pvAvant = e.pv; if (e.canal.subis >= (a.seuil || 20)) { e.canal = null; e.tB = 0; G.textes.push({ x: e.x, y: e.y - 40, t: 'Soin interrompu !', age: 0, duree: 1, couleur: '#a0e0a0' }); } }
+    if (m === 'fin' && e.canal) { e.pv = Math.min(e.pvMax, e.pv + e.pvMax * (a.soin || 0.1)); e.canal = null; Son.jouer('coeur'); }
   },
   requins(e, a, m) { if (m === 'debut') { for (let i = 0; i < 4; i++) setTimeoutJeu(() => { if (e.mort) return; const p = tirEnnemi(e.x, e.y - 10, ciblerJoueur(e) + (i - 1.5) * 0.4, 3.8, { taille: 1.8, duree: 3, source: e.id, apparence: 'eau' }); p.traj = { guidageEnnemi: 1.4 }; }, i * 0.25); Son.jouer('eau'); } },
   prison_eau(e, a, m) { if (m === 'debut') { const J = G.joueur; frappeSolEnnemie(J.x, J.y, 22, 0.8, { visuel: 'eclaboussure', son: 'eau', apres: () => creerZone(J.x, J.y, 'eau', 5, { r: 26, proprio: 'ennemi' }) }); } },
   faux_hidan(e, a, m) { if (m === 'debut') { const p = tirEnnemi(e.x, e.y - 12, ciblerJoueur(e), 6.5, { taille: 2, duree: 1.4, source: 'BOS_013', apparence: 'kunai_ennemi' }); p.traj = { retour: 1 }; p.retourVers = e; p.marqueJashin = true; } },
-  rituel(e, a, m, dt) { // n'a d'effet que si le joueur est marqué ; interrompu par 40 dégâts pendant la canalisation
+  rituel(e, a, m, dt) { // n'a d'effet que si le joueur est marqué ; interrompu par a.seuil dégâts pendant la canalisation
     const J = G.joueur;
-    if (m === 'debut') { if (!(G.marqueJashin > G.temps)) { e.tB = 0; return; } e.x = e.cercle.x; e.y = e.cercle.y; e.rituel = { actif: true, subis: 0 }; G.textes.push({ x: e.x, y: e.y - 44, t: 'Rituel ! Frappez-le (40 dégâts) pour l’interrompre', age: 0, duree: 2, couleur: '#ff6a6a' }); Son.jouer('rire'); }
+    if (m === 'debut') { if (!(G.marqueJashin > G.temps)) { e.tB = 0; return; } e.x = e.cercle.x; e.y = e.cercle.y; e.rituel = { actif: true, subis: 0, seuil: a.seuil || 25 }; G.textes.push({ x: e.x, y: e.y - 44, t: 'Rituel ! Frappez-le (' + e.rituel.seuil + ' dégâts) pour l’interrompre', age: 0, duree: 2, couleur: '#ff6a6a' }); Son.jouer('rire'); }
     if (m === 'fin' && e.rituel && e.rituel.actif) { e.rituel.actif = false; blesserJoueur(2, { type: 'rituel', source: 'BOS_013' }); G.marqueJashin = 0; }
   },
   epee_extensible(e, a, m) { if (m === 'debut') { const ang = ciblerJoueur(e); ligneDanger(e.x, e.y - 10, ang, 400, 10, 0.5); setTimeoutJeu(() => { if (e.mort) return; G.faisceaux.push({ x: e.x, y: e.y - 10, a: ang, l: longueurJusquAuMur(G.salle, e.x, e.y - 10, ang, true), largeur: 6, duree: 0.25, age: 0, type: 'rayon_ennemi', couleur: '#c8ccd8', proprio: 'ennemi' }); Son.jouer('lame'); }, 0.5); } },
@@ -8047,7 +8131,7 @@ function appliquerVarianteSalle(s, mod, al) {
   if (mod.rochersPlus && al.chance(mod.rochersPlus)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(2, 4)), T.ROCHER);
   if (mod.picsActifs && al.chance(mod.picsActifs)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(3, 6)), T.PICS);
   if (mod.crateres && al.chance(mod.crateres)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(2, 5)), T.FOSSE);
-  if (mod.cristaux && al.chance(mod.cristaux)) poserTuilesValidees(s, tuilesLibresLoinDesPortes(s, al, al.entierEntre(1, 3)), T.BLOC), s.cristaux = true;
+  if (mod.cristaux && al.chance(mod.cristaux)) { const L = tuilesLibresLoinDesPortes(s, al, al.entierEntre(2, 4)); poserTuilesValidees(s, L, T.BLOC); s.cristaux = L.filter(([tx, ty]) => s.tuiles[ty * s.W + tx] === T.BLOC).map(([tx, ty]) => ty * s.W + tx); }
   if (mod.flaques && al.chance(mod.flaques)) zone('eau', { n: al.entierEntre(1, 3), r: 22 });
   if (mod.sablesMouvants && al.chance(mod.sablesMouvants)) zone('sable_mouvant', { n: al.entierEntre(1, 2), r: 26 });
   if (mod.acide && al.chance(mod.acide)) zone('acide', { n: al.entierEntre(1, 2), r: 16 });
@@ -8128,6 +8212,39 @@ const Rendu = {
 };
 
 // ── Caméra ──
+// Bande de sable de Gaara : avance depuis les murs pendant sa formation, se retire à la fin
+function dessinerMursSable(g, s, X, Y) {
+  const m = s._mursSable; const k = m.retrait !== undefined ? Math.max(0, 1 - m.retrait) : Math.min(1, m.t / SABLE_ARENE.formation);
+  const p = Math.max(1, Math.round(TUILE * k)); const forme = m.t >= SABLE_ARENE.formation && m.retrait === undefined;
+  for (const i of m.tuiles) {
+    const tx = i % s.W, ty = (i / s.W) | 0, x = X(tx * TUILE), y = Y(ty * TUILE);
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      if (!PROP[tuileA(s, tx + dx, ty + dy)].mur) continue;
+      const rx = dx > 0 ? x + TUILE - p : x, ry = dy > 0 ? y + TUILE - p : y, rw = dx ? p : TUILE, rh = dy ? p : TUILE;
+      g.fillStyle = forme ? 'rgba(200,158,92,0.82)' : 'rgba(200,158,92,0.55)'; g.fillRect(rx, ry, rw, rh);
+      g.fillStyle = 'rgba(120,84,40,0.8)'; if (dx) g.fillRect(dx > 0 ? rx : rx + rw - 1, ry, 1, rh); else g.fillRect(rx, dy > 0 ? ry : ry + rh - 1, rw, 1);
+    }
+    g.fillStyle = 'rgba(236,208,140,0.9)'; for (let n = 0; n < 4; n++) { const h = (i * 7919 + n * 104729) >>> 0; const gx = h % 29, gy = (h >> 5) % 29; if (k > 0.3) g.fillRect(x + 1 + gx, y + 1 + gy + Math.round(Math.sin(G.temps * 2 + n + i) * 1), 1, 1); }
+  }
+  // compte à rebours lisible : l'anneau se referme sous les pieds
+  if (forme && m.dedans > 0) { const J = G.joueur; const r = Math.max(3, Math.round(16 * (1 - m.dedans / SABLE_ARENE.delai))); g.drawImage(anneau(r, 2, '#e8c060'), X(J.x) - r - 1, Y(J.y) - r - 1); }
+}
+function dessinerAnneauSerpent(g, x, y, r, i) {
+  g.drawImage(disque(r + 1, '#1c1420'), x - r - 1, y - r - 1);
+  g.drawImage(disque(r, '#3f6424'), x - r, y - r);
+  g.drawImage(disque(Math.max(2, r - 2), '#5f8a34'), x - r + 2, y - r + 1);
+  g.fillStyle = '#8cb454'; g.fillRect(x - 2, y - r + 2, 3, 1); g.fillRect(x - 3 + (i % 2) * 3, y - 1, 2, 1);
+  g.fillStyle = '#d8cf98'; g.fillRect(x - Math.round(r * 0.5), y + r - 3, Math.round(r), 2);
+}
+function dessinerChaineFreres(g, a, b, X, Y) {
+  const d = dist(a.x, a.y, b.x, b.y), tendue = d > 110, alerte = d > 90;
+  const col = tendue ? (Math.floor(G.temps * 12) % 2 ? '#ff6a5a' : '#ffd0c0') : alerte ? '#e0a060' : '#8a8a94';
+  const n = Math.max(2, Math.round(d / 5)), creux = tendue ? 0 : Math.max(0, (110 - d) * 0.25);
+  for (let i = 0; i <= n; i++) {
+    const t = i / n, x = lerp(a.x, b.x, t), y = lerp(a.y, b.y, t) - 10 + Math.sin(t * Math.PI) * creux;
+    g.fillStyle = '#1c1420'; g.fillRect(X(x) - 2, Y(y) - 2, 4, 4); g.fillStyle = col; if (i % 2) g.fillRect(X(x) - 1, Y(y) - 1, 3, 2); else g.fillRect(X(x) - 1, Y(y) - 1, 2, 3);
+  }
+}
 function camera(s, J) {
   const Wp = s.W * TUILE, Hp = s.H * TUILE;
   let cx = -ORIGINE_X, cy = -ORIGINE_Y;
@@ -8331,6 +8448,7 @@ function rendreSalle(g, ox, oy) {
   for (let ty = 1; ty < s.H - 1; ty++) for (let tx = 1; tx < s.W - 1; tx++) { const t = s.tuiles[ty * s.W + tx]; if (t === T.PICS) g.drawImage(G.variante && G.variante.picsActifs && !picsSortis() ? D.picsRentres : D.pics, X(tx * TUILE), Y(ty * TUILE)); }
   // zones au sol (sous les entités)
   for (const z of G.zones) dessinerZone(g, z, X, Y);
+  if (s._mursSable) dessinerMursSable(g, s, X, Y);
   // télégraphes au sol (au-dessus du décor, sous les entités)
   for (const e of G.effets) if (EFFETS_SOL.has(e.type)) dessinerEffet(g, e, X, Y);
   // portes : battants dynamiques
@@ -8350,6 +8468,9 @@ function rendreSalle(g, ox, oy) {
   for (const x of s.sorties || []) L.push({ y: x.y - 20, f: () => dessinerSortie(g, x, X(x.x), Y(x.y)) });
   for (const b of G.bombes) L.push({ y: b.y, f: () => { ombre(b.x, b.y, 5); dessinerBombe(g, b, X(b.x), Y(b.y)); } });
   for (const e of G.ennemis) L.push({ y: e.y, f: () => { if (!e.cache && !e.illusion && !(e.alpha < 0.5)) ombre(e.x, e.y, e.r * 0.9); dessinerEnnemi(g, e, X(e.x), Y(e.y - (e.z || 0))); } });
+  // corps du serpent (chaque anneau blesse au contact : il doit se voir) et chaîne des frères
+  for (const e of G.ennemis) if (e.segments && !e.mort && !e.cache) e.segments.forEach((q, i) => L.push({ y: q.y - 0.5, f: () => { const r = Math.round(9 - i * 0.6); ombre(q.x, q.y, r); dessinerAnneauSerpent(g, X(q.x), Y(q.y) - 5, r, i); } }));
+  for (const e of G.ennemis) if (e.chaine && !e.mort && !e.chaine.mort) L.push({ y: Math.max(e.y, e.chaine.y), f: () => dessinerChaineFreres(g, e, e.chaine, X, Y) });
   for (const f of J.familiers) L.push({ y: f.y, f: () => { ombre(f.x, f.y, 5); dessinerFamilier(g, f, X(f.x), Y(f.y)); } });
   if (J.etat !== 'mort' || G.animMort) L.push({ y: J.y, f: () => { ombre(J.x, J.y, 8); dessinerJoueur(g, J, X(J.x), Y(J.y - (J.z || 0))); } });
   L.sort((a, b) => a.y - b.y); for (const o of L) o.f();
@@ -8374,13 +8495,19 @@ function rendreSalle(g, ox, oy) {
 }
 const EFFETS_SOL = new Set(['cercle_danger', 'ligne_danger', 'arc_danger', 'marque_sol', 'cercle_sceau', 'cercle_soin', 'fissure', 'frappe_sol', 'indice_secret', 'anneau_expansif']);
 
+let _cristal = null; // amas de cristaux (variante « Galeries de verre ») : font rebondir les projectiles
+function spriteCristal() {
+  return _cristal || (_cristal = contourner(peindre([
+    '.....l........', '....lwl....l..', '....lwb...lwl.', '...lwbb...lwb.', '...lwbbd.lwbb.', '..lwbbbdlwbbbd', '..lwbbbdlwbbbd', '.lwbbbbdwbbbbd',
+    '.lwbbbbdbbbbdd', 'lwbbbbbdbbbbd.', 'lbbbbbbdbbbdd.', 'dbbbbbbbbbddd.', '.dddbbbbbdddd.', '...dddddddd...'], { l: '#e8f8ff', w: '#c8f0ff', b: '#78c8e8', d: '#3a7898' })));
+}
 function dessinerObstacle(g, t, tx, ty, X, Y, D, s) {
   const x = X(tx * TUILE), y = Y(ty * TUILE);
   switch (t) {
     case T.ROCHER: g.drawImage(D.rochers[Math.floor(hasardTuile(tx, ty, 1) * 3)], x + 1, y + 3); break;
     case T.ROCHER_SCEAU: g.drawImage(D.rocherSceau, x + 1, y + 3); break;
     case T.TOTEM: g.drawImage(D.totem, x + 4, y - 2); break;
-    case T.BLOC: g.drawImage(D.bloc, x + 1, y + 4); break;
+    case T.BLOC: g.drawImage(s.cristaux && s.cristaux.includes(ty * s.W + tx) ? spriteCristal() : D.bloc, x + 1, y + 4); break;
     case T.JARRE: g.drawImage(D.jarre, x + 6, y + 12); break;
     case T.CAISSE: g.drawImage(D.caisse, x + 4, y + 10); break;
     case T.FEU: g.drawImage(D.feu[Math.floor(G.temps * 8 + tx) % 3], x + 6, y + 4); break;
@@ -9133,7 +9260,7 @@ function majJeu(dt) {
   majProjectiles(dt); majFaisceaux(dt); majMelees(dt); majBombes(dt); majArcs(dt); majAttraction(dt); majMinuteries(dt);
   majEffets(dt); majRamassables(dt); majPiedestaux(dt); G.machineProche = null; majDispositifs(); majAutel(dt); majSource(); majSorties(dt);
   majDangersTerrain(dt); verifierBlocsCle(); verifierPortes(dt); secoursEnnemisInaccessibles(dt); verifierNettoyage(); majSecousse(dt);
-  majVarianteContinu(dt);
+  majVarianteContinu(dt); majMursSable(dt);
   if (G.notifications.length) { G.notifications[0].t += dt; if (G.notifications[0].t > 3) G.notifications.shift(); }
 }
 function deposer(J) {
@@ -9255,7 +9382,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

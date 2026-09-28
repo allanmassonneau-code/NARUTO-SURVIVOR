@@ -25,6 +25,39 @@ const Rendu = {
 };
 
 // ── Caméra ──
+// Bande de sable de Gaara : avance depuis les murs pendant sa formation, se retire à la fin
+function dessinerMursSable(g, s, X, Y) {
+  const m = s._mursSable; const k = m.retrait !== undefined ? Math.max(0, 1 - m.retrait) : Math.min(1, m.t / SABLE_ARENE.formation);
+  const p = Math.max(1, Math.round(TUILE * k)); const forme = m.t >= SABLE_ARENE.formation && m.retrait === undefined;
+  for (const i of m.tuiles) {
+    const tx = i % s.W, ty = (i / s.W) | 0, x = X(tx * TUILE), y = Y(ty * TUILE);
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      if (!PROP[tuileA(s, tx + dx, ty + dy)].mur) continue;
+      const rx = dx > 0 ? x + TUILE - p : x, ry = dy > 0 ? y + TUILE - p : y, rw = dx ? p : TUILE, rh = dy ? p : TUILE;
+      g.fillStyle = forme ? 'rgba(200,158,92,0.82)' : 'rgba(200,158,92,0.55)'; g.fillRect(rx, ry, rw, rh);
+      g.fillStyle = 'rgba(120,84,40,0.8)'; if (dx) g.fillRect(dx > 0 ? rx : rx + rw - 1, ry, 1, rh); else g.fillRect(rx, dy > 0 ? ry : ry + rh - 1, rw, 1);
+    }
+    g.fillStyle = 'rgba(236,208,140,0.9)'; for (let n = 0; n < 4; n++) { const h = (i * 7919 + n * 104729) >>> 0; const gx = h % 29, gy = (h >> 5) % 29; if (k > 0.3) g.fillRect(x + 1 + gx, y + 1 + gy + Math.round(Math.sin(G.temps * 2 + n + i) * 1), 1, 1); }
+  }
+  // compte à rebours lisible : l'anneau se referme sous les pieds
+  if (forme && m.dedans > 0) { const J = G.joueur; const r = Math.max(3, Math.round(16 * (1 - m.dedans / SABLE_ARENE.delai))); g.drawImage(anneau(r, 2, '#e8c060'), X(J.x) - r - 1, Y(J.y) - r - 1); }
+}
+function dessinerAnneauSerpent(g, x, y, r, i) {
+  g.drawImage(disque(r + 1, '#1c1420'), x - r - 1, y - r - 1);
+  g.drawImage(disque(r, '#3f6424'), x - r, y - r);
+  g.drawImage(disque(Math.max(2, r - 2), '#5f8a34'), x - r + 2, y - r + 1);
+  g.fillStyle = '#8cb454'; g.fillRect(x - 2, y - r + 2, 3, 1); g.fillRect(x - 3 + (i % 2) * 3, y - 1, 2, 1);
+  g.fillStyle = '#d8cf98'; g.fillRect(x - Math.round(r * 0.5), y + r - 3, Math.round(r), 2);
+}
+function dessinerChaineFreres(g, a, b, X, Y) {
+  const d = dist(a.x, a.y, b.x, b.y), tendue = d > 110, alerte = d > 90;
+  const col = tendue ? (Math.floor(G.temps * 12) % 2 ? '#ff6a5a' : '#ffd0c0') : alerte ? '#e0a060' : '#8a8a94';
+  const n = Math.max(2, Math.round(d / 5)), creux = tendue ? 0 : Math.max(0, (110 - d) * 0.25);
+  for (let i = 0; i <= n; i++) {
+    const t = i / n, x = lerp(a.x, b.x, t), y = lerp(a.y, b.y, t) - 10 + Math.sin(t * Math.PI) * creux;
+    g.fillStyle = '#1c1420'; g.fillRect(X(x) - 2, Y(y) - 2, 4, 4); g.fillStyle = col; if (i % 2) g.fillRect(X(x) - 1, Y(y) - 1, 3, 2); else g.fillRect(X(x) - 1, Y(y) - 1, 2, 3);
+  }
+}
 function camera(s, J) {
   const Wp = s.W * TUILE, Hp = s.H * TUILE;
   let cx = -ORIGINE_X, cy = -ORIGINE_Y;
@@ -228,6 +261,7 @@ function rendreSalle(g, ox, oy) {
   for (let ty = 1; ty < s.H - 1; ty++) for (let tx = 1; tx < s.W - 1; tx++) { const t = s.tuiles[ty * s.W + tx]; if (t === T.PICS) g.drawImage(G.variante && G.variante.picsActifs && !picsSortis() ? D.picsRentres : D.pics, X(tx * TUILE), Y(ty * TUILE)); }
   // zones au sol (sous les entités)
   for (const z of G.zones) dessinerZone(g, z, X, Y);
+  if (s._mursSable) dessinerMursSable(g, s, X, Y);
   // télégraphes au sol (au-dessus du décor, sous les entités)
   for (const e of G.effets) if (EFFETS_SOL.has(e.type)) dessinerEffet(g, e, X, Y);
   // portes : battants dynamiques
@@ -247,6 +281,9 @@ function rendreSalle(g, ox, oy) {
   for (const x of s.sorties || []) L.push({ y: x.y - 20, f: () => dessinerSortie(g, x, X(x.x), Y(x.y)) });
   for (const b of G.bombes) L.push({ y: b.y, f: () => { ombre(b.x, b.y, 5); dessinerBombe(g, b, X(b.x), Y(b.y)); } });
   for (const e of G.ennemis) L.push({ y: e.y, f: () => { if (!e.cache && !e.illusion && !(e.alpha < 0.5)) ombre(e.x, e.y, e.r * 0.9); dessinerEnnemi(g, e, X(e.x), Y(e.y - (e.z || 0))); } });
+  // corps du serpent (chaque anneau blesse au contact : il doit se voir) et chaîne des frères
+  for (const e of G.ennemis) if (e.segments && !e.mort && !e.cache) e.segments.forEach((q, i) => L.push({ y: q.y - 0.5, f: () => { const r = Math.round(9 - i * 0.6); ombre(q.x, q.y, r); dessinerAnneauSerpent(g, X(q.x), Y(q.y) - 5, r, i); } }));
+  for (const e of G.ennemis) if (e.chaine && !e.mort && !e.chaine.mort) L.push({ y: Math.max(e.y, e.chaine.y), f: () => dessinerChaineFreres(g, e, e.chaine, X, Y) });
   for (const f of J.familiers) L.push({ y: f.y, f: () => { ombre(f.x, f.y, 5); dessinerFamilier(g, f, X(f.x), Y(f.y)); } });
   if (J.etat !== 'mort' || G.animMort) L.push({ y: J.y, f: () => { ombre(J.x, J.y, 8); dessinerJoueur(g, J, X(J.x), Y(J.y - (J.z || 0))); } });
   L.sort((a, b) => a.y - b.y); for (const o of L) o.f();
@@ -271,13 +308,19 @@ function rendreSalle(g, ox, oy) {
 }
 const EFFETS_SOL = new Set(['cercle_danger', 'ligne_danger', 'arc_danger', 'marque_sol', 'cercle_sceau', 'cercle_soin', 'fissure', 'frappe_sol', 'indice_secret', 'anneau_expansif']);
 
+let _cristal = null; // amas de cristaux (variante « Galeries de verre ») : font rebondir les projectiles
+function spriteCristal() {
+  return _cristal || (_cristal = contourner(peindre([
+    '.....l........', '....lwl....l..', '....lwb...lwl.', '...lwbb...lwb.', '...lwbbd.lwbb.', '..lwbbbdlwbbbd', '..lwbbbdlwbbbd', '.lwbbbbdwbbbbd',
+    '.lwbbbbdbbbbdd', 'lwbbbbbdbbbbd.', 'lbbbbbbdbbbdd.', 'dbbbbbbbbbddd.', '.dddbbbbbdddd.', '...dddddddd...'], { l: '#e8f8ff', w: '#c8f0ff', b: '#78c8e8', d: '#3a7898' })));
+}
 function dessinerObstacle(g, t, tx, ty, X, Y, D, s) {
   const x = X(tx * TUILE), y = Y(ty * TUILE);
   switch (t) {
     case T.ROCHER: g.drawImage(D.rochers[Math.floor(hasardTuile(tx, ty, 1) * 3)], x + 1, y + 3); break;
     case T.ROCHER_SCEAU: g.drawImage(D.rocherSceau, x + 1, y + 3); break;
     case T.TOTEM: g.drawImage(D.totem, x + 4, y - 2); break;
-    case T.BLOC: g.drawImage(D.bloc, x + 1, y + 4); break;
+    case T.BLOC: g.drawImage(s.cristaux && s.cristaux.includes(ty * s.W + tx) ? spriteCristal() : D.bloc, x + 1, y + 4); break;
     case T.JARRE: g.drawImage(D.jarre, x + 6, y + 12); break;
     case T.CAISSE: g.drawImage(D.caisse, x + 4, y + 10); break;
     case T.FEU: g.drawImage(D.feu[Math.floor(G.temps * 8 + tx) % 3], x + 6, y + 4); break;

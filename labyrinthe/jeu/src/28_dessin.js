@@ -162,13 +162,19 @@ function dessinerEnnemi(g, e, x, y) {
   g.globalAlpha = Math.max(0.15, alpha);
   const tele = e.ia.tele; let dx = 0, dy = 0, sc = 1;
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
-  const img = e.flash > 0 ? silhouette(sp.frames[e.frame % sp.frames.length], '#ffffff') : sp.frames[e.frame % sp.frames.length];
+  const base = sp.frames[e.frame % sp.frames.length];
+  const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
   const ech = (e.echelle || 1) * sc;
   const w = Math.round(img.width * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1)), h = Math.round(img.height * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1));
   const miroirG = sp.miroir && e.dir === 'gauche';
-  if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(img, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); }
-  else g.drawImage(img, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h);
+  const poser = im => { if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); } else g.drawImage(im, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); };
+  poser(img);
+  // états de boss lisibles : peau durcie (gris pierre), carapace d'Hiruko (bois cerclé)
+  if (e.durci > 0 && !(e.flash > 0)) { g.globalAlpha = 0.5 + 0.12 * Math.sin(G.temps * 14); poser(silhouetteMemo(base, '#8a8a92')); }
+  if (e.hiruko && !(e.flash > 0)) { g.globalAlpha = 0.42; poser(silhouetteMemo(base, '#6a4a2e')); g.globalAlpha = 1; g.fillStyle = '#c8b070'; for (const k of [-1, 0, 1]) g.fillRect(x + k * 6 - 1, y - Math.round(h * 0.55) + Math.abs(k) * 3, 2, 2); }
   g.globalAlpha = 1;
+  if (e.bouclierSable) { const a = (e.grainsSable || 0) * 2.4; for (let i = 0; i < 8; i++) { const b = a + i * Math.PI / 4; g.fillStyle = i % 2 ? '#d8b070' : '#b08848'; g.fillRect(Math.round(x + Math.cos(b) * (e.r + 7)), Math.round(y - h * 0.45 + Math.sin(b) * (e.r * 0.6 + 4)), 2, 2); } }
+  if (e.susanoo) dessinerSusanoo(g, e, x, y - Math.round(h * 0.5));
   // champion : forme d'aura + icône (pas seulement la couleur)
   if (e.champion) { const C = CHAMPIONS[e.champion]; const t = G.temps * 3; for (let i = 0; i < 4; i++) { const a = t + i * Math.PI / 2; g.fillStyle = C.couleur; g.fillRect(Math.round(x + Math.cos(a) * (e.r + 5)) - 1, Math.round(y - h / 2 + Math.sin(a) * (e.r * 0.7 + 4)) - 1, 3, 3); } dessinerIconeChampion(g, C.icone, x, y - h - 6 + (sp.base || 0), C.couleur); }
   // statuts : symboles redondants
@@ -179,6 +185,22 @@ function dessinerEnnemi(g, e, x, y) {
   if (e.def.params && e.def.params.bouclier === 'aura') { g.globalAlpha = 0.25; g.drawImage(anneau(2.5 * TUILE, 1, '#a0c0ff'), x - 2.5 * TUILE - 1, y - 2.5 * TUILE - 1); g.globalAlpha = 1; }
   if (e.invulnerable) { g.globalAlpha = 0.6; g.drawImage(anneau(e.r + 6, 2, '#e0e0ff'), x - e.r - 7, y - h / 2 - e.r - 7); g.globalAlpha = 1; }
   if (G.joueur.transformations.includes('TRF_005') && !e.boss && e.pv < e.pvMax) { g.fillStyle = '#1c1420'; g.fillRect(x - 8, y + 2, 16, 2); g.fillStyle = '#e04a4a'; g.fillRect(x - 8, y + 2, Math.round(16 * e.pv / e.pvMax), 2); }
+}
+// Rempart spectral d'Itachi : arc de côtes (±60°) orienté ; il vacille avant de se dissiper
+function dessinerSusanoo(g, e, x, y) {
+  const S = e.susanoo, A = SUSANOO.demiArc;
+  if (!S.actif) { if (Math.floor(G.temps * 10) % 4 === 0) { g.globalAlpha = 0.18; g.drawImage(anneau(e.r + 12, 1, '#e0506a'), x - e.r - 13, y - e.r - 13); g.globalAlpha = 1; } return; }
+  const al = S.vacille ? (Math.floor(G.temps * 16) % 2 ? 0.25 : 0.7) : 0.85; g.globalAlpha = al;
+  const R = e.r + 14;
+  for (let t = -A; t <= A + 1e-6; t += A / 28) { // bande spectrale : voile, cœur clair, bord sombre (pixels nets)
+    const c = Math.cos(S.a + t), s = Math.sin(S.a + t);
+    for (let q = -6; q <= 3; q += 1) {
+      g.fillStyle = q >= 2 ? '#6a1432' : q >= 0 ? '#ff9aaa' : q >= -2 ? '#e0506a' : 'rgba(224,80,106,0.35)';
+      g.fillRect(Math.round(x + c * (R + q)), Math.round(y + s * (R + q) * 0.8), 2, 2);
+    }
+  }
+  for (let k = -2; k <= 2; k++) { const b = S.a + k * A / 2.5; lignePixel(g, x + Math.cos(b) * (R - 13), y + Math.sin(b) * (R - 13) * 0.8, x + Math.cos(b) * (R - 6), y + Math.sin(b) * (R - 6) * 0.8, '#ff9aaa', 2); }
+  g.globalAlpha = 1;
 }
 function dessinerIconeChampion(g, ic, x, y, c) {
   g.fillStyle = '#1c1420'; g.fillRect(x - 3, y - 3, 7, 7); g.fillStyle = c;
@@ -281,7 +303,7 @@ function dessinerSortie(g, s, x, y) {
 function dessinerBombe(g, b, x, y) {
   const k = b.age / b.meche; const cl = Math.floor(b.age * (k > 0.7 ? 16 : 6)) % 2;
   g.fillStyle = '#6a6a70'; g.fillRect(x - 1, y - 14, 2, 10);
-  const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouette(s, '#ff6a4a') : s, x - 4, y - 16);
+  const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouetteMemo(s, '#ff6a4a') : s, x - 4, y - 16);
   g.fillStyle = '#ffd060'; g.fillRect(x - 1 + Math.round(Math.random() * 2), y - 17 - Math.round(Math.random() * 2), 1, 1);
 }
 function dessinerZone(g, z, X, Y) {
@@ -297,7 +319,7 @@ function dessinerZone(g, z, X, Y) {
     case 'huile': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(40,30,20,0.55)'), x - z.r, y - z.r * 0.55); g.fillStyle = 'rgba(200,180,120,0.5)'; g.fillRect(x - 3, y - 2, 4, 1); break;
     case 'toile_zone': g.drawImage(decorsTheme(G.theme).toile, x - 16, y - 16); break;
     case 'mine': { const cl = z.armee > 0 ? 0 : Math.floor(G.temps * 6) % 2; g.drawImage(disque(4, '#3a3040'), x - 4, y - 4); g.fillStyle = cl ? '#ff6a4a' : '#8a6a6a'; g.fillRect(x - 1, y - 1, 2, 2); break; }
-    case 'parchemin': { const cl = z.armee > 0 ? 0 : Math.floor(G.temps * 8) % 2; const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouette(s, '#ff4a2a') : s, x - 4, y - 12); g.drawImage(anneau(24, 1, cl ? 'rgba(255,80,40,0.7)' : 'rgba(255,80,40,0.25)'), x - 25, y - 25); break; }
+    case 'parchemin': { const cl = z.armee > 0 ? 0 : Math.floor(G.temps * 8) % 2; const s = spriteRamassable('explosif'); g.drawImage(cl ? silhouetteMemo(s, '#ff4a2a') : s, x - 4, y - 12); g.drawImage(anneau(24, 1, cl ? 'rgba(255,80,40,0.7)' : 'rgba(255,80,40,0.25)'), x - 25, y - 25); break; }
     case 'courant': { g.fillStyle = 'rgba(120,180,220,0.35)'; for (let i = 0; i < 4; i++) { const o = ((G.temps * 40 + i * 12) % 48) - 24; g.fillRect(x + (z.dx ? o : -z.r / 2 + i * 6), y + (z.dy ? o : -z.r / 4 + i * 3), z.dx ? 6 : 1, z.dy ? 6 : 1); } break; }
   }
   g.globalAlpha = 1;
