@@ -137,13 +137,13 @@ Un objet appartient à plusieurs pools avec des poids différents (notation des 
 | Emplacement | Par défaut | Extensions | Remplacement |
 |---|---|---|---|
 | Passifs | illimités | — | ne se déséquipent pas (sauf permutation, rituels) |
-| Actif | 1 | Kakashi : 2 (échange avec le bouton supérieur gauche) | l’ancien actif reste sur le piédestal **avec ses charges** (anti-duplication) |
-| Talisman | 1 | « talisman double » : 2 | l’ancien tombe à vos pieds |
-| Poche | 1 | « poche double » : 2 | l’ancien consommable tombe à vos pieds |
+| Actif | 1 | Kakashi : 2 (échange avec le bouton supérieur gauche) | l’ancien actif reste sur le piédestal **avec ses charges** (anti-duplication) ; il ne se reprend qu’après s’être éloigné du piédestal (pas de va-et-vient) |
+| Talisman | 1 | « talisman double » : 2 | l’ancien tombe à vos pieds ; repris seulement après s’en être éloigné |
+| Poche | 1 | « poche double » : 2 | l’ancien consommable tombe à vos pieds ; repris seulement après s’en être éloigné |
 
 **Doublons** — trois catégories : *cumul* (effet additionné ; la plupart des objets de statistiques), *conversion* (le doublon est converti en un effet documenté ; 1 objet), *unique* (jamais proposé une seconde fois : 12 passifs, surtout les formes de tir, et tous les actifs). Comme tout objet généré est retiré des pools, un doublon ne peut venir que d’une source exceptionnelle (départ de contrat, permutation). **Un doublon ne compte jamais deux fois pour un ensemble.**
 
-**Dépôt** : maintenir *Déposer* 0,8 s pose le talisman (ou, à défaut, le consommable) au sol, avec jauge de confirmation ; un passif ne se dépose pas.
+**Dépôt** : maintenir *Déposer* 0,8 s pose le talisman (ou, à défaut, le consommable) au sol, avec jauge de confirmation ; l’objet posé ne se reprend qu’après s’en être éloigné ; un passif ne se dépose pas.
 
 ## C8. Actifs (brief §19) — `40_actifs.js`
 

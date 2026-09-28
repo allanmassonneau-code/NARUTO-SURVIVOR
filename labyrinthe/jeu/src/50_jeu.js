@@ -47,8 +47,8 @@ function majJeu(dt) {
   if (G.notifications.length) { G.notifications[0].t += dt; if (G.notifications[0].t > 3) G.notifications.shift(); }
 }
 function deposer(J) {
-  if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; J.talisman = J.talisman2 || null; J.talisman2 = null; recalculer(J); Son.jouer('objet_mineur'); return; }
-  if (J.poches.length) { const c = J.poches.shift(); const r = creerRamassable(c.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 16, J.y + 6, { id: c.id }); r.apparence = c.apparence; r.age = 0; Son.jouer('objet_mineur'); }
+  if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; J.talisman = J.talisman2 || null; J.talisman2 = null; recalculer(J); Son.jouer('objet_mineur'); return; }
+  if (J.poches.length) { const c = J.poches.shift(); const r = creerRamassable(c.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 16, J.y + 6, { id: c.id }); r.apparence = c.apparence; r.age = 0; r.attendSortie = true; Son.jouer('objet_mineur'); }
 }
 function declencherMort() { Son.jouer('boss_mort'); Musique.etatCombat(false); G.animMort = 0.001; G.partie.fini = true; effacerPartieSuspendue(); Progression.finPartie('mort'); }
 function victoire(route) {

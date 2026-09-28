@@ -4525,7 +4525,6 @@ function dessinerPiedestal(g, p, X, Y) {
   g.fillStyle = '#2a2230'; g.fillRect(x - 11, y - 2, 22, 10); g.fillStyle = '#6a5a70'; g.fillRect(x - 10, y - 3, 20, 3); g.fillStyle = '#4a3e52'; g.fillRect(x - 9, y, 18, 7);
   g.fillStyle = '#8a7a90'; g.fillRect(x - 10, y - 3, 20, 1);
   if (!p.id) return;
-  if (p.apparu > 0) { p.apparu -= 1 / 60; }
   const flotte = Math.round(Math.sin(G.temps * 2.5 + p.x) * 2);
   if (p.ramassable) { const s = spriteRamassable(p.ramassable); g.drawImage(s, x - Math.round(s.width / 2), y - s.height - 4 + flotte); }
   else {
@@ -6864,7 +6863,9 @@ function majRamassables(dt) {
     // familiers collecteurs
     for (const f of J.familiers) if (f.collecte && r.age > 0.3 && dist(r.x, r.y, f.x, f.y) < 10 && ['ryo', 'cle', 'explosif'].includes(RAMASSABLES[r.type].cat)) { collecter(r, J); }
     if (r.pris || r.age < 0.25 || J.etat !== 'normal') continue;
-    if (dist(r.x, r.y, J.x, J.y) < 12 + (RAMASSABLES[r.type].cat === 'coffre' ? 4 : 0)) collecter(r, J);
+    const d = dist(r.x, r.y, J.x, J.y);
+    if (r.attendSortie) { if (d > 26) r.attendSortie = false; continue; } // objet lâché : repris seulement après s'en être éloigné
+    if (d < 12 + (RAMASSABLES[r.type].cat === 'coffre' ? 4 : 0)) collecter(r, J);
   }
   s.ramassables = s.ramassables.filter(r => !r.pris);
 }
@@ -6908,12 +6909,12 @@ function collecter(r, J) {
 }
 function donnerConsommable(J, c) {
   if (typeof c === 'string') c = { type: INDEX[c] && INDEX[c].famille === 'pilule' ? 'pilule' : 'rouleau', id: c };
-  if (J.poches.length >= J.maxPoches) { const ancien = J.poches.shift(); const r = creerRamassable(ancien.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 14, J.y + 4, { id: ancien.id }); r.apparence = ancien.apparence; r.age = 0; }
+  if (J.poches.length >= J.maxPoches) { const ancien = J.poches.shift(); const r = creerRamassable(ancien.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 14, J.y + 4, { id: ancien.id }); r.apparence = ancien.apparence; r.age = 0; r.attendSortie = true; }
   J.poches.push(c); return true;
 }
 function prendreTalisman(J, id) {
   if (J.talisman && J.maxTalismans > 1 && !J.talisman2) J.talisman2 = J.talisman;
-  else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; }
+  else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; }
   J.talisman = id; recalculer(J); Son.jouer('objet_mineur');
   G.banniere = { t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true };
   Progression.decouvrir(id);
@@ -7147,10 +7148,12 @@ function preparerSalleSpeciale(s) {
 function majPiedestaux(dt) {
   const s = G.salle, J = G.joueur; G.piedestalProche = null;
   for (const p of s.piedestaux) {
-    p.age += dt;
+    p.age += dt; if (p.apparu > 0) p.apparu -= dt;
     if (!p.id || J.etat !== 'normal') continue;
     const d = dist(p.x, p.y + 4, J.x, J.y);
     if (d < 34) G.piedestalProche = p;
+    // objet reposé par un échange : repris seulement après s'être éloigné du piédestal (pas de va-et-vient)
+    if (p.attendSortie) { if (d > 24) p.attendSortie = false; continue; }
     if (d > 14 || p.apparu > 0) continue;
     if (p.prix) { G.achatPropose = p; continue; }       // un achat se confirme (bouton d'interaction)
     if (G.transition || G.enAnimationObjet) continue;
@@ -7199,7 +7202,7 @@ function prendrePiedestal(p) {
     const ancien = J.deuxActifs && !J.actif2 ? null : J.actif;
     if (J.deuxActifs && !J.actif2 && J.actif) { J.actif2 = J.actif; }
     J.actif = { id: p.id, charges: p.charges ?? chargesMax(d) };
-    if (ancien) { p.id = ancien.id; p.charges = ancien.charges; p.apparu = 0.6; } else p.id = null;
+    if (ancien) { p.id = ancien.id; p.charges = ancien.charges; p.apparu = 0.6; p.attendSortie = true; } else p.id = null;
     if (!J.acquis.includes(d.id)) { J.acquis.push(d.id); if (d.ensemble) verifierTransformations(J); }
     Progression.decouvrir(d.id); evenement('objet_acquis', { id: d.id, actif: true });
   } else {
@@ -9991,8 +9994,8 @@ function majJeu(dt) {
   if (G.notifications.length) { G.notifications[0].t += dt; if (G.notifications[0].t > 3) G.notifications.shift(); }
 }
 function deposer(J) {
-  if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; J.talisman = J.talisman2 || null; J.talisman2 = null; recalculer(J); Son.jouer('objet_mineur'); return; }
-  if (J.poches.length) { const c = J.poches.shift(); const r = creerRamassable(c.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 16, J.y + 6, { id: c.id }); r.apparence = c.apparence; r.age = 0; Son.jouer('objet_mineur'); }
+  if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; J.talisman = J.talisman2 || null; J.talisman2 = null; recalculer(J); Son.jouer('objet_mineur'); return; }
+  if (J.poches.length) { const c = J.poches.shift(); const r = creerRamassable(c.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 16, J.y + 6, { id: c.id }); r.apparence = c.apparence; r.age = 0; r.attendSortie = true; Son.jouer('objet_mineur'); }
 }
 function declencherMort() { Son.jouer('boss_mort'); Musique.etatCombat(false); G.animMort = 0.001; G.partie.fini = true; effacerPartieSuspendue(); Progression.finPartie('mort'); }
 function victoire(route) {

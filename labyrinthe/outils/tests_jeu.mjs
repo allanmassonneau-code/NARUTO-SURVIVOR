@@ -124,6 +124,21 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
         out.ok++;
       } catch (err) { out.ko.push(o.id + ' ' + String(err.stack || err).slice(0, 200)); }
     }
+    // Échanges sans va-et-vient : l'objet reposé (actif sur son piédestal, talisman lâché) ne se reprend
+    // qu'après s'en être éloigné, quelle que soit la cadence d'affichage
+    try {
+      L.nouvellePartie({ perso: 'CHR_001', code: 'ACTF2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+      const J = G.joueur, S = G.salle, A = L.DON.objets.filter(x => x.type === 'actif');
+      J.actif = { id: A[0].id, charges: 1 }; const p = L.poserPiedestal(S, J.x, J.y - 4, A[1].id);
+      let n = 0, avant = J.actif.id; for (let i = 0; i < 400; i++) { T.pas(1); if (J.actif.id !== avant) { n++; avant = J.actif.id; } }
+      if (n !== 1 || J.actif.id !== A[1].id || p.id !== A[0].id) out.ko.push('échange d’actif en boucle : ' + n + ' échanges immobile');
+      J.x += 40; T.pas(10); J.x -= 40; T.pas(120);
+      if (J.actif.id !== A[0].id) out.ko.push('actif reposé impossible à reprendre après s’être éloigné');
+      const tal = L.DON.talismans; J.talisman = tal[0].id; const r = L.creerRamassable('talisman', J.x, J.y, { id: tal[1].id }); r.age = 1;
+      T.pas(20); const lache = S.ramassables.find(x => x.type === 'talisman' && x.id === tal[0].id);
+      if (J.talisman !== tal[1].id || !lache) out.ko.push('prise de talisman sans dépôt de l’ancien');
+      else { for (let i = 0; i < 30; i++) { J.x = lache.x - 16 + i; T.pas(1); } if (J.talisman !== tal[1].id) out.ko.push('talisman lâché repris en passant dessus (va-et-vient)'); }
+    } catch (err) { out.ko.push('échanges ' + String(err.stack || err).slice(0, 200)); }
     return out;
   });
 

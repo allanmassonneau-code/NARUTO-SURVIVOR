@@ -75,10 +75,12 @@ function preparerSalleSpeciale(s) {
 function majPiedestaux(dt) {
   const s = G.salle, J = G.joueur; G.piedestalProche = null;
   for (const p of s.piedestaux) {
-    p.age += dt;
+    p.age += dt; if (p.apparu > 0) p.apparu -= dt;
     if (!p.id || J.etat !== 'normal') continue;
     const d = dist(p.x, p.y + 4, J.x, J.y);
     if (d < 34) G.piedestalProche = p;
+    // objet reposé par un échange : repris seulement après s'être éloigné du piédestal (pas de va-et-vient)
+    if (p.attendSortie) { if (d > 24) p.attendSortie = false; continue; }
     if (d > 14 || p.apparu > 0) continue;
     if (p.prix) { G.achatPropose = p; continue; }       // un achat se confirme (bouton d'interaction)
     if (G.transition || G.enAnimationObjet) continue;
@@ -127,7 +129,7 @@ function prendrePiedestal(p) {
     const ancien = J.deuxActifs && !J.actif2 ? null : J.actif;
     if (J.deuxActifs && !J.actif2 && J.actif) { J.actif2 = J.actif; }
     J.actif = { id: p.id, charges: p.charges ?? chargesMax(d) };
-    if (ancien) { p.id = ancien.id; p.charges = ancien.charges; p.apparu = 0.6; } else p.id = null;
+    if (ancien) { p.id = ancien.id; p.charges = ancien.charges; p.apparu = 0.6; p.attendSortie = true; } else p.id = null;
     if (!J.acquis.includes(d.id)) { J.acquis.push(d.id); if (d.ensemble) verifierTransformations(J); }
     Progression.decouvrir(d.id); evenement('objet_acquis', { id: d.id, actif: true });
   } else {

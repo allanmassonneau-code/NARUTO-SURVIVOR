@@ -243,7 +243,6 @@ function dessinerPiedestal(g, p, X, Y) {
   g.fillStyle = '#2a2230'; g.fillRect(x - 11, y - 2, 22, 10); g.fillStyle = '#6a5a70'; g.fillRect(x - 10, y - 3, 20, 3); g.fillStyle = '#4a3e52'; g.fillRect(x - 9, y, 18, 7);
   g.fillStyle = '#8a7a90'; g.fillRect(x - 10, y - 3, 20, 1);
   if (!p.id) return;
-  if (p.apparu > 0) { p.apparu -= 1 / 60; }
   const flotte = Math.round(Math.sin(G.temps * 2.5 + p.x) * 2);
   if (p.ramassable) { const s = spriteRamassable(p.ramassable); g.drawImage(s, x - Math.round(s.width / 2), y - s.height - 4 + flotte); }
   else {

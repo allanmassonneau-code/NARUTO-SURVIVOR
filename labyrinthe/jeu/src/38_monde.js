@@ -322,7 +322,9 @@ function majRamassables(dt) {
     // familiers collecteurs
     for (const f of J.familiers) if (f.collecte && r.age > 0.3 && dist(r.x, r.y, f.x, f.y) < 10 && ['ryo', 'cle', 'explosif'].includes(RAMASSABLES[r.type].cat)) { collecter(r, J); }
     if (r.pris || r.age < 0.25 || J.etat !== 'normal') continue;
-    if (dist(r.x, r.y, J.x, J.y) < 12 + (RAMASSABLES[r.type].cat === 'coffre' ? 4 : 0)) collecter(r, J);
+    const d = dist(r.x, r.y, J.x, J.y);
+    if (r.attendSortie) { if (d > 26) r.attendSortie = false; continue; } // objet lâché : repris seulement après s'en être éloigné
+    if (d < 12 + (RAMASSABLES[r.type].cat === 'coffre' ? 4 : 0)) collecter(r, J);
   }
   s.ramassables = s.ramassables.filter(r => !r.pris);
 }
@@ -366,12 +368,12 @@ function collecter(r, J) {
 }
 function donnerConsommable(J, c) {
   if (typeof c === 'string') c = { type: INDEX[c] && INDEX[c].famille === 'pilule' ? 'pilule' : 'rouleau', id: c };
-  if (J.poches.length >= J.maxPoches) { const ancien = J.poches.shift(); const r = creerRamassable(ancien.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 14, J.y + 4, { id: ancien.id }); r.apparence = ancien.apparence; r.age = 0; }
+  if (J.poches.length >= J.maxPoches) { const ancien = J.poches.shift(); const r = creerRamassable(ancien.type === 'pilule' ? 'pilule' : 'rouleau', J.x + 14, J.y + 4, { id: ancien.id }); r.apparence = ancien.apparence; r.age = 0; r.attendSortie = true; }
   J.poches.push(c); return true;
 }
 function prendreTalisman(J, id) {
   if (J.talisman && J.maxTalismans > 1 && !J.talisman2) J.talisman2 = J.talisman;
-  else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; }
+  else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; }
   J.talisman = id; recalculer(J); Son.jouer('objet_mineur');
   G.banniere = { t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true };
   Progression.decouvrir(id);
