@@ -13,7 +13,7 @@ function modificateursStats(J) {
   const M = {}; const add = (s, k, v) => { M[s] = M[s] || { a: 0, p: 0, m: 1 }; if (k === 'm') M[s].m *= v; else M[s][k] += v; };
   const appliquer = e => { if (e.s) { if (e.a) add(e.s, 'a', e.a); if (e.p) add(e.s, 'p', e.p); if (e.m) add(e.s, 'm', e.m); } };
   for (const id of J.passifs) { const d = INDEX[id]; if (d && d.effets) d.effets.forEach(appliquer); }
-  if (J.talisman && INDEX[J.talisman]) (INDEX[J.talisman].effets || []).forEach(appliquer);
+  for (const t of [J.talisman, J.talisman2]) if (t && INDEX[t]) (INDEX[t].effets || []).forEach(appliquer);
   for (const t of J.transformations) (INDEX[t].effets || []).forEach(appliquer);
   for (const sy of synergiesActives(J)) (sy.effets || []).forEach(appliquer);
   for (const b of J.bonus) appliquer(b);                // bonus temporaires (salle, secondes, étage)
@@ -57,7 +57,7 @@ function calculerProfil(J) {
   const tous = [];
   for (const id of J.passifs) { const d = INDEX[id]; if (d && d.effets) for (const e of d.effets) tous.push([e, d]); }
   for (const t of J.transformations) for (const e of (INDEX[t].effets || [])) tous.push([e, INDEX[t]]);
-  if (J.talisman && INDEX[J.talisman]) for (const e of (INDEX[J.talisman].effets || [])) tous.push([e, INDEX[J.talisman]]);
+  for (const t of [J.talisman, J.talisman2]) if (t && INDEX[t]) for (const e of (INDEX[t].effets || [])) tous.push([e, INDEX[t]]);
   for (const sy of synergiesActives(J)) for (const e of (sy.effets || [])) tous.push([e, sy]);
   for (const b of J.bonus) if (b.tir) tous.push([b.tir, { id: 'bonus' }]);
   for (const [e, d] of tous) {

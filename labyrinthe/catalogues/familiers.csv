@@ -1,0 +1,27 @@
+﻿ID;Nom;Comportement;Dégâts;Cadence / recharge;Particularité
+FAM_CLONE;Clone de l’ombre;suiveur_tireur;3.5;1.8 /s;—
+FAM_RELAIS;Clone de relais;copieur;×0.75 du tir;—;—
+FAM_CLONE_TEMP;Clone (salle);clone_temp;×0.5 du tir;—;—
+FAM_CLONE_RES;Clone de réserve;clone_res;×0.35 dégâts;2.2 /s;—
+FAM_CLONE_SABLE;Clone de sable;copieur;×0.6 du tir;—;—
+FAM_GAMAKICHI;Gamakichi;suiveur_tireur;3;1.3 /s;statut ralenti
+FAM_KATSUYU;Katsuyu miniature;soutien;—;toutes les 5 salles;donne coeur
+FAM_CRAPAUD_CLE;Crapaud messager;soutien;—;toutes les 6 salles;donne cle
+FAM_SERPENT;Serpent;orbital;5;—;bloque les tirs
+FAM_SABLE;Sable protecteur;orbital;2;—;bloque les tirs
+FAM_KUNAI_ORB;Kunai tournoyant;orbital;2;—;—
+FAM_PAPIER;Papillon de papier;orbital;1.5;—;bloque les tirs
+FAM_MIROIR;Miroir de glace;orbital;0;—;bloque les tirs, renvoie les tirs
+FAM_CORBEAU;Corbeau;aveugleur;2;3 s;statut confus
+FAM_PAKKUN;Pakkun;pakkun;—;—;—
+FAM_AKAMARU;Akamaru;contact;6;1.2 s;—
+FAM_INSECTES;Kikaichū;collecteur;1.5;—;—
+FAM_OISEAU_ARGILE;Oiseau d’argile;kamikaze;—;4 s;—
+FAM_KARASU_ATT;Karasu;chasseur;4;1.6 /s;statut poison, marionnette
+FAM_KARASU;Karasu (marionnette);marionnette;—;—;bloque les tirs, marionnette
+FAM_KUROARI;Kuroari;pieges;—;8 s;marionnette
+FAM_SANSHOUO;Sanshōuo;bloqueur;—;—;bloque les tirs, marionnette
+FAM_TIGRE_ENCRE;Fauve d’encre;chasseur;4;1.5 /s;—
+FAM_SERPENT_BLANC;Serpent blanc;chasseur;3;1.2 /s;—
+FAM_LUCIOLE;Luciole;luciole;—;—;—
+FAM_POUPEE;Poupée d’entraînement;bloqueur;—;—;bloque les tirs

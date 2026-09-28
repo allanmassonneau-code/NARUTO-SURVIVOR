@@ -77,6 +77,7 @@ function fondSalle(s) {
       if (!estSol(tx, ty - 1)) { g.fillStyle = 'rgba(0,0,0,0.28)'; g.fillRect(x, y, 32, 6); }
       if (!estSol(tx - 1, ty)) { g.fillStyle = 'rgba(0,0,0,0.18)'; g.fillRect(x, y, 4, 32); }
     }
+    decorSalle(g, s, V);
     // cadres de portes
     for (const p of s.portes) dessinerCadrePorte(g, s, p, V);
     // décorations cosmétiques (sans collision) près des murs
@@ -91,6 +92,49 @@ function fondSalle(s) {
   for (let i = s.decalsDessines || 0; i < s.decals.length; i++) dessinerDecal(g, s.decals[i]);
   s.decalsDessines = s.decals.length; s.decalsNouveaux = false; s.fondSale = false; s._fond = c;
   return c;
+}
+// ── Identité des salles spéciales (sol) : tapis d'échoppe, tapis d'héritage, cercle de sceau
+// des arènes, étagères de la bibliothèque, emblèmes des épreuves et des autels ──
+function tapis(g, x, y, l, h, fond, bord, motif) {
+  x = Math.round(x); y = Math.round(y); l = Math.round(l); h = Math.round(h);
+  g.fillStyle = 'rgba(0,0,0,0.25)'; g.fillRect(x + 2, y + 2, l, h);
+  g.fillStyle = bord; g.fillRect(x, y, l, h); g.fillStyle = fond; g.fillRect(x + 3, y + 3, l - 6, h - 6);
+  g.fillStyle = motif; g.fillRect(x + 5, y + 5, l - 10, 1); g.fillRect(x + 5, y + h - 6, l - 10, 1); g.fillRect(x + 5, y + 5, 1, h - 10); g.fillRect(x + l - 6, y + 5, 1, h - 10);
+  for (let yy = y + 10; yy < y + h - 10; yy += 8) for (let xx = x + 10 + ((yy - y) / 8 % 2) * 4; xx < x + l - 10; xx += 8) { g.fillRect(xx, yy, 2, 2); }
+  g.fillStyle = bord; for (let xx = x + 2; xx < x + l - 2; xx += 4) { g.fillRect(xx, y - 2, 1, 2); g.fillRect(xx, y + h, 1, 2); } // franges
+}
+function cercleSceau(g, cx, cy, r, coul) {
+  g.globalAlpha = 0.28; g.drawImage(anneau(r, 2, coul), cx - r - 1, cy - r - 1); g.drawImage(anneau(Math.round(r * 0.72), 1, coul), cx - Math.round(r * 0.72) - 1, cy - Math.round(r * 0.72) - 1);
+  g.fillStyle = coul; for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; for (let k = 0; k < 3; k++) g.fillRect(Math.round(cx + Math.cos(a) * (r * 0.74 + k * 4)), Math.round(cy + Math.sin(a) * (r * 0.74 + k * 4)), 2, 2); }
+  for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 + 0.2; g.fillRect(Math.round(cx + Math.cos(a) * r * 0.36) - 2, Math.round(cy + Math.sin(a) * r * 0.36) - 1, 4, 2); }
+  g.globalAlpha = 1;
+}
+function lanterne(g, x, y) {
+  g.fillStyle = '#1c1420'; g.fillRect(x + 3, y - 2, 4, 2); g.fillStyle = '#c8303a'; g.fillRect(x, y, 10, 12); g.fillStyle = '#f07a4a'; g.fillRect(x + 2, y + 1, 6, 10);
+  g.fillStyle = '#1c1420'; g.fillRect(x, y + 3, 10, 1); g.fillRect(x, y + 8, 10, 1); g.fillRect(x + 3, y + 12, 4, 2);
+  g.globalAlpha = 0.18; g.drawImage(disque(16, '#ffb060'), x - 11, y - 10); g.globalAlpha = 1;
+}
+function decorSalle(g, s, V) {
+  const pts = c => (s.pointsSpeciaux || []).filter(p => p.c === c).map(p => centreTuile(p.tx, p.ty));
+  const [cx, cy] = centreSalle(s); const larg = s.W * TUILE;
+  switch (s.type) {
+    case 'boutique': {
+      const S = pts('S'); if (S.length) { const xs = S.map(p => p[0]), ys = S.map(p => p[1]); tapis(g, Math.min(...xs) - 28, Math.min(...ys) - 30, Math.max(...xs) - Math.min(...xs) + 56, Math.max(...ys) - Math.min(...ys) + 52, '#5a1a22', '#b08a3a', '#8a3a3a'); }
+      lanterne(g, 40, 36); lanterne(g, larg - 50, 36); break;
+    }
+    case 'heritage': { const I = pts('I')[0] || [cx, cy]; tapis(g, I[0] - 34, I[1] - 30, 68, 50, '#2a2450', '#d8b040', '#4a4080'); lanterne(g, 40, 36); lanterne(g, larg - 50, 36); break; }
+    case 'boss': case 'defi_boss': cercleSceau(g, cx, cy, 70, s.type === 'boss' ? '#c83a3a' : '#b85a9a'); break;
+    case 'sacrifice': { const A = pts('A')[0] || [cx, cy]; cercleSceau(g, A[0], A[1], 40, '#a02a2a'); break; }
+    case 'defi': { g.globalAlpha = 0.3; g.fillStyle = '#c8c8d8'; for (let k = -18; k <= 18; k++) { g.fillRect(cx + k - 1, cy + k - 1, 3, 3); g.fillRect(cx + k - 1, cy - k - 1, 3, 3); } g.globalAlpha = 1; cercleSceau(g, cx, cy, 34, '#9a9ab0'); break; }
+    case 'bibliotheque': { // étagères le long du mur du haut
+      for (let x = 44; x < larg - 44; x += 40) { g.fillStyle = '#4a3222'; g.fillRect(x, 34, 34, 22); g.fillStyle = '#2a1c14'; g.fillRect(x, 44, 34, 2);
+        for (let k = 0; k < 7; k++) { g.fillStyle = ['#c8b890', '#a88a5a', '#d8c8a0', '#8a3a2a', '#3a5a8a'][(x + k * 3) % 5]; g.fillRect(x + 2 + k * 4, 37, 3, 6); g.fillRect(x + 3 + k * 4, 47, 3, 6); } }
+      break;
+    }
+    case 'coffres': { g.globalAlpha = 0.18; g.fillStyle = '#e8c050'; for (let ty = 2; ty < s.H - 2; ty++) for (let tx = 2; tx < s.W - 2; tx++) if ((tx + ty) % 2 === 0) g.fillRect(tx * TUILE + 2, ty * TUILE + 2, 28, 28); g.globalAlpha = 1; break; }
+    case 'malediction': { g.fillStyle = 'rgba(120,20,40,0.35)'; const al = new Alea('fissures' + s.id); for (let k = 0; k < 14; k++) { let x = 40 + al.entier(larg - 80), y = 40 + al.entier(s.H * TUILE - 80); for (let n = 0; n < 12; n++) { g.fillRect(x, y, 2, 2); x += al.entier(5) - 2; y += al.entier(5) - 2; } } break; }
+    case 'repos': { cercleSceau(g, cx, cy, 44, '#6ac8e8'); break; }
+  }
 }
 function dessinerDecal(g, d) {
   const al = new Alea('decal' + d.g);
@@ -261,7 +305,7 @@ function conditionPorte(s, p) {
   if (!v) return true;
   if (v.type === 'defi' || v.type === 'defi_boss' || s.type === 'defi' || s.type === 'defi_boss') {
     if (s.type === 'defi' || s.type === 'defi_boss') return true; // sortir est toujours possible hors combat
-    if (J.talisman === 'TAL_032') return true;
+    if (aTalisman(J, 'TAL_032')) return true;
     if (J.drapeaux.sansVitalite || nbVit(J.sante) === 0) return J.sante.prot.length >= 4;
     return rougeTotal(J.sante) >= rougeMax(J.sante);
   }

@@ -6,14 +6,15 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 function chargesMax(d) { return d ? (d.charges || 0) : 0; }
+// Talisman porté dans l'un des deux emplacements (le second existe avec « talismanDouble »)
+function aTalisman(J, id) { return J.talisman === id || J.talisman2 === id; }
 function chargerActif(J, n, source) {
   if (!J.actif) return; const d = INDEX[J.actif.id]; if (!d || d.unique || d.recharge) return;
-  const max = chargesMax(d); const plafond = J.drapeaux.surcharge ? max * 2 : max;
-  if (J.talisman === 'TAL_003' && source === 'salle') n += 0; // la pile réduit le coût, voir chargesRequises
+  const max = chargesMax(d); const plafond = J.drapeaux.surcharge ? max * 2 : max; // la Pile de chakra réduit le coût (chargesRequises), pas le gain
   const av = J.actif.charges; J.actif.charges = Math.min(plafond, J.actif.charges + n);
   if (av < chargesRequises(J) && J.actif.charges >= chargesRequises(J)) { Son.jouer('charge_pleine'); Entrees.vibrer('charge'); }
 }
-function chargesRequises(J) { const d = INDEX[J.actif.id]; return Math.max(1, chargesMax(d) - (J.talisman === 'TAL_003' ? 1 : 0)); }
+function chargesRequises(J) { const d = INDEX[J.actif.id]; return Math.max(1, chargesMax(d) - (aTalisman(J, 'TAL_003') ? 1 : 0)); }
 function majActifTemporel(J, dt) {
   if (!J.actif) return; const d = INDEX[J.actif.id]; if (!d || !d.recharge) return;
   if (!G.salle.combat) return; // pas de recharge par simple attente hors combat
@@ -161,7 +162,7 @@ function utiliserPoche() {
   let garder = false;
   if (c.type === 'pilule') { garder = !!prendrePilule(J, c); }
   else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); G.banniere = { t: 0, nom: d.nom, desc: d.desc, mineur: true }; }
-  if (J.talisman === 'TAL_031' && Math.random() < 0.15) garder = true;
+  if (aTalisman(J, 'TAL_031') && Math.random() < 0.15) garder = true;
   if (!garder) J.poches.shift();
   evenement('consommable_utilise', { id: c.id });
 }
@@ -186,7 +187,7 @@ const EFFETS_CONSOMMABLES = {
 };
 
 // Pilules : apparence → effet (graine de partie) ; identification à l'usage
-function nomPilule(c) { const P = G.partie; const k = P.pilules.indexOf(c.id); const id = P.pilulesIdentifiees.includes(c.id) || G.joueur.talisman === 'TAL_014'; return id ? INDEX[c.id].nom : 'Pilule inconnue (' + (APPARENCES_PILULES[k] || {}).nom + ')'; }
+function nomPilule(c) { const P = G.partie; const k = P.pilules.indexOf(c.id); const id = P.pilulesIdentifiees.includes(c.id) || aTalisman(G.joueur, 'TAL_014'); return id ? INDEX[c.id].nom : 'Pilule inconnue (' + (APPARENCES_PILULES[k] || {}).nom + ')'; }
 const APPARENCES_PILULES = [
   { nom: 'blanche', a: '#f0f0f0', b: '#f0f0f0' }, { nom: 'rouge', a: '#d83a3a', b: '#d83a3a' }, { nom: 'verte', a: '#4ab04a', b: '#4ab04a' }, { nom: 'jaune', a: '#e8c83a', b: '#e8c83a' },
   { nom: 'bleue', a: '#3a6ad8', b: '#3a6ad8' }, { nom: 'noire', a: '#2a2a30', b: '#2a2a30' }, { nom: 'rouge et blanche', a: '#d83a3a', b: '#f0f0f0' }, { nom: 'verte et jaune', a: '#4ab04a', b: '#e8c83a' },
@@ -195,7 +196,7 @@ const APPARENCES_PILULES = [
 ];
 function prendrePilule(J, c) {
   const P = G.partie; let d = INDEX[c.id];
-  if (J.talisman === 'TAL_014' && d.negatif && d.contraire) d = INDEX[d.contraire]; // neutralisation par objet
+  if (aTalisman(J, 'TAL_014') && d.negatif && d.contraire) d = INDEX[d.contraire]; // neutralisation par objet
   if (!P.pilulesIdentifiees.includes(c.id)) P.pilulesIdentifiees.push(c.id);
   const E = d.effet;
   if (E.s) { J.bonusPermanents.push({ s: E.s, a: E.a }); recalculer(J); }

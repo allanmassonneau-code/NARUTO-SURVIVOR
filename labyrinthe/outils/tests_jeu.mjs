@@ -260,6 +260,15 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     // explosions renforcées
     J = nouvelle(); const e = L.creerEnnemi('ENM_002', J.x + 80, J.y, { sansApparition: true }); e.pv = e.pvMax = 100; J.drapeaux.explosionPlus = true; L.explosion(e.x, e.y, 20, 10, { proprio: 'joueur' });
     verif(Math.abs(100 - e.pv - 15) < 0.01, 'dent de requin : explosion 10 + 5 attendue, dégâts ' + (100 - e.pv));
+    // machines : douze usages de chaque type sans erreur (loterie à gains doublés comprise)
+    J = nouvelle(); J.ryo = 200; J.sante = L.santeInit({ vitalite: 6 }); J.drapeaux.loterieDouble = true; const ryo0 = J.ryo;
+    for (const type of ['loterie', 'don_vital', 'diseuse', 'soin', 'recharge', 'troc']) { const m = { x: J.x, y: J.y - 40, type, usages: 0, uid: 1 }; G.salle.machines.push(m); for (let i = 0; i < 12; i++) { try { L.utiliserMachine(m); } catch (e) { out.ko.push('machine ' + type + ' : ' + String(e).slice(0, 120)); break; } } }
+    verif(J.ryo < ryo0, 'les machines consomment des Ryō');
+    // un identifiant débloqué par deux objectifs : l'un ou l'autre suffit
+    const Pg = L.Progression, pr = Pg.profil; const avant = { tout: pr.toutDebloque, obj: Object.assign({}, pr.objectifs) };
+    pr.toutDebloque = false; pr.objectifs = {}; const bloque = !Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_028: 1 }; const parMadara = Pg.estDebloque('PSV_020'); pr.objectifs = { OBJ_049: 1 }; const parBreche = Pg.estDebloque('PSV_020');
+    pr.toutDebloque = avant.tout; pr.objectifs = avant.obj;
+    verif(bloque && parMadara && parBreche, 'Chute céleste : verrouillée puis débloquée par OBJ_028 ou OBJ_049 (' + [bloque, parMadara, parBreche] + ')');
     return out;
   });
 

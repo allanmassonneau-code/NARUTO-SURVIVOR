@@ -248,7 +248,13 @@ function dessinerPnj(g, n, x, y) {
   dessinerPerso(g, n.type === 'voyageur' ? 'kakuzu' : n.type === 'marchand_cles' ? 'kankuro' : 'kiba', x, y + 10, { dirCorps: 'bas', frame: 0 });
   if (G.machineProche === n) { const I = INFORMATEURS[n.type]; Police.ecrire(g, I.coutAff + ' (' + Entrees.libelle('interagir') + ')', x, y - 30, '#f0e8d0', { a: 'c' }); }
 }
+let _imgTanuki = null; // cache hors de l'objet statue (qui est sérialisé avec la salle)
 function dessinerStatue(g, st, x, y) {
+  if (st.type === 'marchand') { // tanuki porte-bonheur de l'échoppe (le détruire fait tomber des Ryō)
+    const T0 = ['....hhhhhh....', '..hhHhhhhHhh..', '.hhhhhhhhhhhh.', '....ffffff....', '...fwkffkwf...', '...ffkkkkff...', '....ffbbff....', '..ffffffffff..', '.ffbbbbbbbbff.', '.fbbbbbbbbbbfs', 'ffbbbbbbbbbbfs', 'ffbbbbbbbbbbfr', 'ffbbbbbbbbbbff', '.fbbbbbbbbbbf.', '.ffbbbbbbbbff.', '..ffffffffff..', '.FFff....ffFF.', 'FFFF......FFFF'];
+    const img = _imgTanuki || (_imgTanuki = contourner(avecMarge(peindre(T0, { h: '#c8a860', H: '#8a6a3a', f: '#8a6a4a', F: '#5a4230', b: '#e8d8b8', k: '#1c1420', w: '#f0e8d8', s: '#d8d0c0', r: '#b83a2a' }))));
+    g.drawImage(img, x - img.width / 2, y - img.height + 12); return;
+  }
   const col = st.type === 'serpent' ? { a: '#5a4a6a', b: '#8a7a9a' } : st.type === 'crapaud' ? { a: '#b0b098', b: '#e0e0c8' } : { a: '#6a5a4a', b: '#9a8a7a' };
   const L = st.type === 'serpent' ? ['....aaaa....', '...abbbba...', '..abkbbkba..', '..abbbbbba..', '...abbbba...', '....abba....', '...aabbaa...', '..aabbbbaa..', '.aabbbbbbaa.', 'aaaaaaaaaaaa'] : st.type === 'crapaud' ? ['..aa....aa..', '.abka..akba.', '.aabbbbbbaa.', 'aabbbbbbbbaa', 'abbbkkkkbbba', 'aabbbbbbbbaa', '.aabbbbbbaa.', 'aa.aaaaaa.aa', 'aaaaaaaaaaaa'] : ['...aaaaaa...', '..abbbbbba..', '..abkbbkba..', '..abbbbbba..', '...abbbba...', '..aabbbbaa..', '.aabbbbbbaa.', 'aaaaaaaaaaaa'];
   const img = contourner(peindre(L, Object.assign({ k: '#1c1420' }, col))); g.drawImage(img, x - img.width / 2, y - img.height + 12);

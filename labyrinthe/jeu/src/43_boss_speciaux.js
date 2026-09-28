@@ -13,7 +13,7 @@ const INIT_BOSS = {
   brume(e) { e.brume = 0; },
   miroirs(e) {
     const s = G.salle; const [cx, cy] = centreSalle(s); e.miroirs = [];
-    for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3 + Math.PI / 6; const m = creerEnnemi('ENM_016', cx + Math.cos(a) * 150, cy + Math.sin(a) * 80, { sansApparition: true }); m.miroir = true; m.def = Object.assign({}, m.def, { nom: 'Miroir de glace', comportement: 'miroir', sprite: { type: 'carte', cle: 'statue', couleurs: { s: '#b0e0f8', l: '#e8f8ff', d: '#80b8d8' } } }); m.id = 'MIROIR'; m.pv = m.pvMax = 22; m.contact = 0; m.def.ignoreNettoyage = true; e.miroirs.push(m); }
+    for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3 + Math.PI / 6; const m = creerEnnemi('ENM_016', cx + Math.cos(a) * 150, cy + Math.sin(a) * 80, { sansApparition: true }); m.miroir = true; m.def = Object.assign({}, m.def, { nom: 'Miroir de glace', comportement: 'miroir', sprite: { type: 'carte', cle: 'miroir_glace' } }); m.id = 'MIROIR'; m.pv = m.pvMax = 22; m.contact = 0; m.def.ignoreNettoyage = true; e.miroirs.push(m); }
   },
   kankuro(e) { // le marionnettiste se cache ; Karasu attaque
     const s = G.salle; const [tx, ty] = tuileLibreLoin(s, G.joueur.x, G.joueur.y); [e.x, e.y] = centreTuile(tx, ty);
@@ -41,7 +41,7 @@ IA_BOSS.generique = function (e, dt, d) {
     const f = e.chaine; const d0 = dist(e.x, e.y, f.x, f.y); e.chaineTendue = d0 > 110;
     if (e.chaineTendue && !J.intangible) { const t = borne(((J.x - e.x) * (f.x - e.x) + (J.y - e.y) * (f.y - e.y)) / (d0 * d0), 0, 1); const px = lerp(e.x, f.x, t), py = lerp(e.y, f.y, t); if (dist(px, py, J.x, J.y) < 6) blesserJoueur(G.degatsEnnemis, { type: 'chaine', x: px, y: py }); }
   }
-  if (e.intangibleBase) e.intangible = !(e.etatB === 'actif' || e.etatB === 'recup' || e.materialise > 0); if (e.materialise > 0) e.materialise -= dt;
+  if (e.intangibleBase) e.intangible = !(e.etatB === 'tele' || e.etatB === 'actif' || e.etatB === 'recup' || e.materialise > 0); // se matérialise dès l'annonce de l'attaque if (e.materialise > 0) e.materialise -= dt;
   if (e.durci > 0) { e.durci -= dt; }
   if (d.deplacement === 'fuite' && e.etatB === 'choix') { const [dx, dy] = normaliser(e.x - J.x, e.y - J.y); if (dist(e.x, e.y, J.x, J.y) < 5 * TUILE) deplacerEnnemi(e, dx, dy, 1.6 * TUILE, dt); else { e.vx *= 0.9; e.vy *= 0.9; } }
   if (e.role === 'dosu' || e.role === 'zaku' || e.role === 'kin') { /* chacun son jeu d'attaques via def */ }
@@ -90,7 +90,7 @@ const SPECIAUX_BOSS = {
   },
   vague_sable(e, a, m) { if (m === 'debut') { for (let k = 0; k < 3; k++) setTimeoutJeu(() => { if (!e.mort) G.effets.push({ type: 'anneau_expansif', x: e.x, y: e.y, r: 12, v: 3.2 * TUILE, age: 0, duree: 2.4, trou: ciblerJoueur(e) + (Math.random() - 0.5) * 1.5, largeurTrou: 0.9, proprio: 'ennemi' }); Son.jouer('sable'); }, k * 0.7); } },
   soin_kabuto(e, a, m, dt) { // canalisation visible, interrompue par 40 dégâts
-    if (m === 'debut') { e.canal = { subis: 0, pv: e.pv }; G.effets.push({ type: 'cercle_soin', x: e.x, y: e.y, r: 30, age: 0, duree: 2 }); }
+    if (m === 'debut') { e.canal = { subis: 0, pv: e.pv }; e.pvAvant = e.pv; G.effets.push({ type: 'cercle_soin', x: e.x, y: e.y, r: 30, age: 0, duree: 2 }); }
     if (m === 'maj' && e.canal) { if (e.pvAvant !== undefined && e.pv < e.pvAvant) e.canal.subis += e.pvAvant - e.pv; e.pvAvant = e.pv; if (e.canal.subis >= 40) { e.canal = null; e.tB = 0; G.textes.push({ x: e.x, y: e.y - 40, t: 'Soin interrompu !', age: 0, duree: 1, couleur: '#a0e0a0' }); } }
     if (m === 'fin' && e.canal) { e.pv = Math.min(e.pvMax, e.pv + e.pvMax * 0.12); e.canal = null; Son.jouer('coeur'); }
   },
@@ -111,7 +111,7 @@ const SPECIAUX_BOSS = {
       if (!J.intangible && ligneLibre(s, e.x, e.y, J.x, J.y, 'tir')) blesserJoueur(4, { type: 'c3', x: e.x, y: e.y }); }
   },
   clones_corbeaux(e, a, m) { // seul le vrai projette une ombre ; les faux éclatent en corbeaux
-    if (m === 'debut') { for (let i = 0; i < 3; i++) { const [x, y] = pointAleatoire(G.salle, 2); const c = creerEnnemi('ENM_063', x, y, { parent: e.uid, sansApparition: true }); c.def = Object.assign({}, c.def, { nom: 'Illusion', sprite: e.def.sprite, mort: null, comportement: 'tireur', params: { motif: 'vise', cadence: 1.6, vProj: 5, tele: 0.5 } }); c.id = 'ILLUSION_' + e.id; c.pv = c.pvMax = 1; c.illusion = true; c.contact = 0; c.def.ignoreNettoyage = true; c.parent = e.uid; }
+    if (m === 'debut') { for (let i = 0; i < 3; i++) { const [x, y] = pointAleatoire(G.salle, 2); const c = creerEnnemi('ENM_063', x, y, { parent: e.uid, sansApparition: true }); c.def = Object.assign({}, c.def, { nom: 'Illusion', sprite: e.def.sprite, echelleSprite: 2, r: e.def.r, mort: null, comportement: 'tireur', params: { motif: 'vise', cadence: 1.6, vProj: 5, tele: 0.5 } }); c.id = 'ILLUSION_' + e.id; c.pv = c.pvMax = 1; c.illusion = true; c.contact = 0; c.def.ignoreNettoyage = true; c.parent = e.uid; }
       const [x, y] = pointAleatoire(G.salle, 2); e.x = x; e.y = y; Son.jouer('fumee'); }
   },
   lune_rouge(e, a, m) { if (m === 'debut') { G.effets.push({ type: 'tsukuyomi', age: 0, duree: 3 }); for (let k = 0; k < 5; k++) setTimeoutJeu(() => !e.mort && anneauBoss(e, 12, 3.2, { trou: Math.floor(Math.random() * 12), largeurTrou: 1.6 }), k * 0.55); Son.jouer('gong'); } },

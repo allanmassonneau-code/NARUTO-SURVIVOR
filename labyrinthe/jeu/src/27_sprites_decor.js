@@ -234,13 +234,42 @@ function textureMur(V, type) { // type : 'face' | 'cote' | 'rebord' | 'coin'
     else if (M.motif === 'racines') { g.fillStyle = M.ombre; for (let k = 0; k < 4; k++) { const x = 3 + k * 8; g.fillRect(x, 7, 3, 25); g.fillStyle = nuancer(M.face, 1.15); g.fillRect(x, 7, 1, 25); g.fillStyle = M.ombre; } }
     else { g.fillStyle = M.ombre; g.fillRect(4, 12, 10, 1); g.fillRect(18, 20, 11, 1); g.fillRect(8, 26, 8, 1); g.fillRect(22, 10, 1, 6); g.fillStyle = nuancer(M.face, 1.12); g.fillRect(5, 11, 8, 1); g.fillRect(19, 19, 9, 1); }
     g.fillStyle = nuancer(M.ombre, 0.8); g.fillRect(0, 30, 32, 2);
-  } else if (type === 'cote') {
-    g.fillStyle = M.haut; g.fillRect(0, 0, 32, 32);
-    g.fillStyle = nuancer(M.haut, 1.18); for (let y = 2; y < 32; y += 8) g.fillRect(4, y, 24, 1);
-  } else { // rebord / coin
-    g.fillStyle = M.haut; g.fillRect(0, 0, 32, 32); g.fillStyle = nuancer(M.haut, 1.18); g.fillRect(0, 0, 32, 2);
-  }
+  } else dessinerDessusMur(g, M, type === 'cote' ? 'v' : 'h');
   return c;
+}
+// Dessus des murs (latéraux : motif le long de y ; bas : le long de x), vu d'en haut,
+// dans la matière du thème : haie et racines, briques décalées, blocs de roche, planches, plaques rivetées.
+function dessinerDessusMur(g, M, o) {
+  const base = M.haut, clair = nuancer(M.haut, 1.22), tresClair = nuancer(M.haut, 1.45), sombre = nuancer(M.haut, 0.72), joint = nuancer(M.haut, 0.5);
+  const R = (u, v, lu, lv, col) => { g.fillStyle = col; if (o === 'v') g.fillRect(v, u, lv, lu); else g.fillRect(u, v, lu, lv); };
+  const al = new Alea('dessus|' + M.haut + '|' + M.motif + '|' + o);
+  R(0, 0, 32, 32, base);
+  switch (M.motif) {
+    case 'racines': { // haie de sous-bois : touffes de feuillage et racines
+      for (let k = 0; k < 20; k++) { const u = al.entier(30), v = 3 + al.entier(24), l = 3 + al.entier(4); R(u, v, l, 2, k % 3 ? sombre : clair); R(u + 1, v - 1, l - 2, 1, k % 3 ? base : tresClair); }
+      for (let k = 0; k < 3; k++) { const v = 6 + al.entier(20); for (let u = 0; u < 32; u += 2) R(u, v + (Math.sin(u * 0.4 + k) > 0 ? 1 : 0), 2, 1, joint); }
+      break;
+    }
+    case 'briques': { // assises de briques décalées
+      for (let u = 0, r = 0; u < 32; u += 8, r++) { R(u + 7, 2, 1, 28, joint); for (let v = r % 2 ? 2 : 10; v < 30; v += 16) R(u, v, 7, 1, joint); R(u, 2, 7, 1, clair); }
+      R(0, 0, 32, 2, sombre); R(0, 30, 32, 2, sombre);
+      break;
+    }
+    case 'planches': { // planches posées le long du mur, clous
+      for (let v = 2; v < 30; v += 7) { R(0, v + 6, 32, 1, joint); R(0, v, 32, 1, clair); const cut = 4 + al.entier(22); R(cut, v, 1, 6, joint); R(cut + 2, v + 3, 1, 1, tresClair); R(cut - 3, v + 3, 1, 1, tresClair); }
+      break;
+    }
+    case 'metal': { // plaques rivetées
+      for (let u = 0; u < 32; u += 16) { R(u + 15, 2, 1, 28, joint); R(u, 2, 15, 1, clair); for (const dv of [5, 26]) for (const du of [3, 11]) { R(u + du, dv, 2, 2, tresClair); R(u + du + 1, dv + 1, 1, 1, joint); } }
+      R(0, 0, 32, 2, sombre); R(0, 30, 32, 2, sombre); R(0, 15, 32, 1, sombre);
+      break;
+    }
+    default: { // roche : gros blocs irréguliers
+      let u = 0;
+      while (u < 32) { const l = 7 + al.entier(8); let v = 2; while (v < 30) { const h = 6 + al.entier(9); const hh = Math.min(h, 30 - v); R(u, v, l - 1, hh - 1, al.chance(0.3) ? sombre : base); R(u, v, l - 1, 1, clair); R(u, v, 1, hh - 1, clair); R(u + l - 1, v, 1, hh, joint); R(u, v + hh - 1, l, 1, joint); v += hh; } u += l; }
+      R(0, 0, 32, 2, sombre); R(0, 30, 32, 2, sombre);
+    }
+  }
 }
 function decorsMurs(themeId) {
   const D = decorsTheme(themeId); if (D.murs) return D.murs;

@@ -59,7 +59,7 @@ function serialiserJoueur(J) {
 function serialiserPartie() {
   const P = G.partie, E = G.etage;
   const p = Object.assign({}, P); delete p.joueur;
-  const e = { numero: E.numero, cfg: E.cfg, grille: E.grille, depart: E.depart, boss: E.boss, secret: E.secret, isolee: E.isolee, courante: E.courante, degatsVitalite: E.degatsVitalite, degatsSubis: E.degatsSubis, degatsBoss: E.degatsBoss, opportunite: E.opportunite, faveurSanctuaire: E.faveurSanctuaire, malediction: E.malediction, charmeUtilise: E.charmeUtilise, salles: {} };
+  const e = { numero: E.numero, cfg: E.cfg, grille: E.grille, depart: E.depart, boss: E.boss, secret: E.secret, isolee: E.isolee, courante: E.courante, degatsVitalite: E.degatsVitalite, degatsSubis: E.degatsSubis, degatsBoss: E.degatsBoss, opportunite: E.opportunite, faveurSanctuaire: E.faveurSanctuaire, malediction: E.malediction, charmeUtilise: E.charmeUtilise, couponUtilise: E.couponUtilise, mueUtilisee: E.mueUtilisee, salles: {} };
   for (const [id, s] of Object.entries(E.salles)) e.salles[id] = serialiserSalle(s);
   return { v: VERSION_SAUVEGARDE, donnees: VERSION_DONNEES, jeu: VERSION_JEU, date: Date.now(), partie: p, etage: e, joueur: serialiserJoueur(G.joueur),
     aleas: { butin: G.alea.butin.etat(), recomp: G.alea.recomp.etat(), ennemis: G.alea.ennemis.etat(), combat: G.alea.combat.etat() }, stats: G.stats };

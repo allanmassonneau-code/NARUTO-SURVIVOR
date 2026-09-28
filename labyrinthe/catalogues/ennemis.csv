@@ -1,0 +1,76 @@
+﻿ID;Nom;Rôle;Comportement;PV;Vitesse;Rayon;Thèmes;Description
+ENM_001;Poupée d’entraînement animée;p;poursuivant;8;1.1;9;ACA;Un mannequin réveillé par un sceau égaré. Lent, avance droit sur vous.
+ENM_002;Genin renégat;p;poursuivant;10;1.7;9;ACA FOR;Bandeau rayé, fonce au contact.
+ENM_003;Lanceur de kunai;t;tireur;9;1;9;ACA;Tire quand vous êtes aligné sur sa ligne ou sa colonne.
+ENM_004;Rat des sous-sols;n;errant;4;3;6;ACA;Rapide et erratique, fragile.
+ENM_005;Chauve-souris;v;volant;5;2.3;7;ACA FOR;Vole au-dessus des fosses et obstacles.
+ENM_006;Crapaud d’égout;s;sauteur;12;1;9;ACA FOR;"Bondit vers vous ; ses atterrissages éclaboussent en quatre directions."
+ENM_007;Serpent de la forêt;p;poursuivant;9;2;8;FOR;Ondule en approchant.
+ENM_008;Sangsue géante;l;lourd;22;0.8;12;FOR;"Lente ; écrase le sol quand vous approchez."
+ENM_009;Mille-pattes fouisseur;r;rampant;14;2.2;9;ACA FOR;Circule sous terre (sol qui remue) et surgit près de vous.
+ENM_010;Tigre de la forêt;c;chargeur;14;1.4;11;FOR;"Charge en ligne droite quand vous êtes aligné ; étourdi contre un mur."
+ENM_011;Ninja de la pluie;q;tireur_predictif;10;1.4;9;FOR;Anticipe vos déplacements.
+ENM_012;Nuée de moustiques;n;nuee;3;2.6;5;FOR;"Trois par nuée ; très fragiles."
+ENM_013;Araignée tisseuse;m;poseur;10;1.3;9;ACA FOR;Tend des toiles qui ralentissent.
+ENM_014;Jarre hantée;e;inerte;8;2.2;8;ACA;Ressemble à une jarre… jusqu’à ce que vous approchiez.
+ENM_015;Instructeur déchu;i;invocateur;18;0.9;9;ACA;"Anime des poupées ; les tuer d’abord libère la salle."
+ENM_016;Tourelle à parchemins;f;tourelle;12;0;10;ACA FOR;"Fixe ; tire en croix, puis en diagonale."
+ENM_017;Gardien des archives;l;lourd;26;0.9;11;ACA;"Massif ; frappe le sol en onde et en anneau."
+ENM_018;Genin fonceur;c;chargeur;11;1.5;9;ACA;Charge dès que vous êtes aligné.
+ENM_019;Invocateur d’herbes hautes;i;invocateur;16;1;9;FOR;Invoque des serpents.
+ENM_020;Racine griffue;e;embusque;12;1.6;9;FOR;Surgit du sol à distance (le sol se fissure avant).
+ENM_030;Scorpion des sables;p;poursuivant;14;1.9;9;SUN MAR;"Rapide ; son dard empoisonne au contact."
+ENM_031;Momie de sable;l;lourd;30;0.8;11;SUN;Lente, écrase le sol.
+ENM_032;Ver des sables;r;rampant;18;2.4;9;SUN MAR;Traverse le sable et jaillit sous vos pieds.
+ENM_033;Ninja de Suna à l’éventail;t;tireur;14;1.1;9;SUN;Lames de vent en éventail.
+ENM_034;Esprit de sable;v;volant;8;2.1;8;SUN;Volant, imprévisible.
+ENM_035;Marionnette à lames;c;chargeur;16;1.3;9;SUN MAR;Charge avec des lames dépliées.
+ENM_036;Lanceur de jarres;s;lanceur_arc;14;0.8;9;SUN MAR;Lance des jarres en cloche : leur point de chute est marqué.
+ENM_037;Marionnette lanceuse;f;tourelle;16;0;9;SUN MAR;"Fixe ; senbon dans huit directions."
+ENM_038;Marionnettiste caché;i;invocateur;20;1;9;SUN MAR;Ses marionnettes tombent quand il meurt.
+ENM_039;Araignée mécanique;n;nuee;5;2.4;6;SUN MAR;Trois par groupe.
+ENM_040;Ninja du Son;q;tireur_predictif;14;1.3;9;SUN MAR;Ondes sonores visées.
+ENM_041;Poseur de sceaux de sable;m;poseur;14;1.2;9;SUN MAR;Pose des parchemins qui explosent quand vous passez.
+ENM_042;Marionnette bouclier;g;protecteur;22;0.9;11;SUN MAR;Bloque les tirs de face : contournez-la.
+ENM_043;Médecin de Suna;h;guerisseur;12;1.4;9;SUN MAR;"Soigne ses alliés (cercle vert) ; fuit."
+ENM_044;Marionnette errante;p;poursuivant;14;1.6;9;MAR;Avance par saccades.
+ENM_045;Marionnette volante;v;volant;10;2;9;MAR;Plane au-dessus des fosses.
+ENM_046;Marionnette inerte;e;inerte;16;1.8;9;MAR;Immobile… jusqu’à ce qu’on s’approche ou qu’on la frappe.
+ENM_047;Marionnette géante;l;lourd;34;0.8;12;MAR;Écrase le sol.
+ENM_050;Sujet expérimental;p;poursuivant;18;1.7;9;ORO KIR;Se divise en deux à sa mort.
+ENM_051;Serpent blanc géant;c;chargeur;18;1.5;10;ORO;Charge en ligne.
+ENM_052;Porteur du sceau maudit;l;lourd;36;1;11;ORO KIR;S’enrage sous la moitié de ses PV.
+ENM_053;Zetsu blanc;e;embusque;20;1.6;9;ORO;Émerge du sol près de vous et poursuit.
+ENM_054;Cuve vivante;s;lanceur_arc;20;0;12;ORO KIR;Crache de l’acide en cloche (flaque au point de chute).
+ENM_055;Garde du Son;p;poursuivant;16;1.8;9;ORO;Rapide au contact.
+ENM_056;Tireur du Son;q;tireur_predictif;16;1.3;9;ORO KIR;Tirs visés.
+ENM_057;Chauve-souris d’expérience;v;volant;10;2.5;7;ORO;
+ENM_058;Assistant de laboratoire;i;invocateur;24;1;9;ORO KIR;Réanime des sujets.
+ENM_059;Nuée de serpenteaux;n;nuee;5;2.4;5;ORO KIR;
+ENM_060;Poseur de parchemins explosifs;m;poseur;16;1.3;9;ORO KIR;Pièges explosifs (cercle d’alerte).
+ENM_061;Ninja médical;h;guerisseur;16;1.4;9;ORO KIR;
+ENM_062;Ninja de la brume;p;poursuivant;16;1.8;9;KIR;Silhouette contourée dans la brume.
+ENM_063;Clone de glace;t;tireur;16;1.1;9;KIR;"Salves de senbon de glace ; laisse du verglas."
+ENM_064;Méduse de chakra;v;volant;12;1.5;9;KIR;Flotte lentement.
+ENM_065;Déserteur au sabre;c;chargeur;18;1.5;9;KIR;Charge sabre en avant.
+ENM_066;Assassin de la brume;e;embusque;16;1.8;9;KIR;
+ENM_067;Requin des canaux;r;rampant;22;2.6;9;KIR MYO BIJ;Son aileron trahit sa position.
+ENM_068;Nid de serpenteaux;i;invocateur;20;0;11;invocation;"Libère des serpenteaux ; les détruit en mourant."
+ENM_070;Zetsu blanc (armée);p;poursuivant;24;1.7;9;AKA GUE MYO BIJ;En nombre, sans relâche.
+ENM_071;Oiseau d’argile;v;kamikaze;12;2.4;8;AKA GUE BIJ;Plonge et explose (il clignote avant).
+ENM_072;Araignée d’argile;n;kamikaze;6;2.6;6;AKA GUE MYO BIJ;Explose au contact (mèche visible).
+ENM_073;Marionnette humaine;l;lourd;44;1;12;AKA GUE MYO BIJ;Écrase le sol et projette du sable de fer.
+ENM_074;Bête invoquée;p;poursuivant;20;2.1;11;AKA GUE MYO;Rapide et massive.
+ENM_075;Sentinelle de la pluie;q;tireur_predictif;22;1.4;9;AKA GUE MYO BIJ;
+ENM_076;Invocateur aux tiges;i;invocateur;30;1;9;AKA GUE MYO BIJ;Invoque des bêtes.
+ENM_077;Masque élémentaire;f;tourelle;26;0;10;AKA GUE BIJ;Flotte, émet des anneaux de feu (un espace toujours libre).
+ENM_078;Shinobi de l’Alliance égaré;c;chargeur;24;1.6;9;AKA GUE MYO;
+ENM_079;Poseur d’argile;m;poseur;20;1.3;9;AKA GUE MYO BIJ;
+ENM_080;Statue de pierre;g;protecteur;40;0.7;12;AKA GUE MYO BIJ;Ses alliés proches subissent moitié moins de dégâts (anneau bleu).
+ENM_081;Zetsu soigneur;h;guerisseur;20;1.4;9;AKA GUE MYO BIJ;
+ENM_090;Crapaud gardien;p;sauteur;30;1.2;11;MYO;
+ENM_091;Crapaud cracheur d’huile;t;lanceur_arc;26;0.9;10;MYO;
+ENM_092;Hirondelle des ermites;v;volant;16;2.6;8;MYO;
+ENM_093;Crapaud bondissant;s;sauteur;28;1.1;10;MYO;
+ENM_094;Ombre de chakra;p;poursuivant;30;1.9;10;BIJ;
+ENM_095;Queue de chakra;c;chargeur;30;1.6;10;BIJ;

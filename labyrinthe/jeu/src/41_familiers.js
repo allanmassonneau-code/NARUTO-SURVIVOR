@@ -16,7 +16,7 @@ function ajouterFamilier(J, id, source) {
 // Multiplicateur de dégâts d'un familier : talisman, « familiers forts » (Chakra partagé, Meute),
 // marionnettes renforcées (Arsenal), Gamakichi à l'arrêt avec la Nature du sage (Sage des crapauds).
 function bonusFamilier(J, f) {
-  let k = (J.talisman === 'TAL_020' || J.talisman2 === 'TAL_020' ? 1.2 : 1) * (J.drapeaux.familiersForts ? 1.25 : 1);
+  let k = (aTalisman(J, 'TAL_020') ? 1.2 : 1) * (J.drapeaux.familiersForts ? 1.25 : 1);
   if (J.drapeaux.marionnettesFortes && f.def.marionnette) k *= 1.5;
   if (J.sage && f.def.id === 'FAM_GAMAKICHI' && synergiesActives(J).some(x => x.id === 'SYN_052')) k *= 1.5;
   return k;

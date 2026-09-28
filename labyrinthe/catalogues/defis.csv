@@ -1,0 +1,13 @@
+﻿ID;Nom;Règles;Récompense
+DEF_001;Taijutsu pur;"Rock Lee imposé ; aucune salle d’héritage. Atteindre la première fin.";Gants de taijutsu, Porte de la Vie
+DEF_002;Nuit sans lune;Tous les étages sont plongés dans la pénombre. Première fin.;Luciole
+DEF_003;Mains vides;"Aucune salle d’héritage ; les boss donnent tout. Première fin.";Parchemin vide
+DEF_004;Un souffle;"Un seul contenant, jamais plus ; les contenants deviennent des réserves.";Substitution instinctive
+DEF_005;Artificier;"Départ avec Argile explosive et Argile infinie ; première fin.";Parchemins spéciaux
+DEF_006;Mille clones;"Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %.";Clone de relais
+DEF_007;Tout s’achète;"Départ avec 50 Ryō et la Carte de membre ; aucune salle d’héritage.";Dés de la grande perdante
+DEF_008;Sang pour sang;"Chaque boss ouvre un pacte ; aucun sanctuaire.";Chakra du démon
+DEF_009;Tempête du désert;"Gaara imposé avec Sable en orbite et Sable protecteur ; première fin.";Tempête de sable
+DEF_010;Course de l’examen;Première fin en moins de 20 minutes.;Marque de vitesse
+DEF_011;Collectionneur pressé;Atteindre l’étage 6 avec au moins 10 objets.;Défi
+DEF_012;Examen de jōnin;Mode Difficile imposé, toutes les salles d’épreuve ouvertes.;Rasenshuriken

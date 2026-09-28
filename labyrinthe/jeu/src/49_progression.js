@@ -14,15 +14,16 @@ const Progression = {
   },
   sauver() { if (G.modeTest) return; Stockage.ecrire(CLES.profil, this.profil); },
   indexObjectifs() {
-    // quels identifiants sont verrouillés par un objectif ?
+    // quels identifiants sont verrouillés, et par quels objectifs ? (un seul suffit à débloquer)
     this.verrous = {};
-    for (const o of DON.objectifs) for (const id of (o.recompense && o.recompense.debloque) || []) this.verrous[id] = o.id;
-    for (const d of DON.personnages) if (d.deblocage && d.deblocage.objectif) this.verrous[d.id] = d.deblocage.objectif;
+    const ajouter = (id, o) => { (this.verrous[id] || (this.verrous[id] = [])).includes(o) || this.verrous[id].push(o); };
+    for (const o of DON.objectifs) for (const id of (o.recompense && o.recompense.debloque) || []) ajouter(id, o.id);
+    for (const d of DON.personnages) if (d.deblocage && d.deblocage.objectif) ajouter(d.id, d.deblocage.objectif);
   },
   estDebloque(id) {
     if (!this.profil || this.profil.toutDebloque) return true;
-    const o = this.verrous && this.verrous[id]; if (!o) return true;
-    return !!this.profil.objectifs[o];
+    const L = this.verrous && this.verrous[id]; if (!L) return true;
+    return L.some(o => !!this.profil.objectifs[o]);
   },
   decouvrir(id) { if (!this.profil) return; if (!this.profil.decouverts.includes(id)) { this.profil.decouverts.push(id); } },
   voir(id) { if (!this.profil) return; if (!this.profil.vus.includes(id)) this.profil.vus.push(id); },
@@ -40,6 +41,7 @@ const Progression = {
     if (nom === 'achat') this.compteur('achats', 1);
     if (nom === 'transformation') this.compteur('transformations', 1);
     if (nom === 'salle_nettoyee' && G.salle.type === 'defi') this.compteur('epreuvesChunin', 1);
+    if (nom === 'salle_nettoyee' && G.joueur && G.joueur.familiers.some(f => !f.dureeSalle)) this.compteur('sallesFamiliers', 1);
     // états instantanés vérifiés à chaque événement
     const J = G.joueur;
     if (J) {

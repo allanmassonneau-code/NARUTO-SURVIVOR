@@ -1,0 +1,159 @@
+﻿ID;Nom;Famille;Q;Pools (poids);Effet;Cumul;Ensemble;Statut;Déblocage
+PSV_001;Empreinte du Rasengan;projectile;3;heritage 3, boss 1;Tir chargé : une sphère de chakra qui comprime sa cible.;unique;renard;adaptation;—
+PSV_002;Encre de dédoublement;projectile;2;heritage 3, boutique 1;Chaque tir se dédouble, un peu moins fort.;cumul;;création originale;—
+PSV_003;Éventail de kunai;projectile;2;heritage 2, boutique 1, coffre 1;Trois kunai en éventail.;cumul;;création originale;—
+PSV_004;Parchemin des mille aiguilles;projectile;3;heritage 2, boss 1;Quatre senbon partent à chaque tir.;cumul;;création originale;—
+PSV_005;Kunai à marque de téléportation;projectile;2;heritage 2, bibliotheque 1;Les tirs suivent légèrement leur cible.;cumul;;adaptation;—
+PSV_006;Insectes traqueurs;projectile;3;heritage 2, boss 1;Les tirs deviennent des insectes qui poursuivent les ennemis.;cumul;essaim;adaptation;—
+PSV_007;Fil de chakra;projectile;1;heritage 2, boutique 1, coffre 1;Les tirs ricochent sur les murs et les obstacles.;cumul;;création originale;OBJ_006
+PSV_008;Senbon perforant;projectile;2;heritage 2, boutique 1;Les tirs traversent les ennemis.;cumul;;création originale;—
+PSV_009;Parchemin fantôme;projectile;1;heritage 2, bibliotheque 1;Les tirs passent au-dessus des obstacles.;cumul;;création originale;—
+PSV_010;Sable en orbite;projectile;2;heritage 2, bibliotheque 1;Les tirs tournent autour de vous avant de se disperser.;cumul;sable;adaptation;—
+PSV_011;Onde de la vague;projectile;1;heritage 2, boutique 1;Les tirs ondulent : couverture plus large, précision moindre.;cumul;;création originale;—
+PSV_012;Baika (expansion);projectile;3;heritage 2, boss 1;Des tirs énormes et lents, deux fois plus forts.;cumul;;adaptation;—
+PSV_013;Fūma shuriken;projectile;3;heritage 2, boss 1;Lance un grand shuriken qui revient dans la main.;unique;;adaptation;OBJ_002
+PSV_014;Canon de chakra;projectile;4;pacte 2, heritage 1;Charge un rayon rougeoyant qui traverse tout.;unique;renard;création originale;OBJ_029
+PSV_015;Trait de chakra;projectile;3;heritage 2, boss 1;Chaque tir devient un trait instantané.;unique;;création originale;—
+PSV_016;Souffle continu;projectile;3;heritage 1, boss 1;Maintenir la visée émet un faisceau continu.;unique;;création originale;—
+PSV_017;Empreinte du Kubikiribōchō;projectile;3;heritage 1, boss 1, pacte 1;Un grand sabre balaie devant vous.;unique;;adaptation;OBJ_004
+PSV_018;Tantō de l’ANBU;projectile;2;heritage 2, boutique 1;Frappe courte au sabre : puissante mais exposée.;unique;;adaptation;—
+PSV_019;Argile explosive C1;projectile;3;pacte 1, heritage 1, boss 1;"Lance des bombes d’argile ; attention au souffle. Contrepartie : Les explosions peuvent vous blesser.";unique;argile;adaptation;OBJ_019
+PSV_020;Chute céleste;projectile;4;pacte 2, boss 1;Visez un point : une météorite s’y écrase.;unique;;création originale d’après une technique célèbre (attribution à vérifier);OBJ_028 ou OBJ_049
+PSV_021;Sphère téléguidée;projectile;3;heritage 1, boss 1, bibliotheque 1;Une seule sphère, guidée par la visée.;unique;;adaptation;—
+PSV_022;Rotation céleste;projectile;3;heritage 1, sanctuaire 1;Tournoyer détruit les tirs proches et blesse autour.;unique;yeux;adaptation (Hyūga);—
+PSV_023;Clone de relais;familier;3;heritage 2, boss 1;Un clone copie vos tirs (75 %).;cumul;;adaptation;OBJ_056
+PSV_024;Arsenal de Tenten (empreinte);projectile;2;heritage 2, boutique 1, bibliotheque 1;Chaque tir est suivi de deux autres (salve).;cumul;;adaptation;—
+PSV_025;Œil arrière;projectile;1;heritage 2, boutique 1;Tire aussi vers l’arrière.;cumul;yeux;création originale;—
+PSV_026;Croix de sceaux;projectile;2;heritage 2, bibliotheque 1;Parfois, tire dans les quatre directions (20 % + 5 % par chance, 60 % au plus).;cumul;;création originale;OBJ_001
+PSV_027;Parchemins-pièges;projectile;2;heritage 2, boutique 1;Au bout de leur course, les tirs deviennent des mines.;cumul;;création originale;OBJ_001
+PSV_028;Chidori nagashi (empreinte);element;3;heritage 2, boss 1;La foudre saute de la cible à deux ennemis proches.;cumul;tonnerre;adaptation;—
+PSV_029;Poing de Doton;projectile;2;heritage 2, boutique 1;Chaque impact libère une petite onde de choc.;cumul;;création originale;OBJ_008
+PSV_030;Shuriken démultiplié;projectile;2;heritage 2, coffre 1;Les tirs éclatent en quatre éclats à l’impact.;cumul;;création originale;—
+PSV_031;Kunai du vent;projectile;1;heritage 2, boutique 1;Les tirs accélèrent en vol.;cumul;renard;création originale;—
+PSV_032;Poids de plomb;projectile;1;heritage 2, boutique 1;Des tirs lourds qui repoussent fort.;cumul;portes;création originale;—
+PSV_033;Senbon de précision;projectile;1;heritage 2, boutique 2;Plus loin, plus vite.;cumul;;adaptation;—
+PSV_034;Kunai lestés;projectile;2;heritage 3, boutique 1, coffre 1;Des lames plus lourdes.;cumul;;création originale;—
+PSV_035;Sandales de course;projectile;1;heritage 2, boutique 2;Vous vous déplacez plus vite.;cumul;;création originale;—
+PSV_036;Pilule du soldat (empreinte);projectile;2;heritage 2, boutique 1, boss 1;Cadence de tir augmentée.;cumul;;adaptation;—
+PSV_037;Lunettes de visée;projectile;1;heritage 2, boutique 2;Portée et vitesse des tirs accrues.;cumul;;création originale;—
+PSV_038;Bandeau de Konoha;projectile;2;heritage 2, boss 2;Un peu de tout : dégâts, cadence, portée, vitesse, chance.;cumul;;canon adapté;—
+PSV_039;Masque de l’ANBU;projectile;1;heritage 2, boutique 1, cache 1;Dégâts et chance.;cumul;;adaptation;—
+PSV_040;Gants de taijutsu;projectile;2;heritage 2, boutique 1;"Dégâts +0,7 ; les frappes de mêlée gagnent en portée.";cumul;portes;création originale;OBJ_051
+PSV_041;Cadence de la fleur de lotus;projectile;2;heritage 2, boutique 1;Cadence très élevée, portée réduite. Contrepartie : Portée −2.;cumul;portes;création originale;—
+PSV_042;Pointe de précision;projectile;2;heritage 1, boutique 1, bibliotheque 1;Les tirs grossissent : touchent mieux, plus lents.;cumul;;création originale;—
+PSV_043;Grande boule de feu (empreinte);element;2;heritage 2, boutique 1, boss 1;Tirs de feu : 25 % de brûlure (+5 % par chance, 70 % au plus).;cumul;;adaptation;—
+PSV_044;Chakra de l’eau;element;1;heritage 2, boutique 1;Tirs d’eau : ralentissent (30 %), laissent de petites flaques.;cumul;;création originale;—
+PSV_045;Courant foudroyant;element;2;heritage 2, boutique 1;Tirs de foudre : 15 % d’immobiliser 0,3 s.;cumul;tonnerre;création originale;—
+PSV_046;Lame de vent;element;2;heritage 2, boutique 1;Tirs de vent : perçants, portée accrue.;cumul;renard;création originale;—
+PSV_047;Poing de terre;element;1;heritage 2, boutique 1;Recul énorme, dégâts +0,7.;cumul;;création originale;—
+PSV_048;Poison de scorpion;element;2;heritage 2, boutique 1, cache 1;30 % d’empoisonner (+5 % par chance).;cumul;marionnette;création originale;—
+PSV_049;Genjutsu du regard;element;2;heritage 2, bibliotheque 1;15 % de plonger l’ennemi dans la confusion.;cumul;yeux;création originale;—
+PSV_050;Glace éternelle;element;3;heritage 1, boss 1, bibliotheque 1;"Gèle (15 %) ; un ennemi tué gelé éclate en six éclats.";cumul;;adaptation;OBJ_005
+PSV_051;Ombre liante;element;2;heritage 2, bibliotheque 1;12 % d’immobiliser 1,2 s (+3 % par chance).;cumul;;adaptation;OBJ_015
+PSV_052;Encre des bêtes;element;2;heritage 2, bibliotheque 1;Tirs d’encre : 12 % de charmer 3 s.;cumul;;adaptation;—
+PSV_053;Flammes noires;element;4;pacte 2;"Les brûlures durent trois fois plus et font 50 % de plus ; 20 % de brûler.";cumul;yeux;adaptation (attribution à vérifier);OBJ_020
+PSV_054;Marque de Jashin;contrepartie;2;pacte 2;Quand vous êtes blessé, tous les ennemis subissent 15 dégâts.;cumul;interdit;adaptation;OBJ_016
+PSV_055;Chakra du renard;element;3;heritage 1, boss 2, pacte 1;"Dégâts +1, vitesse +0,2 ; une queue de chakra apparaît.";cumul;renard;adaptation;—
+PSV_056;Bulle de chakra rouge;element;3;heritage 1, boss 1, pacte 1;Blessé, vous libérez huit tirs de chakra.;cumul;renard;création originale;—
+PSV_057;Crapaud d’huile;element;2;heritage 1, bibliotheque 1, sanctuaire 1;Les tirs laissent parfois de l’huile qui s’embrase au feu.;cumul;ermite;création originale;—
+PSV_058;Armure de foudre;element;3;heritage 1, boss 1;Vitesse +0,5, cadence +0,3.;cumul;tonnerre;adaptation;—
+PSV_059;Racines du bois;element;3;heritage 1, boss 1, sanctuaire 1;Les tirs font parfois jaillir des racines qui immobilisent (15 %).;cumul;;adaptation (Mokuton);—
+PSV_060;Os de l’ossature;element;3;heritage 1, boss 1, pacte 1;Tirs d’os : perçants, un ricochet.;cumul;experimental;adaptation;OBJ_010
+PSV_061;Clone de l’ombre;familier;2;heritage 2, boutique 1;Un clone vous suit et tire des kunai.;cumul;meute;adaptation;—
+PSV_062;Gamakichi;familier;2;heritage 2, sanctuaire 1;Un petit crapaud qui crache des bulles ralentissantes.;cumul;meute;canon adapté;—
+PSV_063;Katsuyu miniature;familier;2;heritage 2, sanctuaire 2;Toutes les 5 salles nettoyées, une limace apporte un cœur.;cumul;meute;canon adapté;—
+PSV_064;Serpent des manches;familier;2;heritage 1, pacte 1;Un serpent tourne autour de vous et mord.;cumul;experimental;adaptation;OBJ_003
+PSV_065;Sable protecteur;familier;2;heritage 2, boss 1;Deux orbitaux de sable bloquent les tirs ennemis.;cumul;sable;adaptation;—
+PSV_066;Kunai tournoyants;familier;1;heritage 2, boutique 1;Trois kunai tournent autour de vous (ne bloquent pas).;cumul;;création originale;—
+PSV_067;Corbeau messager;familier;2;heritage 1, bibliotheque 1, pacte 1;Un corbeau aveugle les ennemis (confusion).;cumul;yeux;adaptation;—
+PSV_068;Pakkun;familier;1;heritage 2, boutique 1, bibliotheque 1;Un chien ninja flaire les murs secrets.;cumul;meute;canon adapté;—
+PSV_069;Petit chien de chasse;familier;2;heritage 2, boutique 1;Un chien fonce dans la direction de tir.;cumul;meute;création originale;—
+PSV_070;Kikaichū;familier;2;heritage 2, bibliotheque 1;Un essaim ramasse les pièces et pique les ennemis.;cumul;essaim;canon adapté;—
+PSV_071;Oiseau d’argile;familier;3;heritage 1, boss 1, pacte 1;Plonge sur un ennemi et explose toutes les 4 s.;cumul;argile;adaptation;OBJ_019
+PSV_072;Karasu;familier;2;heritage 1, boss 1;Une marionnette attaque au plus près.;cumul;marionnette;canon adapté;OBJ_007
+PSV_073;Kuroari;familier;2;heritage 1, bibliotheque 1;Une marionnette-piège capture un ennemi toutes les 8 s.;cumul;marionnette;canon adapté;OBJ_007
+PSV_074;Sanshōuo;familier;2;heritage 1, sanctuaire 1;Une marionnette-bouclier bloque les tirs devant vous.;cumul;marionnette;canon adapté;OBJ_007
+PSV_075;Papillons de papier;familier;2;heritage 1, sanctuaire 1;Quatre papillons tournent, bloquent et coupent.;cumul;papier;adaptation;—
+PSV_076;Tigres d’encre;familier;2;heritage 1, bibliotheque 1;Deux fauves d’encre chassent vos ennemis.;cumul;meute;adaptation;—
+PSV_077;Clone de sable;familier;3;heritage 1, boss 1;Un clone de sable copie vos tirs (60 %).;cumul;sable;création originale;—
+PSV_078;Serpent blanc;familier;1;heritage 2, pacte 1;Un serpent albinos mord l’ennemi le plus proche.;cumul;experimental;création originale;OBJ_003
+PSV_079;Luciole des ermites;familier;1;heritage 1, sanctuaire 2;"Une luciole éclaire la pénombre ; chance +1.";cumul;ermite;création originale;OBJ_052
+PSV_080;Poupée d’entraînement;familier;1;heritage 1, boutique 1;Une poupée attire l’attention des ennemis.;cumul;;création originale;—
+PSV_081;Miroirs de glace;familier;3;heritage 1, boss 1;Deux miroirs orbitaux renvoient les tirs ennemis.;cumul;;adaptation;OBJ_005
+PSV_082;Crapaud messager;familier;1;heritage 1, sanctuaire 1, bibliotheque 1;Toutes les 6 salles nettoyées, un crapaud rapporte une clé.;cumul;ermite;création originale;—
+PSV_083;Bol de ramen d’Ichiraku;sante;1;heritage 1, boss 2, boutique 1;Un contenant de vitalité et un soin complet.;cumul;;canon adapté;—
+PSV_084;Onigiri;sante;0;heritage 1, boutique 2, boss 1;Un contenant de vitalité.;cumul;;création originale;—
+PSV_085;Dango;sante;1;heritage 1, boutique 2;Un contenant de vitalité et un cœur de soin.;cumul;;création originale;—
+PSV_086;Pilule écarlate;sante;2;heritage 1, pacte 1, boss 1;Dégâts +1 et un contenant, mais un peu plus lent. Contrepartie : Vitesse −0,2.;cumul;;création originale;—
+PSV_087;Sceau de régénération;sante;3;sanctuaire 2, boss 1;Toutes les 3 salles nettoyées, soigne une demi-unité.;cumul;;adaptation (Byakugō, attribution à vérifier);OBJ_013
+PSV_088;Cape de chakra protecteur;sante;1;sanctuaire 2, boutique 1, heritage 1;Deux réserves de chakra protecteur.;cumul;;création originale;—
+PSV_089;Cœur volé;sante;3;pacte 1, isolee 1, boss 1;À votre mort, vous vous relevez avec un contenant (l’objet est consommé).;cumul;;adaptation;OBJ_022
+PSV_090;Ossature renforcée;sante;2;heritage 1, pacte 1;Deux enveloppes osseuses.;cumul;experimental;adaptation;OBJ_010
+PSV_091;Sceau maudit;contrepartie;3;pacte 3;"Deux réserves instables, dégâts +0,5 ; les pactes deviennent plus fréquents (+20 %).";cumul;interdit;adaptation;OBJ_032
+PSV_092;Porte de la Vie;contrepartie;3;pacte 1, boss 1, defi 1;Dégâts +1,5, cadence +0,4, mais un contenant en moins. Contrepartie : −1 contenant de vitalité.;cumul;portes;adaptation (Huit Portes);OBJ_051
+PSV_093;Chakra de la limace;sante;2;sanctuaire 2, heritage 1;Les cœurs soignent deux fois plus.;cumul;ermite;création originale;—
+PSV_094;Trousse de terrain;sante;1;heritage 2, boutique 1;"Un contenant ; les cœurs lâchés sont parfois doublés.";cumul;;création originale;—
+PSV_095;Sceau vital de la famille;sante;2;sanctuaire 1, heritage 1;Un sceau vital partiel, puis un nouveau à chaque étage.;cumul;;création originale;—
+PSV_096;Substitution instinctive;sante;3;heritage 1, sanctuaire 1;15 % + 3 % par chance d’esquiver un coup par une bûche (50 % au plus).;cumul;;adaptation (Kawarimi);OBJ_054
+PSV_097;Armure de sable absolue;sante;4;boss 1, sanctuaire 1;Les coups d’un cœur entier ne retirent qu’une demi-unité. Contrepartie : Vitesse −0,3.;cumul;sable;adaptation;OBJ_009
+PSV_098;Chakra du démon scellé;contrepartie;3;pacte 2;Trois réserves instables, mais un contenant en moins. Contrepartie : −1 contenant.;cumul;interdit;création originale;OBJ_058
+PSV_099;Sac de parchemins;ressource;1;heritage 1, boutique 2, coffre 1;Cinq parchemins explosifs.;cumul;;création originale;—
+PSV_100;Parchemins à fragmentation;ressource;2;heritage 1, boutique 1;Vos explosions projettent quatre kunai.;cumul;;création originale;OBJ_055
+PSV_101;Mèche longue;ressource;1;boutique 2, heritage 1;Explosions plus larges, mèche plus longue. Contrepartie : Délai +0,5 s.;cumul;;création originale;—
+PSV_102;Parchemins incendiaires;ressource;2;heritage 1, boutique 1;Vos explosions laissent des flammes (alliées).;cumul;;création originale;OBJ_055
+PSV_103;Parchemins chercheurs;ressource;2;heritage 1, boutique 1;Vos explosifs posés glissent vers les ennemis.;cumul;;création originale;OBJ_055
+PSV_104;Grand parchemin;ressource;2;heritage 1, boutique 1, coffre 1;Explosions 50 % plus larges, +10 dégâts.;cumul;;création originale;—
+PSV_105;Trousseau du geôlier;ressource;1;heritage 1, boutique 1, coffre 1;Trois clés de sceau.;cumul;;création originale;—
+PSV_106;Épingle de crochetage;ressource;3;cache 1, coffre 1, boutique 1;Portes et coffres verrouillés s’ouvrent sans clé.;cumul;;création originale;OBJ_033
+PSV_107;Bourse-grenouille;ressource;1;heritage 1, boutique 1, machine 1;"+10 Ryō ; 20 % des Ryō ramassés comptent double.";cumul;;canon adapté;—
+PSV_108;Aimant de chakra;ressource;1;boutique 2, heritage 1;Attire Ryō, clés, explosifs et cœurs.;cumul;;création originale;—
+PSV_109;Parchemin d’invocation vide;ressource;1;heritage 1, bibliotheque 1;Un rouleau tactique à chaque nouvel étage.;cumul;;création originale;OBJ_053
+PSV_110;Argile infinie;ressource;3;pacte 1, boss 1, cache 1;"Dix explosifs ; vos explosions ne vous blessent plus.";cumul;argile;création originale;OBJ_019
+PSV_111;Carte du labyrinthe;exploration;1;boutique 2, heritage 1, bibliotheque 1;Révèle le plan de chaque étage (hors secrets).;cumul;;création originale;—
+PSV_112;Boussole du sceau;exploration;1;boutique 2, heritage 1, bibliotheque 1;Révèle l’emplacement des salles spéciales.;cumul;;création originale;—
+PSV_113;Byakugan (empreinte);exploration;2;heritage 1, bibliotheque 1, cache 1;Voit tout l’étage, secrets compris.;cumul;yeux;adaptation;OBJ_012
+PSV_114;Rouleau des voies secrètes;exploration;2;bibliotheque 2, cache 1;Les murs secrets montrent une fissure.;cumul;;création originale;OBJ_033
+PSV_115;Lévitation de chakra;exploration;3;sanctuaire 2, boss 1;Vous survolez fosses et pièges au sol.;cumul;;création originale;OBJ_026
+PSV_116;Ailes de papier;exploration;3;sanctuaire 1, pacte 1, boss 1;Des ailes de papier : lévitation.;cumul;papier;adaptation;—
+PSV_117;Détecteur de pièges;exploration;1;boutique 2, heritage 1;Immunité aux pics, flaques et sables mouvants.;cumul;;création originale;—
+PSV_118;Grelot de l’examen;exploration;1;heritage 1, defi 2;"Les salles d’épreuve révèlent leur récompense ; chance +1.";cumul;;création originale;—
+PSV_119;Sac à double fond;exploration;2;boutique 1, heritage 1;Deux poches pour les consommables.;cumul;;création originale;—
+PSV_120;Collier à deux charmes;exploration;2;boutique 1, cache 1;Deux emplacements de talisman.;cumul;;création originale;OBJ_031
+PSV_121;Carte de membre de l’échoppe;economie;3;boutique 1, isolee 1;Tous les prix de l’échoppe sont divisés par deux.;cumul;;création originale;OBJ_030
+PSV_122;Coupon du marchand;economie;2;boutique 1, machine 1;Le premier achat de chaque étage est gratuit.;cumul;;création originale;OBJ_035
+PSV_123;Livret d’épargne;economie;1;boutique 1, machine 1;À chaque étage, +10 % de vos Ryō (10 au plus).;cumul;;création originale;OBJ_036
+PSV_124;Réputation de client;economie;2;boutique 1;Un étal d’objet supplémentaire dans chaque échoppe.;cumul;;création originale;OBJ_035
+PSV_125;Dés de la grande perdante;economie;1;machine 2, boutique 1;Chance −1, mais les machines de loterie paient double. Contrepartie : Chance −1.;cumul;;adaptation (surnom canonique);OBJ_057
+PSV_126;Livre de l’ermite;economie;3;bibliotheque 2, sanctuaire 1;Les salles d’héritage proposent un second objet (choix).;cumul;;création originale;OBJ_031
+PSV_127;Sceau de réécriture;economie;2;bibliotheque 1, boutique 1;Une relance ne peut plus donner un objet de qualité inférieure.;cumul;;création originale;—
+PSV_128;Tampon du marchand;economie;1;boutique 1, machine 1;Ramasser des Ryō donne parfois un rouleau (5 %).;cumul;;création originale;—
+PSV_129;Contrat de Kakuzu;economie;2;pacte 1, machine 1;Les pactes se paient en Ryō (20 par contenant) si vous les avez.;cumul;interdit;adaptation;OBJ_022
+PSV_130;Bourse de l’organisation;economie;1;pacte 1, boutique 1;+15 Ryō.;cumul;;création originale;—
+PSV_131;Sceau de la mort (empreinte);contrepartie;4;pacte 1;Dégâts ×2, mais deux contenants en moins. Contrepartie : −2 contenants.;cumul;interdit;adaptation (attribution à vérifier);OBJ_039
+PSV_132;Rage du réceptacle;contrepartie;2;heritage 1, pacte 1;Chaque blessure : +0,8 dégâts pour la salle (3 fois au plus).;cumul;renard;création originale;—
+PSV_133;Volonté du feu;contrepartie;2;heritage 1, sanctuaire 1;Avec deux demi-unités ou moins, dégâts +2.;cumul;;création originale;—
+PSV_134;Colère de la Racine;contrepartie;2;pacte 1, heritage 1;Les ennemis tués lâchent parfois un demi-chakra instable (5 %).;cumul;;création originale;—
+PSV_135;Rituel du sang;contrepartie;2;pacte 2;Chaque tribut volontaire donne +0,25 dégâts permanents.;cumul;interdit;création originale;OBJ_016
+PSV_136;Écailles de Samehada;contrepartie;3;heritage 1, boss 1, pacte 1;"Toutes les 12 éliminations, soigne une demi-unité ; dégâts +0,5.";cumul;;adaptation;OBJ_014
+PSV_137;Cadence frénétique;contrepartie;2;heritage 1, pacte 1;Cadence ×1,4, dégâts −10 %. Contrepartie : Dégâts −10 %.;cumul;;création originale;—
+PSV_138;Silence de la brume;contrepartie;2;heritage 1, cache 1;En entrant dans une salle, les ennemis vous perdent de vue 2 s.;cumul;;création originale;—
+PSV_139;Transfert du pacte;contrepartie;2;pacte 1;Chaque pacte conclu : +1 dégât permanent.;cumul;interdit;création originale;OBJ_032
+PSV_140;Réincarnation impure (empreinte);contrepartie;3;pacte 2;10 % des ennemis tués reviennent comme alliés 10 s.;cumul;experimental;adaptation (attribution à vérifier);OBJ_047
+PSV_141;Cœur du réceptacle;contrepartie;2;boss 2;Chaque boss vaincu donne un contenant de vitalité.;cumul;;création originale;—
+PSV_142;Main du scorpion;contrepartie;1;heritage 1, pacte 1;"Le poison dure deux fois plus ; 10 % d’empoisonner.";cumul;marionnette;création originale;OBJ_011
+PSV_143;Mue du serpent;contrepartie;3;pacte 1, boss 1;Une fois par étage, quand votre dernière réserve de chakra se brise, vous gagnez une réserve.;cumul;experimental;création originale;OBJ_017
+PSV_144;Nature du sage;hybride;3;sanctuaire 1, bibliotheque 1;Immobile une seconde, vous accumulez l’énergie naturelle : dégâts ×1,5 jusqu’au prochain pas.;cumul;ermite;création originale;OBJ_046
+PSV_145;Pluie d’armes;hybride;3;heritage 1, bibliotheque 1, boss 1;Tous les 5 cycles de tir, huit armes tombent du ciel sur les ennemis.;cumul;;adaptation;OBJ_038
+PSV_146;Rasenshuriken (empreinte);hybride;4;boss 1, heritage 1;Vos orbes et charges explosent en tourbillon de vent.;cumul;renard;adaptation;OBJ_034 ou OBJ_060
+PSV_147;Lance de foudre;hybride;3;heritage 1, boss 1;Un trait de foudre accompagne chaque tir (×0,5).;cumul;tonnerre;adaptation;—
+PSV_148;Double dragon;hybride;3;heritage 1, bibliotheque 1;Tir multiple et guidage léger réunis.;cumul;;création originale;—
+PSV_149;Explosion de chakra;hybride;3;heritage 1, pacte 1;Les tirs explosent à l’impact (souffle léger, ne vous blesse pas).;cumul;argile;création originale;—
+PSV_150;Tempête de sable;hybride;3;heritage 1, boss 1;Tirs de sable qui ralentissent et tournent.;cumul;sable;création originale;OBJ_059
+PSV_151;Chakra partagé;hybride;2;sanctuaire 1, heritage 1;Vos familiers infligent 25 % de plus.;cumul;meute;création originale;—
+PSV_152;Encre vivante;hybride;2;bibliotheque 1, heritage 1;Les ennemis tués laissent parfois un fauve d’encre pour la salle (10 %).;cumul;;création originale;OBJ_034
+PSV_153;Ruche de chakra;familier;2;heritage 1, bibliotheque 1;À chaque élimination, l’essaim bourdonne : les ennemis à moins de 2 tuiles de vous sont empoisonnés.;cumul;essaim;adaptation (clan Aburame);—
+PSV_154;Voile d’insectes;sante;2;heritage 1, sanctuaire 1;Blessé, un nuage d’insectes ralentit les ennemis dans un rayon de 3 tuiles pendant 2 s.;cumul;essaim;adaptation (clan Aburame);—
+PSV_155;Shuriken de papier;projectile;2;heritage 2, boutique 1;Tirs de papier tranchant : dégâts +0,3, portée +1.;cumul;papier;adaptation;—
+PSV_156;Mer de papiers explosifs;ressource;3;pacte 1, boss 1;"Vos explosifs éclatent deux fois (la seconde, 0,4 s plus tard, à moitié de puissance) ; deux explosifs. Contrepartie : La seconde explosion blesse aussi (sauf immunité).";cumul;papier;adaptation;—
+PSV_900;Clé des ermites;exploration;0;;Objet-clé : ouvre le rayon de la Lumière même après un pacte.;unique;;création originale;—
+PSV_901;Fragment de la clé des ermites;exploration;0;;Objet-clé : un second fragment formera la clé.;conversion;;création originale;—

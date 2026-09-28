@@ -108,7 +108,7 @@
   OB('OBJ_021', 'Marionnettiste', 'Posséder 3 familiers en même temps.', { type: 'etat', nom: 'familiers3' }, ['CHR_009'], 'Kankurō');
   OB('OBJ_022', 'Cinq cœurs', 'Vaincre Kakuzu.', { type: 'boss', id: 'BOS_017' }, ['PSV_089', 'PSV_129'], 'Cœur volé, Contrat');
   OB('OBJ_023', 'La douleur apaisée', 'Vaincre Pain.', { type: 'boss', id: 'BOS_018' }, ['ACT_019', 'ACT_020'], 'Répulsion, Attraction');
-  OB('OBJ_024', 'Compagnon fidèle', 'Nettoyer 30 salles avec des familiers (cumulé : 30 salles au total).', { type: 'compteur', nom: 'objetsPris', min: 15 }, ['CHR_010'], 'Kiba');
+  OB('OBJ_024', 'Compagnon fidèle', 'Nettoyer 30 salles de combat accompagné d’au moins un familier permanent (cumulé).', { type: 'compteur', nom: 'sallesFamiliers', min: 30 }, ['CHR_010'], 'Kiba');
   OB('OBJ_025', 'Masque brisé', 'Vaincre Obito.', { type: 'boss', id: 'BOS_019' }, ['ACT_021'], 'Espace-temps intangible');
   OB('OBJ_026', 'Gardien apaisé', 'Vaincre le Gardien du Sceau.', { type: 'boss', id: 'BOS_020' }, ['ACT_016', 'PSV_115'], 'Grand crapaud, Lévitation');
   OB('OBJ_027', 'Maître des marionnettes', 'Vaincre Sasori sans subir de dégâts pendant le combat.', { type: 'boss', id: 'BOS_010', sansDegats: true }, ['CHR_011'], 'Sasori (expert)');

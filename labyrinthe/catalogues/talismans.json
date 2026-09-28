@@ -1,0 +1,517 @@
+[
+ {
+  "id": "TAL_001",
+  "nom": "Ryō cousu dans la manche",
+  "type": "talisman",
+  "couleur": "#e8c050",
+  "desc": "Blessé, vous perdez un Ryō… qui tombe à vos pieds (et un autre avec).",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "faire": {
+     "type": "ramassable",
+     "ramassable": "ryo"
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_002",
+  "nom": "Épingle à cheveux",
+  "type": "talisman",
+  "couleur": "#c8ccd8",
+  "desc": "Les coffres verrouillés s’ouvrent sans clé (pas les portes).",
+  "effets": [
+   {
+    "drapeau": "crochetageCoffres"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_003",
+  "nom": "Pile de chakra",
+  "type": "talisman",
+  "couleur": "#3aa0f0",
+  "desc": "Les actifs demandent une charge de moins.",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_004",
+  "nom": "Perles du moine",
+  "type": "talisman",
+  "couleur": "#e8e0c0",
+  "desc": "Les sanctuaires sont plus probables (+0,15 au poids).",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_005",
+  "nom": "Baguettes d’Ichiraku",
+  "type": "talisman",
+  "couleur": "#c8a060",
+  "desc": "8 % de soigner une demi-unité à chaque salle nettoyée.",
+  "effets": [
+   {
+    "quand": "salle_nettoyee",
+    "chance": 0.08,
+    "faire": {
+     "type": "soin",
+     "demis": 1
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_006",
+  "nom": "Masque d’oni",
+  "type": "talisman",
+  "couleur": "#c83a2a",
+  "desc": "Toucher un ennemi le terrifie parfois (25 %).",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "chance": 0.25,
+    "faire": {
+     "type": "statut_proches",
+     "statut": "peur",
+     "r": 2,
+     "duree": 2
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_007",
+  "nom": "Talisman de protection",
+  "type": "talisman",
+  "couleur": "#f0f0f0",
+  "desc": "Blessé : 10 % (+2 % par chance) d’une réserve de chakra en demi.",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "chance": 0.1,
+    "chanceParChance": 0.02,
+    "max": 0.3,
+    "faire": {
+     "type": "protection",
+     "demis": 1
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_008",
+  "nom": "Bandeau rayé",
+  "type": "talisman",
+  "couleur": "#6a6a78",
+  "desc": "Dégâts +10 % contre les boss.",
+  "effets": [
+   {
+    "drapeau": "bonusBoss"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_009",
+  "nom": "Grelot du flair",
+  "type": "talisman",
+  "couleur": "#e8c050",
+  "desc": "Signale les murs secrets de la salle en entrant.",
+  "effets": [
+   {
+    "quand": "entree_salle",
+    "faire": {
+     "type": "revelation"
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_010",
+  "nom": "Poignée de sable",
+  "type": "talisman",
+  "couleur": "#d8b070",
+  "desc": "Un orbital de sable temporaire à chaque salle de combat.",
+  "effets": [
+   {
+    "quand": "entree_salle",
+    "si": "combat",
+    "faire": {
+     "type": "familier",
+     "familier": "FAM_SABLE",
+     "salle": true
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_011",
+  "nom": "Mèche courte",
+  "type": "talisman",
+  "couleur": "#f07820",
+  "desc": "Vos explosifs explosent plus vite (mèche de 0,85 s au lieu de 1,4 s).",
+  "effets": [
+   {
+    "drapeau": "mecheCourte"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_012",
+  "nom": "Mèche longue",
+  "type": "talisman",
+  "couleur": "#8a6a3a",
+  "desc": "Explosions 50 % plus larges ; délai +0,5 s.",
+  "effets": [
+   {
+    "drapeau": "mecheLongue"
+   },
+   {
+    "drapeau": "grandeExplosion"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_013",
+  "nom": "Charme du plein",
+  "type": "talisman",
+  "couleur": "#6ae07a",
+  "desc": "À pleine vitalité, dégâts +0,5.",
+  "effets": [
+   {
+    "drapeau": "pleineVitalite"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_014",
+  "nom": "Gourde de saké",
+  "type": "talisman",
+  "couleur": "#8a6a4a",
+  "desc": "Identifie les pilules ; les pilules négatives deviennent leur contraire.",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_015",
+  "nom": "Bague de l’organisation",
+  "type": "talisman",
+  "couleur": "#c8303a",
+  "desc": "Les pactes sont plus fréquents (+5 %).",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_016",
+  "nom": "Plume de la pluie",
+  "type": "talisman",
+  "couleur": "#a8b8c8",
+  "desc": "10 % de tirs spectraux.",
+  "effets": [
+   {
+    "drapeau": "spectralParfois"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_017",
+  "nom": "Écaille de requin",
+  "type": "talisman",
+  "couleur": "#4a6a8a",
+  "desc": "3 % des coups portés soignent une demi-unité.",
+  "effets": [
+   {
+    "quand": "impact",
+    "chance": 0.03,
+    "faire": {
+     "type": "soin",
+     "demis": 1
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_018",
+  "nom": "Gant d’armurière",
+  "type": "talisman",
+  "couleur": "#c83a2a",
+  "desc": "10 % d’un tir supplémentaire.",
+  "effets": [
+   {
+    "quand": "emission_primaire",
+    "chance": 0.1,
+    "faire": {
+     "type": "tir_bonus"
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_019",
+  "nom": "Bandage de lutteur",
+  "type": "talisman",
+  "couleur": "#e8e0d0",
+  "desc": "Vitesse +0,3.",
+  "effets": [
+   {
+    "s": "vitesse",
+    "a": 0.3
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_020",
+  "nom": "Lunettes noires",
+  "type": "talisman",
+  "couleur": "#2a2a2a",
+  "desc": "Vos familiers infligent 20 % de plus.",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_021",
+  "nom": "Fleur de la boutique",
+  "type": "talisman",
+  "couleur": "#e8a0d0",
+  "desc": "5 % de charmer 3 s.",
+  "effets": [
+   {
+    "statut": "charme",
+    "chance": 0.05,
+    "duree": 3
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_022",
+  "nom": "Jeton de tripot",
+  "type": "talisman",
+  "couleur": "#f0c040",
+  "desc": "Loteries un peu plus généreuses (+10 %).",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_023",
+  "nom": "Dent de requin",
+  "type": "talisman",
+  "couleur": "#e8f0f8",
+  "desc": "Vos explosions infligent 5 dégâts de plus.",
+  "effets": [
+   {
+    "drapeau": "explosionPlus"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_024",
+  "nom": "Kunai rouillé",
+  "type": "talisman",
+  "couleur": "#8a5a3a",
+  "desc": "8 % de brûler.",
+  "effets": [
+   {
+    "statut": "brulure",
+    "chance": 0.08,
+    "chanceParChance": 0.02,
+    "max": 0.3
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_025",
+  "nom": "Clochette du chat fugueur",
+  "type": "talisman",
+  "couleur": "#e8c050",
+  "desc": "Chance +1 pour les récompenses de fin de salle.",
+  "effets": [
+   {
+    "s": "chance",
+    "a": 1
+   }
+  ],
+  "statut": "clin d’œil (mission du chat)",
+  "poids": 1
+ },
+ {
+  "id": "TAL_026",
+  "nom": "Graine de bois",
+  "type": "talisman",
+  "couleur": "#6a9a3a",
+  "desc": "Toutes les 10 salles nettoyées, un contenant vide.",
+  "effets": [
+   {
+    "quand": "salle_nettoyee",
+    "tousLes": 10,
+    "faire": {
+     "type": "contenant_vide"
+    }
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_027",
+  "nom": "Sceau d’eau",
+  "type": "talisman",
+  "couleur": "#4a8ae8",
+  "desc": "Immunité aux flaques et sables mouvants.",
+  "effets": [
+   {
+    "drapeau": "immuniteSol"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_028",
+  "nom": "Poids d’entraînement",
+  "type": "talisman",
+  "couleur": "#6a6a78",
+  "desc": "Vitesse −0,3, dégâts +0,5.",
+  "effets": [
+   {
+    "s": "vitesse",
+    "a": -0.3
+   },
+   {
+    "s": "degats",
+    "a": 0.5
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_029",
+  "nom": "Pétale de papier",
+  "type": "talisman",
+  "couleur": "#f4f0e8",
+  "desc": "Vos explosions projettent des papiers tranchants.",
+  "effets": [
+   {
+    "drapeau": "explosifsCroix"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_030",
+  "nom": "Mèche de cheveux blancs",
+  "type": "talisman",
+  "couleur": "#e8e8e8",
+  "desc": "Chance +1.",
+  "effets": [
+   {
+    "s": "chance",
+    "a": 1
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_031",
+  "nom": "Encre sèche",
+  "type": "talisman",
+  "couleur": "#1a1a2a",
+  "desc": "15 % de ne pas consommer un rouleau ou une pilule.",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_032",
+  "nom": "Médaille de l’examen",
+  "type": "talisman",
+  "couleur": "#e8c050",
+  "desc": "Les portes d’épreuve s’ouvrent toujours.",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_033",
+  "nom": "Omamori",
+  "type": "talisman",
+  "couleur": "#c83a4a",
+  "desc": "Une fois par étage, annule un coup.",
+  "effets": [],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_034",
+  "nom": "Tatouage de l’ANBU",
+  "type": "talisman",
+  "couleur": "#3a3a44",
+  "desc": "Dégâts +10 % dans les salles de boss.",
+  "effets": [
+   {
+    "drapeau": "bonusBoss"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "TAL_035",
+  "nom": "Masque de chat",
+  "type": "talisman",
+  "couleur": "#e8e4dc",
+  "desc": "Portes secrètes : une fissure est visible en passant.",
+  "effets": [
+   {
+    "drapeau": "indicesSecrets"
+   }
+  ],
+  "statut": "création originale",
+  "poids": 1
+ }
+]

@@ -107,15 +107,15 @@
   // Routes et fins (RTE) — graphe des dépendances documenté dans le dossier
   const RT = o => DON.routes.push(o);
   RT({ id: 'RTE_01', nom: 'Première fin : le sceau fissuré', bifurcation: 'étage 6', prerequis: 'aucun', boss: 'BOS_014', etages: 6,
-    recompense: 'Débloque les étages 7-8 (chapitre des Akatsuki)', marque: 'Serpent', indice: 'Toujours ouverte.' });
+    recompense: 'Ouvre les étages 7-8 (chapitre IV) ; Mue du serpent (PSV_143) et Rituel de permutation (ACT_031) via OBJ_017', marque: 'Serpent', indice: 'Toujours ouverte.' });
   RT({ id: 'RTE_02', nom: 'Deuxième fin : la pluie sans fin', bifurcation: 'étage 8', prerequis: 'RTE_01 accomplie', boss: 'BOS_018|BOS_019', etages: 8,
-    recompense: 'Débloque les deux branches avancées', marque: 'Nuage rouge', indice: 'Après la première fin, le labyrinthe s’approfondit.' });
+    recompense: 'Ouvre les deux branches de l’étage 9 ; Sceau de la mort (PSV_131) et Transfert d’esprit (ACT_029) via OBJ_039', marque: 'Nuage rouge', indice: 'Après la première fin, le labyrinthe s’approfondit.' });
   RT({ id: 'RTE_03', nom: 'Branche de la Lumière : Mont Myōboku', bifurcation: 'après le boss de l’étage 8', prerequis: 'RTE_02 accomplie ; aucun pacte interdit acheté pendant la partie', boss: 'BOS_020', etages: 9,
-    recompense: 'Personnage Jiraiya ; objet « Huile des crapauds » dans les pools', marque: 'Crapaud', indice: 'Un rayon de lumière ne s’ouvre qu’à ceux qui n’ont rien vendu d’eux-mêmes.' });
+    recompense: 'Nature du sage (PSV_144) et Sceau de scellement (ACT_027) ajoutés aux pools (OBJ_046)', marque: 'Crapaud', indice: 'Un rayon de lumière ne s’ouvre qu’à ceux qui n’ont rien vendu d’eux-mêmes.' });
   RT({ id: 'RTE_04', nom: 'Branche de l’Ombre : Profondeurs du sceau', bifurcation: 'après le boss de l’étage 8', prerequis: 'RTE_02 accomplie', boss: 'BOS_021', etages: 9,
-    recompense: 'Personnage Itachi ; objet « Œil de l’éveil » dans les pools', marque: 'Éventail', indice: 'La trappe mène plus bas, toujours plus bas.' });
+    recompense: 'Réincarnation impure (PSV_140) et Espace-temps intangible (ACT_021) ajoutés aux pools (OBJ_047)', marque: 'Éventail', indice: 'La trappe mène plus bas, toujours plus bas.' });
   RT({ id: 'RTE_05', nom: 'Conseil des épreuves (Boss Rush)', bifurcation: 'étage 6', prerequis: 'boss de l’étage 6 vaincu en moins de 20:00 (chronomètre de partie)', boss: 'vagues de boss', etages: 6,
-    recompense: 'Défis supplémentaires ; marque « Conseil »', marque: 'Parchemin d’or', indice: 'Les juges n’attendent pas les retardataires.' });
+    recompense: 'Défis « Course de l’examen » (DEF_010) et « Collectionneur pressé » (DEF_011) (OBJ_048)', marque: 'Parchemin d’or', indice: 'Les juges n’attendent pas les retardataires.' });
   RT({ id: 'RTE_06', nom: 'Brèche instable', bifurcation: 'étage 8', prerequis: 'salle du boss de l’étage 8 atteinte en moins de 30:00', boss: 'BOS_022', etages: 8,
-    recompense: 'Personnage variante « altérée » supplémentaire ; marque « Brèche »', marque: 'Dix queues', indice: 'Une fissure respire derrière le dernier gardien… si l’on arrive tôt.' });
+    recompense: 'Chute céleste (PSV_020) ajoutée aux pools (OBJ_049)', marque: 'Dix queues', indice: 'Une fissure respire derrière le dernier gardien… si l’on arrive tôt.' });
 })();

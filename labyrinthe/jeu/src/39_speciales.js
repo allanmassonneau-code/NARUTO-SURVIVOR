@@ -254,12 +254,12 @@ function chanceOpportunite() {
   const det = []; let c = 0.20; det.push(['Base', 0.20]);
   if (!E.degatsVitalite) { c += 0.15; det.push(['Aucun dégât à la vitalité sur l’étage', 0.15]); }
   if (!E.degatsBoss) { c += 0.10; det.push(['Boss vaincu sans être touché', 0.10]); }
-  if (J.talisman === 'TAL_015') { c += 0.05; det.push(['Bague de l’Akatsuki', 0.05]); }
+  if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’Akatsuki', 0.05]); }
   if (possede(J, 'PSV_091')) { c += 0.20; det.push(['Sceau maudit', 0.20]); }
   if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['Faveur de l’autel', E.faveurSanctuaire]); }
   c = borne(c, 0, 0.95);
   if (J.drapeaux.serment) return { chance: 1, pacte: 1, sanctuaire: 0, detail: [['Serment de vengeance', 1]] };
-  let wP = 0.6, wS = 0.4 + 0.25 * P.pactesRefuses + (J.talisman === 'TAL_004' ? 0.15 : 0);
+  let wP = 0.6, wS = 0.4 + 0.25 * P.pactesRefuses + (aTalisman(J, 'TAL_004') ? 0.15 : 0);
   if (P.pactesAchetes > 0) wS = 0;  // exclusion puis renormalisation : toute l'opportunité devient un pacte
   const tot = wP + wS;
   return { chance: c, pacte: c * wP / tot, sanctuaire: c * wS / tot, detail: det };
@@ -322,12 +322,12 @@ function utiliserMachine(m) {
   switch (m.type) {
     case 'loterie': // 1 Ryō ; issues publiques (registre §R24) ; Dés de la grande perdante : gains doublés
       if (J.ryo < 1) { Son.jouer('refus'); return; } J.ryo--; m.usages++;
-      { const r = al.suivant(); const k = J.talisman === 'TAL_022' ? 1.1 : 1; const sortie1 = sortie; const sortie = t => { sortie1(t); if (J.drapeaux.loterieDouble) sortie1(t); };
+      { const r = al.suivant(); const k = aTalisman(J, 'TAL_022') ? 1.1 : 1; const gain = t => { sortie(t); if (J.drapeaux.loterieDouble) sortie(t); };
         if (r < 0.62 / k) { G.textes.push({ x: m.x, y: m.y - 24, t: 'Perdu', age: 0, duree: 0.7, couleur: '#a0a0a0' }); }
-        else if (r < 0.80) sortie('ryo'), sortie('ryo');
-        else if (r < 0.88) sortie(al.choix(['cle', 'explosif', 'coeur']));
-        else if (r < 0.95) sortie('pilule');
-        else if (r < 0.985) sortie('ryo5');
+        else if (r < 0.80) gain('ryo'), gain('ryo');
+        else if (r < 0.88) gain(al.choix(['cle', 'explosif', 'coeur']));
+        else if (r < 0.95) gain('pilule');
+        else if (r < 0.985) gain('ryo5');
         else { poserPiedestal(G.salle, m.x, m.y + 36, tirerObjet(G.partie, 'machine', G.alea.butin), { pool: 'machine' }); m.detruite = true; } }
       Son.jouer('ryo'); break;
     case 'don_vital': // prix payé en santé (pas un dommage) → 1 à 3 Ryō ; se bloque après 6 dons

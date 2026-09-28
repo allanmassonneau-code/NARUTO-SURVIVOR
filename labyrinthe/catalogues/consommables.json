@@ -1,0 +1,445 @@
+[
+ {
+  "id": "CON_001",
+  "nom": "Rouleau du retour",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#8a7ab0",
+  "effet": "teleport",
+  "params": {
+   "cible": "depart"
+  },
+  "desc": "Vous renvoie à la salle de départ.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_002",
+  "nom": "Rouleau du marionnettiste",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#6a5a4a",
+  "effet": "bonus_salle",
+  "params": {
+   "bonus": {
+    "tir": {
+     "traj": "guidage",
+     "force": 2
+    }
+   }
+  },
+  "desc": "Pour la salle : vos tirs se guident.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_003",
+  "nom": "Rouleau de l’ombre",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#2a2238",
+  "effet": "immobiliser",
+  "params": {
+   "duree": 4
+  },
+  "desc": "Immobilise tous les ennemis 4 s.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_004",
+  "nom": "Rouleau du chef de village",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#c83a2a",
+  "effet": "bonus_salle",
+  "params": {
+   "bonus": {
+    "s": "degats",
+    "a": 1.5
+   }
+  },
+  "desc": "Pour la salle : dégâts +1,5.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_005",
+  "nom": "Rouleau d’escorte",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#5a1a1a",
+  "effet": "teleport",
+  "params": {
+   "cible": "boss"
+  },
+  "desc": "Vous téléporte devant le boss de l’étage.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_006",
+  "nom": "Rouleau de soin",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#4a8ae8",
+  "effet": "ressources",
+  "params": {
+   "prot": 4
+  },
+  "desc": "Deux réserves de chakra protecteur.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_007",
+  "nom": "Rouleau du ramen",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#c8a060",
+  "effet": "poser",
+  "params": {
+   "types": [
+    "coeur",
+    "coeur"
+   ]
+  },
+  "desc": "Deux cœurs de vitalité apparaissent.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_008",
+  "nom": "Rouleau de la jeunesse",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#3c9a3c",
+  "effet": "bonus_temps",
+  "params": {
+   "duree": 6,
+   "invuln": true,
+   "bonus": {
+    "s": "vitesse",
+    "a": 1
+   }
+  },
+  "desc": "6 s : invulnérable et rapide.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_009",
+  "nom": "Rouleau de l’équilibre",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#c8c0a0",
+  "effet": "ressources",
+  "params": {
+   "res": {
+    "ryo": 1,
+    "cles": 1,
+    "explosifs": 1
+   },
+   "soin": 1
+  },
+  "desc": "Un Ryō, une clé, un explosif et une demi-unité de soin.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_010",
+  "nom": "Rouleau du colporteur",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#e0d070",
+  "effet": "teleport",
+  "params": {
+   "cible": "boutique"
+  },
+  "desc": "Vous téléporte à l’échoppe.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_011",
+  "nom": "Rouleau du tripot",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#c83a2a",
+  "effet": "machine",
+  "params": {
+   "type": "loterie"
+  },
+  "desc": "Fait apparaître une machine de loterie.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_012",
+  "nom": "Rouleau de la force",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#e05a2a",
+  "effet": "bonus_salle",
+  "params": {
+   "bonus": {
+    "s": "degats",
+    "m": 1.5
+   }
+  },
+  "desc": "Pour la salle : dégâts ×1,5.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_013",
+  "nom": "Rouleau de lévitation",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#e0e8ff",
+  "effet": "bonus_salle",
+  "params": {
+   "bonus": {
+    "vol": true
+   }
+  },
+  "desc": "Pour la salle : lévitation.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_014",
+  "nom": "Rouleau funeste",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#1c1420",
+  "effet": "degats_tous",
+  "params": {
+   "degats": 40
+  },
+  "desc": "40 dégâts à tous les ennemis de la salle.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_015",
+  "nom": "Rouleau de l’autel",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#8a1a2a",
+  "effet": "machine",
+  "params": {
+   "type": "don_vital"
+  },
+  "desc": "Fait apparaître un autel de don vital.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_016",
+  "nom": "Rouleau interdit",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#6a2a8a",
+  "effet": "bonus_salle",
+  "params": {
+   "bonus": {
+    "s": "degats",
+    "a": 2
+   }
+  },
+  "desc": "Pour la salle : dégâts +2.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_017",
+  "nom": "Rouleau explosif",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#c82a2a",
+  "effet": "explosions",
+  "params": {
+   "n": 6
+  },
+  "desc": "Six explosions éclatent dans la salle (elles ne vous blessent pas).",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_018",
+  "nom": "Rouleau de l’héritage",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#f0c040",
+  "effet": "teleport",
+  "params": {
+   "cible": "heritage"
+  },
+  "desc": "Vous téléporte à la salle d’héritage.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_019",
+  "nom": "Rouleau de la lune",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#a090a0",
+  "effet": "teleport",
+  "params": {
+   "cible": "cache"
+  },
+  "desc": "Vous téléporte à la cache de renseignements.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_020",
+  "nom": "Rouleau du soleil",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#f0d060",
+  "effet": "reveler",
+  "params": {
+   "soin": true,
+   "degats": 3
+  },
+  "desc": "Soin complet, plan révélé, 3 dégâts à tous.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_021",
+  "nom": "Rouleau du mendiant",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#8a7a6a",
+  "effet": "pnj",
+  "params": {
+   "type": "voyageur"
+  },
+  "desc": "Fait apparaître un voyageur.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_022",
+  "nom": "Rouleau du monde",
+  "type": "consommable",
+  "famille": "rouleau",
+  "couleur": "#6a9a3a",
+  "effet": "reveler",
+  "params": {},
+  "desc": "Révèle le plan de l’étage.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_023",
+  "nom": "Sceau de destruction",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#8a7a9a",
+  "effet": "detruire_obstacles",
+  "params": {},
+  "desc": "Détruit tous les obstacles et révèle les murs secrets de la salle.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_024",
+  "nom": "Sceau de réécriture",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#e8dcc0",
+  "effet": "relancer",
+  "params": {},
+  "desc": "Relance les objets sur piédestal de la salle.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_025",
+  "nom": "Sceau de duplication",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#6ac8e8",
+  "effet": "dupliquer",
+  "params": {},
+  "desc": "Double les ressources au sol dans la salle.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_026",
+  "nom": "Sceau de clairvoyance",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#c9c2e6",
+  "effet": "reveler",
+  "params": {
+   "secrets": true
+  },
+  "desc": "Révèle tout l’étage, secrets compris.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_027",
+  "nom": "Sceau de multiplication",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#f6cf3e",
+  "effet": "clones",
+  "params": {
+   "n": 3
+  },
+  "desc": "Trois clones pour la salle.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_028",
+  "nom": "Sceau de permutation",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#6a2a8a",
+  "effet": "permutation",
+  "params": {},
+  "desc": "Relance tous vos passifs (hors objets-clés).",
+  "statut": "création originale",
+  "poids": 0.3
+ },
+ {
+  "id": "CON_029",
+  "nom": "Sceau protecteur",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#f0f0f0",
+  "effet": "bonus_temps",
+  "params": {
+   "duree": 6,
+   "invuln": true,
+   "bonus": {
+    "s": "degats",
+    "a": 0
+   }
+  },
+  "desc": "6 s d’invulnérabilité.",
+  "statut": "création originale",
+  "poids": 1
+ },
+ {
+  "id": "CON_030",
+  "nom": "Sceau de passage",
+  "type": "consommable",
+  "famille": "sceau",
+  "couleur": "#5a4a3a",
+  "effet": "passage",
+  "params": {},
+  "desc": "Ouvre une trappe vers l’étage suivant (sans récompense de boss).",
+  "statut": "création originale",
+  "poids": 0.5
+ }
+]

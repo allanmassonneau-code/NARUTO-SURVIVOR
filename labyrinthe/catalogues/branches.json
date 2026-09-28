@@ -1,0 +1,40 @@
+{
+ "lumiere": {
+  "pos": 9,
+  "chapitre": 5,
+  "themes": [
+   "THM_MYO"
+  ],
+  "salles": [
+   16,
+   18
+  ],
+  "speciales": {
+   "heritage": 1,
+   "boutique": 0.6
+  },
+  "boss": [
+   "BOS_020"
+  ],
+  "degats": 2
+ },
+ "ombre": {
+  "pos": 9,
+  "chapitre": 5,
+  "themes": [
+   "THM_BIJ"
+  ],
+  "salles": [
+   16,
+   18
+  ],
+  "speciales": {
+   "heritage": 1,
+   "malediction": 1
+  },
+  "boss": [
+   "BOS_021"
+  ],
+  "degats": 2
+ }
+}

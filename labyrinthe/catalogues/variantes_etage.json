@@ -1,0 +1,164 @@
+[
+ {
+  "id": "FLR_ACA_1",
+  "theme": "THM_ACA",
+  "nom": "Salles d’entraînement",
+  "mod": {
+   "jarres": 0.5
+  },
+  "desc": "Jarres et caisses fréquentes : plus de ressources cachées, moins de couverture solide."
+ },
+ {
+  "id": "FLR_ACA_2",
+  "theme": "THM_ACA",
+  "nom": "Archives inondées",
+  "mod": {
+   "flaques": 0.35
+  },
+  "desc": "Des flaques d’eau ralentissent la marche (pas le vol)."
+ },
+ {
+  "id": "FLR_FOR_1",
+  "theme": "THM_FOR",
+  "nom": "Sous-bois",
+  "mod": {
+   "toiles": 0.4
+  },
+  "desc": "Des toiles collantes ralentissent ; le feu les détruit."
+ },
+ {
+  "id": "FLR_FOR_2",
+  "theme": "THM_FOR",
+  "nom": "Racines géantes",
+  "mod": {
+   "rochersPlus": 0.25
+  },
+  "desc": "Plus d’obstacles : couverture abondante, lignes de tir coupées."
+ },
+ {
+  "id": "FLR_SUN_1",
+  "theme": "THM_SUN",
+  "nom": "Grottes de sable",
+  "mod": {
+   "sablesMouvants": 0.35
+  },
+  "desc": "Des sables mouvants ralentissent et attirent vers leur centre."
+ },
+ {
+  "id": "FLR_SUN_2",
+  "theme": "THM_SUN",
+  "nom": "Galeries de verre",
+  "mod": {
+   "cristaux": 0.3
+  },
+  "desc": "Des cristaux font rebondir les projectiles (alliés et ennemis)."
+ },
+ {
+  "id": "FLR_MAR_1",
+  "theme": "THM_MAR",
+  "nom": "Atelier",
+  "mod": {
+   "picsActifs": 0.4
+  },
+  "desc": "Des pics mécaniques sortent et rentrent selon un cycle visible."
+ },
+ {
+  "id": "FLR_MAR_2",
+  "theme": "THM_MAR",
+  "nom": "Entrepôt des cent marionnettes",
+  "mod": {
+   "marionnettesInertes": 0.3
+  },
+  "desc": "Des marionnettes inertes bloquent le passage ; certaines s’animent."
+ },
+ {
+  "id": "FLR_ORO_1",
+  "theme": "THM_ORO",
+  "nom": "Salle des cuves",
+  "mod": {
+   "acide": 0.3
+  },
+  "desc": "Des flaques d’acide blessent au contact (pas en vol)."
+ },
+ {
+  "id": "FLR_ORO_2",
+  "theme": "THM_ORO",
+  "nom": "Serpentarium",
+  "mod": {
+   "nids": 0.3
+  },
+  "desc": "Des nids de serpenteaux libèrent des nuées quand on les frappe."
+ },
+ {
+  "id": "FLR_KIR_1",
+  "theme": "THM_KIR",
+  "nom": "Canaux brumeux",
+  "mod": {
+   "brume": 1
+  },
+  "desc": "Brume : visibilité réduite autour du shinobi ; les ennemis restent contourés."
+ },
+ {
+  "id": "FLR_KIR_2",
+  "theme": "THM_KIR",
+  "nom": "Écluses",
+  "mod": {
+   "courants": 0.35
+  },
+  "desc": "Des courants poussent dans une direction affichée."
+ },
+ {
+  "id": "FLR_AKA_1",
+  "theme": "THM_AKA",
+  "nom": "Grotte du scellement",
+  "mod": {
+   "obscurite": 0.55
+  },
+  "desc": "Pénombre : les lanternes et le feu éclairent ; les dangers restent lisibles."
+ },
+ {
+  "id": "FLR_AKA_2",
+  "theme": "THM_AKA",
+  "nom": "Tour d’Ame",
+  "mod": {
+   "pluie": 1
+  },
+  "desc": "Pluie : flaques conductrices (la foudre s’y propage), le feu y dure moitié moins."
+ },
+ {
+  "id": "FLR_GUE_1",
+  "theme": "THM_GUE",
+  "nom": "Plaine de cratères",
+  "mod": {
+   "crateres": 0.3
+  },
+  "desc": "Cratères (fosses) : le vol devient précieux, les explosifs créent des ponts."
+ },
+ {
+  "id": "FLR_GUE_2",
+  "theme": "THM_GUE",
+  "nom": "Forêt de Zetsu",
+  "mod": {
+   "zetsu": 0.35
+  },
+  "desc": "Des Zetsu blancs surgissent du sol en renfort pendant les combats."
+ },
+ {
+  "id": "FLR_MYO_1",
+  "theme": "THM_MYO",
+  "nom": "Sentiers des crapauds",
+  "mod": {
+   "huile": 0.25
+  },
+  "desc": "Flaques d’huile des crapauds : le Katon les embrase."
+ },
+ {
+  "id": "FLR_BIJ_1",
+  "theme": "THM_BIJ",
+  "nom": "Chambre des chaînes",
+  "mod": {
+   "chaines": 0.3
+  },
+  "desc": "Chaînes de sceau : murs temporaires qui s’ouvrent quand la salle est nettoyée."
+ }
+]

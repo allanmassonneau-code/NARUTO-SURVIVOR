@@ -1,0 +1,837 @@
+[
+ {
+  "id": "SYN_001",
+  "nom": "Rasengan jumeau",
+  "composants": [
+   "PSV_001",
+   "PSV_002"
+  ],
+  "type": "emergente",
+  "desc": "Deux sphères partagent la charge : 3,5 × 3 × 0,70 = 7,35 dégâts chacune ; cycle 0,6 / 0,9 ≈ 0,667 s.",
+  "test": "Cible immobile : deux sphères, dégâts et cycle attendus, arrêt au mur, rien au changement de salle.",
+  "effets": []
+ },
+ {
+  "id": "SYN_002",
+  "nom": "Sphère chercheuse",
+  "composants": [
+   "PSV_001",
+   "PSV_005"
+  ],
+  "type": "emergente",
+  "desc": "Les sphères chargées se guident vers la cible.",
+  "test": "Cible latérale touchée sans alignement parfait.",
+  "effets": []
+ },
+ {
+  "id": "SYN_003",
+  "nom": "Sphère orageuse",
+  "composants": [
+   "PSV_001",
+   "PSV_028"
+  ],
+  "type": "emergente",
+  "desc": "Chaque sphère enchaîne la foudre sur deux ennemis.",
+  "test": "Groupe de trois : trois cibles blessées par une sphère.",
+  "effets": []
+ },
+ {
+  "id": "SYN_004",
+  "nom": "Tourbillon de vent complet",
+  "composants": [
+   "PSV_001",
+   "PSV_146"
+  ],
+  "type": "dediee",
+  "desc": "L’explosion de vent des sphères s’élargit (rayon 2).",
+  "test": "Rayon d’explosion mesuré à 2 tuiles.",
+  "effets": [
+   {
+    "impact": "explosion",
+    "r": 2,
+    "coef": 0.4
+   }
+  ]
+ },
+ {
+  "id": "SYN_005",
+  "nom": "Canons en éventail",
+  "composants": [
+   "PSV_014",
+   "PSV_003"
+  ],
+  "type": "emergente",
+  "desc": "Trois rayons en éventail, chacun au coefficient de multitir (0,58).",
+  "test": "Trois faisceaux, dégâts par rayon = 58 %.",
+  "effets": []
+ },
+ {
+  "id": "SYN_006",
+  "nom": "Rayon perçant",
+  "composants": [
+   "PSV_014",
+   "PSV_008"
+  ],
+  "type": "dediee",
+  "desc": "Le rayon traverse déjà tout : le percement devient +20 % de dégâts.",
+  "test": "Dégâts par tic ×1,2.",
+  "effets": [
+   {
+    "coefDegats": 1.2
+   }
+  ]
+ },
+ {
+  "id": "SYN_007",
+  "nom": "Retour guidé",
+  "composants": [
+   "PSV_013",
+   "PSV_005"
+  ],
+  "type": "emergente",
+  "desc": "Le fūma suit sa cible à l’aller, puis revient.",
+  "test": "Trajet courbe puis retour à la main.",
+  "effets": []
+ },
+ {
+  "id": "SYN_008",
+  "nom": "Fūma foudroyant",
+  "composants": [
+   "PSV_013",
+   "PSV_028"
+  ],
+  "type": "emergente",
+  "desc": "Chaque passage du fūma enchaîne la foudre.",
+  "test": "Deux chaînes par lancer (aller et retour).",
+  "effets": []
+ },
+ {
+  "id": "SYN_009",
+  "nom": "Argile incendiaire",
+  "composants": [
+   "PSV_019",
+   "PSV_043"
+  ],
+  "type": "dediee",
+  "desc": "Les bombes d’argile laissent des flammes alliées.",
+  "test": "Zone de feu après chaque explosion.",
+  "effets": [
+   {
+    "impact": "flamme"
+   }
+  ]
+ },
+ {
+  "id": "SYN_010",
+  "nom": "Météore gelé",
+  "composants": [
+   "PSV_020",
+   "PSV_050"
+  ],
+  "type": "dediee",
+  "desc": "Les frappes au sol gèlent à coup sûr.",
+  "test": "Ennemi gelé après une frappe.",
+  "effets": [
+   {
+    "statut": "gel",
+    "chance": 1,
+    "duree": 1.5
+   }
+  ]
+ },
+ {
+  "id": "SYN_011",
+  "nom": "Sphère d’encre",
+  "composants": [
+   "PSV_021",
+   "PSV_052"
+  ],
+  "type": "dediee",
+  "desc": "La sphère guidée charme plus souvent (+20 %).",
+  "test": "Charme observé en moins de 10 contacts.",
+  "effets": [
+   {
+    "statut": "charme",
+    "chance": 0.2,
+    "duree": 3
+   }
+  ]
+ },
+ {
+  "id": "SYN_012",
+  "nom": "Souffle du vent",
+  "composants": [
+   "PSV_016",
+   "PSV_046"
+  ],
+  "type": "dediee",
+  "desc": "Le faisceau continu porte deux tuiles plus loin.",
+  "test": "Longueur du faisceau +2 tuiles.",
+  "effets": [
+   {
+    "s": "portee",
+    "a": 2
+   }
+  ]
+ },
+ {
+  "id": "SYN_013",
+  "nom": "Tempête orbitale",
+  "composants": [
+   "PSV_010",
+   "PSV_065"
+  ],
+  "type": "dediee",
+  "desc": "Un orbital de sable supplémentaire.",
+  "test": "Trois orbitaux.",
+  "effets": [
+   {
+    "familier": "FAM_SABLE"
+   }
+  ]
+ },
+ {
+  "id": "SYN_014",
+  "nom": "Ricochet détonant",
+  "composants": [
+   "PSV_007",
+   "PSV_149"
+  ],
+  "type": "dediee",
+  "desc": "Un ricochet de plus ; l’explosion survient au dernier contact.",
+  "test": "Trois ricochets puis explosion.",
+  "effets": [
+   {
+    "traj": "rebond"
+   }
+  ]
+ },
+ {
+  "id": "SYN_015",
+  "nom": "Mille aiguilles empoisonnées",
+  "composants": [
+   "PSV_004",
+   "PSV_048"
+  ],
+  "type": "dediee",
+  "desc": "Poison +20 %.",
+  "test": "Taux de poison sur 50 tirs.",
+  "effets": [
+   {
+    "statut": "poison",
+    "chance": 0.2
+   }
+  ]
+ },
+ {
+  "id": "SYN_016",
+  "nom": "Éventail de feu",
+  "composants": [
+   "PSV_003",
+   "PSV_043"
+  ],
+  "type": "dediee",
+  "desc": "Brûlure +10 %.",
+  "test": "Taux de brûlure sur 50 tirs.",
+  "effets": [
+   {
+    "statut": "brulure",
+    "chance": 0.1
+   }
+  ]
+ },
+ {
+  "id": "SYN_017",
+  "nom": "Le vent attise le feu",
+  "composants": [
+   "PSV_043",
+   "PSV_046"
+  ],
+  "type": "dediee",
+  "desc": "Les impacts laissent des flammes ; dégâts +0,5.",
+  "test": "Zones de feu à l’impact.",
+  "effets": [
+   {
+    "impact": "flamme"
+   },
+   {
+    "s": "degats",
+    "a": 0.5
+   }
+  ]
+ },
+ {
+  "id": "SYN_018",
+  "nom": "Eau conductrice",
+  "composants": [
+   "PSV_044",
+   "PSV_045"
+  ],
+  "type": "dediee",
+  "desc": "La foudre se propage par l’eau : un saut de chaîne.",
+  "test": "Chaîne vers un ennemi proche.",
+  "effets": [
+   {
+    "impact": "chaine",
+    "sauts": 1,
+    "r": 2.5,
+    "coef": 0.4
+   }
+  ]
+ },
+ {
+  "id": "SYN_019",
+  "nom": "Boue",
+  "composants": [
+   "PSV_047",
+   "PSV_044"
+  ],
+  "type": "dediee",
+  "desc": "Ralentissement +30 %.",
+  "test": "Taux de ralenti.",
+  "effets": [
+   {
+    "statut": "ralenti",
+    "chance": 0.3,
+    "duree": 2
+   }
+  ]
+ },
+ {
+  "id": "SYN_020",
+  "nom": "Ombre lestée",
+  "composants": [
+   "PSV_051",
+   "PSV_034"
+  ],
+  "type": "dediee",
+  "desc": "Immobilisation +10 %.",
+  "test": "Taux d’immobilisation.",
+  "effets": [
+   {
+    "statut": "immobilise",
+    "chance": 0.1,
+    "duree": 1.2
+   }
+  ]
+ },
+ {
+  "id": "SYN_021",
+  "nom": "Clones à l’encre",
+  "composants": [
+   "PSV_061",
+   "PSV_002"
+  ],
+  "type": "dediee",
+  "desc": "Un second clone rejoint le premier.",
+  "test": "Deux clones suiveurs.",
+  "effets": [
+   {
+    "familier": "FAM_CLONE"
+   }
+  ]
+ },
+ {
+  "id": "SYN_022",
+  "nom": "Flair de la meute",
+  "composants": [
+   "PSV_068",
+   "PSV_069"
+  ],
+  "type": "dediee",
+  "desc": "Toutes les 6 salles nettoyées, les chiens déterrent une ressource.",
+  "test": "Ressource à la 6e salle.",
+  "effets": [
+   {
+    "quand": "salle_nettoyee",
+    "tousLes": 6,
+    "faire": {
+     "type": "ramassable",
+     "ramassable": "coffre"
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_023",
+  "nom": "Envolée d’argile",
+  "composants": [
+   "PSV_019",
+   "PSV_071"
+  ],
+  "type": "dediee",
+  "desc": "L’oiseau d’argile se recharge deux fois plus vite.",
+  "test": "Plongeon toutes les 2 s.",
+  "effets": [
+   {
+    "drapeau": "oiseauRapide"
+   }
+  ]
+ },
+ {
+  "id": "SYN_024",
+  "nom": "Grand sabre vorace",
+  "composants": [
+   "PSV_136",
+   "PSV_017"
+  ],
+  "type": "dediee",
+  "desc": "Soin toutes les 8 éliminations au lieu de 12.",
+  "test": "Soin à la 8e élimination.",
+  "effets": [
+   {
+    "quand": "elimination",
+    "tousLes": 8,
+    "faire": {
+     "type": "soin",
+     "demis": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_025",
+  "nom": "Malédiction partagée",
+  "composants": [
+   "PSV_091",
+   "PSV_054"
+  ],
+  "type": "dediee",
+  "desc": "La marque de Jashin inflige 10 dégâts de plus.",
+  "test": "Dégâts de salle 25.",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "faire": {
+     "type": "degats_tous",
+     "degats": 10
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_026",
+  "nom": "Rotation clairvoyante",
+  "composants": [
+   "PSV_113",
+   "PSV_022"
+  ],
+  "type": "dediee",
+  "desc": "La rotation couvre une portée plus large.",
+  "test": "Rayon de rotation +0,5 tuile.",
+  "effets": [
+   {
+    "s": "portee",
+    "a": 1
+   }
+  ]
+ },
+ {
+  "id": "SYN_027",
+  "nom": "Miroirs gelés",
+  "composants": [
+   "PSV_050",
+   "PSV_081"
+  ],
+  "type": "emergente",
+  "desc": "Les tirs renvoyés par les miroirs sont de glace (élément hyoton).",
+  "test": "Tir renvoyé gèle parfois.",
+  "effets": []
+ },
+ {
+  "id": "SYN_028",
+  "nom": "Lames tournoyantes",
+  "composants": [
+   "PSV_018",
+   "PSV_022"
+  ],
+  "type": "emergente",
+  "desc": "Frappe courte + rotation : la rotation domine, la lame devient un coup d’appoint.",
+  "test": "Priorité rotation, coup d’appoint présent.",
+  "effets": []
+ },
+ {
+  "id": "SYN_029",
+  "nom": "Laser en éventail",
+  "composants": [
+   "PSV_015",
+   "PSV_003"
+  ],
+  "type": "emergente",
+  "desc": "Trois traits instantanés.",
+  "test": "Trois lignes par cycle.",
+  "effets": []
+ },
+ {
+  "id": "SYN_030",
+  "nom": "Faisceau ondulant",
+  "composants": [
+   "PSV_016",
+   "PSV_011"
+  ],
+  "type": "emergente",
+  "desc": "Le faisceau ignore l’ondulation (trajectoire d’un faisceau) : l’onde devient +0,3 dégâts seulement.",
+  "test": "Pas de déformation du faisceau.",
+  "effets": []
+ },
+ {
+  "id": "SYN_031",
+  "nom": "Frappe de sabre explosive",
+  "composants": [
+   "PSV_017",
+   "PSV_149"
+  ],
+  "type": "emergente",
+  "desc": "Chaque coup de sabre déclenche l’explosion d’impact.",
+  "test": "Explosion au contact du sabre.",
+  "effets": []
+ },
+ {
+  "id": "SYN_032",
+  "nom": "Orbe lent chercheur",
+  "composants": [
+   "PSV_012",
+   "PSV_006"
+  ],
+  "type": "emergente",
+  "desc": "Énormes insectes lents qui traquent.",
+  "test": "Guidage visible sur tirs lents.",
+  "effets": []
+ },
+ {
+  "id": "SYN_033",
+  "nom": "Orbite empoisonnée",
+  "composants": [
+   "PSV_010",
+   "PSV_048"
+  ],
+  "type": "emergente",
+  "desc": "Les tirs en orbite empoisonnent au passage.",
+  "test": "Poison sur ennemi au contact de l’orbite.",
+  "effets": []
+ },
+ {
+  "id": "SYN_034",
+  "nom": "Contrôle multiple",
+  "composants": [
+   "PSV_021",
+   "PSV_002"
+  ],
+  "type": "emergente",
+  "desc": "La sphère guidée gagne le coefficient de multitir total (1,4×).",
+  "test": "Dégâts de contact ×1,4.",
+  "effets": []
+ },
+ {
+  "id": "SYN_035",
+  "nom": "Frappe au sol multiple",
+  "composants": [
+   "PSV_020",
+   "PSV_003"
+  ],
+  "type": "emergente",
+  "desc": "Le météore reste unique : le multitir ne multiplie pas la frappe (règle affichée), il n’a pas d’effet.",
+  "test": "Une seule frappe par cycle.",
+  "effets": []
+ },
+ {
+  "id": "SYN_036",
+  "nom": "Bombes en salve",
+  "composants": [
+   "PSV_019",
+   "PSV_024"
+  ],
+  "type": "emergente",
+  "desc": "Trois bombes par cycle, plus faibles (0,6).",
+  "test": "Trois explosions échelonnées.",
+  "effets": []
+ },
+ {
+  "id": "SYN_037",
+  "nom": "Croix de foudre",
+  "composants": [
+   "PSV_026",
+   "PSV_028"
+  ],
+  "type": "emergente",
+  "desc": "Les tirs en croix enchaînent aussi la foudre.",
+  "test": "Chaînes dans quatre directions.",
+  "effets": []
+ },
+ {
+  "id": "SYN_038",
+  "nom": "Mines éclatantes",
+  "composants": [
+   "PSV_027",
+   "PSV_030"
+  ],
+  "type": "emergente",
+  "desc": "Les mines ne se divisent pas (génération bornée) : l’éclat ne s’applique qu’aux tirs primaires.",
+  "test": "Aucun éclat issu d’une mine.",
+  "effets": []
+ },
+ {
+  "id": "SYN_039",
+  "nom": "Boomerang explosif",
+  "composants": [
+   "PSV_013",
+   "PSV_149"
+  ],
+  "type": "emergente",
+  "desc": "Chaque contact du fūma explose (budget par cycle : 14 déclenchements).",
+  "test": "Nombre d’explosions ≤ 14 par lancer.",
+  "effets": []
+ },
+ {
+  "id": "SYN_040",
+  "nom": "Taijutsu enflammé",
+  "composants": [
+   "PSV_018",
+   "PSV_043"
+  ],
+  "type": "emergente",
+  "desc": "La frappe courte applique la brûlure du Katon.",
+  "test": "Brûlure sur frappe.",
+  "effets": []
+ },
+ {
+  "id": "SYN_041",
+  "nom": "Rotation et miroirs",
+  "composants": [
+   "PSV_022",
+   "PSV_081"
+  ],
+  "type": "emergente",
+  "desc": "Défense quasi totale mais sans tir à distance : les miroirs ne bloquent qu’au contact (fréquence bornée).",
+  "test": "Quelques tirs passent encore.",
+  "effets": []
+ },
+ {
+  "id": "SYN_042",
+  "nom": "Coups de sable",
+  "composants": [
+   "PSV_150",
+   "PSV_065"
+  ],
+  "type": "emergente",
+  "desc": "Tempête de sable + orbitaux : couverture défensive dense.",
+  "test": "Projectiles ennemis interceptés.",
+  "effets": []
+ },
+ {
+  "id": "SYN_043",
+  "nom": "Nuée d’encre",
+  "composants": [
+   "PSV_052",
+   "PSV_076"
+  ],
+  "type": "emergente",
+  "desc": "Les fauves d’encre profitent des ennemis charmés.",
+  "test": "Ennemis charmés attaqués.",
+  "effets": []
+ },
+ {
+  "id": "SYN_044",
+  "nom": "Voleur de pacte",
+  "composants": [
+   "PSV_129",
+   "PSV_107"
+  ],
+  "type": "emergente",
+  "desc": "Payer ses pactes en Ryō avec une bourse qui double parfois les pièces.",
+  "test": "Achat d’un pacte en Ryō.",
+  "effets": []
+ },
+ {
+  "id": "SYN_045",
+  "nom": "Marchand avisé",
+  "composants": [
+   "PSV_121",
+   "PSV_124"
+  ],
+  "type": "emergente",
+  "desc": "Soldes et étal supplémentaire : l’échoppe devient une salle d’héritage payante.",
+  "test": "Trois objets à moitié prix.",
+  "effets": []
+ },
+ {
+  "id": "SYN_046",
+  "nom": "Économie de relance",
+  "composants": [
+   "ACT_001",
+   "PSV_127"
+  ],
+  "type": "emergente",
+  "desc": "Relances qui ne descendent jamais en qualité.",
+  "test": "Qualité ≥ initiale après relance.",
+  "effets": []
+ },
+ {
+  "id": "SYN_047",
+  "nom": "Sceau éternel",
+  "composants": [
+   "PSV_095",
+   "PSV_083"
+  ],
+  "type": "emergente",
+  "desc": "Sceaux partiels + soins : la vitalité monte d’étage en étage.",
+  "test": "Contenant ajouté à l’étage suivant.",
+  "effets": []
+ },
+ {
+  "id": "SYN_048",
+  "nom": "Réserve inépuisable",
+  "composants": [
+   "PSV_087",
+   "PSV_093"
+  ],
+  "type": "emergente",
+  "desc": "Régénération doublée par le chakra de la limace.",
+  "test": "Soin de 2 demis toutes les 3 salles.",
+  "effets": []
+ },
+ {
+  "id": "SYN_049",
+  "nom": "Protection du démon",
+  "composants": [
+   "PSV_098",
+   "PSV_056"
+  ],
+  "type": "emergente",
+  "desc": "Réserves instables + bulle rouge : chaque rupture déclenche aussi huit tirs.",
+  "test": "Impulsion + huit tirs.",
+  "effets": []
+ },
+ {
+  "id": "SYN_050",
+  "nom": "Substitution et appât",
+  "composants": [
+   "PSV_096",
+   "PSV_080"
+  ],
+  "type": "emergente",
+  "desc": "Deux sources d’esquive indépendantes (bûche puis poupée).",
+  "test": "Coups évités cumulés.",
+  "effets": []
+ },
+ {
+  "id": "SYN_051",
+  "nom": "Lévitation minée",
+  "composants": [
+   "PSV_115",
+   "PSV_027"
+  ],
+  "type": "emergente",
+  "desc": "Au-dessus des fosses, vos mines restent au-dessus du vide (elles fonctionnent).",
+  "test": "Mine active au-dessus d’une fosse.",
+  "effets": []
+ },
+ {
+  "id": "SYN_052",
+  "nom": "Sage des crapauds",
+  "composants": [
+   "PSV_144",
+   "PSV_062"
+  ],
+  "type": "emergente",
+  "desc": "Immobile, Gamakichi et vous frappez plus fort.",
+  "test": "Bonus ×1,5 actif à l’arrêt.",
+  "effets": []
+ },
+ {
+  "id": "SYN_053",
+  "nom": "Portes et lotus",
+  "composants": [
+   "PSV_092",
+   "ACT_030"
+  ],
+  "type": "emergente",
+  "desc": "Le lotus coûte de la santé : dangereux avec un contenant en moins.",
+  "test": "Coût payé, pas un dommage.",
+  "effets": []
+ },
+ {
+  "id": "SYN_054",
+  "nom": "Fil et fūma",
+  "composants": [
+   "PSV_007",
+   "PSV_013"
+  ],
+  "type": "emergente",
+  "desc": "Le fūma revient déjà : le ricochet ajoute trois rebonds à l’aller.",
+  "test": "Rebonds avant retour.",
+  "effets": []
+ },
+ {
+  "id": "SYN_055",
+  "nom": "Arsenal complet",
+  "composants": [
+   "PSV_024",
+   "PSV_004"
+  ],
+  "type": "emergente",
+  "desc": "Salves de quatre senbon : couverture maximale, dégâts unitaires faibles.",
+  "test": "Douze projectiles par cycle.",
+  "effets": []
+ },
+ {
+  "id": "SYN_056",
+  "nom": "Canon et sceau de la mort",
+  "composants": [
+   "PSV_014",
+   "PSV_131"
+  ],
+  "type": "emergente",
+  "desc": "Rayon ×2 de dégâts, santé réduite : combinaison volontairement dominante mais fragile.",
+  "test": "Dégâts doublés, deux contenants de moins.",
+  "effets": []
+ },
+ {
+  "id": "SYN_057",
+  "nom": "Frappe céleste guidée",
+  "composants": [
+   "PSV_020",
+   "PSV_005"
+  ],
+  "type": "emergente",
+  "desc": "Le réticule ne se guide pas (règle) : le guidage n’a pas d’effet sur la frappe.",
+  "test": "Réticule inchangé.",
+  "effets": []
+ },
+ {
+  "id": "SYN_058",
+  "nom": "Clone de relais armé",
+  "composants": [
+   "PSV_023",
+   "PSV_028"
+  ],
+  "type": "emergente",
+  "desc": "Le clone copie les impacts : sa foudre s’enchaîne aussi (génération 1).",
+  "test": "Chaîne issue du clone.",
+  "effets": []
+ },
+ {
+  "id": "SYN_059",
+  "nom": "Onde et chaîne",
+  "composants": [
+   "PSV_029",
+   "PSV_028"
+  ],
+  "type": "emergente",
+  "desc": "Chaque impact : onde puis chaîne (budget partagé).",
+  "test": "Deux effets secondaires par impact.",
+  "effets": []
+ },
+ {
+  "id": "SYN_060",
+  "nom": "Artiste complet",
+  "composants": [
+   "PSV_110",
+   "PSV_019"
+  ],
+  "type": "emergente",
+  "desc": "Bombes d’argile sans risque pour vous (immunité aux explosions).",
+  "test": "Aucun dégât subi par ses propres bombes.",
+  "effets": []
+ }
+]

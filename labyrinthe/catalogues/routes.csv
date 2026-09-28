@@ -1,0 +1,7 @@
+﻿ID;Nom;Bifurcation;Prérequis;Boss;Récompense;Marque
+RTE_01;Première fin : le sceau fissuré;étage 6;aucun;Orochimaru;"Ouvre les étages 7-8 (chapitre IV) ; Mue du serpent (PSV_143) et Rituel de permutation (ACT_031) via OBJ_017";Serpent
+RTE_02;Deuxième fin : la pluie sans fin;étage 8;RTE_01 accomplie;Pain / Obito;"Ouvre les deux branches de l’étage 9 ; Sceau de la mort (PSV_131) et Transfert d’esprit (ACT_029) via OBJ_039";Nuage rouge
+RTE_03;Branche de la Lumière : Mont Myōboku;après le boss de l’étage 8;"RTE_02 accomplie ; aucun pacte interdit acheté pendant la partie";Le Gardien du Sceau;Nature du sage (PSV_144) et Sceau de scellement (ACT_027) ajoutés aux pools (OBJ_046);Crapaud
+RTE_04;Branche de l’Ombre : Profondeurs du sceau;après le boss de l’étage 8;RTE_02 accomplie;Madara (empreinte);Réincarnation impure (PSV_140) et Espace-temps intangible (ACT_021) ajoutés aux pools (OBJ_047);Éventail
+RTE_05;Conseil des épreuves (Boss Rush);étage 6;boss de l’étage 6 vaincu en moins de 20:00 (chronomètre de partie);vagues de boss;Défis « Course de l’examen » (DEF_010) et « Collectionneur pressé » (DEF_011) (OBJ_048);Parchemin d’or
+RTE_06;Brèche instable;étage 8;salle du boss de l’étage 8 atteinte en moins de 30:00;Empreinte des Dix Queues;Chute céleste (PSV_020) ajoutée aux pools (OBJ_049);Dix queues

@@ -1,0 +1,16 @@
+﻿ID;Nom;Effet;Négative;Neutralisée en
+PIL_01;Pilule de régénération;Soin complet.;non;—
+PIL_02;Pilule de force;Dégâts +0,5.;non;—
+PIL_03;Pilule de faiblesse;Dégâts −0,3.;oui;Pilule de force
+PIL_04;Pilule de vitesse;Vitesse +0,2.;non;—
+PIL_05;Pilule de lenteur;Vitesse −0,15.;oui;Pilule de vitesse
+PIL_06;Pilule de cadence;Cadence +0,25.;non;—
+PIL_07;Pilule de portée;Portée +1.;non;—
+PIL_08;Pilule de myopie;Portée −1.;oui;Pilule de portée
+PIL_09;Pilule de chance;Chance +1.;non;—
+PIL_10;Pilule de malchance;Chance −1.;oui;Pilule de chance
+PIL_11;Pilule de chakra;Recharge complète de l’actif.;non;—
+PIL_12;Pilule amère;Coûte une demi-unité (jamais mortelle).;oui;Pilule de régénération
+PIL_13;Pilule de l’ermite;Révèle le plan.;non;—
+PIL_14;Pilule d’oubli;Efface les salles non visitées de la carte.;oui;Pilule de l’ermite
+PIL_15;Pilule volcanique;Trois explosions autour de vous (sans vous blesser).;non;—

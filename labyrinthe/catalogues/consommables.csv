@@ -1,0 +1,31 @@
+﻿ID;Nom;Famille;Effet;Poids
+CON_001;Rouleau du retour;rouleau;Vous renvoie à la salle de départ.;1
+CON_002;Rouleau du marionnettiste;rouleau;Pour la salle : vos tirs se guident.;1
+CON_003;Rouleau de l’ombre;rouleau;Immobilise tous les ennemis 4 s.;1
+CON_004;Rouleau du chef de village;rouleau;Pour la salle : dégâts +1,5.;1
+CON_005;Rouleau d’escorte;rouleau;Vous téléporte devant le boss de l’étage.;1
+CON_006;Rouleau de soin;rouleau;Deux réserves de chakra protecteur.;1
+CON_007;Rouleau du ramen;rouleau;Deux cœurs de vitalité apparaissent.;1
+CON_008;Rouleau de la jeunesse;rouleau;6 s : invulnérable et rapide.;1
+CON_009;Rouleau de l’équilibre;rouleau;Un Ryō, une clé, un explosif et une demi-unité de soin.;1
+CON_010;Rouleau du colporteur;rouleau;Vous téléporte à l’échoppe.;1
+CON_011;Rouleau du tripot;rouleau;Fait apparaître une machine de loterie.;1
+CON_012;Rouleau de la force;rouleau;Pour la salle : dégâts ×1,5.;1
+CON_013;Rouleau de lévitation;rouleau;Pour la salle : lévitation.;1
+CON_014;Rouleau funeste;rouleau;40 dégâts à tous les ennemis de la salle.;1
+CON_015;Rouleau de l’autel;rouleau;Fait apparaître un autel de don vital.;1
+CON_016;Rouleau interdit;rouleau;Pour la salle : dégâts +2.;1
+CON_017;Rouleau explosif;rouleau;Six explosions éclatent dans la salle (elles ne vous blessent pas).;1
+CON_018;Rouleau de l’héritage;rouleau;Vous téléporte à la salle d’héritage.;1
+CON_019;Rouleau de la lune;rouleau;Vous téléporte à la cache de renseignements.;1
+CON_020;Rouleau du soleil;rouleau;Soin complet, plan révélé, 3 dégâts à tous.;1
+CON_021;Rouleau du mendiant;rouleau;Fait apparaître un voyageur.;1
+CON_022;Rouleau du monde;rouleau;Révèle le plan de l’étage.;1
+CON_023;Sceau de destruction;sceau;Détruit tous les obstacles et révèle les murs secrets de la salle.;1
+CON_024;Sceau de réécriture;sceau;Relance les objets sur piédestal de la salle.;1
+CON_025;Sceau de duplication;sceau;Double les ressources au sol dans la salle.;1
+CON_026;Sceau de clairvoyance;sceau;Révèle tout l’étage, secrets compris.;1
+CON_027;Sceau de multiplication;sceau;Trois clones pour la salle.;1
+CON_028;Sceau de permutation;sceau;Relance tous vos passifs (hors objets-clés).;0.3
+CON_029;Sceau protecteur;sceau;6 s d’invulnérabilité.;1
+CON_030;Sceau de passage;sceau;Ouvre une trappe vers l’étage suivant (sans récompense de boss).;0.5

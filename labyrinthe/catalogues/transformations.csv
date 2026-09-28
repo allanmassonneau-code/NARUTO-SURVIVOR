@@ -1,0 +1,14 @@
+﻿ID;Nom;Ensemble;Seuil;Effet;Objets de l’ensemble
+TRF_001;Manteau du renard;renard;3 distincts;"Aura de chakra : les ennemis à votre contact brûlent ; dégâts +1.";PSV_001, PSV_014, PSV_031, PSV_046, PSV_055, PSV_056, PSV_132, PSV_146, ACT_024
+TRF_002;Sage imparfait;ermite;3 distincts;"Immobile 0,6 s : dégâts ×1,6 jusqu’au prochain pas ; portée +2.";PSV_057, PSV_079, PSV_082, PSV_093, PSV_144, ACT_016
+TRF_003;Essaim Aburame;essaim;3 distincts;"Vos tirs deviennent des insectes chercheurs ; un essaim vous accompagne.";PSV_006, PSV_070, PSV_153, PSV_154
+TRF_004;Arsenal du marionnettiste;marionnette;3 distincts;"Une marionnette d’attaque supplémentaire ; vos marionnettes frappent 50 % plus fort.";PSV_048, PSV_072, PSV_073, PSV_074, PSV_142, ACT_011, ACT_013
+TRF_005;Résonance des yeux;yeux;3 distincts;Barres de vie ennemies visibles, fissures des murs secrets révélées, chance +2, léger guidage.;PSV_022, PSV_025, PSV_049, PSV_053, PSV_067, PSV_113, ACT_008, ACT_017, ACT_018
+TRF_006;Armure de sable;sable;3 distincts;"Trois orbitaux de sable ; les coups d’un cœur entier ne retirent qu’une demi-unité.";PSV_010, PSV_065, PSV_077, PSV_097, PSV_150, ACT_010
+TRF_007;Reliques interdites;interdit;3 distincts;Lévitation, deux réserves instables, dégâts +1.;PSV_054, PSV_091, PSV_098, PSV_129, PSV_131, PSV_135, PSV_139
+TRF_008;Outils du tonnerre;tonnerre;3 distincts;"Chaque tir enchaîne la foudre sur un ennemi proche ; cadence +0,3.";PSV_028, PSV_045, PSV_058, PSV_147, ACT_003
+TRF_009;Corps expérimental;experimental;3 distincts;"Un contenant de plus ; blessé, deux serpents vous défendent pour la salle.";PSV_060, PSV_064, PSV_078, PSV_090, PSV_140, PSV_143
+TRF_010;Messager de papier;papier;3 distincts;Lévitation, quatre papillons protecteurs, tirs de papier.;PSV_075, PSV_116, PSV_155, PSV_156
+TRF_011;Meute d’invocation;meute;3 distincts;"Deux compagnons supplémentaires ; tous les familiers +25 %.";PSV_061, PSV_062, PSV_063, PSV_068, PSV_069, PSV_076, PSV_151, ACT_006, ACT_012
+TRF_012;Huit Portes;portes;3 distincts;"Plafond de cadence +1, vitesse +0,5, dégâts +1 ; vapeur verte.";PSV_032, PSV_040, PSV_041, PSV_092, ACT_007, ACT_030
+TRF_013;Artiste explosif;argile;3 distincts;"Vos tirs explosent légèrement ; vos explosions ne vous blessent plus.";PSV_019, PSV_071, PSV_110, PSV_149

@@ -1,0 +1,122 @@
+[
+ {
+  "id": "DEF_001",
+  "nom": "Taijutsu pur",
+  "desc": "Rock Lee imposé ; aucune salle d’héritage. Atteindre la première fin.",
+  "statut": "création originale",
+  "perso": "CHR_005",
+  "sansHeritage": true,
+  "recompenseTexte": "Gants de taijutsu, Porte de la Vie"
+ },
+ {
+  "id": "DEF_002",
+  "nom": "Nuit sans lune",
+  "desc": "Tous les étages sont plongés dans la pénombre. Première fin.",
+  "statut": "création originale",
+  "obscurite": true,
+  "recompenseTexte": "Luciole"
+ },
+ {
+  "id": "DEF_003",
+  "nom": "Mains vides",
+  "desc": "Aucune salle d’héritage ; les boss donnent tout. Première fin.",
+  "statut": "création originale",
+  "sansHeritage": true,
+  "recompenseTexte": "Parchemin vide"
+ },
+ {
+  "id": "DEF_004",
+  "nom": "Un souffle",
+  "desc": "Un seul contenant, jamais plus ; les contenants deviennent des réserves.",
+  "statut": "création originale",
+  "sante": {
+   "vitalite": 1
+  },
+  "drapeaux": {
+   "plafondVit": 1
+  },
+  "recompenseTexte": "Substitution instinctive"
+ },
+ {
+  "id": "DEF_005",
+  "nom": "Artificier",
+  "desc": "Départ avec Argile explosive et Argile infinie ; première fin.",
+  "statut": "création originale",
+  "depart": [
+   "PSV_019",
+   "PSV_110"
+  ],
+  "recompenseTexte": "Parchemins spéciaux"
+ },
+ {
+  "id": "DEF_006",
+  "nom": "Mille clones",
+  "desc": "Naruto imposé, départ avec deux Clones de l’ombre et Multi-clonage ; dégâts −30 %.",
+  "statut": "création originale",
+  "perso": "CHR_001",
+  "depart": [
+   "PSV_061",
+   "PSV_061"
+  ],
+  "recompenseTexte": "Clone de relais"
+ },
+ {
+  "id": "DEF_007",
+  "nom": "Tout s’achète",
+  "desc": "Départ avec 50 Ryō et la Carte de membre ; aucune salle d’héritage.",
+  "statut": "création originale",
+  "ressources": {
+   "ryo": 50
+  },
+  "depart": [
+   "PSV_121"
+  ],
+  "sansHeritage": true,
+  "recompenseTexte": "Dés de la grande perdante"
+ },
+ {
+  "id": "DEF_008",
+  "nom": "Sang pour sang",
+  "desc": "Chaque boss ouvre un pacte ; aucun sanctuaire.",
+  "statut": "création originale",
+  "drapeaux": {
+   "serment": true
+  },
+  "recompenseTexte": "Chakra du démon"
+ },
+ {
+  "id": "DEF_009",
+  "nom": "Tempête du désert",
+  "desc": "Gaara imposé avec Sable en orbite et Sable protecteur ; première fin.",
+  "statut": "création originale",
+  "perso": "CHR_008",
+  "depart": [
+   "PSV_010",
+   "PSV_065"
+  ],
+  "recompenseTexte": "Tempête de sable"
+ },
+ {
+  "id": "DEF_010",
+  "nom": "Course de l’examen",
+  "desc": "Première fin en moins de 20 minutes.",
+  "statut": "création originale",
+  "chrono": 1200,
+  "recompenseTexte": "Marque de vitesse"
+ },
+ {
+  "id": "DEF_011",
+  "nom": "Collectionneur pressé",
+  "desc": "Atteindre l’étage 6 avec au moins 10 objets.",
+  "statut": "création originale",
+  "recompenseTexte": "Défi"
+ },
+ {
+  "id": "DEF_012",
+  "nom": "Examen de jōnin",
+  "desc": "Mode Difficile imposé, toutes les salles d’épreuve ouvertes.",
+  "statut": "création originale",
+  "difficile": true,
+  "recompenseTexte": "Rasenshuriken"
+ }
+]

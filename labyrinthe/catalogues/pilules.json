@@ -1,0 +1,188 @@
+[
+ {
+  "id": "PIL_01",
+  "nom": "Pilule de régénération",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Soin complet.",
+  "effet": {
+   "soinTotal": true
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_02",
+  "nom": "Pilule de force",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Dégâts +0,5.",
+  "effet": {
+   "s": "degats",
+   "a": 0.5
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_03",
+  "nom": "Pilule de faiblesse",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Dégâts −0,3.",
+  "effet": {
+   "s": "degats",
+   "a": -0.3
+  },
+  "statut": "création originale",
+  "negatif": true,
+  "contraire": "PIL_02"
+ },
+ {
+  "id": "PIL_04",
+  "nom": "Pilule de vitesse",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Vitesse +0,2.",
+  "effet": {
+   "s": "vitesse",
+   "a": 0.2
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_05",
+  "nom": "Pilule de lenteur",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Vitesse −0,15.",
+  "effet": {
+   "s": "vitesse",
+   "a": -0.15
+  },
+  "statut": "création originale",
+  "negatif": true,
+  "contraire": "PIL_04"
+ },
+ {
+  "id": "PIL_06",
+  "nom": "Pilule de cadence",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Cadence +0,25.",
+  "effet": {
+   "s": "cadence",
+   "a": 0.25
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_07",
+  "nom": "Pilule de portée",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Portée +1.",
+  "effet": {
+   "s": "portee",
+   "a": 1
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_08",
+  "nom": "Pilule de myopie",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Portée −1.",
+  "effet": {
+   "s": "portee",
+   "a": -1
+  },
+  "statut": "création originale",
+  "negatif": true,
+  "contraire": "PIL_07"
+ },
+ {
+  "id": "PIL_09",
+  "nom": "Pilule de chance",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Chance +1.",
+  "effet": {
+   "s": "chance",
+   "a": 1
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_10",
+  "nom": "Pilule de malchance",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Chance −1.",
+  "effet": {
+   "s": "chance",
+   "a": -1
+  },
+  "statut": "création originale",
+  "negatif": true,
+  "contraire": "PIL_09"
+ },
+ {
+  "id": "PIL_11",
+  "nom": "Pilule de chakra",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Recharge complète de l’actif.",
+  "effet": {
+   "recharge": true
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_12",
+  "nom": "Pilule amère",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Coûte une demi-unité (jamais mortelle).",
+  "effet": {
+   "prix": true
+  },
+  "statut": "création originale",
+  "negatif": true,
+  "contraire": "PIL_01"
+ },
+ {
+  "id": "PIL_13",
+  "nom": "Pilule de l’ermite",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Révèle le plan.",
+  "effet": {
+   "reveler": true
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "PIL_14",
+  "nom": "Pilule d’oubli",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Efface les salles non visitées de la carte.",
+  "effet": {
+   "oubli": true
+  },
+  "statut": "création originale",
+  "negatif": true,
+  "contraire": "PIL_13"
+ },
+ {
+  "id": "PIL_15",
+  "nom": "Pilule volcanique",
+  "type": "pilule",
+  "famille": "pilule",
+  "desc": "Trois explosions autour de vous (sans vous blesser).",
+  "effet": {
+   "volcan": true
+  },
+  "statut": "création originale"
+ }
+]

@@ -45,7 +45,7 @@ function cadreMenu(g, x, y, l, h, titre) {
   g.fillStyle = 'rgba(10,6,16,0.9)'; g.fillRect(x, y, l, h); g.fillStyle = '#5a4a6a'; g.fillRect(x, y, l, 1); g.fillRect(x, y + h - 1, l, 1);
   if (titre) Police.ecrire(g, titre, x + l / 2, y + 8, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
 }
-function aideBoutons(g, L) { let x = 630; for (let i = L.length - 1; i >= 0; i--) { const [act, txt] = L[i]; const s = Entrees.libelle(act) + ' ' + txt; const w = Police.largeur(s); Police.ecrire(g, s, x, 346, '#a898b8', { a: 'd' }); x -= w + 14; } }
+function aideBoutons(g, L) { let x = 630; for (let i = L.length - 1; i >= 0; i--) { const [act, txt] = L[i]; const s = (act === 'retour' && Entrees.dernierPeripherique !== 'manette' ? 'Échap' : Entrees.libelle(act)) + ' ' + txt; const w = Police.largeur(s); Police.ecrire(g, s, x, 346, '#a898b8', { a: 'd' }); x -= w + 14; } }
 
 // ── Titre ──
 const SceneTitre = {
@@ -119,7 +119,7 @@ const SceneSelection = {
     Police.ecrire(g, ok ? p.nom : '???', x0, y0, '#fff0d0', { e: 2 });
     if (p.variante || DON.personnages.find(v => v.parent === this.bases[this.i].id)) Police.ecrire(g, this.variante ? '▲▼ Variante altérée' : '▲▼ Version de base (variante disponible)', 590, y0 + 2, this.variante ? '#d0a0ff' : '#8a8098', { a: 'd' });
     if (!ok) {
-      const obj = Progression.verrous[p.id]; const o = DON.objectifs.find(x => x.id === obj);
+      const liste = Progression.verrous[p.id] || []; const o = DON.objectifs.find(x => liste.includes(x.id));
       Police.paragraphe(g, 'Verrouillé. Mission : ' + (o ? o.nom + ' — ' + o.desc : '?'), x0, y0 + 28, 520, '#c09080');
     } else {
       const S = p.stats; const L = [['Vitalité', (p.sante.vitalite || 0) + (p.sante.protection ? ' + ' + p.sante.protection + ' chakra' : '') + (p.sante.instable ? ' + ' + p.sante.instable + ' instable' : '')], ['Dégâts', formatNombre(S.degats)], ['Cadence', formatNombre(S.cadence) + ' /s'], ['Portée', formatNombre(S.portee)], ['Vitesse', formatNombre(S.vitesse)], ['Chance', formatNombre(S.chance)]];

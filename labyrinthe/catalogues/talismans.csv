@@ -1,0 +1,36 @@
+﻿ID;Nom;Effet;Statut;Déblocage
+TAL_001;Ryō cousu dans la manche;Blessé, vous perdez un Ryō… qui tombe à vos pieds (et un autre avec).;création originale;—
+TAL_002;Épingle à cheveux;Les coffres verrouillés s’ouvrent sans clé (pas les portes).;création originale;—
+TAL_003;Pile de chakra;Les actifs demandent une charge de moins.;création originale;—
+TAL_004;Perles du moine;Les sanctuaires sont plus probables (+0,15 au poids).;création originale;—
+TAL_005;Baguettes d’Ichiraku;8 % de soigner une demi-unité à chaque salle nettoyée.;création originale;—
+TAL_006;Masque d’oni;Toucher un ennemi le terrifie parfois (25 %).;création originale;—
+TAL_007;Talisman de protection;Blessé : 10 % (+2 % par chance) d’une réserve de chakra en demi.;création originale;—
+TAL_008;Bandeau rayé;Dégâts +10 % contre les boss.;création originale;—
+TAL_009;Grelot du flair;Signale les murs secrets de la salle en entrant.;création originale;—
+TAL_010;Poignée de sable;Un orbital de sable temporaire à chaque salle de combat.;création originale;—
+TAL_011;Mèche courte;Vos explosifs explosent plus vite (mèche de 0,85 s au lieu de 1,4 s).;création originale;—
+TAL_012;Mèche longue;"Explosions 50 % plus larges ; délai +0,5 s.";création originale;—
+TAL_013;Charme du plein;À pleine vitalité, dégâts +0,5.;création originale;—
+TAL_014;Gourde de saké;"Identifie les pilules ; les pilules négatives deviennent leur contraire.";création originale;—
+TAL_015;Bague de l’organisation;Les pactes sont plus fréquents (+5 %).;création originale;—
+TAL_016;Plume de la pluie;10 % de tirs spectraux.;création originale;—
+TAL_017;Écaille de requin;3 % des coups portés soignent une demi-unité.;création originale;—
+TAL_018;Gant d’armurière;10 % d’un tir supplémentaire.;création originale;—
+TAL_019;Bandage de lutteur;Vitesse +0,3.;création originale;—
+TAL_020;Lunettes noires;Vos familiers infligent 20 % de plus.;création originale;—
+TAL_021;Fleur de la boutique;5 % de charmer 3 s.;création originale;—
+TAL_022;Jeton de tripot;Loteries un peu plus généreuses (+10 %).;création originale;—
+TAL_023;Dent de requin;Vos explosions infligent 5 dégâts de plus.;création originale;—
+TAL_024;Kunai rouillé;8 % de brûler.;création originale;—
+TAL_025;Clochette du chat fugueur;Chance +1 pour les récompenses de fin de salle.;clin d’œil (mission du chat);—
+TAL_026;Graine de bois;Toutes les 10 salles nettoyées, un contenant vide.;création originale;—
+TAL_027;Sceau d’eau;Immunité aux flaques et sables mouvants.;création originale;—
+TAL_028;Poids d’entraînement;Vitesse −0,3, dégâts +0,5.;création originale;—
+TAL_029;Pétale de papier;Vos explosions projettent des papiers tranchants.;création originale;—
+TAL_030;Mèche de cheveux blancs;Chance +1.;création originale;—
+TAL_031;Encre sèche;15 % de ne pas consommer un rouleau ou une pilule.;création originale;—
+TAL_032;Médaille de l’examen;Les portes d’épreuve s’ouvrent toujours.;création originale;—
+TAL_033;Omamori;Une fois par étage, annule un coup.;création originale;—
+TAL_034;Tatouage de l’ANBU;Dégâts +10 % dans les salles de boss.;création originale;—
+TAL_035;Masque de chat;Portes secrètes : une fissure est visible en passant.;création originale;—

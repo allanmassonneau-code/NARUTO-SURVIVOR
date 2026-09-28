@@ -4,7 +4,7 @@
 // célèbres ; aucune attaque n'exige un objet non garanti.
 // ═══════════════════════════════════════════════════════════════════════════
 (function () {
-  const B = (id, nom, titre, etage, pv, o) => DON.boss.push(Object.assign({ id, nom, titre, etage, pv, boss: true, r: 14, hauteur: 12, vitesse: 1.4, ia: 'generique', deplacement: 'errance', statut: 'personnage canonique — motifs de combat originaux', contact: 1 }, o));
+  const B = (id, nom, titre, etage, pv, o) => DON.boss.push(Object.assign({ id, nom, titre, etage, pv, boss: true, r: 18, hauteur: 22, vitesse: 1.4, ia: 'generique', deplacement: 'errance', statut: 'personnage canonique — motifs de combat originaux', contact: 1 }, o));
   const N = (masque, corps, o = {}) => Object.assign({ type: 'ninja', masque, corps }, o);
   // ── Étage 1 ──
   B('BOS_001', 'Mizuki', 'Le traître de l’Académie', 1, 170, { sprite: N('bandana', { t: '#5e7e3e', T: '#46612c', a: '#5e7e3e', A: '#46612c', mode: 'veste', v: '#5e7e3e', V: '#46612c' }, { cheveux: { h: '#c8c8d0', g: '#e8e8f0', H: '#9a9aa8' }, arme: true }),
@@ -13,7 +13,7 @@
       { id: 'fuma', type: 'special', nom: 'fuma_boss', tele: 0.6, duree: 1.6, recup: 0.6 },
       { id: 'charge', type: 'charge', vCharge: 8.5, tele: 0.55, duree: 1.2, recup: 0.9 },
     ], phases: [{ seuil: 0.5, message: 'Mizuki perd son sang-froid !', action: 'accelerer' }], desc: 'Kunai en éventail, grand shuriken revenant, charges.' });
-  B('BOS_002', 'Serpent géant', 'Gardien de la Forêt de la Mort', 1, 200, { sprite: { type: 'carte', cle: 'serpent', couleurs: { s: '#6a8a3a', d: '#4a6a2a' } }, echelleSprite: 2, r: 16, init: 'serpent', statut: 'création originale',
+  B('BOS_002', 'Serpent géant', 'Gardien de la Forêt de la Mort', 1, 200, { sprite: { type: 'carte', cle: 'serpent_geant' }, echelleSprite: 2, r: 16, init: 'serpent', statut: 'création originale',
     attaques: [
       { id: 'charge', type: 'charge', vCharge: 9, tele: 0.6, duree: 1.3, recup: 1.0, impact: 'anneau' },
       { id: 'terrier', type: 'special', nom: 'terrier', tele: 0.3, duree: 1.6, recup: 0.8 },
@@ -72,7 +72,7 @@
       { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5 },
       { id: 'salve', type: 'salve', n: 3, v: 6, ecart: 0.2, rafales: 2, tele: 0.4, recup: 0.5 },
     ], desc: 'Se soigne en canalisant (interrompu par 40 dégâts) ; réanime des sujets.' });
-  B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 440, { sprite: N('kiri', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#3a4a6a' } }), vitesse: 1.7, deplacement: 'poursuite', peau: '#6a8ab0',
+  B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 440, { sprite: N('kiri', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#3a4a6a' }, peau: '#6a8ab0', visage: 'branchies' }), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'requins', type: 'special', nom: 'requins', tele: 0.5, duree: 1.5, recup: 0.6 },
       { id: 'inondation', type: 'zone', zone: 'eau', n: 3, r: 1.6, dureeZone: 8, tele: 0.6, recup: 0.4, son: 'eau' },
@@ -115,7 +115,7 @@
       { id: 'fils', type: 'salve', n: 6, v: 4.6, ecart: 0.25, tele: 0.5, recup: 0.6 },
     ], desc: 'Trois masques élémentaires l’accompagnent ; sa peau durcie (grise) réduit les dégâts de 70 % pendant 1,8 s, visiblement.' });
   // ── Étage 8 ──
-  B('BOS_018', 'Pain', 'Les forces d’attraction', 8, 560, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#e87a2a', g: '#ffa050' }, yeux: 'rinnegan' }), vitesse: 1.2,
+  B('BOS_018', 'Pain', 'Les forces d’attraction', 8, 560, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#e87a2a', g: '#ffa050' }, yeux: 'rinnegan', visage: 'piercings' }), vitesse: 1.2,
     attaques: [
       { id: 'repulsion', type: 'repulsion', tele: 0.8, duree: 0.3, recup: 0.8 },
       { id: 'attraction', type: 'attraction', force: 2.3, tele: 0.6, duree: 2.0, recup: 0.6 },
@@ -123,13 +123,13 @@
       { id: 'betes', type: 'invocation', id: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
       { id: 'sphere', type: 'special', nom: 'chibaku', tele: 0.8, duree: 3.2, recup: 1, phase: 1 },
     ], phases: [{ seuil: 0.5, message: 'Une sphère attire les rochers vers le ciel !', action: 'accelerer' }], desc: 'Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction.' });
-  B('BOS_019', 'Obito', 'Les changements de présence', 8, 540, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#2a2a34' } }), init: 'obito', vitesse: 1.6,
+  B('BOS_019', 'Obito', 'Les changements de présence', 8, 460, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#2a2a34' }, visage: 'spirale' }), init: 'obito', vitesse: 1.6,
     attaques: [
       { id: 'saisie', type: 'special', nom: 'saisie_obito', tele: 0.2, duree: 1.3, recup: 0.9 },
       { id: 'boule', type: 'salve', n: 3, v: 4, ecart: 0.3, taille: 2, tele: 0.6, recup: 0.6, proj: 'feu' },
       { id: 'vortex', type: 'special', nom: 'vortex', tele: 0.6, duree: 1.8, recup: 0.6 },
       { id: 'chaines', type: 'rayon', couleur: '#8a8a98', duree: 0.6, balaye: 1.2, tele: 0.8, recup: 0.6, phase: 1 },
-    ], phases: [{ seuil: 0.5, message: 'Le masque se fissure.', action: 'accelerer' }], desc: 'Intangible sauf quand il se matérialise pour attaquer (contour plein).' });
+    ], phases: [{ seuil: 0.5, message: 'Le masque se fissure.', action: 'accelerer' }], desc: 'Intangible sauf quand il se matérialise pour attaquer (annonce, attaque, récupération).' });
   // ── Branches et fins avancées ──
   B('BOS_020', 'Le Gardien du Sceau', 'Celui qui tient le labyrinthe', 9, 800, { sprite: { type: 'carte', cle: 'masque', couleurs: { m: '#f0e8d0', d: '#c8c0a8', r: '#e8c050', f: '#fff8d0' } }, echelleSprite: 3, r: 20, vol: true, statut: 'création originale', deplacement: 'errance', vitesse: 1.0, terminal: true,
     attaques: [
@@ -145,7 +145,7 @@
       { id: 'bois', type: 'special', nom: 'dragons_bois', tele: 0.6, duree: 1.6, recup: 0.6 },
       { id: 'sabre', type: 'lame', portee: 3.2, arc: 180, tele: 0.7, recup: 0.8, vague: true },
     ], phases: [{ seuil: 0.5, message: 'Un guerrier géant l’entoure.', action: 'accelerer' }], desc: 'Attaques massives : météore (abri : loin du centre marqué), dragons de bois, grands balayages.' });
-  B('BOS_022', 'Empreinte des Dix Queues', 'La brèche instable', 8, 1000, { sprite: { type: 'carte', cle: 'ombre', couleurs: { o: '#4a3a5a', l: '#8a6a9a', r: '#ff2a2a' } }, echelleSprite: 4, r: 26, statut: 'création originale d’après une créature célèbre', deplacement: 'aucun', terminal: true, contact: 2,
+  B('BOS_022', 'Empreinte des Dix Queues', 'La brèche instable', 8, 1000, { sprite: { type: 'carte', cle: 'dix_queues' }, echelleSprite: 2, r: 26, statut: 'création originale d’après une créature célèbre', deplacement: 'aucun', terminal: true, contact: 2,
     attaques: [
       { id: 'queues', type: 'special', nom: 'balayage_queues', tele: 0.8, duree: 1.2, recup: 0.6 },
       { id: 'bombe', type: 'rayon', couleur: '#b050e0', duree: 0.8, tele: 1.2, recup: 1 },
@@ -153,7 +153,7 @@
       { id: 'anneau', type: 'anneau', n: 18, v: 3.4, trou: true, largeurTrou: 2, vagues: 3, intervalle: 0.5, tele: 0.6, recup: 0.6 },
     ], desc: 'Immobile et gigantesque : queues balayantes, rayon, anneaux à brèche.' });
   // ── Mini-boss de statues ──
-  B('BOS_M01', 'Mue gardienne', 'Gardienne du pacte', 0, 150, { sprite: { type: 'carte', cle: 'serpent', couleurs: { s: '#8a7a9a', d: '#5a4a6a' } }, echelleSprite: 2, mini: true, statut: 'création originale',
+  B('BOS_M01', 'Mue gardienne', 'Gardienne du pacte', 0, 150, { sprite: { type: 'carte', cle: 'serpent_geant', couleurs: { s: '#8a7a9a', d: '#5a4a6a', l: '#b0a0c0', b: '#e0d8e8', B: '#b8b0c8' } }, echelleSprite: 1, mini: true, statut: 'création originale',
     attaques: [{ id: 'charge', type: 'charge', vCharge: 9, tele: 0.55, duree: 1, recup: 0.8 }, { id: 'anneau', type: 'anneau', n: 10, v: 4, tele: 0.5, recup: 0.6 }] });
   B('BOS_M02', 'Crapaud gardien', 'Gardien du sanctuaire', 0, 150, { sprite: { type: 'carte', cle: 'crapaud_gardien' }, echelleSprite: 2, mini: true, statut: 'création originale',
     attaques: [{ id: 'saut', type: 'saut', r: 1.6, tele: 0.5, duree: 0.7, recup: 0.7, anneau: 8 }, { id: 'langue', type: 'salve', n: 1, v: 9, tele: 0.4, recup: 0.5 }] });

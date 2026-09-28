@@ -1,0 +1,34 @@
+﻿ID;Nom;Q;Pools (poids);Recharge;Effet;Statut;Déblocage
+ACT_001;Réécriture d’empreinte;3;heritage 1, boutique 1, bibliotheque 1;6 charge(s);Relance les objets sur piédestal de la salle, chacun depuis son pool.;création originale;—
+ACT_002;Multi-clonage;2;heritage 1, boutique 1;4 charge(s);Deux clones copient vos tirs pour la salle (50 %) et disparaissent au premier coup.;adaptation;—
+ACT_003;Chidori;3;heritage 1, boss 1;3 charge(s);Fonce en ligne droite : 6× dégâts aux ennemis traversés, invulnérable pendant l’élan.;adaptation;—
+ACT_004;Ōkashō;2;heritage 1;3 charge(s);Frappe le sol : 12 dégâts + 4 par point de force stocké, brise rochers et murs fissurés proches.;adaptation;—
+ACT_006;Invocation des chiens ninja;2;heritage 1, bibliotheque 1;3 charge(s);Des chiens surgissent et immobilisent tous les ennemis 3 s (boss : réduit).;adaptation;—
+ACT_007;Porte de l’Ouverture;2;heritage 1, boss 1;3 charge(s);8 s : dégâts ×1,5, vitesse +1, cadence ×1,3.;adaptation (Huit Portes);—
+ACT_008;Protection des huit trigrammes;3;heritage 1, sanctuaire 1;2 charge(s);Rotation de 1,2 s : détruit les tirs proches, repousse et blesse (6× dégâts au total).;adaptation (Hyūga);—
+ACT_009;Manipulation des ombres;2;heritage 1, bibliotheque 1;3 charge(s);Immobilise les trois ennemis les plus proches pendant 4 s (boss : 1,4 s).;adaptation;—
+ACT_010;Cercueil de sable;3;heritage 1, boss 1;3 charge(s);Le sable écrase l’ennemi le plus proche : 10× dégâts (6× contre un boss).;adaptation;—
+ACT_011;Kuroari : piège;2;heritage 1, bibliotheque 1;3 charge(s);Enferme l’ennemi non-boss le plus proche puis le transperce (8×).;adaptation;—
+ACT_012;Crocs sur crocs;2;heritage 1, boutique 1;3 charge(s);Deux passes en vrille à travers la salle : 5× dégâts à chaque contact, invulnérable.;adaptation;—
+ACT_013;Pluie de senbon empoisonnés;2;heritage 1, pacte 1;2 charge(s);Seize senbon empoisonnés partent en cercle.;création originale;—
+ACT_014;Fils de Jiongu;2;heritage 1, pacte 1;2 charge(s);Attire tous les ramassables de la salle et lacère les ennemis proches (3×).;adaptation;—
+ACT_015;Parchemin de substitution;2;heritage 1, boutique 1, sanctuaire 1;2 charge(s);Une bûche prend votre place : 3 s d’invisibilité, les ennemis frappent la bûche.;adaptation (Kawarimi);—
+ACT_016;Invocation : grand crapaud;4;sanctuaire 1, boss 1, pacte 1;6 charge(s);Un crapaud géant atterrit : 40 dégâts à tous les ennemis (25 aux boss), obstacles pulvérisés.;adaptation;OBJ_026
+ACT_017;Amaterasu (empreinte);3;pacte 2;4 charge(s);Flammes noires sur tous les ennemis de la salle.;adaptation (attribution à vérifier);OBJ_020
+ACT_018;Tsukuyomi (empreinte);4;pacte 1, boss 1;6 charge(s);Le temps s’arrête pour vos ennemis et leurs tirs pendant 4 s (boss : 1,5 s).;adaptation (attribution à vérifier);OBJ_020
+ACT_019;Répulsion divine;3;pacte 1, boss 1;3 charge(s);Repousse tous les ennemis, détruit tous leurs tirs, 3× dégâts.;adaptation;OBJ_023
+ACT_020;Attraction céleste;3;pacte 1, boss 1;4 charge(s);Attire les ennemis au centre puis les écrase (5×).;adaptation;OBJ_023
+ACT_021;Espace-temps intangible;3;pacte 1, isolee 1;4 charge(s);"3 s intangible : ennemis et tirs vous traversent (pas les murs) ; vous ne pouvez pas tirer.";adaptation;OBJ_025 ou OBJ_047
+ACT_022;Pilule du soldat;1;boutique 2, heritage 1;1 charge(s);Pour la salle : cadence +1.;adaptation;—
+ACT_023;Parchemin de téléportation;1;boutique 1, heritage 1;2 charge(s);Vous téléporte dans une salle déjà visitée.;création originale;—
+ACT_024;Rasenshuriken;4;boss 1, heritage 1;4 charge(s);Un immense shuriken de vent traverse tout et explose (15× autour).;adaptation;OBJ_037
+ACT_025;Dragons de feu;3;heritage 1, boss 1;3 charge(s);Quatre dragons de feu chercheurs (4×, brûlure).;création originale;OBJ_038
+ACT_026;Forêt naissante;3;sanctuaire 1, boss 1;4 charge(s);Des racines jaillissent sous chaque ennemi : immobilisation 2,5 s et dégâts répétés.;adaptation (Mokuton);OBJ_028
+ACT_027;Sceau de scellement;4;bibliotheque 1, sanctuaire 1;6 charge(s);Scelle l’ennemi le plus proche (boss : 15 % de ses PV).;création originale;OBJ_037 ou OBJ_046
+ACT_028;Invocation inversée;2;bibliotheque 1, heritage 1;3 charge(s);Invoque un familier au hasard pour tout l’étage.;création originale;—
+ACT_029;Transfert d’esprit;3;bibliotheque 1, heritage 1;3 charge(s);L’ennemi non-boss le plus proche combat pour vous jusqu’à sa mort.;adaptation;OBJ_039
+ACT_030;Lotus primaire;2;heritage 1, defi 1;2 charge(s);"Saisit l’ennemi proche : 12× dégâts ; vous coûte une demi-unité si vous en avez plus d’une.";adaptation;—
+ACT_031;Rituel de permutation;3;pacte 1, cache 1;usage unique;Usage unique : chaque passif (hors objets-clés) est remplacé par un autre.;création originale;OBJ_017
+ACT_032;Genjutsu du temps suspendu;2;bibliotheque 1, boutique 1;4 charge(s);Ralentit tous les ennemis de moitié pendant 6 s.;création originale;—
+ACT_033;Sablier du courant;2;heritage 1, bibliotheque 1;recharge 20 s en combat;Recharge dans le temps (20 s en combat) : 6 s de vitesse +1,2.;création originale;—
+ACT_050;Relais;0;;1 charge(s);Sacrifie un clone : explosion de chakra (5× dégâts autour).;création originale;—

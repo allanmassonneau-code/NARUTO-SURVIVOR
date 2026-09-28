@@ -77,6 +77,93 @@ const CARTES_CREATURES = {
   masque: { c: { m: '#d8d0c0', d: '#a8a090', k: '#1c1420', r: '#c83a2a', f: '#f07a2a' }, f: [
     ['..mmmmmmm..', '.mmmmmmmmm.', 'mmkkmmmkkmm', 'mmkrmmmrkmm', 'mmmmmmmmmmm', '.mmmkkkmmm.', '..mmmmmmm..', '...f.f.f...'],
     ['..mmmmmmm..', '.mmmmmmmmm.', 'mmkkmmmkkmm', 'mmkrmmmrkmm', 'mmmmmmmmmmm', '.mmmkkkmmm.', '..mmmmmmm..', '..f.f.f.f..']] },
+  miroir_glace: { c: { b: '#9ccce8', l: '#eefaff', m: '#c8ecfa', d: '#5a90b8', f: '#3a6488' }, f: [[
+    '..dddddddd..', '.dmmmmmmmmd.', '.dmllmmmmbd.', '.dmlmmmmmbd.', '.dmmmmmmbbd.', '.dmmmmmbbbd.', '.dmmmmbbbbd.', '.dmmmbbbbld.',
+    '.dmmbbbbbld.', '.dmbbbbbbbd.', '.dbbbbbbbbd.', '.dbbbbblbbd.', '.dbbbbllbbd.', '.dbbbbbbbbd.', '..dddddddd..', '...ff..ff...', '..ffff.ffff.']] },
+  // Grand serpent (boss) : tête dressée, anneaux enroulés, ventre clair ; langue animée
+  serpent_geant: { c: { s: '#5f8a34', d: '#3f6424', l: '#8cb454', b: '#d8cf98', B: '#b0a670', k: '#1c1420', y: '#f0d040', r: '#c8303a' }, f: [[
+    '...................ssss.......',
+    '.................sslllss......',
+    '................sllllllss.....',
+    '................sllykllsss....',
+    '................ssllllllssss..',
+    '.................sssddssssssrr',
+    '..................bbssss....r.',
+    '.................bbsss........',
+    '................bbss..........',
+    '.....sssssss...bbss...........',
+    '...sslllllllssbbss............',
+    '..sllldsssddllbss.............',
+    '.slldsbbbbbsdlllsssssss.......',
+    '.slsdbbbbbbbbsdllllllllss.....',
+    'sllsbBbbbbbbbbsdssssslllss....',
+    'slsdbbBbbbbbbbbddddddsssllss..',
+    '.sldsbbbbBBbbbbbbbbbddssslls..',
+    '..ssddsbbbbbbbbbbbbbbbdssssl..',
+    '....sssddddddddddddddddssss...',
+    '.......ssssssssssssssssss.....'], [
+    '...................ssss.......',
+    '.................sslllss......',
+    '................sllllllss.....',
+    '................sllykllsss....',
+    '................ssllllllssss..',
+    '.................sssddsssssss.',
+    '..................bbssss......',
+    '.................bbsss........',
+    '................bbss..........',
+    '.....sssssss...bbss...........',
+    '...sslllllllssbbss............',
+    '..sllldsssddllbss.............',
+    '.slldsbbbbbsdlllsssssss.......',
+    '.slsdbbbbbbbbsdllllllllss.....',
+    'sllsbBbbbbbbbbsdssssslllss....',
+    'slsdbbBbbbbbbbbddddddsssllss..',
+    '.sldsbbbbBBbbbbbbbbbddssslls..',
+    '..ssddsbbbbbbbbbbbbbbbdssssl..',
+    '....sssddddddddddddddddssss...',
+    '.......ssssssssssssssssss.....']], miroir: true },
+  // Empreinte des Dix Queues : masse sombre, œil unique cerclé, queues dressées
+  dix_queues: { c: { o: '#2e2238', O: '#1c1424', l: '#54406a', r: '#e03a3a', R: '#ff8a6a', y: '#e8d890', k: '#0a0510', q: '#3a2c48' }, f: [[
+    '..q...q....q.....q....q...q...',
+    '.qq..qq...qq....qq...qq..qq...',
+    '.qq.qq...qq....qq...qq..qq....',
+    '..qqq...qq.....qq..qq..qq.....',
+    '...qqq.qq.....qq..qq.qqq......',
+    '....qqqqq.....qqqqqqqqq.......',
+    '.....qqqoooooooooooqqq........',
+    '....ooooolllllllloooooo.......',
+    '...oooolllooooooollloooo......',
+    '..oooollooooyyyoooolllooo.....',
+    '..ooolloooyyrrryyoooolloo.....',
+    '.oooolloooyrRkRryooooollooo...',
+    '.oooollooooyrrryoooooolloooo..',
+    '.ooooolloooyyyyyoooooolloooo..',
+    'ooooooollooooooooooooloooooo..',
+    'oOooooooollloooooollloooooOo..',
+    'oOOooooooooolllllllooooooOOo..',
+    '.oOOoooooooooooooooooooOOOo...',
+    '.oOoOoooOoooooooooOoooOoOoo...',
+    '..o.oo.oo.oo..oo.oo.oo.oo.o...'], [
+    '...q...q....q....q....q...q...',
+    '..qq..qq...qq...qq...qq..qq...',
+    '.qq..qq...qq....qq..qq..qq....',
+    '.qqq.qq..qq.....qq.qq..qq.....',
+    '..qqqqq.qq.....qq.qq..qqq.....',
+    '....qqqqqq....qqqqqqqqq.......',
+    '.....qqqoooooooooooqqq........',
+    '....ooooolllllllloooooo.......',
+    '...oooolllooooooollloooo......',
+    '..oooollooooyyyoooolllooo.....',
+    '..ooolloooyyrrryyoooolloo.....',
+    '.oooolloooyrRkRryooooollooo...',
+    '.oooollooooyrrryoooooolloooo..',
+    '.ooooolloooyyyyyoooooolloooo..',
+    'ooooooollooooooooooooloooooo..',
+    'oOooooooollloooooollloooooOo..',
+    'oOOooooooooolllllllooooooOOo..',
+    '.oOOoooooooooooooooooooOOOo...',
+    '.oOoOoooOoooooooooOoooOoOoo...',
+    '..oo.oo.oo.oo..oo.oo.oo.oo....']] },
   statue: { c: { s: '#8a8a90', d: '#5a5a62', l: '#b8b8c0', k: '#1c1420', y: '#f0d060' }, f: [
     ['...ssssss...', '..slsssssd..', '..skyssyks..', '..ssssssss..', '.ssssssssss.', 'sssssssssssd', 'ssddsssddssd', '.ssssssssss.', '.ss......ss.'],
     ['...ssssss...', '..slsssssd..', '..skssssks..', '..ssssssss..', '.ssssssssss.', 'sssssssssssd', 'ssddsssddssd', '.ssssssssss.', '.ss......ss.']] },
@@ -103,24 +190,40 @@ const MASQUES_ENNEMIS = {
   anbu: { coiffure: 'sasuke', c: { h: '#2a2a34', g: '#4a4a58', H: '#18181e', b: '#2a2a34', p: '#e8e4dc', P: '#c83a2a' } },
   alliance: { coiffure: 'naruto', c: { h: '#5a4a3a', g: '#7a6a5a', H: '#3a2e24', b: '#3a3a44', p: '#cfd2de', P: '#6a7088' } },
 };
-const _spEnn = {};
+// Signes distinctifs dessinés sur le visage (tête en (3,0), centre du visage ≈ (16,13))
+function dessinerVisage(g, type, cx, cy) {
+  const px = (x, y, c) => { g.fillStyle = c; g.fillRect(cx + x, cy + y, 1, 1); };
+  if (type === 'spirale') { // masque orange à spirale, un seul trou d'œil
+    for (let y = -6; y <= 6; y++) for (let x = -8; x <= 8; x++) {
+      const e = (x * x) / 70 + (y * y) / 40; if (e > 1) continue;
+      const ex = x - 3, ey = y; const d = Math.hypot(ex, ey), a = Math.atan2(ey, ex);
+      const bande = (((d - a * 2.4 / Math.PI) % 2.4) + 2.4) % 2.4;
+      px(x, y, e > 0.8 ? '#8a3a0a' : d < 1 ? '#1c1420' : bande < 0.9 ? '#a8480c' : '#ec8a24');
+    }
+  } else if (type === 'piercings') { for (const [x, y] of [[-5, 3], [5, 3], [-2, 5], [2, 5], [0, -1], [-6, -3], [6, -3]]) px(x, y, '#c8ccd8'); }
+  else if (type === 'branchies') { for (const [x, y] of [[-7, 2], [-7, 4], [7, 2], [7, 4]]) { px(x, y, '#2a4a6a'); px(x + (x < 0 ? 1 : -1), y, '#2a4a6a'); } }
+}
+const _spEnn = new WeakMap(); // cache par définition (les variantes créées en combat ont leur propre sprite)
 function spriteEnnemi(e) {
   const d = e.def; const S = d.sprite || { type: 'carte', cle: 'poupee' };
-  const cle = d.id; if (_spEnn[cle]) return _spEnn[cle];
+  if (_spEnn.has(d)) return _spEnn.get(d);
   let r;
+  // taille : les boss sont agrandis par Scale2x (×2, ou ×4 pour les géants) ; les autres restent à l'échelle 1
+  const k = d.echelleSprite ? (d.echelleSprite >= 3 ? 4 : d.echelleSprite) : (d.boss && !d.mini ? 2 : 1);
+  const agrandir = c => k >= 4 ? agrandir2x(agrandir2x(c)) : k === 2 ? agrandir2x(c) : c;
   if (S.type === 'carte' && CARTES_CREATURES[S.cle]) {
     const C = CARTES_CREATURES[S.cle]; const col = Object.assign({}, C.c, S.couleurs || {});
-    r = { frames: C.f.map(f => contourner(peindre(f.map(l => l.padEnd(Math.max(...f.map(x => x.length)), '.')), col))), miroir: C.miroir, base: 1 };
+    r = { frames: C.f.map(f => contourner(avecMarge(agrandir(peindre(f.map(l => l.padEnd(Math.max(...f.map(x => x.length)), '.')), col))))), miroir: C.miroir, base: 1 };
   } else if (S.type === 'ninja') {
     const M = MASQUES_ENNEMIS[S.masque] || MASQUES_ENNEMIS.bandana;
-    const V = { coiffure: M.coiffure, c: Object.assign({}, M.c, S.cheveux || {}), yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages };
-    const k = 'enn_' + d.id; VISUELS[k] = V;
+    const cs = Object.assign({}, M.c, S.cheveux || {}); const peau = S.peau || M.peau; if (peau) { cs.s = peau; cs.d = nuancer(peau, 0.82); cs.l = nuancer(peau, 1.12); }
+    const V = { coiffure: M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages };
+    const k = 'enn_' + d.id + '_' + d.nom; VISUELS[k] = V;
     const P = spritesPerso(k);
-    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, k, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } return c; };
-    r = { frames: [frame(0), frame(1)], base: 1 };
-    if (M.peau) { r.frames = r.frames.map(f => f); }
+    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, k, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); return c; };
+    r = { frames: [frame(0), frame(1)].map(agrandir), base: k };
   } else r = { frames: [contourner(disque(e.r || 8, '#a04a6a'))], base: 0 };
-  return (_spEnn[cle] = r);
+  _spEnn.set(d, r); return r;
 }
 // ── Familiers ──
 const _spFam = {};

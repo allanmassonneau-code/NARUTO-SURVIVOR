@@ -40,6 +40,21 @@ function nuancer(hex, k) { // k<1 assombrit, k>1 éclaircit (vers le blanc)
 function melange(a, b, t) { const A = hexRgb(a), B = hexRgb(b); return rgbHex(lerp(A[0], B[0], t), lerp(A[1], B[1], t), lerp(A[2], B[2], t)); }
 
 // Contour automatique : tout pixel transparent voisin (4-connexité) d'un pixel opaque.
+// Agrandissement ×2 « Scale2x / EPX » : double la taille sans flou et adoucit les diagonales
+// (grands sprites de boss à partir des mêmes cartes, sans pixels « gonflés » au plus proche voisin).
+function agrandir2x(c) {
+  const l = c.width, h = c.height; const src = ctxDe(c).getImageData(0, 0, l, h); const s = new Uint32Array(src.data.buffer);
+  const out = toile(l * 2, h * 2), g = ctxDe(out); const img = g.createImageData(l * 2, h * 2); const o = new Uint32Array(img.data.buffer);
+  const px = (x, y) => (x < 0 || y < 0 || x >= l || y >= h) ? 0 : s[y * l + x];
+  for (let y = 0; y < h; y++) for (let x = 0; x < l; x++) {
+    const P = s[y * l + x], A = px(x, y - 1), B = px(x + 1, y), C = px(x - 1, y), D = px(x, y + 1);
+    const i = y * 2 * l * 2 + x * 2, L2 = l * 2;
+    o[i] = (C === A && C !== D && A !== B) ? A : P; o[i + 1] = (A === B && A !== C && B !== D) ? B : P;
+    o[i + L2] = (D === C && D !== B && C !== A) ? C : P; o[i + L2 + 1] = (B === D && B !== A && D !== C) ? D : P;
+  }
+  g.putImageData(img, 0, 0); return out;
+}
+function avecMarge(c, m = 1) { const o = toile(c.width + 2 * m, c.height + 2 * m); ctxDe(o).drawImage(c, m, m); return o; }
 function contourner(c, couleur = CONTOUR, diagonales = false) {
   const l = c.width, h = c.height, src = ctxDe(c).getImageData(0, 0, l, h), d = src.data;
   const out = toile(l, h), g = ctxDe(out); g.drawImage(c, 0, 0);

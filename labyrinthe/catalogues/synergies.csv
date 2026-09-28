@@ -1,0 +1,61 @@
+﻿ID;Nom;Composants;Type;Effet;Test d’acceptation
+SYN_001;Rasengan jumeau;PSV_001 Empreinte du Rasengan + PSV_002 Encre de dédoublement;emergente;"Deux sphères partagent la charge : 3,5 × 3 × 0,70 = 7,35 dégâts chacune ; cycle 0,6 / 0,9 ≈ 0,667 s.";Cible immobile : deux sphères, dégâts et cycle attendus, arrêt au mur, rien au changement de salle.
+SYN_002;Sphère chercheuse;PSV_001 Empreinte du Rasengan + PSV_005 Kunai à marque de téléportation;emergente;Les sphères chargées se guident vers la cible.;Cible latérale touchée sans alignement parfait.
+SYN_003;Sphère orageuse;PSV_001 Empreinte du Rasengan + PSV_028 Chidori nagashi (empreinte);emergente;Chaque sphère enchaîne la foudre sur deux ennemis.;Groupe de trois : trois cibles blessées par une sphère.
+SYN_004;Tourbillon de vent complet;PSV_001 Empreinte du Rasengan + PSV_146 Rasenshuriken (empreinte);dediee;L’explosion de vent des sphères s’élargit (rayon 2).;Rayon d’explosion mesuré à 2 tuiles.
+SYN_005;Canons en éventail;PSV_014 Canon de chakra + PSV_003 Éventail de kunai;emergente;Trois rayons en éventail, chacun au coefficient de multitir (0,58).;Trois faisceaux, dégâts par rayon = 58 %.
+SYN_006;Rayon perçant;PSV_014 Canon de chakra + PSV_008 Senbon perforant;dediee;Le rayon traverse déjà tout : le percement devient +20 % de dégâts.;Dégâts par tic ×1,2.
+SYN_007;Retour guidé;PSV_013 Fūma shuriken + PSV_005 Kunai à marque de téléportation;emergente;Le fūma suit sa cible à l’aller, puis revient.;Trajet courbe puis retour à la main.
+SYN_008;Fūma foudroyant;PSV_013 Fūma shuriken + PSV_028 Chidori nagashi (empreinte);emergente;Chaque passage du fūma enchaîne la foudre.;Deux chaînes par lancer (aller et retour).
+SYN_009;Argile incendiaire;PSV_019 Argile explosive C1 + PSV_043 Grande boule de feu (empreinte);dediee;Les bombes d’argile laissent des flammes alliées.;Zone de feu après chaque explosion.
+SYN_010;Météore gelé;PSV_020 Chute céleste + PSV_050 Glace éternelle;dediee;Les frappes au sol gèlent à coup sûr.;Ennemi gelé après une frappe.
+SYN_011;Sphère d’encre;PSV_021 Sphère téléguidée + PSV_052 Encre des bêtes;dediee;La sphère guidée charme plus souvent (+20 %).;Charme observé en moins de 10 contacts.
+SYN_012;Souffle du vent;PSV_016 Souffle continu + PSV_046 Lame de vent;dediee;Le faisceau continu porte deux tuiles plus loin.;Longueur du faisceau +2 tuiles.
+SYN_013;Tempête orbitale;PSV_010 Sable en orbite + PSV_065 Sable protecteur;dediee;Un orbital de sable supplémentaire.;Trois orbitaux.
+SYN_014;Ricochet détonant;PSV_007 Fil de chakra + PSV_149 Explosion de chakra;dediee;"Un ricochet de plus ; l’explosion survient au dernier contact.";Trois ricochets puis explosion.
+SYN_015;Mille aiguilles empoisonnées;PSV_004 Parchemin des mille aiguilles + PSV_048 Poison de scorpion;dediee;Poison +20 %.;Taux de poison sur 50 tirs.
+SYN_016;Éventail de feu;PSV_003 Éventail de kunai + PSV_043 Grande boule de feu (empreinte);dediee;Brûlure +10 %.;Taux de brûlure sur 50 tirs.
+SYN_017;Le vent attise le feu;PSV_043 Grande boule de feu (empreinte) + PSV_046 Lame de vent;dediee;"Les impacts laissent des flammes ; dégâts +0,5.";Zones de feu à l’impact.
+SYN_018;Eau conductrice;PSV_044 Chakra de l’eau + PSV_045 Courant foudroyant;dediee;La foudre se propage par l’eau : un saut de chaîne.;Chaîne vers un ennemi proche.
+SYN_019;Boue;PSV_047 Poing de terre + PSV_044 Chakra de l’eau;dediee;Ralentissement +30 %.;Taux de ralenti.
+SYN_020;Ombre lestée;PSV_051 Ombre liante + PSV_034 Kunai lestés;dediee;Immobilisation +10 %.;Taux d’immobilisation.
+SYN_021;Clones à l’encre;PSV_061 Clone de l’ombre + PSV_002 Encre de dédoublement;dediee;Un second clone rejoint le premier.;Deux clones suiveurs.
+SYN_022;Flair de la meute;PSV_068 Pakkun + PSV_069 Petit chien de chasse;dediee;Toutes les 6 salles nettoyées, les chiens déterrent une ressource.;Ressource à la 6e salle.
+SYN_023;Envolée d’argile;PSV_019 Argile explosive C1 + PSV_071 Oiseau d’argile;dediee;L’oiseau d’argile se recharge deux fois plus vite.;Plongeon toutes les 2 s.
+SYN_024;Grand sabre vorace;PSV_136 Écailles de Samehada + PSV_017 Empreinte du Kubikiribōchō;dediee;Soin toutes les 8 éliminations au lieu de 12.;Soin à la 8e élimination.
+SYN_025;Malédiction partagée;PSV_091 Sceau maudit + PSV_054 Marque de Jashin;dediee;La marque de Jashin inflige 10 dégâts de plus.;Dégâts de salle 25.
+SYN_026;Rotation clairvoyante;PSV_113 Byakugan (empreinte) + PSV_022 Rotation céleste;dediee;La rotation couvre une portée plus large.;Rayon de rotation +0,5 tuile.
+SYN_027;Miroirs gelés;PSV_050 Glace éternelle + PSV_081 Miroirs de glace;emergente;Les tirs renvoyés par les miroirs sont de glace (élément hyoton).;Tir renvoyé gèle parfois.
+SYN_028;Lames tournoyantes;PSV_018 Tantō de l’ANBU + PSV_022 Rotation céleste;emergente;Frappe courte + rotation : la rotation domine, la lame devient un coup d’appoint.;Priorité rotation, coup d’appoint présent.
+SYN_029;Laser en éventail;PSV_015 Trait de chakra + PSV_003 Éventail de kunai;emergente;Trois traits instantanés.;Trois lignes par cycle.
+SYN_030;Faisceau ondulant;PSV_016 Souffle continu + PSV_011 Onde de la vague;emergente;Le faisceau ignore l’ondulation (trajectoire d’un faisceau) : l’onde devient +0,3 dégâts seulement.;Pas de déformation du faisceau.
+SYN_031;Frappe de sabre explosive;PSV_017 Empreinte du Kubikiribōchō + PSV_149 Explosion de chakra;emergente;Chaque coup de sabre déclenche l’explosion d’impact.;Explosion au contact du sabre.
+SYN_032;Orbe lent chercheur;PSV_012 Baika (expansion) + PSV_006 Insectes traqueurs;emergente;Énormes insectes lents qui traquent.;Guidage visible sur tirs lents.
+SYN_033;Orbite empoisonnée;PSV_010 Sable en orbite + PSV_048 Poison de scorpion;emergente;Les tirs en orbite empoisonnent au passage.;Poison sur ennemi au contact de l’orbite.
+SYN_034;Contrôle multiple;PSV_021 Sphère téléguidée + PSV_002 Encre de dédoublement;emergente;La sphère guidée gagne le coefficient de multitir total (1,4×).;Dégâts de contact ×1,4.
+SYN_035;Frappe au sol multiple;PSV_020 Chute céleste + PSV_003 Éventail de kunai;emergente;Le météore reste unique : le multitir ne multiplie pas la frappe (règle affichée), il n’a pas d’effet.;Une seule frappe par cycle.
+SYN_036;Bombes en salve;PSV_019 Argile explosive C1 + PSV_024 Arsenal de Tenten (empreinte);emergente;Trois bombes par cycle, plus faibles (0,6).;Trois explosions échelonnées.
+SYN_037;Croix de foudre;PSV_026 Croix de sceaux + PSV_028 Chidori nagashi (empreinte);emergente;Les tirs en croix enchaînent aussi la foudre.;Chaînes dans quatre directions.
+SYN_038;Mines éclatantes;PSV_027 Parchemins-pièges + PSV_030 Shuriken démultiplié;emergente;Les mines ne se divisent pas (génération bornée) : l’éclat ne s’applique qu’aux tirs primaires.;Aucun éclat issu d’une mine.
+SYN_039;Boomerang explosif;PSV_013 Fūma shuriken + PSV_149 Explosion de chakra;emergente;Chaque contact du fūma explose (budget par cycle : 14 déclenchements).;Nombre d’explosions ≤ 14 par lancer.
+SYN_040;Taijutsu enflammé;PSV_018 Tantō de l’ANBU + PSV_043 Grande boule de feu (empreinte);emergente;La frappe courte applique la brûlure du Katon.;Brûlure sur frappe.
+SYN_041;Rotation et miroirs;PSV_022 Rotation céleste + PSV_081 Miroirs de glace;emergente;Défense quasi totale mais sans tir à distance : les miroirs ne bloquent qu’au contact (fréquence bornée).;Quelques tirs passent encore.
+SYN_042;Coups de sable;PSV_150 Tempête de sable + PSV_065 Sable protecteur;emergente;Tempête de sable + orbitaux : couverture défensive dense.;Projectiles ennemis interceptés.
+SYN_043;Nuée d’encre;PSV_052 Encre des bêtes + PSV_076 Tigres d’encre;emergente;Les fauves d’encre profitent des ennemis charmés.;Ennemis charmés attaqués.
+SYN_044;Voleur de pacte;PSV_129 Contrat de Kakuzu + PSV_107 Bourse-grenouille;emergente;Payer ses pactes en Ryō avec une bourse qui double parfois les pièces.;Achat d’un pacte en Ryō.
+SYN_045;Marchand avisé;PSV_121 Carte de membre de l’échoppe + PSV_124 Réputation de client;emergente;Soldes et étal supplémentaire : l’échoppe devient une salle d’héritage payante.;Trois objets à moitié prix.
+SYN_046;Économie de relance;ACT_001 Réécriture d’empreinte + PSV_127 Sceau de réécriture;emergente;Relances qui ne descendent jamais en qualité.;Qualité ≥ initiale après relance.
+SYN_047;Sceau éternel;PSV_095 Sceau vital de la famille + PSV_083 Bol de ramen d’Ichiraku;emergente;Sceaux partiels + soins : la vitalité monte d’étage en étage.;Contenant ajouté à l’étage suivant.
+SYN_048;Réserve inépuisable;PSV_087 Sceau de régénération + PSV_093 Chakra de la limace;emergente;Régénération doublée par le chakra de la limace.;Soin de 2 demis toutes les 3 salles.
+SYN_049;Protection du démon;PSV_098 Chakra du démon scellé + PSV_056 Bulle de chakra rouge;emergente;Réserves instables + bulle rouge : chaque rupture déclenche aussi huit tirs.;Impulsion + huit tirs.
+SYN_050;Substitution et appât;PSV_096 Substitution instinctive + PSV_080 Poupée d’entraînement;emergente;Deux sources d’esquive indépendantes (bûche puis poupée).;Coups évités cumulés.
+SYN_051;Lévitation minée;PSV_115 Lévitation de chakra + PSV_027 Parchemins-pièges;emergente;Au-dessus des fosses, vos mines restent au-dessus du vide (elles fonctionnent).;Mine active au-dessus d’une fosse.
+SYN_052;Sage des crapauds;PSV_144 Nature du sage + PSV_062 Gamakichi;emergente;Immobile, Gamakichi et vous frappez plus fort.;Bonus ×1,5 actif à l’arrêt.
+SYN_053;Portes et lotus;PSV_092 Porte de la Vie + ACT_030 Lotus primaire;emergente;Le lotus coûte de la santé : dangereux avec un contenant en moins.;Coût payé, pas un dommage.
+SYN_054;Fil et fūma;PSV_007 Fil de chakra + PSV_013 Fūma shuriken;emergente;Le fūma revient déjà : le ricochet ajoute trois rebonds à l’aller.;Rebonds avant retour.
+SYN_055;Arsenal complet;PSV_024 Arsenal de Tenten (empreinte) + PSV_004 Parchemin des mille aiguilles;emergente;Salves de quatre senbon : couverture maximale, dégâts unitaires faibles.;Douze projectiles par cycle.
+SYN_056;Canon et sceau de la mort;PSV_014 Canon de chakra + PSV_131 Sceau de la mort (empreinte);emergente;Rayon ×2 de dégâts, santé réduite : combinaison volontairement dominante mais fragile.;Dégâts doublés, deux contenants de moins.
+SYN_057;Frappe céleste guidée;PSV_020 Chute céleste + PSV_005 Kunai à marque de téléportation;emergente;Le réticule ne se guide pas (règle) : le guidage n’a pas d’effet sur la frappe.;Réticule inchangé.
+SYN_058;Clone de relais armé;PSV_023 Clone de relais + PSV_028 Chidori nagashi (empreinte);emergente;Le clone copie les impacts : sa foudre s’enchaîne aussi (génération 1).;Chaîne issue du clone.
+SYN_059;Onde et chaîne;PSV_029 Poing de Doton + PSV_028 Chidori nagashi (empreinte);emergente;Chaque impact : onde puis chaîne (budget partagé).;Deux effets secondaires par impact.
+SYN_060;Artiste complet;PSV_110 Argile infinie + PSV_019 Argile explosive C1;emergente;Bombes d’argile sans risque pour vous (immunité aux explosions).;Aucun dégât subi par ses propres bombes.

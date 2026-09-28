@@ -375,6 +375,7 @@ function majBombes(dt) {
     if (b.age >= b.meche) {
       b.fini = true;
       explosion(b.x, b.y, b.r, b.deg, { proprio: 'joueur', blesseJoueur: !J.drapeaux.immuniteExplosion, degatsJoueur: 2 });
+      if (J.drapeaux.explosionDouble) { const x = b.x, y = b.y, r = b.r, d = b.deg * 0.5; setTimeoutJeu(() => explosion(x, y, r, d, { proprio: 'joueur', blesseJoueur: !J.drapeaux.immuniteExplosion, degatsJoueur: 2 }), 0.4); }
       if (J.drapeaux.explosifsFeu) for (let i = 0; i < 5; i++) creerZone(b.x + (Math.random() - 0.5) * 40, b.y + (Math.random() - 0.5) * 30, 'feu_allie', 3, { r: 12, dps: 6 });
       if (J.drapeaux.explosifsCroix) for (let i = 0; i < 4; i++) { const p = creerSousProjectile({ x: b.x, y: b.y - 6, vitesse: 8 * TUILE, degats: J.stats.degats, recul: 40, taille: 1, apparence: 'kunai', elements: new Set(), gen: 0, budget: { n: 4 }, cycleId: 0 }, i * Math.PI / 2, J.stats.degats * 1.5); p.dureeVie = 1; }
     }

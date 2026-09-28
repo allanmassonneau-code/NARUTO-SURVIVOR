@@ -1,0 +1,955 @@
+[
+ {
+  "id": "OBJ_001",
+  "nom": "Premier sceau brisé",
+  "desc": "Vaincre un boss d’étage 1.",
+  "condition": {
+   "type": "compteur",
+   "nom": "bossVaincus",
+   "min": 1
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_026",
+    "PSV_027"
+   ],
+   "texte": "Croix de sceaux, Parchemins-pièges"
+  }
+ },
+ {
+  "id": "OBJ_002",
+  "nom": "Le traître démasqué",
+  "desc": "Vaincre Mizuki.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_001"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_013"
+   ],
+   "texte": "Fūma shuriken"
+  }
+ },
+ {
+  "id": "OBJ_003",
+  "nom": "Hors de la forêt",
+  "desc": "Vaincre le Serpent géant.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_002"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_064",
+    "PSV_078"
+   ],
+   "texte": "Serpents"
+  }
+ },
+ {
+  "id": "OBJ_004",
+  "nom": "Le démon du brouillard",
+  "desc": "Vaincre Zabuza.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_004"
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_004",
+    "PSV_017"
+   ],
+   "texte": "Kakashi, Kubikiribōchō"
+  }
+ },
+ {
+  "id": "OBJ_005",
+  "nom": "Miroirs brisés",
+  "desc": "Vaincre Haku.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_005"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_081",
+    "PSV_050"
+   ],
+   "texte": "Miroirs de glace, Glace éternelle"
+  }
+ },
+ {
+  "id": "OBJ_006",
+  "nom": "Les frères démons",
+  "desc": "Vaincre les frères démons.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_003"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_007"
+   ],
+   "texte": "Fil de chakra"
+  }
+ },
+ {
+  "id": "OBJ_007",
+  "nom": "Fils coupés",
+  "desc": "Vaincre Kankurō.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_006"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_072",
+    "PSV_073",
+    "PSV_074"
+   ],
+   "texte": "Marionnettes"
+  }
+ },
+ {
+  "id": "OBJ_008",
+  "nom": "Trio dissonant",
+  "desc": "Vaincre le trio du Son.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_007"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_029"
+   ],
+   "texte": "Poing de Doton"
+  }
+ },
+ {
+  "id": "OBJ_009",
+  "nom": "Le sable se tait",
+  "desc": "Vaincre Gaara.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_009"
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_005",
+    "PSV_097"
+   ],
+   "texte": "Rock Lee, Armure de sable absolue"
+  }
+ },
+ {
+  "id": "OBJ_010",
+  "nom": "Os brisés",
+  "desc": "Vaincre Kimimaro.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_008"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_060",
+    "PSV_090"
+   ],
+   "texte": "Os"
+  }
+ },
+ {
+  "id": "OBJ_011",
+  "nom": "La carapace tombe",
+  "desc": "Vaincre Sasori.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_010"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_142"
+   ],
+   "texte": "Main du scorpion"
+  }
+ },
+ {
+  "id": "OBJ_012",
+  "nom": "Regard perçant",
+  "desc": "Trouver 5 caches de renseignements (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "secretsTrouves",
+   "min": 5
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_006",
+    "PSV_113"
+   ],
+   "texte": "Hinata, Byakugan"
+  }
+ },
+ {
+  "id": "OBJ_013",
+  "nom": "Soigneur démasqué",
+  "desc": "Vaincre Kabuto.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_011"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_087"
+   ],
+   "texte": "Sceau de régénération"
+  }
+ },
+ {
+  "id": "OBJ_014",
+  "nom": "Requin échoué",
+  "desc": "Vaincre Kisame.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_012"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_136"
+   ],
+   "texte": "Écailles de Samehada"
+  }
+ },
+ {
+  "id": "OBJ_015",
+  "nom": "Stratégie de l’examen",
+  "desc": "Réussir 2 épreuves chūnin (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "epreuvesChunin",
+   "min": 2
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_007",
+    "PSV_051"
+   ],
+   "texte": "Shikamaru, Ombre liante"
+  }
+ },
+ {
+  "id": "OBJ_016",
+  "nom": "Rituel rompu",
+  "desc": "Vaincre Hidan.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_013"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_054",
+    "PSV_135"
+   ],
+   "texte": "Marque de Jashin, Rituel du sang"
+  }
+ },
+ {
+  "id": "OBJ_017",
+  "nom": "Première fin",
+  "desc": "Vaincre Orochimaru.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_014"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_143",
+    "ACT_031"
+   ],
+   "texte": "Mue du serpent, Rituel de permutation"
+  }
+ },
+ {
+  "id": "OBJ_018",
+  "nom": "Protection absolue",
+  "desc": "Posséder 3 réserves de chakra protecteur en même temps.",
+  "condition": {
+   "type": "etat",
+   "nom": "protections3"
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_008"
+   ],
+   "texte": "Gaara"
+  }
+ },
+ {
+  "id": "OBJ_019",
+  "nom": "L’art éclate",
+  "desc": "Vaincre Deidara.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_015"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_019",
+    "PSV_071",
+    "PSV_110"
+   ],
+   "texte": "Argile"
+  }
+ },
+ {
+  "id": "OBJ_020",
+  "nom": "Au-delà de l’illusion",
+  "desc": "Vaincre Itachi.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_016"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_053",
+    "ACT_017",
+    "ACT_018"
+   ],
+   "texte": "Flammes noires, Amaterasu, Tsukuyomi"
+  }
+ },
+ {
+  "id": "OBJ_021",
+  "nom": "Marionnettiste",
+  "desc": "Posséder 3 familiers en même temps.",
+  "condition": {
+   "type": "etat",
+   "nom": "familiers3"
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_009"
+   ],
+   "texte": "Kankurō"
+  }
+ },
+ {
+  "id": "OBJ_022",
+  "nom": "Cinq cœurs",
+  "desc": "Vaincre Kakuzu.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_017"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_089",
+    "PSV_129"
+   ],
+   "texte": "Cœur volé, Contrat"
+  }
+ },
+ {
+  "id": "OBJ_023",
+  "nom": "La douleur apaisée",
+  "desc": "Vaincre Pain.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_018"
+  },
+  "recompense": {
+   "debloque": [
+    "ACT_019",
+    "ACT_020"
+   ],
+   "texte": "Répulsion, Attraction"
+  }
+ },
+ {
+  "id": "OBJ_024",
+  "nom": "Compagnon fidèle",
+  "desc": "Nettoyer 30 salles de combat accompagné d’au moins un familier permanent (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "sallesFamiliers",
+   "min": 30
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_010"
+   ],
+   "texte": "Kiba"
+  }
+ },
+ {
+  "id": "OBJ_025",
+  "nom": "Masque brisé",
+  "desc": "Vaincre Obito.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_019"
+  },
+  "recompense": {
+   "debloque": [
+    "ACT_021"
+   ],
+   "texte": "Espace-temps intangible"
+  }
+ },
+ {
+  "id": "OBJ_026",
+  "nom": "Gardien apaisé",
+  "desc": "Vaincre le Gardien du Sceau.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_020"
+  },
+  "recompense": {
+   "debloque": [
+    "ACT_016",
+    "PSV_115"
+   ],
+   "texte": "Grand crapaud, Lévitation"
+  }
+ },
+ {
+  "id": "OBJ_027",
+  "nom": "Maître des marionnettes",
+  "desc": "Vaincre Sasori sans subir de dégâts pendant le combat.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_010",
+   "sansDegats": true
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_011"
+   ],
+   "texte": "Sasori (expert)"
+  }
+ },
+ {
+  "id": "OBJ_028",
+  "nom": "Rival ancien",
+  "desc": "Vaincre Madara.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_021"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_020",
+    "ACT_026"
+   ],
+   "texte": "Chute céleste, Forêt naissante"
+  }
+ },
+ {
+  "id": "OBJ_029",
+  "nom": "Dix queues",
+  "desc": "Vaincre l’empreinte des Dix Queues.",
+  "condition": {
+   "type": "boss",
+   "id": "BOS_022"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_014"
+   ],
+   "texte": "Canon de chakra"
+  }
+ },
+ {
+  "id": "OBJ_030",
+  "nom": "Fortune",
+  "desc": "Posséder 50 Ryō en même temps.",
+  "condition": {
+   "type": "etat",
+   "nom": "ryo50"
+  },
+  "recompense": {
+   "debloque": [
+    "CHR_012",
+    "PSV_121"
+   ],
+   "texte": "Kakuzu (expert), Carte de membre"
+  }
+ },
+ {
+  "id": "OBJ_031",
+  "nom": "Collectionneur",
+  "desc": "Posséder 12 objets passifs en même temps.",
+  "condition": {
+   "type": "etat",
+   "nom": "objets12"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_126",
+    "PSV_120"
+   ],
+   "texte": "Livre de l’ermite, Collier"
+  }
+ },
+ {
+  "id": "OBJ_032",
+  "nom": "Premier pacte",
+  "desc": "Conclure un pacte interdit.",
+  "condition": {
+   "type": "compteur",
+   "nom": "pactes",
+   "min": 1
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_091",
+    "PSV_139"
+   ],
+   "texte": "Sceau maudit, Transfert du pacte"
+  }
+ },
+ {
+  "id": "OBJ_033",
+  "nom": "Explorateur",
+  "desc": "Détruire 10 rochers à sceau (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "rochersSceau",
+   "min": 10
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_114",
+    "PSV_106"
+   ],
+   "texte": "Voies secrètes, Épingle"
+  }
+ },
+ {
+  "id": "OBJ_034",
+  "nom": "Métamorphose",
+  "desc": "Obtenir une transformation.",
+  "condition": {
+   "type": "compteur",
+   "nom": "transformations",
+   "min": 1
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_146",
+    "PSV_152"
+   ],
+   "texte": "Rasenshuriken, Encre vivante"
+  }
+ },
+ {
+  "id": "OBJ_035",
+  "nom": "Client fidèle",
+  "desc": "Faire 15 achats (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "achats",
+   "min": 15
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_124",
+    "PSV_122"
+   ],
+   "texte": "Réputation, Coupon"
+  }
+ },
+ {
+  "id": "OBJ_036",
+  "nom": "Donateur",
+  "desc": "Donner 50 Ryō à la caisse des marchands.",
+  "condition": {
+   "type": "compteur",
+   "nom": "dons",
+   "min": 50
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_123"
+   ],
+   "texte": "Livret d’épargne ; échoppe niveau 1"
+  }
+ },
+ {
+  "id": "OBJ_037",
+  "nom": "Technique scellée",
+  "desc": "Utiliser 30 fois un actif (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "actifsUtilises",
+   "min": 30
+  },
+  "recompense": {
+   "debloque": [
+    "ACT_024",
+    "ACT_027"
+   ],
+   "texte": "Rasenshuriken, Scellement"
+  }
+ },
+ {
+  "id": "OBJ_038",
+  "nom": "Chasseur",
+  "desc": "Éliminer 500 ennemis (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "eliminations",
+   "min": 500
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_145",
+    "ACT_025"
+   ],
+   "texte": "Pluie d’armes, Dragons de feu"
+  }
+ },
+ {
+  "id": "OBJ_039",
+  "nom": "Deuxième fin",
+  "desc": "Accomplir la deuxième fin (étage 8).",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_02"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_131",
+    "ACT_029"
+   ],
+   "texte": "Sceau de la mort, Transfert d’esprit"
+  }
+ },
+ {
+  "id": "OBJ_040",
+  "nom": "Réceptacle",
+  "desc": "Accomplir la première fin avec Naruto.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_01",
+   "perso": "CHR_001"
+  },
+  "recompense": {
+   "debloque": [
+    "ALT_001"
+   ],
+   "texte": "Naruto — Réceptacle fissuré"
+  }
+ },
+ {
+  "id": "OBJ_041",
+  "nom": "Vengeance",
+  "desc": "Accomplir la première fin avec Sasuke.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_01",
+   "perso": "CHR_002"
+  },
+  "recompense": {
+   "debloque": [
+    "ALT_002"
+   ],
+   "texte": "Sasuke — Serment de vengeance"
+  }
+ },
+ {
+  "id": "OBJ_042",
+  "nom": "Centaine",
+  "desc": "Accomplir la première fin avec Sakura.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_01",
+   "perso": "CHR_003"
+  },
+  "recompense": {
+   "debloque": [
+    "ALT_003"
+   ],
+   "texte": "Sakura — Sceau de la centaine"
+  }
+ },
+ {
+  "id": "OBJ_043",
+  "nom": "Shukaku",
+  "desc": "Accomplir la première fin avec Gaara.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_01",
+   "perso": "CHR_008"
+  },
+  "recompense": {
+   "debloque": [
+    "ALT_004"
+   ],
+   "texte": "Gaara — Shukaku déchaîné"
+  }
+ },
+ {
+  "id": "OBJ_044",
+  "nom": "Trois marionnettes",
+  "desc": "Accomplir la première fin avec Kankurō.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_01",
+   "perso": "CHR_009"
+  },
+  "recompense": {
+   "debloque": [
+    "ALT_005"
+   ],
+   "texte": "Kankurō — Trois marionnettes"
+  }
+ },
+ {
+  "id": "OBJ_045",
+  "nom": "Cœurs de réserve",
+  "desc": "Accomplir la première fin avec Kakuzu.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_01",
+   "perso": "CHR_012"
+  },
+  "recompense": {
+   "debloque": [
+    "ALT_006"
+   ],
+   "texte": "Kakuzu — Cinq cœurs"
+  }
+ },
+ {
+  "id": "OBJ_046",
+  "nom": "Lumière",
+  "desc": "Accomplir la branche de la Lumière.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_03"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_144",
+    "ACT_027"
+   ],
+   "texte": "Nature du sage"
+  }
+ },
+ {
+  "id": "OBJ_047",
+  "nom": "Ombre",
+  "desc": "Accomplir la branche de l’Ombre.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_04"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_140",
+    "ACT_021"
+   ],
+   "texte": "Réincarnation impure"
+  }
+ },
+ {
+  "id": "OBJ_048",
+  "nom": "Conseil",
+  "desc": "Terminer le Conseil des épreuves.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_05"
+  },
+  "recompense": {
+   "debloque": [
+    "DEF_010",
+    "DEF_011"
+   ],
+   "texte": "Défis supplémentaires"
+  }
+ },
+ {
+  "id": "OBJ_049",
+  "nom": "Brèche",
+  "desc": "Refermer la brèche instable.",
+  "condition": {
+   "type": "fin",
+   "route": "RTE_06"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_020"
+   ],
+   "texte": "Chute céleste"
+  }
+ },
+ {
+  "id": "OBJ_050",
+  "nom": "Difficile",
+  "desc": "Accomplir une fin en mode Difficile.",
+  "condition": {
+   "type": "fin",
+   "difficile": true
+  },
+  "recompense": {
+   "debloque": [
+    "DEF_012"
+   ],
+   "texte": "Défi : Examen de jōnin"
+  }
+ },
+ {
+  "id": "OBJ_051",
+  "nom": "Défi : taijutsu",
+  "desc": "Réussir le contrat « Taijutsu pur ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_001"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_040",
+    "PSV_092"
+   ],
+   "texte": "Gants de taijutsu, Porte de la Vie"
+  }
+ },
+ {
+  "id": "OBJ_052",
+  "nom": "Défi : obscurité",
+  "desc": "Réussir le contrat « Nuit sans lune ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_002"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_079"
+   ],
+   "texte": "Luciole"
+  }
+ },
+ {
+  "id": "OBJ_053",
+  "nom": "Défi : sans héritage",
+  "desc": "Réussir le contrat « Mains vides ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_003"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_109"
+   ],
+   "texte": "Parchemin vide"
+  }
+ },
+ {
+  "id": "OBJ_054",
+  "nom": "Défi : un seul cœur",
+  "desc": "Réussir le contrat « Un souffle ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_004"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_096"
+   ],
+   "texte": "Substitution instinctive"
+  }
+ },
+ {
+  "id": "OBJ_055",
+  "nom": "Défi : explosifs",
+  "desc": "Réussir le contrat « Artificier ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_005"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_100",
+    "PSV_102",
+    "PSV_103"
+   ],
+   "texte": "Parchemins spéciaux"
+  }
+ },
+ {
+  "id": "OBJ_056",
+  "nom": "Défi : clones",
+  "desc": "Réussir le contrat « Mille clones ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_006"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_023"
+   ],
+   "texte": "Clone de relais"
+  }
+ },
+ {
+  "id": "OBJ_057",
+  "nom": "Défi : marchand",
+  "desc": "Réussir le contrat « Tout s’achète ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_007"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_125"
+   ],
+   "texte": "Dés de la grande perdante"
+  }
+ },
+ {
+  "id": "OBJ_058",
+  "nom": "Défi : pacte",
+  "desc": "Réussir le contrat « Sang pour sang ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_008"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_098"
+   ],
+   "texte": "Chakra du démon"
+  }
+ },
+ {
+  "id": "OBJ_059",
+  "nom": "Défi : sable",
+  "desc": "Réussir le contrat « Tempête du désert ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_009"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_150"
+   ],
+   "texte": "Tempête de sable"
+  }
+ },
+ {
+  "id": "OBJ_060",
+  "nom": "Défi : conseil",
+  "desc": "Réussir le contrat « Examen de jōnin ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_012"
+  },
+  "recompense": {
+   "debloque": [
+    "PSV_146"
+   ],
+   "texte": "Rasenshuriken"
+  }
+ }
+]

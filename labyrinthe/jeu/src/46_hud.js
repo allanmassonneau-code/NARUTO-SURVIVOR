@@ -72,7 +72,7 @@ function dessinerStats(g, J, x, y) {
   L.forEach(([k, v], i) => { Police.ecrire(g, k, x, y + i * 10, '#8a8098'); Police.ecrire(g, v, x + 22, y + i * 10, '#e8e0f0'); });
 }
 function dessinerBanniere(g) {
-  const B = G.banniere; B.t += 1 / 60; const d = B.mineur ? 1.6 : 2.6; if (B.t > d) { G.banniere = null; return; }
+  const B = G.banniere; const d = B.mineur ? 1.6 : 2.6; if (B.t > d) return;
   const a = B.t < 0.15 ? B.t / 0.15 : B.t > d - 0.4 ? (d - B.t) / 0.4 : 1;
   g.globalAlpha = a;
   const y = B.transformation ? 130 : 84; const w = Math.max(Police.largeur(B.nom) * 2, Police.largeur(B.desc || '')) + 24;
@@ -83,12 +83,17 @@ function dessinerBanniere(g) {
   g.globalAlpha = 1;
 }
 function dessinerBanniereEtage(g) {
-  const B = G.banniereEtage; B.t += 1 / 60; const d = 3.2; if (B.t > d) { G.banniereEtage = null; return; }
+  const B = G.banniereEtage; const d = 3.2; if (B.t > d) return;
   const a = B.t < 0.3 ? B.t / 0.3 : B.t > d - 0.6 ? (d - B.t) / 0.6 : 1; g.globalAlpha = a;
-  g.fillStyle = 'rgba(8,6,12,0.75)'; g.fillRect(120, 146, 400, 58);
-  Police.ecrire(g, B.titre, 320, 152, '#a898b8', { a: 'c' });
-  Police.ecrire(g, B.nom, 320, 166, '#f4e8d0', { a: 'c', e: 2, contour: '#1c1420' });
-  if (B.desc) Police.ecrire(g, B.desc, 320, 188, '#c0b8a8', { a: 'c' });
+  // tiers supérieur de la salle (jamais sur les portes ni au centre) ; nom de zone en grand, lieu en dessous
+  const [zone, lieu] = B.nom.split(/ [—-] /); const e = Police.largeur(zone) * 2 <= 420 ? 2 : 1;
+  const h = 6 + 11 + (e === 2 ? 18 : 11) + (lieu ? 11 : 0) + (B.desc ? 12 : 0) + 3; const y0 = 84;
+  const w = Math.min(440, Math.max(Police.largeur(zone) * e, Police.largeur(B.desc || ''), Police.largeur(lieu || '')) + 28);
+  g.fillStyle = 'rgba(8,6,12,0.78)'; g.fillRect(320 - w / 2, y0, w, h); g.fillStyle = '#6a5a7a'; g.fillRect(320 - w / 2, y0, w, 1); g.fillRect(320 - w / 2, y0 + h - 1, w, 1);
+  let y = y0 + 5; Police.ecrire(g, B.titre, 320, y, '#a898b8', { a: 'c' }); y += 11;
+  Police.ecrire(g, zone, 320, y, '#f4e8d0', { a: 'c', e, contour: '#1c1420' }); y += e === 2 ? 18 : 11;
+  if (lieu) { Police.ecrire(g, lieu, 320, y, '#e0c890', { a: 'c' }); y += 11; }
+  if (B.desc) Police.ecrire(g, B.desc, 320, y + 1, '#b8b0a0', { a: 'c' });
   g.globalAlpha = 1;
 }
 function dessinerIntroBoss(g) {

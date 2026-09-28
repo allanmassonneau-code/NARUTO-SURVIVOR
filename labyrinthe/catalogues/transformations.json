@@ -1,0 +1,399 @@
+[
+ {
+  "id": "TRF_001",
+  "nom": "Manteau du renard",
+  "type": "transformation",
+  "ensemble": "renard",
+  "seuil": 3,
+  "desc": "Aura de chakra : les ennemis à votre contact brûlent ; dégâts +1.",
+  "effets": [
+   {
+    "s": "degats",
+    "a": 1
+   },
+   {
+    "drapeau": "auraContact"
+   },
+   {
+    "statut": "brulure",
+    "chance": 0.15,
+    "max": 0.15
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "motif": "queues",
+   "n": 3,
+   "couleur": "#f0a030"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "tete_renard",
+   "a": "#f08a24"
+  }
+ },
+ {
+  "id": "TRF_002",
+  "nom": "Sage imparfait",
+  "type": "transformation",
+  "ensemble": "ermite",
+  "seuil": 3,
+  "desc": "Immobile 0,6 s : dégâts ×1,6 jusqu’au prochain pas ; portée +2.",
+  "effets": [
+   {
+    "drapeau": "energieNaturelle"
+   },
+   {
+    "drapeau": "sageFort"
+   },
+   {
+    "s": "portee",
+    "a": 2
+   }
+  ],
+  "visuel": {
+   "couche": "peau",
+   "motif": "maquillage",
+   "couleur": "#f08a24"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "crapaud",
+   "a": "#8a9a4a"
+  }
+ },
+ {
+  "id": "TRF_003",
+  "nom": "Essaim Aburame",
+  "type": "transformation",
+  "ensemble": "essaim",
+  "seuil": 3,
+  "desc": "Vos tirs deviennent des insectes chercheurs ; un essaim vous accompagne.",
+  "effets": [
+   {
+    "traj": "guidage",
+    "force": 1.5
+   },
+   {
+    "apparence": "insecte"
+   },
+   {
+    "familier": "FAM_INSECTES"
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "motif": "insectes"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "insecte",
+   "a": "#3a3a2a"
+  }
+ },
+ {
+  "id": "TRF_004",
+  "nom": "Arsenal du marionnettiste",
+  "type": "transformation",
+  "ensemble": "marionnette",
+  "seuil": 3,
+  "desc": "Une marionnette d’attaque supplémentaire ; vos marionnettes frappent 50 % plus fort.",
+  "effets": [
+   {
+    "familier": "FAM_KARASU_ATT"
+   },
+   {
+    "drapeau": "marionnettesFortes"
+   }
+  ],
+  "visuel": {
+   "couche": "bras",
+   "motif": "bras_marionnette"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "marionnette",
+   "a": "#6a5a4a"
+  }
+ },
+ {
+  "id": "TRF_005",
+  "nom": "Résonance des yeux",
+  "type": "transformation",
+  "ensemble": "yeux",
+  "seuil": 3,
+  "desc": "Barres de vie ennemies visibles, fissures des murs secrets révélées, chance +2, léger guidage.",
+  "effets": [
+   {
+    "drapeau": "indicesSecrets"
+   },
+   {
+    "s": "chance",
+    "a": 2
+   },
+   {
+    "traj": "guidage",
+    "force": 0.5
+   }
+  ],
+  "visuel": {
+   "couche": "yeux",
+   "motif": "yeux_rouges",
+   "couleur": "#e0202a"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "oeil",
+   "a": "#e8e8f0",
+   "b": "#c81e28"
+  }
+ },
+ {
+  "id": "TRF_006",
+  "nom": "Armure de sable",
+  "type": "transformation",
+  "ensemble": "sable",
+  "seuil": 3,
+  "desc": "Trois orbitaux de sable ; les coups d’un cœur entier ne retirent qu’une demi-unité.",
+  "effets": [
+   {
+    "familier": "FAM_SABLE"
+   },
+   {
+    "familier": "FAM_SABLE"
+   },
+   {
+    "familier": "FAM_SABLE"
+   },
+   {
+    "drapeau": "armureSable"
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "motif": "sable_flottant"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "sable",
+   "a": "#d8b070"
+  }
+ },
+ {
+  "id": "TRF_007",
+  "nom": "Reliques interdites",
+  "type": "transformation",
+  "ensemble": "interdit",
+  "seuil": 3,
+  "desc": "Lévitation, deux réserves instables, dégâts +1.",
+  "effets": [
+   {
+    "vol": true
+   },
+   {
+    "sante": {
+     "instable": 4
+    }
+   },
+   {
+    "s": "degats",
+    "a": 1
+   }
+  ],
+  "visuel": {
+   "couche": "tete",
+   "motif": "cornes",
+   "couleur": "#3a1a4a"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "crane",
+   "a": "#3a1a4a"
+  }
+ },
+ {
+  "id": "TRF_008",
+  "nom": "Outils du tonnerre",
+  "type": "transformation",
+  "ensemble": "tonnerre",
+  "seuil": 3,
+  "desc": "Chaque tir enchaîne la foudre sur un ennemi proche ; cadence +0,3.",
+  "effets": [
+   {
+    "impact": "chaine",
+    "sauts": 1,
+    "r": 3,
+    "coef": 0.5
+   },
+   {
+    "s": "cadence",
+    "a": 0.3
+   },
+   {
+    "element": "raiton"
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "couleur": "#a0d0ff"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "eclair",
+   "a": "#a8d8ff"
+  }
+ },
+ {
+  "id": "TRF_009",
+  "nom": "Corps expérimental",
+  "type": "transformation",
+  "ensemble": "experimental",
+  "seuil": 3,
+  "desc": "Un contenant de plus ; blessé, deux serpents vous défendent pour la salle.",
+  "effets": [
+   {
+    "sante": {
+     "cont": 1
+    }
+   },
+   {
+    "quand": "degat_recu",
+    "faire": {
+     "type": "familier",
+     "familier": "FAM_SERPENT_BLANC",
+     "salle": true
+    }
+   }
+  ],
+  "visuel": {
+   "couche": "peau",
+   "motif": "marque",
+   "couleur": "#6a2a8a"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "serpent",
+   "a": "#e8e4d0"
+  }
+ },
+ {
+  "id": "TRF_010",
+  "nom": "Messager de papier",
+  "type": "transformation",
+  "ensemble": "papier",
+  "seuil": 3,
+  "desc": "Lévitation, quatre papillons protecteurs, tirs de papier.",
+  "effets": [
+   {
+    "vol": true
+   },
+   {
+    "familier": "FAM_PAPIER"
+   },
+   {
+    "familier": "FAM_PAPIER"
+   },
+   {
+    "apparence": "papier"
+   }
+  ],
+  "visuel": {
+   "couche": "dos",
+   "motif": "plumes",
+   "couleur": "#f4f0e8"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "papier",
+   "a": "#f4f0e8"
+  }
+ },
+ {
+  "id": "TRF_011",
+  "nom": "Meute d’invocation",
+  "type": "transformation",
+  "ensemble": "meute",
+  "seuil": 3,
+  "desc": "Deux compagnons supplémentaires ; tous les familiers +25 %.",
+  "effets": [
+   {
+    "familier": "FAM_TIGRE_ENCRE"
+   },
+   {
+    "familier": "FAM_AKAMARU"
+   },
+   {
+    "drapeau": "familiersForts"
+   }
+  ],
+  "visuel": {
+   "couche": "corps",
+   "motif": "bandeau_bras",
+   "couleur": "#c83a2a"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "chien",
+   "a": "#c8a870"
+  }
+ },
+ {
+  "id": "TRF_012",
+  "nom": "Huit Portes",
+  "type": "transformation",
+  "ensemble": "portes",
+  "seuil": 3,
+  "desc": "Plafond de cadence +1, vitesse +0,5, dégâts +1 ; vapeur verte.",
+  "effets": [
+   {
+    "s": "plafondCadence",
+    "a": 1
+   },
+   {
+    "s": "vitesse",
+    "a": 0.5
+   },
+   {
+    "s": "degats",
+    "a": 1
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "couleur": "#8af07a"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "poing",
+   "a": "#6ae07a"
+  }
+ },
+ {
+  "id": "TRF_013",
+  "nom": "Artiste explosif",
+  "type": "transformation",
+  "ensemble": "argile",
+  "seuil": 3,
+  "desc": "Vos tirs explosent légèrement ; vos explosions ne vous blessent plus.",
+  "effets": [
+   {
+    "impact": "explosion",
+    "r": 0.8,
+    "coef": 0.4
+   },
+   {
+    "drapeau": "immuniteExplosion"
+   }
+  ],
+  "visuel": {
+   "couche": "bras",
+   "motif": "lueur_poings",
+   "couleur": "#f0e8d8"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "oiseau",
+   "a": "#f0e8d8"
+  }
+ }
+]

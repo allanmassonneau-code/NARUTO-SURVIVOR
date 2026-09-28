@@ -1,0 +1,869 @@
+[
+ {
+  "id": "ACT_001",
+  "nom": "Réécriture d’empreinte",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1,
+   "bibliotheque": 1
+  },
+  "charges": 6,
+  "effet": "reecriture",
+  "params": {},
+  "desc": "Relance les objets sur piédestal de la salle, chacun depuis son pool.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "icone": {
+   "forme": "rouleau",
+   "a": "#e8dcc0",
+   "b": "#3a3040",
+   "c": "#c83a2a"
+  },
+  "sansCible": "conserve"
+ },
+ {
+  "id": "ACT_002",
+  "nom": "Multi-clonage",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1
+  },
+  "charges": 4,
+  "effet": "clones",
+  "params": {
+   "n": 2
+  },
+  "desc": "Deux clones copient vos tirs pour la salle (50 %) et disparaissent au premier coup.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "masque",
+   "a": "#f6cf3e",
+   "b": "#f28a22",
+   "c": "#28407c"
+  },
+  "persoExclusif": null
+ },
+ {
+  "id": "ACT_003",
+  "nom": "Chidori",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boss": 1
+  },
+  "charges": 3,
+  "effet": "dash",
+  "params": {
+   "portee": 4,
+   "coef": 6,
+   "duree": 0.22,
+   "visuel": "foudre"
+  },
+  "desc": "Fonce en ligne droite : 6× dégâts aux ennemis traversés, invulnérable pendant l’élan.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "tonnerre",
+  "icone": {
+   "forme": "eclair",
+   "a": "#a8d8ff",
+   "b": "#5a90d8",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_004",
+  "nom": "Ōkashō",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1
+  },
+  "charges": 3,
+  "effet": "okasho",
+  "params": {
+   "base": 12
+  },
+  "desc": "Frappe le sol : 12 dégâts + 4 par point de force stocké, brise rochers et murs fissurés proches.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "poing",
+   "a": "#f39ab8",
+   "b": "#cf6a90",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_006",
+  "nom": "Invocation des chiens ninja",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "bibliotheque": 1
+  },
+  "charges": 3,
+  "effet": "immobiliser_tous",
+  "params": {
+   "duree": 3,
+   "coef": 2,
+   "visuel": "chiens"
+  },
+  "desc": "Des chiens surgissent et immobilisent tous les ennemis 3 s (boss : réduit).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "meute",
+  "icone": {
+   "forme": "chien",
+   "a": "#c8a870",
+   "b": "#8a6a4a",
+   "c": "#1c1420"
+  }
+ },
+ {
+  "id": "ACT_007",
+  "nom": "Porte de l’Ouverture",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boss": 1
+  },
+  "charges": 3,
+  "effet": "bonus",
+  "params": {
+   "duree": 8,
+   "bonus": [
+    {
+     "s": "degats",
+     "m": 1.5
+    },
+    {
+     "s": "vitesse",
+     "a": 1
+    },
+    {
+     "s": "cadence",
+     "m": 1.3
+    }
+   ],
+   "visuel": "aura_verte",
+   "nom": "portes"
+  },
+  "desc": "8 s : dégâts ×1,5, vitesse +1, cadence ×1,3.",
+  "statut": "adaptation (Huit Portes)",
+  "cumul": "unique",
+  "ensemble": "portes",
+  "icone": {
+   "forme": "poing",
+   "a": "#6ae07a",
+   "b": "#3a9a4a",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_008",
+  "nom": "Protection des huit trigrammes",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "sanctuaire": 1
+  },
+  "charges": 2,
+  "effet": "kaiten",
+  "params": {
+   "duree": 1.2,
+   "coef": 6
+  },
+  "desc": "Rotation de 1,2 s : détruit les tirs proches, repousse et blesse (6× dégâts au total).",
+  "statut": "adaptation (Hyūga)",
+  "cumul": "unique",
+  "ensemble": "yeux",
+  "icone": {
+   "forme": "tornade",
+   "a": "#e0e8ff",
+   "b": "#a0b0d8",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_009",
+  "nom": "Manipulation des ombres",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "bibliotheque": 1
+  },
+  "charges": 3,
+  "effet": "ombres",
+  "params": {
+   "n": 3,
+   "duree": 4
+  },
+  "desc": "Immobilise les trois ennemis les plus proches pendant 4 s (boss : 1,4 s).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "racine",
+   "a": "#2a2238",
+   "b": "#1c1428",
+   "c": "#6a5a80"
+  }
+ },
+ {
+  "id": "ACT_010",
+  "nom": "Cercueil de sable",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boss": 1
+  },
+  "charges": 3,
+  "effet": "frappe_cible",
+  "params": {
+   "coef": 10,
+   "coefBoss": 6,
+   "delai": 0.5,
+   "visuel": "cercueil",
+   "son": "sable"
+  },
+  "desc": "Le sable écrase l’ennemi le plus proche : 10× dégâts (6× contre un boss).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "sable",
+  "icone": {
+   "forme": "sable",
+   "a": "#c8a060",
+   "b": "#8a6a3a",
+   "c": "#f0d8a0"
+  }
+ },
+ {
+  "id": "ACT_011",
+  "nom": "Kuroari : piège",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "bibliotheque": 1
+  },
+  "charges": 3,
+  "effet": "frappe_cible",
+  "params": {
+   "coef": 8,
+   "coefBoss": 3,
+   "delai": 1.2,
+   "capture": 1.2,
+   "visuel": "cercueil",
+   "son": "lame"
+  },
+  "desc": "Enferme l’ennemi non-boss le plus proche puis le transperce (8×).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "marionnette",
+  "icone": {
+   "forme": "marionnette",
+   "a": "#2a2a30",
+   "b": "#6a6a78",
+   "c": "#1c1420"
+  }
+ },
+ {
+  "id": "ACT_012",
+  "nom": "Crocs sur crocs",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1
+  },
+  "charges": 3,
+  "effet": "dash",
+  "params": {
+   "portee": 6,
+   "coef": 5,
+   "duree": 0.4,
+   "visuel": "vrille"
+  },
+  "desc": "Deux passes en vrille à travers la salle : 5× dégâts à chaque contact, invulnérable.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "meute",
+  "icone": {
+   "forme": "tornade",
+   "a": "#c8c0b0",
+   "b": "#8a8070",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_013",
+  "nom": "Pluie de senbon empoisonnés",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "pacte": 1
+  },
+  "charges": 2,
+  "effet": "anneau_projectiles",
+  "params": {
+   "n": 16,
+   "coef": 2,
+   "statut": "poison",
+   "apparence": "senbon"
+  },
+  "desc": "Seize senbon empoisonnés partent en cercle.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "ensemble": "marionnette",
+  "icone": {
+   "forme": "senbon",
+   "a": "#b070d0",
+   "b": "#5a2a7a",
+   "c": "#7ae04a"
+  }
+ },
+ {
+  "id": "ACT_014",
+  "nom": "Fils de Jiongu",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "pacte": 1
+  },
+  "charges": 2,
+  "effet": "attirer",
+  "params": {},
+  "desc": "Attire tous les ramassables de la salle et lacère les ennemis proches (3×).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "chaine",
+   "a": "#2a2a2a",
+   "b": "#6a6a6a",
+   "c": "#c83a2a"
+  }
+ },
+ {
+  "id": "ACT_015",
+  "nom": "Parchemin de substitution",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1,
+   "sanctuaire": 1
+  },
+  "charges": 2,
+  "effet": "substitution",
+  "params": {
+   "duree": 3
+  },
+  "desc": "Une bûche prend votre place : 3 s d’invisibilité, les ennemis frappent la bûche.",
+  "statut": "adaptation (Kawarimi)",
+  "cumul": "unique",
+  "icone": {
+   "forme": "rouleau",
+   "a": "#8a5a30",
+   "b": "#c89a60",
+   "c": "#3a2a1a"
+  }
+ },
+ {
+  "id": "ACT_016",
+  "nom": "Invocation : grand crapaud",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 4,
+  "pools": {
+   "sanctuaire": 1,
+   "boss": 1,
+   "pacte": 1
+  },
+  "charges": 6,
+  "effet": "gamabunta",
+  "params": {},
+  "desc": "Un crapaud géant atterrit : 40 dégâts à tous les ennemis (25 aux boss), obstacles pulvérisés.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "ermite",
+  "icone": {
+   "forme": "crapaud",
+   "a": "#d86a2a",
+   "b": "#f0b070",
+   "c": "#3a1a10"
+  }
+ },
+ {
+  "id": "ACT_017",
+  "nom": "Amaterasu (empreinte)",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "pacte": 2
+  },
+  "charges": 4,
+  "effet": "statut_tous",
+  "params": {
+   "statut": "brulure",
+   "duree": 3,
+   "coef": 3,
+   "visuel": "flammes_noires",
+   "son": "feu"
+  },
+  "desc": "Flammes noires sur tous les ennemis de la salle.",
+  "statut": "adaptation (attribution à vérifier)",
+  "cumul": "unique",
+  "ensemble": "yeux",
+  "icone": {
+   "forme": "flamme",
+   "a": "#1a0a1a",
+   "b": "#5a2a6a",
+   "c": "#b060ff"
+  }
+ },
+ {
+  "id": "ACT_018",
+  "nom": "Tsukuyomi (empreinte)",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 4,
+  "pools": {
+   "pacte": 1,
+   "boss": 1
+  },
+  "charges": 6,
+  "effet": "tsukuyomi",
+  "params": {
+   "duree": 4
+  },
+  "desc": "Le temps s’arrête pour vos ennemis et leurs tirs pendant 4 s (boss : 1,5 s).",
+  "statut": "adaptation (attribution à vérifier)",
+  "cumul": "unique",
+  "ensemble": "yeux",
+  "icone": {
+   "forme": "lune",
+   "a": "#c81e28",
+   "b": "#6a0a14",
+   "c": "#1c1420"
+  }
+ },
+ {
+  "id": "ACT_019",
+  "nom": "Répulsion divine",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "pacte": 1,
+   "boss": 1
+  },
+  "charges": 3,
+  "effet": "repousser",
+  "params": {
+   "coef": 3
+  },
+  "desc": "Repousse tous les ennemis, détruit tous leurs tirs, 3× dégâts.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "sphere",
+   "a": "#e0e0ff",
+   "b": "#a0a0d8",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_020",
+  "nom": "Attraction céleste",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "pacte": 1,
+   "boss": 1
+  },
+  "charges": 4,
+  "effet": "attraction",
+  "params": {
+   "coef": 5
+  },
+  "desc": "Attire les ennemis au centre puis les écrase (5×).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "sphere",
+   "a": "#2a2030",
+   "b": "#6a5a80",
+   "c": "#c0b0e0"
+  }
+ },
+ {
+  "id": "ACT_021",
+  "nom": "Espace-temps intangible",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "pacte": 1,
+   "isolee": 1
+  },
+  "charges": 4,
+  "effet": "kamui",
+  "params": {
+   "duree": 3
+  },
+  "desc": "3 s intangible : ennemis et tirs vous traversent (pas les murs) ; vous ne pouvez pas tirer.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "sceau",
+   "a": "#e87a2a",
+   "b": "#1c1420",
+   "c": "#a8a8b0"
+  }
+ },
+ {
+  "id": "ACT_022",
+  "nom": "Pilule du soldat",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 1,
+  "pools": {
+   "boutique": 2,
+   "heritage": 1
+  },
+  "charges": 1,
+  "effet": "bonus",
+  "params": {
+   "duree": "salle",
+   "bonus": {
+    "s": "cadence",
+    "a": 1
+   },
+   "visuel": "aura_verte"
+  },
+  "desc": "Pour la salle : cadence +1.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "pilule",
+   "a": "#f0e8a0",
+   "b": "#c8b050",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_023",
+  "nom": "Parchemin de téléportation",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 1,
+  "pools": {
+   "boutique": 1,
+   "heritage": 1
+  },
+  "charges": 2,
+  "effet": "teleport",
+  "params": {},
+  "desc": "Vous téléporte dans une salle déjà visitée.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "icone": {
+   "forme": "rouleau",
+   "a": "#8a7ab0",
+   "b": "#e8dcc0",
+   "c": "#3a3040"
+  },
+  "sansCible": "conserve"
+ },
+ {
+  "id": "ACT_024",
+  "nom": "Rasenshuriken",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 4,
+  "pools": {
+   "boss": 1,
+   "heritage": 1
+  },
+  "charges": 4,
+  "effet": "rasenshuriken",
+  "params": {},
+  "desc": "Un immense shuriken de vent traverse tout et explose (15× autour).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "renard",
+  "icone": {
+   "forme": "fuma",
+   "a": "#e0f4ff",
+   "b": "#6ab8f8",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_025",
+  "nom": "Dragons de feu",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boss": 1
+  },
+  "charges": 3,
+  "effet": "dragons",
+  "params": {},
+  "desc": "Quatre dragons de feu chercheurs (4×, brûlure).",
+  "statut": "création originale",
+  "cumul": "unique",
+  "icone": {
+   "forme": "flamme",
+   "a": "#c83018",
+   "b": "#f07820",
+   "c": "#ffe060"
+  }
+ },
+ {
+  "id": "ACT_026",
+  "nom": "Forêt naissante",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "sanctuaire": 1,
+   "boss": 1
+  },
+  "charges": 4,
+  "effet": "racines",
+  "params": {},
+  "desc": "Des racines jaillissent sous chaque ennemi : immobilisation 2,5 s et dégâts répétés.",
+  "statut": "adaptation (Mokuton)",
+  "cumul": "unique",
+  "icone": {
+   "forme": "racine",
+   "a": "#6a4a2a",
+   "b": "#4a3018",
+   "c": "#8ac060"
+  }
+ },
+ {
+  "id": "ACT_027",
+  "nom": "Sceau de scellement",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 4,
+  "pools": {
+   "bibliotheque": 1,
+   "sanctuaire": 1
+  },
+  "charges": 6,
+  "effet": "scellement",
+  "params": {},
+  "desc": "Scelle l’ennemi le plus proche (boss : 15 % de ses PV).",
+  "statut": "création originale",
+  "cumul": "unique",
+  "icone": {
+   "forme": "sceau",
+   "a": "#e8d060",
+   "b": "#8a6a20",
+   "c": "#1c1420"
+  }
+ },
+ {
+  "id": "ACT_028",
+  "nom": "Invocation inversée",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "bibliotheque": 1,
+   "heritage": 1
+  },
+  "charges": 3,
+  "effet": "familier_temporaire",
+  "params": {},
+  "desc": "Invoque un familier au hasard pour tout l’étage.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "icone": {
+   "forme": "rouleau",
+   "a": "#6a9a3a",
+   "b": "#e8dcc0",
+   "c": "#3a3040"
+  }
+ },
+ {
+  "id": "ACT_029",
+  "nom": "Transfert d’esprit",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "bibliotheque": 1,
+   "heritage": 1
+  },
+  "charges": 3,
+  "effet": "charme",
+  "params": {},
+  "desc": "L’ennemi non-boss le plus proche combat pour vous jusqu’à sa mort.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "feuille",
+   "a": "#e8a0d0",
+   "b": "#a05090",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_030",
+  "nom": "Lotus primaire",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "defi": 1
+  },
+  "charges": 2,
+  "effet": "lotus",
+  "params": {},
+  "desc": "Saisit l’ennemi proche : 12× dégâts ; vous coûte une demi-unité si vous en avez plus d’une.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "portes",
+  "icone": {
+   "forme": "feuille",
+   "a": "#6ae07a",
+   "b": "#3a9a4a",
+   "c": "#e0ffe0"
+  }
+ },
+ {
+  "id": "ACT_031",
+  "nom": "Rituel de permutation",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "pacte": 1,
+   "cache": 1
+  },
+  "charges": 0,
+  "effet": "permutation",
+  "params": {},
+  "desc": "Usage unique : chaque passif (hors objets-clés) est remplacé par un autre.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "unique": true,
+  "icone": {
+   "forme": "sceau",
+   "a": "#6a2a8a",
+   "b": "#e8dcc0",
+   "c": "#c83a2a"
+  }
+ },
+ {
+  "id": "ACT_032",
+  "nom": "Genjutsu du temps suspendu",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "bibliotheque": 1,
+   "boutique": 1
+  },
+  "charges": 4,
+  "effet": "ralentir_tous",
+  "params": {
+   "duree": 6
+  },
+  "desc": "Ralentit tous les ennemis de moitié pendant 6 s.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "icone": {
+   "forme": "lune",
+   "a": "#6a80c0",
+   "b": "#3a4a8a",
+   "c": "#e0e8ff"
+  }
+ },
+ {
+  "id": "ACT_033",
+  "nom": "Sablier du courant",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "bibliotheque": 1
+  },
+  "charges": 0,
+  "effet": "bonus",
+  "params": {
+   "duree": 6,
+   "bonus": {
+    "s": "vitesse",
+    "a": 1.2
+   }
+  },
+  "desc": "Recharge dans le temps (20 s en combat) : 6 s de vitesse +1,2.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "recharge": 20,
+  "icone": {
+   "forme": "fiole",
+   "a": "#6ac8e8",
+   "b": "#3a8ab0",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_050",
+  "nom": "Relais",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 0,
+  "pools": {},
+  "charges": 1,
+  "effet": "relais",
+  "params": {},
+  "desc": "Sacrifie un clone : explosion de chakra (5× dégâts autour).",
+  "statut": "création originale",
+  "cumul": "unique",
+  "persoExclusif": "ALT_001",
+  "icone": {
+   "forme": "masque",
+   "a": "#6a2a1a",
+   "b": "#f28a22",
+   "c": "#28407c"
+  }
+ }
+]

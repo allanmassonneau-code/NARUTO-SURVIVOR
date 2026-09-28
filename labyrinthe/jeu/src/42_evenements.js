@@ -10,7 +10,7 @@ function sourcesDeclencheurs(J) {
   const L = [];
   for (const id of J.passifs) { const d = INDEX[id]; if (d.effets) for (const e of d.effets) if (e.quand) L.push([e, d]); }
   for (const t of J.transformations) for (const e of INDEX[t].effets || []) if (e.quand) L.push([e, INDEX[t]]);
-  if (J.talisman) for (const e of INDEX[J.talisman].effets || []) if (e.quand) L.push([e, INDEX[J.talisman]]);
+  for (const t of [J.talisman, J.talisman2]) if (t) for (const e of INDEX[t].effets || []) if (e.quand) L.push([e, INDEX[t]]);
   for (const s of synergiesActives(J)) for (const e of s.effets || []) if (e.quand) L.push([e, s]);
   return L;
 }

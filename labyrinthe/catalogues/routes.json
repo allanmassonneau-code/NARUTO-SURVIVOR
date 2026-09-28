@@ -1,0 +1,68 @@
+[
+ {
+  "id": "RTE_01",
+  "nom": "Première fin : le sceau fissuré",
+  "bifurcation": "étage 6",
+  "prerequis": "aucun",
+  "boss": "BOS_014",
+  "etages": 6,
+  "recompense": "Ouvre les étages 7-8 (chapitre IV) ; Mue du serpent (PSV_143) et Rituel de permutation (ACT_031) via OBJ_017",
+  "marque": "Serpent",
+  "indice": "Toujours ouverte."
+ },
+ {
+  "id": "RTE_02",
+  "nom": "Deuxième fin : la pluie sans fin",
+  "bifurcation": "étage 8",
+  "prerequis": "RTE_01 accomplie",
+  "boss": "BOS_018|BOS_019",
+  "etages": 8,
+  "recompense": "Ouvre les deux branches de l’étage 9 ; Sceau de la mort (PSV_131) et Transfert d’esprit (ACT_029) via OBJ_039",
+  "marque": "Nuage rouge",
+  "indice": "Après la première fin, le labyrinthe s’approfondit."
+ },
+ {
+  "id": "RTE_03",
+  "nom": "Branche de la Lumière : Mont Myōboku",
+  "bifurcation": "après le boss de l’étage 8",
+  "prerequis": "RTE_02 accomplie ; aucun pacte interdit acheté pendant la partie",
+  "boss": "BOS_020",
+  "etages": 9,
+  "recompense": "Nature du sage (PSV_144) et Sceau de scellement (ACT_027) ajoutés aux pools (OBJ_046)",
+  "marque": "Crapaud",
+  "indice": "Un rayon de lumière ne s’ouvre qu’à ceux qui n’ont rien vendu d’eux-mêmes."
+ },
+ {
+  "id": "RTE_04",
+  "nom": "Branche de l’Ombre : Profondeurs du sceau",
+  "bifurcation": "après le boss de l’étage 8",
+  "prerequis": "RTE_02 accomplie",
+  "boss": "BOS_021",
+  "etages": 9,
+  "recompense": "Réincarnation impure (PSV_140) et Espace-temps intangible (ACT_021) ajoutés aux pools (OBJ_047)",
+  "marque": "Éventail",
+  "indice": "La trappe mène plus bas, toujours plus bas."
+ },
+ {
+  "id": "RTE_05",
+  "nom": "Conseil des épreuves (Boss Rush)",
+  "bifurcation": "étage 6",
+  "prerequis": "boss de l’étage 6 vaincu en moins de 20:00 (chronomètre de partie)",
+  "boss": "vagues de boss",
+  "etages": 6,
+  "recompense": "Défis « Course de l’examen » (DEF_010) et « Collectionneur pressé » (DEF_011) (OBJ_048)",
+  "marque": "Parchemin d’or",
+  "indice": "Les juges n’attendent pas les retardataires."
+ },
+ {
+  "id": "RTE_06",
+  "nom": "Brèche instable",
+  "bifurcation": "étage 8",
+  "prerequis": "salle du boss de l’étage 8 atteinte en moins de 30:00",
+  "boss": "BOS_022",
+  "etages": 8,
+  "recompense": "Chute céleste (PSV_020) ajoutée aux pools (OBJ_049)",
+  "marque": "Dix queues",
+  "indice": "Une fissure respire derrière le dernier gardien… si l’on arrive tôt."
+ }
+]
