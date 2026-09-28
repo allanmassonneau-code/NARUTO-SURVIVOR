@@ -81,6 +81,15 @@ function collecterLumieres(s, A) {
     else { const [c, f] = couleurTir(p); aj(p.x, p.y - p.z, 26 * Math.min(2.5, k), c, 0.5 * f, 0.42 * f); }
   }
   for (const o of G.orbes) aj(o.x, o.y, o.r * 6, '#6ab8f8', 0.55, 0.4);
+  // rôles lumineux : soigneurs verts, invocateurs violets, mèches des kamikazes, masques de feu, auras protectrices
+  for (const e of G.ennemis) {
+    if (e.mort || e.cache) continue; const d = e.def, P = d.params || {};
+    if (d.comportement === 'guerisseur') aj(e.x, e.y - 10, 46, '#60f080', 0.36, 0.12);
+    else if (d.comportement === 'invocateur' && !e.boss) aj(e.x, e.y - 4, 50, '#b070f0', 0.36, 0.12);
+    else if (d.comportement === 'kamikaze') aj(e.x, e.y - 8, 28, '#ffb040', 0.45, 0.3);
+    if (P.proj === 'feu' && d.comportement === 'tourelle') aj(e.x, e.y - 8, 56, '#ff8a30', 0.42, 0.2);
+    if (P.bouclier === 'aura') aj(e.x, e.y - 8, 64, '#8ad0ff', 0.32, 0.1);
+  }
   for (const f of G.faisceaux) for (const b of f.faisceaux || [f]) { const n = Math.max(1, Math.round(b.l / 40)); for (let i = 0; i <= n; i++) { const d = b.l * i / n; aj(f.x + Math.cos(b.a) * d, f.y + Math.sin(b.a) * d, 40, f.couleur && f.couleur[0] === '#' ? f.couleur : '#ffffff', 0.5, 0.3); } }
   for (const z of G.zones) { const c = COUL_ZONE[z.type]; if (c) aj(z.x, z.y, z.r * 2.2, c, 0.45, 0.12); }
   for (const e of G.effets) {

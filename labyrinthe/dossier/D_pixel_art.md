@@ -89,6 +89,25 @@ Une **carte de lumière** à demi-résolution est multipliée sur la salle à ch
 
 **Matière.** Le sol reçoit des taches d'usure en dégradé doux et des détails du thème (nœuds et clous de planches, touffes d'herbe et feuilles, rides de sable, grilles et flaques d'acide, flaques d'eau, fissures, fleurs, veines rougeoyantes), jamais sous un obstacle ni dans une fosse ; les murs gagnent un volume (face qui s'assombrit vers le sol, arête éclairée), une ombre portée en dégradé sur trois côtés et des détails (lierre, suintements, tuyau continu, dunes au pied du mur, chaînes, avis placardés, fils) ; les obstacles ont une ombre de contact, les fosses une paroi striée. Les tirs alliés laissent deux images fantômes le long de leur vitesse (sauf *Confort*).
 
+### Équipement par comportement (`25_sprites_ennemis.js`)
+
+Règle : **un comportement d'attaque = une silhouette**. Les shinobi hostiles partagent le corps du chibi ; la faction se lit à la coiffure et aux couleurs, le **comportement à l'équipement**, dessiné dans le sprite (aucun coût à l'image) :
+
+| Comportement | Équipement | Variante d'attaque |
+|---|---|---|
+| Poursuivant | bandages aux poings, kunai | — |
+| Chargeur | épaulières, grande lame en avant | — |
+| Tireur en ligne | bandoulière | kunai (ligne), éventail rouge (éventail), cristaux (salves de glace) |
+| Tireur qui anticipe | visière à lentille rouge | arbalète, ou amplificateur au bras (ondes sonores) |
+| Lanceur en cloche | jarre sur le dos, petite jarre en main | — |
+| Poseur de pièges | sacoche, parchemins pendus à la ceinture | — |
+| Lourd | plastron riveté, massue | — |
+| Invocateur | grand rouleau dans le dos, cercle violet au sol, lueur violette | — |
+| Soigneur | tablier à croix verte, mains vertes, cercle vert au sol, lueur verte | — |
+| Embusqué | cape à capuche (seul le visage reste visible) | — |
+
+Les créatures qui partageaient une forme reçoivent un accessoire d'attaque : marionnette à lames (lames dépliées), marionnette lanceuse (tubes et socle), marionnette inerte (fils et croix de manipulation), marionnette volante (fils), oiseau d'argile kamikaze (mèche allumée, marque rouge), statue bouclier (grand pavois), statue d'aura (runes et couronne bleues, lueur), statue géante (massue), crapaud cracheur (goitre d'huile), sujet qui se divise (couture médiane), momie lourde (poings de pierre), serpent chargeur (crête), cuve d'acide (buse), nid de serpenteaux (têtes qui dépassent), masque de feu (couronne de flammes, lueur), tourelle à parchemins (bandes de papier).
+
 ## D5. Animations
 
 | Animation | Règle |
@@ -174,7 +193,8 @@ Tout est **synthétisé** (WebAudio) ; aucune musique ni aucun son n’est impor
 
 - **Effets** : chaque son a un intervalle minimal, un nombre maximal de voix simultanées et une priorité ; **budget global de 22 voix** : une voix moins prioritaire est coupée, jamais un avertissement de boss. Hauteur variée de ±6 % à chaque lecture pour éviter la répétition mécanique (tirs, impacts, pièces).
 - **Musique** : générée depuis une graine fixe par thème, en gammes japonaises (*in*, *yo*, *ryūkyū*, *sombre*), timbre koto (triangle + harmonique) ou flûte (sinus + souffle), tempo 72 à 100 ; une couche de percussions (taiko) s’ajoute en combat et se retire en douceur au nettoyage ; les boss ont une piste propre (+22 battements par minute, gamme sombre). Aucune mélodie connue n’est reprise.
-- L’audio démarre au premier appui (contrainte des navigateurs), signalé sur l’écran titre.
+- L’audio démarre au premier clic ou appui clavier (contrainte des navigateurs : un bouton de manette ne suffit pas) ; le jeu retente à chaque appui de manette et affiche une invite (haut-parleur barré) au titre et en jeu tant que le son attend.
+- **Mixage** : gain maître, compresseur de cohésion et limiteur (crêtes ≈ −5 dB, niveau efficace ≈ −18 dB mesurés), réverbération synthétique partagée (salle de pierre de 2,6 s) et nappe tenue sous la musique.
 
 ## D11. Confort et accessibilité
 

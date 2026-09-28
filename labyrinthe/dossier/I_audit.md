@@ -67,6 +67,8 @@ Le dossier a été relu contre le code, et le code contre le dossier. Chaque éc
 | Ponctuation française orpheline en début de ligne | règle de coupure |
 | Texte de récompense débordant de l'écran de victoire | coupure centrée |
 | Salles de pacte et de sanctuaire sans identité visuelle | décors propres (G §3, briefs 10-11) |
+| Son jamais démarré en jouant à la manette seule (le navigateur exige un clic ou une touche) ; mixage trop faible (crêtes à −25 dB) | nouvel essai à chaque appui de manette, invite visible tant que le son attend, gain maître, compresseur et limiteur (crêtes ≈ −5 dB), réverbération |
+| Ennemis de comportements différents visuellement identiques (même corps de shinobi, couleurs seules ; même marionnette pour quatre comportements, même oiseau pour un volant et un kamikaze) | équipement par comportement et accessoire d'attaque pour les créatures (D §4) |
 
 **Défauts du banc de test** : huit codes de mission invalides tombaient sur une graine aléatoire (tests instables) ; le test manette dépendait de l'ordre d'exécution ; le test de secours ne mesurait que l'écart horizontal. Tous corrigés.
 

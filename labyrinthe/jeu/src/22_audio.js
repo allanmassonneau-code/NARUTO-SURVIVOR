@@ -9,13 +9,23 @@ const Son = {
   voix: [], dernier: {}, actif: false,
   reglages: null,
   init(reglages) { this.reglages = reglages; },
-  demarrer() { // doit suivre une activation utilisateur (clic / touche)
-    if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
+  // Les navigateurs n'autorisent le son qu'après un clic ou une touche : un bouton de manette ne
+  // compte pas. Le jeu retente à chaque appui et affiche une invite tant que le son attend.
+  demarrer() {
+    if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {}); return; }
     const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-    this.ctx = new AC();
-    this.maitre = this.ctx.createDynamicsCompressor(); this.maitre.threshold.value = -14; this.maitre.ratio.value = 4; this.maitre.connect(this.ctx.destination);
-    this.busEffets = this.ctx.createGain(); this.busEffets.connect(this.maitre);
-    this.busMusique = this.ctx.createGain(); this.busMusique.connect(this.maitre);
+    try { this.ctx = new AC({ latencyHint: 'interactive' }); } catch (e) { return; }
+    const c = this.ctx;
+    // bus → gain maître → compresseur de cohésion → limiteur → sortie ; réverbération partagée
+    this.maitre = c.createGain(); this.maitre.gain.value = 3.4;
+    const cohesion = c.createDynamicsCompressor(); cohesion.threshold.value = -20; cohesion.knee.value = 10; cohesion.ratio.value = 3; cohesion.attack.value = 0.004; cohesion.release.value = 0.2;
+    const limiteur = c.createDynamicsCompressor(); limiteur.threshold.value = -4; limiteur.knee.value = 0; limiteur.ratio.value = 20; limiteur.attack.value = 0.001; limiteur.release.value = 0.12;
+    this.maitre.connect(cohesion); cohesion.connect(limiteur); limiteur.connect(c.destination);
+    this.reverb = c.createConvolver(); this.reverb.buffer = this.reponseSalle(2.6, 3); this.reverb.connect(this.maitre);
+    this.busEffets = c.createGain(); this.busEffets.connect(this.maitre);
+    this.busMusique = c.createGain(); this.busMusique.connect(this.maitre);
+    for (const [bus, k] of [[this.busEffets, 0.14], [this.busMusique, 0.42]]) { const e = c.createGain(); e.gain.value = k; bus.connect(e); e.connect(this.reverb); }
+    if (c.state === 'suspended') c.resume().catch(() => {});
     this.appliquerVolumes();
     const n = this.ctx.sampleRate * 1.5, b = this.ctx.createBuffer(1, n, this.ctx.sampleRate), d = b.getChannelData(0);
     let s = 12345; for (let i = 0; i < n; i++) { s = (s * 1103515245 + 12345) & 0x7fffffff; d[i] = (s / 0x3fffffff) - 1; }
@@ -25,8 +35,14 @@ const Son = {
   suspendu() { return !this.ctx || this.ctx.state !== 'running'; },
   appliquerVolumes() {
     if (!this.ctx || !this.reglages) return;
-    this.busEffets.gain.value = (this.reglages.volEffets ?? 0.8) * 0.9;
-    this.busMusique.gain.value = (this.reglages.volMusique ?? 0.6) * 0.55;
+    this.busEffets.gain.value = (this.reglages.volEffets ?? 0.8) * 1.1;
+    this.busMusique.gain.value = (this.reglages.volMusique ?? 0.6) * 1.0;
+  },
+  // Réponse impulsionnelle synthétique (bruit stéréo à décroissance) : une salle de pierre
+  reponseSalle(duree, pente) {
+    const c = this.ctx, n = Math.floor(c.sampleRate * duree), b = c.createBuffer(2, n, c.sampleRate);
+    for (let ch = 0; ch < 2; ch++) { const d = b.getChannelData(ch); let s = 777 + ch * 131; for (let i = 0; i < n; i++) { s = (s * 1103515245 + 12345) & 0x7fffffff; d[i] = ((s / 0x3fffffff) - 1) * Math.pow(1 - i / n, pente) * (i < 60 ? i / 60 : 1); } }
+    return b;
   },
   // ── primitives ──
   osc(type, f0, f1, t0, dur, vol, dest, attaque = 0.004) {
@@ -188,6 +204,7 @@ const Musique = {
       const t = this.prochain, total = p.mesures * p.pasParMesure, s = this.pas % total;
       for (const n of p.melodie) if (n.pas === s) this.note(n.deg, t, n.dur * spb, p.timbre);
       for (const n of p.basse) if (n.pas === s) this.basse(n.deg, t, n.dur * spb);
+      if (s % (p.pasParMesure * 2) === 0) this.nappe(t, p.pasParMesure * 2 * spb);
       const dans = s % p.pasParMesure;
       if (p.perc.includes(dans)) A.taiko(t, (dans === 0 ? 0.55 : 0.32) * (p.boss ? 1.2 : 1), this.gPerc);
       if (dans % 2 === 1 && p.boss) A.souffle(t, 0.03, 0.05, 'highpass', 6000, 0, 1, this.gPerc);
@@ -202,5 +219,7 @@ const Musique = {
     else { A.osc('square', f, f, t, dur * 0.9, 0.035, this.gAmb, 0.01); }
   },
   basse(deg, t, dur) { const f = this.freq(deg - 10); this.A.osc('triangle', f, f, t, dur, 0.09, this.gAmb, 0.05); },
+  // nappe tenue (fondamentale et quinte, attaque lente) : remplit l'espace sous la mélodie
+  nappe(t, dur) { for (const [d, v] of [[-5, 0.045], [-2, 0.03], [0, 0.018]]) { const f = this.freq(d); this.A.osc('sine', f, f * 1.002, t, dur, v, this.gAmb, Math.min(0.8, dur * 0.3)); } },
   etatCombat(v) { this.cibleCombat = v ? 1 : 0; },
 };

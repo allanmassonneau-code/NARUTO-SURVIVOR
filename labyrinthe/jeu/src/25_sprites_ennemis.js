@@ -205,6 +205,105 @@ function dessinerVisage(g, type, cx, cy) {
 }
 // Cache par objet « sprite » et par échelle : les copies de définition créées en combat
 // (illusions, masques, miroirs) qui gardent le même objet sprite ne le reconstruisent pas.
+// ── Équipements par comportement : un comportement d'attaque = une silhouette ──
+// Rouleau dans le dos = invocateur ; tablier à croix verte = soigneur ; épaulières et grande
+// lame = chargeur ; bandoulière et kunai (éventail, glace selon le tir) = tireur en ligne ;
+// visière rouge et arbalète (ou amplificateur) = tireur qui anticipe ; jarre sur le dos =
+// lanceur en cloche ; parchemins pendus à la ceinture = poseur de pièges ; plastron et
+// massue = lourd ; cape à capuche = embusqué ; bandages et kunai = poursuivant.
+const ARME_PROPRE = new Set(['chargeur', 'lourd', 'tireur', 'tireur_predictif', 'lanceur_arc', 'guerisseur', 'invocateur', 'embusque']);
+const _equip = {};
+function piece(nom, lignes, couleurs) { return _equip[nom] || (_equip[nom] = contourner(avecMarge(peindre(lignes, couleurs)))); }
+const EQUIPEMENTS = {
+  rouleau: [['RsssssssssssssssssssssssR', 'RlllllllllllllllllllllllR', 'RsssssssssssssssssssssssR', 'RdddddddddddddddddddddddR'], { R: '#b83a3a', s: '#e8dcb8', l: '#fff4dc', d: '#b8a888' }],
+  tablier: [['wwwwwwwwww', 'wwwwggwwww', 'wwwwggwwww', 'wwggggggww', 'wwwwggwwww', 'wwwwggwwww', 'dwwwwwwwwd'], { w: '#f4f0e6', g: '#2ab050', d: '#c8c0b0' }],
+  epauliere: [['.mmmm.', 'mllllm', 'mmmmmm'], { m: '#5a5e6a', l: '#a8aebc' }],
+  lame: [['.......w', '......wl', '.....wl.', '....wl..', '...wl...', '..wl....', '.wl.....', 'bb......', 'bb......'], { w: '#f4f8ff', l: '#a0a8b8', b: '#5a3a24' }],
+  kunai: [['.bb....', 'rbbsssw', '.bb....'], { r: '#8a8a94', b: '#4a3a2a', s: '#c8ccd8', w: '#ffffff' }],
+  eventail: [['..wpwpw..', '.wpwpwpw.', 'wpwpwpwpw', '.wpwpwpw.', '..wpwpw..', '...wpw...', '....k....', '....k....'], { w: '#f0e8d8', p: '#c84a3a', k: '#4a3a2a' }],
+  glace: [['...c...', '..cwc.c', '.cwwwc.', 'c.cwc..', '...c...'], { c: '#7ac8f0', w: '#e8f8ff' }],
+  arbalete: [['kk.....kk', '.kwwwwwk.', '...bbb...', '...b.b...'], { k: '#3a3040', w: '#c8ccd8', b: '#6a4a2a' }],
+  amplificateur: [['.mmm.', 'mkmkm', 'mmmmm', 'mkmkm', 'mmmmm', '.lll.'], { m: '#8a8a94', k: '#2a2a34', l: '#c8c8d0' }],
+  jarre: [['..nnnn..', '...jj...', '.jjjjjj.', 'jjlljjjj', 'jljjjjjd', 'jjjjjjjd', 'jjjjjjdd', '.jjjjdd.', '..dddd..'], { n: '#6a4a36', j: '#b86a44', l: '#e0a07a', d: '#8a4a30' }],
+  jarrette: [['.nn.', 'jjjj', 'jljj', 'jjjd', '.dd.'], { n: '#6a4a36', j: '#b86a44', l: '#e0a07a', d: '#8a4a30' }],
+  etiquette: [['ppp', 'prp', 'ppp', 'prp', 'ppp'], { p: '#f4f0e8', r: '#c83a2a' }],
+  sacoche: [['.bbb.', 'bdddb', 'bdbdb', 'bdddb', '.bbb.'], { b: '#6a4a2a', d: '#8a6a3a' }],
+  plastron: [['mmmmmmmmmm', 'mlmmmmmmlm', 'mmmmkkmmmm', 'mlmmmmmmlm', 'mmmmmmmmmm'], { m: '#6a6e7a', l: '#a8aeb8', k: '#3a3e48' }],
+  massue: [['.w......', '.ww.....', '..ww....', '...ww...', '...ww...', '..hhhhh.', '.hhlhhhh', 'hhhhbhhh', 'hbhhhhhh', 'hhhhhbhh', 'hhhhhhhh', '.hhhhhh.', '..hhhh..'], { w: '#7a5a3a', h: '#4e4450', l: '#8a8098', b: '#1c1420' }],
+};
+const eq = (g, nom, x, y) => { const [l, c] = EQUIPEMENTS[nom]; g.drawImage(piece(nom, l, c), x - 1, y - 1); };
+function equiperNinja(g, d, couche, i) {
+  const P = d.params || {}, R = (x, y, l, h, c) => { g.fillStyle = c; g.fillRect(x, y, l, h); };
+  switch (d.comportement) {
+    case 'invocateur': if (couche === 'dos') eq(g, 'rouleau', 3, 21); else { R(12, 25, 1, 1, '#e0b0ff'); R(19, 25, 1, 1, '#e0b0ff'); R(15, 24 + i, 2, 1, '#c080ff'); } break;
+    case 'guerisseur': if (couche === 'face') { eq(g, 'tablier', 11, 21); R(9, 26, 3, 2, '#7af09a'); R(20, 26, 3, 2, '#7af09a'); R(10, 26, 1, 1, '#e8ffec'); R(21, 26, 1, 1, '#e8ffec'); } break;
+    case 'chargeur': if (couche === 'face') { eq(g, 'epauliere', 5, 20); eq(g, 'epauliere', 21, 20); eq(g, 'lame', 21, 18); } break;
+    case 'tireur':
+      if (couche === 'face') {
+        for (let k = 0; k < 7; k++) { R(10 + Math.round(k * 1.7), 22 + k, 2, 1, '#6a4a2a'); if (k % 2) R(10 + Math.round(k * 1.7), 22 + k, 1, 1, '#d8dce8'); }
+        if (P.motif === 'eventail') eq(g, 'eventail', 22, 18); else if (P.proj === 'glace_ennemie') eq(g, 'glace', 23, 21); else eq(g, 'kunai', 22, 25);
+      }
+      break;
+    case 'tireur_predictif':
+      if (couche === 'face') { R(6, 12, 20, 3, '#24202c'); R(18, 12, 5, 3, '#ff4a4a'); R(19, 12, 1, 1, '#ffd0c8'); R(8, 13, 3, 1, '#4a4454'); if (P.proj === 'son') eq(g, 'amplificateur', 21, 22); else eq(g, 'arbalete', 11, 23); }
+      break;
+    case 'lanceur_arc': if (couche === 'dos') eq(g, 'jarre', 22, 19); else eq(g, 'jarrette', 5, 24); break;
+    case 'poseur': if (couche === 'face') { eq(g, 'sacoche', 4, 24); eq(g, 'etiquette', 10, 27); eq(g, 'etiquette', 15, 28 + i); eq(g, 'etiquette', 20, 27); } break;
+    case 'lourd': if (couche === 'face') { eq(g, 'plastron', 11, 22); eq(g, 'massue', 21, 20); } break;
+    case 'embusque':
+      if (couche === 'face') { // cape à capuche : seul le visage reste visible
+        const cape = '#2a2432', clair = '#4a4058', bord = '#120e16';
+        for (let y = 20; y <= 32; y++) { const w = 7 + Math.round((y - 20) * 0.35); R(16 - w - 1, y, 2 * w + 2, 1, bord); R(16 - w, y, 2 * w, 1, cape); R(16 - w, y, 1, 1, clair); }
+        for (let x = 16 - 11; x < 16 + 11; x += 2) R(x, 32 + ((x + i) % 2), 1, 1, bord);
+        const capuche = [[0, 11, 20], [1, 9, 22], [2, 7, 24], [3, 4, 27], [4, 3, 28], [5, 3, 28], [6, 3, 28], [7, 3, 28], [8, 3, 28], [9, 3, 28]];
+        for (const [y, a, b] of capuche) { R(a - 1, y, b - a + 3, 1, bord); R(a, y, b - a + 1, 1, y === 9 ? clair : cape); }
+        R(4, 10, 2, 9, cape); R(26, 10, 2, 9, cape); R(3, 10, 1, 9, bord); R(28, 10, 1, 9, bord);
+      }
+      break;
+    case 'poursuivant': if (couche === 'face') { R(9, 25, 3, 1, '#e8e4dc'); R(20, 25, 3, 1, '#e8e4dc'); R(9, 27, 3, 1, '#e8e4dc'); R(20, 27, 3, 1, '#e8e4dc'); if (!d.sprite.arme) { R(22, 26, 1, 2, '#4a3a2a'); R(22, 28, 1, 4, '#c8ccd8'); R(22, 32, 1, 1, '#ffffff'); } } break;
+  }
+}
+// Créatures partageant une même forme : l'accessoire annonce l'attaque
+function accessoireCreature(d, S) {
+  const P = d.params || {}, co = d.comportement;
+  const R = (g, x, y, l, h, c) => { g.fillStyle = c; g.fillRect(x, y, l, h); };
+  const fils = (g, bx, by, bw, xs) => { R(g, bx + 1, 0, bw - 2, 2, '#6a4a2a'); R(g, bx + 1, 0, bw - 2, 1, '#9a7a4a'); for (const x of xs) R(g, bx + x, 2, 1, by + 2 - 2, 'rgba(235,235,250,0.85)'); };
+  switch (S.cle) {
+    case 'marionnette':
+      if (co === 'chargeur') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (let k = 0; k < 6; k++) { R(g, bx + 1 - k, by + 5 + k + i, 1, 1, '#f0f4ff'); R(g, bx + 1 - k, by + 6 + k + i, 1, 1, '#7a8090'); R(g, bx + bw - 2 + k, by + 5 + k + i, 1, 1, '#f0f4ff'); R(g, bx + bw - 2 + k, by + 6 + k + i, 1, 1, '#7a8090'); } };
+      if (co === 'tourelle') return (g, bx, by, bw, bh, i, c) => { if (c === 'dos') { for (const x of [bx + 1, bx + bw - 4]) { R(g, x - 1, by - 5, 5, 8, '#1c1420'); R(g, x, by - 4, 3, 7, '#4a4450'); R(g, x, by - 4, 3, 1, '#9a92a8'); } } else { R(g, bx - 1, by + bh - 4, bw + 2, 5, '#1c1420'); R(g, bx, by + bh - 3, bw, 3, '#4a3e36'); for (let x = bx + 2; x < bx + bw - 1; x += 4) R(g, x, by + bh - 2, 1, 1, '#b0a898'); } };
+      if (co === 'inerte') return (g, bx, by, bw, bh, i, c) => { if (c === 'dos') fils(g, bx, by, bw, [3, Math.floor(bw / 2), bw - 4]); };
+      return null;
+    case 'statue':
+      if (P.bouclier === 'frontal') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + 2, y = by + bh - 10, w = bw - 4; R(g, x - 1, y - 1, w + 2, 11, '#1c1420'); R(g, x, y, w, 9, '#6a5a4a'); R(g, x, y, w, 1, '#b89a6a'); R(g, x, y, 1, 9, '#b89a6a'); R(g, x + Math.floor(w / 2) - 1, y + 2, 2, 5, '#e8c050'); R(g, x + Math.floor(w / 2) - 3, y + 4, 6, 1, '#e8c050'); };
+      if (P.bouclier === 'aura') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (const [x, y] of [[3, 4], [bw - 4, 4], [Math.floor(bw / 2), 6], [4, 8], [bw - 5, 8]]) R(g, bx + x, by + y, 1, 1, '#8ae0ff'); for (let k = -1; k <= 1; k++) R(g, bx + Math.floor(bw / 2) + k * 3, by - 3 - (k ? 0 : 1) - (i && !k ? 1 : 0), 2, 2, '#8ae0ff'); };
+      if (co === 'lourd') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; for (let k = 0; k < 8; k++) R(g, bx + bw - 3 + Math.round(k * 0.5), by + bh - 4 - k, 2, 1, '#6a4a2a'); R(g, bx + bw - 1, by - 5, 7, 7, '#1c1420'); R(g, bx + bw, by - 4, 5, 5, '#5a5058'); R(g, bx + bw, by - 4, 5, 1, '#8a8098'); };
+      return null;
+    case 'crapaud':
+      if (co === 'lanceur_arc') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + Math.floor(bw / 2) - 3, y = by + bh - 6; g.drawImage(ellipse(4, 2 + i, '#1c1420'), x - 1, y - 1 - i); g.drawImage(ellipse(3, 1 + i, '#f0c060'), x, y - i); R(g, x + 2, y + 3, 1, 2, '#3a2a1a'); };
+      return null;
+    case 'momie':
+      if (d.mort === 'division') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + Math.floor(bw / 2) - 1; for (let y = by + 2; y < by + bh - 1; y++) { R(g, x, y, 1, 1, '#5a3a3a'); if (y % 2 === 0) R(g, x - 1, y, 3, 1, '#7a4a4a'); } };
+      if (co === 'lourd') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (const x of [bx - 2, bx + bw - 3]) { R(g, x, by + bh - 7, 5, 5, '#1c1420'); R(g, x + 1, by + bh - 6, 3, 3, '#9a8a6a'); R(g, x + 1, by + bh - 6, 3, 1, '#c8b890'); } };
+      return null;
+    case 'serpent':
+      if (co === 'chargeur') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (let k = 0; k < 3; k++) { R(g, bx + 8 + k * 2, by - 2 - (k % 2), 1, 3 + (k % 2), '#f8f4e0'); } R(g, bx + bw - 3, by + 3, 2, 1, '#ffffff'); };
+      return null;
+    case 'cuve':
+      if (co === 'lanceur_arc') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; const x = bx + Math.floor(bw / 2) - 2; R(g, x - 1, by - 5, 6, 7, '#1c1420'); R(g, x, by - 4, 4, 6, '#4a5058'); R(g, x, by - 4, 4, 1, '#8a929c'); R(g, x + 1, by - 6 - i, 2, 2, '#8af0a0'); };
+      if (co === 'invocateur') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; for (const [dx, dy] of [[3, 0], [Math.floor(bw / 2) - 1, -1 - i], [bw - 6, 0]]) { R(g, bx + dx - 1, by + dy - 3, 5, 4, '#1c1420'); R(g, bx + dx, by + dy - 2, 3, 2, '#e8e4d0'); R(g, bx + dx + 2, by + dy - 2, 1, 1, '#c83a2a'); } };
+      return null;
+    case 'oiseau_argile':
+      if (co === 'kamikaze') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + Math.floor(bw / 2); R(g, x, by - 3, 1, 4, '#3a3040'); R(g, x - 1, by - 5, 3, 2, i ? '#ff7a2a' : '#ffe060'); R(g, x - 1, by + bh - 5, 3, 2, '#c83a2a'); };
+      if (co === 'volant') return (g, bx, by, bw, bh, i, c) => { if (c === 'dos') fils(g, bx, by, bw, [1, bw - 2]); };
+      return null;
+    case 'masque':
+      if (P.proj === 'feu') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (let k = 0; k < 5; k++) { const x = bx + 1 + k * Math.floor((bw - 2) / 4), h = 3 + ((k + i) % 2) * 2; R(g, x - 1, by + 1 - h, 3, h + 1, '#1c1420'); R(g, x, by + 1 - h, 1, h, (k + i) % 2 ? '#ffd040' : '#ff7a2a'); } };
+      if (P.motif === 'rotation') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; for (const x of [bx - 2, bx + bw]) { R(g, x - 1, by + 1, 4, 9, '#1c1420'); R(g, x, by + 2, 2, 7, '#f0ece0'); R(g, x, by + 4 + i, 2, 1, '#c83a2a'); } };
+      return null;
+  }
+  return null;
+}
 const _spEnn = new WeakMap(), SPRITE_DEFAUT = { type: 'carte', cle: 'poupee' };
 function spriteEnnemi(e) {
   const d = e.def; const S = d.sprite || SPRITE_DEFAUT;
@@ -217,13 +316,14 @@ function spriteEnnemi(e) {
   if (S.type === 'carte' && CARTES_CREATURES[S.cle]) {
     const C = CARTES_CREATURES[S.cle]; const col = Object.assign({}, C.c, S.couleurs || {});
     r = { frames: C.f.map(f => contourner(avecMarge(agrandir(peindre(f.map(l => l.padEnd(Math.max(...f.map(x => x.length)), '.')), col))))), miroir: C.miroir, base: 1 };
+    const A = k === 1 && accessoireCreature(d, S); if (A) r.frames = r.frames.map((f, i) => { const M = 6, T = 7, c = toile(f.width + 2 * M, f.height + T), g = ctxDe(c); A(g, M, T, f.width, f.height, i, 'dos'); g.drawImage(f, M, T); A(g, M, T, f.width, f.height, i, 'face'); return c; });
   } else if (S.type === 'ninja') {
     const M = MASQUES_ENNEMIS[S.masque] || MASQUES_ENNEMIS.bandana;
     const cs = Object.assign({}, M.c, S.cheveux || {}); const peau = S.peau || M.peau; if (peau) { cs.s = peau; cs.d = nuancer(peau, 0.82); cs.l = nuancer(peau, 1.12); }
     const V = { coiffure: S.coiffure || M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages, dos: S.dos };
     const cle = 'enn_' + d.id + '_' + d.nom; VISUELS[cle] = V;
     const P = spritesPerso(cle);
-    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); return c; };
+    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); equiperNinja(g, d, 'dos', i); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme && !ARME_PROPRE.has(d.comportement)) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); equiperNinja(g, d, 'face', i); return c; };
     r = { frames: [frame(0), frame(1)].map(agrandir), base: k }; // pieds à 1 px du bas, ×k après agrandissement
   } else r = { frames: [contourner(disque(d.r || 8, '#a04a6a'))], base: 0 };
   cache.set(k, r); return r;

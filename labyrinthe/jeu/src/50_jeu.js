@@ -157,9 +157,11 @@ const SceneDeconnexion = {
 };
 
 // ── Démarrage et boucle ──
-let _dernier = 0, _accu = 0;
+let _dernier = 0, _accu = 0, _appuiSon = false;
 function boucle(t) {
   const dt = Math.min(0.1, (t - _dernier) / 1000 || 0); _dernier = t; _accu += dt; let n = 0;
+  // la manette ne suffit pas à autoriser le son : on retente à chaque nouvel appui (utile si la page a déjà été cliquée)
+  const appui = Entrees.pad && Entrees.boutons.some(Boolean); if (appui && !_appuiSon && Son.suspendu()) Son.demarrer(); _appuiSon = appui;
   while (_accu >= DT && n < 5) { Entrees.maj(DT); try { Scenes.maj(DT); } catch (e) { G.derniereErreur = String(e.stack || e); console.error(e); } Entrees.finPas(); _accu -= DT; n++; }
   if (n >= 5) _accu = 0;
   try { Scenes.rendre(Rendu.gi); } catch (e) { G.derniereErreur = String(e.stack || e); console.error(e); }
@@ -173,7 +175,7 @@ function demarrer() {
   Progression.charger();
   Entrees.surDeconnexion = () => { if (Scenes.courante() === SceneJeu) Scenes.empiler(SceneDeconnexion); };
   Entrees.surPerteFocus = () => { if (Scenes.courante() === SceneJeu && G.partie && !G.modeTest) Scenes.empiler(ScenePause); };
-  const activer = () => Son.demarrer(); addEventListener('keydown', activer); addEventListener('pointerdown', activer);
+  const activer = () => Son.demarrer(); for (const ev of ['keydown', 'pointerdown', 'touchend', 'click']) addEventListener(ev, activer);
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle

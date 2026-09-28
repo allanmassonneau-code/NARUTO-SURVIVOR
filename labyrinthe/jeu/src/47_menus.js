@@ -85,7 +85,7 @@ const SceneTitre = {
     ordre.forEach((k, i) => { const x = 150 + i * 68; g.drawImage(ellipse(10, 3, 'rgba(0,0,0,0.55)'), x - 10, 329); dessinerPerso(g, k, x, 330, { dirCorps: 'bas', frame: Math.floor(t * 4 + i) % 4, etatTete: Math.floor(t * 0.7 + i) % 7 === 0 ? 'cligne' : 'normal' }); });
     cadreMenu(g, 230, 124, 180, 112);
     this.menu.rendre(g, 246, 136, 148);
-    if (Son.suspendu()) Police.ecrire(g, 'Cliquez ou appuyez sur une touche pour activer le son', 320, 246, '#f0d8b0', { a: 'c', contour: '#1c1420' });
+    if (Son.suspendu()) { inviteSon(g, 320, 240); Police.ecrire(g, 'Les navigateurs ne comptent pas la manette pour autoriser le son : un seul clic suffit.', 320, 260, '#c8b8a8', { a: 'c', contour: '#1c1420' }); }
     aideBoutons(g, [['interagir', 'Valider'], ['retour', 'Retour']]);
     Police.ecrire(g, 'v' + VERSION_JEU, 6, 346, '#7a7088');
   },

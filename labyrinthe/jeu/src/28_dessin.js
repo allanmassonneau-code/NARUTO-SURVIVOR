@@ -171,6 +171,8 @@ function dessinerEnnemi(g, e, x, y) {
   const w = Math.round(img.width * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1)), h = Math.round(img.height * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1));
   const miroirG = sp.miroir && e.dir === 'gauche';
   const poser = im => { if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); } else g.drawImage(im, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); };
+  // cercle au sol des invocateurs (violet) et des soigneurs (vert) : leur rôle se lit de loin
+  const co = e.def.comportement; if (!e.boss && (co === 'invocateur' || co === 'guerisseur')) { const inv = co === 'invocateur', t = G.temps * (inv ? 1.2 : -1.6), rr = e.r + 6; g.fillStyle = inv ? '#b070f0' : '#5ae080'; for (let k = 0; k < 8; k++) { const a = t + k * Math.PI / 4; g.fillRect(Math.round(x + Math.cos(a) * rr), Math.round(y + Math.sin(a) * rr * 0.4), 2, 1); } }
   poser(img);
   // états de boss lisibles : peau durcie (gris pierre), carapace d'Hiruko (bois cerclé)
   if (e.durci > 0 && !(e.flash > 0)) { g.globalAlpha = 0.5 + 0.12 * Math.sin(G.temps * 14); poser(silhouetteMemo(base, '#8a8a92')); }

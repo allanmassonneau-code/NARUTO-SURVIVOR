@@ -13,6 +13,14 @@ function plaqueHUD(g, x, y, l, h, lisere = '#4a3c5c') {
   g.fillRect(x + 1, y + 1, 1, 1); g.fillRect(x + l - 2, y + 1, 1, 1); g.fillRect(x + 1, y + h - 2, 1, 1); g.fillRect(x + l - 2, y + h - 2, 1, 1);
   g.fillStyle = 'rgba(255,240,220,0.08)'; g.fillRect(x + 2, y + 1, l - 4, 1);
 }
+// Invite tant que le navigateur retient le son (haut-parleur barré + consigne)
+function inviteSon(g, cx, y) {
+  const t = 'Son en attente : cliquez dans la fenêtre ou appuyez sur une touche', w = Police.largeur(t) + 30, x = Math.round(cx - w / 2);
+  plaqueHUD(g, x, y, w, 17, '#a07a3a');
+  g.fillStyle = '#f0d8b0'; g.fillRect(x + 7, y + 6, 3, 5); g.fillRect(x + 10, y + 5, 1, 7); g.fillRect(x + 11, y + 4, 1, 9); g.fillRect(x + 12, y + 3, 1, 11);
+  g.fillStyle = '#ff7a5a'; for (let k = 0; k < 5; k++) { g.fillRect(x + 15 + k, y + 6 + k, 1, 1); g.fillRect(x + 19 - k, y + 6 + k, 1, 1); }
+  Police.ecrire(g, t, x + 24, y + 5, '#f4e0c0');
+}
 function losange(g, x, y, c, n = 2) { x = Math.round(x); y = Math.round(y); g.fillStyle = c; for (let k = -n; k <= n; k++) { const w = n - Math.abs(k); g.fillRect(x - w, y + k, 2 * w + 1, 1); } }
 // Bandeau cinématographique : bords estompés, filets dorés, losanges au centre
 function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
@@ -99,6 +107,7 @@ function dessinerHUD(g) {
   if (G.flashDegat > 0 && !G.reglages.sansFlash) { g.save(); g.globalAlpha = Math.min(1, G.flashDegat * 1.2); const v = g.createRadialGradient(320, 180, 150, 320, 180, 380); v.addColorStop(0, 'rgba(160,10,28,0)'); v.addColorStop(1, 'rgba(160,10,28,0.75)'); g.fillStyle = v; g.fillRect(0, 0, ECRAN_L, ECRAN_H); g.restore(); }
   if (G.introBoss) dessinerIntroBoss(g);
   if (G.fondu) { g.globalAlpha = Math.min(1, G.fondu.t / (G.fondu.duree / 2)); g.fillStyle = '#000'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); g.globalAlpha = 1; }
+  if (Son.suspendu()) inviteSon(g, 320, 4);
   if (Entrees.maintien.deposer > 0.15 && (J.talisman || J.poches.length)) { const k = Math.min(1, Entrees.maintien.deposer / DUREE_DEPOT); plaqueHUD(g, 282, 244, 76, 28); Police.ecrire(g, 'Déposer…', 320, 250, '#f0e0c0', { a: 'c' }); g.fillStyle = '#14101c'; g.fillRect(290, 262, 60, 4); g.fillStyle = '#f0e0c0'; g.fillRect(290, 262, Math.round(60 * k), 4); }
 }
 function dessinerStats(g, J, x, y) {
