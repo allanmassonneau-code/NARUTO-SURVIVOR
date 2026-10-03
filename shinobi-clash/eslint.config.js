@@ -16,7 +16,14 @@ export default tseslint.config(
     // Scripts Node (outils, serveur) et callbacks Playwright exécutés dans la page.
     files: ['tools/**/*.mjs', 'server/**/*.ts', 'tools/**/*.ts'],
     languageOptions: {
-      globals: { process: 'readonly', console: 'readonly', localStorage: 'readonly', setTimeout: 'readonly' },
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        fetch: 'readonly',
+        setTimeout: 'readonly',
+      },
     },
   },
 );

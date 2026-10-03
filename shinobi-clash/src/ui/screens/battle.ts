@@ -25,7 +25,7 @@ import {
 } from '../../game/battle/controllers';
 import { animationFor, type JutsuAnimation } from '../../game/gfx/animations';
 import { FIELD_H, FIELD_W } from '../../game/gfx/backgrounds';
-import { portraitUrl } from '../../game/gfx/sprites';
+import { portraitUrl, shade } from '../../game/gfx/sprites';
 import { BattleScene } from '../../game/scenes/BattleScene';
 import type { MatchEnd, MatchFound } from '../../net/protocol';
 import { pvp } from '../../net/pvpClient';
@@ -133,7 +133,8 @@ export function battleScreen(params: ScreenParams): Screen {
   const msgBox = h('div', { class: 'msgbox' }, msgText, caret);
   const menuBox = h('div', { class: 'menubox' });
   const dock = h('div', { class: 'dock', 'data-mode': 'message' }, msgBox, menuBox);
-  stageEl.appendChild(dock);
+  // Terrain et boîte de commandes partagent un cadre : surimpression façon GBA sur grand écran, empilés en portrait.
+  const frame = h('div', { class: 'battle-frame' }, stageEl, dock);
   const tip = h('div', { class: 'tip hidden' });
   const teamStrip = h('div', { class: 'team-strip' });
   const replayBar = h('div', { class: 'replay-bar hidden' });
@@ -149,7 +150,7 @@ export function battleScreen(params: ScreenParams): Screen {
       h('div', { class: 'title' }, title),
       turnCounter,
     ),
-    h('div', { class: 'battle-body' }, stageEl, below),
+    h('div', { class: 'battle-body' }, frame, below),
   );
   if (settings.colorblind) root.classList.add('colorblind');
 
@@ -788,7 +789,12 @@ export function battleScreen(params: ScreenParams): Screen {
         'div',
         { class: 'irow' },
         h('span', { class: 'ik' }, 'TYPE/'),
-        h('b', { style: { color: ELEMENTS[jutsu.element].color } }, ELEMENTS[jutsu.element].name.toUpperCase()),
+        // Assombri : les couleurs claires (Taijutsu, Raiton) seraient illisibles sur le fond blanc du menu.
+        h(
+          'b',
+          { style: { color: shade(ELEMENTS[jutsu.element].color, -0.35) } },
+          ELEMENTS[jutsu.element].name.toUpperCase(),
+        ),
       ),
       h(
         'div',
@@ -827,6 +833,7 @@ export function battleScreen(params: ScreenParams): Screen {
 
   function showJutsuMenu(): void {
     hideTooltip();
+    msgText.textContent = 'Quel jutsu ? Le coût en chakra ◆ est à droite.';
     const options = jutsuOptions(state, 0);
     const buttons = options.map((option, i) => jutsuButton(option, i));
     const info = h('div', { class: 'jinfo' });
@@ -839,6 +846,7 @@ export function battleScreen(params: ScreenParams): Screen {
   /** Choix d'un shinobi : volontaire (consomme le tour) ou forcé après un K.O. */
   function showPartyMenu(forced: boolean): void {
     hideTooltip();
+    msgText.textContent = forced ? 'Qui envoyer au combat ?' : `Remplacer ${activeUnit(state, 0).name} par…`;
     huds[0].previewCost(0);
     const foe = activeUnit(state, 1);
     const entries: HTMLButtonElement[] = [];
@@ -906,6 +914,7 @@ export function battleScreen(params: ScreenParams): Screen {
 
   function showItemMenu(): void {
     hideTooltip();
+    msgText.textContent = 'Quel objet utiliser ?';
     const info = h('div', { class: 'jinfo' });
     const items = Object.entries(state.sides[0].items).filter(([id, count]) => ITEMS[id] && count > 0);
     const entries = items.map(([id, count]) =>

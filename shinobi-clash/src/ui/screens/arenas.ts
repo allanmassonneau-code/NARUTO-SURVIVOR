@@ -121,7 +121,8 @@ export function arenasScreen(): Screen {
       'button',
       {
         class: `map-marker ${arenaUnlocked(i) ? '' : 'locked'} ${arenaCleared(i) ? 'cleared' : ''}`,
-        style: { left: `${(pos.x / MAP_W) * 100}%`, top: `${(pos.y / MAP_H) * 100}%` },
+        // Ordonnée en unités de conteneur : le marqueur reste sur la carte même quand le cadre s'allonge (portrait).
+        style: { left: `${(pos.x / MAP_W) * 100}%`, top: `${((pos.y / MAP_H) * 100) / 1.5}cqw` },
         title: arena.name,
         onclick: () => selectArena(i, true),
       },

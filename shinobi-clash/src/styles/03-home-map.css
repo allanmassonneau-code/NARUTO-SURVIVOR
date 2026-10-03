@@ -357,3 +357,140 @@
   padding: 8px 12px;
   font-size: 17px;
 }
+
+/* ---------- Téléphone en portrait : scène en haut, menu en grands boutons dessous ---------- */
+@media (orientation: portrait) and (max-width: 900px) {
+  .home-desk {
+    --screen-w: 100%;
+    justify-content: flex-start;
+    overflow-y: auto;
+    gap: 8px;
+    padding: 8px 8px 16px;
+  }
+  .home-frame {
+    aspect-ratio: auto;
+    overflow: visible;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .home-frame > canvas {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 3/2;
+    border: 4px solid #0a0812;
+    border-radius: 10px;
+    box-shadow: 0 0 0 3px #3a3052;
+  }
+  /* Les positions de la scène sont exprimées en largeur (cqw) : le cadre n'est plus au format 3:2. */
+  .home-logo {
+    top: 20.7cqw;
+  }
+  .home-card {
+    top: 2.4cqw;
+    width: 56%;
+  }
+  .home-card .avatar-frame img {
+    width: 9cqw;
+  }
+  .home-money {
+    top: 15cqw;
+  }
+  .home-frame .start-menu,
+  .home-frame .map-panel {
+    position: static;
+    width: auto;
+    padding: 8px;
+  }
+  .home-frame .start-menu .menu-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 8px;
+    overflow: visible;
+  }
+  .home-frame .start-menu .mitem,
+  .home-frame .stage-item {
+    min-height: 54px;
+    border: 2px solid #d8d8ec;
+    border-radius: 6px;
+    background: #f4f4fc;
+    padding: 8px 10px 8px 24px;
+    font-size: 15px;
+  }
+  .home-frame .start-menu .mitem.play {
+    grid-column: 1 / -1;
+    justify-content: center;
+    min-height: 60px;
+    font-size: 18px;
+    color: #fff;
+    text-shadow: 2px 2px #8a1c2c;
+    background: var(--red);
+    border-color: var(--red-dark);
+  }
+  .home-frame .start-menu .mitem.play:before {
+    border-left-color: #fff;
+  }
+  .mbadge {
+    min-width: 20px;
+    border-radius: 8px;
+    padding: 2px 6px;
+    font-size: 9px;
+  }
+  .home-desc {
+    position: static;
+    height: auto;
+    min-height: 56px;
+    padding: 10px 16px;
+    font-size: 15px;
+    border-radius: 8px;
+  }
+  .home-frame:not(.map-frame) .home-desc {
+    display: none;
+  }
+  .map-team {
+    top: 2.4cqw;
+  }
+  .map-team .mini-team img {
+    width: 7cqw;
+  }
+  .map-head .an {
+    font-size: 11px;
+  }
+  .map-head .as {
+    font-size: 14px;
+  }
+  .home-frame .map-panel .menu-grid {
+    grid-auto-rows: auto;
+    gap: 8px;
+  }
+  .stage-item .sm {
+    gap: 6px;
+    font-size: 13px;
+  }
+  .stage-item .ai-tag {
+    padding: 2px 4px;
+    font-size: 8px;
+  }
+  .stage-item .foes img {
+    width: 30px;
+    border-radius: 3px;
+  }
+  .map-marker .pin {
+    width: 3.4cqw;
+    height: 3.4cqw;
+  }
+  .map-marker .lbl {
+    font-size: 11px;
+  }
+}
+
+/* Indications clavier inutiles sur un écran tactile. */
+@media (hover: none) {
+  .home-hint {
+    display: none;
+  }
+}

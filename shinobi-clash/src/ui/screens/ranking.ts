@@ -2,7 +2,7 @@ import { LEAGUES, leagueFor } from '../../data/leagues';
 import { currentSeason } from '../../data/seasons';
 import { getShinobi } from '../../data/shinobi';
 import { portraitUrl } from '../../game/gfx/sprites';
-import type { PvpMode } from '../../net/protocol';
+import type { LeaderboardEntry, PvpMode } from '../../net/protocol';
 import { pvp, type ConnectionStatus } from '../../net/pvpClient';
 import rankingCss from '../../styles/screens/ranking.css?inline';
 import { audio } from '../../services/audio';
@@ -182,13 +182,8 @@ export function rankingScreen(params: ScreenParams): Screen {
 
   const profile = game.profile;
   const league = leagueFor(profile.rank.mmr);
-  const leaderboard = h(
-    'div',
-    { class: 'panel' },
-    h('h3', null, 'Classement du serveur'),
-    h('div', { class: 'dim' }, 'Chargement…'),
-  );
-  void pvp.leaderboard().then((entries) => {
+  const leaderboard = h('div', { class: 'panel' });
+  const renderLeaderboard = (entries: LeaderboardEntry[] | null) => {
     clear(leaderboard);
     leaderboard.appendChild(h('h3', null, 'Classement du serveur'));
     if (!entries) {
@@ -217,7 +212,20 @@ export function rankingScreen(params: ScreenParams): Screen {
         ),
       );
     }
-  });
+  };
+  const loadLeaderboard = () => {
+    clear(leaderboard);
+    leaderboard.append(h('h3', null, 'Classement du serveur'), h('div', { class: 'dim' }, 'Chargement…'));
+    void pvp.leaderboard().then(renderLeaderboard);
+  };
+  // Hors connexion, on n'interroge le serveur qu'à la demande (pas de requête vouée à l'échec à chaque visite).
+  if (pvp.status === 'online') loadLeaderboard();
+  else {
+    leaderboard.append(
+      h('h3', null, 'Classement du serveur'),
+      button('Afficher le classement', loadLeaderboard, { size: 'small', variant: 'dark' }),
+    );
+  }
 
   const season = currentSeason(Date.now());
   const pass = game.passView();

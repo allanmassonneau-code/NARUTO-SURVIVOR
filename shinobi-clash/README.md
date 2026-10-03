@@ -26,6 +26,8 @@ npm run server       # serveur PvP sur ws://localhost:8787 (facultatif)
 | `npm run simulate -- 3000 ranked` | simulation d'équilibrage IA contre IA, rapport dans `simulation-report.txt` |
 | `npm run server` | serveur PvP autoritaire (WebSocket + classement HTTP) |
 | `npm run e2e` | parcours complet dans Chromium (nécessite `npm run preview` en parallèle) |
+| `npm run e2e:pvp` | deux joueurs s'affrontent en classé via le serveur local (nécessite `npm run server` et `npm run preview`) |
+| `npm run shots` | captures portrait, paysage et desktop à partir d'une sauvegarde injectée |
 
 Le build se sert depuis n'importe quel dossier (chemins relatifs) et fonctionne hors ligne grâce au service worker.
 
