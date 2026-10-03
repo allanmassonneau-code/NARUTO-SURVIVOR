@@ -1,0 +1,22 @@
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slot{position:relative;aspect-ratio:3/4;border:3px dashed #6a5a8a;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;transition:transform .15s var(--ease-back),background .15s}
+.slot.filled{border-style:solid;border-color:var(--ink);background:#2b2440}
+.slot.hot{background:rgba(240,180,41,.25);transform:scale(1.04)}
+.slot img{width:70%;image-rendering:pixelated}
+.slot .sn{font-family:var(--font-pixel);font-size:9px;margin-top:4px}
+.slot .idx{position:absolute;top:4px;left:6px;font-family:var(--font-pixel);font-size:8px;color:var(--text-dim)}
+.slot .lead{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-family:var(--font-pixel);font-size:7px;color:var(--ink);background:var(--gold);border:2px solid var(--ink);padding:2px 5px;white-space:nowrap;z-index:2}
+.slot .rm{position:absolute;top:3px;right:3px;min-height:26px;padding:2px 6px}
+.slot .plus{font-size:28px;color:#6a5a8a}
+.team-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.syn{display:flex;flex-wrap:wrap;gap:6px}
+.syn .s{padding:4px 8px;border:2px solid var(--ink);background:#4a3e6a;font-size:13px}
+.syn .s.on{background:#3a7a3a;animation:popIn .3s var(--ease-back)}
+.warn{color:#f8c030;font-size:14px}
+.near-tag{position:absolute;bottom:52px;left:4px;right:4px;z-index:3;font-family:var(--font-pixel);font-size:6px;background:#3a7a3a;color:#fff;border:2px solid var(--ink);padding:2px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.in-team{opacity:.45}
+.drag-ghost{position:fixed;z-index:99;pointer-events:none;width:70px;opacity:.9;transform:translate(-50%,-50%) rotate(-4deg);image-rendering:pixelated;filter:drop-shadow(3px 3px 0 #000)}
+.weak-grid{display:flex;gap:6px;flex-wrap:wrap;font-size:13px}
+.team-layout{display:grid;grid-template-columns:minmax(380px,460px) 1fr;gap:28px;align-items:start}
+.team-left{position:sticky;top:0}
+@media (max-width:900px){.team-layout{grid-template-columns:1fr}.team-left{position:static}}

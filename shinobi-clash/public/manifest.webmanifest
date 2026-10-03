@@ -1,0 +1,12 @@
+{
+  "name": "Shinobi Clash",
+  "short_name": "Shinobi Clash",
+  "description": "Collection et combats shinobi au tour par tour, en pixel art.",
+  "lang": "fr",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#16132a",
+  "theme_color": "#16132a",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

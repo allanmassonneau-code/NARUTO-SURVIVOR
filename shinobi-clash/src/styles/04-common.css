@@ -1,0 +1,182 @@
+/* Utilitaires de mise en page, filtres, onglets, lignes de jutsu, cadres d'avatar. */
+.row {
+  align-items: center;
+  gap: 8px;
+  display: flex;
+}
+.row.wrap-r {
+  flex-wrap: wrap;
+}
+.spacer {
+  flex: 1;
+}
+.dim {
+  color: var(--text-dim);
+}
+.panel .dim {
+  color: #7a6448;
+}
+.px-font {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.center {
+  text-align: center;
+}
+.hidden {
+  display: none !important;
+}
+.filters {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px;
+  margin-bottom: 12px;
+  display: grid;
+}
+.filters .field {
+  width: 100%;
+  max-width: none !important;
+}
+.seg {
+  border: 3px solid var(--ink);
+  background: var(--ink);
+  gap: 2px;
+  display: inline-flex;
+}
+.seg button {
+  min-height: 36px;
+  font-family: var(--font-pixel);
+  cursor: pointer;
+  color: var(--text-dim);
+  background: #3a3052;
+  border: 0;
+  padding: 4px 10px;
+  font-size: 8px;
+}
+.seg button.on {
+  background: var(--gold);
+  color: var(--ink);
+}
+select.field {
+  width: auto;
+  min-height: 38px;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+.stat-grid {
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 15px;
+  display: grid;
+}
+.stat-grid .bar {
+  height: 8px;
+}
+.jutsu-row {
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  background: #fff8e6;
+  grid-template-columns: 1fr auto;
+  gap: 2px 8px;
+  margin-bottom: 6px;
+  padding: 8px 10px;
+  display: grid;
+}
+.jutsu-row .jn {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+}
+.jutsu-row .jd {
+  color: #5a4630;
+  grid-column: 1/-1;
+  font-size: 14px;
+}
+.cost {
+  font-family: var(--font-pixel);
+  color: var(--chakra-dark);
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  display: inline-flex;
+}
+.cost:before {
+  content: "";
+  background: var(--chakra);
+  border: 2px solid var(--ink);
+  width: 8px;
+  height: 10px;
+}
+.back-btn {
+  flex-shrink: 0;
+}
+.card.awakened {
+  box-shadow:
+    inset 0 0 0 3px var(--rc),
+    inset 0 0 0 5px var(--ink),
+    0 0 0 2px var(--gold),
+    0 0 12px 2px #f0b42980,
+    3px 4px 0 #0006;
+  animation: 2.4s ease-in-out infinite awaken;
+}
+.card.awakened .stars {
+  color: #ffe28a;
+  text-shadow: 0 0 6px #f0b429;
+}
+@keyframes awaken {
+  50% {
+    box-shadow:
+      inset 0 0 0 3px var(--rc),
+      inset 0 0 0 5px var(--ink),
+      0 0 0 2px var(--gold),
+      0 0 20px 6px #f0b429bf,
+      3px 4px 0 #0006;
+  }
+}
+.avatar-frame {
+  --f1: var(--ink);
+  --f2: #3a3052;
+  background: var(--ink-2);
+  border: 3px solid var(--f1);
+  box-shadow:
+    inset 0 0 0 2px var(--f2),
+    2px 2px 0 #0006;
+  flex: none;
+  padding: 2px;
+  display: inline-flex;
+}
+.avatar-frame img {
+  width: 44px;
+  height: 42px;
+  display: block;
+}
+.avatar-frame.big img {
+  width: 72px;
+  height: 68px;
+}
+.avatar-frame.animated {
+  animation: 1.6s steps(4, end) infinite frameShine;
+}
+@keyframes frameShine {
+  0%,
+  to {
+    box-shadow:
+      inset 0 0 0 2px var(--f2),
+      2px 2px 0 #0006;
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 2px #fff6c8,
+      0 0 10px var(--f2);
+  }
+}
+.title-tag {
+  color: var(--ink);
+  background: var(--gold);
+  border: 2px solid var(--ink);
+  margin-top: 3px;
+  padding: 1px 6px;
+  font-size: 13px;
+  line-height: 1.3;
+  display: inline-block;
+}

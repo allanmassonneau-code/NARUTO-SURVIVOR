@@ -1,0 +1,8 @@
+.detail-head{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.detail-art{width:120px;height:144px;background:radial-gradient(circle at 50% 60%,var(--ec) 0 35%,transparent 70%),#2b2440;border:3px solid var(--ink);display:flex;align-items:flex-end;justify-content:center}
+.detail-art img{width:100px;height:120px}
+.detail-head h2{font-size:14px!important;margin-bottom:6px!important}
+.stars-big{color:var(--gold-dark);font-size:18px;letter-spacing:1px}
+.jutsu-detail{display:none;font-size:14px;margin-top:6px;color:#3a2a1a}
+.jutsu-row.open .jutsu-detail{display:block}
+.frag{display:flex;align-items:center;gap:8px;flex-wrap:wrap}

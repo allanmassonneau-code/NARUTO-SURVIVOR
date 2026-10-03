@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#16132a" />
+    <meta
+      name="description"
+      content="Jeu de collection et de combat shinobi au tour par tour, en pixel art façon GBA."
+    />
+    <title>Shinobi Clash</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <style>
+      #boot {
+        color: #f0b429;
+        background: #16132a;
+        justify-content: center;
+        align-items: center;
+        font: 14px monospace;
+        display: flex;
+        position: fixed;
+        inset: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="boot">Chargement…</div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

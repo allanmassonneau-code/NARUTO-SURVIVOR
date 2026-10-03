@@ -1,0 +1,8 @@
+.look-row{display:flex;flex-wrap:wrap;gap:8px}
+.look-opt{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:4px 8px;border:3px solid var(--ink);
+  background:#fff8e6;color:var(--paper-text);font:inherit;font-size:14px;cursor:pointer}
+.look-opt.on{background:var(--gold);box-shadow:inset 0 0 0 2px #fff3b0}
+.look-opt.locked{opacity:.5;cursor:help}
+.look-opt:focus-visible{outline:3px solid var(--chakra);outline-offset:2px}
+.look-opt img{width:30px;height:28px;background:var(--ink-2)}
+.look-swatch{width:18px;height:18px;border:3px solid var(--f1);box-shadow:inset 0 0 0 2px var(--f2);background:var(--ink-2)}

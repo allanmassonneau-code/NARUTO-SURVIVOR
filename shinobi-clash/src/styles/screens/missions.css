@@ -1,0 +1,11 @@
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.ach{display:flex;flex-direction:column;gap:6px;padding:10px 12px}
+.ach .ach-top{display:flex;align-items:center;gap:8px}
+.ach .ach-ico{flex:none;width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--ink);background:#bfae8c;font-size:14px;filter:grayscale(1)}
+.ach.unlocked .ach-ico{background:var(--gold);filter:none}
+.ach h3{margin:0!important;flex:1;font-size:9px!important}
+.ach p{margin:0;font-size:14px}
+.ach .ach-bar{display:flex;align-items:center;gap:8px;font-size:13px}
+.ach .ach-bar>div{flex:1}
+.ach.claimed{opacity:.72}

@@ -1,0 +1,8 @@
+.starters{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:14px 0}
+.starter{cursor:pointer;transition:transform .15s var(--ease-back);text-align:center}
+.starter:hover{transform:translateY(-4px)}
+.starter.sel{outline:4px solid var(--gold);outline-offset:3px;animation:selBounce .35s var(--ease-back)}
+.starter img{width:120px;height:144px;margin:4px auto;display:block}
+.starter .ph{font-family:var(--font-pixel);font-size:12px;color:var(--red);margin:4px 0}
+.starter ul{text-align:left;padding-left:18px;margin:8px 0 0;font-size:14px}
+.intro-scroll{max-width:760px;margin:0 auto}

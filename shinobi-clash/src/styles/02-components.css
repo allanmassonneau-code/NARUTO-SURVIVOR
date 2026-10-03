@@ -1,0 +1,516 @@
+/* Composants : panneaux, boutons pixel, barres, pips de chakra, puces, cartes, modales, toasts, infobulles. */
+.panel {
+  background: var(--parchment);
+  color: var(--paper-text);
+  border: 3px solid var(--ink);
+  box-shadow:
+    inset 0 0 0 3px #fff7e2,
+    inset 0 0 0 5px var(--parchment-3),
+    4px 4px 0 #00000059;
+  border-radius: 8px;
+  padding: 14px;
+  position: relative;
+}
+.panel.dark {
+  color: var(--text);
+  background: #2c4c64;
+  box-shadow:
+    inset 0 0 0 3px #e8c868,
+    inset 0 0 0 5px #a07a2c,
+    4px 4px #00000059;
+}
+.panel h2,
+.panel h3 {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.5px;
+  margin: 0 0 10px;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.section-title {
+  font-family: var(--font-pixel);
+  color: var(--gold);
+  text-shadow: 2px 2px 0 var(--ink);
+  margin: 18px 0 10px;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.btn {
+  --bc: var(--parchment);
+  --bd: var(--parchment-3);
+  --bt: var(--paper-text);
+  min-height: var(--tap);
+  background: var(--bc);
+  color: var(--bt);
+  border: 3px solid var(--ink);
+  box-shadow:
+    inset -3px -4px 0 var(--bd),
+    inset 3px 3px 0 #ffffff73,
+    0 4px 0 var(--ink);
+  font-family: var(--font-pixel);
+  cursor: pointer;
+  touch-action: manipulation;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 11px;
+  line-height: 1.4;
+  transition:
+    transform 60ms,
+    filter 0.1s;
+  display: inline-flex;
+  position: relative;
+  transform: translateY(0);
+}
+.btn:hover {
+  filter: brightness(1.08);
+}
+.btn:active,
+.btn.pressed {
+  box-shadow:
+    inset -3px -2px 0 var(--bd),
+    inset 3px 3px 0 #ffffff59,
+    0 1px 0 var(--ink);
+  transform: translateY(3px);
+}
+.btn:disabled,
+.btn.disabled {
+  filter: grayscale(0.8) brightness(0.75);
+  cursor: not-allowed;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+.btn.primary {
+  --bc: var(--red);
+  --bd: var(--red-dark);
+  --bt: #fff;
+  text-shadow: 2px 2px 0 var(--red-dark);
+}
+.btn.gold {
+  --bc: var(--gold);
+  --bd: var(--gold-dark);
+  --bt: var(--ink);
+}
+.btn.blue {
+  --bc: var(--chakra);
+  --bd: var(--chakra-dark);
+  --bt: #fff;
+  text-shadow: 2px 2px 0 var(--chakra-dark);
+}
+.btn.dark {
+  --bc: #3a3052;
+  --bd: #241d36;
+  --bt: var(--text);
+}
+.btn.small {
+  min-height: 34px;
+  padding: 4px 10px;
+  font-size: 9px;
+}
+.btn.big {
+  min-height: 60px;
+  padding: 12px 20px;
+  font-size: 12px;
+}
+.btn.icon {
+  width: var(--tap);
+  padding: 0;
+}
+.btn .badge,
+.badge {
+  background: var(--red);
+  color: #fff;
+  border: 2px solid var(--ink);
+  min-width: 22px;
+  height: 22px;
+  font-family: var(--font-pixel);
+  justify-content: center;
+  align-items: center;
+  padding: 0 5px;
+  font-size: 9px;
+  animation: 1.6s ease-in-out infinite badgePulse;
+  display: flex;
+  position: absolute;
+  top: -10px;
+  right: -8px;
+}
+@keyframes badgePulse {
+  50% {
+    transform: scale(1.12);
+  }
+}
+.bar {
+  border: 2px solid var(--ink);
+  background: #3a2c34;
+  height: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.bar > .fill {
+  background: var(--hp-hi);
+  transition:
+    width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.3s;
+  position: absolute;
+  inset: 0 auto 0 0;
+  box-shadow:
+    inset 0 -3px #0003,
+    inset 0 2px #ffffff59;
+}
+.bar > .ghost {
+  background: #fff3;
+  transition: width 0.9s ease-out 0.35s;
+  position: absolute;
+  inset: 0 auto 0 0;
+}
+.bar.xp > .fill {
+  background: var(--chakra);
+}
+.pips {
+  gap: 2px;
+  display: flex;
+}
+.pip {
+  border: 2px solid var(--ink);
+  background: #2a3348;
+  width: 9px;
+  height: 11px;
+  transition: background 0.2s;
+}
+.pip.on {
+  background: var(--chakra);
+  box-shadow: inset 0 2px #b8e4ff;
+}
+.pip.gain {
+  animation: pipGain 0.4s var(--ease-back);
+}
+.pip.cost {
+  background: #9ad4ff;
+  animation: 0.6s steps(2, end) infinite pipBlink;
+}
+@keyframes pipGain {
+  0% {
+    background: #fff;
+    transform: scale(1.6);
+  }
+}
+@keyframes pipBlink {
+  50% {
+    background: #2a3348;
+  }
+}
+.chip {
+  border: 2px solid var(--ink);
+  font-family: var(--font-pixel);
+  color: #fff;
+  text-shadow: 1px 1px 0 var(--ink);
+  white-space: nowrap;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  font-size: 8px;
+  line-height: 1.5;
+  display: inline-flex;
+}
+.elem-kanji {
+  text-shadow: none;
+  font-family: serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+.status-icon {
+  border: 2px solid var(--ink);
+  font-family: var(--font-pixel);
+  color: var(--ink);
+  animation: statusIn 0.3s var(--ease-back);
+  justify-content: center;
+  align-items: center;
+  padding: 1px 4px;
+  font-size: 7px;
+  display: inline-flex;
+}
+@keyframes statusIn {
+  0% {
+    transform: scale(0);
+  }
+}
+.card {
+  --rc: var(--r-common);
+  aspect-ratio: 3/4;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--rc) 35%, #2b2440),
+    #1d1830 70%
+  );
+  border: 3px solid var(--ink);
+  box-shadow:
+    inset 0 0 0 3px var(--rc),
+    inset 0 0 0 5px var(--ink),
+    3px 4px 0 #0006;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-back);
+  flex-direction: column;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-4px) rotate(-0.5deg);
+}
+.card:active {
+  transform: translateY(0) scale(0.97);
+}
+.card .art {
+  background-image:
+    radial-gradient(
+      circle at 50% 55%,
+      color-mix(in srgb, var(--ec, #888) 55%, transparent) 0 30%,
+      transparent 62%
+    ),
+    repeating-linear-gradient(45deg, transparent 0 6px, #ffffff0a 6px 8px);
+  border: 2px solid var(--ink);
+  flex: 1;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 7px 7px 0;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+.card .art img {
+  object-fit: contain;
+  object-position: bottom;
+  width: 82%;
+  max-height: 100%;
+}
+.card .meta {
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px 8px 7px;
+  display: flex;
+}
+.card .name {
+  font-family: var(--font-pixel);
+  color: #fff;
+  text-shadow: 1px 1px 0 var(--ink);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 9px;
+  overflow: hidden;
+}
+.card .row {
+  color: var(--text-dim);
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  display: flex;
+}
+.card .lvl {
+  font-family: var(--font-pixel);
+  color: #fff;
+  font-size: 8px;
+}
+.card .stars {
+  color: var(--gold);
+  letter-spacing: -1px;
+  font-size: 11px;
+}
+.card .rarity-gem {
+  background: var(--rc);
+  border: 2px solid var(--ink);
+  z-index: 2;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  transform: rotate(45deg);
+}
+.card .elem-corner {
+  z-index: 2;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.card.locked {
+  filter: grayscale() brightness(0.45);
+}
+.card.locked .art img {
+  filter: brightness(0);
+  opacity: 0.6;
+}
+.card .new-tag {
+  z-index: 3;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-pixel);
+  border: 2px solid var(--ink);
+  padding: 2px 5px;
+  font-size: 7px;
+  animation: 1.4s infinite badgePulse;
+  position: absolute;
+  top: 30px;
+  left: -2px;
+}
+.card.selected {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  animation: selBounce 0.35s var(--ease-back);
+}
+@keyframes selBounce {
+  40% {
+    transform: translateY(-6px) scale(1.04);
+  }
+}
+.card.r-legendary:after {
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(115deg, #0000 30%, #fff0b459 45%, #0000 60%) 0
+    0/250% 100%;
+  animation: 3.5s linear infinite shine;
+  position: absolute;
+  inset: 0;
+}
+.card.r-epic:after {
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(115deg, #0000 35%, #dcb4ff38 48%, #0000 60%) 0
+    0/250% 100%;
+  animation: 5s linear infinite shine;
+  position: absolute;
+  inset: 0;
+}
+@keyframes shine {
+  0% {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+.grid-cards {
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 10px;
+  display: grid;
+}
+@media (min-width: 700px) {
+  .grid-cards {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+  }
+}
+.modal-backdrop {
+  z-index: 50;
+  background: #0a0814b8;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  animation: 0.18s both fadeIn;
+  display: flex;
+  position: fixed;
+  inset: 0;
+}
+.modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  animation: popIn 0.3s var(--ease-back) both;
+  overflow-y: auto;
+}
+.modal .close {
+  float: right;
+  z-index: 2;
+  position: sticky;
+  top: 0;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+}
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+}
+.toasts {
+  z-index: 80;
+  pointer-events: none;
+  flex-direction: column;
+  gap: 8px;
+  width: min(92vw, 420px);
+  display: flex;
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translate(-50%);
+}
+.toast {
+  background: var(--ink-2);
+  border: 3px solid var(--ink);
+  animation: toastIn 0.3s var(--ease-back) both;
+  padding: 10px 14px;
+  font-size: 15px;
+  box-shadow:
+    inset 0 0 0 2px #4a3e6a,
+    3px 3px #0006;
+}
+.toast.error {
+  box-shadow:
+    inset 0 0 0 2px var(--red),
+    3px 3px 0 #0006;
+}
+.toast.good {
+  box-shadow:
+    inset 0 0 0 2px var(--hp-hi),
+    3px 3px 0 #0006;
+}
+.toast.out {
+  animation: 0.3s both fadeOut;
+}
+@keyframes toastIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.9);
+  }
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+.tooltip {
+  z-index: 90;
+  background: var(--parchment);
+  max-width: 260px;
+  color: var(--paper-text);
+  border: 3px solid var(--ink);
+  pointer-events: none;
+  padding: 8px 10px;
+  font-size: 14px;
+  animation: 0.12s both fadeIn;
+  position: fixed;
+  box-shadow: 3px 3px #0006;
+}
+.tooltip b {
+  font-family: var(--font-pixel);
+  margin-bottom: 4px;
+  font-size: 9px;
+  display: block;
+}
+.flyer {
+  z-index: 95;
+  pointer-events: none;
+  font-family: var(--font-pixel);
+  text-shadow: 2px 2px 0 var(--ink);
+  font-size: 12px;
+  position: fixed;
+}
