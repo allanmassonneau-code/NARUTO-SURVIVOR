@@ -91,8 +91,13 @@ async function boot(): Promise<void> {
   document.getElementById('boot')?.remove();
   if (game.seasonSettlement) showSeasonEnd(game.seasonSettlement);
 
-  if ('serviceWorker' in navigator && import.meta.env.PROD) {
-    navigator.serviceWorker.register('./sw.js').catch(() => undefined);
+  // Une page intégrée dans un cadre (aperçu, artefact) n'a pas de service worker : le jeu fonctionne sans.
+  if ('serviceWorker' in navigator && import.meta.env.PROD && window.self === window.top) {
+    try {
+      navigator.serviceWorker.register('./sw.js').catch(() => undefined);
+    } catch {
+      // Cadre isolé : enregistrement refusé.
+    }
   }
 }
 
