@@ -9,6 +9,8 @@ export interface PlayerRecord {
   wins: number;
   losses: number;
   draws: number;
+  /** Saison classée du dernier match ; un changement déclenche la remise à niveau. */
+  seasonId?: string;
 }
 
 /**

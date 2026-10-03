@@ -1,6 +1,6 @@
 import type { BattleMode, CurrencyId, Side, TeamSpec, TurnLogEntry } from './types';
 
-export const SAVE_VERSION = 3;
+export const SAVE_VERSION = 4;
 
 export interface Settings {
   musicVolume: number;
@@ -47,6 +47,8 @@ export interface TeamSlot {
 /** Données suffisantes pour rejouer un combat à l'identique. */
 export interface ReplayData {
   v: 1;
+  /** Version du contenu de combat au moment du match (absente = version 1). */
+  content?: number;
   seed: number;
   mode: BattleMode;
   teams: [TeamSpec, TeamSpec];
@@ -99,7 +101,14 @@ export interface PlayerProfile {
   missions: { daily: MissionPeriodState; weekly: MissionPeriodState };
   pve: { cleared: Record<string, number> };
   matchHistory: MatchRecord[];
-  rank: { mmr: number; seasonId: string; wins: number; losses: number };
+  rank: {
+    mmr: number;
+    seasonId: string;
+    wins: number;
+    losses: number;
+    /** Badges des saisons classées terminées. */
+    history: { seasonId: string; league: string; mmr: number }[];
+  };
   achievements: string[];
   achievementsClaimed: string[];
   pass: { seasonId: string; xp: number; premium: boolean; claimedFree: number[]; claimedPremium: number[] };
@@ -149,7 +158,7 @@ export function newProfile(now: number, id = `local-${now.toString(36)}`): Playe
     },
     pve: { cleared: {} },
     matchHistory: [],
-    rank: { mmr: 1000, seasonId: 's1', wins: 0, losses: 0 },
+    rank: { mmr: 1000, seasonId: 's1', wins: 0, losses: 0, history: [] },
     achievements: [],
     achievementsClaimed: [],
     pass: { seasonId: 's1', xp: 0, premium: false, claimedFree: [], claimedPremium: [] },

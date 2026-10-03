@@ -17,6 +17,7 @@ import { PASSIVE_INFO } from '../../data/passiveInfo';
 import { PASS_XP } from '../../data/seasons';
 import { getShinobi } from '../../data/shinobi';
 import { STATUSES } from '../../data/statuses';
+import { CONTENT_VERSION } from '../../data/version';
 import {
   LocalBattleController,
   OnlineBattleController,
@@ -1269,7 +1270,7 @@ export function battleScreen(params: ScreenParams): Screen {
       mmr: end.mmr,
       ryo: end.rewards.ryo,
       stats: { jutsus: state.stats.jutsusUsed[0], swaps: state.stats.swaps[0], crits: state.stats.crits[0] },
-      replay: { v: 1, mode: found.mode, you: found.you, ...end.replay },
+      replay: { v: 1, content: CONTENT_VERSION, mode: found.mode, you: found.you, ...end.replay },
     });
     const ryoEl = h('span', null, '0');
     const league = leagueFor(end.mmr);

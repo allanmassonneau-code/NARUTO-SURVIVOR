@@ -18,6 +18,11 @@ const MIGRATIONS: Record<number, (save: RawSave) => RawSave> = {
     lifetime: { jutsus: 0, crits: 0, trainingWins: 0, pvpWins: 0, ...(save.lifetime as object) },
     saveVersion: 3,
   }),
+  3: (save) => ({
+    ...save,
+    rank: { history: [], ...((save.rank as object) ?? { mmr: 1000, seasonId: 's1', wins: 0, losses: 0 }) },
+    saveVersion: 4,
+  }),
 };
 
 /** Valide, migre et complète une sauvegarde lue sur disque. */

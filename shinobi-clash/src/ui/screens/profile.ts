@@ -1,7 +1,9 @@
 import { playerXpToNext, type MatchRecord } from '../../core/profile';
 import { ACHIEVEMENTS } from '../../data/achievements';
 import { COSMETICS } from '../../data/cosmetics';
-import { currentSeason } from '../../data/seasons';
+import { LEAGUES } from '../../data/leagues';
+import { currentSeason, SEASONS } from '../../data/seasons';
+import { CONTENT_VERSION } from '../../data/version';
 import { getShinobi, ROSTER } from '../../data/shinobi';
 import { portraitUrl } from '../../game/gfx/sprites';
 import profileCss from '../../styles/screens/profile.css?inline';
@@ -137,7 +139,9 @@ function matchRow(match: MatchRecord): HTMLDivElement {
       ? h(
           'div',
           { style: 'margin-top:8px;text-align:right' },
-          button('▶ Revoir', () => navigate('battle', { replay: { match } }), { size: 'small', variant: 'blue' }),
+          (match.replay.content ?? 1) === CONTENT_VERSION
+            ? button('▶ Revoir', () => navigate('battle', { replay: { match } }), { size: 'small', variant: 'blue' })
+            : h('span', { class: 'dim', style: 'font-size:12px' }, 'Replay d’une version précédente de l’équilibrage'),
         )
       : null,
   );
@@ -202,6 +206,26 @@ export function profileScreen(): Screen {
               `Combats : ${profile.lifetime.battles} · Victoires : ${profile.lifetime.wins} · Collection : ${owned}/${ROSTER.length} · Parchemins ouverts : ${profile.totalPacksOpened} · Légendaires : ${profile.lifetime.legendaries} · Succès : ${profile.achievements.length}/${ACHIEVEMENTS.length}`,
             ),
           ),
+          profile.rank.history.length ? h('div', { class: 'section-title' }, 'Saisons classées') : null,
+          profile.rank.history.length
+            ? h(
+                'div',
+                { class: 'panel row wrap-r' },
+                ...profile.rank.history.map((entry) => {
+                  const league = LEAGUES.find((l) => l.name === entry.league) ?? LEAGUES[0];
+                  const season = SEASONS.find((x) => x.id === entry.seasonId);
+                  return h(
+                    'span',
+                    {
+                      class: 'chip',
+                      style: { background: league.color, color: '#1a1420', textShadow: 'none' },
+                      title: `${entry.mmr} MMR`,
+                    },
+                    `${season?.name ?? entry.seasonId} · ${league.name}`,
+                  );
+                }),
+              )
+            : null,
           h('div', { class: 'section-title' }, 'Apparence'),
           appearancePanel(refresh),
           h('div', { class: 'section-title' }, 'Historique des combats'),

@@ -2,7 +2,7 @@
 
 Jeu de collection et de combat shinobi au tour par tour, en pixel art façon Game Boy Advance. Web / PWA, souris, tactile et clavier.
 
-> **Projet de fan non officiel**, sans lien avec les ayants droit de *Naruto*. Les sprites, décors, sons et musiques sont générés par le code du jeu : aucune ressource commerciale n'est extraite.
+> **Projet de fan non officiel**, sans lien avec les ayants droit de _Naruto_. Les sprites, décors, sons et musiques sont générés par le code du jeu : aucune ressource commerciale n'est extraite.
 
 La boucle : **ouvrir → collectionner → composer → combattre → gagner → améliorer → recommencer**.
 
@@ -15,19 +15,19 @@ npm run dev          # http://localhost:5173 (ajouter ?dev pour le menu dévelop
 npm run server       # serveur PvP sur ws://localhost:8787 (facultatif)
 ```
 
-| Commande | Rôle |
-|---|---|
-| `npm run dev` | serveur de développement Vite |
-| `npm run build` | vérification TypeScript stricte puis build de production dans `dist/` |
-| `npm run preview` | sert le build |
-| `npm run test` | tests Vitest (moteur, parchemins, économie, sauvegarde, missions, serveur PvP) |
-| `npm run lint` | ESLint |
-| `npm run format` | Prettier |
-| `npm run simulate -- 3000 ranked` | simulation d'équilibrage IA contre IA, rapport dans `simulation-report.txt` |
-| `npm run server` | serveur PvP autoritaire (WebSocket + classement HTTP) |
-| `npm run e2e` | parcours complet dans Chromium (nécessite `npm run preview` en parallèle) |
-| `npm run e2e:pvp` | deux joueurs s'affrontent en classé via le serveur local (nécessite `npm run server` et `npm run preview`) |
-| `npm run shots` | captures portrait, paysage et desktop à partir d'une sauvegarde injectée |
+| Commande                          | Rôle                                                                                                       |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                     | serveur de développement Vite                                                                              |
+| `npm run build`                   | vérification TypeScript stricte puis build de production dans `dist/`                                      |
+| `npm run preview`                 | sert le build                                                                                              |
+| `npm run test`                    | tests Vitest (moteur, parchemins, économie, sauvegarde, missions, serveur PvP)                             |
+| `npm run lint`                    | ESLint                                                                                                     |
+| `npm run format`                  | Prettier                                                                                                   |
+| `npm run simulate -- 3000 ranked` | simulation d'équilibrage IA contre IA, rapport dans `simulation-report.txt`                                |
+| `npm run server`                  | serveur PvP autoritaire (WebSocket + classement HTTP)                                                      |
+| `npm run e2e`                     | parcours complet dans Chromium (nécessite `npm run preview` en parallèle)                                  |
+| `npm run e2e:pvp`                 | deux joueurs s'affrontent en classé via le serveur local (nécessite `npm run server` et `npm run preview`) |
+| `npm run shots`                   | captures portrait, paysage et desktop à partir d'une sauvegarde injectée                                   |
 
 Le build se sert depuis n'importe quel dossier (chemins relatifs) et fonctionne hors ligne grâce au service worker.
 
@@ -38,8 +38,9 @@ Le build se sert depuis n'importe quel dossier (chemins relatifs) et fonctionne 
 - **IA** facile, normale et difficile, sans information cachée.
 - **Aventure** : 7 arènes de 3 combats sur une carte du monde, récompenses de première victoire.
 - **Parchemins** : 3 types, probabilités affichées, pity dur et doux, doublons convertis en fragments, ouverture interactive (sceau à briser, fausses pistes, révélation carte par carte, mise en scène légendaire).
-- **Progression** : XP et niveaux (30 max), éveil ★1 à ★5 plafonné à +16 %, niveau de joueur, missions quotidiennes et hebdomadaires, 23 succès, passe de combat gratuit et premium, cadres et titres cosmétiques.
+- **Progression** : XP et niveaux (30 max), éveil ★1 à ★5 plafonné à +16 %, niveau de joueur, missions quotidiennes et hebdomadaires, 22 succès, passe de combat gratuit et premium, cadres et titres cosmétiques.
 - **PvP** : amical et classé (niveaux normalisés, sans objets), MMR Elo et 7 ligues, serveur autoritaire, reconnexion, abandon après 30 s d'absence, historique et **replays** déterministes.
+- **Saisons classées** : à la fin d'une saison, la ligue atteinte rapporte ses récompenses et un badge (onglet Profil), puis le MMR se rapproche de 1000 (40 % de l'écart effacé) et le bilan repart de zéro — côté client comme côté serveur.
 - **Économie** : Ryō (gratuit), Jade (achats simulés par `MockPurchaseProvider`), points de chaîne (intégration Twitch simulée).
 - **Accessibilité** : volumes, vibrations, secousses et animations réduites, vitesse de combat, mode daltonien, texte agrandi.
 
@@ -72,6 +73,7 @@ Décisions importantes :
 - **Phaser ne dessine que le terrain** (240×160, sans lissage). Menus, HUD et textes sont en DOM pour rester nets et lisibles sur mobile.
 - **Tous les visuels sont générés** à partir des données (`look` d'un shinobi, palette d'un décor). `SPRITE_OVERRIDES` permet de remplacer un sprite par un dessin fait main.
 - **La sauvegarde est versionnée** (`saveVersion`) avec migrations, derrière l'interface `SaveRepository` (localStorage aujourd'hui, API demain).
+- **Les replays sont liés à une version du contenu** (`CONTENT_VERSION`, `src/data/version.ts`). Un changement d'équilibrage qui modifie l'issue des combats doit l'incrémenter : les replays plus anciens ne sont alors plus proposés, puisqu'ils ne se rejoueraient plus à l'identique.
 
 ## Ajouter du contenu
 
@@ -88,6 +90,8 @@ Décisions importantes :
           accent: '#8b93a8', eyes: '#d0283a', headband: 'forehead', features: ['sharingan'] },
 }
 ```
+
+**Équilibrage** : `npm run simulate -- 4000 ranked <graine>` sur plusieurs graines ; viser 42–58 % de victoires par shinobi. Après un changement de statistiques, incrémenter `CONTENT_VERSION`.
 
 **Un jutsu** : une entrée `jutsu({...})` dans `src/data/jutsus.ts`. Les effets se composent (`status`, `buff`, `heal`, `shield`, `clone`, `protect`, `chakra`, `cleanse`, `dispel`, `drain`, `selfDamage`, `detonate`) ; `animationId` choisit la mise en scène dans `src/game/gfx/animations.ts`.
 

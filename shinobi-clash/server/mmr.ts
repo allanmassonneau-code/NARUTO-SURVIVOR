@@ -5,7 +5,4 @@ export function eloDelta(mmr: number, opponentMmr: number, score: 0 | 0.5 | 1, g
   return Math.round(k * (score - expected));
 }
 
-/** Remise à niveau partielle de fin de saison : on se rapproche de 1000 sans tout perdre. */
-export function seasonReset(mmr: number): number {
-  return Math.round(1000 + (mmr - 1000) * 0.6);
-}
+export { seasonReset } from '../src/core/ranked';

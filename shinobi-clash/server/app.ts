@@ -15,7 +15,8 @@ import {
   type ServerMessage,
 } from '../src/net/protocol';
 import { Match, type MatchResult, type Seat } from './match';
-import { eloDelta } from './mmr';
+import { eloDelta, seasonReset } from './mmr';
+import { currentSeason } from '../src/data/seasons';
 import { Store, type PlayerRecord } from './store';
 
 /** Fenêtre de MMR acceptée : elle s'élargit avec l'attente. */
@@ -206,7 +207,12 @@ export function createPvpServer(opts: PvpServerOptions) {
           .slice(0, 16) || 'Genin';
       const team = sanitizeTeam(name, m.team);
       const id = typeof m.playerId === 'string' && m.playerId.length <= 64 ? m.playerId : randomUUID();
-      const player = store.get(id) ?? { id, name, mmr: 1000, wins: 0, losses: 0, draws: 0 };
+      const season = currentSeason(Date.now()).id;
+      const player = store.get(id) ?? { id, name, mmr: 1000, wins: 0, losses: 0, draws: 0, seasonId: season };
+      if (player.seasonId !== season) {
+        // Nouvelle saison : remise à niveau partielle et nouveau bilan.
+        Object.assign(player, { mmr: seasonReset(player.mmr), wins: 0, losses: 0, draws: 0, seasonId: season });
+      }
       player.name = name;
       store.upsert(player);
       sessionKey.id = id;

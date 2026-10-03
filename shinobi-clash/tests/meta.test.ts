@@ -7,6 +7,8 @@ import { isStageUnlocked, recordBattle } from '../src/core/records';
 import { applyRedemption, CHANNEL_DAILY_CAP, createRedemptionLedger } from '../src/services/channelPoints';
 import { activeSynergies, combineBonuses, synergiesGainedBy } from '../src/data/synergies';
 import { getShinobi } from '../src/data/shinobi';
+import { SEASONS } from '../src/data/seasons';
+import { seasonReset, settleRankedSeason } from '../src/core/ranked';
 
 const NOW = new Date('2026-10-01T10:00:00').getTime();
 
@@ -101,5 +103,33 @@ describe('synergies', () => {
     expect(bonus.attackPct).toBeGreaterThan(0);
     const gained = synergiesGainedBy([getShinobi('gaara')], getShinobi('temari')).map((s) => s.id);
     expect(gained).toContain('suna');
+  });
+});
+
+describe('saisons classées', () => {
+  const seasons = [
+    { ...SEASONS[0], id: 's0', name: 'Saison 0', startDate: '2020-01-01', endDate: '2020-12-31' },
+    ...SEASONS,
+  ];
+
+  it('récompense la ligue atteinte, garde un badge et remet le MMR à niveau', () => {
+    const p = newProfile(NOW);
+    p.rank = { mmr: 1300, seasonId: 's0', wins: 8, losses: 3, history: [] };
+    const jade = p.currencies.jade;
+    const settled = settleRankedSeason(p, NOW, seasons);
+    expect(settled?.league).toBe('Or');
+    expect(p.currencies.jade).toBe(jade + 50);
+    expect(p.packs.standard).toBe(2);
+    expect(p.rank).toMatchObject({ mmr: seasonReset(1300), seasonId: 's1', wins: 0, losses: 0 });
+    expect(p.rank.history).toEqual([{ seasonId: 's0', league: 'Or', mmr: 1300 }]);
+    expect(settleRankedSeason(p, NOW, seasons)).toBeNull();
+  });
+
+  it('sans match classé : pas de récompense ni de badge', () => {
+    const p = newProfile(NOW);
+    p.rank = { mmr: 1000, seasonId: 's0', wins: 0, losses: 0, history: [] };
+    expect(settleRankedSeason(p, NOW, seasons)).toBeNull();
+    expect(p.rank.seasonId).toBe('s1');
+    expect(p.rank.history).toEqual([]);
   });
 });

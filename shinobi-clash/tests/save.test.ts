@@ -27,6 +27,7 @@ describe('sauvegarde', () => {
     expect(p.currencies).toEqual({ ryo: 10, jade: 50, chainPoints: 0 });
     expect(p.lifetime).toMatchObject({ battles: 3, wins: 2, jutsus: 0, pvpWins: 0 });
     expect(p.pass.seasonId).toBe('s1');
+    expect(p.rank.history).toEqual([]);
     expect(p.settings.musicVolume).toBe(0.5);
   });
 

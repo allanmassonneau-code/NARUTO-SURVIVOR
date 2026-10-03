@@ -5,7 +5,9 @@ import './styles/main.css';
 import { audio } from './services/audio';
 import { track } from './services/analytics';
 import { game } from './services/gameService';
-import { toast } from './ui/components';
+import type { SeasonSettlement } from './core/ranked';
+import { button, openModal, rewardLines, toast } from './ui/components';
+import { h } from './ui/dom';
 import { navigate, registerScreen } from './ui/router';
 import { arenasScreen } from './ui/screens/arenas';
 import { battleScreen } from './ui/screens/battle';
@@ -35,6 +37,31 @@ registerScreen('ranking', rankingScreen);
 registerScreen('settings', settingsScreen);
 registerScreen('pass', passScreen);
 
+/** Bilan de fin de saison classée : ligue atteinte, récompenses, nouveau MMR de départ. */
+function showSeasonEnd(s: SeasonSettlement): void {
+  audio.play('levelup');
+  const close = openModal(
+    h(
+      'div',
+      { class: 'result' },
+      h('div', { class: 'px-font', style: 'color:var(--text-dim)' }, `FIN DE SAISON — ${s.seasonName}`),
+      h('div', { class: 'big win' }, s.league.toUpperCase()),
+      h('div', null, s.reward ? rewardLines(s.reward).join(' · ') : 'Aucune récompense pour cette ligue.'),
+      h(
+        'div',
+        { class: 'dim', style: 'font-size:14px;margin-top:8px' },
+        `Classement remis à niveau : ${s.mmrBefore} → ${s.mmrAfter}. Le badge de saison est dans ton profil.`,
+      ),
+      h(
+        'div',
+        { class: 'actions' },
+        button('Nouvelle saison !', () => close(), { variant: 'gold' }),
+      ),
+    ),
+    { dark: true },
+  );
+}
+
 async function boot(): Promise<void> {
   await game.load();
   applySettings(game.profile.settings);
@@ -62,6 +89,7 @@ async function boot(): Promise<void> {
 
   navigate(game.profile.tutorial.starterChosen ? 'home' : 'onboarding');
   document.getElementById('boot')?.remove();
+  if (game.seasonSettlement) showSeasonEnd(game.seasonSettlement);
 
   if ('serviceWorker' in navigator && import.meta.env.PROD) {
     navigator.serviceWorker.register('./sw.js').catch(() => undefined);

@@ -7,6 +7,7 @@ import { buyPack, openPack, type PackOpening } from '../core/gacha';
 import { claimMission, refreshMissions } from '../core/missions';
 import { averageLevel, randomTeam, TRAINING_OPPONENT_NAMES } from '../core/opponents';
 import { MAX_LEVEL, MAX_STARS } from '../core/progression';
+import { settleRankedSeason, type SeasonSettlement } from '../core/ranked';
 import { newProfile, type PlayerProfile, type ReplayData, type Settings } from '../core/profile';
 import { isStageUnlocked, recordBattle, recordPvp, type BattleRewards, type PvpResult } from '../core/records';
 import { Rng, randomSeed } from '../core/rng';
@@ -17,6 +18,7 @@ import { STAGES } from '../data/arenas';
 import { configForMode } from '../data/battleConfig';
 import { COSMETICS_BY_ID } from '../data/cosmetics';
 import { PVE_ITEM_LOADOUT } from '../data/items';
+import { CONTENT_VERSION } from '../data/version';
 import { track } from './analytics';
 import { applyRedemption, createRedemptionLedger, MockChannelProvider } from './channelPoints';
 import { JADE_PRODUCTS, MockPurchaseProvider, type PurchaseProvider } from './purchases';
@@ -45,6 +47,8 @@ export interface DebugOptions {
 export class GameService {
   profile: PlayerProfile = newProfile(Date.now());
   readonly debug: DebugOptions = { forceRarity: null, forceLegendary: false, enemyOverride: null };
+  /** Bilan de la saison classée clôturée au chargement, à présenter au joueur. */
+  seasonSettlement: SeasonSettlement | null = null;
   /** Positionné par le menu dev « gagner instantanément » : le combat n'est alors pas vérifiable. */
   debugWinUsed = false;
   private listeners = new Set<(p: PlayerProfile) => void>();
@@ -76,9 +80,11 @@ export class GameService {
       }
     }
     refreshMissions(this.profile, Date.now());
+    this.seasonSettlement = settleRankedSeason(this.profile, Date.now());
     checkAchievements(this.profile);
     if (this.profile.settings.seedOverride !== null) this.rng = new Rng(this.profile.settings.seedOverride);
     this.emit();
+    if (this.seasonSettlement) void this.flush();
   }
 
   subscribe(listener: (p: PlayerProfile) => void): () => void {
@@ -333,7 +339,15 @@ export class GameService {
     const mode = setup.mode ?? 'pve';
     const replay: ReplayData | undefined = this.debugWinUsed
       ? undefined
-      : { v: 1, seed: setup.seed, mode, teams: [setup.player, setup.enemy], log: final.log, you: 0 };
+      : {
+          v: 1,
+          content: CONTENT_VERSION,
+          seed: setup.seed,
+          mode,
+          teams: [setup.player, setup.enemy],
+          log: final.log,
+          you: 0,
+        };
     let winner: Winner | null = final.winner;
     if (final.endReason === 'forfeit') winner = 1;
     else if (!this.debugWinUsed) {
