@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "simulate": "tsx tools/simulate.ts",
-    "server": "tsx server/index.ts"
+    "server": "tsx server/index.ts",
+    "e2e": "node tools/e2e.mjs http://localhost:4173/ ."
   },
   "dependencies": {
     "@fontsource/pixelify-sans": "^5.3.0",

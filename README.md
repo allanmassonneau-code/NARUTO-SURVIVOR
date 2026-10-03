@@ -1,5 +1,8 @@
 # NARUTO: SHINOBI SURVIVORS — dossier de préproduction
 
+> **Nouveau — [Shinobi Clash](shinobi-clash/README.md)** : jeu de collection et de combat shinobi au tour par tour, en pixel art façon GBA (Web/PWA). `cd shinobi-clash && npm install && npm run dev`.
+
+
 Projet créatif **non officiel** : dossier de conception d'un roguelite de type « survivors » en pixel art dans l'univers de *Naruto* et *Naruto Shippuden*. Ce dépôt ne contient **pas** le jeu : il contient la conception (règles, bible artistique, catalogues, architecture, plan de production) et un outillage qui vérifie la cohérence des catalogues. Tous les chiffres sont des hypothèses à tester. Les droits d'exploitation de la licence sont un prérequis non traité (risque R-01).
 
 ## Lire le dossier
