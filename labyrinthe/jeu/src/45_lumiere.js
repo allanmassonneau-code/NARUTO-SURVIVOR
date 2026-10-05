@@ -160,10 +160,12 @@ function eclairerSalle(g, s, X, Y, ox, oy) {
 function placerAppliques(s, A) {
   const L = []; if (s.type === 'cache' || s.type === 'isolee') return L;
   for (const [i, j] of FORMES[s.forme].cel) for (const dx of [2, CEL_L - 3]) {
-    const tx = 1 + CEL_L * i + dx, ty = CEL_H * j, dessous = tuileA(s, tx, ty + 1);
-    if (tuileA(s, tx, ty) !== T.MUR || dessous === T.MUR || dessous === T.VIDE || dessous === T.PORTE) continue;
-    if (s.portes.some(p => Math.abs(p.tx - tx) <= 1 && Math.abs(p.ty - ty) <= 1)) continue;
-    L.push({ x: tx * TUILE + 16, y: ty * TUILE + 6, type: A.applique, i: L.length });
+    const tx = 1 + CEL_L * i + dx;
+    for (let ty = CEL_H * j; ty < CEL_H * (j + 1); ty++) { // premier mur dont la face donne sur le sol (couloirs compris)
+      const dessous = tuileA(s, tx, ty + 1); if (tuileA(s, tx, ty) !== T.MUR || dessous === T.MUR || dessous === T.VIDE || dessous === T.PORTE) continue;
+      if (!s.portes.some(p => Math.abs(p.tx - tx) <= 1 && Math.abs(p.ty - ty) <= 1)) L.push({ x: tx * TUILE + 16, y: ty * TUILE + 6, type: A.applique, i: L.length });
+      break;
+    }
   }
   return L;
 }
@@ -246,6 +248,7 @@ function dessinerAir(g, s, X, Y) {
       case 'braise': x = mod(a * Wp + Math.sin(t * 1.6 + i) * 10, Wp); y = mod(c * Hp - t * (14 + b * 16), Hp); col = b > 0.5 ? '#ffa048' : '#ff6030'; tl = b > 0.7 ? 2 : 1; al = 0.55 + 0.45 * Math.sin(t * 6 + i * 3); lueur = 8; break;
       default: x = mod(a * Wp + Math.sin(t * 0.9 + i) * 12, Wp); y = mod(c * Hp + t * (9 + b * 7), Hp); col = '#bcb4b0'; tl = 2; al = 0.32; // cendre
     }
+    const tu = tuileA(s, Math.floor((TUILE + x) / TUILE), Math.floor((TUILE + y) / TUILE)); if (tu === T.VIDE || tu === T.MUR || tu === T.PORTE) continue; // pas de poussière dans le vide
     if (al > 0.02) _air.push(X(TUILE + x), Y(TUILE + y), al, col, tl, lueur);
   }
   // lueurs d'abord (un seul changement de mode de fusion), puis les grains nets

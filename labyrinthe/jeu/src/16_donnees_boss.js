@@ -153,7 +153,7 @@
       { id: 'anneau', type: 'anneau', n: 18, v: 3.4, trou: true, largeurTrou: 2, vagues: 3, intervalle: 0.5, tele: 0.6, recup: 0.6 },
     ], desc: 'Immobile et gigantesque : queues balayantes, rayon, anneaux à brèche.' });
   // ── Mini-boss de statues ──
-  B('BOS_M01', 'Mue gardienne', 'Gardienne du pacte', 0, 150, { sprite: { type: 'carte', cle: 'serpent_geant', couleurs: { s: '#8a7a9a', d: '#5a4a6a', l: '#b0a0c0', b: '#e0d8e8', B: '#b8b0c8' } }, echelleSprite: 1, mini: true, statut: 'création originale',
+  B('BOS_M01', 'Mue gardienne', 'Gardienne du pacte', 0, 150, { sprite: { type: 'carte', cle: 'serpent_geant', couleurs: { s: '#8a7a9a', d: '#5a4a6a', l: '#b0a0c0', b: '#e0d8e8', B: '#b8b0c8' } }, echelleSprite: 2, mini: true, statut: 'création originale',
     attaques: [{ id: 'charge', type: 'charge', vCharge: 9, tele: 0.55, duree: 1, recup: 0.8 }, { id: 'anneau', type: 'anneau', n: 10, v: 4, tele: 0.5, recup: 0.6 }] });
   B('BOS_M02', 'Crapaud gardien', 'Gardien du sanctuaire', 0, 150, { sprite: { type: 'carte', cle: 'crapaud_gardien' }, echelleSprite: 2, mini: true, statut: 'création originale',
     attaques: [{ id: 'saut', type: 'saut', r: 1.6, tele: 0.5, duree: 0.7, recup: 0.7, anneau: 8 }, { id: 'langue', type: 'salve', n: 1, v: 9, tele: 0.4, recup: 0.5 }] });

@@ -319,7 +319,11 @@ function dessinerZone(g, z, X, Y) {
   g.globalAlpha = fin * (k < 1 ? 0.4 : 1);
   switch (z.type) {
     case 'feu_allie': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(255,140,40,0.45)'), x - z.r, y - z.r * 0.55); if (Math.random() < 0.3) G.particules.push({ x: z.x + (Math.random() - 0.5) * z.r, y: z.y, vx: 0, vy: -24, age: 0, duree: 0.3, couleur: '#ffb040', taille: 2 }); break;
-    case 'feu_ennemi': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(40,10,30,0.7)'), x - z.r, y - z.r * 0.55); g.drawImage(ellipse(z.r - 2, z.r * 0.5 - 1, 'rgba(160,40,200,0.6)'), x - z.r + 2, y - z.r * 0.5 + 1); break;
+    case 'feu_ennemi': { // flammes noires : cœur d'encre, liseré violet, langues de feu animées
+      g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(18,6,22,0.8)'), x - z.r, y - Math.round(z.r * 0.55)); g.drawImage(ellipse(Math.max(2, z.r - 3), Math.max(1, z.r * 0.55 - 2), 'rgba(110,40,150,0.4)'), x - z.r + 3, y - Math.round(z.r * 0.55) + 2);
+      const n = Math.max(5, Math.round(z.r / 3)); for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2 + z.r, rr = z.r * (0.25 + 0.6 * ((i * 37) % 10) / 10), fx = Math.round(x + Math.cos(a) * rr), fy = Math.round(y + Math.sin(a) * rr * 0.55), h = 3 + Math.round(4 * (0.5 + 0.5 * Math.sin(G.temps * 9 + i * 1.7))); g.fillStyle = '#0c0410'; g.fillRect(fx - 1, fy - h, 3, h + 1); g.fillStyle = i % 3 ? '#2a0e38' : '#8a4ac0'; g.fillRect(fx, fy - h + 1, 1, h - 1); }
+      break;
+    }
     case 'eau_alliee': case 'eau': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(80,150,220,0.4)'), x - z.r, y - z.r * 0.55); break;
     case 'acide': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(20,40,10,0.6)'), x - z.r - 1, y - z.r * 0.55 - 1); g.drawImage(ellipse(z.r - 1, z.r * 0.5, 'rgba(130,220,60,0.7)'), x - z.r + 1, y - z.r * 0.5); if (Math.random() < 0.05) G.particules.push({ x: z.x, y: z.y - 2, vx: 0, vy: -10, age: 0, duree: 0.4, couleur: '#c0ff80', taille: 2 }); break;
     case 'glace': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(190,230,255,0.5)'), x - z.r, y - z.r * 0.55); break;

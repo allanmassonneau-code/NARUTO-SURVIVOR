@@ -61,9 +61,9 @@ function majVarianteContinu(dt) {
   for (const p of G.proj) if (p.proprio === 'joueur' && p.elements && p.elements.has('katon')) { const tx = Math.floor(p.x / TUILE), ty = Math.floor(p.y / TUILE); if (tuileA(s, tx, ty) === T.TOILE) { s.tuiles[ty * s.W + tx] = T.SOL; s.fondSale = true; } }
 }
 function majPhasesSalle(s, premiere) {
-  if (premiere && s.type === 'malediction') G.textes.push({ x: G.joueur.x, y: G.joueur.y - 40, t: 'Chambre au sceau blessant : sortir coûte une demi-unité (sauf lévitation).', age: 0, duree: 2.5, couleur: '#e05a7a' });
-  if (premiere && s.type === 'sacrifice') G.textes.push({ x: G.joueur.x, y: G.joueur.y - 40, t: 'Autel de tribut : chaque passage sur l’autel coûte une demi-unité.', age: 0, duree: 2.5, couleur: '#d0a0a0' });
-  if (premiere && s.type === 'defi') G.textes.push({ x: G.joueur.x, y: G.joueur.y - 40, t: 'Prendre la récompense lance trois vagues.', age: 0, duree: 2.5, couleur: '#b0b0e0' });
+  if (premiere && s.type === 'malediction') G.textes.push({ ecran: true, t: 'Chambre au sceau blessant : sortir coûte une demi-unité (sauf lévitation).', age: 0, duree: 3, couleur: '#e05a7a' });
+  if (premiere && s.type === 'sacrifice') G.textes.push({ ecran: true, t: 'Autel de tribut : chaque passage sur l’autel coûte une demi-unité.', age: 0, duree: 3, couleur: '#d0a0a0' });
+  if (premiere && s.type === 'defi') G.textes.push({ ecran: true, t: 'Prendre la récompense lance trois vagues.', age: 0, duree: 3, couleur: '#b0b0e0' });
 }
 function lacherRecompenseChampion(e, r) {
   const t = { ryo: 'ryo', ryo2: 'ryo5', explosif: 'explosif', coeur: 'coeur_demi', protection: 'protection_demi', cle: 'cle' }[r] || 'ryo';

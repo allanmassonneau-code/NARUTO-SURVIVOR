@@ -225,7 +225,11 @@ function decorSalle(g, s, V) {
         for (let k = 0; k < 7; k++) { g.fillStyle = ['#c8b890', '#a88a5a', '#d8c8a0', '#8a3a2a', '#3a5a8a'][(x + k * 3) % 5]; g.fillRect(x + 2 + k * 4, 37, 3, 6); g.fillRect(x + 3 + k * 4, 47, 3, 6); } }
       break;
     }
-    case 'coffres': { lumiere(cx, cy, 200, '#ffd870', 0.25); g.globalAlpha = 0.18; g.fillStyle = '#e8c050'; for (let ty = 2; ty < s.H - 2; ty++) for (let tx = 2; tx < s.W - 2; tx++) if ((tx + ty) % 2 === 0) g.fillRect(tx * TUILE + 2, ty * TUILE + 2, 28, 28); g.globalAlpha = 1; break; }
+    case 'coffres': { // salle aux coffres : voile doré, sceau de mosaïque, pièces éparses qui accrochent la lumière
+      lumiere(cx, cy, 200, '#ffd870', 0.25); const H = s.H * TUILE; voile(g, cx, cy, larg * 0.36, H * 0.3, '#ffd870', 0.18); cercleSceau(g, cx, cy, 52, '#e8c050');
+      const al = new Alea('pieces' + s.id); for (let k = 0; k < 28; k++) { const x = 44 + al.entier(larg - 88), y = 48 + al.entier(H - 96); g.fillStyle = '#7a5a18'; g.fillRect(x, y + 1, 4, 2); g.fillStyle = '#e8c050'; g.fillRect(x, y, 4, 2); g.fillStyle = '#fff4b0'; g.fillRect(x, y, 1, 1); }
+      break;
+    }
     case 'malediction': { lumiere(cx, cy, 220, '#c02040', 0.28); g.fillStyle = 'rgba(120,20,40,0.35)'; const al = new Alea('fissures' + s.id); for (let k = 0; k < 14; k++) { let x = 40 + al.entier(larg - 80), y = 40 + al.entier(s.H * TUILE - 80); for (let n = 0; n < 12; n++) { g.fillRect(x, y, 2, 2); x += al.entier(5) - 2; y += al.entier(5) - 2; } } break; }
     case 'repos': { cercleSceau(g, cx, cy, 44, '#6ac8e8'); lumiere(cx, cy, 150, '#70e0ff', 0.35); break; }
     case 'pacte': { // empreinte interdite : pénombre violette, sceau serpentin sous les offres, bougies noires
@@ -341,6 +345,8 @@ function rendreSalle(g, ox, oy) {
   const s = G.salle, J = G.joueur;
   const [cx, cy] = camera(s, J); const X = x => Math.round(x - cx + ox), Y = y => Math.round(y - cy + oy);
   g.drawImage(fondEcran(G.theme), ox, oy);
+  // tout ce qui appartient à la salle (télégraphes, effets, brume, pénombre) reste dans son cadre, jamais sur le HUD
+  g.save(); g.beginPath(); g.rect(X(0), Y(0), s.W * TUILE, s.H * TUILE); g.clip();
   g.drawImage(fondSalle(s), X(0), Y(0));
   dessinerAppliques(g, s, X, Y);
   const D = decorsTheme(G.theme);
@@ -391,7 +397,8 @@ function rendreSalle(g, ox, oy) {
   // obscurité / brume (les dangers et les ennemis restent contourés)
   if (G.variante && (G.variante.obscurite || G.variante.brume)) dessinerObscurite(g, s, X, Y);
   // textes flottants
-  for (const t of G.textes) if (!t.ecran) { const k = t.age / t.duree; g.globalAlpha = k > 0.7 ? (1 - k) / 0.3 : 1; Police.ecrire(g, t.t, X(t.x), Y(t.y - k * 10), t.couleur || '#fff', { a: 'c' }); g.globalAlpha = 1; }
+  g.restore(); // fin de la découpe à la salle : textes, jauge et réticule restent entiers
+  for (const t of G.textes) if (!t.ecran) { const k = t.age / t.duree, w = Police.largeur(t.t); g.globalAlpha = k > 0.7 ? (1 - k) / 0.3 : 1; Police.ecrire(g, t.t, borne(X(t.x), ox + w / 2 + 4, ox + ECRAN_L - w / 2 - 4), Y(t.y - k * 10), t.couleur || '#fff', { a: 'c' }); g.globalAlpha = 1; }
   // jauge de charge (compacte, au-dessus de la tête)
   if (J.tir.charge > 0) { const w = 18, k = Math.min(1, J.tir.charge); g.fillStyle = '#14101c'; g.fillRect(X(J.x - w / 2 - 1), Y(J.y - 40), w + 2, 4); g.fillStyle = k >= 1 ? (Math.floor(G.temps * 12) % 2 ? '#ffffff' : '#ffe060') : '#6ad0ff'; g.fillRect(X(J.x - w / 2), Y(J.y - 39), Math.round(w * k), 2); }
   if (J.tir.reticule && J.tir.reticule.actif) { const R = J.tir.reticule; g.drawImage(anneau(12, 1, '#ff5a3a'), X(R.x - 13), Y(R.y - 13)); g.fillStyle = '#ff5a3a'; g.fillRect(X(R.x) - 1, Y(R.y) - 1, 3, 3); }

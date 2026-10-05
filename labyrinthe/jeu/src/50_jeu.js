@@ -44,7 +44,7 @@ function majJeu(dt) {
   majEffets(dt); majRamassables(dt); majPiedestaux(dt); G.machineProche = null; majDispositifs(); majAutel(dt); majSource(); majSorties(dt);
   majDangersTerrain(dt); verifierBlocsCle(); verifierPortes(dt); secoursEnnemisInaccessibles(dt); verifierNettoyage(); majSecousse(dt);
   majVarianteContinu(dt); majMursSable(dt);
-  if (G.notifications.length) { G.notifications[0].t += dt; if (G.notifications[0].t > 3) G.notifications.shift(); }
+  if (G.notifications.length && !banniereVisible()) { G.notifications[0].t += dt; if (G.notifications[0].t > 3) G.notifications.shift(); }
 }
 function deposer(J) {
   if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; J.talisman = J.talisman2 || null; J.talisman2 = null; recalculer(J); Son.jouer('objet_mineur'); return; }
@@ -64,7 +64,7 @@ const SceneJeu = {
   maj(dt) { majJeu(dt); },
   rendre(g) {
     rendreJeu(g); dessinerHUD(g);
-    if (G.notifications.length) { const n = G.notifications[0]; plaqueHUD(g, 420, 76, 210, 34, '#c8a040'); Police.ecrire(g, n.titre, 428, 81, '#f0c040'); Police.ecrire(g, n.nom, 428, 93, '#fff0d0'); }
+    if (G.notifications.length && !banniereVisible() && !Entrees.enfonce('carte')) { const n = G.notifications[0]; plaqueHUD(g, 420, 76, 210, 34, '#c8a040'); Police.ecrire(g, n.titre, 428, 81, '#f0c040'); Police.ecrire(g, n.nom, 428, 93, '#fff0d0'); }
   },
 };
 const ScenePause = {
@@ -81,7 +81,7 @@ const ScenePause = {
     g.fillStyle = 'rgba(6,4,10,0.72)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
     cadreMenu(g, 40, 40, 220, 150, 'Pause'); this.menu.rendre(g, 56, 74, 188, actif);
     // carte et statistiques consultables en pause
-    cadreMenu(g, 280, 40, 320, 280); cadreMenu(g, 40, 198, 220, 122); dessinerMinicarte(g, 0, 0, true);
+    cadreMenu(g, 280, 40, 320, 280); cadreMenu(g, 40, 198, 220, 122); dessinerMinicarte(g, 440, 186, true);
     const J = G.joueur, P = G.partie; Police.ecrire(g, G.etage.cfg.nom, 440, 46, '#e8dcc0', { a: 'c' });
     dessinerStats(g, J, 50, 206); Police.ecrire(g, 'Temps ' + formatTemps(P.temps), 130, 206, '#a8a0b8'); Police.ecrire(g, 'Code ' + codeAffiche(P.code), 130, 218, '#a8a0b8'); Police.ecrire(g, (P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' — ' + INDEX[P.defi].nom : ''), 130, 230, '#a8a0b8');
     Police.ecrire(g, 'Objets : ' + J.passifs.length, 130, 242, '#a8a0b8');

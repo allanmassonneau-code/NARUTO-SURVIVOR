@@ -165,7 +165,7 @@ const SceneCode = {
   rendre(g) {
     fondMenu(g);
     Police.ecrire(g, 'Mission à code', 320, 20, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
-    Police.ecrire(g, 'Un code reproduit les étages et le butin d’une même version des données. Les parties à code saisi n’ouvrent pas de déblocages.', 320, 48, '#8a8098', { a: 'c' });
+    Police.couper('Un code reproduit les étages et le butin d’une même version des données. Les parties à code saisi n’ouvrent pas de déblocages.', 520).forEach((l, i) => Police.ecrire(g, l, 320, 42 + i * 11, '#8a8098', { a: 'c' }));
     for (let i = 0; i < 8; i++) { const x = 220 + i * 26; g.fillStyle = '#2a2236'; g.fillRect(x, 70, 20, 24); if (this.code[i]) Police.ecrire(g, this.code[i], x + 10, 76, '#fff0d0', { a: 'c', e: 2 }); if (i === 3) g.fillRect(x + 22, 80, 2, 2); }
     const L = ALPHABET_CODE.split('').concat(['←', 'OK']);
     L.forEach((c, k) => { const x = 180 + (k % this.cols) * 36, y = 120 + Math.floor(k / this.cols) * 30; const f = k === this.y * this.cols + this.x; g.fillStyle = f ? '#f0c870' : '#2a2236'; g.fillRect(x, y, 30, 24); Police.ecrire(g, c, x + 15, y + 6, f ? '#1c1420' : '#e8e0f0', { a: 'c', e: c.length > 1 ? 1 : 2, ombre: null }); });
@@ -260,12 +260,12 @@ const SceneRegistre = {
   },
   rendre(g) {
     fondMenu(g); cadreMenu(g, 14, 26, 612, 312);
-    const titres = ['Marques', 'Collection', 'Missions', 'Secrets']; titres.forEach((t, k) => Police.ecrire(g, t, 140 + k * 120, 10, k === this.onglet ? '#ffe0a0' : '#6a6078', { a: 'c', e: k === this.onglet ? 2 : 1 }));
+    const titres = ['Marques', 'Collection', 'Missions', 'Secrets']; titres.forEach((t, k) => { const x = 140 + k * 120, sel = k === this.onglet; Police.ecrire(g, t, x, 10, sel ? '#ffe0a0' : '#8a8098', { a: 'c' }); if (sel) { const w = Police.largeur(t); losange(g, x - w / 2 - 8, 14, '#e0b870', 2); losange(g, x + w / 2 + 7, 14, '#e0b870', 2); g.fillStyle = '#c8a060'; g.fillRect(x - w / 2, 21, w, 1); } });
     const P = Progression.profil;
     if (this.onglet === 0) {
       const L = DON.personnages; const deb = Math.min(this.i, Math.max(0, L.length - 18));
-      L.slice(deb, deb + 18).forEach((p, k) => { const y = 40 + k * 16; const ok = Progression.estDebloque(p.id); Police.ecrire(g, ok ? p.nom : '???', 40, y, ok ? '#e8e0f0' : '#5a5268'); const M = P.marques[p.id] || {}; ['RTE_01', 'RTE_02', 'RTE_03', 'RTE_04', 'RTE_05', 'RTE_06'].forEach((r, i) => { g.fillStyle = M[r] ? (M[r] === 'difficile' ? '#f0c040' : '#c8c0d8') : '#2a2436'; g.fillRect(300 + i * 16, y, 11, 9); }); });
-      ['1re fin', '2e fin', 'Lumière', 'Ombre', 'Conseil', 'Brèche'].forEach((t, i) => Police.ecrire(g, t, 305 + i * 16, 30 - (i % 2) * 8, '#6a6078', { a: 'c' }));
+      L.slice(deb, deb + 18).forEach((p, k) => { const y = 40 + k * 16; const ok = Progression.estDebloque(p.id); Police.ecrire(g, ok ? p.nom : '???', 40, y, ok ? '#e8e0f0' : '#5a5268'); const M = P.marques[p.id] || {}; ['RTE_01', 'RTE_02', 'RTE_03', 'RTE_04', 'RTE_05', 'RTE_06'].forEach((r, i) => { g.fillStyle = M[r] ? (M[r] === 'difficile' ? '#f0c040' : '#c8c0d8') : '#2a2436'; g.fillRect(292 + i * 46, y, 11, 9); }); });
+      ['Fin 1', 'Fin 2', 'Lumière', 'Ombre', 'Conseil', 'Brèche'].forEach((t, i) => Police.ecrire(g, t, 297 + i * 46, 29, '#a898b8', { a: 'c' }));
     } else if (this.onglet === 1) {
       const L = DON.objets.concat(DON.talismans); const cols = 14; const deb = Math.floor(Math.min(this.i, L.length - 1) / cols) * cols; const vis = L.slice(Math.max(0, deb - cols * 3), Math.max(0, deb - cols * 3) + cols * 12);
       vis.forEach((o, k) => { const x = 40 + (k % cols) * 40, y = 34 + Math.floor(k / cols) * 24; const conn = P.decouverts.includes(o.id); const vu = P.vus.includes(o.id); if (conn) g.drawImage(o.type === 'talisman' ? spriteRamassable('talisman', o.couleur) : iconeObjet(o.id), x, y); else { g.fillStyle = vu ? '#3a3048' : '#1a1622'; g.fillRect(x + 2, y + 2, 16, 16); Police.ecrire(g, '?', x + 10, y + 6, '#5a5268', { a: 'c' }); } });

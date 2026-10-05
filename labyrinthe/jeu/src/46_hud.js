@@ -21,6 +21,8 @@ function inviteSon(g, cx, y) {
   g.fillStyle = '#ff7a5a'; for (let k = 0; k < 5; k++) { g.fillRect(x + 15 + k, y + 6 + k, 1, 1); g.fillRect(x + 19 - k, y + 6 + k, 1, 1); }
   Police.ecrire(g, t, x + 24, y + 5, '#f4e0c0');
 }
+// Un bandeau (objet, transformation, étage) occupe le haut de l'écran : les notifications attendent
+function banniereVisible() { const B = G.banniere, E = G.banniereEtage; return !!(B && B.t < (B.mineur ? 1.6 : 2.6) || E && E.t < 3.2 || G.introBoss); }
 function losange(g, x, y, c, n = 2) { x = Math.round(x); y = Math.round(y); g.fillStyle = c; for (let k = -n; k <= n; k++) { const w = n - Math.abs(k); g.fillRect(x - w, y + k, 2 * w + 1, 1); } }
 // Bandeau cinématographique : bords estompés, filets dorés, losanges au centre
 function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
@@ -103,7 +105,8 @@ function dessinerHUD(g) {
   if (G.achatPropose) dessinerPanneauAchat(g, G.achatPropose);
   else if (Entrees.enfonce('description') && G.piedestalProche && G.piedestalProche.id) dessinerDescription(g, G.piedestalProche.ramassable ? null : G.piedestalProche.id);
   if (Entrees.enfonce('carte') && !G.transition) dessinerCarteEtendue(g);
-  for (const t of G.textes) if (t.ecran) { const k = t.age / t.duree; g.globalAlpha = k > 0.8 ? (1 - k) / 0.2 : 1; Police.ecrire(g, t.t, 320, 300, t.couleur || '#fff', { a: 'c', contour: '#1c1420' }); g.globalAlpha = 1; }
+  // messages d'écran : le plus récent en bas, les précédents empilés au-dessus, coupés à 460 px
+  { const M = G.textes.filter(t => t.ecran); let y = 300; for (let i = M.length - 1; i >= 0 && y > 200; i--) { const t = M[i], k = t.age / t.duree, lignes = Police.couper(t.t, 460); g.globalAlpha = k > 0.8 ? (1 - k) / 0.2 : Math.min(1, t.age / 0.12); for (let j = lignes.length - 1; j >= 0; j--) { Police.ecrire(g, lignes[j], 320, y, t.couleur || '#fff', { a: 'c', contour: '#1c1420' }); y -= 12; } y -= 4; } g.globalAlpha = 1; }
   if (G.flashDegat > 0 && !G.reglages.sansFlash) { g.save(); g.globalAlpha = Math.min(1, G.flashDegat * 1.2); const v = g.createRadialGradient(320, 180, 150, 320, 180, 380); v.addColorStop(0, 'rgba(160,10,28,0)'); v.addColorStop(1, 'rgba(160,10,28,0.75)'); g.fillStyle = v; g.fillRect(0, 0, ECRAN_L, ECRAN_H); g.restore(); }
   if (G.introBoss) dessinerIntroBoss(g);
   if (G.fondu) { g.globalAlpha = Math.min(1, G.fondu.t / (G.fondu.duree / 2)); g.fillStyle = '#000'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); g.globalAlpha = 1; }
@@ -201,7 +204,7 @@ function dessinerMinicarte(g, x0, y0, etendue) {
   const perdu = G.etage.malediction === 'perdu' && !etendue;
   const cw = etendue ? 18 : 9, ch = etendue ? 14 : 7, n = etendue ? 13 : 7;
   const cx = s0.cx >= 0 ? s0.cx : 6, cy = s0.cy >= 0 ? s0.cy : 6;
-  const ox = etendue ? Math.round(320 - 6.5 * cw) : x0, oy = etendue ? Math.round(180 - 6.5 * ch) : y0;
+  const ox = etendue ? Math.round((x0 || 320) - 6.5 * cw) : x0, oy = etendue ? Math.round((y0 || 180) - 6.5 * ch) : y0; // étendue : (x0, y0) = centre
   const dx0 = etendue ? 0 : cx - 3, dy0 = etendue ? 0 : cy - 3;
   if (!etendue) { plaqueHUD(g, ox - 5, oy - 5, n * cw + 10, n * ch + 22); if (G.etage.cfg) Police.ecrire(g, 'Étage ' + G.etage.numero, ox + n * cw / 2, oy + n * ch + 4, '#a898b8', { a: 'c' }); }
   if (perdu) { Police.ecrire(g, '?', ox + n * cw / 2, oy + n * ch / 2 - 4, '#8a8098', { a: 'c' }); return; }
@@ -222,8 +225,8 @@ function dessinerMinicarte(g, x0, y0, etendue) {
   }
 }
 function dessinerCarteEtendue(g) {
-  g.fillStyle = 'rgba(6,4,10,0.82)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
-  dessinerMinicarte(g, 0, 0, true);
+  g.fillStyle = 'rgba(6,4,10,0.93)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+  dessinerMinicarte(g, 320, 180, true);
   Police.ecrire(g, G.etage.cfg.titre + ' — ' + G.etage.cfg.nom, 320, 16, '#e8dcc0', { a: 'c' });
   Police.ecrire(g, 'Code de mission : ' + codeAffiche(G.partie.code) + '   Temps : ' + formatTemps(G.partie.temps), 320, 340, '#8a8098', { a: 'c' });
   const leg = [['Boss', 'boss'], ['Héritage', 'heritage'], ['Échoppe', 'boutique'], ['Secret', 'cache'], ['Épreuve', 'defi'], ['Maudite', 'malediction']];
