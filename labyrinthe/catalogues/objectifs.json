@@ -58,9 +58,10 @@
   "recompense": {
    "debloque": [
     "CHR_004",
-    "PSV_017"
+    "PSV_017",
+    "DEF_014"
    ],
-   "texte": "Kakashi, Kubikiribōchō"
+   "texte": "Kakashi, Kubikiribōchō ; contrat « Le ninja copieur »"
   }
  },
  {
@@ -185,9 +186,10 @@
   "recompense": {
    "debloque": [
     "CHR_006",
-    "PSV_113"
+    "PSV_113",
+    "DEF_015"
    ],
-   "texte": "Hinata, Byakugan"
+   "texte": "Hinata, Byakugan ; contrat « Œil blanc »"
   }
  },
  {
@@ -232,9 +234,10 @@
   "recompense": {
    "debloque": [
     "CHR_007",
-    "PSV_051"
+    "PSV_051",
+    "DEF_016"
    ],
-   "texte": "Shikamaru, Ombre liante"
+   "texte": "Shikamaru, Ombre liante ; contrat « Ombres et nuages »"
   }
  },
  {
@@ -328,9 +331,10 @@
   },
   "recompense": {
    "debloque": [
-    "CHR_009"
+    "CHR_009",
+    "DEF_017"
    ],
-   "texte": "Kankurō"
+   "texte": "Kankurō ; contrat « Trois marionnettes »"
   }
  },
  {
@@ -376,9 +380,10 @@
   },
   "recompense": {
    "debloque": [
-    "CHR_010"
+    "CHR_010",
+    "DEF_018"
    ],
-   "texte": "Kiba"
+   "texte": "Kiba ; contrat « Le flair d’Akamaru »"
   }
  },
  {
@@ -423,9 +428,10 @@
   },
   "recompense": {
    "debloque": [
-    "CHR_011"
+    "CHR_011",
+    "DEF_019"
    ],
-   "texte": "Sasori (expert)"
+   "texte": "Sasori (expert) ; contrat « Le dard du scorpion »"
   }
  },
  {
@@ -470,9 +476,10 @@
   "recompense": {
    "debloque": [
     "CHR_012",
-    "PSV_121"
+    "PSV_121",
+    "DEF_020"
    ],
-   "texte": "Kakuzu (expert), Carte de membre"
+   "texte": "Kakuzu (expert), Carte de membre ; contrat « Un seul cœur à prendre »"
   }
  },
  {
@@ -950,6 +957,273 @@
     "PSV_146"
    ],
    "texte": "Rasenshuriken"
+  }
+ },
+ {
+  "id": "OBJ_061",
+  "nom": "Contrat : Fleur de cerisier",
+  "desc": "Réussir le contrat « Fleur de cerisier ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_013"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_062",
+  "nom": "Contrat : Le ninja copieur",
+  "desc": "Réussir le contrat « Le ninja copieur ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_014"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_063",
+  "nom": "Contrat : Œil blanc",
+  "desc": "Réussir le contrat « Œil blanc ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_015"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_064",
+  "nom": "Contrat : Ombres et nuages",
+  "desc": "Réussir le contrat « Ombres et nuages ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_016"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_065",
+  "nom": "Contrat : Trois marionnettes",
+  "desc": "Réussir le contrat « Trois marionnettes ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_017"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_066",
+  "nom": "Contrat : Le flair d’Akamaru",
+  "desc": "Réussir le contrat « Le flair d’Akamaru ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_018"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_067",
+  "nom": "Contrat : Le dard du scorpion",
+  "desc": "Réussir le contrat « Le dard du scorpion ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_019"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_068",
+  "nom": "Contrat : Un seul cœur à prendre",
+  "desc": "Réussir le contrat « Un seul cœur à prendre ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_020"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_069",
+  "nom": "Contrat : Lave naissante",
+  "desc": "Réussir le contrat « Lave naissante ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_021"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_070",
+  "nom": "Contrat : Tempête dans la nuit",
+  "desc": "Réussir le contrat « Tempête dans la nuit ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_022"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_071",
+  "nom": "Contrat : Pureté",
+  "desc": "Réussir le contrat « Pureté ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_023"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_072",
+  "nom": "Contrat : Marathon",
+  "desc": "Réussir le contrat « Marathon ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_024"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_073",
+  "nom": "Contrat : Sans le sou",
+  "desc": "Réussir le contrat « Sans le sou ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_025"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_074",
+  "nom": "Contrat : Verre fragile",
+  "desc": "Réussir le contrat « Verre fragile ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_026"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_075",
+  "nom": "Contrat : Pas de plomb",
+  "desc": "Réussir le contrat « Pas de plomb ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_027"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_076",
+  "nom": "Contrat : Collection éclair",
+  "desc": "Réussir le contrat « Collection éclair ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_028"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_077",
+  "nom": "Contrat : Pluie de papier",
+  "desc": "Réussir le contrat « Pluie de papier ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_029"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_078",
+  "nom": "Contrat : L’épreuve des ermites",
+  "desc": "Réussir le contrat « L’épreuve des ermites ».",
+  "condition": {
+   "type": "fin",
+   "defi": "DEF_030"
+  },
+  "recompense": {
+   "debloque": [],
+   "texte": "Sceau au registre"
+  }
+ },
+ {
+  "id": "OBJ_079",
+  "nom": "Kekkei genkai",
+  "desc": "Réunir une fusion de natures pendant une partie.",
+  "condition": {
+   "type": "etat",
+   "nom": "fusion"
+  },
+  "recompense": {
+   "debloque": [
+    "DEF_021",
+    "DEF_022"
+   ],
+   "texte": "Contrats : Lave naissante, Tempête dans la nuit"
+  }
+ },
+ {
+  "id": "OBJ_080",
+  "nom": "Bibliothèque des synergies",
+  "desc": "Inscrire 30 synergies au registre (cumulé).",
+  "condition": {
+   "type": "compteur",
+   "nom": "synergies",
+   "min": 30
+  },
+  "recompense": {
+   "debloque": [
+    "DEF_029",
+    "DEF_030"
+   ],
+   "texte": "Contrats : Pluie de papier, L’épreuve des ermites"
   }
  }
 ]

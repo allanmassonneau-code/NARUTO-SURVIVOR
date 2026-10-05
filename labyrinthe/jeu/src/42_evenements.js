@@ -103,7 +103,9 @@ function annoncerSynergies(J) {
   if (!J.synergiesVues) J.synergiesVues = [];
   for (const s of synergiesReunies(J)) {
     if (J.synergiesVues.includes(s.id)) continue;
-    J.synergiesVues.push(s.id); Progression.decouvrir(s.id);
+    J.synergiesVues.push(s.id);
+    if (Progression.profil && !Progression.profil.decouverts.includes(s.id)) { Progression.decouvrir(s.id); Progression.compteur('synergies', 1); }
+    if (s.type === 'fusion') Progression.verifier({ type: 'etat', nom: 'fusion' });
     if (G.partie && G.joueur === J) { annoncer({ t: 0, nom: 'Synergie : ' + s.nom, desc: s.desc, synergie: true, mineur: !(s.effets && s.effets.length) }); Son.jouer('sceau'); }
   }
 }

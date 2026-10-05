@@ -25,8 +25,16 @@ function menuListe(items, o = {}) {
     },
     rendre(g, x, y, largeur, actif = true) {
       let yy = y;
-      this.items.forEach((it, i) => {
-        if (it.cache) return;
+      // liste longue : fenêtre de « visibles » éléments qui suit le focus, flèches aux bords
+      let L = this.items.map((it, i) => i).filter(i => !this.items[i].cache); const n = this.o.visibles;
+      if (n && L.length > n) {
+        const p = Math.max(0, L.indexOf(this.focus)); this.debut = this.debut || 0;
+        if (p < this.debut) this.debut = p; if (p >= this.debut + n) this.debut = p - n + 1; this.debut = Math.max(0, Math.min(this.debut, L.length - n));
+        const haut = this.debut > 0, bas = this.debut + n < L.length; L = L.slice(this.debut, this.debut + n);
+        if (haut) losange(g, x + largeur / 2, y - 9, '#c8a060', 2); if (bas) losange(g, x + largeur / 2, y + n * 14 + 1, '#c8a060', 2);
+      }
+      L.forEach(i => {
+        const it = this.items[i];
         const f = i === this.focus && actif; const h = it.hauteur || 14;
         if (f) { const gr = g.createLinearGradient(x - 6, 0, x + largeur + 6, 0); gr.addColorStop(0, 'rgba(240,190,100,0.3)'); gr.addColorStop(1, 'rgba(240,190,100,0.03)'); g.fillStyle = gr; g.fillRect(x - 6, yy - 3, largeur + 12, h); g.fillStyle = '#f0c870'; g.fillRect(x - 6, yy - 3, 2, h); losange(g, x - 11, yy + 3, '#ffe0a0', 2); }
         const col = it.inactif ? '#5a5268' : f ? '#fff4d8' : '#c8c0d8';
@@ -176,10 +184,10 @@ const SceneCode = {
 // ── Défis ──
 const SceneDefis = {
   entrer() {
-    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); if (d.perso) { Son.jouer('valider'); effacerPartieSuspendue(); nouvellePartie({ perso: d.perso, defi: d.id }); Scenes.aller(SceneJeu); } else Scenes.empiler(SceneSelection, { defi: d.id }); } })));
+    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); if (d.perso) { Son.jouer('valider'); effacerPartieSuspendue(); nouvellePartie({ perso: d.perso, defi: d.id }); Scenes.aller(SceneJeu); } else Scenes.empiler(SceneSelection, { defi: d.id }); } })), { visibles: 14 });
   },
   maj() { this.menu.maj(); if (Entrees.menuRetour()) { Son.jouer('annuler'); Scenes.depiler(); } },
-  rendre(g) { fondMenu(g); cadreMenu(g, 80, 10, 480, 330, 'Contrats de mission (défis)'); this.menu.rendre(g, 100, 40, 440); aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Retour']]); },
+  rendre(g) { fondMenu(g); cadreMenu(g, 80, 10, 480, 330, 'Contrats de mission (défis) — ' + DON.defis.filter(d => Progression.profil.defis[d.id]).length + ' / ' + DON.defis.length); this.menu.rendre(g, 100, 44, 440); aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Retour']]); },
 };
 
 // ── Options (réglages séparés du profil et de la partie) ──

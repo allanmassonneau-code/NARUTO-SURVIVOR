@@ -127,5 +127,247 @@
   "difficile": true,
   "epreuves": true,
   "recompenseTexte": "Rasenshuriken"
+ },
+ {
+  "id": "DEF_013",
+  "nom": "Fleur de cerisier",
+  "desc": "Sakura imposée, départ avec Gants de taijutsu et Katsuyu miniature. Première fin.",
+  "statut": "création originale",
+  "perso": "CHR_003",
+  "depart": [
+   "PSV_040",
+   "PSV_063"
+  ],
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_014",
+  "nom": "Le ninja copieur",
+  "desc": "Kakashi imposé, départ avec Chidori nagashi et Pakkun ; dégâts −20 %. Deuxième fin.",
+  "statut": "création originale",
+  "perso": "CHR_004",
+  "depart": [
+   "PSV_028",
+   "PSV_068"
+  ],
+  "bonus": [
+   {
+    "s": "degats",
+    "m": 0.8
+   }
+  ],
+  "route": "RTE_02",
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_015",
+  "nom": "Œil blanc",
+  "desc": "Hinata imposée avec le Byakugan ; tous les étages dans la pénombre. Première fin.",
+  "statut": "création originale",
+  "perso": "CHR_006",
+  "depart": [
+   "PSV_113"
+  ],
+  "obscurite": true,
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_016",
+  "nom": "Ombres et nuages",
+  "desc": "Shikamaru imposé avec l’Ombre liante ; aucune salle d’héritage. Première fin.",
+  "statut": "création originale",
+  "perso": "CHR_007",
+  "depart": [
+   "PSV_051"
+  ],
+  "sansHeritage": true,
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_017",
+  "nom": "Trois marionnettes",
+  "desc": "Kankurō imposé avec Karasu, Kuroari et Sanshōuo ; dégâts −30 %. Première fin.",
+  "statut": "création originale",
+  "perso": "CHR_009",
+  "depart": [
+   "PSV_072",
+   "PSV_073",
+   "PSV_074"
+  ],
+  "bonus": [
+   {
+    "s": "degats",
+    "m": 0.7
+   }
+  ],
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_018",
+  "nom": "Le flair d’Akamaru",
+  "desc": "Kiba imposé avec 30 Ryō ; aucune salle d’héritage. Première fin.",
+  "statut": "création originale",
+  "perso": "CHR_010",
+  "ressources": {
+   "ryo": 30
+  },
+  "sansHeritage": true,
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_019",
+  "nom": "Le dard du scorpion",
+  "desc": "Sasori imposé avec Poison de scorpion et Main du scorpion. Deuxième fin.",
+  "statut": "création originale",
+  "perso": "CHR_011",
+  "depart": [
+   "PSV_048",
+   "PSV_142"
+  ],
+  "route": "RTE_02",
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_020",
+  "nom": "Un seul cœur à prendre",
+  "desc": "Kakuzu imposé avec un seul contenant (jamais plus) et le Contrat de Kakuzu. Première fin.",
+  "statut": "création originale",
+  "perso": "CHR_012",
+  "depart": [
+   "PSV_129"
+  ],
+  "sante": {
+   "vitalite": 1
+  },
+  "drapeaux": {
+   "plafondVit": 1
+  },
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_021",
+  "nom": "Lave naissante",
+  "desc": "Départ avec Grande boule de feu et Poing de terre (Yōton dès la première salle) ; dégâts −25 %. Première fin.",
+  "statut": "création originale",
+  "depart": [
+   "PSV_043",
+   "PSV_047"
+  ],
+  "bonus": [
+   {
+    "s": "degats",
+    "m": 0.75
+   }
+  ],
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_022",
+  "nom": "Tempête dans la nuit",
+  "desc": "Départ avec Chakra de l’eau et Courant foudroyant (Ranton) ; tous les étages dans la pénombre. Première fin.",
+  "statut": "création originale",
+  "depart": [
+   "PSV_044",
+   "PSV_045"
+  ],
+  "obscurite": true,
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_023",
+  "nom": "Pureté",
+  "desc": "Aucun pacte interdit et aucune salle d’héritage. Première fin.",
+  "statut": "création originale",
+  "sansPacte": true,
+  "sansHeritage": true,
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_024",
+  "nom": "Marathon",
+  "desc": "Deuxième fin en moins de 40 minutes (chronomètre de partie).",
+  "statut": "création originale",
+  "chrono": 2400,
+  "route": "RTE_02",
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_025",
+  "nom": "Sans le sou",
+  "desc": "Ni Ryō, ni clé, ni parchemin explosif au départ. Première fin.",
+  "statut": "création originale",
+  "ressources": {
+   "ryo": 0,
+   "cles": 0,
+   "explosifs": 0
+  },
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_026",
+  "nom": "Verre fragile",
+  "desc": "Dégâts ×1,5 mais un seul contenant, jamais plus. Première fin.",
+  "statut": "création originale",
+  "sante": {
+   "vitalite": 1
+  },
+  "drapeaux": {
+   "plafondVit": 1
+  },
+  "bonus": [
+   {
+    "s": "degats",
+    "m": 1.5
+   }
+  ],
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_027",
+  "nom": "Pas de plomb",
+  "desc": "Vitesse −0,8, dégâts +1. Première fin.",
+  "statut": "création originale",
+  "bonus": [
+   {
+    "s": "vitesse",
+    "a": -0.8
+   },
+   {
+    "s": "degats",
+    "a": 1
+   }
+  ],
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_028",
+  "nom": "Collection éclair",
+  "desc": "Atteindre l’étage 4 avec au moins 8 objets passifs (réussi dès l’arrivée).",
+  "statut": "création originale",
+  "etageCible": 4,
+  "objetsMin": 8,
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_029",
+  "nom": "Pluie de papier",
+  "desc": "Départ avec Shuriken de papier et Mer de papiers explosifs. Deuxième fin.",
+  "statut": "création originale",
+  "depart": [
+   "PSV_155",
+   "PSV_156"
+  ],
+  "route": "RTE_02",
+  "recompenseTexte": "Sceau du contrat"
+ },
+ {
+  "id": "DEF_030",
+  "nom": "L’épreuve des ermites",
+  "desc": "Mode Difficile, aucun pacte : la fin de la Lumière.",
+  "statut": "création originale",
+  "difficile": true,
+  "sansPacte": true,
+  "route": "RTE_03",
+  "recompenseTexte": "Sceau du contrat"
  }
 ]

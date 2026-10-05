@@ -2187,7 +2187,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   OB('OBJ_001', 'Premier sceau brisé', 'Vaincre un boss d’étage 1.', { type: 'compteur', nom: 'bossVaincus', min: 1 }, ['PSV_026', 'PSV_027'], 'Croix de sceaux, Parchemins-pièges');
   OB('OBJ_002', 'Le traître démasqué', 'Vaincre Mizuki.', { type: 'boss', id: 'BOS_001' }, ['PSV_013'], 'Fūma shuriken');
   OB('OBJ_003', 'Hors de la forêt', 'Vaincre le Serpent géant.', { type: 'boss', id: 'BOS_002' }, ['PSV_064', 'PSV_078'], 'Serpents');
-  OB('OBJ_004', 'Le démon du brouillard', 'Vaincre Zabuza.', { type: 'boss', id: 'BOS_004' }, ['CHR_004', 'PSV_017'], 'Kakashi, Kubikiribōchō');
+  OB('OBJ_004', 'Le démon du brouillard', 'Vaincre Zabuza.', { type: 'boss', id: 'BOS_004' }, ['CHR_004', 'PSV_017', 'DEF_014'], 'Kakashi, Kubikiribōchō ; contrat « Le ninja copieur »');
   OB('OBJ_005', 'Miroirs brisés', 'Vaincre Haku.', { type: 'boss', id: 'BOS_005' }, ['PSV_081', 'PSV_050'], 'Miroirs de glace, Glace éternelle');
   OB('OBJ_006', 'Les frères démons', 'Vaincre les frères démons.', { type: 'boss', id: 'BOS_003' }, ['PSV_007'], 'Fil de chakra');
   OB('OBJ_007', 'Fils coupés', 'Vaincre Kankurō.', { type: 'boss', id: 'BOS_006' }, ['PSV_072', 'PSV_073', 'PSV_074'], 'Marionnettes');
@@ -2195,25 +2195,25 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   OB('OBJ_009', 'Le sable se tait', 'Vaincre Gaara.', { type: 'boss', id: 'BOS_009' }, ['CHR_005', 'PSV_097'], 'Rock Lee, Armure de sable absolue');
   OB('OBJ_010', 'Os brisés', 'Vaincre Kimimaro.', { type: 'boss', id: 'BOS_008' }, ['PSV_060', 'PSV_090'], 'Os');
   OB('OBJ_011', 'La carapace tombe', 'Vaincre Sasori.', { type: 'boss', id: 'BOS_010' }, ['PSV_142'], 'Main du scorpion');
-  OB('OBJ_012', 'Regard perçant', 'Trouver 5 caches de renseignements (cumulé).', { type: 'compteur', nom: 'secretsTrouves', min: 5 }, ['CHR_006', 'PSV_113'], 'Hinata, Byakugan');
+  OB('OBJ_012', 'Regard perçant', 'Trouver 5 caches de renseignements (cumulé).', { type: 'compteur', nom: 'secretsTrouves', min: 5 }, ['CHR_006', 'PSV_113', 'DEF_015'], 'Hinata, Byakugan ; contrat « Œil blanc »');
   OB('OBJ_013', 'Soigneur démasqué', 'Vaincre Kabuto.', { type: 'boss', id: 'BOS_011' }, ['PSV_087'], 'Sceau de régénération');
   OB('OBJ_014', 'Requin échoué', 'Vaincre Kisame.', { type: 'boss', id: 'BOS_012' }, ['PSV_136'], 'Écailles de Samehada');
-  OB('OBJ_015', 'Stratégie de l’examen', 'Réussir 2 épreuves chūnin (cumulé).', { type: 'compteur', nom: 'epreuvesChunin', min: 2 }, ['CHR_007', 'PSV_051'], 'Shikamaru, Ombre liante');
+  OB('OBJ_015', 'Stratégie de l’examen', 'Réussir 2 épreuves chūnin (cumulé).', { type: 'compteur', nom: 'epreuvesChunin', min: 2 }, ['CHR_007', 'PSV_051', 'DEF_016'], 'Shikamaru, Ombre liante ; contrat « Ombres et nuages »');
   OB('OBJ_016', 'Rituel rompu', 'Vaincre Hidan.', { type: 'boss', id: 'BOS_013' }, ['PSV_054', 'PSV_135'], 'Marque de Jashin, Rituel du sang');
   OB('OBJ_017', 'Première fin', 'Vaincre Orochimaru.', { type: 'boss', id: 'BOS_014' }, ['PSV_143', 'ACT_031'], 'Mue du serpent, Rituel de permutation');
   OB('OBJ_018', 'Protection absolue', 'Posséder 3 réserves de chakra protecteur en même temps.', { type: 'etat', nom: 'protections3' }, ['CHR_008'], 'Gaara');
   OB('OBJ_019', 'L’art éclate', 'Vaincre Deidara.', { type: 'boss', id: 'BOS_015' }, ['PSV_019', 'PSV_071', 'PSV_110'], 'Argile');
   OB('OBJ_020', 'Au-delà de l’illusion', 'Vaincre Itachi.', { type: 'boss', id: 'BOS_016' }, ['PSV_053', 'ACT_017', 'ACT_018'], 'Flammes noires, Amaterasu, Tsukuyomi');
-  OB('OBJ_021', 'Marionnettiste', 'Posséder 3 familiers en même temps.', { type: 'etat', nom: 'familiers3' }, ['CHR_009'], 'Kankurō');
+  OB('OBJ_021', 'Marionnettiste', 'Posséder 3 familiers en même temps.', { type: 'etat', nom: 'familiers3' }, ['CHR_009', 'DEF_017'], 'Kankurō ; contrat « Trois marionnettes »');
   OB('OBJ_022', 'Cinq cœurs', 'Vaincre Kakuzu.', { type: 'boss', id: 'BOS_017' }, ['PSV_089', 'PSV_129'], 'Cœur volé, Contrat');
   OB('OBJ_023', 'La douleur apaisée', 'Vaincre Pain.', { type: 'boss', id: 'BOS_018' }, ['ACT_019', 'ACT_020'], 'Répulsion, Attraction');
-  OB('OBJ_024', 'Compagnon fidèle', 'Nettoyer 30 salles de combat accompagné d’au moins un familier permanent (cumulé).', { type: 'compteur', nom: 'sallesFamiliers', min: 30 }, ['CHR_010'], 'Kiba');
+  OB('OBJ_024', 'Compagnon fidèle', 'Nettoyer 30 salles de combat accompagné d’au moins un familier permanent (cumulé).', { type: 'compteur', nom: 'sallesFamiliers', min: 30 }, ['CHR_010', 'DEF_018'], 'Kiba ; contrat « Le flair d’Akamaru »');
   OB('OBJ_025', 'Masque brisé', 'Vaincre Obito.', { type: 'boss', id: 'BOS_019' }, ['ACT_021'], 'Espace-temps intangible');
   OB('OBJ_026', 'Gardien apaisé', 'Vaincre le Gardien du Sceau.', { type: 'boss', id: 'BOS_020' }, ['ACT_016', 'PSV_115'], 'Grand crapaud, Lévitation');
-  OB('OBJ_027', 'Maître des marionnettes', 'Vaincre Sasori sans subir de dégâts pendant le combat.', { type: 'boss', id: 'BOS_010', sansDegats: true }, ['CHR_011'], 'Sasori (expert)');
+  OB('OBJ_027', 'Maître des marionnettes', 'Vaincre Sasori sans subir de dégâts pendant le combat.', { type: 'boss', id: 'BOS_010', sansDegats: true }, ['CHR_011', 'DEF_019'], 'Sasori (expert) ; contrat « Le dard du scorpion »');
   OB('OBJ_028', 'Rival ancien', 'Vaincre Madara.', { type: 'boss', id: 'BOS_021' }, ['PSV_020', 'ACT_026'], 'Chute céleste, Forêt naissante');
   OB('OBJ_029', 'Dix queues', 'Vaincre l’empreinte des Dix Queues.', { type: 'boss', id: 'BOS_022' }, ['PSV_014'], 'Canon de chakra');
-  OB('OBJ_030', 'Fortune', 'Posséder 50 Ryō en même temps.', { type: 'etat', nom: 'ryo50' }, ['CHR_012', 'PSV_121'], 'Kakuzu (expert), Carte de membre');
+  OB('OBJ_030', 'Fortune', 'Posséder 50 Ryō en même temps.', { type: 'etat', nom: 'ryo50' }, ['CHR_012', 'PSV_121', 'DEF_020'], 'Kakuzu (expert), Carte de membre ; contrat « Un seul cœur à prendre »');
   OB('OBJ_031', 'Collectionneur', 'Posséder 12 objets passifs en même temps.', { type: 'etat', nom: 'objets12' }, ['PSV_126', 'PSV_120'], 'Livre de l’ermite, Collier');
   OB('OBJ_032', 'Premier pacte', 'Conclure un pacte interdit.', { type: 'compteur', nom: 'pactes', min: 1 }, ['PSV_091', 'PSV_139'], 'Sceau maudit, Transfert du pacte');
   OB('OBJ_033', 'Explorateur', 'Détruire 10 rochers à sceau (cumulé).', { type: 'compteur', nom: 'rochersSceau', min: 10 }, ['PSV_114', 'PSV_106'], 'Voies secrètes, Épingle');
@@ -2244,6 +2244,27 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   OB('OBJ_058', 'Défi : pacte', 'Réussir le contrat « Sang pour sang ».', { type: 'fin', defi: 'DEF_008' }, ['PSV_098'], 'Chakra du démon');
   OB('OBJ_059', 'Défi : sable', 'Réussir le contrat « Tempête du désert ».', { type: 'fin', defi: 'DEF_009' }, ['PSV_150'], 'Tempête de sable');
   OB('OBJ_060', 'Défi : conseil', 'Réussir le contrat « Examen de jōnin ».', { type: 'fin', defi: 'DEF_012' }, ['PSV_146'], 'Rasenshuriken');
+  // ── Contrats 13 à 30 et registre des synergies ──
+  OB('OBJ_061', 'Contrat : Fleur de cerisier', 'Réussir le contrat « Fleur de cerisier ».', { type: 'fin', defi: 'DEF_013' }, [], 'Sceau au registre');
+  OB('OBJ_062', 'Contrat : Le ninja copieur', 'Réussir le contrat « Le ninja copieur ».', { type: 'fin', defi: 'DEF_014' }, [], 'Sceau au registre');
+  OB('OBJ_063', 'Contrat : Œil blanc', 'Réussir le contrat « Œil blanc ».', { type: 'fin', defi: 'DEF_015' }, [], 'Sceau au registre');
+  OB('OBJ_064', 'Contrat : Ombres et nuages', 'Réussir le contrat « Ombres et nuages ».', { type: 'fin', defi: 'DEF_016' }, [], 'Sceau au registre');
+  OB('OBJ_065', 'Contrat : Trois marionnettes', 'Réussir le contrat « Trois marionnettes ».', { type: 'fin', defi: 'DEF_017' }, [], 'Sceau au registre');
+  OB('OBJ_066', 'Contrat : Le flair d’Akamaru', 'Réussir le contrat « Le flair d’Akamaru ».', { type: 'fin', defi: 'DEF_018' }, [], 'Sceau au registre');
+  OB('OBJ_067', 'Contrat : Le dard du scorpion', 'Réussir le contrat « Le dard du scorpion ».', { type: 'fin', defi: 'DEF_019' }, [], 'Sceau au registre');
+  OB('OBJ_068', 'Contrat : Un seul cœur à prendre', 'Réussir le contrat « Un seul cœur à prendre ».', { type: 'fin', defi: 'DEF_020' }, [], 'Sceau au registre');
+  OB('OBJ_069', 'Contrat : Lave naissante', 'Réussir le contrat « Lave naissante ».', { type: 'fin', defi: 'DEF_021' }, [], 'Sceau au registre');
+  OB('OBJ_070', 'Contrat : Tempête dans la nuit', 'Réussir le contrat « Tempête dans la nuit ».', { type: 'fin', defi: 'DEF_022' }, [], 'Sceau au registre');
+  OB('OBJ_071', 'Contrat : Pureté', 'Réussir le contrat « Pureté ».', { type: 'fin', defi: 'DEF_023' }, [], 'Sceau au registre');
+  OB('OBJ_072', 'Contrat : Marathon', 'Réussir le contrat « Marathon ».', { type: 'fin', defi: 'DEF_024' }, [], 'Sceau au registre');
+  OB('OBJ_073', 'Contrat : Sans le sou', 'Réussir le contrat « Sans le sou ».', { type: 'fin', defi: 'DEF_025' }, [], 'Sceau au registre');
+  OB('OBJ_074', 'Contrat : Verre fragile', 'Réussir le contrat « Verre fragile ».', { type: 'fin', defi: 'DEF_026' }, [], 'Sceau au registre');
+  OB('OBJ_075', 'Contrat : Pas de plomb', 'Réussir le contrat « Pas de plomb ».', { type: 'fin', defi: 'DEF_027' }, [], 'Sceau au registre');
+  OB('OBJ_076', 'Contrat : Collection éclair', 'Réussir le contrat « Collection éclair ».', { type: 'fin', defi: 'DEF_028' }, [], 'Sceau au registre');
+  OB('OBJ_077', 'Contrat : Pluie de papier', 'Réussir le contrat « Pluie de papier ».', { type: 'fin', defi: 'DEF_029' }, [], 'Sceau au registre');
+  OB('OBJ_078', 'Contrat : L’épreuve des ermites', 'Réussir le contrat « L’épreuve des ermites ».', { type: 'fin', defi: 'DEF_030' }, [], 'Sceau au registre');
+  OB('OBJ_079', 'Kekkei genkai', 'Réunir une fusion de natures pendant une partie.', { type: 'etat', nom: 'fusion' }, ['DEF_021', 'DEF_022'], 'Contrats : Lave naissante, Tempête dans la nuit');
+  OB('OBJ_080', 'Bibliothèque des synergies', 'Inscrire 30 synergies au registre (cumulé).', { type: 'compteur', nom: 'synergies', min: 30 }, ['DEF_029', 'DEF_030'], 'Contrats : Pluie de papier, L’épreuve des ermites');
 
   // ── Défis (contrats de mission) ──
   const DE = (id, nom, desc, o) => DON.defis.push(Object.assign({ id, nom, desc, statut: 'création originale' }, o));
@@ -2259,6 +2280,28 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   DE('DEF_010', 'Course de l’examen', 'Première fin en moins de 20 minutes (chronomètre de partie).', { chrono: 20 * 60, recompenseTexte: 'Marque de vitesse' });
   DE('DEF_011', 'Collectionneur pressé', 'Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée).', { etageCible: 6, objetsMin: 10, recompenseTexte: 'Défi' });
   DE('DEF_012', 'Examen de jōnin', 'Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin.', { difficile: true, epreuves: true, recompenseTexte: 'Rasenshuriken' });
+  // ── Contrats de personnage (ouverts avec leur personnage) ──
+  DE('DEF_013', 'Fleur de cerisier', 'Sakura imposée, départ avec Gants de taijutsu et Katsuyu miniature. Première fin.', { perso: 'CHR_003', depart: ['PSV_040', 'PSV_063'], recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_014', 'Le ninja copieur', 'Kakashi imposé, départ avec Chidori nagashi et Pakkun ; dégâts −20 %. Deuxième fin.', { perso: 'CHR_004', depart: ['PSV_028', 'PSV_068'], bonus: [{ s: 'degats', m: 0.8 }], route: 'RTE_02', recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_015', 'Œil blanc', 'Hinata imposée avec le Byakugan ; tous les étages dans la pénombre. Première fin.', { perso: 'CHR_006', depart: ['PSV_113'], obscurite: true, recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_016', 'Ombres et nuages', 'Shikamaru imposé avec l’Ombre liante ; aucune salle d’héritage. Première fin.', { perso: 'CHR_007', depart: ['PSV_051'], sansHeritage: true, recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_017', 'Trois marionnettes', 'Kankurō imposé avec Karasu, Kuroari et Sanshōuo ; dégâts −30 %. Première fin.', { perso: 'CHR_009', depart: ['PSV_072', 'PSV_073', 'PSV_074'], bonus: [{ s: 'degats', m: 0.7 }], recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_018', 'Le flair d’Akamaru', 'Kiba imposé avec 30 Ryō ; aucune salle d’héritage. Première fin.', { perso: 'CHR_010', ressources: { ryo: 30 }, sansHeritage: true, recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_019', 'Le dard du scorpion', 'Sasori imposé avec Poison de scorpion et Main du scorpion. Deuxième fin.', { perso: 'CHR_011', depart: ['PSV_048', 'PSV_142'], route: 'RTE_02', recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_020', 'Un seul cœur à prendre', 'Kakuzu imposé avec un seul contenant (jamais plus) et le Contrat de Kakuzu. Première fin.', { perso: 'CHR_012', depart: ['PSV_129'], sante: { vitalite: 1 }, drapeaux: { plafondVit: 1 }, recompenseTexte: 'Sceau du contrat' });
+  // ── Contrats de fusion (ouverts en réunissant une fusion de natures) ──
+  DE('DEF_021', 'Lave naissante', 'Départ avec Grande boule de feu et Poing de terre (Yōton dès la première salle) ; dégâts −25 %. Première fin.', { depart: ['PSV_043', 'PSV_047'], bonus: [{ s: 'degats', m: 0.75 }], recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_022', 'Tempête dans la nuit', 'Départ avec Chakra de l’eau et Courant foudroyant (Ranton) ; tous les étages dans la pénombre. Première fin.', { depart: ['PSV_044', 'PSV_045'], obscurite: true, recompenseTexte: 'Sceau du contrat' });
+  // ── Contrats de règle ──
+  DE('DEF_023', 'Pureté', 'Aucun pacte interdit et aucune salle d’héritage. Première fin.', { sansPacte: true, sansHeritage: true, recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_024', 'Marathon', 'Deuxième fin en moins de 40 minutes (chronomètre de partie).', { chrono: 40 * 60, route: 'RTE_02', recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_025', 'Sans le sou', 'Ni Ryō, ni clé, ni parchemin explosif au départ. Première fin.', { ressources: { ryo: 0, cles: 0, explosifs: 0 }, recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_026', 'Verre fragile', 'Dégâts ×1,5 mais un seul contenant, jamais plus. Première fin.', { sante: { vitalite: 1 }, drapeaux: { plafondVit: 1 }, bonus: [{ s: 'degats', m: 1.5 }], recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_027', 'Pas de plomb', 'Vitesse −0,8, dégâts +1. Première fin.', { bonus: [{ s: 'vitesse', a: -0.8 }, { s: 'degats', a: 1 }], recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_028', 'Collection éclair', 'Atteindre l’étage 4 avec au moins 8 objets passifs (réussi dès l’arrivée).', { etageCible: 4, objetsMin: 8, recompenseTexte: 'Sceau du contrat' });
+  // ── Contrats de maître (ouverts par le registre des synergies) ──
+  DE('DEF_029', 'Pluie de papier', 'Départ avec Shuriken de papier et Mer de papiers explosifs. Deuxième fin.', { depart: ['PSV_155', 'PSV_156'], route: 'RTE_02', recompenseTexte: 'Sceau du contrat' });
+  DE('DEF_030', 'L’épreuve des ermites', 'Mode Difficile, aucun pacte : la fin de la Lumière.', { difficile: true, sansPacte: true, route: 'RTE_03', recompenseTexte: 'Sceau du contrat' });
 
   // ── Secrets documentés (indices consultables) ──
   const SE = (id, nom, indice, solution) => DON.secrets.push({ id, nom, indice, solution });
@@ -8674,7 +8717,9 @@ function annoncerSynergies(J) {
   if (!J.synergiesVues) J.synergiesVues = [];
   for (const s of synergiesReunies(J)) {
     if (J.synergiesVues.includes(s.id)) continue;
-    J.synergiesVues.push(s.id); Progression.decouvrir(s.id);
+    J.synergiesVues.push(s.id);
+    if (Progression.profil && !Progression.profil.decouverts.includes(s.id)) { Progression.decouvrir(s.id); Progression.compteur('synergies', 1); }
+    if (s.type === 'fusion') Progression.verifier({ type: 'etat', nom: 'fusion' });
     if (G.partie && G.joueur === J) { annoncer({ t: 0, nom: 'Synergie : ' + s.nom, desc: s.desc, synergie: true, mineur: !(s.effets && s.effets.length) }); Son.jouer('sceau'); }
   }
 }
@@ -10314,8 +10359,16 @@ function menuListe(items, o = {}) {
     },
     rendre(g, x, y, largeur, actif = true) {
       let yy = y;
-      this.items.forEach((it, i) => {
-        if (it.cache) return;
+      // liste longue : fenêtre de « visibles » éléments qui suit le focus, flèches aux bords
+      let L = this.items.map((it, i) => i).filter(i => !this.items[i].cache); const n = this.o.visibles;
+      if (n && L.length > n) {
+        const p = Math.max(0, L.indexOf(this.focus)); this.debut = this.debut || 0;
+        if (p < this.debut) this.debut = p; if (p >= this.debut + n) this.debut = p - n + 1; this.debut = Math.max(0, Math.min(this.debut, L.length - n));
+        const haut = this.debut > 0, bas = this.debut + n < L.length; L = L.slice(this.debut, this.debut + n);
+        if (haut) losange(g, x + largeur / 2, y - 9, '#c8a060', 2); if (bas) losange(g, x + largeur / 2, y + n * 14 + 1, '#c8a060', 2);
+      }
+      L.forEach(i => {
+        const it = this.items[i];
         const f = i === this.focus && actif; const h = it.hauteur || 14;
         if (f) { const gr = g.createLinearGradient(x - 6, 0, x + largeur + 6, 0); gr.addColorStop(0, 'rgba(240,190,100,0.3)'); gr.addColorStop(1, 'rgba(240,190,100,0.03)'); g.fillStyle = gr; g.fillRect(x - 6, yy - 3, largeur + 12, h); g.fillStyle = '#f0c870'; g.fillRect(x - 6, yy - 3, 2, h); losange(g, x - 11, yy + 3, '#ffe0a0', 2); }
         const col = it.inactif ? '#5a5268' : f ? '#fff4d8' : '#c8c0d8';
@@ -10465,10 +10518,10 @@ const SceneCode = {
 // ── Défis ──
 const SceneDefis = {
   entrer() {
-    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); if (d.perso) { Son.jouer('valider'); effacerPartieSuspendue(); nouvellePartie({ perso: d.perso, defi: d.id }); Scenes.aller(SceneJeu); } else Scenes.empiler(SceneSelection, { defi: d.id }); } })));
+    this.menu = menuListe(DON.defis.map(d => ({ label: (Progression.profil.defis[d.id] ? '✓ ' : '') + d.nom, aide: d.desc + (d.recompenseTexte ? ' — Récompense : ' + d.recompenseTexte : ''), inactif: !Progression.estDebloque(d.id), action: () => { if (!Progression.estDebloque(d.id)) { Son.jouer('refus'); return; } Scenes.depiler(); if (d.perso) { Son.jouer('valider'); effacerPartieSuspendue(); nouvellePartie({ perso: d.perso, defi: d.id }); Scenes.aller(SceneJeu); } else Scenes.empiler(SceneSelection, { defi: d.id }); } })), { visibles: 14 });
   },
   maj() { this.menu.maj(); if (Entrees.menuRetour()) { Son.jouer('annuler'); Scenes.depiler(); } },
-  rendre(g) { fondMenu(g); cadreMenu(g, 80, 10, 480, 330, 'Contrats de mission (défis)'); this.menu.rendre(g, 100, 40, 440); aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Retour']]); },
+  rendre(g) { fondMenu(g); cadreMenu(g, 80, 10, 480, 330, 'Contrats de mission (défis) — ' + DON.defis.filter(d => Progression.profil.defis[d.id]).length + ' / ' + DON.defis.length); this.menu.rendre(g, 100, 44, 440); aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Retour']]); },
 };
 
 // ── Options (réglages séparés du profil et de la partie) ──
@@ -10750,7 +10803,7 @@ const Progression = {
   },
   // Fin de partie : marques par personnage et routes
   // Conditions d'un contrat à la victoire : chronomètre, cible d'étage (déjà validée à l'arrivée)
-  conditionsDefi(P, route) { const D = INDEX[P.defi]; if (!D) return false; if (D.chrono && P.temps > D.chrono) return false; if (D.etageCible && !P.defiValide) return false; return true; },
+  conditionsDefi(P, route) { const D = INDEX[P.defi]; if (!D) return false; if (D.chrono && P.temps > D.chrono) return false; if (D.etageCible && !P.defiValide) return false; if (D.route && route !== D.route) return false; if (D.sansPacte && (P.pactesAchetes || 0) > 0) return false; return true; },
   defiReussi(id) { if (!this.profil || this.profil.defis[id]) return; this.profil.defis[id] = true; this.sauver(); G.notifications = G.notifications || []; G.notifications.push({ t: 0, titre: 'Contrat rempli', nom: (INDEX[id] || {}).nom || id, detail: '' }); },
   finPartie(resultat, route) {
     const P = G.partie; const persoId = P.perso; this.profil.morts += resultat === 'mort' ? 1 : 0;

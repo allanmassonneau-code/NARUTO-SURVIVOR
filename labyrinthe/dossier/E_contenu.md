@@ -255,9 +255,9 @@ Une mort pendant le paiement passe par les résurrections dans l'ordre (cœur de
 
 **Secrets (15).** Chaque secret a un **indice consultable en jeu** : Registre des missions, onglet *Secrets* ; la solution s'y inscrit quand le secret est trouvé, avec une notification la première fois. Liste complète dans F. Des indices supplémentaires viennent de la diseuse et des chiens de Kakashi (Pakkun signale un mur secret).
 
-**Objectifs (60).** 23 défaites de boss (dont une sans dégât), 22 fins (par route, personnage, difficulté ou contrat), 11 compteurs cumulés, 4 états simultanés (3 réserves, 3 familiers, 50 Ryō, 12 objets). Le premier palier se débloque sans aucun objet nouveau : vaincre Zabuza donne Kakashi.
+**Objectifs (80).** Les 60 premiers : 23 défaites de boss (dont une sans dégât), 22 fins (par route, personnage, difficulté ou contrat), 11 compteurs cumulés, 4 états simultanés (3 réserves, 3 familiers, 50 Ryō, 12 objets). Le premier palier se débloque sans aucun objet nouveau : vaincre Zabuza donne Kakashi. Les 20 suivants : un par contrat 13 à 30 (sceau au registre), *Kekkei genkai* (réunir une fusion de natures) et *Bibliothèque des synergies* (30 synergies inscrites, cumulé).
 
-**Contrats (12)**, tous vérifiés par [defis] :
+**Contrats (30)**, vérifiés par [defis] (règles, fin imposée, chronomètre, aucun pacte, ressources). Les contrats de personnage s'ouvrent avec leur personnage, les contrats de fusion avec l'objectif *Kekkei genkai*, les contrats de maître avec la *Bibliothèque des synergies* :
 
 | Contrat | Règle | Réussite |
 |---|---|---|
@@ -273,5 +273,23 @@ Une mort pendant le paiement passe par les résurrections dans l'ordre (cœur de
 | DEF_010 Course de l'examen | — | première fin **en moins de 20:00** |
 | DEF_011 Collectionneur pressé | — | arriver à l'étage 6 avec **10 passifs** (dès l'arrivée) |
 | DEF_012 Examen de jōnin | Difficile imposé, une épreuve par étage, épreuves de boss aux étages 4, 6, 8 | première fin |
+| DEF_013 Fleur de cerisier | Sakura, Gants de taijutsu, Katsuyu miniature | première fin |
+| DEF_014 Le ninja copieur | Kakashi, Chidori nagashi, Pakkun, dégâts ×0,8 | **deuxième fin** |
+| DEF_015 Œil blanc | Hinata, Byakugan, pénombre à tous les étages | première fin |
+| DEF_016 Ombres et nuages | Shikamaru, Ombre liante, aucune salle d'héritage | première fin |
+| DEF_017 Trois marionnettes | Kankurō, Karasu, Kuroari et Sanshōuo, dégâts ×0,7 | première fin |
+| DEF_018 Le flair d'Akamaru | Kiba, 30 Ryō, aucune salle d'héritage | première fin |
+| DEF_019 Le dard du scorpion | Sasori, Poison et Main du scorpion | **deuxième fin** |
+| DEF_020 Un seul cœur à prendre | Kakuzu, un seul contenant, Contrat de Kakuzu | première fin |
+| DEF_021 Lave naissante | Grande boule de feu et Poing de terre (Yōton dès le départ), dégâts ×0,75 | première fin |
+| DEF_022 Tempête dans la nuit | Chakra de l'eau et Courant foudroyant (Ranton), pénombre | première fin |
+| DEF_023 Pureté | aucun pacte, aucune salle d'héritage | première fin **sans pacte** |
+| DEF_024 Marathon | — | **deuxième fin en moins de 40:00** |
+| DEF_025 Sans le sou | ni Ryō, ni clé, ni parchemin au départ | première fin |
+| DEF_026 Verre fragile | dégâts ×1,5, un seul contenant | première fin |
+| DEF_027 Pas de plomb | vitesse −0,8, dégâts +1 | première fin |
+| DEF_028 Collection éclair | — | arriver à l'étage 4 avec **8 passifs** |
+| DEF_029 Pluie de papier | Shuriken de papier et Mer de papiers explosifs | **deuxième fin** |
+| DEF_030 L'épreuve des ermites | Difficile imposé, aucun pacte | **fin de la Lumière** |
 
 Un contrat n'est inscrit que si ses conditions sont tenues ; l'écran de victoire dit s'il est rempli. Les modes Standard, Difficile, contrats, mission à code et Conseil (Boss Rush) sont jouables ; le **Marché des mercenaires** (mode de vagues économique) n'est pas produit (voir I).

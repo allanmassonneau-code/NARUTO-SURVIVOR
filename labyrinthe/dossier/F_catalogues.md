@@ -23,8 +23,8 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 | Boss (dont mini-boss) | 25 | 25 | 70 |
 | Archétypes ennemis | 76 | 60 | 140 |
 | Modèles de salles | 120 | 120 | 500 |
-| Objectifs de déblocage | 60 | 80 | 250 |
-| Défis jouables | 12 | 30 | 80 |
+| Objectifs de déblocage | 80 | 80 | 250 |
+| Défis jouables | 30 | 30 | 80 |
 | Secrets documentés | 15 | — | 60 |
 | Routes et fins | 6 | — | — |
 
@@ -636,14 +636,14 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | SYN_095 | Sceau maudit, niveau 2 | PSV_091 Sceau maudit + PSV_133 Volonté du feu | dediee | À santé basse, un coup reçu déploie les ailes du sceau : lévitation et dégâts +1 pour la salle. | Lévitation à santé basse. |
 | SYN_096 | Onde du démon | PSV_055 Chakra du renard + PSV_098 Chakra du démon scellé | dediee | Dégâts +1 ; chaque coup reçu libère une onde de chakra rouge autour de vous. | Explosion autour du joueur après un coup. |
 
-## Objectifs de déblocage (OBJ) — 60
+## Objectifs de déblocage (OBJ) — 80
 
 | ID | Nom | Condition | Débloque |
 |---|---|---|---|
 | OBJ_001 | Premier sceau brisé | bossVaincus ≥ 1 (cumulé) | PSV_026 Croix de sceaux, PSV_027 Parchemins-pièges |
 | OBJ_002 | Le traître démasqué | vaincre Mizuki | PSV_013 Fūma shuriken |
 | OBJ_003 | Hors de la forêt | vaincre Serpent géant | PSV_064 Serpent des manches, PSV_078 Serpent blanc |
-| OBJ_004 | Le démon du brouillard | vaincre Zabuza | CHR_004 Kakashi, PSV_017 Empreinte du Kubikiribōchō |
+| OBJ_004 | Le démon du brouillard | vaincre Zabuza | CHR_004 Kakashi, PSV_017 Empreinte du Kubikiribōchō, DEF_014 Le ninja copieur |
 | OBJ_005 | Miroirs brisés | vaincre Haku | PSV_081 Miroirs de glace, PSV_050 Glace éternelle |
 | OBJ_006 | Les frères démons | vaincre Les frères démons | PSV_007 Fil de chakra |
 | OBJ_007 | Fils coupés | vaincre Kankurō et Karasu | PSV_072 Karasu, PSV_073 Kuroari, PSV_074 Sanshōuo |
@@ -651,25 +651,25 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | OBJ_009 | Le sable se tait | vaincre Gaara | CHR_005 Rock Lee, PSV_097 Armure de sable absolue |
 | OBJ_010 | Os brisés | vaincre Kimimaro | PSV_060 Os de l’ossature, PSV_090 Ossature renforcée |
 | OBJ_011 | La carapace tombe | vaincre Sasori | PSV_142 Main du scorpion |
-| OBJ_012 | Regard perçant | secretsTrouves ≥ 5 (cumulé) | CHR_006 Hinata, PSV_113 Byakugan (empreinte) |
+| OBJ_012 | Regard perçant | secretsTrouves ≥ 5 (cumulé) | CHR_006 Hinata, PSV_113 Byakugan (empreinte), DEF_015 Œil blanc |
 | OBJ_013 | Soigneur démasqué | vaincre Kabuto | PSV_087 Sceau de régénération |
 | OBJ_014 | Requin échoué | vaincre Kisame | PSV_136 Écailles de Samehada |
-| OBJ_015 | Stratégie de l’examen | epreuvesChunin ≥ 2 (cumulé) | CHR_007 Shikamaru, PSV_051 Ombre liante |
+| OBJ_015 | Stratégie de l’examen | epreuvesChunin ≥ 2 (cumulé) | CHR_007 Shikamaru, PSV_051 Ombre liante, DEF_016 Ombres et nuages |
 | OBJ_016 | Rituel rompu | vaincre Hidan | PSV_054 Marque de Jashin, PSV_135 Rituel du sang |
 | OBJ_017 | Première fin | vaincre Orochimaru | PSV_143 Mue du serpent, ACT_031 Rituel de permutation |
 | OBJ_018 | Protection absolue | état : protections3 | CHR_008 Gaara |
 | OBJ_019 | L’art éclate | vaincre Deidara | PSV_019 Argile explosive C1, PSV_071 Oiseau d’argile, PSV_110 Argile infinie |
 | OBJ_020 | Au-delà de l’illusion | vaincre Itachi | PSV_053 Flammes noires, ACT_017 Amaterasu (empreinte), ACT_018 Tsukuyomi (empreinte) |
-| OBJ_021 | Marionnettiste | état : familiers3 | CHR_009 Kankurō |
+| OBJ_021 | Marionnettiste | état : familiers3 | CHR_009 Kankurō, DEF_017 Trois marionnettes |
 | OBJ_022 | Cinq cœurs | vaincre Kakuzu | PSV_089 Cœur volé, PSV_129 Contrat de Kakuzu |
 | OBJ_023 | La douleur apaisée | vaincre Pain | ACT_019 Répulsion divine, ACT_020 Attraction céleste |
-| OBJ_024 | Compagnon fidèle | sallesFamiliers ≥ 30 (cumulé) | CHR_010 Kiba |
+| OBJ_024 | Compagnon fidèle | sallesFamiliers ≥ 30 (cumulé) | CHR_010 Kiba, DEF_018 Le flair d’Akamaru |
 | OBJ_025 | Masque brisé | vaincre Obito | ACT_021 Espace-temps intangible |
 | OBJ_026 | Gardien apaisé | vaincre Le Gardien du Sceau | ACT_016 Invocation : grand crapaud, PSV_115 Lévitation de chakra |
-| OBJ_027 | Maître des marionnettes | vaincre Sasori sans dégâts | CHR_011 Sasori |
+| OBJ_027 | Maître des marionnettes | vaincre Sasori sans dégâts | CHR_011 Sasori, DEF_019 Le dard du scorpion |
 | OBJ_028 | Rival ancien | vaincre Madara (empreinte) | PSV_020 Chute céleste, ACT_026 Forêt naissante |
 | OBJ_029 | Dix queues | vaincre Empreinte des Dix Queues | PSV_014 Canon de chakra |
-| OBJ_030 | Fortune | état : ryo50 | CHR_012 Kakuzu, PSV_121 Carte de membre de l’échoppe |
+| OBJ_030 | Fortune | état : ryo50 | CHR_012 Kakuzu, PSV_121 Carte de membre de l’échoppe, DEF_020 Un seul cœur à prendre |
 | OBJ_031 | Collectionneur | état : objets12 | PSV_126 Livre de l’ermite, PSV_120 Collier à deux charmes |
 | OBJ_032 | Premier pacte | pactes ≥ 1 (cumulé) | PSV_091 Sceau maudit, PSV_139 Transfert du pacte |
 | OBJ_033 | Explorateur | rochersSceau ≥ 10 (cumulé) | PSV_114 Rouleau des voies secrètes, PSV_106 Épingle de crochetage |
@@ -700,8 +700,28 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | OBJ_058 | Défi : pacte | fin  du défi DEF_008 | PSV_098 Chakra du démon scellé |
 | OBJ_059 | Défi : sable | fin  du défi DEF_009 | PSV_150 Tempête de sable |
 | OBJ_060 | Défi : conseil | fin  du défi DEF_012 | PSV_146 Rasenshuriken (empreinte) |
+| OBJ_061 | Contrat : Fleur de cerisier | fin  du défi DEF_013 |  |
+| OBJ_062 | Contrat : Le ninja copieur | fin  du défi DEF_014 |  |
+| OBJ_063 | Contrat : Œil blanc | fin  du défi DEF_015 |  |
+| OBJ_064 | Contrat : Ombres et nuages | fin  du défi DEF_016 |  |
+| OBJ_065 | Contrat : Trois marionnettes | fin  du défi DEF_017 |  |
+| OBJ_066 | Contrat : Le flair d’Akamaru | fin  du défi DEF_018 |  |
+| OBJ_067 | Contrat : Le dard du scorpion | fin  du défi DEF_019 |  |
+| OBJ_068 | Contrat : Un seul cœur à prendre | fin  du défi DEF_020 |  |
+| OBJ_069 | Contrat : Lave naissante | fin  du défi DEF_021 |  |
+| OBJ_070 | Contrat : Tempête dans la nuit | fin  du défi DEF_022 |  |
+| OBJ_071 | Contrat : Pureté | fin  du défi DEF_023 |  |
+| OBJ_072 | Contrat : Marathon | fin  du défi DEF_024 |  |
+| OBJ_073 | Contrat : Sans le sou | fin  du défi DEF_025 |  |
+| OBJ_074 | Contrat : Verre fragile | fin  du défi DEF_026 |  |
+| OBJ_075 | Contrat : Pas de plomb | fin  du défi DEF_027 |  |
+| OBJ_076 | Contrat : Collection éclair | fin  du défi DEF_028 |  |
+| OBJ_077 | Contrat : Pluie de papier | fin  du défi DEF_029 |  |
+| OBJ_078 | Contrat : L’épreuve des ermites | fin  du défi DEF_030 |  |
+| OBJ_079 | Kekkei genkai | état : fusion | DEF_021 Lave naissante, DEF_022 Tempête dans la nuit |
+| OBJ_080 | Bibliothèque des synergies | synergies ≥ 30 (cumulé) | DEF_029 Pluie de papier, DEF_030 L’épreuve des ermites |
 
-## Défis — contrats de mission (DEF) — 12
+## Défis — contrats de mission (DEF) — 30
 
 | ID | Nom | Règles | Récompense |
 |---|---|---|---|
@@ -717,6 +737,24 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | DEF_010 | Course de l’examen | Première fin en moins de 20 minutes (chronomètre de partie). | Marque de vitesse |
 | DEF_011 | Collectionneur pressé | Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée). | Défi |
 | DEF_012 | Examen de jōnin | Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin. | Rasenshuriken |
+| DEF_013 | Fleur de cerisier | Sakura imposée, départ avec Gants de taijutsu et Katsuyu miniature. Première fin. | Sceau du contrat |
+| DEF_014 | Le ninja copieur | Kakashi imposé, départ avec Chidori nagashi et Pakkun ; dégâts −20 %. Deuxième fin. | Sceau du contrat |
+| DEF_015 | Œil blanc | Hinata imposée avec le Byakugan ; tous les étages dans la pénombre. Première fin. | Sceau du contrat |
+| DEF_016 | Ombres et nuages | Shikamaru imposé avec l’Ombre liante ; aucune salle d’héritage. Première fin. | Sceau du contrat |
+| DEF_017 | Trois marionnettes | Kankurō imposé avec Karasu, Kuroari et Sanshōuo ; dégâts −30 %. Première fin. | Sceau du contrat |
+| DEF_018 | Le flair d’Akamaru | Kiba imposé avec 30 Ryō ; aucune salle d’héritage. Première fin. | Sceau du contrat |
+| DEF_019 | Le dard du scorpion | Sasori imposé avec Poison de scorpion et Main du scorpion. Deuxième fin. | Sceau du contrat |
+| DEF_020 | Un seul cœur à prendre | Kakuzu imposé avec un seul contenant (jamais plus) et le Contrat de Kakuzu. Première fin. | Sceau du contrat |
+| DEF_021 | Lave naissante | Départ avec Grande boule de feu et Poing de terre (Yōton dès la première salle) ; dégâts −25 %. Première fin. | Sceau du contrat |
+| DEF_022 | Tempête dans la nuit | Départ avec Chakra de l’eau et Courant foudroyant (Ranton) ; tous les étages dans la pénombre. Première fin. | Sceau du contrat |
+| DEF_023 | Pureté | Aucun pacte interdit et aucune salle d’héritage. Première fin. | Sceau du contrat |
+| DEF_024 | Marathon | Deuxième fin en moins de 40 minutes (chronomètre de partie). | Sceau du contrat |
+| DEF_025 | Sans le sou | Ni Ryō, ni clé, ni parchemin explosif au départ. Première fin. | Sceau du contrat |
+| DEF_026 | Verre fragile | Dégâts ×1,5 mais un seul contenant, jamais plus. Première fin. | Sceau du contrat |
+| DEF_027 | Pas de plomb | Vitesse −0,8, dégâts +1. Première fin. | Sceau du contrat |
+| DEF_028 | Collection éclair | Atteindre l’étage 4 avec au moins 8 objets passifs (réussi dès l’arrivée). | Sceau du contrat |
+| DEF_029 | Pluie de papier | Départ avec Shuriken de papier et Mer de papiers explosifs. Deuxième fin. | Sceau du contrat |
+| DEF_030 | L’épreuve des ermites | Mode Difficile, aucun pacte : la fin de la Lumière. | Sceau du contrat |
 
 ## Secrets (SEC) — 15
 

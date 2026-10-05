@@ -55,7 +55,7 @@ const Progression = {
   },
   // Fin de partie : marques par personnage et routes
   // Conditions d'un contrat à la victoire : chronomètre, cible d'étage (déjà validée à l'arrivée)
-  conditionsDefi(P, route) { const D = INDEX[P.defi]; if (!D) return false; if (D.chrono && P.temps > D.chrono) return false; if (D.etageCible && !P.defiValide) return false; return true; },
+  conditionsDefi(P, route) { const D = INDEX[P.defi]; if (!D) return false; if (D.chrono && P.temps > D.chrono) return false; if (D.etageCible && !P.defiValide) return false; if (D.route && route !== D.route) return false; if (D.sansPacte && (P.pactesAchetes || 0) > 0) return false; return true; },
   defiReussi(id) { if (!this.profil || this.profil.defis[id]) return; this.profil.defis[id] = true; this.sauver(); G.notifications = G.notifications || []; G.notifications.push({ t: 0, titre: 'Contrat rempli', nom: (INDEX[id] || {}).nom || id, detail: '' }); },
   finPartie(resultat, route) {
     const P = G.partie; const persoId = P.perso; this.profil.morts += resultat === 'mort' ? 1 : 0;

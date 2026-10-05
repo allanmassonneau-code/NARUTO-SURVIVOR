@@ -191,7 +191,7 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | visibilite | chacun des 101 ennemis et boss dessine des pixels | 101 |
 | mecaniques | bande de sable de Gaara, Susanoo, cristaux, zones télégraphiées | 0 erreur |
 | pactes | 8 scénarios chiffrés (E §6), événements comptés, refus, tirage figé | 0 erreur |
-| defis | règles et conditions de réussite des contrats | 10 vérifications |
+| defis | règles et conditions de réussite des contrats (fin imposée, chronomètre, aucun pacte, ressources), objectifs du registre des synergies | 21 vérifications |
 
 **Validation des données** : `node labyrinthe/outils/catalogues.mjs --verifier` (identifiants, références, pools, effets implémentés, fiches de boss complètes, navigabilité des 120 gabarits) : 0 erreur, 3 avertissements (objets-clés et actif de variante hors pools, attendu).
 
@@ -219,7 +219,7 @@ Trois stockages indépendants (`localStorage`) : **réglages** (`lds_reglages`),
 |---|---|---|
 | Prototype | déplacement, tir cardinal, une salle, un boss, manette | fait |
 | Tranche verticale | 6 étages, 3 personnages, pools, boutique, pacte, sanctuaire, sauvegarde | fait |
-| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables, 158 passifs, 33 actifs, 25 boss, 76 ennemis, 10 thèmes, 120 salles, défis, secrets, registre, dossier A à I | fait sauf 66 salles sur 120, 60 objectifs sur 80, 12 défis sur 30 (I) |
+| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables, 158 passifs, 33 actifs, 25 boss, 76 ennemis, 10 thèmes, 120 salles, défis, secrets, registre, dossier A à I | fait (cibles chiffrées atteintes, I §1) |
 | Recette | 20 heures de jeu humain à la manette sur 3 manettes (Xbox, DualSense, générique), réglage des boss les plus longs, vérification des télégraphes à vitesse minimale, lecture daltonisme et mode confort | à faire |
 | Extension | 22 personnages et 34 variantes de plus, bibliothèque complète (600 collectibles, 500 salles, 70 boss…), remontée secrète, Marché des mercenaires | à faire (I) |
 | Diffusion | vérification des droits d'exploitation de la licence | **préalable non levé** |

@@ -95,13 +95,13 @@
   },
   {
    "ensemble": "Objectifs de déblocage",
-   "produit": 60,
+   "produit": 80,
    "cible_v1": 80,
    "cible_bibliotheque": 250
   },
   {
    "ensemble": "Défis jouables",
-   "produit": 12,
+   "produit": 30,
    "cible_v1": 30,
    "cible_bibliotheque": 80
   },

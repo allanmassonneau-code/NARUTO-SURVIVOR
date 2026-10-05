@@ -32,7 +32,7 @@ Toutes les touches se reconfigurent (Options → Commandes). Réglages de zones 
 - **158 objets passifs, 33 techniques actives, 35 talismans, 30 consommables, 15 pilules**, 96 synergies (dont 9 fusions de natures et 3 trios) et 13 transformations d'ensemble.
 - **25 boss** (Mizuki, Zabuza, Haku, Gaara, Orochimaru, Itachi, Pain, Konan, Obito, Madara…) et **76 ennemis**, avec champions.
 - **Pactes et sanctuaires**, échoppes, informateurs, machines, autel de tribut, chambres maudites, épreuves.
-- **6 routes et fins**, Boss Rush (Conseil des épreuves), rencontre chronométrée, **12 contrats** (défis), **60 objectifs**, **15 secrets** avec indices consultables, sauvegarde de partie suspendue.
+- **6 routes et fins**, Boss Rush (Conseil des épreuves), rencontre chronométrée, **30 contrats** (défis), **80 objectifs**, **15 secrets** avec indices consultables, sauvegarde de partie suspendue.
 
 ## Dossier de conception
 

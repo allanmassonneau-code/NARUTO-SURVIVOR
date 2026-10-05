@@ -483,6 +483,20 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     P = partie('DEF_011'); L.entrerEtage(6); verif(!P.defiValide, 'DEF_011 : validé sans 10 objets');
     P = partie('DEF_011'); for (const id of L.DON.objets.filter(o => o.type === 'passif').slice(0, 10).map(o => o.id)) G.joueur.passifs.push(id); L.entrerEtage(6); verif(P.defiValide && L.Progression.profil.defis.DEF_011, 'DEF_011 : non validé à l’étage 6 avec 10 objets');
     P = partie('DEF_012'); verif(P.difficile, 'DEF_012 : Difficile non imposé'); L.entrerEtage(2); verif(G.etage.cfg.speciales.defi === 1, 'DEF_012 : pas de salle d’épreuve à l’étage 2');
+    // contrats 13 à 30 : personnage et départ imposés, fin imposée, aucun pacte, ressources nulles
+    P = partie('DEF_013'); verif(G.joueur.def.id === 'CHR_003' && G.joueur.passifs.includes('PSV_040') && G.joueur.passifs.includes('PSV_063'), 'DEF_013 : départ non imposé');
+    P = partie('DEF_021'); verif(L.synergiesActives(G.joueur).some(s => s.id === 'SYN_061'), 'DEF_021 : Yōton absent au départ');
+    P = partie('DEF_025'); verif(G.joueur.ryo === 0 && G.joueur.cles === 0 && G.joueur.explosifs === 0, 'DEF_025 : ressources de départ non nulles');
+    P = partie('DEF_023'); P.pactesAchetes = 1; L.Progression.finPartie('victoire', 'RTE_01'); verif(P.defiEchoue && !L.Progression.profil.defis.DEF_023, 'DEF_023 : réussi malgré un pacte');
+    P = partie('DEF_023'); L.Progression.finPartie('victoire', 'RTE_01'); verif(!P.defiEchoue && L.Progression.profil.defis.DEF_023, 'DEF_023 : non réussi sans pacte');
+    P = partie('DEF_024'); P.temps = 30 * 60; L.Progression.finPartie('victoire', 'RTE_01'); verif(P.defiEchoue && !L.Progression.profil.defis.DEF_024, 'DEF_024 : réussi sur la mauvaise fin');
+    P = partie('DEF_024'); P.temps = 41 * 60; L.Progression.finPartie('victoire', 'RTE_02'); verif(P.defiEchoue && !L.Progression.profil.defis.DEF_024, 'DEF_024 : réussi hors délai');
+    P = partie('DEF_024'); P.temps = 30 * 60; L.Progression.finPartie('victoire', 'RTE_02'); verif(!P.defiEchoue && L.Progression.profil.defis.DEF_024, 'DEF_024 : non réussi');
+    verif(L.Progression.profil.objectifs.OBJ_071, 'OBJ_071 : contrat « Pureté » non inscrit');
+    // registre des synergies : une fusion réunie accomplit « Kekkei genkai » ; le compteur cumule les découvertes
+    P = partie(null, 'CHR_001'); const avant = L.Progression.profil.compteurs.synergies || 0; for (const id of ['PSV_043', 'PSV_047']) L.acquerirPassif(G.joueur, id, 'test'); L.recalculer(G.joueur);
+    verif(L.Progression.profil.objectifs.OBJ_079, 'OBJ_079 : fusion réunie sans objectif accompli');
+    verif((L.Progression.profil.compteurs.synergies || 0) > avant || L.Progression.profil.decouverts.includes('SYN_061'), 'compteur de synergies inchangé');
     return out;
   });
 

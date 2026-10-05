@@ -27,7 +27,7 @@ node labyrinthe/outils/catalogues.mjs --verifier # validation seule (code de sor
 
 ## État d’avancement en une ligne
 
-Le jeu jouable couvre le périmètre **« version 1.0 de travail »** du brief (§44) sur la plupart des lots — 18 personnages jouables, 158 passifs, 33 actifs, 35 talismans, 30 consommables, 96 synergies, 13 transformations, 24 boss, 75 ennemis, 10 thèmes, 18 variantes d’étage et 120 modèles de salles — mais **pas** sur les objectifs (60 sur 80) ni les défis (12 sur 30). La **bibliothèque complète** (600 collectibles, 500 salles, 70 boss…) reste une cible de conception : elle n’est pas produite et n’est pas présentée comme telle. Le détail est dans [I_audit.md](I_audit.md) et, lot par lot, dans [F_catalogues.md](F_catalogues.md).
+Le jeu jouable couvre le périmètre **« version 1.0 de travail »** du brief (§44) sur tous les lots chiffrés — 18 personnages jouables, 158 passifs, 33 actifs, 35 talismans, 30 consommables, 96 synergies, 13 transformations, 25 boss, 76 ennemis, 10 thèmes, 18 variantes d’étage, 120 modèles de salles, 80 objectifs et 30 contrats. La **bibliothèque complète** (600 collectibles, 500 salles, 70 boss…) reste une cible de conception : elle n’est pas produite et n’est pas présentée comme telle. Le détail est dans [I_audit.md](I_audit.md) et, lot par lot, dans [F_catalogues.md](F_catalogues.md).
 
 ## Conventions de rédaction
 

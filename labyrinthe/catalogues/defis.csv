@@ -11,3 +11,21 @@ DEF_009;Tempête du désert;"Gaara imposé avec Sable en orbite et Sable protect
 DEF_010;Course de l’examen;Première fin en moins de 20 minutes (chronomètre de partie).;Marque de vitesse
 DEF_011;Collectionneur pressé;Atteindre l’étage 6 avec au moins 10 objets passifs (réussi dès l’arrivée).;Défi
 DEF_012;Examen de jōnin;"Mode Difficile imposé ; une salle d’épreuve à chaque étage (à partir du 2), une épreuve de boss aux étages 4, 6 et 8. Première fin.";Rasenshuriken
+DEF_013;Fleur de cerisier;Sakura imposée, départ avec Gants de taijutsu et Katsuyu miniature. Première fin.;Sceau du contrat
+DEF_014;Le ninja copieur;"Kakashi imposé, départ avec Chidori nagashi et Pakkun ; dégâts −20 %. Deuxième fin.";Sceau du contrat
+DEF_015;Œil blanc;"Hinata imposée avec le Byakugan ; tous les étages dans la pénombre. Première fin.";Sceau du contrat
+DEF_016;Ombres et nuages;"Shikamaru imposé avec l’Ombre liante ; aucune salle d’héritage. Première fin.";Sceau du contrat
+DEF_017;Trois marionnettes;"Kankurō imposé avec Karasu, Kuroari et Sanshōuo ; dégâts −30 %. Première fin.";Sceau du contrat
+DEF_018;Le flair d’Akamaru;"Kiba imposé avec 30 Ryō ; aucune salle d’héritage. Première fin.";Sceau du contrat
+DEF_019;Le dard du scorpion;Sasori imposé avec Poison de scorpion et Main du scorpion. Deuxième fin.;Sceau du contrat
+DEF_020;Un seul cœur à prendre;Kakuzu imposé avec un seul contenant (jamais plus) et le Contrat de Kakuzu. Première fin.;Sceau du contrat
+DEF_021;Lave naissante;"Départ avec Grande boule de feu et Poing de terre (Yōton dès la première salle) ; dégâts −25 %. Première fin.";Sceau du contrat
+DEF_022;Tempête dans la nuit;"Départ avec Chakra de l’eau et Courant foudroyant (Ranton) ; tous les étages dans la pénombre. Première fin.";Sceau du contrat
+DEF_023;Pureté;Aucun pacte interdit et aucune salle d’héritage. Première fin.;Sceau du contrat
+DEF_024;Marathon;Deuxième fin en moins de 40 minutes (chronomètre de partie).;Sceau du contrat
+DEF_025;Sans le sou;Ni Ryō, ni clé, ni parchemin explosif au départ. Première fin.;Sceau du contrat
+DEF_026;Verre fragile;Dégâts ×1,5 mais un seul contenant, jamais plus. Première fin.;Sceau du contrat
+DEF_027;Pas de plomb;Vitesse −0,8, dégâts +1. Première fin.;Sceau du contrat
+DEF_028;Collection éclair;Atteindre l’étage 4 avec au moins 8 objets passifs (réussi dès l’arrivée).;Sceau du contrat
+DEF_029;Pluie de papier;Départ avec Shuriken de papier et Mer de papiers explosifs. Deuxième fin.;Sceau du contrat
+DEF_030;L’épreuve des ermites;Mode Difficile, aucun pacte : la fin de la Lumière.;Sceau du contrat
