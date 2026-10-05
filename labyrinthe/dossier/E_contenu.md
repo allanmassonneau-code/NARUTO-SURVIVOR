@@ -58,6 +58,8 @@ Le brief vise 40 personnages et 40 variantes ; la version jouable en contient **
 
 **La difficulté vient des associations.** Chaque gabarit de salle place des *rôles* (lettres p, t, c, s, i, e, f, g, h, n, q, l, m, r, v) et chaque thème traduit un rôle en ennemis précis. Les associations difficiles sont donc écrites dans les gabarits, par exemple un protecteur (g) devant deux tireurs (t) : l'aura divise par deux les dégâts subis par ses voisins à moins de 2,5 tuiles, il faut le contourner ou le faire tomber d'abord ; un guérisseur (h) derrière un lourd (l) ; un invocateur (i) avec une nuée (n).
 
+**Variété des salles.** 105 modèles, dont 80 salles de combat : 49 génériques 1×1, 10 propres à un thème (salle de classe de l'Académie, sous les racines de la Forêt, dunes de Suna, atelier encombré, rangée de cuves, canal à passerelles de Kiri, antre aux braseros, tranchées, bassin des crapauds, sceaux brisés ; poids ×3 sur leur thème), 5 couloirs à portes imposées et 16 grandes salles (2×1 : 5, 1×2 : 4, 2×2 : 3, deux équerres par orientation). Un même étage ne répète pas un modèle tant qu'il en reste d'inédits.
+
 ### Champions : forme et icône, pas seulement une couleur
 
 Probabilité par ennemi ordinaire : **5 %** (10 % en Difficile), **+2 %** à partir de l'étage 5. Chaque champion porte une aura de 4 pixels tournants **et** une icône au-dessus de la tête (lisible sans distinguer les teintes).

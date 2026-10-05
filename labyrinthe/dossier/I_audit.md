@@ -20,7 +20,7 @@
 | Variantes d'étage | 18 | 12 | 24 |
 | Boss (dont mini-boss) | 24 | 25 | 70 |
 | Archétypes ennemis | 75 | 60 | 140 |
-| Modèles de salles | 66 | 120 | 500 |
+| Modèles de salles | 105 | 120 | 500 |
 | Objectifs de déblocage | 60 | 80 | 250 |
 | Défis jouables | 12 | 30 | 80 |
 | Secrets documentés | 15 | — | 60 |
@@ -29,7 +29,7 @@
 | Briefs d'écrans | 16 | — | 16 |
 | Fiches d'effets (D) | 22 | — | 30 |
 
-**Lecture honnête.** La cible « v1.0 de travail » est atteinte ou dépassée sur 12 lots, manquée sur 4 : salles (66 sur 120), objectifs (60 sur 80), défis (12 sur 30), boss (24 sur 25). La **bibliothèque complète** reste une cible de conception : 600 collectibles, 500 salles, 70 boss, 140 ennemis et 80 personnages ne sont ni produits ni décrits fiche par fiche ; aucun document ne les présente comme faits. Les synergies documentées sont des paires (60) : les trios et combinaisons de quatre du brief (§35 : 90 et 30) ne sont pas écrits.
+**Lecture honnête.** La cible « v1.0 de travail » est atteinte ou dépassée sur 12 lots, manquée sur 4 : salles (105 sur 120), objectifs (60 sur 80), défis (12 sur 30), boss (24 sur 25). La **bibliothèque complète** reste une cible de conception : 600 collectibles, 500 salles, 70 boss, 140 ennemis et 80 personnages ne sont ni produits ni décrits fiche par fiche ; aucun document ne les présente comme faits. Les synergies documentées sont surtout des paires : 96 dont 9 fusions de natures et 3 trios ; les trios et combinaisons de quatre du brief (§35 : 90 et 30) restent très en deçà.
 
 ## I2. Contradictions trouvées et résolues
 
@@ -73,7 +73,7 @@ Le dossier a été relu contre le code, et le code contre le dossier. Chaque éc
 | Revue de captures (chaque thème, type de salle, boss, état du HUD, menu) : textes d'entrée de salle hors écran, messages d'écran superposés, notifications par-dessus les bandeaux, télégraphes sur le HUD, onglets du registre qui se chevauchent, texte de mission à code qui déborde, carte de pause décentrée, poussières au-dessus du vide, couloirs sans appliques, brume et pénombre qui débordaient de la salle | textes empilés et coupés, notifications retenues, dessin de la salle découpé à ses murs, appliques par cellule |
 | Bandeau d'une synergie ou d'une transformation écrasé par celui de l'objet qui la complète ; bandeaux d'objet dessinés par-dessus le titre d'étage | file de bandeaux : l'objet d'abord, puis transformation et synergie ; file retenue pendant le titre d'étage et l'intro de boss [synergies] |
 
-**Défauts du banc de test** : huit codes de mission invalides tombaient sur une graine aléatoire (tests instables) ; le test manette dépendait de l'ordre d'exécution ; le test de secours ne mesurait que l'écart horizontal. Tous corrigés.
+**Défauts du banc de test** : huit codes de mission invalides tombaient sur une graine aléatoire (tests instables) ; le test manette dépendait de l'ordre d'exécution ; le test de secours ne mesurait que l'écart horizontal ; le pilote employait le *Parchemin de téléportation* au milieu d'un combat de boss (comportement voulu du jeu, mais le parcours ne finissait plus l'étage). Tous corrigés.
 
 Les écarts plus anciens (pics devant des portes, familiers accumulés, faisceau continu qui ne blessait qu'une fois, transformations impossibles à compléter, récompenses de route citant des personnages absents, second talisman ignoré, île inaccessible dans ROM_012…) sont consignés dans le registre de A et dans l'historique des commits.
 

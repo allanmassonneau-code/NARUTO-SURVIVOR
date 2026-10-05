@@ -47,7 +47,8 @@ window.__T = {
       if (bloque > 30) { fuite = 25; a = Math.random() * 6.28; bloque = 0; }
       if (fuite > 0) { fuite--; mx = Math.cos(a); my = Math.sin(a); }
       if (mx > 0.3) t.push('KeyD'); if (mx < -0.3) t.push('KeyA'); if (my > 0.3) t.push('KeyS'); if (my < -0.3) t.push('KeyW');
-      if (o.actif && i % 120 === 0) t.push('Space');
+      // le pilote n'emploie pas les actifs qui l'emmènent ailleurs (téléportation) : il doit finir la salle
+      if (o.actif && i % 120 === 0 && !(J.actif && L.INDEX[J.actif.id] && L.INDEX[J.actif.id].effet === 'teleport')) t.push('Space');
       if (o.bombes && i % 240 === 100) t.push('KeyE');
       const err = this.pas(1, t); if (err) return err;
       if (L.Scenes.courante() !== L.SceneJeu) { if (o.fermerMenus) L.Scenes.aller(L.SceneJeu); else return 'scene ' + (L.Scenes.courante() === window.LDS.SceneTitre ? 'titre' : 'autre'); }

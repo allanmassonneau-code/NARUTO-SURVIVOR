@@ -193,7 +193,7 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | pactes | 8 scénarios chiffrés (E §6), événements comptés, refus, tirage figé | 0 erreur |
 | defis | règles et conditions de réussite des contrats | 10 vérifications |
 
-**Validation des données** : `node labyrinthe/outils/catalogues.mjs --verifier` (identifiants, références, pools, effets implémentés, fiches de boss complètes, navigabilité des 66 gabarits) : 0 erreur, 3 avertissements (objets-clés et actif de variante hors pools, attendu).
+**Validation des données** : `node labyrinthe/outils/catalogues.mjs --verifier` (identifiants, références, pools, effets implémentés, fiches de boss complètes, navigabilité des 105 gabarits) : 0 erreur, 3 avertissements (objets-clés et actif de variante hors pools, attendu).
 
 **Ce que les tests ne prouvent pas.** Le pilote est invulnérable : il prouve qu'un combat se termine, pas qu'un humain esquive tout. La manette est simulée par l'API Gamepad du navigateur, pas testée sur matériel. L'équilibrage n'a été réglé qu'avec le pilote. Recette manuelle à faire : H §8, jalon « recette ».
 
@@ -219,7 +219,7 @@ Trois stockages indépendants (`localStorage`) : **réglages** (`lds_reglages`),
 |---|---|---|
 | Prototype | déplacement, tir cardinal, une salle, un boss, manette | fait |
 | Tranche verticale | 6 étages, 3 personnages, pools, boutique, pacte, sanctuaire, sauvegarde | fait |
-| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables, 158 passifs, 33 actifs, 24 boss, 75 ennemis, 10 thèmes, 66 salles, défis, secrets, registre, dossier A à I | fait sauf 66 salles sur 120, 60 objectifs sur 80, 12 défis sur 30 (I) |
+| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables, 158 passifs, 33 actifs, 24 boss, 75 ennemis, 10 thèmes, 105 salles, défis, secrets, registre, dossier A à I | fait sauf 66 salles sur 120, 60 objectifs sur 80, 12 défis sur 30 (I) |
 | Recette | 20 heures de jeu humain à la manette sur 3 manettes (Xbox, DualSense, générique), réglage des boss les plus longs, vérification des télégraphes à vitesse minimale, lecture daltonisme et mode confort | à faire |
 | Extension | 22 personnages et 34 variantes de plus, bibliothèque complète (600 collectibles, 500 salles, 70 boss…), remontée secrète, Marché des mercenaires | à faire (I) |
 | Diffusion | vérification des droits d'exploitation de la licence | **préalable non levé** |

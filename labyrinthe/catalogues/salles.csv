@@ -34,9 +34,36 @@ ROM_031;Sanctuaire de nuées;combat;1x1;3-9;toutes;3;87 / 91
 ROM_032;Arène ouverte;combat;1x1;2-9;toutes;6;91 / 91
 ROM_033;Bloc à clé;combat;1x1;tous;toutes;2;82 / 91
 ROM_034;Rochers à fouiller;combat;1x1;tous;toutes;0;69 / 91
+ROM_035;Quatre colonnes;combat;1x1;tous;toutes;4;75 / 91
+ROM_036;Fosse en croix;combat;1x1;2-9;toutes;4;73 / 91
+ROM_037;Galerie des caisses;combat;1x1;tous;toutes;3;82 / 91
+ROM_038;Ronde au-dessus du vide;combat;1x1;tous;toutes;4;73 / 91
+ROM_039;Couloir central;combat;1x1;tous;toutes;4;79 / 91
+ROM_043;Champ de pics;combat;1x1;2-9;toutes;3;75 / 91
+ROM_044;Tourelle centrale;combat;1x1;2-9;toutes;3;87 / 91
+ROM_045;Feux de veille;combat;1x1;3-9;toutes;3;87 / 91
+ROM_046;Caisses piégées;combat;1x1;tous;toutes;4;87 / 91
+ROM_047;Allée des lanceurs;combat;1x1;2-9;toutes;4;83 / 91
+ROM_048;Petit labyrinthe;combat;1x1;tous;toutes;3;63 / 91
+ROM_049;Îlots de pierre;combat;1x1;tous;toutes;3;73 / 91
+ROM_050;Le guet;combat;1x1;3-9;toutes;5;89 / 91
+ROM_051;Rampants entre les fosses;combat;1x1;2-9;toutes;4;75 / 91
+ROM_052;Invocateur retranché;combat;1x1;3-9;toutes;3;81 / 91
+ROM_053;Salle de classe;combat;1x1;tous;toutes;4;75 / 91
+ROM_054;Sous les racines;combat;1x1;tous;toutes;3;75 / 91
+ROM_055;Dunes et embuscades;combat;1x1;tous;toutes;4;84 / 91
+ROM_056;Atelier encombré;combat;1x1;tous;toutes;4;71 / 91
+ROM_057;Rangée de cuves;combat;1x1;tous;toutes;3;75 / 91
+ROM_058;Canal et passerelles;combat;1x1;tous;toutes;4;69 / 91
+ROM_059;Antre aux braseros;combat;1x1;tous;toutes;3;72 / 91
+ROM_064;Tranchées;combat;1x1;tous;toutes;4;79 / 91
+ROM_065;Bassin des crapauds;combat;1x1;tous;toutes;3;75 / 91
+ROM_066;Sceaux brisés;combat;1x1;tous;toutes;3;83 / 91
 ROM_040;Couloir horizontal;combat;1x1;tous;gauche, droite;3;39 / 91
 ROM_041;Couloir vertical;combat;1x1;tous;haut, bas;3;35 / 91
 ROM_042;Couloir de fosses;combat;1x1;tous;gauche, droite;2;31 / 91
+ROM_067;Passerelle sur le vide;combat;1x1;tous;gauche, droite;3;39 / 91
+ROM_068;Puits de pierre;combat;1x1;tous;haut, bas;2;31 / 91
 ROM_060;Longue galerie;combat;2x1;tous;toutes;5;176 / 182
 ROM_061;Galerie des fosses;combat;2x1;tous;toutes;4;150 / 182
 ROM_062;Haute tour;combat;1x2;tous;toutes;6;176 / 182
@@ -45,6 +72,18 @@ ROM_071;Salle en équerre (L1);combat;L1;tous;toutes;4;261 / 273
 ROM_072;Salle en équerre (L2);combat;L2;tous;toutes;5;261 / 273
 ROM_073;Salle en équerre (L3);combat;L3;tous;toutes;5;261 / 273
 ROM_074;Salle en équerre (L4);combat;L4;tous;toutes;4;261 / 273
+ROM_080;Pont des deux rives;combat;2x1;tous;toutes;6;152 / 182
+ROM_081;Salle des colonnes;combat;2x1;tous;toutes;5;150 / 182
+ROM_082;Champ de bataille;combat;2x1;3-9;toutes;5;174 / 182
+ROM_083;Puits vertical;combat;1x2;tous;toutes;6;162 / 182
+ROM_084;Escalier de pierre;combat;1x2;tous;toutes;6;168 / 182
+ROM_085;Couloir des pièges;combat;1x2;2-9;toutes;4;150 / 182
+ROM_086;Cour du château;combat;2x2;tous;toutes;8;332 / 364
+ROM_087;Lac intérieur;combat;2x2;2-9;toutes;11;304 / 364
+ROM_088;Équerre aux fosses (L1);combat;L1;tous;toutes;6;239 / 273
+ROM_089;Équerre des chargeurs (L2);combat;L2;tous;toutes;6;254 / 273
+ROM_090;Équerre des braseros (L3);combat;L3;2-9;toutes;5;241 / 273
+ROM_091;Équerre de pierre (L4);combat;L4;tous;toutes;6;254 / 273
 ROM_100;Salle d’héritage;heritage;1x1;tous;toutes;0;91 / 91
 ROM_101;Héritage entre les rochers;heritage;1x1;2-9;toutes;0;85 / 91
 ROM_102;Héritage sur l’îlot;heritage;1x1;3-9;toutes;0;72 / 91
