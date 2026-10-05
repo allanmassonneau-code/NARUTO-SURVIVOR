@@ -32,6 +32,8 @@ function annoncer(b) {
   if (B.synergie || B.transformation) { B.t = 0; F.unshift(B); }
   G.banniere = b;
 }
+// Message d'écran : un texte identique encore affiché est remplacé, jamais empilé
+function texteEcran(o) { G.textes = G.textes.filter(x => !(x.ecran && x.t === o.t)); o.ecran = true; G.textes.push(o); }
 function bannieresRetenues() { const E = G.banniereEtage; return !!(E && E.t < 3.2 || G.introBoss); }
 function banniereVisible() { const B = G.banniere; return !!(B && B.t < dureeBanniere(B) || bannieresRetenues()); }
 // Icône des synergies : deux anneaux enlacés (turquoise et or)

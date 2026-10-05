@@ -189,7 +189,7 @@ function reconstruireInventaire(J) { // Kakuzu altéré : un passif remplacé pa
   const nouv = tirerObjet(G.partie, 'heritage', G.alea.butin, { qualiteMin: q, qualiteMax: q, passifSeulement: true });
   J.passifs[J.passifs.indexOf(vieux)] = nouv; if (!J.acquis.includes(nouv)) J.acquis.push(nouv);
   recalculer(J); verifierTransformations(J);
-  G.textes.push({ t: INDEX[vieux].nom + ' → ' + INDEX[nouv].nom, ecran: true, age: 0, duree: 3, couleur: '#8ae0a0' });
+  texteEcran({ t: INDEX[vieux].nom + ' → ' + INDEX[nouv].nom, ecran: true, age: 0, duree: 3, couleur: '#8ae0a0' });
 }
 
 // ── Épreuves (chūnin : vagues après la prise ; jōnin : boss en vagues) ──

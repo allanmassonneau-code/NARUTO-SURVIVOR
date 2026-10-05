@@ -56,7 +56,7 @@ function entrerEtage(n) {
   // refus : une salle de pacte visitée puis quittée sans rien acheter augmente la part du sanctuaire (E §6)
   const prec = G.etage;
   if (n > 1 && prec && prec.numero < n && prec.opportunite === 'pacte' && prec.salles.opp && prec.salles.opp.visitee && !prec.pacteAchete) {
-    P.pactesRefuses++; Progression.secret('SEC_012'); G.textes.push({ x: 0, y: 0, t: 'Pacte refusé : les ermites s’en souviendront', age: 0, duree: 2.2, couleur: '#fff8d0', ecran: true });
+    P.pactesRefuses++; Progression.secret('SEC_012'); texteEcran({ x: 0, y: 0, t: 'Pacte refusé : les ermites s’en souviendront', age: 0, duree: 2.2, couleur: '#fff8d0', ecran: true });
   }
   P.etage = n;
   const Dc = P.defi && INDEX[P.defi];
@@ -68,7 +68,7 @@ function entrerEtage(n) {
   G.etage.degatsVitalite = false; G.etage.degatsSubis = false; G.etage.opportunite = null;
   G.alea = { butin: fluxEtage(P.code, n, 'butin'), recomp: fluxEtage(P.code, n, 'recompenses'), ennemis: fluxEtage(P.code, n, 'ennemis'), combat: fluxEtage(P.code, n, 'combat'), cosmo: new Alea(Math.random() + '') };
   // effets d'entrée d'étage
-  if (J.sante.partiel) { J.sante.partiel = 0; ajouterConteneur(J.sante, 1, true); G.textes.push({ x: 0, y: 0, t: 'Le sceau partiel devient un contenant', age: 0, duree: 2, couleur: '#fff', ecran: true }); }
+  if (J.sante.partiel) { J.sante.partiel = 0; ajouterConteneur(J.sante, 1, true); texteEcran({ x: 0, y: 0, t: 'Le sceau partiel devient un contenant', age: 0, duree: 2, couleur: '#fff', ecran: true }); }
   J.clesDorees = false; J.explosifsDores = false;
   finEtageBonus(J);
   if (J.def.regleCode === 'cinq_coeurs' && n > 1) reconstruireInventaire(J);
@@ -80,7 +80,7 @@ function entrerEtage(n) {
   entrerSalle(G.etage.depart, null);
   G.banniereEtage = { t: 0, titre: cfg.titre, nom: cfg.nom, desc: INDEX[cfg.variante].desc };
   const th = INDEX[cfg.theme]; Musique.jouerPiste(cfg.theme, th.musique);
-  if (cfg.degats >= 2 && n === 5) G.textes.push({ t: 'Désormais, les coups infligent un cœur entier.', ecran: true, age: 0, duree: 4, couleur: '#ff8a6a' });
+  if (cfg.degats >= 2 && n === 5) texteEcran({ t: 'Désormais, les coups infligent un cœur entier.', ecran: true, age: 0, duree: 4, couleur: '#ff8a6a' });
   sauvegarderPartie('etage');
 }
 
