@@ -1236,6 +1236,119 @@
   "vol": false
  },
  {
+  "id": "BOS_023",
+  "nom": "Konan",
+  "titre": "L’ange de papier",
+  "etage": 8,
+  "pv": 520,
+  "boss": true,
+  "r": 18,
+  "hauteur": 22,
+  "vitesse": 1.7,
+  "ia": "generique",
+  "deplacement": "errance",
+  "statut": "personnage canonique — motifs de combat originaux",
+  "contact": 1,
+  "sprite": {
+   "type": "ninja",
+   "masque": "anbu",
+   "corps": {
+    "t": "#1e1e28",
+    "T": "#121218"
+   },
+   "nuages": true,
+   "coiffure": "konan",
+   "cheveux": {
+    "h": "#5a5ac8",
+    "g": "#8a8ae8",
+    "H": "#34348a",
+    "x": "#f4f0e8",
+    "X": "#e8b040"
+   },
+   "yeux": "etroit"
+  },
+  "vol": true,
+  "attaques": [
+   {
+    "id": "shuriken",
+    "type": "salve",
+    "n": 5,
+    "v": 5.5,
+    "ecart": 0.2,
+    "rafales": 2,
+    "intervalle": 0.3,
+    "tele": 0.45,
+    "recup": 0.5,
+    "proj": "papier_ennemi"
+   },
+   {
+    "id": "papillons",
+    "type": "invocation",
+    "ennemi": "ENM_096",
+    "n": 3,
+    "max": 6,
+    "tele": 0.5,
+    "recup": 0.4
+   },
+   {
+    "id": "etiquettes",
+    "type": "pluie",
+    "n": 9,
+    "delai": 1,
+    "r": 1,
+    "intervalle": 0.13,
+    "tele": 0.5,
+    "recup": 0.6,
+    "son": "explosion",
+    "visuel": "explosion_petite"
+   },
+   {
+    "id": "ailes",
+    "type": "anneau",
+    "n": 14,
+    "v": 4.2,
+    "vagues": 2,
+    "intervalle": 0.4,
+    "trou": true,
+    "largeurTrou": 2,
+    "tele": 0.6,
+    "recup": 0.6,
+    "proj": "papier_ennemi"
+   },
+   {
+    "id": "lance",
+    "type": "charge",
+    "vCharge": 9.5,
+    "tele": 0.55,
+    "duree": 1,
+    "recup": 0.8,
+    "phase": 1
+   },
+   {
+    "id": "mer",
+    "type": "pluie",
+    "n": 20,
+    "delai": 1.1,
+    "r": 1.1,
+    "intervalle": 0.07,
+    "tele": 0.7,
+    "recup": 1,
+    "son": "explosion",
+    "visuel": "explosion_petite",
+    "phase": 1
+   }
+  ],
+  "phases": [
+   {
+    "seuil": 0.4,
+    "message": "Une mer de papiers explosifs recouvre la salle !",
+    "action": "accelerer"
+   }
+  ],
+  "desc": "Éventails de shuriken de papier, papillons qui explosent au contact, pluie d’étiquettes explosives ; à 40 % la mer de papiers et des charges ailées.",
+  "comportement": "boss"
+ },
+ {
   "id": "BOS_019",
   "nom": "Obito",
   "titre": "Les changements de présence",

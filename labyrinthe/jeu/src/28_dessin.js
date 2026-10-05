@@ -32,6 +32,7 @@ function spriteProjectile(app, taille) {
     case 'encre': s = [P(['.kk.', 'kkkk', 'kkkk', '.kk.'], { k: '#1a1a2a' }, '#8080a0')]; break;
     case 'lame': s = rotations(P(['.www......', 'wwwwwwwwww', '.www......'], { w: '#d0d8e8' }, '#3a3040'), 16); break;
     // ── projectiles ennemis : contour sombre épais, cœur pulsant ──
+    case 'papier_ennemi': s = rotations(P(['...r...', '..rwr..', '.rwwwr.', 'rwwwwwr', '.rwwwr.', '..rwr..', '...r...'], { w: '#f4f0e8', r: '#d0306a' }, '#1a0810'), 16); break;
     case 'ennemi': default: {
       const r = Math.max(3, Math.round(4 * taille));
       const c = toile(r * 2 + 4, r * 2 + 4); const g = ctxDe(c);
@@ -44,7 +45,8 @@ function spriteProjectile(app, taille) {
 }
 function dessinerProjectile(g, p, x, y) {
   if (p.proprio === 'ennemi') {
-    const s = spriteProjectile(p.apparence && p.apparence !== 'ennemi' && ['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie'].includes(p.apparence) ? p.apparence : 'ennemi', p.taille || 1)[0];
+    const L = spriteProjectile(p.apparence && p.apparence !== 'ennemi' && ['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie', 'papier_ennemi'].includes(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
+    const s = L.length > 1 ? L[((Math.floor(G.temps * 20 + (p.x + p.y) * 0.05) % L.length) + L.length) % L.length] : L[0]; // le papier tournoie
     const pul = 0.5 + 0.5 * Math.sin((G.temps + (p.x + p.y) * 0.01) * 18);
     g.drawImage(s, x - s.width / 2, y - s.height / 2);
     if (pul > 0.6) { g.globalAlpha = 0.55; g.drawImage(anneau(s.width / 2 + 1, 1, '#ffe0f0'), x - s.width / 2 - 2, y - s.height / 2 - 2); g.globalAlpha = 1; }

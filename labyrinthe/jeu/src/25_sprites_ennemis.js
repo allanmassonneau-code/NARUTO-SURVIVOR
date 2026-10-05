@@ -64,6 +64,9 @@ const CARTES_CREATURES = {
   requin: { c: { b: '#4a6a8a', d: '#34506a', w: '#e8f0f8', k: '#1c1420' }, f: [
     ['.....b......', '....bbb.....', '...bbbbbbbb.', '.bbbbbbbbkbb', 'bbbbbwwwwwb.', '.b...wkwkw..'],
     ['......b.....', '.....bbb....', '...bbbbbbbb.', '.bbbbbbbbkbb', 'bbbbbwwwwwb.', '..b..wkwkw..']], miroir: true },
+  papillon_papier: { c: { w: '#f4f0e8', d: '#c8c0b0', k: '#1c1420', r: '#c83a5a' }, f: [
+    ['ww.....ww', 'www...www', 'wwww.wwww', '.wwdrdww.', '..wdrdw..', '.ww.k.ww.', 'ww.....ww'],
+    ['.........', 'ww.....ww', 'wwww.wwww', '.wwdrdww.', '..wdrdw..', '..w.k.w..', '.........']] },
   oiseau_argile: { c: { a: '#f0e8d8', d: '#b8ac98', k: '#1c1420', b: '#8a8aa0' }, f: [
     ['a..........a', 'aa........aa', '.aaa.aa.aaa.', '..aaaaaaaa..', '...aakaaa...', '....aaaa....', '.....dd.....'],
     ['............', '............', 'aaaa.aa.aaaa', '.aaaaaaaaaa.', '...aakaaa...', '....aaaa....', '.....dd.....']] },

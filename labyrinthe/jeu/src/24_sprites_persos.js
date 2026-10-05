@@ -807,6 +807,13 @@ function carteCorps(vue, frame, mode) {
   return L;
 }
 
+// Konan (boss) : carré de Sakura sans bandeau, fleur de papier (x pétales, X cœur) piquée sur le côté
+COIFFURES.konan = (() => {
+  const R = {}; for (const [vue, L] of Object.entries(COIFFURES.sakura)) R[vue] = L.map(l => l.replace(/[bpP]/g, 'h').split(''));
+  const fleur = (L, x, y) => { for (const [dx, dy, c] of [[0, -1, 'x'], [-1, 0, 'x'], [1, 0, 'x'], [0, 1, 'x'], [0, 0, 'X'], [-1, -1, 'x'], [1, 1, 'x']]) if (L[y + dy] && L[y + dy][x + dx] !== undefined) L[y + dy][x + dx] = c; };
+  fleur(R.face, 5, 5); fleur(R.cote, 7, 4); fleur(R.dos, 18, 5);
+  for (const v in R) R[v] = R[v].map(l => l.join('')); return R;
+})();
 // Définitions visuelles des personnages (couleurs + coiffure + corps + options)
 const VISUELS = {
   naruto: { coiffure: 'naruto', c: { h: '#f6cf3e', g: '#fff19c', H: '#c99a26', b: '#28407c', p: '#cfd2de', P: '#6a7088', m: '#6a3424' },

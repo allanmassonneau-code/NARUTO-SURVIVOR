@@ -181,14 +181,14 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | objets | chacun des 157 passifs : acquisition, 6 s de combat, dégâts infligés | 157 ; seul PSV_014 (rayon à charger) sans dégât dans la fenêtre |
 | actifs | 33 actifs utilisés en salle ; échange sur piédestal sans va-et-vient | 33 |
 | synergies | chacune des 56 synergies à effet réunie, annoncée et vérifiée en combat (dégâts de lave, vapeur, foudre, rayon Jinton…) ; ordre des bandeaux objet → synergie, retenus sous le titre d'étage | 56, dont 9 fusions |
-| boss | 24 boss vaincus par le pilote renforcé en moins de 150 s | 24, de 8 à 98 s |
-| ennemis | 75 archétypes, 12 s de combat | 0 erreur ; 4 à 6 embusqués ou invocateurs parfois non vaincus dans la fenêtre |
+| boss | 25 boss vaincus par le pilote renforcé en moins de 150 s | 25, de 8 à 98 s |
+| ennemis | 76 archétypes, 12 s de combat | 0 erreur ; 4 à 6 embusqués ou invocateurs parfois non vaincus dans la fenêtre |
 | personnages | 18 entrées jouables ; conversion de Rock Lee ; sphère d'appoint | 18 |
 | sauvegarde | reprise d'une partie suspendue, taille, effacement sans résurrection | ≈ 14 Kio |
 | manette | démarrage à la manette, pause, retour, tir au stick, hystérésis, consommation, déconnexion | 0 erreur |
 | economie | ordre des stats, ordre des pertes, prix ≠ dommage, soldes, coupon, contrats, contreparties sans contenant, offrande | 21 vérifications |
 | secours | ennemi sur une île : déplacé après 8 s, une seule fois | 0 erreur |
-| visibilite | chacun des 99 ennemis et boss dessine des pixels | 99 |
+| visibilite | chacun des 101 ennemis et boss dessine des pixels | 101 |
 | mecaniques | bande de sable de Gaara, Susanoo, cristaux, zones télégraphiées | 0 erreur |
 | pactes | 8 scénarios chiffrés (E §6), événements comptés, refus, tirage figé | 0 erreur |
 | defis | règles et conditions de réussite des contrats | 10 vérifications |
@@ -219,7 +219,7 @@ Trois stockages indépendants (`localStorage`) : **réglages** (`lds_reglages`),
 |---|---|---|
 | Prototype | déplacement, tir cardinal, une salle, un boss, manette | fait |
 | Tranche verticale | 6 étages, 3 personnages, pools, boutique, pacte, sanctuaire, sauvegarde | fait |
-| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables, 158 passifs, 33 actifs, 24 boss, 75 ennemis, 10 thèmes, 120 salles, défis, secrets, registre, dossier A à I | fait sauf 66 salles sur 120, 60 objectifs sur 80, 12 défis sur 30 (I) |
+| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables, 158 passifs, 33 actifs, 25 boss, 76 ennemis, 10 thèmes, 120 salles, défis, secrets, registre, dossier A à I | fait sauf 66 salles sur 120, 60 objectifs sur 80, 12 défis sur 30 (I) |
 | Recette | 20 heures de jeu humain à la manette sur 3 manettes (Xbox, DualSense, générique), réglage des boss les plus longs, vérification des télégraphes à vitesse minimale, lecture daltonisme et mode confort | à faire |
 | Extension | 22 personnages et 34 variantes de plus, bibliothèque complète (600 collectibles, 500 salles, 70 boss…), remontée secrète, Marché des mercenaires | à faire (I) |
 | Diffusion | vérification des droits d'exploitation de la licence | **préalable non levé** |

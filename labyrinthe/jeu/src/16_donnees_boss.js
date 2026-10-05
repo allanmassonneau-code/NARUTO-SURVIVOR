@@ -123,6 +123,16 @@
       { id: 'betes', type: 'invocation', ennemi: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
       { id: 'sphere', type: 'special', nom: 'chibaku', tele: 0.8, duree: 3.2, recup: 1, phase: 1 },
     ], phases: [{ seuil: 0.5, message: 'Une sphère attire les rochers vers le ciel !', action: 'accelerer' }], desc: 'Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction.' });
+  B('BOS_023', 'Konan', 'L’ange de papier', 8, 520, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, coiffure: 'konan', cheveux: { h: '#5a5ac8', g: '#8a8ae8', H: '#34348a', x: '#f4f0e8', X: '#e8b040' }, yeux: 'etroit' }), vol: true, vitesse: 1.7, deplacement: 'errance',
+    attaques: [
+      { id: 'shuriken', type: 'salve', n: 5, v: 5.5, ecart: 0.2, rafales: 2, intervalle: 0.3, tele: 0.45, recup: 0.5, proj: 'papier_ennemi' },
+      { id: 'papillons', type: 'invocation', ennemi: 'ENM_096', n: 3, max: 6, tele: 0.5, recup: 0.4 },
+      { id: 'etiquettes', type: 'pluie', n: 9, delai: 1, r: 1, intervalle: 0.13, tele: 0.5, recup: 0.6, son: 'explosion', visuel: 'explosion_petite' },
+      { id: 'ailes', type: 'anneau', n: 14, v: 4.2, vagues: 2, intervalle: 0.4, trou: true, largeurTrou: 2, tele: 0.6, recup: 0.6, proj: 'papier_ennemi' },
+      { id: 'lance', type: 'charge', vCharge: 9.5, tele: 0.55, duree: 1.0, recup: 0.8, phase: 1 },
+      { id: 'mer', type: 'pluie', n: 20, delai: 1.1, r: 1.1, intervalle: 0.07, tele: 0.7, recup: 1.0, son: 'explosion', visuel: 'explosion_petite', phase: 1 },
+    ], phases: [{ seuil: 0.4, message: 'Une mer de papiers explosifs recouvre la salle !', action: 'accelerer' }],
+    desc: 'Éventails de shuriken de papier, papillons qui explosent au contact, pluie d’étiquettes explosives ; à 40 % la mer de papiers et des charges ailées.' });
   B('BOS_019', 'Obito', 'Les changements de présence', 8, 460, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#2a2a34' }, visage: 'spirale' }), init: 'obito', vitesse: 1.6,
     attaques: [
       { id: 'saisie', type: 'special', nom: 'saisie_obito', tele: 0.2, duree: 1.3, recup: 0.9 },

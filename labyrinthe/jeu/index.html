@@ -702,6 +702,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   E('ENM_093', 'Crapaud bondissant', 's', 'sauteur', 28, 1.1, K('crapaud'), { intervalle: 2, portee: 4, duree: 0.6, atterrissage: 'anneau' }, { r: 10 });
   E('ENM_094', 'Ombre de chakra', 'p', 'poursuivant', 30, 1.9, K('ombre'), {}, { r: 10, champion: 'fantome' });
   E('ENM_095', 'Queue de chakra', 'c', 'chargeur', 30, 1.6, K('queue'), { vCharge: 10, tele: 0.35, recup: 0.6 }, { r: 10 });
+  E('ENM_096', 'Papillon de papier', 'v', 'kamikaze', 8, 2.8, K('papillon_papier'), { declenche: 1.2, meche: 0.5 }, { vol: true, r: 6, tache: 'parchemin', desc: 'Invoqué par Konan : fond sur vous et explose au contact (il clignote avant).' });
   for (const e of DON.ennemis) if (e.champion) { e.championDefaut = e.champion; delete e.champion; }
 })();
 
@@ -831,6 +832,16 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
       { id: 'betes', type: 'invocation', ennemi: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
       { id: 'sphere', type: 'special', nom: 'chibaku', tele: 0.8, duree: 3.2, recup: 1, phase: 1 },
     ], phases: [{ seuil: 0.5, message: 'Une sphère attire les rochers vers le ciel !', action: 'accelerer' }], desc: 'Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction.' });
+  B('BOS_023', 'Konan', 'L’ange de papier', 8, 520, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, coiffure: 'konan', cheveux: { h: '#5a5ac8', g: '#8a8ae8', H: '#34348a', x: '#f4f0e8', X: '#e8b040' }, yeux: 'etroit' }), vol: true, vitesse: 1.7, deplacement: 'errance',
+    attaques: [
+      { id: 'shuriken', type: 'salve', n: 5, v: 5.5, ecart: 0.2, rafales: 2, intervalle: 0.3, tele: 0.45, recup: 0.5, proj: 'papier_ennemi' },
+      { id: 'papillons', type: 'invocation', ennemi: 'ENM_096', n: 3, max: 6, tele: 0.5, recup: 0.4 },
+      { id: 'etiquettes', type: 'pluie', n: 9, delai: 1, r: 1, intervalle: 0.13, tele: 0.5, recup: 0.6, son: 'explosion', visuel: 'explosion_petite' },
+      { id: 'ailes', type: 'anneau', n: 14, v: 4.2, vagues: 2, intervalle: 0.4, trou: true, largeurTrou: 2, tele: 0.6, recup: 0.6, proj: 'papier_ennemi' },
+      { id: 'lance', type: 'charge', vCharge: 9.5, tele: 0.55, duree: 1.0, recup: 0.8, phase: 1 },
+      { id: 'mer', type: 'pluie', n: 20, delai: 1.1, r: 1.1, intervalle: 0.07, tele: 0.7, recup: 1.0, son: 'explosion', visuel: 'explosion_petite', phase: 1 },
+    ], phases: [{ seuil: 0.4, message: 'Une mer de papiers explosifs recouvre la salle !', action: 'accelerer' }],
+    desc: 'Éventails de shuriken de papier, papillons qui explosent au contact, pluie d’étiquettes explosives ; à 40 % la mer de papiers et des charges ailées.' });
   B('BOS_019', 'Obito', 'Les changements de présence', 8, 460, { sprite: N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#2a2a34' }, visage: 'spirale' }), init: 'obito', vitesse: 1.6,
     attaques: [
       { id: 'saisie', type: 'special', nom: 'saisie_obito', tele: 0.2, duree: 1.3, recup: 0.9 },
@@ -2021,7 +2032,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     { pos: 5, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [13, 15], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_011', 'BOS_012', 'BOS_013'], objetsAttendus: '2 à 4', degats: 2 },
     { pos: 6, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [14, 16], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_014'], objetsAttendus: '2 à 4', degats: 2 },
     { pos: 7, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [15, 17], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.15, coffres: 0.12, repos: 0.2 }, boss: ['BOS_015', 'BOS_016', 'BOS_017'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019', 'BOS_023'], objetsAttendus: '2 à 4', degats: 2 },
   ];
   DON.branches = {
     lumiere: { pos: 9, chapitre: 5, themes: ['THM_MYO'], salles: [16, 18], speciales: { heritage: 1, boutique: 0.6 }, boss: ['BOS_020'], degats: 2 },
@@ -3934,6 +3945,13 @@ function carteCorps(vue, frame, mode) {
   return L;
 }
 
+// Konan (boss) : carré de Sakura sans bandeau, fleur de papier (x pétales, X cœur) piquée sur le côté
+COIFFURES.konan = (() => {
+  const R = {}; for (const [vue, L] of Object.entries(COIFFURES.sakura)) R[vue] = L.map(l => l.replace(/[bpP]/g, 'h').split(''));
+  const fleur = (L, x, y) => { for (const [dx, dy, c] of [[0, -1, 'x'], [-1, 0, 'x'], [1, 0, 'x'], [0, 1, 'x'], [0, 0, 'X'], [-1, -1, 'x'], [1, 1, 'x']]) if (L[y + dy] && L[y + dy][x + dx] !== undefined) L[y + dy][x + dx] = c; };
+  fleur(R.face, 5, 5); fleur(R.cote, 7, 4); fleur(R.dos, 18, 5);
+  for (const v in R) R[v] = R[v].map(l => l.join('')); return R;
+})();
 // Définitions visuelles des personnages (couleurs + coiffure + corps + options)
 const VISUELS = {
   naruto: { coiffure: 'naruto', c: { h: '#f6cf3e', g: '#fff19c', H: '#c99a26', b: '#28407c', p: '#cfd2de', P: '#6a7088', m: '#6a3424' },
@@ -4119,6 +4137,9 @@ const CARTES_CREATURES = {
   requin: { c: { b: '#4a6a8a', d: '#34506a', w: '#e8f0f8', k: '#1c1420' }, f: [
     ['.....b......', '....bbb.....', '...bbbbbbbb.', '.bbbbbbbbkbb', 'bbbbbwwwwwb.', '.b...wkwkw..'],
     ['......b.....', '.....bbb....', '...bbbbbbbb.', '.bbbbbbbbkbb', 'bbbbbwwwwwb.', '..b..wkwkw..']], miroir: true },
+  papillon_papier: { c: { w: '#f4f0e8', d: '#c8c0b0', k: '#1c1420', r: '#c83a5a' }, f: [
+    ['ww.....ww', 'www...www', 'wwww.wwww', '.wwdrdww.', '..wdrdw..', '.ww.k.ww.', 'ww.....ww'],
+    ['.........', 'ww.....ww', 'wwww.wwww', '.wwdrdww.', '..wdrdw..', '..w.k.w..', '.........']] },
   oiseau_argile: { c: { a: '#f0e8d8', d: '#b8ac98', k: '#1c1420', b: '#8a8aa0' }, f: [
     ['a..........a', 'aa........aa', '.aaa.aa.aaa.', '..aaaaaaaa..', '...aakaaa...', '....aaaa....', '.....dd.....'],
     ['............', '............', 'aaaa.aa.aaaa', '.aaaaaaaaaa.', '...aakaaa...', '....aaaa....', '.....dd.....']] },
@@ -4870,6 +4891,7 @@ function spriteProjectile(app, taille) {
     case 'encre': s = [P(['.kk.', 'kkkk', 'kkkk', '.kk.'], { k: '#1a1a2a' }, '#8080a0')]; break;
     case 'lame': s = rotations(P(['.www......', 'wwwwwwwwww', '.www......'], { w: '#d0d8e8' }, '#3a3040'), 16); break;
     // ── projectiles ennemis : contour sombre épais, cœur pulsant ──
+    case 'papier_ennemi': s = rotations(P(['...r...', '..rwr..', '.rwwwr.', 'rwwwwwr', '.rwwwr.', '..rwr..', '...r...'], { w: '#f4f0e8', r: '#d0306a' }, '#1a0810'), 16); break;
     case 'ennemi': default: {
       const r = Math.max(3, Math.round(4 * taille));
       const c = toile(r * 2 + 4, r * 2 + 4); const g = ctxDe(c);
@@ -4882,7 +4904,8 @@ function spriteProjectile(app, taille) {
 }
 function dessinerProjectile(g, p, x, y) {
   if (p.proprio === 'ennemi') {
-    const s = spriteProjectile(p.apparence && p.apparence !== 'ennemi' && ['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie'].includes(p.apparence) ? p.apparence : 'ennemi', p.taille || 1)[0];
+    const L = spriteProjectile(p.apparence && p.apparence !== 'ennemi' && ['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie', 'papier_ennemi'].includes(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
+    const s = L.length > 1 ? L[((Math.floor(G.temps * 20 + (p.x + p.y) * 0.05) % L.length) + L.length) % L.length] : L[0]; // le papier tournoie
     const pul = 0.5 + 0.5 * Math.sin((G.temps + (p.x + p.y) * 0.01) * 18);
     g.drawImage(s, x - s.width / 2, y - s.height / 2);
     if (pul > 0.6) { g.globalAlpha = 0.55; g.drawImage(anneau(s.width / 2 + 1, 1, '#ffe0f0'), x - s.width / 2 - 2, y - s.height / 2 - 2); g.globalAlpha = 1; }
@@ -9172,7 +9195,7 @@ function lumiere(x, y, r, c, a, vacille = false, eclat = 0) { if (_lumCollecte) 
 const PORTES_LUMINEUSES = new Set(['boss', 'heritage', 'boutique', 'malediction', 'sacrifice', 'defi', 'defi_boss', 'dispositifs', 'bibliotheque', 'coffres', 'repos', 'pacte', 'sanctuaire', 'breche', 'lumiere']);
 const COUL_COLLECTE = { coeur: '#ff5a6a', protection: '#70a8ff', instable: '#c080ff', condensateur: '#80e0ff', ryo: '#ffd860', cle: '#ffe488', explosif: '#ff9a50' };
 const COUL_TIR = { orbe: '#7ac8ff', rasenshuriken: '#9ad8ff', poing: '#ff8ac0', paume: '#b8d8ff', sable: '#f0c070', element: '#ffb050', glace: '#9ae0ff', dragon_feu: '#ff8030', argile: '#fff0d0', papier: '#fff8e8', encre: '#8a8ad0', lame_poison: '#c080ff', kunai_ombre: '#9a88d0' };
-const COUL_TIR_ENNEMI = { eau: '#4a9aff', sable_ennemi: '#e0a040', feu: '#ff6030', son: '#c0a0ff', glace_ennemie: '#8ad0ff' };
+const COUL_TIR_ENNEMI = { eau: '#4a9aff', sable_ennemi: '#e0a040', feu: '#ff6030', son: '#c0a0ff', glace_ennemie: '#8ad0ff', papier_ennemi: '#fff0e0' };
 const COUL_ELEMENT = { katon: '#ff7a30', raiton: '#b0e0ff', suiton: '#60a8ff', futon: '#c8ffd8', doton: '#d8a868' };
 const COUL_ZONE = { feu_allie: '#ff9040', feu_ennemi: '#c050ff', acide: '#8ae050', glace: '#bfe8ff', eau: '#5aa0e0', eau_alliee: '#5aa0e0', lave_alliee: '#ff6a20', eau_electrique: '#8ad0ff' };
 function couleurTir(p) {

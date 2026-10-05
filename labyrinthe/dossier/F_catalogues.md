@@ -20,8 +20,8 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 | Transformations d’ensemble | 13 | 12 | 40 |
 | Thèmes d’étage | 10 | 6 | 12 |
 | Variantes d’étage | 18 | 12 | 24 |
-| Boss (dont mini-boss) | 24 | 25 | 70 |
-| Archétypes ennemis | 75 | 60 | 140 |
+| Boss (dont mini-boss) | 25 | 25 | 70 |
+| Archétypes ennemis | 76 | 60 | 140 |
 | Modèles de salles | 120 | 120 | 500 |
 | Objectifs de déblocage | 60 | 80 | 250 |
 | Défis jouables | 12 | 30 | 80 |
@@ -380,7 +380,7 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | FAM_LUCIOLE | Luciole | luciole | — | — | — |
 | FAM_POUPEE | Poupée d’entraînement | bloqueur | — | — | bloque les tirs |
 
-## Ennemis (ENM) — 75
+## Ennemis (ENM) — 76
 
 | ID | Nom | Rôle | Comportement | PV | Vitesse | Rayon | Thèmes | Description |
 |---|---|---|---|---|---|---|---|---|
@@ -459,8 +459,9 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | ENM_093 | Crapaud bondissant | s | sauteur | 28 | 1.1 | 10 | MYO |  |
 | ENM_094 | Ombre de chakra | p | poursuivant | 30 | 1.9 | 10 | BIJ |  |
 | ENM_095 | Queue de chakra | c | chargeur | 30 | 1.6 | 10 | BIJ |  |
+| ENM_096 | Papillon de papier | v | kamikaze | 8 | 2.8 | 6 | invocation | Invoqué par Konan : fond sur vous et explose au contact (il clignote avant). |
 
-## Boss (BOS) — 24
+## Boss (BOS) — 25
 
 | ID | Nom | Titre | Étage | PV | Attaques | Phases | Mécanique |
 |---|---|---|---|---|---|---|---|
@@ -482,6 +483,7 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | BOS_016 | Itachi | Les illusions du corbeau | 7 | 480 | clones, boule, flammes, tsukuyomi | 40 % | Seul le vrai Itachi projette une ombre ; ses clones éclatent en corbeaux. |
 | BOS_017 | Kakuzu | Les cinq cœurs | 7 | 300 | poing, durcir, fils | — | Trois masques élémentaires l’accompagnent ; sa peau durcie (grise) réduit les dégâts de 70 % pendant 1,8 s, visiblement. |
 | BOS_018 | Pain | Les forces d’attraction | 8 | 560 | repulsion, attraction, tiges, betes, sphere | 50 % | Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction. |
+| BOS_023 | Konan | L’ange de papier | 8 | 520 | shuriken, papillons, etiquettes, ailes, lance, mer | 40 % | Éventails de shuriken de papier, papillons qui explosent au contact, pluie d’étiquettes explosives ; à 40 % la mer de papiers et des charges ailées. |
 | BOS_019 | Obito | Les changements de présence | 8 | 460 | saisie, boule, vortex, chaines | 50 % | Intangible sauf quand il se matérialise pour attaquer (annonce, attaque, récupération). |
 | BOS_020 | Le Gardien du Sceau | Celui qui tient le labyrinthe | 9 | 800 | chaines, anneaux, spirale, arene | 66 %, 33 % | Arène évolutive : des blocs apparaissent entre les phases ; chaînes balayantes. |
 | BOS_021 | Madara (empreinte) | L’ancien rival | 9 | 900 | meteore, feu, bois, sabre | 50 % | Attaques massives : météore (abri : loin du centre marqué), dragons de bois, grands balayages. |

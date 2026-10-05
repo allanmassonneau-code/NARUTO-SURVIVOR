@@ -50,7 +50,7 @@ function lumiere(x, y, r, c, a, vacille = false, eclat = 0) { if (_lumCollecte) 
 const PORTES_LUMINEUSES = new Set(['boss', 'heritage', 'boutique', 'malediction', 'sacrifice', 'defi', 'defi_boss', 'dispositifs', 'bibliotheque', 'coffres', 'repos', 'pacte', 'sanctuaire', 'breche', 'lumiere']);
 const COUL_COLLECTE = { coeur: '#ff5a6a', protection: '#70a8ff', instable: '#c080ff', condensateur: '#80e0ff', ryo: '#ffd860', cle: '#ffe488', explosif: '#ff9a50' };
 const COUL_TIR = { orbe: '#7ac8ff', rasenshuriken: '#9ad8ff', poing: '#ff8ac0', paume: '#b8d8ff', sable: '#f0c070', element: '#ffb050', glace: '#9ae0ff', dragon_feu: '#ff8030', argile: '#fff0d0', papier: '#fff8e8', encre: '#8a8ad0', lame_poison: '#c080ff', kunai_ombre: '#9a88d0' };
-const COUL_TIR_ENNEMI = { eau: '#4a9aff', sable_ennemi: '#e0a040', feu: '#ff6030', son: '#c0a0ff', glace_ennemie: '#8ad0ff' };
+const COUL_TIR_ENNEMI = { eau: '#4a9aff', sable_ennemi: '#e0a040', feu: '#ff6030', son: '#c0a0ff', glace_ennemie: '#8ad0ff', papier_ennemi: '#fff0e0' };
 const COUL_ELEMENT = { katon: '#ff7a30', raiton: '#b0e0ff', suiton: '#60a8ff', futon: '#c8ffd8', doton: '#d8a868' };
 const COUL_ZONE = { feu_allie: '#ff9040', feu_ennemi: '#c050ff', acide: '#8ae050', glace: '#bfe8ff', eau: '#5aa0e0', eau_alliee: '#5aa0e0', lave_alliee: '#ff6a20', eau_electrique: '#8ad0ff' };
 function couleurTir(p) {

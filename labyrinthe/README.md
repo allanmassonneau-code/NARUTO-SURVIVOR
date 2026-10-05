@@ -30,7 +30,7 @@ Toutes les touches se reconfigurent (Options → Commandes). Réglages de zones 
 - **18 personnages jouables** : 12 personnages et 6 variantes altérées, chacun avec une règle propre (Naruto, Sasuke, Sakura, Kakashi, Rock Lee, Hinata, Shikamaru, Gaara, Kankurō, Kiba, et les experts Sasori et Kakuzu).
 - **9 étages, 10 thèmes, 18 variantes** qui changent une règle de terrain (flaques, toiles, cristaux, brume, pénombre…), générés à partir d'un code de mission reproductible.
 - **158 objets passifs, 33 techniques actives, 35 talismans, 30 consommables, 15 pilules**, 96 synergies (dont 9 fusions de natures et 3 trios) et 13 transformations d'ensemble.
-- **24 boss** (Mizuki, Zabuza, Haku, Gaara, Orochimaru, Itachi, Pain, Obito, Madara…) et **75 ennemis**, avec champions.
+- **25 boss** (Mizuki, Zabuza, Haku, Gaara, Orochimaru, Itachi, Pain, Konan, Obito, Madara…) et **76 ennemis**, avec champions.
 - **Pactes et sanctuaires**, échoppes, informateurs, machines, autel de tribut, chambres maudites, épreuves.
 - **6 routes et fins**, Boss Rush (Conseil des épreuves), rencontre chronométrée, **12 contrats** (défis), **60 objectifs**, **15 secrets** avec indices consultables, sauvegarde de partie suspendue.
 

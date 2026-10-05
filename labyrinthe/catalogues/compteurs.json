@@ -77,13 +77,13 @@
   },
   {
    "ensemble": "Boss (dont mini-boss)",
-   "produit": 24,
+   "produit": 25,
    "cible_v1": 25,
    "cible_bibliotheque": 70
   },
   {
    "ensemble": "Archétypes ennemis",
-   "produit": 75,
+   "produit": 76,
    "cible_v1": 60,
    "cible_bibliotheque": 140
   },

@@ -316,7 +316,7 @@ Unités : santé en demis (1 contenant = 2 demis) ; distances en tuiles de 32 px
 | Identité visuelle | Silhouette de Kakuzu, teinte #1a3a2a |
 | Directions de build | 1. Adaptation permanente 2. Qualité élevée 3. Survie par résurrections |
 
-## 2. Boss — 24 fiches, attaque par attaque
+## 2. Boss — 25 fiches, attaque par attaque
 
 Chaque attaque suit le même cycle : **préparation** (télégraphe visible et sonore), **phase active**, **récupération** (boss vulnérable et immobile), puis une pause de 0,6 s par défaut. Aucune attaque n’exige un objet : toutes s’esquivent à la vitesse de base (4,5 t/s) et avec le tir de départ. Les attaques ne se répètent jamais deux fois de suite ; une « recharge » impose un délai minimal entre deux usages.
 
@@ -606,6 +606,25 @@ Phases :
 | betes (phase 2) | appelle 1 × Bête invoquée (2 au plus) | 0,6 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
 | sphere (phase 2) | noyau central (60 PV) qui vous attire pendant 3,2 s ; s’il survit, il explose (2 tuiles) | 0,8 s | 3,2 s | 1 s | 1 unité (explosion) | marcher contre la force, détruire le noyau ou s’éloigner en fin |
 
+### BOS_023 — Konan, « L’ange de papier »
+
+Étage 8 · 520 PV · déplacement errance (1,7 t/s) · volant · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Éventails de shuriken de papier, papillons qui explosent au contact, pluie d’étiquettes explosives ; à 40 % la mer de papiers et des charges ailées.
+
+Phases :
+
+- à 40 % des PV — « Une mer de papiers explosifs recouvre la salle ! » : le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| shuriken | 5 projectile(s) visé(s) × 2 rafales, écart 0,2 rad, 5,5 t/s | 0,45 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
+| papillons | appelle 3 × Papillon de papier (6 au plus) | 0,5 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
+| etiquettes | 9 impacts (r 1 t, préavis 1 s), un sur trois sur vous | 0,5 s | 0,5 s | 0,6 s | coup d’étage | rester mobile hors des cercles |
+| ailes | anneau de 14 à brèche × 2 vagues, 4,2 t/s | 0,6 s | 0,5 s | 0,6 s | coup d’étage | passer par la brèche |
+| lance (phase 2) | charge en ligne droite (9,5 t/s) jusqu’au mur | 0,55 s | 1 s | 0,8 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+| mer (phase 2) | 20 impacts (r 1,1 t, préavis 1,1 s), un sur trois sur vous | 0,7 s | 0,5 s | 1 s | coup d’étage | rester mobile hors des cercles |
+
 ### BOS_019 — Obito, « Les changements de présence »
 
 Étage 8 · 460 PV · déplacement errance (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
@@ -691,7 +710,7 @@ Mini-boss de statue · 150 PV · déplacement errance (1,4 t/s) · contact coup 
 | saut | saut sur votre position, cercle de 1,6 tuiles, anneau de 8 à l’atterrissage | 0,5 s | 0,7 s | 0,7 s | coup d’étage | quitter le cercle annoncé |
 | langue | 1 projectile(s) visé(s), écart 0,22 rad, 9 t/s | 0,4 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
 
-## 3. Ennemis par fonction — 75 archétypes
+## 3. Ennemis par fonction — 76 archétypes
 
 La silhouette annonce la fonction (voir D §3). Les chiffres sont ceux des données : PV bruts avant multiplicateurs de champion.
 
@@ -712,9 +731,9 @@ La silhouette annonce la fonction (voir D §3). Les chiffres sont ceux des donn�
 | embusque | 3 | 12–20 | 1,6–1,8 | ENM_020 Racine griffue, ENM_053 Zetsu blanc, ENM_066 Assassin de la brume |
 | lanceur_arc | 3 | 14–26 | 0–0,9 | ENM_036 Lanceur de jarres, ENM_054 Cuve vivante, ENM_091 Crapaud cracheur d’huile |
 | guerisseur | 3 | 12–20 | 1,4–1,4 | ENM_043 Médecin de Suna, ENM_061 Ninja médical, ENM_081 Zetsu soigneur |
+| kamikaze | 3 | 6–12 | 2,4–2,8 | ENM_071 Oiseau d’argile, ENM_072 Araignée d’argile, ENM_096 Papillon de papier |
 | inerte | 2 | 8–16 | 1,8–2,2 | ENM_014 Jarre hantée, ENM_046 Marionnette inerte |
 | protecteur | 2 | 22–40 | 0,7–0,9 | ENM_042 Marionnette bouclier, ENM_080 Statue de pierre |
-| kamikaze | 2 | 6–12 | 2,4–2,6 | ENM_071 Oiseau d’argile, ENM_072 Araignée d’argile |
 | errant | 1 | 4–4 | 3–3 | ENM_004 Rat des sous-sols |
 
 ## 4. Thèmes et variantes d’étage — 10 thèmes, 18 variantes

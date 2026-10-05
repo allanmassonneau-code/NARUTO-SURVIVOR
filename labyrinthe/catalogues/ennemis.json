@@ -1756,5 +1756,27 @@
   },
   "statut": "création originale",
   "contact": 1
+ },
+ {
+  "id": "ENM_096",
+  "nom": "Papillon de papier",
+  "role": "v",
+  "comportement": "kamikaze",
+  "pv": 8,
+  "vitesse": 2.8,
+  "r": 6,
+  "sprite": {
+   "type": "carte",
+   "cle": "papillon_papier"
+  },
+  "params": {
+   "declenche": 1.2,
+   "meche": 0.5
+  },
+  "statut": "création originale",
+  "contact": 1,
+  "vol": true,
+  "tache": "parchemin",
+  "desc": "Invoqué par Konan : fond sur vous et explose au contact (il clignote avant)."
  }
 ]

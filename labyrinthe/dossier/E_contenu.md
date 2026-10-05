@@ -94,6 +94,7 @@ Probabilité par ennemi ordinaire : **5 %** (10 % en Difficile), **+2 %** à par
 | BOS_014 Orochimaru (fin 1) | danger qui se multiplie | mues hostiles, réapparition ailleurs, huit lignes de serpents |
 | BOS_018 Pain (fin 2) | forces de terrain | répulsion qui efface vos tirs, attraction, noyau à détruire |
 | BOS_019 Obito (fin 2) | épreuve de lecture | présence intermittente : il n'est frappable que pendant ses attaques |
+| BOS_023 Konan (fin 2) | saturation de l'espace | shuriken de papier en éventail, papillons qui fondent sur vous et explosent, pluie d'étiquettes ; à 40 % la mer de papiers (vingt impacts annoncés) et des charges ailées |
 | BOS_020 Gardien du Sceau (Lumière) | arène évolutive | blocs redistribués à 66 % et 33 % |
 | BOS_021 Madara (Ombre) | attaques massives | météore à fuir, dragons qui brisent la couverture, grands balayages |
 | BOS_022 Dix Queues (Brèche) | géant immobile | queues en arcs annoncés, rayon, anneaux à brèche |
@@ -133,7 +134,7 @@ Dix thèmes et dix-huit variantes (fiches générées dans E_fiches §4). Chaque
 
 - **Identité** : grottes de scellement, pluie d'Ame, nuages rouges.
 - **Variantes** : *Grotte du scellement* (pénombre 55 % : lanternes et feu éclairent, les dangers restent contourés) ; *Tour d'Ame* (pluie, renforts de Zetsu).
-- **Boss** : Deidara (C3 : se cacher derrière un bloc), Itachi (illusions sans ombre, Susanoo frontal), Kakuzu (masques, peau durcie), Pain, Obito.
+- **Boss** : Deidara (C3 : se cacher derrière un bloc), Itachi (illusions sans ombre, Susanoo frontal), Kakuzu (masques, peau durcie), Pain, Konan (papillons et mer de papiers), Obito.
 - **Rôle** : lecture sous contrainte visuelle, combats de fin de partie.
 
 ## E5. Routes et fins
@@ -143,7 +144,7 @@ graph TD
   A["Étages 1 à 6"] --> R1["RTE_01 — Première fin<br/>Orochimaru, étage 6"]
   A -- "boss de l'étage 6 vaincu avant 20:00" --> R5["RTE_05 — Conseil des épreuves<br/>6 boss d'étages 1 à 6 en série"]
   R1 -- "ouvre" --> B["Étages 7 et 8"]
-  B --> R2["RTE_02 — Deuxième fin<br/>Pain ou Obito, étage 8"]
+  B --> R2["RTE_02 — Deuxième fin<br/>Pain, Konan ou Obito, étage 8"]
   B -- "salle du boss 8 atteinte avant 30:00" --> R6["RTE_06 — Brèche instable<br/>Empreinte des Dix Queues"]
   R2 -- "ouvre" --> C["Étage 9 : deux branches"]
   C -- "aucun pacte acheté, ou clé des ermites" --> R3["RTE_03 — Lumière<br/>Gardien du Sceau"]
