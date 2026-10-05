@@ -10,7 +10,7 @@ function creerJoueur(defId) {
   const J = {
     def: d, cle: d.cle, x: 0, y: 0, vx: 0, vy: 0, r: 7, rTouche: 5, z: 0,
     dirCorps: 'bas', dirTete: 'bas', frame: 0, tAnim: 0, tCligne: 2 + Math.random() * 3,
-    sante: santeInit(d.sante), invuln: 0, intangible: false, etat: 'normal',
+    sante: santeInit(d.sante), invuln: 0, intangible: false, etat: 'normal', delaiActif: 0,
     ryo: d.ressources.ryo, cles: d.ressources.cles, explosifs: d.ressources.explosifs, clesDorees: false, explosifsDores: false,
     passifs: [], acquis: [], transformations: [], bonus: [], bonusPermanents: [], familiers: [], mutations: {}, mutationsToutes: [],
     actif: null, actif2: null, talisman: null, poches: [], maxPoches: 1, maxTalismans: 1, talisman2: null,
@@ -56,7 +56,8 @@ function majDeplacementJoueur(J, dt) {
   // aide d'alignement devant une porte ouverte
   aideAlignementPorte(J, mx, my, dt);
   const mode = J.vol ? 'vol' : 'marche';
-  deplacerCercle(s, J, J.vx * dt, J.vy * dt, mode);
+  const bute = deplacerCercle(s, J, J.vx * dt, J.vy * dt, mode);
+  if (bute.bloqueX) J.vx = 0; if (bute.bloqueY) J.vy = 0; // contre un mur, la vitesse ne pousse plus (ni ne dévie les tirs)
   // animation
   const m = Math.hypot(J.vx, J.vy);
   if (m > 12) {

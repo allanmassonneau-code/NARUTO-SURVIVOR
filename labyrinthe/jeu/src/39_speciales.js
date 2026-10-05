@@ -82,6 +82,8 @@ function majPiedestaux(dt) {
     // objet reposé par un échange : repris seulement après s'être éloigné du piédestal (pas de va-et-vient)
     if (p.attendSortie) { if (d > 24) p.attendSortie = false; continue; }
     if (d > 14 || p.apparu > 0) continue;
+    // après la prise d'un actif, aucun autre actif ne se prend ni ne s'achète pendant DELAI_ACTIF
+    if (J.delaiActif > 0 && INDEX[p.id] && INDEX[p.id].type === 'actif') continue;
     if (p.prix) { G.achatPropose = p; continue; }       // un achat se confirme (bouton d'interaction)
     if (G.transition || G.enAnimationObjet) continue;
     prendrePiedestal(p);
@@ -120,6 +122,7 @@ function acheter(p) {
   if (p.ramassable) { const r = creerRamassable(p.ramassable, J.x, J.y, { immobile: true }); r.age = 1; collecter(r, J); if (!r.pris) { r.x = p.x; r.y = p.y + 14; } p.id = null; retirerPiedestalVide(); return; }
   p.prix = null; prendrePiedestal(p);
 }
+const DELAI_ACTIF = 2; // s : pas de second actif juste après en avoir pris un (échanges en boucle)
 function prendrePiedestal(p) {
   const J = G.joueur, s = G.salle; const d = INDEX[p.id]; if (!d) return;
   // choix liés : prendre l'un fait disparaître les autres
@@ -128,7 +131,7 @@ function prendrePiedestal(p) {
     // l'actif remplacé reste sur le piédestal avec ses charges (anti-duplication)
     const ancien = J.deuxActifs && !J.actif2 ? null : J.actif;
     if (J.deuxActifs && !J.actif2 && J.actif) { J.actif2 = J.actif; }
-    J.actif = { id: p.id, charges: p.charges ?? chargesMax(d) };
+    J.actif = { id: p.id, charges: p.charges ?? chargesMax(d) }; J.delaiActif = DELAI_ACTIF;
     if (ancien) { p.id = ancien.id; p.charges = ancien.charges; p.apparu = 0.6; p.attendSortie = true; } else p.id = null;
     if (!J.acquis.includes(d.id)) { J.acquis.push(d.id); if (d.ensemble) verifierTransformations(J); }
     Progression.decouvrir(d.id); evenement('objet_acquis', { id: d.id, actif: true });
@@ -152,7 +155,7 @@ function animationObjet(d) {
 }
 function majAnimationObjet(dt) {
   const A = G.enAnimationObjet; A.t += dt * (Entrees.enfonce('interagir') ? 2.5 : 1);
-  if (A.t >= A.duree) { G.enAnimationObjet = null; G.joueur.etat = 'normal'; Entrees.consommer(); }
+  if (A.t >= A.duree) { G.enAnimationObjet = null; G.joueur.etat = 'normal'; Entrees.consommer({ garderTir: true }); }
 }
 
 // ── Relances (réécriture d'empreinte) : chaque piédestal depuis son pool, choix liés conservés ──

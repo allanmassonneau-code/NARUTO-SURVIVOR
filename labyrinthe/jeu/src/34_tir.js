@@ -82,10 +82,19 @@ function cycleAttaque(J, dir, mult, o = {}) {
   evenement('emission_primaire', { dir, cycleId });
   Son.jouer(P.forme === 'lame' || P.forme === 'lame_longue' ? 'lame' : 'tir');
 }
+// L'origine d'un tir est 12 px au-dessus des pieds : collé à un mur ou à un obstacle par le haut, elle tomberait
+// dedans et le tir serait détruit aussitôt. On la redescend jusqu'au premier point libre, sans passer sous les pieds.
+function origineLibre(x, y, yPieds) {
+  const s = G.salle; if (!s) return y;
+  let dedans = false;
+  for (let k = 0; k < 14 && y < yPieds - 1; k++) { if (!tirArretePx(s, x, y, false)) break; y += 1; dedans = true; }
+  return dedans ? Math.min(y + 2, yPieds - 1) : y; // petite marge sous l'arête
+}
 function origineTir(J, dir) {
-  if (J.profil.source === 'marionnette') { const k = J.familiers.find(f => f.def.id === 'FAM_KARASU'); if (k) return { x: k.x, y: k.y - 10 }; }
+  if (J.profil.source === 'marionnette') { const k = J.familiers.find(f => f.def.id === 'FAM_KARASU'); if (k) return { x: k.x, y: origineLibre(k.x, k.y - 10, k.y) }; }
   const alt = (J.tir.alterne = !J.tir.alterne) ? 1 : -1; const [dx, dy] = DIRS[dir];
-  return { x: J.x + (-dy) * 4 * alt + dx * 4, y: J.y - 12 + dx * 0 + dy * 2 + (dy === 0 ? 0 : 0) };
+  const x = J.x + (-dy) * 4 * alt + dx * 4;
+  return { x, y: origineLibre(x, J.y - 12 + dy * 2, J.y) };
 }
 function emettre(J, dir, mult, cycleId, estSalve, budget, o = {}) {
   budget = budget || { n: BUDGET_CYCLE };
@@ -179,7 +188,7 @@ function majProjectiles(dt) {
       const P = PROP[t];
       let bloque = false;
       if (P.mur) bloque = true;
-      else if (P.bloqueTir && !p.spectral && !(p.arc && p.z > 14)) bloque = true;
+      else if (!(p.arc && p.z > 14) && tirArretePx(s, nx, ny, p.spectral)) bloque = true;
       if (bloque) {
         const tx = Math.floor(nx / TUILE), ty = Math.floor(ny / TUILE);
         if (!P.mur && PROP[t].pvTir && p.proprio === 'joueur') endommagerTuile(s, tx, ty, 1);
@@ -187,9 +196,9 @@ function majProjectiles(dt) {
         const cristal = s.cristaux && s.cristaux.includes(ty * s.W + tx) && !p.rayon;
         if (p.rebonds > 0 || cristal) {
           if (cristal) { p.rebondsCristal = (p.rebondsCristal || 0) + 1; if (p.rebondsCristal > 3) { detruireProjectile(p, 'mur'); continue; } G.effets.push({ type: 'etincelle', x: p.x, y: p.y - 4, age: 0, duree: 0.15 }); } else p.rebonds--;
-          const tX = PROP[tuilePx(s, nx, p.y)], tY = PROP[tuilePx(s, p.x, ny)];
-          if (tX.mur || (tX.bloqueTir && !p.spectral)) p.vx = -p.vx; if (tY.mur || (tY.bloqueTir && !p.spectral)) p.vy = -p.vy;
-          if (!(tX.mur || tX.bloqueTir) && !(tY.mur || tY.bloqueTir)) { p.vx = -p.vx; p.vy = -p.vy; }
+          const bX = tirArretePx(s, nx, p.y, p.spectral), bY = tirArretePx(s, p.x, ny, p.spectral);
+          if (bX) p.vx = -p.vx; if (bY) p.vy = -p.vy;
+          if (!bX && !bY) { p.vx = -p.vx; p.vy = -p.vy; }
           p.touches.clear();
         } else { detruireProjectile(p, 'mur'); continue; }
       } else { p.x = nx; p.y = ny; }
@@ -282,7 +291,7 @@ function detruireProjectile(p, raison, cible) {
 // ── Rayons, lasers, faisceaux ──
 function longueurJusquAuMur(s, x, y, a, spectral, max = 2000) {
   const pas = 4; let l = 0;
-  while (l < max) { const t = tuilePx(s, x + Math.cos(a) * l, y + Math.sin(a) * l); if (PROP[t].mur || (!spectral && PROP[t].bloqueTir)) break; l += pas; }
+  while (l < max) { if (tirArretePx(s, x + Math.cos(a) * l, y + Math.sin(a) * l, spectral)) break; l += pas; }
   return l;
 }
 function tirerLaser(J, org, a, deg, cycleId, budget, appoint) {
@@ -310,7 +319,7 @@ function majFaisceaux(dt) {
   const s = G.salle;
   for (const f of G.faisceaux) {
     f.age += dt;
-    if (f.attache) { const J = f.attache; f.x = J.x; f.y = J.y - 12; const lmax = f.type === 'faisceau' ? (J.stats.portee * TUILE * 1.4) : 2000; f.l = longueurJusquAuMur(s, f.x, f.y, f.a, true, lmax);
+    if (f.attache) { const J = f.attache; f.x = J.x; f.y = origineLibre(J.x, J.y - 12, J.y); const lmax = f.type === 'faisceau' ? (J.stats.portee * TUILE * 1.4) : 2000; f.l = longueurJusquAuMur(s, f.x, f.y, f.a, true, lmax);
       // multitir : plusieurs faisceaux en éventail (±0,16 rad), chacun arrêté par les murs — dessinés et appliqués à l'identique
       const n = (f.type === 'rayon' || f.type === 'faisceau') && f.proprio === 'joueur' ? Math.max(1, J.profil.multi) : 1;
       f.faisceaux = n > 1 ? Array.from({ length: n }, (_, i) => { const a = f.a + (i - (n - 1) / 2) * 0.16; return { a, l: longueurJusquAuMur(s, f.x, f.y, a, true, lmax) }; }) : null; }

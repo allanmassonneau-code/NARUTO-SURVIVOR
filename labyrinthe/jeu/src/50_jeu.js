@@ -14,6 +14,7 @@ const G = {
 // ── Ordre de mise à jour d'un pas ──
 function majJeu(dt) {
   const J = G.joueur; const P = G.partie;
+  if (J && J.delaiActif > 0) J.delaiActif -= dt; // délai après la prise d'un actif (animation comprise)
   // bannières : minutées par la simulation (pas par l'affichage)
   if (!bannieresRetenues()) {
     if (!G.banniere && G.banniereFile && G.banniereFile.length) G.banniere = G.banniereFile.shift();
@@ -25,7 +26,7 @@ function majJeu(dt) {
   if (J.etat === 'mort') { G.animMort = (G.animMort || 0) + dt; majEffets(dt); if (G.animMort > 1.4) { G.animMort = 0; Scenes.empiler(SceneMort); } return; }
   // actions (événements consommés au changement de contexte)
   if (Entrees.vientEnfonce('pause')) { Scenes.empiler(ScenePause); return; }
-  if (G.introBoss) { G.introBoss.t += dt * (Entrees.enfonce('interagir') ? 3 : 1); if (G.introBoss.t >= G.introBoss.duree) { G.introBoss = null; Entrees.consommer(); } majEffets(dt); return; }
+  if (G.introBoss) { G.introBoss.t += dt * (Entrees.enfonce('interagir') ? 3 : 1); if (G.introBoss.t >= G.introBoss.duree) { G.introBoss = null; Entrees.consommer({ garderTir: true }); } majEffets(dt); return; }
   if (G.enAnimationObjet) { majAnimationObjet(dt); majEffets(dt); return; }
   // ralenti (mort du dernier boss) : la simulation seule, jamais l'interface
   if (G.ralenti) { G.ralenti.t += dt; if (G.ralenti.t >= G.ralenti.duree) G.ralenti = null; else dt *= G.ralenti.k + (1 - G.ralenti.k) * Math.pow(G.ralenti.t / G.ralenti.duree, 2); }

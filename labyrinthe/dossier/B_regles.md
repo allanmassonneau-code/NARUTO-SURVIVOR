@@ -34,7 +34,7 @@ Les gâchettes analogiques s’activent au-delà de 0,35. Le type de manette est
 
 ### B1.3 Consommation des entrées au changement de contexte
 
-À chaque ouverture ou fermeture de menu, prise d’objet majeur, transition de salle et reprise après pause, **toutes les actions maintenues sont consommées** : elles doivent être relâchées avant d’agir de nouveau (tir compris). Fermer un menu avec le bouton de validation ne pose donc jamais d’explosif ni n’utilise l’actif (test automatique « manette »).
+À chaque ouverture ou fermeture de menu, prise d’objet majeur, transition de salle et reprise après pause, **toutes les actions maintenues sont consommées** : elles doivent être relâchées avant d’agir de nouveau. La **visée** n’est consommée qu’aux menus et à la reprise : tenue à travers une porte, une prise d’objet ou l’intro d’un boss, elle continue de tirer (test « mecaniques »). Fermer un menu avec le bouton de validation ne pose donc jamais d’explosif ni n’utilise l’actif (test automatique « manette »).
 
 ### B1.4 Attaques chargées, salles, pause
 
@@ -90,7 +90,7 @@ Les gâchettes analogiques s’activent au-delà de 0,35. Le type de manette est
 | Vitesse | 9 tuiles/s de base (bornes 4–18) |
 | Taille visuelle | coefficient de profil (1 par défaut ; ×1,5 « Pointe de précision », ×2 tirs lents) |
 | Collision avec les ennemis | rayon = 4 + 2 × √(dégâts / 3,5) × taille (px) — un tir plus fort touche un peu plus large |
-| Collision avec le décor | rayon fixe de 2 px (un gros tir ne s’accroche pas aux angles) |
+| Collision avec le décor | rayon fixe de 2 px (un gros tir ne s’accroche pas aux angles) ; murs : la tuile entière ; obstacles : leur **largeur dessinée** (un tir qui frôle une jarre passe) ; un tir tiré collé à un mur naît sous son arête, jamais dedans |
 | Percement | nombre de cibles supplémentaires ; « perçant » = illimité ; un tir ne touche jamais deux fois la même cible (liste des cibles touchées par projectile) |
 | Rebond | 3 rebonds par objet de ricochet, sur murs et obstacles |
 | Recul | impulsion proportionnelle au coefficient de recul du profil (×2 à ×2,5 pour les objets lourds) ; aucun recul sur les boss, les ennemis lourds et fixes |
@@ -201,7 +201,7 @@ Affichage de gauche à droite : vitalité, enveloppes, réserves (bleues), insta
 - **Protection seule** : un personnage à 0 vitalité et 1 réserve meurt au coup suivant ; l’épreuve chūnin exige alors au moins 2 réserves pleines au lieu de « vitalité pleine ».
 - **Dernier demi-point** : Naruto gagne +1 dégât pour la salle (« Obstination ! »).
 - **Contenant vide** : il compte pour la capacité et se remplit normalement ; l’épreuve chūnin exige que tous soient pleins.
-- **Dégâts par étage** : une demi-unité par coup aux étages 1–4, **une unité** aux étages 5–9 (annoncé à l’entrée de l’étage 5, rappel « ×2 » près de la santé). Explosifs du joueur : une unité à tout étage. Pics : dégât de l’étage. Feu au contact : une demi-unité.
+- **Dégâts par étage** : une demi-unité par coup aux étages 1–4, **une unité** aux étages 5–9 (annoncé à l’entrée de l’étage 5, rappel « ×2 » près de la santé). Explosifs du joueur : une unité à tout étage. Pics : dégât de l’étage. Feu au contact : une demi-unité (contact avec la flamme, pas avec sa tuile).
 - **Invulnérabilité** : 1,0 s après un dégât, visible, bornée, gelée pendant la pause.
 - Les **charges d’actif** sont une jauge verticale segmentée à côté de l’icône de l’actif, jamais des cœurs : lancer une technique ne consomme aucune protection.
 
@@ -283,7 +283,7 @@ La génération garantit que la **route obligatoire vers le boss ne demande aucu
 | Départ | 1 par étage | — | — | Plan de l’étage (bannière) | point clair | libre |
 | Combat | le reste | — | ennemis | tirage de fin | — | vide |
 | Héritage | 1 par étage | clé dès l’étage 2 | — | héritage (1 objet, 2 au choix pour Shikamaru) | étoile dorée | objet restant |
-| Échoppe | 1 par étage | clé dès l’étage 2 | — | boutique : 2 objets (3 avec *Réputation*) + ressources ; statue-tanuki | pièce | achats conservés |
+| Échoppe | 1 par étage | clé dès l’étage 2 | — | boutique : 2 objets (3 avec *Réputation*) + ressources ; statue-tanuki | pièce verte | achats conservés |
 | Boss | 1, cul-de-sac le plus éloigné (≥ 3 à l’étage 1, ≥ 4 ensuite) | — | boss | boss + cœur ou réserve | crâne | sorties |
 | Cache | case vide voisine d’au moins 2 salles ordinaires | explosif | — | cache (objet ou ressources) | — (secrète) | — |
 | Chambre isolée | case vide voisine d’une seule salle de combat 1×1 | explosif | — | isolée (objet 75 %) | — | — |

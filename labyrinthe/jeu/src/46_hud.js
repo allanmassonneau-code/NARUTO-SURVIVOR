@@ -235,7 +235,7 @@ function detailsObjet(d) {
 }
 
 // ── Minicarte et carte étendue ──
-const ICONE_SALLE = { boss: '#e04a4a', heritage: '#f0c040', boutique: '#e0d070', cache: '#a090a0', isolee: '#a090a0', sacrifice: '#c07070', malediction: '#b04070', defi: '#9090c0', defi_boss: '#c060a0', dispositifs: '#50a0c0', bibliotheque: '#80c060', coffres: '#c0a050', repos: '#60c0c0', pacte: '#8a3aa8', sanctuaire: '#f0f0d0' };
+const ICONE_SALLE = { boss: '#e04a4a', heritage: '#f0c040', boutique: '#58d08a', cache: '#a090a0', isolee: '#a090a0', sacrifice: '#c07070', malediction: '#b04070', defi: '#9090c0', defi_boss: '#c060a0', dispositifs: '#50a0c0', bibliotheque: '#80c060', coffres: '#c0a050', repos: '#60c0c0', pacte: '#8a3aa8', sanctuaire: '#f0f0d0' };
 function dessinerMinicarte(g, x0, y0, etendue) {
   const E = G.etage; if (!E) return; const s0 = G.salle;
   const perdu = G.etage.malediction === 'perdu' && !etendue;
@@ -258,8 +258,19 @@ function dessinerMinicarte(g, x0, y0, etendue) {
       if (F.cel.some(([a, b]) => a === i && b === j + 1)) g.fillRect(x, y + ch - 1, cw - 1, 1);
     }
     const ic = ICONE_SALLE[s.type];
-    if (ic && (s.visitee || s.apercue)) { const gx = s.cx - dx0, gy = s.cy - dy0; if (gx >= 0 && gy >= 0 && gx < n && gy < n) { g.fillStyle = '#14101c'; g.fillRect(ox + gx * cw + Math.floor(cw / 2) - 2, oy + gy * ch + Math.floor(ch / 2) - 2, 5, 4); g.fillStyle = ic; g.fillRect(ox + gx * cw + Math.floor(cw / 2) - 1, oy + gy * ch + Math.floor(ch / 2) - 1, 3, 2); } }
+    if (ic && (s.visitee || s.apercue)) { const gx = s.cx - dx0, gy = s.cy - dy0; if (gx >= 0 && gy >= 0 && gx < n && gy < n) pictoSalle(g, s.type, ox + gx * cw + Math.floor(cw / 2), oy + gy * ch + Math.floor(ch / 2), ic, etendue); }
   }
+}
+// Pictogramme d'une salle spéciale : la forme compte autant que la couleur (étoile d'or pour l'héritage,
+// pièce verte pour l'échoppe, bloc rouge pour le boss) ; sur la carte étendue, le symbole de sa porte
+function pictoSalle(g, type, x, y, c, grand) {
+  const C = CADRES_PORTE[type];
+  if (grand && C && C.sym) { g.fillStyle = '#14101c'; g.fillRect(x - 3, y - 3, 7, 7); dessinerSymbolePorte(g, C.sym, x, y, c); return; }
+  g.fillStyle = '#14101c'; g.fillRect(x - 2, y - 2, 5, 5); g.fillStyle = c;
+  if (type === 'heritage') { g.fillRect(x - 1, y, 3, 1); g.fillRect(x, y - 1, 1, 3); g.fillRect(x - 2, y, 1, 1); g.fillRect(x + 2, y, 1, 1); }
+  else if (type === 'boutique') { g.fillRect(x - 1, y - 1, 3, 1); g.fillRect(x - 1, y + 1, 3, 1); g.fillRect(x - 1, y, 1, 1); g.fillRect(x + 1, y, 1, 1); }
+  else if (type === 'boss') g.fillRect(x - 1, y - 1, 3, 3);
+  else g.fillRect(x - 1, y - 1, 3, 2);
 }
 function dessinerCarteEtendue(g) {
   g.fillStyle = 'rgba(6,4,10,0.93)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
@@ -267,5 +278,5 @@ function dessinerCarteEtendue(g) {
   Police.ecrire(g, G.etage.cfg.titre + ' — ' + G.etage.cfg.nom, 320, 16, '#e8dcc0', { a: 'c' });
   Police.ecrire(g, 'Code de mission : ' + codeAffiche(G.partie.code) + '   Temps : ' + formatTemps(G.partie.temps), 320, 340, '#8a8098', { a: 'c' });
   const leg = [['Boss', 'boss'], ['Héritage', 'heritage'], ['Échoppe', 'boutique'], ['Secret', 'cache'], ['Épreuve', 'defi'], ['Maudite', 'malediction']];
-  leg.forEach(([t, k], i) => { g.fillStyle = ICONE_SALLE[k]; g.fillRect(30, 60 + i * 14, 6, 6); Police.ecrire(g, t, 40, 60 + i * 14, '#c8c0d8'); });
+  leg.forEach(([t, k], i) => { pictoSalle(g, k, 33, 63 + i * 14, ICONE_SALLE[k], true); Police.ecrire(g, t, 42, 60 + i * 14, '#c8c0d8'); });
 }

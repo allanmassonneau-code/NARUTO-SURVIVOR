@@ -96,7 +96,7 @@ function entrerSalle(id, depuisDir) {
   s.visitee = true; s.apercue = true; if (premiere) G.stats.sallesVisitees++;
   // les voisines deviennent « aperçues » (pas les secrets non découverts)
   for (const p of s.portes) { const v = E.salles[p.vers]; if (v && p.etat !== 'secrete') v.apercue = true; }
-  if (s.type === 'cache' || s.type === 'isolee') { for (const p of s.portes) { const v = E.salles[p.vers]; const retour = v && v.portes.find(q => q.vers === s.id); if (retour && retour.etat === 'secrete') { retour.etat = 'ouverte'; retour.secrete = false; retour.revelee = true; } } }
+  if (s.type === 'cache' || s.type === 'isolee') { for (const p of s.portes) { const v = E.salles[p.vers]; const retour = v && v.portes.find(q => q.vers === s.id); if (retour && retour.etat === 'secrete') { retour.etat = 'ouverte'; retour.secrete = false; retour.revelee = true; v.fondSale = true; p.revelee = true; s.fondSale = true; } } }
   // position d'entrée : devant la porte opposée à la direction de déplacement
   if (depuisDir) {
     const opp = DIR_OPPOSEE[depuisDir];
@@ -257,7 +257,7 @@ function verifierPortes(dt) {
 function demarrerTransition(dir, vers, type = 'porte') {
   if (G.modeTest) (G.modeTest.transitions || (G.modeTest.transitions = [])).push({ dir, vers, type, de: G.salle && G.salle.id, pile: String(new Error().stack).split('\n').slice(2, 6).map(l => l.trim().replace(/\(.*index.html:/, '(')).join(' < ') });
   G.transition = { dir, vers, t: 0, duree: G.reglages.confort ? 0.18 : 0.26, image: capturerVue(), type };
-  Entrees.consommer();
+  Entrees.consommer({ garderTir: true });
 }
 function majTransition(dt) {
   const T0 = G.transition; T0.t += dt;
@@ -442,7 +442,10 @@ function exploserDecor(x, y, r) {
 }
 function revelerPorteSecrete(s, p) {
   p.etat = 'ouverte'; p.secrete = false; p.revelee = true;
-  const v = G.etage.salles[p.vers]; if (v) { v.apercue = true; const q = v.portes.find(k => k.vers === s.id); if (q) { q.etat = 'ouverte'; q.secrete = false; } }
+  // le fond en cache montrait encore le mur : on le redessine (brèche visible des deux côtés)
+  s.fondSale = true; s.version = (s.version || 0) + 1;
+  const v = G.etage.salles[p.vers]; if (v) { v.apercue = true; v.fondSale = true; const q = v.portes.find(k => k.vers === s.id); if (q) { q.etat = 'ouverte'; q.secrete = false; q.revelee = true; } }
+  G.effets.push({ type: 'fumee', x: (p.tx + 0.5) * TUILE, y: (p.ty + 0.5) * TUILE, age: 0, duree: 0.6, taille: 2.2 }); secousse(4, null);
   Son.jouer('secret'); G.effets.push({ type: 'debris', x: (p.tx + 0.5) * TUILE, y: (p.ty + 0.5) * TUILE, age: 0, duree: 0.5, n: 10 });
   Progression.compteur('secretsTrouves', 1); const ts = [s.type, v && v.type].find(t => t === 'cache' || t === 'isolee'); if (ts) Progression.secret(ts === 'isolee' ? 'SEC_002' : 'SEC_001');
   evenement('secret_trouve', { s, p });
@@ -503,7 +506,7 @@ function majDangersTerrain(dt) {
   if (!J.vol && !J.drapeaux.immuniteSol) {
     const t = tuilePx(s, J.x, J.y);
     if (PROP[t].blessant && !(G.variante && G.variante.picsActifs && !picsSortis())) blesserJoueur(G.degatsEnnemis, { type: 'pics' });
-    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const tt = tuilePx(s, J.x + dx * (J.r + 1), J.y + dy * (J.r + 1)); if (PROP[tt].contact) blesserJoueur(1, { type: 'feu' }); }
+    if (cercleToucheTuile(s, J.x, J.y, J.r + 1, P => P.contact)) blesserJoueur(1, { type: 'feu' }); // au contact de la flamme, pas de sa tuile
   }
   for (const z of G.zones) {
     z.age += dt;

@@ -244,15 +244,24 @@ function dessinerRamassable(g, r, x, y) {
 }
 function dessinerPiedestal(g, p, X, Y) {
   const x = X(p.x), y = Y(p.y);
-  g.fillStyle = '#2a2230'; g.fillRect(x - 11, y - 2, 22, 10); g.fillStyle = '#6a5a70'; g.fillRect(x - 10, y - 3, 20, 3); g.fillStyle = '#4a3e52'; g.fillRect(x - 9, y, 18, 7);
-  g.fillStyle = '#8a7a90'; g.fillRect(x - 10, y - 3, 20, 1);
+  if (p.prix && p.prix.type === 'ryo') { // étal de l'échoppe : petite table de bois couverte d'un tissu vert
+    g.fillStyle = '#1c1410'; g.fillRect(x - 12, y - 4, 24, 9); g.fillRect(x - 11, y + 4, 3, 5); g.fillRect(x + 8, y + 4, 3, 5);
+    g.fillStyle = '#7a5232'; g.fillRect(x - 11, y - 3, 22, 3); g.fillStyle = '#5a3a22'; g.fillRect(x - 10, y, 20, 4); g.fillStyle = '#4a2e1a'; g.fillRect(x - 10, y + 4, 2, 4); g.fillRect(x + 8, y + 4, 2, 4);
+    g.fillStyle = '#3a9a6a'; g.fillRect(x - 8, y - 4, 16, 3); g.fillStyle = '#5ac08a'; g.fillRect(x - 8, y - 4, 16, 1);
+  } else {
+    g.fillStyle = '#2a2230'; g.fillRect(x - 11, y - 2, 22, 10); g.fillStyle = '#6a5a70'; g.fillRect(x - 10, y - 3, 20, 3); g.fillStyle = '#4a3e52'; g.fillRect(x - 9, y, 18, 7);
+    g.fillStyle = '#8a7a90'; g.fillRect(x - 10, y - 3, 20, 1);
+    if (p.pool === 'heritage') { g.fillStyle = '#e8c050'; g.fillRect(x - 10, y - 3, 20, 1); g.fillRect(x - 9, y + 3, 18, 1); g.fillStyle = '#b08a30'; g.fillRect(x - 11, y - 2, 1, 9); g.fillRect(x + 10, y - 2, 1, 9); }
+  }
   if (!p.id) return;
   const flotte = Math.round(Math.sin(G.temps * 2.5 + p.x) * 2);
   if (p.ramassable) { const s = spriteRamassable(p.ramassable); g.drawImage(s, x - Math.round(s.width / 2), y - s.height - 4 + flotte); }
   else {
     const ic = G.etage && G.etage.malediction === 'aveugle' ? iconeObjet('?') : iconeObjet(p.id);
+    const bloque = G.joueur && G.joueur.delaiActif > 0 && INDEX[p.id] && INDEX[p.id].type === 'actif'; // pas encore reprenable
     g.drawImage(ellipse(8, 3, 'rgba(0,0,0,0.3)'), x - 8, y - 5);
-    g.drawImage(ic, x - 10, y - 26 + flotte);
+    if (bloque) g.globalAlpha = 0.4 + 0.15 * Math.sin(G.temps * 8);
+    g.drawImage(ic, x - 10, y - 26 + flotte); g.globalAlpha = 1;
   }
   if (p.prix) {
     const n = p.prix.type === 'ryo' ? prixRyo(p) : 0; const t = p.prix.type === 'ryo' ? (n === 0 ? 'Gratuit' : String(n)) : p.prix.type === 'pacte' ? prixPacteTexte(p) : '';

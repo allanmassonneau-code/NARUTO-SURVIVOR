@@ -285,8 +285,8 @@ function decorsMurs(themeId) {
 const CADRES_PORTE = {
   normale: { cadre: '#6a5444', lum: '#9a8068', sym: null },
   boss: { cadre: '#5a1c1c', lum: '#b83a2a', sym: 'crane' },
-  heritage: { cadre: '#a07a20', lum: '#f0c850', sym: 'etoile' },
-  boutique: { cadre: '#6a5a2a', lum: '#c8b060', sym: 'piece' },
+  heritage: { cadre: '#a07a20', lum: '#ffe070', sym: 'etoile' },
+  boutique: { cadre: '#4a3020', lum: '#58d08a', sym: 'piece' },
   cache: { cadre: '#3a3036', lum: '#6a5a60', sym: null },
   isolee: { cadre: '#3a3036', lum: '#6a5a60', sym: null },
   malediction: { cadre: '#4a1a2a', lum: '#a02a4a', sym: 'pics' },

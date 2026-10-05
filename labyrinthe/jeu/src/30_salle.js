@@ -127,20 +127,51 @@ function deplacerCercle(s, e, dx, dy, mode) {
   }
   return { bloqueX, bloqueY };
 }
+// Boîtes de collision des obstacles, plus petites que la tuile et calées sur le dessin
+// [gauche, haut, droite, bas] en px : on frôle les rochers et les jarres sans s'accrocher aux coins,
+// et l'on passe « derrière » leur moitié haute. Murs et portes gardent la tuile entière.
+const MARGES_OBSTACLES = {
+  [T.ROCHER]: [4, 8, 4, 2], [T.ROCHER_SCEAU]: [4, 8, 4, 2], [T.TOTEM]: [6, 8, 6, 2], [T.BLOC]: [3, 7, 3, 2], [T.BLOC_CLE]: [4, 8, 4, 2],
+  [T.JARRE]: [7, 13, 7, 1], [T.CAISSE]: [5, 11, 5, 1], [T.FEU]: [6, 9, 6, 2], [T.FOSSE]: [3, 4, 3, 3],
+};
+// Boîte d'une tuile pleine, rentrée pour les obstacles : [x0, y0, x1, y1]
+function boiteTuile(s, tx, ty) {
+  const m = MARGES_OBSTACLES[tuileA(s, tx, ty)], x = tx * TUILE, y = ty * TUILE;
+  return m ? [x + m[0], y + m[1], x + TUILE - m[2], y + TUILE - m[3]] : [x, y, x + TUILE, y + TUILE];
+}
+// Le cercle touche-t-il une tuile qui passe le filtre (boîte rentrée comprise) ?
+function cercleToucheTuile(s, x, y, r, filtre) {
+  const tx0 = Math.floor((x - r) / TUILE), tx1 = Math.floor((x + r) / TUILE), ty0 = Math.floor((y - r) / TUILE), ty1 = Math.floor((y + r) / TUILE);
+  for (let ty = ty0; ty <= ty1; ty++) for (let tx = tx0; tx <= tx1; tx++) {
+    if (!filtre(PROP[tuileA(s, tx, ty)])) continue;
+    const [x0, y0, x1, y1] = boiteTuile(s, tx, ty);
+    if (Math.hypot(x - borne(x, x0, x1), y - borne(y, y0, y1)) < r) return true;
+  }
+  return false;
+}
+// Un tir en (x, y) est-il arrêté par le décor ? Murs : la tuile entière. Obstacles : leur largeur dessinée
+// (un tir qui frôle une jarre passe) ; en profondeur la tuile entière compte, le tir volant à hauteur de poitrine.
+function tirArretePx(s, x, y, spectral) {
+  const t = tuilePx(s, x, y), P = PROP[t];
+  if (P.mur) return true;
+  if (!P.bloqueTir || spectral) return false;
+  const m = MARGES_OBSTACLES[t]; if (!m) return true;
+  const lx = x - Math.floor(x / TUILE) * TUILE; return lx >= m[0] && lx < TUILE - m[2];
+}
 function resoudre(s, e, r, mode, axe) {
   let touche = false;
   const tx0 = Math.floor((e.x - r) / TUILE), tx1 = Math.floor((e.x + r) / TUILE), ty0 = Math.floor((e.y - r) / TUILE), ty1 = Math.floor((e.y + r) / TUILE);
   for (let ty = ty0; ty <= ty1; ty++) for (let tx = tx0; tx <= tx1; tx++) {
     if (!solidePour(s, tx, ty, mode)) continue;
-    const rx = tx * TUILE, ry = ty * TUILE;
-    const px = borne(e.x, rx, rx + TUILE), py = borne(e.y, ry, ry + TUILE);
+    const [rx0, ry0, rx1, ry1] = boiteTuile(s, tx, ty);
+    const px = borne(e.x, rx0, rx1), py = borne(e.y, ry0, ry1);
     let ddx = e.x - px, ddy = e.y - py; const d = Math.hypot(ddx, ddy);
     if (d >= r) continue;
     touche = true;
     if (d > 0.0001) { const k = (r - d) / d; e.x += ddx * k; e.y += ddy * k; }
-    else { // centre dans la tuile : on ressort selon l'axe traité
-      if (axe === 'x') e.x = (e.x < rx + TUILE / 2) ? rx - r : rx + TUILE + r;
-      else e.y = (e.y < ry + TUILE / 2) ? ry - r : ry + TUILE + r;
+    else { // centre dans la boîte : on ressort selon l'axe traité
+      if (axe === 'x') e.x = (e.x < (rx0 + rx1) / 2) ? rx0 - r : rx1 + r;
+      else e.y = (e.y < (ry0 + ry1) / 2) ? ry0 - r : ry1 + r;
     }
   }
   return touche;
@@ -150,7 +181,7 @@ function ligneLibre(s, x0, y0, x1, y1, mode = 'tir') {
   const d = dist(x0, y0, x1, y1), n = Math.ceil(d / 6);
   for (let k = 1; k < n; k++) {
     const x = lerp(x0, x1, k / n), y = lerp(y0, y1, k / n); const t = tuilePx(s, x, y);
-    if (mode === 'tir' ? PROP[t].bloqueTir : (PROP[t].solide || PROP[t].fosse)) return false;
+    if (mode === 'tir' ? tirArretePx(s, x, y, false) : (PROP[t].solide || PROP[t].fosse)) return false;
   }
   return true;
 }

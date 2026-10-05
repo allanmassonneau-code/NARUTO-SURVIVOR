@@ -214,9 +214,16 @@ function decorSalle(g, s, V) {
   switch (s.type) {
     case 'boutique': {
       const S = pts('S'); if (S.length) { const xs = S.map(p => p[0]), ys = S.map(p => p[1]); tapis(g, Math.min(...xs) - 28, Math.min(...ys) - 30, Math.max(...xs) - Math.min(...xs) + 56, Math.max(...ys) - Math.min(...ys) + 52, '#5a1a22', '#b08a3a', '#8a3a3a'); }
-      lanterne(g, 40, 36); lanterne(g, larg - 50, 36); break;
+      // marché : auvents rayés et étagères de marchandises contre le mur du haut, lanternes de papier aux bouts
+      for (const x0 of [40, larg - 104]) { etagereMarchandises(g, x0 + 6, 52); auvent(g, x0, 33, 64); }
+      lanterne(g, 28, 46); lanterne(g, larg - 38, 46); break;
     }
-    case 'heritage': { const I = pts('I')[0] || [cx, cy]; lumiere(I[0], I[1] - 10, 170, '#ffe090', 0.38); tapis(g, I[0] - 34, I[1] - 30, 68, 50, '#2a2450', '#d8b040', '#4a4080'); lanterne(g, 40, 36); lanterne(g, larg - 50, 36); break; }
+    case 'heritage': { // sanctuaire de l'héritage : rai de lumière dorée, sceau d'or au sol, bougies, corde sacrée au mur
+      const I = pts('I')[0] || [cx, cy]; lumiere(I[0], I[1] - 10, 210, '#ffe090', 0.55); voile(g, I[0], I[1] - 26, 44, 74, '#fff0b0', 0.24);
+      cercleSceau(g, I[0], I[1] + 2, 46, '#e8c050');
+      for (const [dx, dy] of [[-58, -26], [54, -26], [-58, 30], [54, 30]]) bougie(g, I[0] + dx, I[1] + dy);
+      shimenawa(g, Math.round(larg / 2 - 80), 38, 160); break;
+    }
     case 'boss': case 'defi_boss': cercleSceau(g, cx, cy, 70, s.type === 'boss' ? '#c83a3a' : '#b85a9a'); lumiere(cx, cy, 230, s.type === 'boss' ? '#ff4030' : '#d060b0', 0.2); break;
     case 'sacrifice': { const A = pts('A')[0] || [cx, cy]; cercleSceau(g, A[0], A[1], 40, '#a02a2a'); lumiere(A[0], A[1], 130, '#ff3030', 0.3); break; }
     case 'defi': { g.globalAlpha = 0.3; g.fillStyle = '#c8c8d8'; for (let k = -18; k <= 18; k++) { g.fillRect(cx + k - 1, cy + k - 1, 3, 3); g.fillRect(cx + k - 1, cy - k - 1, 3, 3); } g.globalAlpha = 1; cercleSceau(g, cx, cy, 34, '#9a9ab0'); break; }
@@ -253,6 +260,18 @@ function bougie(g, x, y) {
   g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 1, 6, 11); g.fillStyle = '#2a2230'; g.fillRect(x, y, 4, 9);
   g.fillStyle = '#ffb040'; g.fillRect(x + 1, y - 4, 2, 3); g.fillStyle = '#fff0a0'; g.fillRect(x + 1, y - 3, 2, 1);
   lumiere(x + 2, y - 3, 48, '#ffb040', 0.55, true, 0.35);
+}
+function auvent(g, x, y, l) { // auvent d'échoppe rayé vert et crème, bord festonné, ombre portée
+  g.fillStyle = 'rgba(0,0,0,0.25)'; g.fillRect(x + 1, y + 12, l, 3);
+  for (let i = 0; i < l; i += 8) { g.fillStyle = (i / 8) % 2 ? '#e8e0c8' : '#3a9a6a'; g.fillRect(x + i, y, 8, 9); g.fillRect(x + i + 1, y + 9, 6, 2); g.fillRect(x + i + 2, y + 11, 4, 1); g.fillStyle = 'rgba(255,255,255,0.18)'; g.fillRect(x + i, y + 1, 8, 1); }
+  g.fillStyle = '#2a1a10'; g.fillRect(x - 2, y - 1, l + 4, 2);
+}
+function etagereMarchandises(g, x, y) { // étagère : rouleaux, fioles et sacs alignés (décor)
+  const al = new Alea('etal' + x);
+  for (const [ry, n] of [[y, 6], [y + 13, 5]]) {
+    for (let k = 0; k < n; k++) { const c = al.choix(['#c8b890', '#8a3a2a', '#3a5a8a', '#5a9a5a', '#d8a040', '#e8dcc0']); const h = 4 + al.entier(4), w = n === 6 ? 5 : 6, xx = x + 2 + k * (n === 6 ? 8 : 10); g.fillStyle = '#1c1420'; g.fillRect(xx - 1, ry - h - 1, w + 2, h + 1); g.fillStyle = c; g.fillRect(xx, ry - h, w, h); g.fillStyle = nuancer(c, 1.3); g.fillRect(xx, ry - h, 1, h); }
+    g.fillStyle = '#5a3a22'; g.fillRect(x, ry, 52, 3); g.fillStyle = '#2a1c14'; g.fillRect(x, ry + 3, 52, 1);
+  }
 }
 function shimenawa(g, x, y, l) { // corde tressée en arc et papiers shide en zigzag
   const o = i => Math.round(Math.sin(i / l * Math.PI) * 6);
@@ -295,6 +314,7 @@ function dessinerDeco(g, type, x, y, al) {
 function dessinerCadrePorte(g, s, p, V) {
   const x = p.tx * TUILE, y = p.ty * TUILE; const C = CADRES_PORTE[p.type] || CADRES_PORTE.normale;
   if (p.etat === 'secrete') return; // indistinguable du mur (sauf indices : fissure légère)
+  if (p.revelee) { dessinerBreche(g, p, x, y, V); return; } // passage secret ouvert à l'explosif : trou aux bords cassés
   g.save();
   const vertical = p.dir === 'haut' || p.dir === 'bas';
   g.fillStyle = C.cadre;
@@ -306,6 +326,41 @@ function dessinerCadrePorte(g, s, p, V) {
   const sx = x + 16, sy = p.dir === 'haut' ? y + 5 : p.dir === 'bas' ? y + 22 : y + 16;
   dessinerSymbolePorte(g, C.sym, p.dir === 'gauche' ? x + 5 : p.dir === 'droite' ? x + 27 : sx, sy, C.lum);
   g.restore();
+  if (p.type === 'boutique' || p.type === 'heritage') ornementsPorte(g, p, x, y);
+}
+// De part et d'autre de la porte : deux lanternes de papier rouges (échoppe) ou deux flammes d'or (héritage)
+function ornementsPorte(g, p, x, y) {
+  const pos = p.dir === 'haut' ? [[x - 8, y + 12], [x + 32, y + 12]] : p.dir === 'bas' ? [[x - 8, y + 4], [x + 32, y + 4]] : [[x + 12, y - 10], [x + 12, y + 32]];
+  for (const [ox, oy] of pos) {
+    if (p.type === 'boutique') {
+      g.fillStyle = '#1c1420'; g.fillRect(ox + 2, oy - 2, 4, 2); g.fillRect(ox, oy, 8, 10); g.fillStyle = '#d8303a'; g.fillRect(ox + 1, oy + 1, 6, 8); g.fillStyle = '#ff8a5a'; g.fillRect(ox + 3, oy + 2, 2, 6);
+      g.fillStyle = '#1c1420'; g.fillRect(ox + 1, oy + 4, 6, 1); g.fillRect(ox + 3, oy + 10, 2, 2);
+      lumiere(ox + 4, oy + 5, 46, '#ff9a60', 0.5, true, 0.3);
+    } else {
+      g.fillStyle = '#1c1420'; g.fillRect(ox, oy + 5, 8, 5); g.fillStyle = '#b08a30'; g.fillRect(ox + 1, oy + 6, 6, 3); g.fillStyle = '#e8c050'; g.fillRect(ox + 1, oy + 6, 6, 1);
+      g.fillStyle = '#ffb040'; g.fillRect(ox + 2, oy + 1, 4, 5); g.fillStyle = '#fff0a0'; g.fillRect(ox + 3, oy + 2, 2, 3);
+      lumiere(ox + 4, oy + 3, 50, '#ffd060', 0.6, true, 0.4);
+    }
+  }
+}
+// Brèche d'un passage secret : ouverture aux bords irréguliers, briques cassées, gravats au pied
+function dessinerBreche(g, p, x, y, V) {
+  const al = new Alea('breche|' + p.tx + ',' + p.ty), M = (V && V.mur) || {}, face = M.face || '#5a4a40';
+  const sombre = '#050407', bord = nuancer(face, 1.35), creux = nuancer(face, 0.55), gravats = [face, nuancer(face, 0.8), nuancer(face, 1.15), '#6a6060'];
+  const vertical = p.dir === 'haut' || p.dir === 'bas';
+  // profondeur : du bord du mur vers la salle ; largeur irrégulière (5 à 9 px de bord de chaque côté)
+  const d0 = p.dir === 'haut' ? 5 : p.dir === 'gauche' ? 5 : 0, d1 = p.dir === 'haut' ? 32 : p.dir === 'gauche' ? 32 : p.dir === 'bas' ? 24 : 27;
+  for (let d = d0; d < d1; d++) {
+    const a = 5 + al.entier(4), b = 5 + al.entier(4), L = 32 - a - b;
+    if (vertical) { g.fillStyle = creux; g.fillRect(x + a - 2, y + d, 2, 1); g.fillRect(x + 32 - b, y + d, 2, 1); g.fillStyle = sombre; g.fillRect(x + a, y + d, L, 1); g.fillStyle = bord; g.fillRect(x + a - 3, y + d, 1, 1); g.fillRect(x + 34 - b, y + d, 1, 1); }
+    else { g.fillStyle = creux; g.fillRect(x + d, y + a - 2, 1, 2); g.fillRect(x + d, y + 32 - b, 1, 2); g.fillStyle = sombre; g.fillRect(x + d, y + a, 1, L); g.fillStyle = bord; g.fillRect(x + d, y + a - 3, 1, 1); g.fillRect(x + d, y + 34 - b, 1, 1); }
+  }
+  // gravats côté salle
+  for (let i = 0; i < 9; i++) {
+    const u = 3 + al.entier(26), w = 2 + al.entier(3), h = 2 + al.entier(2); g.fillStyle = al.choix(gravats);
+    if (p.dir === 'haut') g.fillRect(x + u, y + 28 + al.entier(4), w, h); else if (p.dir === 'bas') g.fillRect(x + u, y + al.entier(4), w, h);
+    else if (p.dir === 'gauche') g.fillRect(x + 28 + al.entier(4), y + u, h, w); else g.fillRect(x + al.entier(4), y + u, h, w);
+  }
 }
 function dessinerSymbolePorte(g, sym, x, y, c) {
   if (!sym) return; g.fillStyle = c;

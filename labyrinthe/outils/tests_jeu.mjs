@@ -139,6 +139,22 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       if (J.talisman !== tal[1].id || !lache) out.ko.push('prise de talisman sans dépôt de l’ancien');
       else { for (let i = 0; i < 30; i++) { J.x = lache.x - 16 + i; T.pas(1); } if (J.talisman !== tal[1].id) out.ko.push('talisman lâché repris en passant dessus (va-et-vient)'); }
     } catch (err) { out.ko.push('échanges ' + String(err.stack || err).slice(0, 200)); }
+    // Délai de 2 s après la prise d'un actif : ni l'actif reposé (même en s'éloignant puis revenant aussitôt)
+    // ni un autre actif voisin ne se prennent ; le délai écoulé, le second se prend normalement
+    try {
+      L.nouvellePartie({ perso: 'CHR_001', code: 'ACTG2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
+      const J = G.joueur, S = G.salle, A = L.DON.objets.filter(x => x.type === 'actif');
+      J.actif = { id: A[0].id, charges: 1 }; const x0 = J.x, y0 = J.y;
+      const p = L.poserPiedestal(S, x0, y0 - 4, A[1].id), q = L.poserPiedestal(S, x0 + 70, y0 - 4, A[2].id);
+      let k = 0; while (J.actif.id !== A[1].id && k++ < 60) T.pas(1);
+      let f = 0; while (J.etat !== 'normal' && f++ < 90) T.pas(1); // fin de l'animation de prise (≈ 0,8 s)
+      J.x = x0 + 40; T.pas(3); J.x = x0; J.y = y0; T.pas(3);
+      if (J.actif.id !== A[1].id) out.ko.push('actif reposé repris pendant le délai de 2 s');
+      J.x = q.x; J.y = q.y + 4; T.pas(3);
+      if (J.actif.id !== A[1].id) out.ko.push('second actif pris pendant le délai de 2 s');
+      T.pas(90);
+      if (J.actif.id !== A[2].id || q.id !== A[1].id) out.ko.push('second actif impossible à prendre une fois le délai écoulé');
+    } catch (err) { out.ko.push('délai actif ' + String(err.stack || err).slice(0, 200)); }
     return out;
   });
 
@@ -432,6 +448,34 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     // Zones ennemies : pas de dégâts pendant leur naissance (télégraphe)
     const avantZ = L.santeTotale(G.joueur.sante); L.creerZone(G.joueur.x, G.joueur.y, 'acide', 3, { r: 20, proprio: 'ennemi', naissance: 0.6 });
     T.pas(20, []); if (L.santeTotale(G.joueur.sante) < avantZ) out.ko.push('zone ennemie blessante avant la fin de sa naissance');
+    // Collé au mur du haut (en poussant vers lui), un tir de côté part bien : l'origine n'est plus dans le mur
+    L.nouvellePartie({ perso: 'CHR_001', code: 'MURH2345' }); L.Scenes.aller(L.SceneJeu); T.pas(200);
+    { const J = G.joueur; J.x = 330; J.y = 60; T.pas(40, ['KeyW']); const yM = J.y; const e = L.creerEnnemi('ENM_001', 200, yM, { sansApparition: true }); const pv0 = e.pv;
+      for (let i = 0; i < 90; i++) { T.pas(1, ['KeyW', 'ArrowLeft']); e.x = 200; e.y = yM; }
+      if (!(yM < 44)) out.ko.push('mise en place : joueur non collé au mur (' + Math.round(yM) + ')'); else if (!(e.pv < pv0)) out.ko.push('tir de côté contre le mur du haut détruit à la naissance'); }
+    // Visée tenue à travers une porte : le tir reprend dans la salle suivante sans relâcher le stick
+    L.nouvellePartie({ perso: 'CHR_001', code: 'VISE2345' }); L.Scenes.aller(L.SceneJeu); T.pas(200);
+    { const sv = Object.values(G.etage.salles).find(x => x.type === 'combat'); sv.visitee = true; sv.ennemisDef = [];
+      L.demarrerTransition('droite', sv.id); for (let i = 0; i < 40; i++) T.pas(1, ['ArrowLeft']);
+      let tirs = 0; for (let i = 0; i < 40; i++) { T.pas(1, ['ArrowLeft']); tirs = Math.max(tirs, G.proj.filter(p => p.proprio === 'joueur').length); }
+      if (!(L.Entrees.visee.dir === 'gauche' && tirs > 0)) out.ko.push('visée tenue à travers une porte : plus de tir (visée ' + L.Entrees.visee.dir + ')'); }
+    // Boîtes des obstacles : on frôle une jarre, un tir passe à côté, le feu ne brûle qu'au contact de la flamme
+    L.nouvellePartie({ perso: 'CHR_001', code: 'BOIT2345' }); L.Scenes.aller(L.SceneJeu); T.pas(200);
+    { const s = G.salle, J = G.joueur; G.ennemis = [];
+      for (let ty = 2; ty <= 6; ty++) for (let tx = 3; tx <= 12; tx++) s.tuiles[ty * s.W + tx] = L.T.SOL;
+      const jx = 8, jy = 4, fx = 11, fy = 2; s.tuiles[jy * s.W + jx] = L.T.JARRE; s.tuiles[fy * s.W + fx] = L.T.FEU; s.fondSale = true;
+      J.x = jx * 32 - 20; J.y = jy * 32 + 24; for (let i = 0; i < 40; i++) T.pas(1, ['KeyD']);
+      if (!(J.x > jx * 32 - 3)) out.ko.push('jarre : arrêté à ' + Math.round(jx * 32 - J.x) + ' px de sa tuile (boîte trop large)');
+      out.jarre = 'arrêt à ' + Math.round(J.x - jx * 32) + ' px du bord de tuile';
+      J.x = 4 * 32 + 16; J.y = 6 * 32 + 16; T.pas(5, []);
+      const frole = L.tirEnnemi(jx * 32 + 3, jy * 32 + 60, -Math.PI / 2, 4), plein = L.tirEnnemi(jx * 32 + 16, jy * 32 + 60, -Math.PI / 2, 4);
+      frole.dureeVie = plein.dureeVie = 5; T.pas(40, []);
+      if (frole.mort) out.ko.push('tir qui frôle une jarre arrêté par sa tuile'); if (!plein.mort) out.ko.push('tir en plein dans une jarre non arrêté');
+      J.invuln = 0; const pv0 = L.santeTotale(J.sante);
+      for (let i = 0; i < 10; i++) { J.x = fx * 32 - 6; J.y = fy * 32 + 16; T.pas(1, []); }
+      if (L.santeTotale(J.sante) < pv0) out.ko.push('feu : brûlé à 12 px de la flamme');
+      for (let i = 0; i < 10; i++) { J.x = fx * 32; J.y = fy * 32 + 16; T.pas(1, []); }
+      if (!(L.santeTotale(J.sante) < pv0)) out.ko.push('feu : pas de brûlure au contact de la flamme'); }
     return out;
   });
 

@@ -109,8 +109,10 @@ const Entrees = {
   vientEnfonce(a) { return this.brutEnfonce(a) && !this.brutAvant(a) && !this.bloque[a]; },
   vientRelache(a) { return !this.brutEnfonce(a) && this.brutAvant(a); },
   // Consomme toutes les entrées maintenues : elles devront être relâchées avant d'agir à nouveau.
-  consommer() {
-    for (const a of [...ACTIONS_JEU, 'tir', 'nav']) this.bloque[a] = true;
+  // Les boutons enfoncés au changement de contexte ne déclenchent rien tant qu'on ne les a pas relâchés.
+  // garderTir : en jeu (porte, prise d'objet, intro de boss), une visée tenue continue de tirer.
+  consommer(o = {}) {
+    for (const a of [...ACTIONS_JEU, 'tir', 'nav']) if (!(a === 'tir' && o.garderTir)) this.bloque[a] = true;
     this.maintien = {};
   },
 

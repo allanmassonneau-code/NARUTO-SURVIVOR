@@ -17,6 +17,7 @@ Langage de la famille *Rebirth* : petits personnages caricaturaux à **grosse t�
 | Écrans ultralarges | bandes noires : on ne voit jamais davantage de salles ni d’ennemis |
 | Grandes salles (2×1, 1×2, 2×2, L) | caméra locale qui suit le joueur, butées aux murs ; l’échelle des personnages ne change pas |
 | Joueur | canevas visuel ≈ 32 × 32 (tête 26 × 22 posée sur un corps 14 × 11) ; **collision : cercle de 7 px aux pieds**, indépendante de la tête et des accessoires ; rayon de touche des projectiles ennemis 5 px |
+| Obstacles | boîte de collision **plus petite que la tuile**, calée sur le dessin (marges gauche / haut / droite / bas) : rocher et rocher à sceau 4 / 8 / 4 / 2 px, totem 6 / 8 / 6 / 2, bloc 3 / 7 / 3 / 2, jarre 7 / 13 / 7 / 1, caisse 5 / 11 / 5 / 1, feu 6 / 9 / 6 / 2, fosse 3 / 4 / 3 / 3 ; on frôle sans s’accrocher aux coins et l’on passe derrière la moitié haute (tri en profondeur) ; murs et portes gardent la tuile entière |
 | Rendu | positions arrondies au pixel au moment du dessin ; simulation en flottants à 60 Hz ; aucun filtrage des sprites |
 
 ### Zones d’écran (640 × 360)
@@ -179,6 +180,7 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 | 24 | Salle nettoyée | dernier ennemi vaincu (hors boss) | 0,9 | onde dorée depuis le dernier ennemi, lueur chaude qui balaie la salle, portes qui s’illuminent | `nettoyee` (trois notes) + `porte_ouvre` | onde seule |
 | 25 | Battants de porte | fermeture au combat, ouverture | 0,12 / 0,34 | les barreaux retombent d’un coup (poussière) et glissent dans le mur à l’ouverture | `porte_ferme` / `porte_ouvre` | sans poussière |
 | 26 | Fusions de natures | impacts des synergies | 0,6–2,4 | lave (croûte, bulles), vapeur (bouffées), flaque électrisée (étincelles), sable de fer (grains qui convergent), racines (couronne qui jaillit), rayon Jinton (faisceau blanc, cube) | `feu`, `eau`, `eclair`, `laser` | — |
+| 27 | Mur secret ouvert | explosion contre un mur secret, entrée dans une cache | 0,6 | brèche dentelée et gravats dessinés **des deux côtés** du mur, fumée, débris, secousse 4 | `secret` | sans secousse |
 
 **Combinaisons d’effets** (au moins dix) : Rasengan + foudre (sphère spiralée puis arcs vers deux cibles) ; argile + Katon (explosion ronde puis zone de feu allié) ; météore + glace (réticule puis sol gelé) ; boomerang + explosion (une petite explosion par contact, budget 14) ; faisceau + multitir (faisceaux en éventail) ; rayon + percement (rayon plus épais, +20 %) ; sable en orbite + poison (grains verts) ; éventail + Katon (trois flammes) ; chaîne + onde (onde puis arcs, budget partagé) ; mines + lévitation (mines au-dessus du vide) ; réserve instable rompue + bulle rouge (onde noire + huit tirs).
 
@@ -191,7 +193,8 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 - **Mission à code** : clavier virtuel de 32 caractères (sans I, O, 0, 1), saisie entièrement à la manette.
 - **Pause** : reprendre, objets et mutations (inventaire par pages avec descriptions à deux niveaux), options, sauvegarder et quitter, abandonner (confirmation) ; la carte étendue reste au maintien de *Carte*.
 - **Descriptions** : bouton *Description* près d’un piédestal → phrase courte, puis valeurs et interactions découvertes ; panneau d’achat qui affiche le **résultat exact** d’un pacte (contenants restants, santé après paiement, risque de mort, confirmation à deux temps si mortel).
-- **Carte** : minicarte (salles aperçues, pictogrammes des spéciales), carte étendue au maintien (légende, code de mission, temps).
+- **Carte** : minicarte (salles aperçues, pictogrammes des spéciales : étoile dorée pour l’héritage, pièce verte pour l’échoppe, crâne pour le boss), carte étendue au maintien (légende aux mêmes pictogrammes, code de mission, temps).
+- **Échoppe et héritage** : deux lieux qu’on reconnaît dès la porte. L’**échoppe** est un marché : porte brune à seuil vert flanquée de deux lanternes de papier rouges, tapis rouge, étals à auvent rayé vert et blanc, étagères de marchandises, lanternes, piédestaux en étals de bois à nappe verte avec le prix en Ryō. L’**héritage** est un sanctuaire : porte dorée flanquée de deux flammes, cercle de sceau doré au sol, quatre bougies, corde sacrée à papiers pliés, puits de lumière dorée, piédestal unique à liseré doré.
 
 ## D10. Audio (brief §34) — `22_audio.js`
 
