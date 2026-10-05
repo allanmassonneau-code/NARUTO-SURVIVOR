@@ -22,7 +22,7 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 | Variantes d’étage | 18 | 12 | 24 |
 | Boss (dont mini-boss) | 24 | 25 | 70 |
 | Archétypes ennemis | 75 | 60 | 140 |
-| Modèles de salles | 105 | 120 | 500 |
+| Modèles de salles | 120 | 120 | 500 |
 | Objectifs de déblocage | 60 | 80 | 250 |
 | Défis jouables | 12 | 30 | 80 |
 | Secrets documentés | 15 | — | 60 |

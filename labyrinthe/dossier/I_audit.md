@@ -20,7 +20,7 @@
 | Variantes d'étage | 18 | 12 | 24 |
 | Boss (dont mini-boss) | 24 | 25 | 70 |
 | Archétypes ennemis | 75 | 60 | 140 |
-| Modèles de salles | 105 | 120 | 500 |
+| Modèles de salles | 120 | 120 | 500 |
 | Objectifs de déblocage | 60 | 80 | 250 |
 | Défis jouables | 12 | 30 | 80 |
 | Secrets documentés | 15 | — | 60 |
@@ -29,7 +29,7 @@
 | Briefs d'écrans | 16 | — | 16 |
 | Fiches d'effets (D) | 22 | — | 30 |
 
-**Lecture honnête.** La cible « v1.0 de travail » est atteinte ou dépassée sur 12 lots, manquée sur 4 : salles (105 sur 120), objectifs (60 sur 80), défis (12 sur 30), boss (24 sur 25). La **bibliothèque complète** reste une cible de conception : 600 collectibles, 500 salles, 70 boss, 140 ennemis et 80 personnages ne sont ni produits ni décrits fiche par fiche ; aucun document ne les présente comme faits. Les synergies documentées sont surtout des paires : 96 dont 9 fusions de natures et 3 trios ; les trios et combinaisons de quatre du brief (§35 : 90 et 30) restent très en deçà.
+**Lecture honnête.** La cible « v1.0 de travail » est atteinte ou dépassée sur 13 lots, manquée sur 3 : objectifs (60 sur 80), défis (12 sur 30), boss (24 sur 25). La **bibliothèque complète** reste une cible de conception : 600 collectibles, 500 salles, 70 boss, 140 ennemis et 80 personnages ne sont ni produits ni décrits fiche par fiche ; aucun document ne les présente comme faits. Les synergies documentées sont surtout des paires : 96 dont 9 fusions de natures et 3 trios ; les trios et combinaisons de quatre du brief (§35 : 90 et 30) restent très en deçà.
 
 ## I2. Contradictions trouvées et résolues
 

@@ -1038,6 +1038,196 @@
   "poids": 1.5
  },
  {
+  "id": "ROM_092",
+  "nom": "Dojo d’entraînement",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".#...#.#...#.",
+   ".....p.p.....",
+   "..t.......t..",
+   ".............",
+   ".#...#.#...#.",
+   "............."
+  ],
+  "themes": [
+   "THM_ACA"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_093",
+  "nom": "Toiles géantes",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".WWW.....WWW.",
+   ".W.W..v..W.W.",
+   ".....s.s.....",
+   ".W.W.....W.W.",
+   ".WWW.....WWW.",
+   "............."
+  ],
+  "themes": [
+   "THM_FOR"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_094",
+  "nom": "Sables mouvants",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   "..OO.....OO..",
+   ".OvO..t..OOO.",
+   ".............",
+   ".OOO..c..OvO.",
+   "..OO.....OO..",
+   "............."
+  ],
+  "themes": [
+   "THM_SUN"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_095",
+  "nom": "Chaîne de montage",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".f.........f.",
+   "...XXX.XXX...",
+   ".............",
+   "...XXX.XXX...",
+   "....p...p....",
+   "............."
+  ],
+  "themes": [
+   "THM_MAR"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_096",
+  "nom": "Serpentarium",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".OOOO...OOOO.",
+   "....O...O....",
+   "..p.O.r.O.p..",
+   "....O...O....",
+   ".OOOO...OOOO.",
+   "............."
+  ],
+  "themes": [
+   "THM_ORO"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_097",
+  "nom": "Brume sur l’écluse",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".OOOOO.OOOOO.",
+   ".OOOOO.OOOOO.",
+   "...v..t..v...",
+   ".OOOOO.OOOOO.",
+   ".OOOOO.OOOOO.",
+   "............."
+  ],
+  "themes": [
+   "THM_KIR"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_098",
+  "nom": "Salle du conseil",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   "...T.....T...",
+   ".T....i....T.",
+   "...t.....t...",
+   ".T....p....T.",
+   "...T.....T...",
+   "............."
+  ],
+  "themes": [
+   "THM_AKA"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_099",
+  "nom": "Champ de cratères",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   "..OO....OO...",
+   "..OO..t.OO...",
+   ".........l...",
+   ".OO......OO..",
+   ".OO..p...OO..",
+   "............."
+  ],
+  "themes": [
+   "THM_GUE"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_075",
+  "nom": "Cascade aux crapauds",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   "..F.......F..",
+   ".....OOO.....",
+   "..v..OOO..v..",
+   ".....OOO.....",
+   "...p.....p...",
+   "............."
+  ],
+  "themes": [
+   "THM_MYO"
+  ],
+  "poids": 1.5
+ },
+ {
+  "id": "ROM_076",
+  "nom": "Chaînes du sceau",
+  "type": "combat",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".^^^.....^^^.",
+   "...T..g..T...",
+   ".............",
+   "...T.....T...",
+   ".^^^.p.p.^^^.",
+   "............."
+  ],
+  "themes": [
+   "THM_BIJ"
+  ],
+  "poids": 1.5
+ },
+ {
   "id": "ROM_040",
   "nom": "Couloir horizontal",
   "type": "combat",
@@ -1627,6 +1817,22 @@
   "sansSceau": true
  },
  {
+  "id": "ROM_111",
+  "nom": "Échoppe des remparts",
+  "type": "boutique",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".JJ...A...JJ.",
+   ".............",
+   "...S..S..S...",
+   ".............",
+   ".CC.S...S.CC.",
+   "............."
+  ],
+  "sansSceau": true
+ },
+ {
   "id": "ROM_120",
   "nom": "Arène du gardien",
   "type": "boss",
@@ -1808,6 +2014,22 @@
   "sansSceau": true
  },
  {
+  "id": "ROM_181",
+  "nom": "Marché couvert",
+  "type": "dispositifs",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".M.........M.",
+   ".............",
+   "......M......",
+   ".............",
+   "...N.....N...",
+   "............."
+  ],
+  "sansSceau": true
+ },
+ {
   "id": "ROM_185",
   "nom": "Bibliothèque d’empreintes",
   "type": "bibliotheque",
@@ -1819,6 +2041,22 @@
    ".....I.I.....",
    ".............",
    ".CC.......CC.",
+   "............."
+  ],
+  "sansSceau": true
+ },
+ {
+  "id": "ROM_186",
+  "nom": "Rayonnages",
+  "type": "bibliotheque",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".CCC.....CCC.",
+   ".............",
+   "....I...I....",
+   ".............",
+   ".CCC.....CCC.",
    "............."
   ],
   "sansSceau": true
@@ -1840,6 +2078,22 @@
   "sansSceau": true
  },
  {
+  "id": "ROM_191",
+  "nom": "Trésor entre les rochers",
+  "type": "coffres",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".#.........#.",
+   "..Z...Z...Z..",
+   ".............",
+   "..Z...Z...Z..",
+   ".#.........#.",
+   "............."
+  ],
+  "sansSceau": true
+ },
+ {
   "id": "ROM_195",
   "nom": "Source chaude",
   "type": "repos",
@@ -1850,6 +2104,22 @@
    ".............",
    "......A......",
    ".............",
+   ".............",
+   "............."
+  ],
+  "sansSceau": true
+ },
+ {
+  "id": "ROM_196",
+  "nom": "Source entre les pierres",
+  "type": "repos",
+  "forme": "1x1",
+  "grille": [
+   ".............",
+   ".............",
+   "....#...#....",
+   "......A......",
+   "....#...#....",
    ".............",
    "............."
   ],

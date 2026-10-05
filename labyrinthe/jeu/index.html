@@ -1367,6 +1367,87 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     '.....#.#.....',
     '..T.......T..',
     '.............'], { themes: ['THM_BIJ'], poids: 1.5 });
+  // ── Combat 1×1 : deuxième salle propre à chaque thème ──
+  S('ROM_092', 'Dojo d’entraînement', 'combat', [
+    '.............',
+    '.#...#.#...#.',
+    '.....p.p.....',
+    '..t.......t..',
+    '.............',
+    '.#...#.#...#.',
+    '.............'], { themes: ['THM_ACA'], poids: 1.5 });
+  S('ROM_093', 'Toiles géantes', 'combat', [
+    '.............',
+    '.WWW.....WWW.',
+    '.W.W..v..W.W.',
+    '.....s.s.....',
+    '.W.W.....W.W.',
+    '.WWW.....WWW.',
+    '.............'], { themes: ['THM_FOR'], poids: 1.5 });
+  S('ROM_094', 'Sables mouvants', 'combat', [
+    '.............',
+    '..OO.....OO..',
+    '.OvO..t..OOO.',
+    '.............',
+    '.OOO..c..OvO.',
+    '..OO.....OO..',
+    '.............'], { themes: ['THM_SUN'], poids: 1.5 });
+  S('ROM_095', 'Chaîne de montage', 'combat', [
+    '.............',
+    '.f.........f.',
+    '...XXX.XXX...',
+    '.............',
+    '...XXX.XXX...',
+    '....p...p....',
+    '.............'], { themes: ['THM_MAR'], poids: 1.5 });
+  S('ROM_096', 'Serpentarium', 'combat', [
+    '.............',
+    '.OOOO...OOOO.',
+    '....O...O....',
+    '..p.O.r.O.p..',
+    '....O...O....',
+    '.OOOO...OOOO.',
+    '.............'], { themes: ['THM_ORO'], poids: 1.5 });
+  S('ROM_097', 'Brume sur l’écluse', 'combat', [
+    '.............',
+    '.OOOOO.OOOOO.',
+    '.OOOOO.OOOOO.',
+    '...v..t..v...',
+    '.OOOOO.OOOOO.',
+    '.OOOOO.OOOOO.',
+    '.............'], { themes: ['THM_KIR'], poids: 1.5 });
+  S('ROM_098', 'Salle du conseil', 'combat', [
+    '.............',
+    '...T.....T...',
+    '.T....i....T.',
+    '...t.....t...',
+    '.T....p....T.',
+    '...T.....T...',
+    '.............'], { themes: ['THM_AKA'], poids: 1.5 });
+  S('ROM_099', 'Champ de cratères', 'combat', [
+    '.............',
+    '..OO....OO...',
+    '..OO..t.OO...',
+    '.........l...',
+    '.OO......OO..',
+    '.OO..p...OO..',
+    '.............'], { themes: ['THM_GUE'], poids: 1.5 });
+  S('ROM_075', 'Cascade aux crapauds', 'combat', [
+    '.............',
+    '..F.......F..',
+    '.....OOO.....',
+    '..v..OOO..v..',
+    '.....OOO.....',
+    '...p.....p...',
+    '.............'], { themes: ['THM_MYO'], poids: 1.5 });
+  S('ROM_076', 'Chaînes du sceau', 'combat', [
+    '.............',
+    '.^^^.....^^^.',
+    '...T..g..T...',
+    '.............',
+    '...T.....T...',
+    '.^^^.p.p.^^^.',
+    '.............'], { themes: ['THM_BIJ'], poids: 1.5 });
   // ── Couloirs étroits (portes imposées) ──
   S('ROM_040', 'Couloir horizontal', 'combat', [
     '~~~~~~~~~~~~~',
@@ -1670,6 +1751,14 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     '.............',
     '......S......',
     '.............'], { sansSceau: true });
+  S('ROM_111', 'Échoppe des remparts', 'boutique', [
+    '.............',
+    '.JJ...A...JJ.',
+    '.............',
+    '...S..S..S...',
+    '.............',
+    '.CC.S...S.CC.',
+    '.............'], { sansSceau: true });
   S('ROM_120', 'Arène du gardien', 'boss', [
     '.............',
     '.............',
@@ -1758,6 +1847,14 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     '.............',
     '..N.......N..',
     '.............'], { sansSceau: true });
+  S('ROM_181', 'Marché couvert', 'dispositifs', [
+    '.............',
+    '.M.........M.',
+    '.............',
+    '......M......',
+    '.............',
+    '...N.....N...',
+    '.............'], { sansSceau: true });
   S('ROM_185', 'Bibliothèque d’empreintes', 'bibliotheque', [
     '.............',
     '.CC.......CC.',
@@ -1765,6 +1862,14 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     '.....I.I.....',
     '.............',
     '.CC.......CC.',
+    '.............'], { sansSceau: true });
+  S('ROM_186', 'Rayonnages', 'bibliotheque', [
+    '.............',
+    '.CCC.....CCC.',
+    '.............',
+    '....I...I....',
+    '.............',
+    '.CCC.....CCC.',
     '.............'], { sansSceau: true });
   S('ROM_190', 'Chambre forte', 'coffres', [
     '.............',
@@ -1774,12 +1879,28 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     '...Z..Z..Z...',
     '.............',
     '.............'], { sansSceau: true });
+  S('ROM_191', 'Trésor entre les rochers', 'coffres', [
+    '.............',
+    '.#.........#.',
+    '..Z...Z...Z..',
+    '.............',
+    '..Z...Z...Z..',
+    '.#.........#.',
+    '.............'], { sansSceau: true });
   S('ROM_195', 'Source chaude', 'repos', [
     '.............',
     '.............',
     '.............',
     '......A......',
     '.............',
+    '.............',
+    '.............'], { sansSceau: true });
+  S('ROM_196', 'Source entre les pierres', 'repos', [
+    '.............',
+    '.............',
+    '....#...#....',
+    '......A......',
+    '....#...#....',
     '.............',
     '.............'], { sansSceau: true });
   S('ROM_199', 'Pacte interdit', 'pacte', [

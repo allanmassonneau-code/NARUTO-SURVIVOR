@@ -64,6 +64,16 @@
 | ROM_064 | Tranchées | combat | 1x1 | tous | toutes | 4 | 79 / 91 |
 | ROM_065 | Bassin des crapauds | combat | 1x1 | tous | toutes | 3 | 75 / 91 |
 | ROM_066 | Sceaux brisés | combat | 1x1 | tous | toutes | 3 | 83 / 91 |
+| ROM_092 | Dojo d’entraînement | combat | 1x1 | tous | toutes | 4 | 83 / 91 |
+| ROM_093 | Toiles géantes | combat | 1x1 | tous | toutes | 3 | 91 / 91 |
+| ROM_094 | Sables mouvants | combat | 1x1 | tous | toutes | 4 | 73 / 91 |
+| ROM_095 | Chaîne de montage | combat | 1x1 | tous | toutes | 4 | 79 / 91 |
+| ROM_096 | Serpentarium | combat | 1x1 | tous | toutes | 3 | 69 / 91 |
+| ROM_097 | Brume sur l’écluse | combat | 1x1 | tous | toutes | 3 | 51 / 91 |
+| ROM_098 | Salle du conseil | combat | 1x1 | tous | toutes | 4 | 83 / 91 |
+| ROM_099 | Champ de cratères | combat | 1x1 | tous | toutes | 3 | 75 / 91 |
+| ROM_075 | Cascade aux crapauds | combat | 1x1 | tous | toutes | 4 | 80 / 91 |
+| ROM_076 | Chaînes du sceau | combat | 1x1 | tous | toutes | 3 | 75 / 91 |
 | ROM_040 | Couloir horizontal | combat | 1x1 | tous | gauche, droite | 3 | 39 / 91 |
 | ROM_041 | Couloir vertical | combat | 1x1 | tous | haut, bas | 3 | 35 / 91 |
 | ROM_042 | Couloir de fosses | combat | 1x1 | tous | gauche, droite | 2 | 31 / 91 |
@@ -93,6 +103,7 @@
 | ROM_101 | Héritage entre les rochers | heritage | 1x1 | 2-9 | toutes | 0 | 85 / 91 |
 | ROM_102 | Héritage sur l’îlot | heritage | 1x1 | 3-9 | toutes | 0 | 72 / 91 |
 | ROM_110 | Échoppe clandestine | boutique | 1x1 | tous | toutes | 0 | 91 / 91 |
+| ROM_111 | Échoppe des remparts | boutique | 1x1 | tous | toutes | 0 | 83 / 91 |
 | ROM_120 | Arène du gardien | boss | 1x1 | tous | toutes | 0 | 91 / 91 |
 | ROM_121 | Arène aux piliers | boss | 1x1 | tous | toutes | 0 | 87 / 91 |
 | ROM_130 | Cache de renseignements | cache | 1x1 | tous | toutes | 0 | 91 / 91 |
@@ -104,9 +115,13 @@
 | ROM_170 | Épreuve de l’examen chūnin | defi | 1x1 | tous | toutes | 0 | 91 / 91 |
 | ROM_175 | Épreuve de jōnin | defi_boss | 1x1 | tous | toutes | 0 | 91 / 91 |
 | ROM_180 | Comptoir des contrebandiers | dispositifs | 1x1 | tous | toutes | 0 | 91 / 91 |
+| ROM_181 | Marché couvert | dispositifs | 1x1 | tous | toutes | 0 | 91 / 91 |
 | ROM_185 | Bibliothèque d’empreintes | bibliotheque | 1x1 | tous | toutes | 0 | 83 / 91 |
+| ROM_186 | Rayonnages | bibliotheque | 1x1 | tous | toutes | 0 | 79 / 91 |
 | ROM_190 | Chambre forte | coffres | 1x1 | tous | toutes | 0 | 91 / 91 |
+| ROM_191 | Trésor entre les rochers | coffres | 1x1 | tous | toutes | 0 | 87 / 91 |
 | ROM_195 | Source chaude | repos | 1x1 | tous | toutes | 0 | 91 / 91 |
+| ROM_196 | Source entre les pierres | repos | 1x1 | tous | toutes | 0 | 87 / 91 |
 | ROM_199 | Pacte interdit | pacte | 1x1 | tous | toutes | 0 | 91 / 91 |
 | ROM_198 | Sanctuaire des ermites | sanctuaire | 1x1 | tous | toutes | 0 | 91 / 91 |
 
@@ -950,6 +965,146 @@ Type combat, forme 1x1, poids 1.5.
 .............
 ```
 
+### ROM_092 — Dojo d’entraînement
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+.#...#.#...#.
+.....p.p.....
+..t.......t..
+.............
+.#...#.#...#.
+.............
+```
+
+### ROM_093 — Toiles géantes
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+.WWW.....WWW.
+.W.W..v..W.W.
+.....s.s.....
+.W.W.....W.W.
+.WWW.....WWW.
+.............
+```
+
+### ROM_094 — Sables mouvants
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+..OO.....OO..
+.OvO..t..OOO.
+.............
+.OOO..c..OvO.
+..OO.....OO..
+.............
+```
+
+### ROM_095 — Chaîne de montage
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+.f.........f.
+...XXX.XXX...
+.............
+...XXX.XXX...
+....p...p....
+.............
+```
+
+### ROM_096 — Serpentarium
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+.OOOO...OOOO.
+....O...O....
+..p.O.r.O.p..
+....O...O....
+.OOOO...OOOO.
+.............
+```
+
+### ROM_097 — Brume sur l’écluse
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+.OOOOO.OOOOO.
+.OOOOO.OOOOO.
+...v..t..v...
+.OOOOO.OOOOO.
+.OOOOO.OOOOO.
+.............
+```
+
+### ROM_098 — Salle du conseil
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+...T.....T...
+.T....i....T.
+...t.....t...
+.T....p....T.
+...T.....T...
+.............
+```
+
+### ROM_099 — Champ de cratères
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+..OO....OO...
+..OO..t.OO...
+.........l...
+.OO......OO..
+.OO..p...OO..
+.............
+```
+
+### ROM_075 — Cascade aux crapauds
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+..F.......F..
+.....OOO.....
+..v..OOO..v..
+.....OOO.....
+...p.....p...
+.............
+```
+
+### ROM_076 — Chaînes du sceau
+
+Type combat, forme 1x1, poids 1.5.
+
+```text
+.............
+.^^^.....^^^.
+...T..g..T...
+.............
+...T.....T...
+.^^^.p.p.^^^.
+.............
+```
+
 ### ROM_040 — Couloir horizontal
 
 Type combat, forme 1x1, portes imposées : gauche, droite.
@@ -1461,6 +1616,20 @@ Type boutique, forme 1x1.
 .............
 ```
 
+### ROM_111 — Échoppe des remparts
+
+Type boutique, forme 1x1.
+
+```text
+.............
+.JJ...A...JJ.
+.............
+...S..S..S...
+.............
+.CC.S...S.CC.
+.............
+```
+
 ### ROM_120 — Arène du gardien
 
 Type boss, forme 1x1.
@@ -1615,6 +1784,20 @@ Type dispositifs, forme 1x1.
 .............
 ```
 
+### ROM_181 — Marché couvert
+
+Type dispositifs, forme 1x1.
+
+```text
+.............
+.M.........M.
+.............
+......M......
+.............
+...N.....N...
+.............
+```
+
 ### ROM_185 — Bibliothèque d’empreintes
 
 Type bibliotheque, forme 1x1.
@@ -1626,6 +1809,20 @@ Type bibliotheque, forme 1x1.
 .....I.I.....
 .............
 .CC.......CC.
+.............
+```
+
+### ROM_186 — Rayonnages
+
+Type bibliotheque, forme 1x1.
+
+```text
+.............
+.CCC.....CCC.
+.............
+....I...I....
+.............
+.CCC.....CCC.
 .............
 ```
 
@@ -1643,6 +1840,20 @@ Type coffres, forme 1x1.
 .............
 ```
 
+### ROM_191 — Trésor entre les rochers
+
+Type coffres, forme 1x1.
+
+```text
+.............
+.#.........#.
+..Z...Z...Z..
+.............
+..Z...Z...Z..
+.#.........#.
+.............
+```
+
 ### ROM_195 — Source chaude
 
 Type repos, forme 1x1.
@@ -1653,6 +1864,20 @@ Type repos, forme 1x1.
 .............
 ......A......
 .............
+.............
+.............
+```
+
+### ROM_196 — Source entre les pierres
+
+Type repos, forme 1x1.
+
+```text
+.............
+.............
+....#...#....
+......A......
+....#...#....
 .............
 .............
 ```
