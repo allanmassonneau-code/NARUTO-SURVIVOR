@@ -167,8 +167,10 @@ function dessinerEnnemi(g, e, x, y) {
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
   const base = sp.frames[e.frame % sp.frames.length];
   const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
-  const ech = (e.echelle || 1) * sc;
-  const w = Math.round(img.width * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1)), h = Math.round(img.height * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1));
+  const ech = (e.echelle || 1) * sc, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
+  // écrasement bref au coup reçu (plus discret sur les boss et en mode confort)
+  const tc = G.temps - (e.coupT ?? -9), sq = tc >= 0 && tc < 0.1 ? (1 - tc / 0.1) * (e.boss ? 0.4 : 1) * (G.reglages.confort ? 0.5 : 1) : 0;
+  const w = Math.round(img.width * f * (1 + 0.2 * sq)), h = Math.round(img.height * f * (1 - 0.15 * sq));
   const miroirG = sp.miroir && e.dir === 'gauche';
   const poser = im => { if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); } else g.drawImage(im, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); };
   // cercle au sol des invocateurs (violet) et des soigneurs (vert) : leur rôle se lit de loin

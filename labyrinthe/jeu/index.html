@@ -1920,7 +1920,7 @@ const SUBSTITUTIONS = { 'æ': 'ae', '’': "'", '‘': "'", '“': '"', '”': '
 const ESPACE_L = 3, INTERLETTRE = 1, HAUTEUR_LIGNE = 11;
 
 const Police = {
-  atlas: null, cases: {}, teintes: new Map(),
+  atlas: null, cases: {}, teintes: new Map(), rendus: new Map(),
   preparer() {
     // atlas blanc de tous les glyphes
     const chars = Object.keys(GLYPHES);
@@ -1968,14 +1968,26 @@ const Police = {
     return lignes;
   },
   // options : { e: échelle entière, a: 'g'|'c'|'d', ombre: couleur|null, contour: couleur|null }
+  // Chaque texte (chaîne, couleur, échelle, ombre ou contour) est composé une fois dans une petite toile
+  // puis posé d'un seul drawImage : un glyphe par appel coûtait l'essentiel du rendu logiciel.
   ecrire(ctx, s, x, y, couleur = '#f4ecd8', o = {}) {
     if (!this.atlas) this.preparer();
     s = this.normaliser(s); const e = o.e || 1;
     const l = this.largeur(s) * e;
-    let px = Math.round(o.a === 'c' ? x - l / 2 : o.a === 'd' ? x - l : x); const py = Math.round(y);
-    if (o.contour) { for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, 1], [-1, 1], [1, -1]]) this._brut(ctx, s, px + dx * e, py + dy * e, o.contour, e); }
-    else if (o.ombre !== null) this._brut(ctx, s, px + e, py + e, o.ombre || '#14101c', e);
-    this._brut(ctx, s, px, py, couleur, e);
+    const px = Math.round(o.a === 'c' ? x - l / 2 : o.a === 'd' ? x - l : x), py = Math.round(y);
+    if (!l) return l;
+    const cle = s + '\u0001' + couleur + '\u0001' + e + '\u0001' + (o.contour || '') + '\u0001' + (o.ombre === null ? '-' : o.ombre || '');
+    let r = this.rendus.get(cle);
+    if (!r) {
+      r = document.createElement('canvas'); r.width = l + 2 * e; r.height = 14 * e;
+      const g = r.getContext('2d'); g.imageSmoothingEnabled = false;
+      if (o.contour) { for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, 1], [-1, 1], [1, -1]]) this._brut(g, s, e + dx * e, 3 * e + dy * e, o.contour, e); }
+      else if (o.ombre !== null) this._brut(g, s, 2 * e, 4 * e, o.ombre || '#14101c', e);
+      this._brut(g, s, e, 3 * e, couleur, e);
+      if (this.rendus.size >= 900) this.rendus.delete(this.rendus.keys().next().value); // les plus anciens d'abord
+      this.rendus.set(cle, r);
+    }
+    ctx.drawImage(r, px - e, py - 3 * e);
     return l;
   },
   _brut(ctx, s, x, y, couleur, e) {
@@ -2323,6 +2335,7 @@ const Son = {
     telegraphe: [0.12, 2, 5], laser: [0.08, 2, 2], eclair: [0.05, 2, 2], eau: [0.06, 2, 1], feu: [0.06, 2, 1], vent: [0.08, 2, 1],
     sable: [0.06, 2, 1], fumee: [0.08, 2, 1], invocation: [0.2, 1, 3], meche: [0.15, 2, 1], pics: [0.2, 1, 3], tir_ennemi: [0.06, 3, 1],
     charge: [0.3, 1, 2], lame: [0.05, 2, 1], pas_lourd: [0.12, 1, 1], rire: [0.5, 1, 3], gong: [0.8, 1, 5], sceau: [0.3, 1, 4],
+    nettoyee: [0.5, 1, 4], battement: [0.6, 1, 1],
   },
   jouer(nom, vol = 1, hauteur = 1) {
     if (!this.actif || !this.ctx || this.ctx.state !== 'running') return;
@@ -2359,6 +2372,8 @@ const Son = {
       case 'objet_mineur': this.osc('triangle', 784, 0, t, 0.1, 0.12 * v, d); this.osc('triangle', 1046, 0, t + 0.07, 0.18, 0.12 * v, d); duree = 0.25; break;
       case 'porte_ferme': this.osc('sine', 110, 55, t, 0.25, 0.35 * v, d); this.souffle(t, 0.15, 0.2 * v, 'lowpass', 600, 100, 1, d); duree = 0.26; break;
       case 'porte_ouvre': this.souffle(t, 0.3, 0.12 * v, 'bandpass', 300, 1200, 1.5, d); this.osc('triangle', 392, 523, t, 0.25, 0.06 * v, d); duree = 0.3; break;
+      case 'nettoyee': { const n = [659, 880, 1318]; n.forEach((f, i) => this.osc('triangle', f, 0, t + i * 0.07, 0.4, 0.085 * v, d)); this.osc('sine', 1976, 0, t + 0.2, 0.55, 0.035 * v, d, 0.02); duree = 0.8; break; }
+      case 'battement': this.osc('sine', 72, 44, t, 0.13, 0.32 * v, d, 0.006); this.osc('sine', 66, 40, t + 0.19, 0.12, 0.22 * v, d, 0.006); duree = 0.34; break;
       case 'secret': { const n = [587, 698, 880, 1174, 1046]; n.forEach((f, i) => this.osc('triangle', f, 0, t + i * 0.11, 0.4, 0.13 * v, d)); duree = 0.9; break; }
       case 'achat': this.osc('triangle', 1318, 0, t, 0.08, 0.12 * v, d); this.osc('triangle', 1976, 0, t + 0.07, 0.2, 0.12 * v, d); this.osc('sine', 659, 0, t, 0.3, 0.08 * v, d); duree = 0.3; break;
       case 'refus': this.osc('square', 150, 130, t, 0.18, 0.08 * v, d); duree = 0.2; break;
@@ -4490,8 +4505,10 @@ function dessinerEnnemi(g, e, x, y) {
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
   const base = sp.frames[e.frame % sp.frames.length];
   const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
-  const ech = (e.echelle || 1) * sc;
-  const w = Math.round(img.width * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1)), h = Math.round(img.height * (ech > 1.05 ? Math.round(ech * 4) / 4 : 1));
+  const ech = (e.echelle || 1) * sc, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
+  // écrasement bref au coup reçu (plus discret sur les boss et en mode confort)
+  const tc = G.temps - (e.coupT ?? -9), sq = tc >= 0 && tc < 0.1 ? (1 - tc / 0.1) * (e.boss ? 0.4 : 1) * (G.reglages.confort ? 0.5 : 1) : 0;
+  const w = Math.round(img.width * f * (1 + 0.2 * sq)), h = Math.round(img.height * f * (1 - 0.15 * sq));
   const miroirG = sp.miroir && e.dir === 'gauche';
   const poser = im => { if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); } else g.drawImage(im, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); };
   // cercle au sol des invocateurs (violet) et des soigneurs (vert) : leur rôle se lit de loin
@@ -4694,14 +4711,44 @@ function majEffets(dt) {
       if (!e.touche && !J.intangible) { const d = dist(e.x, e.y, J.x, J.y); if (Math.abs(d - e.r) < 7) { const a = angleVers(e.x, e.y, J.x, J.y); if (Math.abs(diffAngle(a, e.trou)) > e.largeurTrou / 2) { e.touche = true; blesserJoueur(G.degatsEnnemis, { type: 'onde', x: e.x, y: e.y }); } } }
     }
     if (e.attache) { e.x = J.x; e.y = J.y; }
+    if (e.type === 'cadavre_boss') {
+      if (Math.random() < dt * (G.reglages.confort ? 6 : 14)) { const a = Math.random() * Math.PI * 2, d = Math.random() * e.r; G.effets.push({ type: 'explosion_petite', x: e.x + Math.cos(a) * d, y: e.y - e.h * 0.45 + Math.sin(a) * d * 0.8, r: 8 + Math.random() * 8, age: 0, duree: 0.28 }); Son.jouer('explosion', 0.3); }
+      if (!e.fini && e.age >= e.duree * 0.9) { e.fini = true; G.effets.push({ type: 'mort_boss', x: e.x, y: e.y - 12, age: 0, duree: 1.2 }); debrisSprite(e.x, e.y, Math.round(e.h * 0.5), e.img, G.reglages.confort ? 10 : 24, 1.6); secousse(10, null); Son.jouer('explosion'); }
+    }
   }
   G.effets = G.effets.filter(e => e.age < e.duree);
   const maxP = G.reglages.confort ? 120 : 260;
   if (G.particules.length > maxP) G.particules.splice(0, G.particules.length - maxP);
-  for (const p of G.particules) { p.age += dt; p.x += p.vx * dt; p.y += p.vy * dt; if (p.g) p.vy += p.g * dt; }
+  for (const p of G.particules) {
+    p.age += dt; p.x += p.vx * dt; p.y += p.vy * dt; if (p.g) p.vy += p.g * dt;
+    if (p.sol !== undefined && p.y > p.sol && p.vy > 0) { p.y = p.sol; p.vy *= -0.35; p.vx *= 0.55; if (p.vy > -25) { p.vy = 0; p.g = 0; p.vx *= 0.5; } } // éclats qui rebondissent au sol
+  }
   G.particules = G.particules.filter(p => p.age < p.duree);
   for (const t of G.textes) t.age += dt;
   G.textes = G.textes.filter(t => t.age < t.duree);
+}
+// Mort : silhouette blanche qui s'évase, éclats aux couleurs du sprite qui retombent et rebondissent
+const _couleursSprite = new WeakMap();
+function couleursSprite(c) {
+  let L = _couleursSprite.get(c); if (L) return L;
+  const n = new Map();
+  try { const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 0; i < d.length; i += 4) { if (d[i + 3] < 200 || d[i] + d[i + 1] + d[i + 2] < 90) continue; const k = (d[i] >> 5) << 6 | (d[i + 1] >> 5) << 3 | d[i + 2] >> 5; n.set(k, (n.get(k) || 0) + 1); } } catch (err) { /* toile illisible : couleurs neutres */ }
+  L = [...n.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k]) => 'rgb(' + ((k >> 6 & 7) * 32 + 16) + ',' + ((k >> 3 & 7) * 32 + 16) + ',' + ((k & 7) * 32 + 16) + ')');
+  if (!L.length) L = ['#c8c0d0', '#8a8098'];
+  _couleursSprite.set(c, L); return L;
+}
+function imageMort(e) {
+  const sp = spriteEnnemi(e), img = sp.frames[e.frame % sp.frames.length], ech = e.echelle || 1, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
+  return { img, w: Math.round(img.width * f), h: Math.round(img.height * f), base: sp.base || 0, miroir: !!(sp.miroir && e.dir === 'gauche') };
+}
+function debrisSprite(x, y, hauteur, img, n, v = 1) {
+  const C = couleursSprite(img);
+  for (let i = 0; i < n; i++) { const a = -Math.PI * (0.08 + 0.84 * Math.random()), s = (40 + Math.random() * 70) * v; G.particules.push({ x: x + (Math.random() - 0.5) * 10 * v, y: y - hauteur, vx: Math.cos(a) * s, vy: Math.sin(a) * s, g: 420, sol: y + (Math.random() - 0.5) * 6, age: 0, duree: 0.55 + Math.random() * 0.4, couleur: C[i % C.length], taille: Math.random() < 0.35 ? 3 : 2 }); }
+}
+function eclatMort(e) {
+  const M = imageMort(e), y = e.y - (e.z || 0);
+  G.effets.push(Object.assign({ type: 'eclat_mort', x: e.x, y, age: 0, duree: 0.16 }, M));
+  debrisSprite(e.x, y, Math.round(M.h * 0.5), M.img, (G.reglages.confort ? 4 : 8) + Math.min(6, Math.round(e.r / 3)));
 }
 function effetImpact(x, y, app, force, elements) {
   const n = G.reglages.confort ? 2 : 4; const col = app === 'ennemi' ? '#ff9ac0' : app === 'sable' ? '#e0c080' : app === 'poing' ? '#ffb0d0' : app === 'orbe' ? '#c0e8ff' : '#fff4d0';
@@ -4782,6 +4829,26 @@ function dessinerEffet(g, e, X, Y) {
       break;
     }
     case 'nuage_venin': { for (let i = 0; i < 5; i++) { const a = i * 1.26, d = 4 + k * 16, r = Math.max(1, Math.round(6 * (1 - k * 0.5))); g.globalAlpha = 0.6 * (1 - k); g.drawImage(disque(r, i % 2 ? '#8ae05a' : '#5aa040'), Math.round(x + Math.cos(a) * d - r), Math.round(y + Math.sin(a) * d * 0.6 - r)); } g.globalAlpha = 1; break; }
+    case 'cadavre_boss': { // la dépouille vacille, clignote, rougeoie et s'affaisse
+      const tr = G.reglages.confort ? 0 : Math.round((Math.random() - 0.5) * 4 * (0.4 + k)), blanc = !G.reglages.sansFlash && Math.floor(e.age * 16) % 3 === 0;
+      const w = e.w, h = Math.max(2, Math.round(e.h * (1 - 0.3 * k * k))), a0 = k > 0.88 ? Math.max(0, (1 - k) / 0.12) : 1;
+      const poser = im => { if (e.miroir) { g.save(); g.translate(x + tr, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y - h + e.base, w, h); g.restore(); } else g.drawImage(im, x + tr - Math.round(w / 2), y - h + e.base, w, h); };
+      g.globalAlpha = a0; poser(blanc ? silhouetteMemo(e.img, '#ffffff') : e.img);
+      if (!blanc && k > 0.25) { g.globalAlpha = a0 * Math.min(0.8, (k - 0.25) * 1.4); poser(silhouetteMemo(e.img, '#ff9a48')); }
+      g.globalAlpha = 1; break;
+    }
+    case 'salle_nettoyee': { // onde dorée qui balaie la salle : le calme revient
+      const r = 10 + 420 * (1 - (1 - k) * (1 - k)), S = G.salle; g.save(); g.beginPath(); g.rect(X(TUILE), Y(TUILE), (S.W - 2) * TUILE, (S.H - 2) * TUILE); g.clip();
+      g.globalAlpha = 0.5 * (1 - k); g.strokeStyle = '#ffe8a8'; g.lineWidth = 2;
+      g.beginPath(); g.arc(x, y - 6, r, 0, Math.PI * 2); g.stroke(); if (r > 24) { g.globalAlpha = 0.25 * (1 - k); g.beginPath(); g.arc(x, y - 6, r - 10, 0, Math.PI * 2); g.stroke(); }
+      g.restore(); break;
+    }
+    case 'eclat_mort': { // silhouette blanche qui s'évase et s'efface
+      const w = Math.round(e.w * (1 + 0.35 * k)), h = Math.round(e.h * (1 + 0.15 * k)), im = silhouetteMemo(e.img, G.reglages.sansFlash ? '#c8c0d8' : '#ffffff');
+      g.globalAlpha = (1 - k) * (G.reglages.sansFlash ? 0.45 : 0.9);
+      if (e.miroir) { g.save(); g.translate(x, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y - h + e.base, w, h); g.restore(); } else g.drawImage(im, x - Math.round(w / 2), y - h + e.base, w, h);
+      g.globalAlpha = 1; break;
+    }
     case 'racines': { // racines qui jaillissent en couronne autour de l'impact, puis rentrent sous terre
       const R = e.r || 18, cr = Math.min(1, e.age * 6), dec = k > 0.7 ? (k - 0.7) / 0.3 : 0, h = Math.round(14 * cr * (1 - dec));
       for (let i = 0; i < 7; i++) {
@@ -5907,7 +5974,7 @@ function infligerDegats(e, deg, src = {}) {
   if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if (D.inoShikaCho && e.statuts.immobilise) deg *= 1.5; }
   e.pv -= deg; e.dernierCoup = G.temps;
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
-  if (!src.sansFlash) e.flash = 0.08;
+  if (!src.sansFlash) { e.flash = 0.08; e.coupT = G.temps; }
   G.stats.degats += deg;
   if (!src.sansRecul && src.recul && !e.boss && !e.def.lourd && !e.def.fixe) {
     const [nx, ny] = normaliser(src.vx || 0, src.vy || 0); const k = src.recul * (e.champion === 'robuste' ? 0.5 : 1);
@@ -5923,8 +5990,9 @@ function tuerEnnemi(e, src = {}) {
   if (e.boss) { mortBoss(e); return; }
   const C = e.champion && CHAMPIONS[e.champion];
   G.effets.push({ type: 'fumee', x: e.x, y: e.y - 8, age: 0, duree: 0.45, taille: e.r / 9 });
+  eclatMort(e); G.dernierMort = { x: e.x, y: e.y, s: G.salle }; if (e.r >= 12 || (e.echelle || 1) > 1.2) secousse(2, null);
   ajouterDecal(G.salle, e.x, e.y, e.def.tache || 'encre', e.r);
-  Son.jouer('ennemi_mort');
+  Son.jouer('ennemi_mort', 1, e.r >= 12 ? 0.72 : e.r <= 7 ? 1.25 : 1); // plus grave pour les gros
   if (e.statuts.gel && G.joueur.drapeaux.eclatsGlace) { for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; const q = creerSousProjectile({ x: e.x, y: e.y - 8, vitesse: 7 * TUILE, degats: G.joueur.stats.degats, recul: 30, taille: 0.8, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 6 }, cycleId: 0 }, a, G.joueur.stats.degats * 0.5); q.dureeVie = 0.5; } }
   const D = G.joueur.drapeaux; // synergies : la brûlure (Shakuton) et le venin (Sasori) se propagent à la mort
   if (D.incandescence && e.statuts.brulure) { for (const f of G.ennemis) if (f !== e && !f.mort && !f.cache && dist(f.x, f.y, e.x, e.y) < 2 * TUILE) appliquerStatut(f, 'brulure', 2.5, G.joueur.stats.degats); G.effets.push({ type: 'onde', x: e.x, y: e.y - 6, r: 2 * TUILE, age: 0, duree: 0.35, couleur: '#ff8a3a' }); }
@@ -6305,7 +6373,11 @@ function majDeplacementJoueur(J, dt) {
   deplacerCercle(s, J, J.vx * dt, J.vy * dt, mode);
   // animation
   const m = Math.hypot(J.vx, J.vy);
-  if (m > 12) { J.tAnim += dt * (m / TUILE) * 1.6; J.frame = Math.floor(J.tAnim * 2) % 4; J.dirCorps = dirDepuisVecteur(J.vx, J.vy); }
+  if (m > 12) {
+    const f0 = J.frame; J.tAnim += dt * (m / TUILE) * 1.6; J.frame = Math.floor(J.tAnim * 2) % 4; J.dirCorps = dirDepuisVecteur(J.vx, J.vy);
+    // petite poussière à chaque appui de pied (décor, absente en mode confort et en vol)
+    if (J.frame !== f0 && J.frame % 2 === 1 && !J.vol && !G.reglages.confort) for (let i = 0; i < 2; i++) G.particules.push({ x: J.x + (Math.random() - 0.5) * 6, y: J.y + 1, vx: -J.vx * 0.15 + (Math.random() - 0.5) * 14, vy: -6 - Math.random() * 8, age: 0, duree: 0.3, couleur: 'rgba(190,180,160,0.45)', taille: 2 });
+  }
   else J.frame = 0;
   if (!Entrees.visee.dir && J.tir.anim <= 0 && m > 12) J.dirTete = J.dirCorps;
   J.tir.anim -= dt;
@@ -6735,7 +6807,7 @@ function entrerSalle(id, depuisDir) {
   if (ancienne) quitterSalle(ancienne);
   G.salle = s; E.courante = id; s.version = (s.version || 0) + 1;
   G.proj = []; G.faisceaux = []; G.melees = []; G.effets = []; G.particules = []; G.zones = (s.zonesPersistantes || []).slice(); G.arcs = []; G.orbes = []; G.minuteries = []; G.ennemis = []; G.textes = G.textes.filter(t => t.ecran);
-  G.appat = null; G.pousse = null; G.gelGlobal = 0;
+  G.appat = null; G.pousse = null; G.gelGlobal = 0; G.ralenti = null;
   const premiere = !s.visitee;
   s.visitee = true; s.apercue = true; if (premiere) G.stats.sallesVisitees++;
   // les voisines deviennent « aperçues » (pas les secrets non découverts)
@@ -6862,6 +6934,7 @@ function verifierNettoyage() {
   Musique.etatCombat(false);
   Son.jouer('porte_ouvre');
   const J = G.joueur;
+  if (s.type !== 'boss') { const o = G.dernierMort && G.dernierMort.s === s ? G.dernierMort : J; G.effets.push({ type: 'salle_nettoyee', x: o.x, y: o.y, age: 0, duree: 0.9 }); Son.jouer('nettoyee'); }
   // récompenses : une seule fois par salle (pas de nouvelle charge ni de loot à la revisite)
   if (!s.recompensee) {
     s.recompensee = true;
@@ -8158,8 +8231,11 @@ function majPhaseBoss(e) {
   }
 }
 function mortBoss(e) {
-  G.effets.push({ type: 'mort_boss', x: e.x, y: e.y - 12, age: 0, duree: 1.2 });
-  Son.jouer('boss_mort'); secousse(10, null); Entrees.vibrer('boss');
+  // la dépouille vacille, clignote et se désagrège sous de petites explosions, puis éclat final ;
+  // ralenti décoratif si c'était le dernier boss (jamais en mode confort)
+  G.effets.push(Object.assign({ type: 'cadavre_boss', x: e.x, y: e.y - (e.z || 0), r: e.r, age: 0, duree: 1.1 }, imageMort(e)));
+  if (!G.reglages.confort && !G.ennemis.some(x => x.boss && !x.mort && x !== e)) G.ralenti = { t: 0, duree: 1.2, k: 0.25 };
+  Son.jouer('boss_mort'); secousse(8, null); Entrees.vibrer('boss');
   for (const f of G.ennemis) if (f.parent === e.uid || e.lies.includes(f)) { if (!f.mort) { f.mort = true; G.effets.push({ type: 'fumee', x: f.x, y: f.y, age: 0, duree: 0.5 }); } }
   // boss liés (duo, trio) : la salle se termine quand tous sont vaincus
   if (G.ennemis.some(x => x.boss && !x.mort && x !== e)) { evenement('elimination', { e }); return; }
@@ -8646,6 +8722,8 @@ function collecterLumieres(s, A) {
       case 'meteore': aj(e.x, e.y, e.r * 2.6, '#ff7a30', 0.8 * (1 - k), 0.4); break;
       case 'eclair': aj((e.x0 + e.x1) / 2, (e.y0 + e.y1) / 2, 70 + dist(e.x0, e.y0, e.x1, e.y1) / 2, '#a8d8ff', 0.7 * (1 - k), 0.25); break;
       case 'mort_boss': aj(e.x, e.y, 220, '#fff0e0', 0.9 * (1 - k), 0.3); break;
+      case 'salle_nettoyee': aj(e.x, e.y, 80 + 380 * k, '#ffe8b0', 0.45 * (1 - k), 0.1); for (const p of s.portes) if (p.etat !== 'secrete') aj(p.tx * TUILE + 16, p.ty * TUILE + 16, 72, '#ffe0a0', 0.6 * (1 - k), 0.3); break;
+      case 'cadavre_boss': aj(e.x, e.y - e.h * 0.4, 90 + 60 * k, '#ffd8a0', 0.4 + 0.4 * k, 0.3); break;
       case 'transformation': case 'resurrection': aj(e.x, e.y, 150, '#ffe080', 0.8 * (1 - k), 0.3); break;
       case 'aura_sage': aj(e.x, e.y - 12, 72, '#ff9a30', 0.5 * (1 - k)); break;
       case 'etoile_impact': aj(e.x, e.y, 34, '#fff0c0', 0.6 * (1 - k), 0.5); break;
@@ -9172,6 +9250,7 @@ function rendreSalle(g, ox, oy) {
   g.save(); g.beginPath(); g.rect(X(0), Y(0), s.W * TUILE, s.H * TUILE); g.clip();
   g.drawImage(fondSalle(s), X(0), Y(0));
   dessinerAppliques(g, s, X, Y);
+  if (s.type === 'depart' && G.etage && G.etage.numero === 1) dessinerConsignes(g, s, X, Y);
   const D = decorsTheme(G.theme);
   // pics dynamiques (variante « Atelier ») et pics standards
   for (let ty = 1; ty < s.H - 1; ty++) for (let tx = 1; tx < s.W - 1; tx++) { const t = s.tuiles[ty * s.W + tx]; if (t === T.PICS) g.drawImage(G.variante && G.variante.picsActifs && !picsSortis() ? D.picsRentres : D.pics, X(tx * TUILE), Y(ty * TUILE)); }
@@ -9250,17 +9329,35 @@ function dessinerObstacle(g, t, tx, ty, X, Y, D, s) {
   }
   if (s.pvTuiles[ty * s.W + tx] !== undefined && PROP[t].pvTir && s.pvTuiles[ty * s.W + tx] < PROP[t].pvTir) { g.fillStyle = 'rgba(20,10,10,0.5)'; g.fillRect(x + 12, y + 14, 1, 6); g.fillRect(x + 13, y + 19, 4, 1); }
 }
+// Consignes peintes au sol de la première salle, selon le dernier périphérique utilisé
+function dessinerConsignes(g, s, X, Y) {
+  const E = Entrees, pad = E.dernierPeripherique === 'manette', [cx, cy] = centreSalle(s);
+  const dep = pad ? 'Stick gauche' : ['haut', 'gauche', 'bas', 'droite'].map(a => E.libelle(a)).join(' ');
+  const tir = pad ? 'Stick droit' : ['tirHaut', 'tirGauche', 'tirBas', 'tirDroite'].map(a => E.libelle(a)).join(' ');
+  const L = [[cx - 120, cy - 30, 'Se déplacer', dep], [cx + 120, cy - 30, 'Lancer', tir], [cx - 120, cy + 34, 'Technique', E.libelle('actif')], [cx + 120, cy + 34, 'Parchemin explosif', E.libelle('explosif')]];
+  g.globalAlpha = 0.4;
+  for (const [x, y, t, k] of L) { Police.ecrire(g, t, X(x), Y(y), '#e8dcc0', { a: 'c' }); Police.ecrire(g, k, X(x), Y(y + 11), '#fff4d8', { a: 'c' }); }
+  g.globalAlpha = 1;
+}
 function dessinerBattants(g, s, p, X, Y) {
   const x = X(p.tx * TUILE), y = Y(p.ty * TUILE);
   if (p.etat === 'secrete') { if (p.indice || G.joueur.drapeaux.indicesSecrets) { g.fillStyle = 'rgba(255,240,200,0.5)'; g.fillRect(x + 12, y + 10, 1, 8); g.fillRect(x + 13, y + 17, 5, 1); g.fillRect(x + 17, y + 12, 1, 5); } return; }
   const ferme = s.combat && G.portesFermeesDans <= 0 || p.etat === 'verrouillee' || (p.etat === 'conditionnelle' && !conditionPorte(s, p));
-  if (!ferme) return;
-  const C = CADRES_PORTE[p.type] || CADRES_PORTE.normale;
+  // battants animés : ils glissent dans le mur à l'ouverture et retombent d'un coup à la fermeture
+  if (p._ferme === undefined) { p._ferme = ferme; p._tBasc = -9; }
+  if (p._ferme !== ferme) {
+    p._ferme = ferme; p._tBasc = G.temps;
+    if (ferme && !G.reglages.confort) for (let i = 0; i < 5; i++) G.particules.push({ x: p.tx * TUILE + 16 + (Math.random() - 0.5) * 20, y: p.ty * TUILE + (p.dir === 'haut' ? 30 : p.dir === 'bas' ? 4 : 24), vx: (Math.random() - 0.5) * 40, vy: -10 - Math.random() * 20, age: 0, duree: 0.35, couleur: 'rgba(200,190,170,0.7)', taille: 2 });
+  }
+  const kb = Math.min(1, Math.max(0, (G.temps - p._tBasc) / (ferme ? 0.12 : 0.34))), v = ferme ? 1 - (1 - kb) * (1 - kb) : 1 - kb * kb;
+  if (v <= 0.03) return;
+  const C = CADRES_PORTE[p.type] || CADRES_PORTE.normale, L = n => Math.max(1, Math.round(n * v));
   g.fillStyle = nuancer(C.cadre, 1.15);
-  if (p.dir === 'haut') { g.fillRect(x + 6, y + 9, 20, 23); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 10, 2, 21); }
-  else if (p.dir === 'bas') { g.fillRect(x + 6, y, 20, 15); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 1, 2, 13); }
-  else if (p.dir === 'gauche') { g.fillRect(x + 9, y + 6, 23, 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 10, y + 9 + k * 6, 21, 2); }
-  else { g.fillRect(x, y + 6, 23, 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 1, y + 9 + k * 6, 21, 2); }
+  if (p.dir === 'haut') { g.fillRect(x + 6, y + 9, 20, L(23)); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 10, 2, L(21)); }
+  else if (p.dir === 'bas') { g.fillRect(x + 6, y + 15 - L(15), 20, L(15)); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 14 - L(13), 2, L(13)); }
+  else if (p.dir === 'gauche') { g.fillRect(x + 9, y + 6, L(23), 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 10, y + 9 + k * 6, L(21), 2); }
+  else { g.fillRect(x + 23 - L(23), y + 6, L(23), 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 22 - L(21), y + 9 + k * 6, L(21), 2); }
+  if (v < 0.6) return;
   if (p.etat === 'verrouillee') { const cx = x + 16 + (p.dir === 'gauche' ? 4 : p.dir === 'droite' ? -4 : 0), cy = y + 16 + (p.dir === 'haut' ? 4 : p.dir === 'bas' ? -6 : 0); g.drawImage(ICONES.cadenas, cx - 5, cy - 6); }
   if (p.etat === 'conditionnelle' && !conditionPorte(s, p)) { const cx = x + 16, cy = y + 16; g.drawImage(ICONES.coeurBarre, cx - 5, cy - 5); }
 }
@@ -9348,6 +9445,14 @@ function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
   losange(g, x + w / 2, y, accent); losange(g, x + w / 2, y + h - 1, accent);
 }
 let _traceBoss = null;
+// Compteurs qui « sautent » quand ils changent : { b: 0 → 1 → 0 en 0,3 s, s: +1 gain, −1 perte }
+let _hudPartie = null; const _hud = {};
+function bosseHUD(cle, v) {
+  if (_hudPartie !== G.partie) { _hudPartie = G.partie; for (const k in _hud) delete _hud[k]; }
+  const h = _hud[cle] || (_hud[cle] = { v, t: -9, s: 0 });
+  if (v !== h.v) { h.s = v > h.v ? 1 : -1; h.v = v; h.t = G.temps; }
+  const k = (G.temps - h.t) / 0.3; return k >= 0 && k < 1 ? { b: Math.sin(k * Math.PI), s: h.s } : null;
+}
 function dessinerHUD(g) {
   const J = G.joueur; if (!J) return;
   const S = J.sante, calme = G.reglages.sansFlash;
@@ -9355,11 +9460,14 @@ function dessinerHUD(g) {
   const nCases = S.cont.length + Math.ceil(S.prot.length / 2) + S.cicatrices, rangs = Math.max(1, Math.ceil(nCases / 6));
   plaqueHUD(g, 1, 1, 98, Math.max(34, 8 + rangs * 9));
   if (santeTotale(S) <= 2 && !calme && J.etat !== 'mort') { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.25 + 0.2 * Math.sin(G.temps * 5); g.drawImage(halo('#ff2030', false, 50), 26, -14, 50, 40); g.restore(); }
-  let i = 0; const pos = k => [38 + (k % 6) * 9, 5 + Math.floor(k / 6) * 9];
+  // cœurs : tremblent à la perte, s'illuminent au gain
+  const bs = bosseHUD('sante', santeTotale(S) + S.cont.length * 0.01), sx = bs && bs.s < 0 && !calme ? Math.round(Math.sin(G.temps * 70) * 2 * bs.b) : 0;
+  let i = 0; const pos = k => [38 + sx + (k % 6) * 9, 5 + Math.floor(k / 6) * 9];
   for (const c of S.cont) { const [x, y] = pos(i++); const set = c.t === 'os' ? ICONES.os : ICONES.vit; g.drawImage(set[c.p], x, y); }
   for (let k = 0; k < S.prot.length; k += 2) { const [x, y] = pos(i++); const t = S.prot[k] === 'n' ? ICONES.noir : ICONES.bleu; g.drawImage(t[k + 1 < S.prot.length ? 2 : 1], x, y); }
   for (let k = 0; k < S.cicatrices; k++) { const [x, y] = pos(i++); g.drawImage(ICONES.cicatrice, x, y); }
   if (S.partiel) { const [x, y] = pos(0); g.drawImage(ICONES.partiel, x + 1, y); }
+  if (bs && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = (bs.s > 0 ? 0.45 : 0.35) * bs.b; g.drawImage(halo(bs.s > 0 ? '#ffe8a0' : '#ff3040', false, 64), 28, -16, 76, 50); g.restore(); }
   if (G.degatsEnnemis >= 2) Police.ecrire(g, '×2', 38 + 6 * 9 + 4, 24, '#ff8a6a'); // rappel : coups d'un cœur entier
   // actif : écrin biseauté, lueur quand il est prêt
   g.fillStyle = '#0a0710'; g.fillRect(3, 3, 28, 28); g.fillStyle = '#241c30'; g.fillRect(4, 4, 26, 26); g.fillStyle = '#3a3048'; g.fillRect(4, 4, 26, 1); g.fillRect(4, 4, 1, 26); g.fillStyle = '#16101e'; g.fillRect(4, 29, 26, 1); g.fillRect(29, 4, 1, 26);
@@ -9385,7 +9493,11 @@ function dessinerHUD(g) {
   const stats = G.reglages.afficherStats; const hCol = 40 + lignes.length * 11 + (stats ? 70 : 0);
   plaqueHUD(g, 1, 37, 62, hCol);
   const res = [[ICONES.ryo, J.ryo], [ICONES.explosif, J.explosifsDores ? 99 : J.explosifs], [ICONES.cle, J.clesDorees ? 99 : J.cles]];
-  res.forEach(([ic, n], k) => { g.drawImage(ic, 6, 42 + k * 12 - (ic.height > 10 ? 2 : 0)); Police.ecrire(g, String(n).padStart(2, '0'), 19, 43 + k * 12, n > 0 ? '#f4ecd8' : '#8a8098'); });
+  res.forEach(([ic, n], k) => {
+    const b = bosseHUD('res' + k, n), dy = b ? -Math.round(3 * b.b) : 0;
+    g.drawImage(ic, 6, 42 + k * 12 - (ic.height > 10 ? 2 : 0) + dy);
+    Police.ecrire(g, String(n).padStart(2, '0'), 19, 43 + k * 12 + dy, b && b.b > 0.15 ? (b.s > 0 ? '#ffd040' : '#ff6a5a') : n > 0 ? '#f4ecd8' : '#8a8098');
+  });
   let yx = 79;
   for (const [t, c] of lignes) { Police.ecrire(g, t, 6, yx, c); yx += 11; }
   if (stats) { g.fillStyle = '#3a3048'; g.fillRect(6, yx - 2, 52, 1); dessinerStats(g, J, 6, yx + 2); }
@@ -10184,7 +10296,11 @@ function majJeu(dt) {
   if (Entrees.vientEnfonce('pause')) { Scenes.empiler(ScenePause); return; }
   if (G.introBoss) { G.introBoss.t += dt * (Entrees.enfonce('interagir') ? 3 : 1); if (G.introBoss.t >= G.introBoss.duree) { G.introBoss = null; Entrees.consommer(); } majEffets(dt); return; }
   if (G.enAnimationObjet) { majAnimationObjet(dt); majEffets(dt); return; }
+  // ralenti (mort du dernier boss) : la simulation seule, jamais l'interface
+  if (G.ralenti) { G.ralenti.t += dt; if (G.ralenti.t >= G.ralenti.duree) G.ralenti = null; else dt *= G.ralenti.k + (1 - G.ralenti.k) * Math.pow(G.ralenti.t / G.ralenti.duree, 2); }
   P.temps += dt; G.temps += dt;
+  // pouls à santé basse (un cœur ou moins quand on en a eu davantage), seulement en combat
+  if (santeTotale(J.sante) <= 2 && J.sante.cont.length * 2 + J.sante.prot.length > 3 && G.salle.combat && J.etat !== 'mort') { G.pouls = (G.pouls || 0) - dt; if (G.pouls <= 0) { G.pouls = 1.15; Son.jouer('battement', 0.9); } } else G.pouls = 0;
   if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
   if (Entrees.vientEnfonce('explosif')) poserExplosif();
   if (Entrees.vientEnfonce('actif')) utiliserActif();

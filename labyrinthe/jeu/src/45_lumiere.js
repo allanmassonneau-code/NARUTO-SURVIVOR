@@ -100,6 +100,8 @@ function collecterLumieres(s, A) {
       case 'meteore': aj(e.x, e.y, e.r * 2.6, '#ff7a30', 0.8 * (1 - k), 0.4); break;
       case 'eclair': aj((e.x0 + e.x1) / 2, (e.y0 + e.y1) / 2, 70 + dist(e.x0, e.y0, e.x1, e.y1) / 2, '#a8d8ff', 0.7 * (1 - k), 0.25); break;
       case 'mort_boss': aj(e.x, e.y, 220, '#fff0e0', 0.9 * (1 - k), 0.3); break;
+      case 'salle_nettoyee': aj(e.x, e.y, 80 + 380 * k, '#ffe8b0', 0.45 * (1 - k), 0.1); for (const p of s.portes) if (p.etat !== 'secrete') aj(p.tx * TUILE + 16, p.ty * TUILE + 16, 72, '#ffe0a0', 0.6 * (1 - k), 0.3); break;
+      case 'cadavre_boss': aj(e.x, e.y - e.h * 0.4, 90 + 60 * k, '#ffd8a0', 0.4 + 0.4 * k, 0.3); break;
       case 'transformation': case 'resurrection': aj(e.x, e.y, 150, '#ffe080', 0.8 * (1 - k), 0.3); break;
       case 'aura_sage': aj(e.x, e.y - 12, 72, '#ff9a30', 0.5 * (1 - k)); break;
       case 'etoile_impact': aj(e.x, e.y, 34, '#fff0c0', 0.6 * (1 - k), 0.5); break;

@@ -43,8 +43,11 @@ function majPhaseBoss(e) {
   }
 }
 function mortBoss(e) {
-  G.effets.push({ type: 'mort_boss', x: e.x, y: e.y - 12, age: 0, duree: 1.2 });
-  Son.jouer('boss_mort'); secousse(10, null); Entrees.vibrer('boss');
+  // la dépouille vacille, clignote et se désagrège sous de petites explosions, puis éclat final ;
+  // ralenti décoratif si c'était le dernier boss (jamais en mode confort)
+  G.effets.push(Object.assign({ type: 'cadavre_boss', x: e.x, y: e.y - (e.z || 0), r: e.r, age: 0, duree: 1.1 }, imageMort(e)));
+  if (!G.reglages.confort && !G.ennemis.some(x => x.boss && !x.mort && x !== e)) G.ralenti = { t: 0, duree: 1.2, k: 0.25 };
+  Son.jouer('boss_mort'); secousse(8, null); Entrees.vibrer('boss');
   for (const f of G.ennemis) if (f.parent === e.uid || e.lies.includes(f)) { if (!f.mort) { f.mort = true; G.effets.push({ type: 'fumee', x: f.x, y: f.y, age: 0, duree: 0.5 }); } }
   // boss liés (duo, trio) : la salle se termine quand tous sont vaincus
   if (G.ennemis.some(x => x.boss && !x.mort && x !== e)) { evenement('elimination', { e }); return; }

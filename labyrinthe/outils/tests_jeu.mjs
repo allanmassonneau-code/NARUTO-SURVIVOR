@@ -404,7 +404,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       for (let k = 0; k < 90; k++) { J.x = tx * 32 + 16; J.y = ty * 32 + 20; if (k === 5) lent = L.dansSableArene(J); b.tB = 99; T.pas(1, []); }
       if (!lent) out.ko.push('sable formé sans effet');
       if (!(L.santeTotale(J.sante) < avant)) out.ko.push('rester dans le sable ne coûte rien');
-      b.pv = 1; L.infligerDegats(b, 5, { proprio: 'joueur', type: 'explosion' }); T.pas(90, []);
+      b.pv = 1; L.infligerDegats(b, 5, { proprio: 'joueur', type: 'explosion' }); T.pas(150, []); // 1 s de retrait, ralenti de la mort du boss compris
       if (G.salle._mursSable) out.ko.push('sable encore là après la mort de Gaara');
       out.sable = m.tuiles.length + ' tuiles';
     }

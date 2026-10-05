@@ -52,6 +52,14 @@ function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
   losange(g, x + w / 2, y, accent); losange(g, x + w / 2, y + h - 1, accent);
 }
 let _traceBoss = null;
+// Compteurs qui « sautent » quand ils changent : { b: 0 → 1 → 0 en 0,3 s, s: +1 gain, −1 perte }
+let _hudPartie = null; const _hud = {};
+function bosseHUD(cle, v) {
+  if (_hudPartie !== G.partie) { _hudPartie = G.partie; for (const k in _hud) delete _hud[k]; }
+  const h = _hud[cle] || (_hud[cle] = { v, t: -9, s: 0 });
+  if (v !== h.v) { h.s = v > h.v ? 1 : -1; h.v = v; h.t = G.temps; }
+  const k = (G.temps - h.t) / 0.3; return k >= 0 && k < 1 ? { b: Math.sin(k * Math.PI), s: h.s } : null;
+}
 function dessinerHUD(g) {
   const J = G.joueur; if (!J) return;
   const S = J.sante, calme = G.reglages.sansFlash;
@@ -59,11 +67,14 @@ function dessinerHUD(g) {
   const nCases = S.cont.length + Math.ceil(S.prot.length / 2) + S.cicatrices, rangs = Math.max(1, Math.ceil(nCases / 6));
   plaqueHUD(g, 1, 1, 98, Math.max(34, 8 + rangs * 9));
   if (santeTotale(S) <= 2 && !calme && J.etat !== 'mort') { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.25 + 0.2 * Math.sin(G.temps * 5); g.drawImage(halo('#ff2030', false, 50), 26, -14, 50, 40); g.restore(); }
-  let i = 0; const pos = k => [38 + (k % 6) * 9, 5 + Math.floor(k / 6) * 9];
+  // cœurs : tremblent à la perte, s'illuminent au gain
+  const bs = bosseHUD('sante', santeTotale(S) + S.cont.length * 0.01), sx = bs && bs.s < 0 && !calme ? Math.round(Math.sin(G.temps * 70) * 2 * bs.b) : 0;
+  let i = 0; const pos = k => [38 + sx + (k % 6) * 9, 5 + Math.floor(k / 6) * 9];
   for (const c of S.cont) { const [x, y] = pos(i++); const set = c.t === 'os' ? ICONES.os : ICONES.vit; g.drawImage(set[c.p], x, y); }
   for (let k = 0; k < S.prot.length; k += 2) { const [x, y] = pos(i++); const t = S.prot[k] === 'n' ? ICONES.noir : ICONES.bleu; g.drawImage(t[k + 1 < S.prot.length ? 2 : 1], x, y); }
   for (let k = 0; k < S.cicatrices; k++) { const [x, y] = pos(i++); g.drawImage(ICONES.cicatrice, x, y); }
   if (S.partiel) { const [x, y] = pos(0); g.drawImage(ICONES.partiel, x + 1, y); }
+  if (bs && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = (bs.s > 0 ? 0.45 : 0.35) * bs.b; g.drawImage(halo(bs.s > 0 ? '#ffe8a0' : '#ff3040', false, 64), 28, -16, 76, 50); g.restore(); }
   if (G.degatsEnnemis >= 2) Police.ecrire(g, '×2', 38 + 6 * 9 + 4, 24, '#ff8a6a'); // rappel : coups d'un cœur entier
   // actif : écrin biseauté, lueur quand il est prêt
   g.fillStyle = '#0a0710'; g.fillRect(3, 3, 28, 28); g.fillStyle = '#241c30'; g.fillRect(4, 4, 26, 26); g.fillStyle = '#3a3048'; g.fillRect(4, 4, 26, 1); g.fillRect(4, 4, 1, 26); g.fillStyle = '#16101e'; g.fillRect(4, 29, 26, 1); g.fillRect(29, 4, 1, 26);
@@ -89,7 +100,11 @@ function dessinerHUD(g) {
   const stats = G.reglages.afficherStats; const hCol = 40 + lignes.length * 11 + (stats ? 70 : 0);
   plaqueHUD(g, 1, 37, 62, hCol);
   const res = [[ICONES.ryo, J.ryo], [ICONES.explosif, J.explosifsDores ? 99 : J.explosifs], [ICONES.cle, J.clesDorees ? 99 : J.cles]];
-  res.forEach(([ic, n], k) => { g.drawImage(ic, 6, 42 + k * 12 - (ic.height > 10 ? 2 : 0)); Police.ecrire(g, String(n).padStart(2, '0'), 19, 43 + k * 12, n > 0 ? '#f4ecd8' : '#8a8098'); });
+  res.forEach(([ic, n], k) => {
+    const b = bosseHUD('res' + k, n), dy = b ? -Math.round(3 * b.b) : 0;
+    g.drawImage(ic, 6, 42 + k * 12 - (ic.height > 10 ? 2 : 0) + dy);
+    Police.ecrire(g, String(n).padStart(2, '0'), 19, 43 + k * 12 + dy, b && b.b > 0.15 ? (b.s > 0 ? '#ffd040' : '#ff6a5a') : n > 0 ? '#f4ecd8' : '#8a8098');
+  });
   let yx = 79;
   for (const [t, c] of lignes) { Police.ecrire(g, t, 6, yx, c); yx += 11; }
   if (stats) { g.fillStyle = '#3a3048'; g.fillRect(6, yx - 2, 52, 1); dessinerStats(g, J, 6, yx + 2); }

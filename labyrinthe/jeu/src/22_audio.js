@@ -70,6 +70,7 @@ const Son = {
     telegraphe: [0.12, 2, 5], laser: [0.08, 2, 2], eclair: [0.05, 2, 2], eau: [0.06, 2, 1], feu: [0.06, 2, 1], vent: [0.08, 2, 1],
     sable: [0.06, 2, 1], fumee: [0.08, 2, 1], invocation: [0.2, 1, 3], meche: [0.15, 2, 1], pics: [0.2, 1, 3], tir_ennemi: [0.06, 3, 1],
     charge: [0.3, 1, 2], lame: [0.05, 2, 1], pas_lourd: [0.12, 1, 1], rire: [0.5, 1, 3], gong: [0.8, 1, 5], sceau: [0.3, 1, 4],
+    nettoyee: [0.5, 1, 4], battement: [0.6, 1, 1],
   },
   jouer(nom, vol = 1, hauteur = 1) {
     if (!this.actif || !this.ctx || this.ctx.state !== 'running') return;
@@ -106,6 +107,8 @@ const Son = {
       case 'objet_mineur': this.osc('triangle', 784, 0, t, 0.1, 0.12 * v, d); this.osc('triangle', 1046, 0, t + 0.07, 0.18, 0.12 * v, d); duree = 0.25; break;
       case 'porte_ferme': this.osc('sine', 110, 55, t, 0.25, 0.35 * v, d); this.souffle(t, 0.15, 0.2 * v, 'lowpass', 600, 100, 1, d); duree = 0.26; break;
       case 'porte_ouvre': this.souffle(t, 0.3, 0.12 * v, 'bandpass', 300, 1200, 1.5, d); this.osc('triangle', 392, 523, t, 0.25, 0.06 * v, d); duree = 0.3; break;
+      case 'nettoyee': { const n = [659, 880, 1318]; n.forEach((f, i) => this.osc('triangle', f, 0, t + i * 0.07, 0.4, 0.085 * v, d)); this.osc('sine', 1976, 0, t + 0.2, 0.55, 0.035 * v, d, 0.02); duree = 0.8; break; }
+      case 'battement': this.osc('sine', 72, 44, t, 0.13, 0.32 * v, d, 0.006); this.osc('sine', 66, 40, t + 0.19, 0.12, 0.22 * v, d, 0.006); duree = 0.34; break;
       case 'secret': { const n = [587, 698, 880, 1174, 1046]; n.forEach((f, i) => this.osc('triangle', f, 0, t + i * 0.11, 0.4, 0.13 * v, d)); duree = 0.9; break; }
       case 'achat': this.osc('triangle', 1318, 0, t, 0.08, 0.12 * v, d); this.osc('triangle', 1976, 0, t + 0.07, 0.2, 0.12 * v, d); this.osc('sine', 659, 0, t, 0.3, 0.08 * v, d); duree = 0.3; break;
       case 'refus': this.osc('square', 150, 130, t, 0.18, 0.08 * v, d); duree = 0.2; break;

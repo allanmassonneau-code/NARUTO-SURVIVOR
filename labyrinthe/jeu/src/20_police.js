@@ -149,7 +149,7 @@ const SUBSTITUTIONS = { 'æ': 'ae', '’': "'", '‘': "'", '“': '"', '”': '
 const ESPACE_L = 3, INTERLETTRE = 1, HAUTEUR_LIGNE = 11;
 
 const Police = {
-  atlas: null, cases: {}, teintes: new Map(),
+  atlas: null, cases: {}, teintes: new Map(), rendus: new Map(),
   preparer() {
     // atlas blanc de tous les glyphes
     const chars = Object.keys(GLYPHES);
@@ -197,14 +197,26 @@ const Police = {
     return lignes;
   },
   // options : { e: échelle entière, a: 'g'|'c'|'d', ombre: couleur|null, contour: couleur|null }
+  // Chaque texte (chaîne, couleur, échelle, ombre ou contour) est composé une fois dans une petite toile
+  // puis posé d'un seul drawImage : un glyphe par appel coûtait l'essentiel du rendu logiciel.
   ecrire(ctx, s, x, y, couleur = '#f4ecd8', o = {}) {
     if (!this.atlas) this.preparer();
     s = this.normaliser(s); const e = o.e || 1;
     const l = this.largeur(s) * e;
-    let px = Math.round(o.a === 'c' ? x - l / 2 : o.a === 'd' ? x - l : x); const py = Math.round(y);
-    if (o.contour) { for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, 1], [-1, 1], [1, -1]]) this._brut(ctx, s, px + dx * e, py + dy * e, o.contour, e); }
-    else if (o.ombre !== null) this._brut(ctx, s, px + e, py + e, o.ombre || '#14101c', e);
-    this._brut(ctx, s, px, py, couleur, e);
+    const px = Math.round(o.a === 'c' ? x - l / 2 : o.a === 'd' ? x - l : x), py = Math.round(y);
+    if (!l) return l;
+    const cle = s + '\u0001' + couleur + '\u0001' + e + '\u0001' + (o.contour || '') + '\u0001' + (o.ombre === null ? '-' : o.ombre || '');
+    let r = this.rendus.get(cle);
+    if (!r) {
+      r = document.createElement('canvas'); r.width = l + 2 * e; r.height = 14 * e;
+      const g = r.getContext('2d'); g.imageSmoothingEnabled = false;
+      if (o.contour) { for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, 1], [-1, 1], [1, -1]]) this._brut(g, s, e + dx * e, 3 * e + dy * e, o.contour, e); }
+      else if (o.ombre !== null) this._brut(g, s, 2 * e, 4 * e, o.ombre || '#14101c', e);
+      this._brut(g, s, e, 3 * e, couleur, e);
+      if (this.rendus.size >= 900) this.rendus.delete(this.rendus.keys().next().value); // les plus anciens d'abord
+      this.rendus.set(cle, r);
+    }
+    ctx.drawImage(r, px - e, py - 3 * e);
     return l;
   },
   _brut(ctx, s, x, y, couleur, e) {

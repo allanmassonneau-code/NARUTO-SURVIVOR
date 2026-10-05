@@ -59,7 +59,11 @@ function majDeplacementJoueur(J, dt) {
   deplacerCercle(s, J, J.vx * dt, J.vy * dt, mode);
   // animation
   const m = Math.hypot(J.vx, J.vy);
-  if (m > 12) { J.tAnim += dt * (m / TUILE) * 1.6; J.frame = Math.floor(J.tAnim * 2) % 4; J.dirCorps = dirDepuisVecteur(J.vx, J.vy); }
+  if (m > 12) {
+    const f0 = J.frame; J.tAnim += dt * (m / TUILE) * 1.6; J.frame = Math.floor(J.tAnim * 2) % 4; J.dirCorps = dirDepuisVecteur(J.vx, J.vy);
+    // petite poussière à chaque appui de pied (décor, absente en mode confort et en vol)
+    if (J.frame !== f0 && J.frame % 2 === 1 && !J.vol && !G.reglages.confort) for (let i = 0; i < 2; i++) G.particules.push({ x: J.x + (Math.random() - 0.5) * 6, y: J.y + 1, vx: -J.vx * 0.15 + (Math.random() - 0.5) * 14, vy: -6 - Math.random() * 8, age: 0, duree: 0.3, couleur: 'rgba(190,180,160,0.45)', taille: 2 });
+  }
   else J.frame = 0;
   if (!Entrees.visee.dir && J.tir.anim <= 0 && m > 12) J.dirTete = J.dirCorps;
   J.tir.anim -= dt;

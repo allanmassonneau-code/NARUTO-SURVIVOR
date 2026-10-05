@@ -17,14 +17,44 @@ function majEffets(dt) {
       if (!e.touche && !J.intangible) { const d = dist(e.x, e.y, J.x, J.y); if (Math.abs(d - e.r) < 7) { const a = angleVers(e.x, e.y, J.x, J.y); if (Math.abs(diffAngle(a, e.trou)) > e.largeurTrou / 2) { e.touche = true; blesserJoueur(G.degatsEnnemis, { type: 'onde', x: e.x, y: e.y }); } } }
     }
     if (e.attache) { e.x = J.x; e.y = J.y; }
+    if (e.type === 'cadavre_boss') {
+      if (Math.random() < dt * (G.reglages.confort ? 6 : 14)) { const a = Math.random() * Math.PI * 2, d = Math.random() * e.r; G.effets.push({ type: 'explosion_petite', x: e.x + Math.cos(a) * d, y: e.y - e.h * 0.45 + Math.sin(a) * d * 0.8, r: 8 + Math.random() * 8, age: 0, duree: 0.28 }); Son.jouer('explosion', 0.3); }
+      if (!e.fini && e.age >= e.duree * 0.9) { e.fini = true; G.effets.push({ type: 'mort_boss', x: e.x, y: e.y - 12, age: 0, duree: 1.2 }); debrisSprite(e.x, e.y, Math.round(e.h * 0.5), e.img, G.reglages.confort ? 10 : 24, 1.6); secousse(10, null); Son.jouer('explosion'); }
+    }
   }
   G.effets = G.effets.filter(e => e.age < e.duree);
   const maxP = G.reglages.confort ? 120 : 260;
   if (G.particules.length > maxP) G.particules.splice(0, G.particules.length - maxP);
-  for (const p of G.particules) { p.age += dt; p.x += p.vx * dt; p.y += p.vy * dt; if (p.g) p.vy += p.g * dt; }
+  for (const p of G.particules) {
+    p.age += dt; p.x += p.vx * dt; p.y += p.vy * dt; if (p.g) p.vy += p.g * dt;
+    if (p.sol !== undefined && p.y > p.sol && p.vy > 0) { p.y = p.sol; p.vy *= -0.35; p.vx *= 0.55; if (p.vy > -25) { p.vy = 0; p.g = 0; p.vx *= 0.5; } } // éclats qui rebondissent au sol
+  }
   G.particules = G.particules.filter(p => p.age < p.duree);
   for (const t of G.textes) t.age += dt;
   G.textes = G.textes.filter(t => t.age < t.duree);
+}
+// Mort : silhouette blanche qui s'évase, éclats aux couleurs du sprite qui retombent et rebondissent
+const _couleursSprite = new WeakMap();
+function couleursSprite(c) {
+  let L = _couleursSprite.get(c); if (L) return L;
+  const n = new Map();
+  try { const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 0; i < d.length; i += 4) { if (d[i + 3] < 200 || d[i] + d[i + 1] + d[i + 2] < 90) continue; const k = (d[i] >> 5) << 6 | (d[i + 1] >> 5) << 3 | d[i + 2] >> 5; n.set(k, (n.get(k) || 0) + 1); } } catch (err) { /* toile illisible : couleurs neutres */ }
+  L = [...n.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k]) => 'rgb(' + ((k >> 6 & 7) * 32 + 16) + ',' + ((k >> 3 & 7) * 32 + 16) + ',' + ((k & 7) * 32 + 16) + ')');
+  if (!L.length) L = ['#c8c0d0', '#8a8098'];
+  _couleursSprite.set(c, L); return L;
+}
+function imageMort(e) {
+  const sp = spriteEnnemi(e), img = sp.frames[e.frame % sp.frames.length], ech = e.echelle || 1, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
+  return { img, w: Math.round(img.width * f), h: Math.round(img.height * f), base: sp.base || 0, miroir: !!(sp.miroir && e.dir === 'gauche') };
+}
+function debrisSprite(x, y, hauteur, img, n, v = 1) {
+  const C = couleursSprite(img);
+  for (let i = 0; i < n; i++) { const a = -Math.PI * (0.08 + 0.84 * Math.random()), s = (40 + Math.random() * 70) * v; G.particules.push({ x: x + (Math.random() - 0.5) * 10 * v, y: y - hauteur, vx: Math.cos(a) * s, vy: Math.sin(a) * s, g: 420, sol: y + (Math.random() - 0.5) * 6, age: 0, duree: 0.55 + Math.random() * 0.4, couleur: C[i % C.length], taille: Math.random() < 0.35 ? 3 : 2 }); }
+}
+function eclatMort(e) {
+  const M = imageMort(e), y = e.y - (e.z || 0);
+  G.effets.push(Object.assign({ type: 'eclat_mort', x: e.x, y, age: 0, duree: 0.16 }, M));
+  debrisSprite(e.x, y, Math.round(M.h * 0.5), M.img, (G.reglages.confort ? 4 : 8) + Math.min(6, Math.round(e.r / 3)));
 }
 function effetImpact(x, y, app, force, elements) {
   const n = G.reglages.confort ? 2 : 4; const col = app === 'ennemi' ? '#ff9ac0' : app === 'sable' ? '#e0c080' : app === 'poing' ? '#ffb0d0' : app === 'orbe' ? '#c0e8ff' : '#fff4d0';
@@ -105,6 +135,26 @@ function dessinerEffet(g, e, X, Y) {
       break;
     }
     case 'nuage_venin': { for (let i = 0; i < 5; i++) { const a = i * 1.26, d = 4 + k * 16, r = Math.max(1, Math.round(6 * (1 - k * 0.5))); g.globalAlpha = 0.6 * (1 - k); g.drawImage(disque(r, i % 2 ? '#8ae05a' : '#5aa040'), Math.round(x + Math.cos(a) * d - r), Math.round(y + Math.sin(a) * d * 0.6 - r)); } g.globalAlpha = 1; break; }
+    case 'cadavre_boss': { // la dépouille vacille, clignote, rougeoie et s'affaisse
+      const tr = G.reglages.confort ? 0 : Math.round((Math.random() - 0.5) * 4 * (0.4 + k)), blanc = !G.reglages.sansFlash && Math.floor(e.age * 16) % 3 === 0;
+      const w = e.w, h = Math.max(2, Math.round(e.h * (1 - 0.3 * k * k))), a0 = k > 0.88 ? Math.max(0, (1 - k) / 0.12) : 1;
+      const poser = im => { if (e.miroir) { g.save(); g.translate(x + tr, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y - h + e.base, w, h); g.restore(); } else g.drawImage(im, x + tr - Math.round(w / 2), y - h + e.base, w, h); };
+      g.globalAlpha = a0; poser(blanc ? silhouetteMemo(e.img, '#ffffff') : e.img);
+      if (!blanc && k > 0.25) { g.globalAlpha = a0 * Math.min(0.8, (k - 0.25) * 1.4); poser(silhouetteMemo(e.img, '#ff9a48')); }
+      g.globalAlpha = 1; break;
+    }
+    case 'salle_nettoyee': { // onde dorée qui balaie la salle : le calme revient
+      const r = 10 + 420 * (1 - (1 - k) * (1 - k)), S = G.salle; g.save(); g.beginPath(); g.rect(X(TUILE), Y(TUILE), (S.W - 2) * TUILE, (S.H - 2) * TUILE); g.clip();
+      g.globalAlpha = 0.5 * (1 - k); g.strokeStyle = '#ffe8a8'; g.lineWidth = 2;
+      g.beginPath(); g.arc(x, y - 6, r, 0, Math.PI * 2); g.stroke(); if (r > 24) { g.globalAlpha = 0.25 * (1 - k); g.beginPath(); g.arc(x, y - 6, r - 10, 0, Math.PI * 2); g.stroke(); }
+      g.restore(); break;
+    }
+    case 'eclat_mort': { // silhouette blanche qui s'évase et s'efface
+      const w = Math.round(e.w * (1 + 0.35 * k)), h = Math.round(e.h * (1 + 0.15 * k)), im = silhouetteMemo(e.img, G.reglages.sansFlash ? '#c8c0d8' : '#ffffff');
+      g.globalAlpha = (1 - k) * (G.reglages.sansFlash ? 0.45 : 0.9);
+      if (e.miroir) { g.save(); g.translate(x, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y - h + e.base, w, h); g.restore(); } else g.drawImage(im, x - Math.round(w / 2), y - h + e.base, w, h);
+      g.globalAlpha = 1; break;
+    }
     case 'racines': { // racines qui jaillissent en couronne autour de l'impact, puis rentrent sous terre
       const R = e.r || 18, cr = Math.min(1, e.age * 6), dec = k > 0.7 ? (k - 0.7) / 0.3 : 0, h = Math.round(14 * cr * (1 - dec));
       for (let i = 0; i < 7; i++) {

@@ -17,7 +17,7 @@
 
 ## H1. Architecture
 
-**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 842 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 44 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture.
+**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 853 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 44 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture.
 
 **Couches** (un module ne dépend que des couches précédentes, sauf la boucle de jeu qui les orchestre) :
 
@@ -33,7 +33,7 @@
 
 **Boucle.** `requestAnimationFrame` alimente un accumulateur ; la simulation avance par **pas fixes de 1/60 s** (5 pas au plus par image, l'excédent est abandonné), indépendamment de la fréquence d'affichage. Le rendu se fait sur un écran interne de 640×360 présenté à l'échelle entière (×2, ×3…) sans lissage. Les scènes forment une pile (`aller`, `empiler`, `dépiler`) ; tout changement de scène **consomme** les entrées maintenues, qui doivent être relâchées avant d'agir à nouveau (pas de tir involontaire en fermant un menu).
 
-**Ordre d'un pas de jeu** (`majJeu`) : bannières → fondu → transition de porte → mort → pause → intro de boss → animation d'objet → temps et invulnérabilité → actions (explosif, actif, poche, échange, dépôt) → bonus → déplacement → tir → familiers → ennemis → projectiles, faisceaux, mêlées, bombes, arcs, attraction, minuteries → effets, ramassables, piédestaux, dispositifs, autel, source, sorties → dangers de terrain, blocs à clé, portes, secours, nettoyage, secousse → variantes, bande de sable → notifications.
+**Ordre d'un pas de jeu** (`majJeu`) : bannières (file retenue sous le titre d'étage et l'intro de boss) → fondu → transition de porte → mort → pause → intro de boss → animation d'objet → ralenti (mort du dernier boss : seul le pas de simulation est raccourci, jamais l'interface) → temps, pouls à santé basse et invulnérabilité → actions (explosif, actif, poche, échange, dépôt) → bonus → déplacement → tir → familiers → ennemis → projectiles, faisceaux, mêlées, bombes, arcs, attraction, minuteries → effets, ramassables, piédestaux, dispositifs, autel, source, sorties → dangers de terrain, blocs à clé, portes, secours, nettoyage, secousse → variantes, bande de sable → notifications.
 
 **Hasard.** Chaque partie a un code de 8 signes (alphabet sans I, O, 0, 1). Les flux sont dérivés par étage : `fluxEtage(code, n, nom)` pour le thème, le butin, les récompenses, les ennemis et le combat ; les tirages sensibles ont leur propre graine (opportunité après le boss : `code|opportunite|étage` ; autel : `code|autel|étage|palier`), si bien que recharger ne permet pas de retenter. Les variations fines de combat (décalage d'un anneau, points d'une pluie) et le cosmétique utilisent un hasard non graine : une mission à code reproduit la structure et les offres, pas chaque projectile.
 
@@ -202,12 +202,12 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | Mesure | Valeur | Conditions |
 |---|---|---|
 | Simulation d'un pas | ≈ 0,06 ms | combat contre les Dix Queues, 12 objets de tir multiple, 5 familiers, 900 pas |
-| Rendu d'une image | ≈ 2,4 ms en moyenne avec l'éclairage dynamique (≈ 1,5 ms sans) ; 99e centile ≈ 21 ms (≈ 14 ms sans) ; pire ≈ 23 ms | même scène, écran interne 640×360, rendu **logiciel** de Chromium sans écran (un navigateur accéléré par la carte graphique fait mieux) |
+| Rendu d'une image | ≈ 2,5 ms en moyenne avec l'éclairage dynamique (≈ 0,85 ms sans) ; 95e centile ≈ 4,5 ms ; pics isolés de 30 à 60 ms répartis au hasard (bruit de la machine de mesure, moins nombreux qu'avant le cache de textes) | même scène, écran interne 640×360, rendu **logiciel** de Chromium sans écran (un navigateur accéléré par la carte graphique fait mieux). Sur la même machine, la version précédente prenait ≈ 4,9 ms (≈ 3,5 ms sans éclairage) : le texte dessiné glyphe par glyphe en coûtait près des trois quarts |
 | Génération d'un étage | ≈ 0,75 ms | 400 étages en 0,3 s |
-| Fichier du jeu | ≈ 842 Kio | un seul HTML, sans ressource externe |
+| Fichier du jeu | ≈ 853 Kio | un seul HTML, sans ressource externe |
 | Partie suspendue | ≈ 14 Kio | étage et joueur sérialisés |
 
-**Garde-fous** : particules plafonnées (260, 120 en mode confort) ; budget de 14 réactivations par cycle de tir et générations d'impact bornées (`GEN_MAX`) ; multitir plafonné à 8 ; caches de sprites (par objet sprite et échelle), de silhouettes, de disques, ellipses et anneaux ; fond de salle mis en cache et redessiné seulement quand sa version change ; pas de simulation borné à 5 par image. Éclairage : part fixe de la carte de lumière (pénombre, cellules, sources immobiles) en cache par salle, carte à demi-résolution, multiplication limitée à la salle visible et agrandie au plus proche voisin, halos pré-dimensionnés par paliers (réduire un grand halo avec lissage coûte cher en rendu logiciel), décor des menus pré-rendu une fois ; l'option *Éclairage dynamique* le coupe entièrement. Les pics du 99e centile viennent surtout de la création paresseuse des sprites au premier affichage.
+**Garde-fous** : chaque texte (chaîne, couleur, échelle, ombre ou contour) composé une fois dans une petite toile puis posé d'un seul `drawImage` (900 textes en cache, les plus anciens remplacés d'abord) ; particules plafonnées (260, 120 en mode confort) ; couleurs des éclats de mort relevées une fois par image de sprite ; budget de 14 réactivations par cycle de tir et générations d'impact bornées (`GEN_MAX`) ; multitir plafonné à 8 ; caches de sprites (par objet sprite et échelle), de silhouettes, de disques, ellipses et anneaux ; fond de salle mis en cache et redessiné seulement quand sa version change ; pas de simulation borné à 5 par image. Éclairage : part fixe de la carte de lumière (pénombre, cellules, sources immobiles) en cache par salle, carte à demi-résolution, multiplication limitée à la salle visible et agrandie au plus proche voisin, halos pré-dimensionnés par paliers (réduire un grand halo avec lissage coûte cher en rendu logiciel), décor des menus pré-rendu une fois ; l'option *Éclairage dynamique* le coupe entièrement. Les pics du 99e centile viennent surtout de la création paresseuse des sprites au premier affichage.
 
 ## H7. Sauvegardes
 

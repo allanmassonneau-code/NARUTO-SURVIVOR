@@ -91,7 +91,7 @@ function entrerSalle(id, depuisDir) {
   if (ancienne) quitterSalle(ancienne);
   G.salle = s; E.courante = id; s.version = (s.version || 0) + 1;
   G.proj = []; G.faisceaux = []; G.melees = []; G.effets = []; G.particules = []; G.zones = (s.zonesPersistantes || []).slice(); G.arcs = []; G.orbes = []; G.minuteries = []; G.ennemis = []; G.textes = G.textes.filter(t => t.ecran);
-  G.appat = null; G.pousse = null; G.gelGlobal = 0;
+  G.appat = null; G.pousse = null; G.gelGlobal = 0; G.ralenti = null;
   const premiere = !s.visitee;
   s.visitee = true; s.apercue = true; if (premiere) G.stats.sallesVisitees++;
   // les voisines deviennent « aperçues » (pas les secrets non découverts)
@@ -218,6 +218,7 @@ function verifierNettoyage() {
   Musique.etatCombat(false);
   Son.jouer('porte_ouvre');
   const J = G.joueur;
+  if (s.type !== 'boss') { const o = G.dernierMort && G.dernierMort.s === s ? G.dernierMort : J; G.effets.push({ type: 'salle_nettoyee', x: o.x, y: o.y, age: 0, duree: 0.9 }); Son.jouer('nettoyee'); }
   // récompenses : une seule fois par salle (pas de nouvelle charge ni de loot à la revisite)
   if (!s.recompensee) {
     s.recompensee = true;

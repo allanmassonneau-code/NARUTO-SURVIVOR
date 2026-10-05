@@ -349,6 +349,7 @@ function rendreSalle(g, ox, oy) {
   g.save(); g.beginPath(); g.rect(X(0), Y(0), s.W * TUILE, s.H * TUILE); g.clip();
   g.drawImage(fondSalle(s), X(0), Y(0));
   dessinerAppliques(g, s, X, Y);
+  if (s.type === 'depart' && G.etage && G.etage.numero === 1) dessinerConsignes(g, s, X, Y);
   const D = decorsTheme(G.theme);
   // pics dynamiques (variante « Atelier ») et pics standards
   for (let ty = 1; ty < s.H - 1; ty++) for (let tx = 1; tx < s.W - 1; tx++) { const t = s.tuiles[ty * s.W + tx]; if (t === T.PICS) g.drawImage(G.variante && G.variante.picsActifs && !picsSortis() ? D.picsRentres : D.pics, X(tx * TUILE), Y(ty * TUILE)); }
@@ -427,17 +428,35 @@ function dessinerObstacle(g, t, tx, ty, X, Y, D, s) {
   }
   if (s.pvTuiles[ty * s.W + tx] !== undefined && PROP[t].pvTir && s.pvTuiles[ty * s.W + tx] < PROP[t].pvTir) { g.fillStyle = 'rgba(20,10,10,0.5)'; g.fillRect(x + 12, y + 14, 1, 6); g.fillRect(x + 13, y + 19, 4, 1); }
 }
+// Consignes peintes au sol de la première salle, selon le dernier périphérique utilisé
+function dessinerConsignes(g, s, X, Y) {
+  const E = Entrees, pad = E.dernierPeripherique === 'manette', [cx, cy] = centreSalle(s);
+  const dep = pad ? 'Stick gauche' : ['haut', 'gauche', 'bas', 'droite'].map(a => E.libelle(a)).join(' ');
+  const tir = pad ? 'Stick droit' : ['tirHaut', 'tirGauche', 'tirBas', 'tirDroite'].map(a => E.libelle(a)).join(' ');
+  const L = [[cx - 120, cy - 30, 'Se déplacer', dep], [cx + 120, cy - 30, 'Lancer', tir], [cx - 120, cy + 34, 'Technique', E.libelle('actif')], [cx + 120, cy + 34, 'Parchemin explosif', E.libelle('explosif')]];
+  g.globalAlpha = 0.4;
+  for (const [x, y, t, k] of L) { Police.ecrire(g, t, X(x), Y(y), '#e8dcc0', { a: 'c' }); Police.ecrire(g, k, X(x), Y(y + 11), '#fff4d8', { a: 'c' }); }
+  g.globalAlpha = 1;
+}
 function dessinerBattants(g, s, p, X, Y) {
   const x = X(p.tx * TUILE), y = Y(p.ty * TUILE);
   if (p.etat === 'secrete') { if (p.indice || G.joueur.drapeaux.indicesSecrets) { g.fillStyle = 'rgba(255,240,200,0.5)'; g.fillRect(x + 12, y + 10, 1, 8); g.fillRect(x + 13, y + 17, 5, 1); g.fillRect(x + 17, y + 12, 1, 5); } return; }
   const ferme = s.combat && G.portesFermeesDans <= 0 || p.etat === 'verrouillee' || (p.etat === 'conditionnelle' && !conditionPorte(s, p));
-  if (!ferme) return;
-  const C = CADRES_PORTE[p.type] || CADRES_PORTE.normale;
+  // battants animés : ils glissent dans le mur à l'ouverture et retombent d'un coup à la fermeture
+  if (p._ferme === undefined) { p._ferme = ferme; p._tBasc = -9; }
+  if (p._ferme !== ferme) {
+    p._ferme = ferme; p._tBasc = G.temps;
+    if (ferme && !G.reglages.confort) for (let i = 0; i < 5; i++) G.particules.push({ x: p.tx * TUILE + 16 + (Math.random() - 0.5) * 20, y: p.ty * TUILE + (p.dir === 'haut' ? 30 : p.dir === 'bas' ? 4 : 24), vx: (Math.random() - 0.5) * 40, vy: -10 - Math.random() * 20, age: 0, duree: 0.35, couleur: 'rgba(200,190,170,0.7)', taille: 2 });
+  }
+  const kb = Math.min(1, Math.max(0, (G.temps - p._tBasc) / (ferme ? 0.12 : 0.34))), v = ferme ? 1 - (1 - kb) * (1 - kb) : 1 - kb * kb;
+  if (v <= 0.03) return;
+  const C = CADRES_PORTE[p.type] || CADRES_PORTE.normale, L = n => Math.max(1, Math.round(n * v));
   g.fillStyle = nuancer(C.cadre, 1.15);
-  if (p.dir === 'haut') { g.fillRect(x + 6, y + 9, 20, 23); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 10, 2, 21); }
-  else if (p.dir === 'bas') { g.fillRect(x + 6, y, 20, 15); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 1, 2, 13); }
-  else if (p.dir === 'gauche') { g.fillRect(x + 9, y + 6, 23, 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 10, y + 9 + k * 6, 21, 2); }
-  else { g.fillRect(x, y + 6, 23, 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 1, y + 9 + k * 6, 21, 2); }
+  if (p.dir === 'haut') { g.fillRect(x + 6, y + 9, 20, L(23)); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 10, 2, L(21)); }
+  else if (p.dir === 'bas') { g.fillRect(x + 6, y + 15 - L(15), 20, L(15)); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 9 + k * 6, y + 14 - L(13), 2, L(13)); }
+  else if (p.dir === 'gauche') { g.fillRect(x + 9, y + 6, L(23), 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 10, y + 9 + k * 6, L(21), 2); }
+  else { g.fillRect(x + 23 - L(23), y + 6, L(23), 20); g.fillStyle = C.lum; for (let k = 0; k < 3; k++) g.fillRect(x + 22 - L(21), y + 9 + k * 6, L(21), 2); }
+  if (v < 0.6) return;
   if (p.etat === 'verrouillee') { const cx = x + 16 + (p.dir === 'gauche' ? 4 : p.dir === 'droite' ? -4 : 0), cy = y + 16 + (p.dir === 'haut' ? 4 : p.dir === 'bas' ? -6 : 0); g.drawImage(ICONES.cadenas, cx - 5, cy - 6); }
   if (p.etat === 'conditionnelle' && !conditionPorte(s, p)) { const cx = x + 16, cy = y + 16; g.drawImage(ICONES.coeurBarre, cx - 5, cy - 5); }
 }

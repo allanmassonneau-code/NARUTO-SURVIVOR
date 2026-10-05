@@ -113,12 +113,13 @@ Les créatures qui partageaient une forme reçoivent un accessoire d'attaque : m
 | Animation | Règle |
 |---|---|
 | Attente | corps frame 0, clignement des yeux toutes les 2 à 6 s (0,12 s) |
-| Marche | 4 frames par vue, cadence proportionnelle à la vitesse (×1,6 par tuile/s) ; balancement de la tête d’1 px sur les frames impaires |
+| Marche | 4 frames par vue, cadence proportionnelle à la vitesse (×1,6 par tuile/s) ; balancement de la tête d’1 px sur les frames impaires ; petite poussière à chaque appui de pied (pas en vol, pas en mode confort) |
 | Tir | tête en pose « tir » (yeux plissés, bouche) 1 px plus bas pendant 0,1 s ; la tête suit la visée, le corps la marche |
 | Charge | jauge sous le personnage ; la silhouette ne change pas |
 | Dégâts | clignotement pendant l’invulnérabilité (1 s) ou silhouette pâle (mode sans flash) ; bordure rouge brève à l’écran |
 | Prise d’objet majeur | pose face, objet brandi au-dessus de la tête, nom + phrase ; **0,8 s** (0,55 s en confort), accélérable ×2,5 avec *Interagir* ; le jeu est suspendu de façon cohérente, rien n’avance |
 | Mort | effondrement puis écran de défaite après 1,4 s |
+| Ennemi touché | silhouette blanche 0,08 s et **écrasement** bref (largeur +20 %, hauteur −15 %, 0,1 s ; ×0,4 sur un boss, ×0,5 en confort) |
 | Transformation | anneau et étincelles 1 s, bannière dorée 2,6 s, sans figer le combat |
 | Célébration | écran de victoire avec le personnage et ses mutations |
 
@@ -165,7 +166,7 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 | 11 | Aura de préparation | attaque de boss | 0,3–0,9 | anneau doré pulsant | — | toujours visible |
 | 12 | Transformation | ensemble complet | 1,0 | anneau + étincelles + bannière dorée | `transformation` | sans secousse |
 | 13 | Réécriture | relance d’objet | 0,45 | le rouleau s’efface et se réécrit | `sceau` | — |
-| 14 | Mort de boss | boss vaincu | 1,2 | anneau blanc expansif + particules | `boss_mort` + secousse 10 | secousse 2 |
+| 14 | Mort de boss | boss vaincu | 1,1 + 1,2 | la dépouille vacille, clignote, rougeoie et s’affaisse sous de petites explosions, puis éclat final (anneau blanc, débris aux couleurs du boss) ; **ralenti** de 1,2 s (×0,25 → ×1) s’il s’agit du dernier boss | `boss_mort` + secousse 8, puis `explosion` + secousse 10 | pas de ralenti, moins d’explosions, pas de clignotement sans flash |
 | 15 | Résurrection | cœur de réserve, Cœur volé | 1,0 | colonne claire | `transformation` | — |
 | 16 | Coffre ouvert | ouverture | 0,6 | couvercle, éclat, projection des ressources | `coffre` | — |
 | 17 | Fissure (embusqué, Zabuza) | surgissement | 0,4–0,55 | fissures au sol + terre qui remue | `rocher` | toujours visible |
@@ -174,13 +175,18 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 | 20 | Tsukuyomi | Itachi | 3,0 | voile rouge, lune | `gong` | voile atténué |
 | 21 | Aura du sage | énergie naturelle | 0,5 | anneau orange + pigment au sol | `charge_pleine` | — |
 | 22 | Flammes noires | Amaterasu | persistant | flammes noires contourées de violet (lisibles sur sol sombre) | `feu` | — |
+| 23 | Mort d’un ennemi | élimination | 0,16 + 0,9 | silhouette blanche qui s’évase, fumée, 8 à 14 éclats aux couleurs du sprite qui retombent et rebondissent, tache au sol ; secousse 2 pour les gros | `ennemi_mort`, plus grave pour les gros | 4 éclats, silhouette pâle sans flash |
+| 24 | Salle nettoyée | dernier ennemi vaincu (hors boss) | 0,9 | onde dorée depuis le dernier ennemi, lueur chaude qui balaie la salle, portes qui s’illuminent | `nettoyee` (trois notes) + `porte_ouvre` | onde seule |
+| 25 | Battants de porte | fermeture au combat, ouverture | 0,12 / 0,34 | les barreaux retombent d’un coup (poussière) et glissent dans le mur à l’ouverture | `porte_ferme` / `porte_ouvre` | sans poussière |
+| 26 | Fusions de natures | impacts des synergies | 0,6–2,4 | lave (croûte, bulles), vapeur (bouffées), flaque électrisée (étincelles), sable de fer (grains qui convergent), racines (couronne qui jaillit), rayon Jinton (faisceau blanc, cube) | `feu`, `eau`, `eclair`, `laser` | — |
 
 **Combinaisons d’effets** (au moins dix) : Rasengan + foudre (sphère spiralée puis arcs vers deux cibles) ; argile + Katon (explosion ronde puis zone de feu allié) ; météore + glace (réticule puis sol gelé) ; boomerang + explosion (une petite explosion par contact, budget 14) ; faisceau + multitir (faisceaux en éventail) ; rayon + percement (rayon plus épais, +20 %) ; sable en orbite + poison (grains verts) ; éventail + Katon (trois flammes) ; chaîne + onde (onde puis arcs, budget partagé) ; mines + lévitation (mines au-dessus du vide) ; réserve instable rompue + bulle rouge (onde noire + huit tirs).
 
 ## D9. Interface et menus
 
 - **Titre** : scène de crépuscule originale (ciel tramé en Bayer 4×4, lune, trois plans de montagnes, toits d'un village imaginaire aux fenêtres chaudes, nuages, brume, feuilles et pétales), logo en dégradé à reflet et double contour, sceau tournant en lueur, menu (Continuer, Nouvelle partie, Défis, Mission à code, Registre des missions, Options) dans un cadre serti, personnages sur un faîtage ; navigation manette complète. Le même décor, assombri, habille tous les menus.
-- **HUD** : plaques translucides à liseré (santé et actif, ressources et statistiques, minicarte et étage, talisman, poche), écrin de l'actif qui s'illumine quand il est prêt, barre de boss ornée avec **traîne des dégâts récents**, bandeaux à bords estompés (étage, objets, intro de boss), lueur rouge des cœurs en santé critique et vignette rouge au coup reçu (sauf *Sans flash*).
+- **HUD** : plaques translucides à liseré (santé et actif, ressources et statistiques, minicarte et étage, talisman, poche), écrin de l'actif qui s'illumine quand il est prêt, barre de boss ornée avec **traîne des dégâts récents**, bandeaux à bords estompés (étage, objets, intro de boss), lueur rouge des cœurs en santé critique et vignette rouge au coup reçu (sauf *Sans flash*). Les compteurs **sautent** quand ils changent (or au gain, rouge à la perte, 0,3 s) ; les cœurs tremblent à la perte et s’illuminent au gain.
+- **Première salle** : les commandes sont peintes au sol de la salle de départ du premier étage (déplacement, tir, technique, parchemin explosif), selon le dernier périphérique utilisé et la disposition du clavier.
 - **Sélection** : carrousel des 12 personnages ; ▲▼ bascule vers la variante altérée ; fiche (santé, statistiques, actif, règle, faiblesse, marques de fin) ; « Description » bascule Standard/Difficile.
 - **Mission à code** : clavier virtuel de 32 caractères (sans I, O, 0, 1), saisie entièrement à la manette.
 - **Pause** : reprendre, objets et mutations (inventaire par pages avec descriptions à deux niveaux), options, sauvegarder et quitter, abandonner (confirmation) ; la carte étendue reste au maintien de *Carte*.
@@ -194,6 +200,7 @@ Tout est **synthétisé** (WebAudio) ; aucune musique ni aucun son n’est impor
 - **Effets** : chaque son a un intervalle minimal, un nombre maximal de voix simultanées et une priorité ; **budget global de 22 voix** : une voix moins prioritaire est coupée, jamais un avertissement de boss. Hauteur variée de ±6 % à chaque lecture pour éviter la répétition mécanique (tirs, impacts, pièces).
 - **Musique** : générée depuis une graine fixe par thème, en gammes japonaises (*in*, *yo*, *ryūkyū*, *sombre*), timbre koto (triangle + harmonique) ou flûte (sinus + souffle), tempo 72 à 100 ; une couche de percussions (taiko) s’ajoute en combat et se retire en douceur au nettoyage ; les boss ont une piste propre (+22 battements par minute, gamme sombre). Aucune mélodie connue n’est reprise.
 - L’audio démarre au premier clic ou appui clavier (contrainte des navigateurs : un bouton de manette ne suffit pas) ; le jeu retente à chaque appui de manette et affiche une invite (haut-parleur barré) au titre et en jeu tant que le son attend.
+- **Ressenti** : carillon de trois notes quand une salle est nettoyée ; pouls sourd toutes les 1,15 s en combat quand il ne reste qu’un cœur (si l’on en a eu au moins deux) ; mort d’ennemi plus grave pour les gros.
 - **Mixage** : gain maître, compresseur de cohésion et limiteur (crêtes ≈ −5 dB, niveau efficace ≈ −18 dB mesurés), réverbération synthétique partagée (salle de pierre de 2,6 s) et nappe tenue sous la musique.
 
 ## D11. Confort et accessibilité
@@ -204,7 +211,7 @@ Tout est **synthétisé** (WebAudio) ; aucune musique ni aucun son n’est impor
 | Vibrations | 0,7 | 0 = désactivées |
 | Secousses | 0,7 | 0 = désactivées ; plafonnées et directionnelles |
 | Sans flash | non | supprime flashs et clignotements (silhouette pâle) |
-| Confort | non | transitions 0,18 s, animation d’objet 0,55 s, pas de ralenti décoratif |
+| Confort | non | transitions 0,18 s, animation d’objet 0,55 s, pas de ralenti décoratif (mort de boss), moins d’éclats, pas de poussière de pas, écrasement réduit |
 | Éclairage dynamique | oui | lumières, halos et air du thème (décoratifs) ; à couper sur une machine modeste |
 | Zones mortes, seuils de visée, hystérésis | B2 | réglables |
 | Profil de tir | stick + croix | stick seul, croix seule |

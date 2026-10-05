@@ -27,7 +27,11 @@ function majJeu(dt) {
   if (Entrees.vientEnfonce('pause')) { Scenes.empiler(ScenePause); return; }
   if (G.introBoss) { G.introBoss.t += dt * (Entrees.enfonce('interagir') ? 3 : 1); if (G.introBoss.t >= G.introBoss.duree) { G.introBoss = null; Entrees.consommer(); } majEffets(dt); return; }
   if (G.enAnimationObjet) { majAnimationObjet(dt); majEffets(dt); return; }
+  // ralenti (mort du dernier boss) : la simulation seule, jamais l'interface
+  if (G.ralenti) { G.ralenti.t += dt; if (G.ralenti.t >= G.ralenti.duree) G.ralenti = null; else dt *= G.ralenti.k + (1 - G.ralenti.k) * Math.pow(G.ralenti.t / G.ralenti.duree, 2); }
   P.temps += dt; G.temps += dt;
+  // pouls à santé basse (un cœur ou moins quand on en a eu davantage), seulement en combat
+  if (santeTotale(J.sante) <= 2 && J.sante.cont.length * 2 + J.sante.prot.length > 3 && G.salle.combat && J.etat !== 'mort') { G.pouls = (G.pouls || 0) - dt; if (G.pouls <= 0) { G.pouls = 1.15; Son.jouer('battement', 0.9); } } else G.pouls = 0;
   if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
   if (Entrees.vientEnfonce('explosif')) poserExplosif();
   if (Entrees.vientEnfonce('actif')) utiliserActif();

@@ -93,7 +93,7 @@ function infligerDegats(e, deg, src = {}) {
   if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if (D.inoShikaCho && e.statuts.immobilise) deg *= 1.5; }
   e.pv -= deg; e.dernierCoup = G.temps;
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
-  if (!src.sansFlash) e.flash = 0.08;
+  if (!src.sansFlash) { e.flash = 0.08; e.coupT = G.temps; }
   G.stats.degats += deg;
   if (!src.sansRecul && src.recul && !e.boss && !e.def.lourd && !e.def.fixe) {
     const [nx, ny] = normaliser(src.vx || 0, src.vy || 0); const k = src.recul * (e.champion === 'robuste' ? 0.5 : 1);
@@ -109,8 +109,9 @@ function tuerEnnemi(e, src = {}) {
   if (e.boss) { mortBoss(e); return; }
   const C = e.champion && CHAMPIONS[e.champion];
   G.effets.push({ type: 'fumee', x: e.x, y: e.y - 8, age: 0, duree: 0.45, taille: e.r / 9 });
+  eclatMort(e); G.dernierMort = { x: e.x, y: e.y, s: G.salle }; if (e.r >= 12 || (e.echelle || 1) > 1.2) secousse(2, null);
   ajouterDecal(G.salle, e.x, e.y, e.def.tache || 'encre', e.r);
-  Son.jouer('ennemi_mort');
+  Son.jouer('ennemi_mort', 1, e.r >= 12 ? 0.72 : e.r <= 7 ? 1.25 : 1); // plus grave pour les gros
   if (e.statuts.gel && G.joueur.drapeaux.eclatsGlace) { for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; const q = creerSousProjectile({ x: e.x, y: e.y - 8, vitesse: 7 * TUILE, degats: G.joueur.stats.degats, recul: 30, taille: 0.8, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 6 }, cycleId: 0 }, a, G.joueur.stats.degats * 0.5); q.dureeVie = 0.5; } }
   const D = G.joueur.drapeaux; // synergies : la brûlure (Shakuton) et le venin (Sasori) se propagent à la mort
   if (D.incandescence && e.statuts.brulure) { for (const f of G.ennemis) if (f !== e && !f.mort && !f.cache && dist(f.x, f.y, e.x, e.y) < 2 * TUILE) appliquerStatut(f, 'brulure', 2.5, G.joueur.stats.degats); G.effets.push({ type: 'onde', x: e.x, y: e.y - 6, r: 2 * TUILE, age: 0, duree: 0.35, couleur: '#ff8a3a' }); }
