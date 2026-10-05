@@ -183,9 +183,31 @@ Les familiers ne bloquent pas les portes, ne poussent pas le joueur, se replacen
 
 ## C11. Synergies (brief §21)
 
+Quatre-vingt-seize synergies, toutes testées (catalogue F) :
+
 - **Émergentes** (40) : découlent des règles générales (C1–C5) ; elles sont documentées pour fixer le résultat attendu et le test.
-- **Dédiées** (20) : ajoutent un effet déclaré (liste `effets`), actif **dès que tous les composants sont possédés**, quel que soit l’ordre.
+- **Dédiées** (47, dont 3 trios) : ajoutent un effet déclaré (liste `effets`), actif **dès que tous les composants sont possédés**, quel que soit l’ordre. Un actif compte comme composant tant qu’il est tenu.
+- **Fusions de natures** (9) : ne citent aucun objet mais des natures (`elements`). Les objets élémentaires portent leur nature (Katon, Fūton, Suiton, Raiton, Doton, Hyōton) ; dès que vos objets, transformations ou talismans réunissent les natures d’une fusion, elle s’active, quel que soit l’objet qui les apporte. Une synergie n’ajoute jamais de nature (pas de fusion en cascade).
 - Chaque synergie a un test d’acceptation (catalogue F). Les combinaisons à trois ou quatre objets sont déterministes car le profil se recalcule toujours depuis la liste complète.
+- **Annonce** : une synergie réunie pour la première fois s’annonce par un bandeau turquoise et un son de sceau, après le bandeau de l’objet qui la complète (jamais écrasée, jamais par-dessus le titre d’étage) ; elle s’inscrit dans l’onglet *Synergies* du registre (composants ou natures en indice) et apparaît dans l’inventaire avec l’icône des deux anneaux.
+
+### Fusions de natures (kekkei genkai)
+
+| Synergie | Natures | Effet |
+|---|---|---|
+| Yōton — Lave (SYN_061) | Katon + Doton | l’impact laisse une coulée de lave (brûle, ralentit) |
+| Futton — Vapeur (SYN_062) | Katon + Suiton | nuage de vapeur brûlante à l’impact |
+| Shakuton — Incandescence (SYN_063) | Katon + Fūton | brûlure (12 %) ; dégâts ×1,4 sur cible brûlée ; un ennemi brûlé qui meurt propage la brûlure |
+| Ranton — Tempête (SYN_064) | Raiton + Suiton | flaque électrisée à l’impact (décharges, immobilisation brève) |
+| Jiton — Sable de fer (SYN_065) | Fūton + Doton | attraction des ennemis vers l’impact, tirs légèrement guidés |
+| Mokuton — Bois (SYN_066) | Doton + Suiton | racines à l’impact (30 %) : immobilisent la cible et ses voisins |
+| Hyōton — Glace (SYN_067) | Fūton + Suiton | gel (20 %) ; un ennemi gelé éclate en éclats de glace |
+| Bakuton — Explosion (SYN_068) | Doton + Raiton | petite explosion à l’impact |
+| Jinton — Particule (SYN_069) | Katon + Fūton + Doton | toutes les six émissions, rayon blanc perçant ×3 (traverse obstacles et ennemis, arrêté par les murs, légèrement assisté vers l’ennemi le mieux aligné) |
+
+### Nouvelles paires et trios dédiés (SYN_070 à SYN_096)
+
+Ils récompensent des duos lisibles de la fiction sans en reprendre de texte : *Éclair jaune de Konoha*, *Manteau à une queue* (chakra de la bête 5 s après un coup reçu : dégâts, vitesse, brûlure au contact), *Gamayu Endan*, *Danse du camélia*, *Amaterasu et Tsukuyomi* (dégâts ×1,25 sur cible confuse), *Corbeaux d’illusion*, *Ange de papier*, *Mer de papiers*, *Culte de Jashin*, *Les cinq cœurs*, *Maîtresse des armes*, *Kirin* (foudre céleste toutes les huit émissions), *Armure du Raikage*, *Rasenshuriken parfait*, *Réceptacle éveillé*, *Venin de Sasori* (le poison se propage à la mort), *Ruche d’Aburame*, *Défense absolue du sable*, *Lame du vent*, *Lotus de la porte*, *Poing souple*, *Gardiens de Katsuyu*, *Sceau maudit niveau 2*, *Onde du démon* ; et trois trios : *Les trois Sannin*, *Équipe 7*, *Ino-Shika-Chō* (dégâts ×1,5 sur cible immobilisée). Les nombres sont des valeurs de conception à régler en jeu, pas des mesures.
 - Les déclencheurs (`quand`) utilisent le vocabulaire d’événements (H3), avec chance (éventuellement modulée par la chance, bornée), cooldown, « toutes les N occurrences », condition (santé basse, combat, boss…). Les événements cosmétiques ne déclenchent rien.
 
 ### Vingt anti-synergies et compromis intentionnels

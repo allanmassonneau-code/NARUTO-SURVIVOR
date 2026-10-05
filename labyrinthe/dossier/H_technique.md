@@ -17,7 +17,7 @@
 
 ## H1. Architecture
 
-**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 815 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 44 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture.
+**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 842 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 44 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture.
 
 **Couches** (un module ne dépend que des couches précédentes, sauf la boucle de jeu qui les orchestre) :
 
@@ -50,7 +50,7 @@ Les objets de données sont de simples littéraux ; les champs facultatifs sont 
 | Actif (ACT) | comme un passif, plus `charges` ou `recharge` (s) ou `unique`, `effet` (nom de comportement), `params` |
 | Talisman, consommable, pilule | `id, nom, desc, effets[]` ; consommable : `famille, poids` ; pilule : `negatif, contraire` |
 | Familier (FAM) | `id, nom, comportement` (16 comportements), `degats` ou `coef`, cadence, portée, drapeaux (`bloque, reflet, marionnette`) |
-| Synergie (SYN) | `id, nom, composants[]` (identifiants existants), `type` (émergente, dédiée), `desc`, *`effets[]`*, `test` (critère d'acceptation) |
+| Synergie (SYN) | `id, nom, composants[]` (identifiants existants) ou *`elements[]`* (natures requises : katon, futon, suiton, raiton, doton), `type` (émergente, dédiée, fusion), `desc`, *`effets[]`*, `test` (critère d'acceptation) |
 | Transformation (TRF) | `id, nom, ensemble, seuil` (3 identifiants distincts acquis), `desc, effets[]` |
 | Ennemi (ENM) | `id, nom, role` (lettre de gabarit), `comportement, pv, vitesse, r, sprite, params`, `contact`, *`mort`* (division, salve8, explose, flaque, glace), *`fixe`*, `desc` |
 | Boss (BOS) | `id, nom, titre, etage, pv, r, hauteur, vitesse, deplacement, ia`, *`init`*, `attaques[{id, type, tele, duree, recup, …, phase, recharge, maxUsages}]`, `phases[{seuil, message, action, invulnerable}]`, `sprite`, *`echelleSprite, mini, terminal`* |
@@ -59,7 +59,7 @@ Les objets de données sont de simples littéraux ; les champs facultatifs sont 
 | Route (RTE) | `bifurcation, prerequis, boss, etages, recompense, marque, indice` |
 | Objectif (OBJ) / défi (DEF) / secret (SEC) | objectif : `condition {type: boss, compteur, etat, fin}`, `recompense {debloque[]}` ; défi : règles (`perso, sansHeritage, obscurite, bonus, chrono, etageCible, objetsMin, difficile, epreuves`…), `recompenseTexte` ; secret : `indice, solution` |
 
-**Langage d'effets** (objets, talismans, synergies, transformations) : `{s, a|p|m}` statistique (additif, pourcentage, multiplicatif) ; `{forme}` forme de tir et paramètres ; `{multi}`, `{salve}`, `{arriere}`, `{croix}` ; `{traj, force}` trajectoire ; `{impact, r, coef}` réaction à l'impact (budget) ; `{statut, chance, duree, max, chanceParChance}` ; `{sante: {cont, prot, instable, os, partiel, soin, soinTotal, retraitCont}}` ; `{res}` ressources ; `{familier}` ; `{drapeau}` règle spéciale ; `{quand, si, chance, faire: {type, …}}` déclencheur d'événement. Le validateur refuse une statistique inconnue, un familier inconnu, un événement jamais émis ou une action non implémentée.
+**Langage d'effets** (objets, talismans, synergies, transformations) : `{s, a|p|m}` statistique (additif, pourcentage, multiplicatif) ; `{forme}` forme de tir et paramètres ; `{multi}`, `{salve}`, `{arriere}`, `{croix}` ; `{traj, force}` trajectoire ; `{impact, r, coef, chance}` réaction à l'impact (budget ; explosion, chaîne, éclat, onde, flamme, flaque, mine, lave, vapeur, flaque électrisée, attraction, racines) ; `{statut, chance, duree, max, chanceParChance}` ; `{sante: {cont, prot, instable, os, partiel, soin, soinTotal, retraitCont}}` ; `{res}` ressources ; `{familier}` ; `{drapeau}` règle spéciale ; `{element}` nature portée (fusions) ; `{quand, si, chance, faire: {type, …}}` déclencheur d'événement. Le validateur refuse une statistique inconnue, un familier inconnu, un événement jamais émis ou une action non implémentée.
 
 ## H3. Vocabulaire d'événements
 
@@ -179,7 +179,8 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | generation | 400 étages : boss présent, salles reliées, route du boss sans clé, portes secrètes réciproques, devants de porte libres | 0 erreur, 1,2 essai en moyenne, 0 plan de secours |
 | parcours ×3 | Naruto, Rock Lee, Sasuke jouent 9 étages : chaque salle nettoyée, objets pris, boss vaincus, sortie empruntée | 0 erreur |
 | objets | chacun des 157 passifs : acquisition, 6 s de combat, dégâts infligés | 157 ; seul PSV_014 (rayon à charger) sans dégât dans la fenêtre |
-| actifs | 33 actifs utilisés en salle | 33 |
+| actifs | 33 actifs utilisés en salle ; échange sur piédestal sans va-et-vient | 33 |
+| synergies | chacune des 56 synergies à effet réunie, annoncée et vérifiée en combat (dégâts de lave, vapeur, foudre, rayon Jinton…) ; ordre des bandeaux objet → synergie, retenus sous le titre d'étage | 56, dont 9 fusions |
 | boss | 24 boss vaincus par le pilote renforcé en moins de 150 s | 24, de 8 à 98 s |
 | ennemis | 75 archétypes, 12 s de combat | 0 erreur ; 4 à 6 embusqués ou invocateurs parfois non vaincus dans la fenêtre |
 | personnages | 18 entrées jouables ; conversion de Rock Lee ; sphère d'appoint | 18 |
@@ -203,7 +204,7 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | Simulation d'un pas | ≈ 0,06 ms | combat contre les Dix Queues, 12 objets de tir multiple, 5 familiers, 900 pas |
 | Rendu d'une image | ≈ 2,4 ms en moyenne avec l'éclairage dynamique (≈ 1,5 ms sans) ; 99e centile ≈ 21 ms (≈ 14 ms sans) ; pire ≈ 23 ms | même scène, écran interne 640×360, rendu **logiciel** de Chromium sans écran (un navigateur accéléré par la carte graphique fait mieux) |
 | Génération d'un étage | ≈ 0,75 ms | 400 étages en 0,3 s |
-| Fichier du jeu | ≈ 815 Kio | un seul HTML, sans ressource externe |
+| Fichier du jeu | ≈ 842 Kio | un seul HTML, sans ressource externe |
 | Partie suspendue | ≈ 14 Kio | étage et joueur sérialisés |
 
 **Garde-fous** : particules plafonnées (260, 120 en mode confort) ; budget de 14 réactivations par cycle de tir et générations d'impact bornées (`GEN_MAX`) ; multitir plafonné à 8 ; caches de sprites (par objet sprite et échelle), de silhouettes, de disques, ellipses et anneaux ; fond de salle mis en cache et redessiné seulement quand sa version change ; pas de simulation borné à 5 par image. Éclairage : part fixe de la carte de lumière (pénombre, cellules, sources immobiles) en cache par salle, carte à demi-résolution, multiplication limitée à la salle visible et agrandie au plus proche voisin, halos pré-dimensionnés par paliers (réduire un grand halo avec lissage coûte cher en rendu logiciel), décor des menus pré-rendu une fois ; l'option *Éclairage dynamique* le coupe entièrement. Les pics du 99e centile viennent surtout de la création paresseuse des sprites au premier affichage.

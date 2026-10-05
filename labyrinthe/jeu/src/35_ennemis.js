@@ -90,6 +90,7 @@ function infligerDegats(e, deg, src = {}) {
   // aura d'un protecteur voisin : dégâts ×0,5
   for (const p of G.ennemis) if (p !== e && !p.mort && p.def.params && p.def.params.bouclier === 'aura' && dist(p.x, p.y, e.x, e.y) < 2.5 * TUILE) { deg *= 0.5; break; }
   if (G.joueur.drapeaux.bonusBoss && e.boss) deg *= 1.1;
+  if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if (D.inoShikaCho && e.statuts.immobilise) deg *= 1.5; }
   e.pv -= deg; e.dernierCoup = G.temps;
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
   if (!src.sansFlash) e.flash = 0.08;
@@ -111,6 +112,9 @@ function tuerEnnemi(e, src = {}) {
   ajouterDecal(G.salle, e.x, e.y, e.def.tache || 'encre', e.r);
   Son.jouer('ennemi_mort');
   if (e.statuts.gel && G.joueur.drapeaux.eclatsGlace) { for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; const q = creerSousProjectile({ x: e.x, y: e.y - 8, vitesse: 7 * TUILE, degats: G.joueur.stats.degats, recul: 30, taille: 0.8, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 6 }, cycleId: 0 }, a, G.joueur.stats.degats * 0.5); q.dureeVie = 0.5; } }
+  const D = G.joueur.drapeaux; // synergies : la brûlure (Shakuton) et le venin (Sasori) se propagent à la mort
+  if (D.incandescence && e.statuts.brulure) { for (const f of G.ennemis) if (f !== e && !f.mort && !f.cache && dist(f.x, f.y, e.x, e.y) < 2 * TUILE) appliquerStatut(f, 'brulure', 2.5, G.joueur.stats.degats); G.effets.push({ type: 'onde', x: e.x, y: e.y - 6, r: 2 * TUILE, age: 0, duree: 0.35, couleur: '#ff8a3a' }); }
+  if (D.nuageVenin && e.statuts.poison) { for (const f of G.ennemis) if (f !== e && !f.mort && !f.cache && dist(f.x, f.y, e.x, e.y) < 2.2 * TUILE) appliquerStatut(f, 'poison', 3, G.joueur.stats.degats); G.effets.push({ type: 'nuage_venin', x: e.x, y: e.y - 6, age: 0, duree: 0.7 }); }
   const mortDef = e.def.mort;
   if (mortDef === 'division' || (C && C.mort === 'division')) {
     if (!e.parentDivision) for (let i = 0; i < 2; i++) { const f = creerEnnemi(e.def.enfant || e.def.id, e.x + (i ? 8 : -8), e.y, { sansApparition: true, pvMult: 0.45, echelle: 0.75 }); f.parentDivision = true; f.vx = (i ? 1 : -1) * 60; if (e.parent) f.parent = e.parent; }

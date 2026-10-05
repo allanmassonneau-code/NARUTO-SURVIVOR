@@ -147,7 +147,7 @@ function retirerPiedestalVide() { /* les piédestaux vides restent visibles (lec
 function animationObjet(d) {
   G.enAnimationObjet = { d, t: 0, duree: G.reglages.confort ? 0.55 : 0.8 };
   G.joueur.etat = 'objet';
-  G.banniere = { t: 0, nom: d.nom, desc: d.desc, mineur: false };
+  annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: false });
   Son.jouer('objet'); Entrees.vibrer('objet');
 }
 function majAnimationObjet(dt) {

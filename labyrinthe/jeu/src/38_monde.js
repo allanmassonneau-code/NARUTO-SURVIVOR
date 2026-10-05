@@ -17,7 +17,7 @@ function nouvellePartie(o) {
   G.partie = P;
   // états transitoires de la partie précédente (une transition entamée finirait dans le nouvel étage)
   Object.assign(G, { transition: null, introBoss: null, animMort: null, conseil: null, pousse: null, attraction: null, appat: null, gelGlobal: 0, marqueJashin: 0,
-    fondu: null, enAnimationObjet: null, achatPropose: null, flashDegat: 0, causeMort: null, bossActifs: [], bombes: [], banniere: null, banniereEtage: null, dernierePorte: null });
+    fondu: null, enAnimationObjet: null, achatPropose: null, flashDegat: 0, causeMort: null, bossActifs: [], bombes: [], banniere: null, banniereFile: [], banniereEtage: null, dernierePorte: null });
   G.stats = { degats: 0, eliminations: 0, degatsRecus: 0, sallesVisitees: 0, objets: 0, depenses: 0 };
   P.joueur = creerJoueur(o.perso); G.joueur = P.joueur;
   const al = new Alea(code + '|pilules|' + VERSION_DONNEES);
@@ -375,7 +375,7 @@ function prendreTalisman(J, id) {
   if (J.talisman && J.maxTalismans > 1 && !J.talisman2) J.talisman2 = J.talisman;
   else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; }
   J.talisman = id; recalculer(J); Son.jouer('objet_mineur');
-  G.banniere = { t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true };
+  annoncer({ t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true });
   Progression.decouvrir(id);
 }
 
@@ -510,6 +510,9 @@ function majDangersTerrain(dt) {
     switch (z.type) {
       case 'feu_allie': for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { if (!e.ia.feuT || G.temps - e.ia.feuT > 0.5) { e.ia.feuT = G.temps; infligerDegats(e, z.dps * 0.5 || 3, { proprio: 'joueur', type: 'feu', sansRecul: true }); appliquerStatut(e, 'brulure', 1.5, G.joueur.stats.degats); } } break;
       case 'eau_alliee': for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, z.x, z.y) < z.r + e.r) appliquerStatut(e, 'ralenti', 0.5, 0); break;
+      case 'lave_alliee': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.def.vol && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { appliquerStatut(e, 'ralenti', 0.4, 0); if (!e.ia.laveT || G.temps - e.ia.laveT > 0.5) { e.ia.laveT = G.temps; infligerDegats(e, z.dps * 0.5, { proprio: 'joueur', type: 'lave', sansRecul: true, sansFlash: true }); appliquerStatut(e, 'brulure', 1.5, G.joueur.stats.degats); } } break;
+      case 'vapeur_alliee': for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { appliquerStatut(e, 'ralenti', 0.4, 0); if (!e.ia.vapeurT || G.temps - e.ia.vapeurT > 0.5) { e.ia.vapeurT = G.temps; infligerDegats(e, z.dps * 0.5, { proprio: 'joueur', type: 'vapeur', sansRecul: true, sansFlash: true }); } } break;
+      case 'eau_electrique': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.def.vol && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { if (!e.ia.elecT || G.temps - e.ia.elecT > 0.6) { e.ia.elecT = G.temps; infligerDegats(e, z.deg, { proprio: 'joueur', type: 'foudre', sansRecul: true }); appliquerStatut(e, 'immobilise', 0.25, 0); G.effets.push({ type: 'eclair', x0: z.x, y0: z.y, x1: e.x, y1: e.y - 8, age: 0, duree: 0.12 }); } } break;
       case 'mine': if (z.armee <= 0) for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { z.fini = true; explosion(z.x, z.y, 0.9 * TUILE, z.deg, { proprio: 'joueur', petite: true, gen: 1 }); break; } break;
       case 'parchemin': if (z.armee <= 0 && (dist(J.x, J.y, z.x, z.y) < 24 || z.age > z.duree - 0.05)) { z.fini = true; explosion(z.x, z.y, 1.2 * TUILE, 8, { proprio: 'ennemi', blesseJoueur: true, degatsJoueur: G.degatsEnnemis }); } break;
       case 'acide': case 'feu_ennemi': if (!J.vol && !(z.naissance && z.age < z.naissance) && dist(J.x, J.y, z.x, z.y) < z.r) blesserJoueur(G.degatsEnnemis, { type: z.type }); break;

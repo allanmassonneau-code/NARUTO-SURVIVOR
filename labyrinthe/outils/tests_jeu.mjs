@@ -142,6 +142,48 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     return out;
   });
 
+  // 4 bis) Chaque synergie à effet : réunie, annoncée, et sa mécanique propre se produit en combat
+  if (veut('synergies')) await lancer('synergies', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0, fusions: 0 };
+    const PORTEUR = { katon: 'PSV_043', futon: 'PSV_046', doton: 'PSV_047', suiton: 'PSV_044', raiton: 'PSV_045', hyoton: 'PSV_050' };
+    const ATTENDU = { SYN_061: 'lave', SYN_062: 'vapeur', SYN_064: 'foudre', SYN_069: 'jinton', SYN_081: 'foudre' };
+    for (const sy of L.DON.synergies.filter(x => x.effets && x.effets.length)) {
+      try {
+        L.nouvellePartie({ perso: 'CHR_001', code: 'SYNR2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); G.modeTest.dieu = true; G.modeTest.degatsPar = {};
+        const J = G.joueur; const ids = sy.composants.concat((sy.elements || []).map(n => PORTEUR[n]));
+        for (const id of ids) { if (L.INDEX[id].type === 'actif') { J.actif = { id, charges: 9 }; if (!J.acquis.includes(id)) J.acquis.push(id); } else L.acquerirPassif(J, id, 'test'); }
+        L.recalculer(J);
+        if (!L.synergiesActives(J).some(x => x.id === sy.id)) { out.ko.push(sy.id + ' inactive'); continue; }
+        if (!J.synergiesVues.includes(sy.id)) { out.ko.push(sy.id + ' non annoncée'); continue; }
+        if (sy.elements) out.fusions++;
+        const s = Object.values(G.etage.salles).find(x => x.type === 'combat' && x.pointsApparition && x.pointsApparition.length >= 2) || Object.values(G.etage.salles).find(x => x.type === 'combat');
+        let e = T.allerA(s.id); if (e) { out.ko.push(sy.id + ' entrée ' + e); continue; }
+        if (sy.effets.some(x => x.quand === 'degat_recu')) { J.sante = L.santeInit({ vitalite: 1, pleins: 1 }); L.evenement('degat_recu', {}); }
+        if (sy.effets.some(x => x.quand === 'boss_vaincu')) { const n = J.sante.cont.length; L.evenement('boss_vaincu', {}); if (J.sante.cont.length <= n) out.ko.push(sy.id + ' : aucun contenant après un boss'); }
+        for (let i = 0; i < 90 && G.ennemis.some(x => !x.mort && x.apparition > 0); i++) T.pas(1); // ennemis pleinement apparus
+        for (const x of sy.effets) if (x.tousLes) J.compteurs['tl_' + sy.id] = x.tousLes - 1; // la prochaine émission déclenche
+        e = T.bot(4, { dieu: true }); if (e) { out.ko.push(sy.id + ' ' + e); continue; }
+        if (ATTENDU[sy.id] && !Object.keys(G.modeTest.degatsPar).some(k => k.startsWith(ATTENDU[sy.id]))) { out.ko.push(sy.id + ' : aucun dégât « ' + ATTENDU[sy.id] + ' » (' + Object.keys(G.modeTest.degatsPar).join(',') + ')'); continue; }
+        out.ok++;
+      } catch (err) { out.ko.push(sy.id + ' ' + String(err.stack || err).slice(0, 200)); }
+    }
+    // bandeaux : l'objet ramassé s'affiche d'abord, la synergie qu'il complète ensuite (jamais écrasée),
+    // et rien ne passe par-dessus le titre d'étage
+    try {
+      L.nouvellePartie({ perso: 'CHR_001', code: 'BAND2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); G.modeTest.dieu = true;
+      const J = G.joueur; L.acquerirPassif(J, 'PSV_043', 'test'); L.recalculer(J); G.banniere = null; G.banniereFile = [];
+      const p = L.poserPiedestal(G.salle, J.x, J.y - 30, 'PSV_047'); J.x = p.x; J.y = p.y + 6; T.pas(3, []);
+      if (!G.banniereEtage) out.ko.push('bandeaux : titre d’étage déjà parti (scénario invalide)');
+      const B = G.banniere, F = (G.banniereFile || []).map(b => b.nom);
+      if (!B || B.nom !== L.INDEX.PSV_047.nom) out.ko.push('bandeaux : l’objet ramassé n’est pas en tête (' + (B && B.nom) + ')');
+      if (!F.some(n => n.includes('Yōton'))) out.ko.push('bandeaux : synergie Yōton perdue (file : ' + F.join(', ') + ')');
+      if (B && B.t > 0.01) out.ko.push('bandeaux : le bandeau d’objet avance sous le titre d’étage');
+      T.pas(Math.round((3.4 + 2.7) * 60), []);
+      if (!G.banniere || !G.banniere.synergie) out.ko.push('bandeaux : la synergie ne suit pas l’objet (' + (G.banniere && G.banniere.nom) + ')');
+    } catch (err) { out.ko.push('bandeaux ' + String(err.stack || err).slice(0, 200)); }
+    return out;
+  });
+
   // 5) Chaque boss : apparition, dangers, dégâts subis, mort possible
   if (veut('boss')) await lancer('boss', () => {
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], intouchable: [], ok: 0, durees: {} };

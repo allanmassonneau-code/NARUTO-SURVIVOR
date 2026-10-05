@@ -16,7 +16,7 @@ function creerJoueur(defId) {
     actif: null, actif2: null, talisman: null, poches: [], maxPoches: 1, maxTalismans: 1, talisman2: null,
     tir: { cooldown: 0, charge: 0, dir: 'bas', salveFile: [], salveT: 0, alterne: false, anim: 0 },
     drapeaux: {}, compteurs: { sallesNettoyees: 0, elims: 0 }, bloqueTir: 0, force: 0, sceau: 0, clones: 0,
-    stats: null, profil: null, vol: false,
+    stats: null, profil: null, vol: false, synergiesVues: [],
   };
   const rc = d.regleCode; const B = J.drapeauxBase = {};
   if (rc === 'corps_marionnette') B.sansVitalite = true;

@@ -15,7 +15,10 @@ const G = {
 function majJeu(dt) {
   const J = G.joueur; const P = G.partie;
   // bannières : minutées par la simulation (pas par l'affichage)
-  if (G.banniere) { G.banniere.t += dt; if (G.banniere.t > (G.banniere.mineur ? 1.6 : 2.6)) G.banniere = null; }
+  if (!bannieresRetenues()) {
+    if (!G.banniere && G.banniereFile && G.banniereFile.length) G.banniere = G.banniereFile.shift();
+    if (G.banniere) { G.banniere.t += dt; if (G.banniere.t > dureeBanniere(G.banniere)) G.banniere = (G.banniereFile && G.banniereFile.shift()) || null; }
+  }
   if (G.banniereEtage) { G.banniereEtage.t += dt; if (G.banniereEtage.t > 3.2) G.banniereEtage = null; }
   if (G.fondu) { G.fondu.t += dt; if (G.fondu.t >= G.fondu.duree / 2 && !G.fondu.fait) { G.fondu.fait = true; G.fondu.action(); } if (G.fondu.t >= G.fondu.duree) G.fondu = null; return; }
   if (G.transition) { majTransition(dt); return; }
@@ -98,13 +101,13 @@ const ScenePause = {
 };
 const SceneInventaire = {
   entrer() { this.i = 0; },
-  liste() { const J = G.joueur; const L = []; if (J.actif) L.push(J.actif.id); if (J.actif2) L.push(J.actif2.id); if (J.talisman) L.push(J.talisman); for (const id of J.passifs) L.push(id); for (const t of J.transformations) L.push(t); return L; },
+  liste() { const J = G.joueur; const L = []; if (J.actif) L.push(J.actif.id); if (J.actif2) L.push(J.actif2.id); if (J.talisman) L.push(J.talisman); for (const id of J.passifs) L.push(id); for (const t of J.transformations) L.push(t); for (const s of synergiesReunies(J)) L.push(s.id); return L; },
   maj() { const L = this.liste(); const c = 12; if (Entrees.nav.dx) this.i = borne(this.i + Entrees.nav.dx, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dy) this.i = borne(this.i + Entrees.nav.dy * c, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dx || Entrees.nav.dy) Son.jouer('menu'); if (Entrees.menuRetour()) Scenes.depiler(); },
   rendre(g) {
     fondMenu(g); cadreMenu(g, 26, 32, 376, 304); cadreMenu(g, 408, 32, 226, 304);
     Police.ecrire(g, 'Objets, transformations et mutations', 320, 10, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
     const L = this.liste(); const c = 12;
-    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : iconeObjet(id), x, y); });
+    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : id.startsWith('SYN_') ? iconeSynergie() : iconeObjet(id), x, y); });
     const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + (d.visuel.nom || d.visuel.motif || d.visuel.couche), 420, y + 30, 200, '#8a9aa8'); }
     if (!L.length) Police.ecrire(g, 'Aucun objet pour l’instant.', 320, 160, '#8a8098', { a: 'c' });
     aideBoutons(g, [['retour', 'Retour']]);
@@ -179,5 +182,5 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }

@@ -348,6 +348,9 @@
    {
     "s": "degats",
     "a": 0.3
+   },
+   {
+    "element": "suiton"
    }
   ],
   "cumul": "cumul",
@@ -4636,6 +4639,9 @@
    {
     "s": "degats",
     "a": 0.5
+   },
+   {
+    "element": "doton"
    }
   ],
   "cumul": "cumul",

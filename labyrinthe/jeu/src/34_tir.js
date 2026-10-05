@@ -5,7 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 const BUDGET_CYCLE = 14;   // déclenchements secondaires max par cycle d'attaque
-const GEN_MAX = { explosion: 2, chaine: 2, eclat: 1, onde: 2, mine: 1, flamme: 2, flaque: 2 };
+const GEN_MAX = { explosion: 2, chaine: 2, eclat: 1, onde: 2, mine: 1, flamme: 2, flaque: 2, lave: 1, vapeur: 1, flaque_electrique: 1, attraction: 1, racines: 1 };
 let _cycle = 0;
 
 // Durée de charge convertie explicitement par la cadence (registre §R8c)
@@ -240,6 +240,7 @@ function toucherEnnemi(p, e) {
 function declencherImpacts(p, cible) {
   for (const im of p.impacts) {
     if (p.gen >= (GEN_MAX[im.impact] ?? 1)) continue;
+    if (im.chance !== undefined && Math.random() >= im.chance) continue;
     if (p.budget.n <= 0) break;
     p.budget.n--;
     const deg = p.degats * (im.coef || 0.5);
@@ -248,8 +249,13 @@ function declencherImpacts(p, cible) {
       case 'chaine': if (cible) chaineFoudre(cible, deg, im.sauts || 2, (im.r || 3) * TUILE, p.gen + 1); break;
       case 'eclat': for (let i = 0; i < (im.n || 4); i++) { const a = p.angle + Math.PI / 4 + i * Math.PI * 2 / (im.n || 4); const q = creerSousProjectile(p, a, deg); q.touches.add(cible); } break;
       case 'onde': onde(p.x, p.y, (im.r || 1) * TUILE, deg, p.gen + 1); break;
-      case 'flamme': creerZone(p.x, p.y, 'feu_allie', 1.6, { r: 14, dps: p.degats * 0.6 }); break;
+      case 'flamme': creerZone(p.x, p.y, 'feu_allie', 1.6, { r: im.r || 14, dps: p.degats * (im.dps || 0.6) }); break;
       case 'flaque': creerZone(p.x, p.y, 'eau_alliee', 2.5, { r: 16 }); break;
+      case 'lave': creerZone(p.x, p.y, 'lave_alliee', 2.4, { r: im.r || 15, dps: deg * 2 }); break;
+      case 'vapeur': creerZone(p.x, p.y, 'vapeur_alliee', 1.8, { r: im.r || 20, dps: deg * 1.6 }); break;
+      case 'flaque_electrique': creerZone(p.x, p.y, 'eau_electrique', 2.4, { r: im.r || 16, deg }); break;
+      case 'attraction': attirer(p.x, p.y, (im.r || 2.5) * TUILE, im.force || 70); break;
+      case 'racines': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.boss && dist(e.x, e.y, p.x, p.y) < (im.r || 1.2) * TUILE + e.r) appliquerStatut(e, 'immobilise', im.duree || 1.2, deg); G.effets.push({ type: 'racines', x: p.x, y: p.y, r: (im.r || 1.2) * TUILE, age: 0, duree: 0.9 }); break;
     }
   }
 }
@@ -466,4 +472,9 @@ function chaineFoudre(depart, deg, sauts, r, gen) {
   if (chaine.length > 1) Son.jouer('eclair', 0.6);
 }
 function creerMine(x, y, deg) { G.zones.push({ type: 'mine', x, y, r: 10, age: 0, duree: 4, deg, proprio: 'joueur', armee: 0.3 }); }
-function creerZone(x, y, type, duree, o = {}) { const z = Object.assign({ type, x, y, age: 0, duree, r: 14 }, o); G.zones.push(z); return z; }
+const ZONES_PLAFONNEES = new Set(['feu_allie', 'lave_alliee', 'vapeur_alliee', 'eau_electrique', 'eau_alliee']);
+function creerZone(x, y, type, duree, o = {}) {
+  // tirs rapides : au-delà de 24 zones alliées d'un même type, la plus ancienne s'efface
+  if (ZONES_PLAFONNEES.has(type)) { const L = G.zones.filter(z => z.type === type); if (L.length >= 24) L[0].fini = true, G.zones = G.zones.filter(z => !z.fini); }
+  const z = Object.assign({ type, x, y, age: 0, duree, r: 14 }, o); G.zones.push(z); return z;
+}

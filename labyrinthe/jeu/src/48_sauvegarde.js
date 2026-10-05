@@ -52,7 +52,7 @@ function serialiserSalle(s) {
 }
 function serialiserJoueur(J) {
   const o = {};
-  for (const k of ['cle', 'x', 'y', 'dirCorps', 'dirTete', 'sante', 'ryo', 'cles', 'explosifs', 'clesDorees', 'explosifsDores', 'passifs', 'acquis', 'transformations', 'bonusPermanents', 'actif', 'actif2', 'talisman', 'talisman2', 'poches', 'maxPoches', 'maxTalismans', 'drapeaux', 'compteurs', 'force', 'sceau', 'clones', 'coeursReserve', 'marionnette', 'deuxActifs']) o[k] = J[k];
+  for (const k of ['cle', 'x', 'y', 'dirCorps', 'dirTete', 'sante', 'ryo', 'cles', 'explosifs', 'clesDorees', 'explosifsDores', 'passifs', 'acquis', 'transformations', 'bonusPermanents', 'actif', 'actif2', 'talisman', 'talisman2', 'poches', 'maxPoches', 'maxTalismans', 'drapeaux', 'compteurs', 'force', 'sceau', 'clones', 'coeursReserve', 'marionnette', 'deuxActifs', 'synergiesVues']) o[k] = J[k];
   o.def = J.def.id; o.bonus = J.bonus.filter(b => b.duree === 'etage' || b.duree === 'permanent');
   o.familiers = J.familiers.filter(f => !f.dureeSalle && f.def.comportement !== 'clone_res').map(f => ({ id: f.def.id, source: f.source, etage: f.etage, variante: f.variante }));
   return o;

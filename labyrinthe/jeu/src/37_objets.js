@@ -111,10 +111,12 @@ function recalculer(J) {
   J.drapeaux = Object.assign({}, J.drapeauxBase || {}); if (obst) J.drapeaux.obstination = true;
   const sources = J.passifs.map(id => INDEX[id]).concat(J.transformations.map(t => INDEX[t]), J.talisman ? [INDEX[J.talisman]] : [], J.talisman2 ? [INDEX[J.talisman2]] : [], synergiesActives(J));
   for (const d of sources) for (const e of (d && d.effets) || []) if (e.drapeau) J.drapeaux[e.drapeau] = e.valeur === undefined ? true : e.valeur;
+  for (const b of J.bonus) if (b.drapeau) J.drapeaux[b.drapeau] = true; // bonus minutés (manteau de la bête…)
   J.maxPoches = 1 + (J.drapeaux.pocheDouble ? 1 : 0); J.maxTalismans = 1 + (J.drapeaux.talismanDouble ? 1 : 0);
   J.stats = calculerStats(J); J.profil = calculerProfil(J);
   J.vol = J.passifs.some(id => (INDEX[id].effets || []).some(e => e.vol)) || J.transformations.some(t => (INDEX[t].effets || []).some(e => e.vol)) || J.bonus.some(b => b.vol);
   majMutations(J);
+  annoncerSynergies(J);
 }
 // Acquisition d'un passif (règles de doublons : cumul / conversion / unique)
 function acquerirPassif(J, id, source = 'piedestal') {

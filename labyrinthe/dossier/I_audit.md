@@ -14,7 +14,7 @@
 | Consommables (rouleaux, sceaux) | 30 | 30 | 80 |
 | Pilules (effets) | 15 | — | — |
 | Familiers (comportements distincts) | 16 | — | — |
-| Synergies documentées | 60 | 60 | 300 |
+| Synergies documentées | 96 | 60 | 300 |
 | Transformations d'ensemble | 13 | 12 | 40 |
 | Thèmes d'étage | 10 | 6 | 12 |
 | Variantes d'étage | 18 | 12 | 24 |
@@ -70,6 +70,8 @@ Le dossier a été relu contre le code, et le code contre le dossier. Chaque éc
 | Son jamais démarré en jouant à la manette seule (le navigateur exige un clic ou une touche) ; mixage trop faible (crêtes à −25 dB) | nouvel essai à chaque appui de manette, invite visible tant que le son attend, gain maître, compresseur et limiteur (crêtes ≈ −5 dB), réverbération |
 | Ennemis de comportements différents visuellement identiques (même corps de shinobi, couleurs seules ; même marionnette pour quatre comportements, même oiseau pour un volant et un kamikaze) | équipement par comportement et accessoire d'attaque pour les créatures (D §4) |
 | Échange d'actif en boucle : l'ancien actif reposé sur le piédestal était repris dès la fin de l'animation si l'on restait dessus (délai décompté au dessin, écoulé pendant l'animation) ; même va-et-vient avec un talisman ou un consommable lâché | un objet reposé ou lâché ne se reprend qu'après s'en être éloigné ; délai décompté par la simulation [actifs] |
+| Revue de captures (chaque thème, type de salle, boss, état du HUD, menu) : textes d'entrée de salle hors écran, messages d'écran superposés, notifications par-dessus les bandeaux, télégraphes sur le HUD, onglets du registre qui se chevauchent, texte de mission à code qui déborde, carte de pause décentrée, poussières au-dessus du vide, couloirs sans appliques, brume et pénombre qui débordaient de la salle | textes empilés et coupés, notifications retenues, dessin de la salle découpé à ses murs, appliques par cellule |
+| Bandeau d'une synergie ou d'une transformation écrasé par celui de l'objet qui la complète ; bandeaux d'objet dessinés par-dessus le titre d'étage | file de bandeaux : l'objet d'abord, puis transformation et synergie ; file retenue pendant le titre d'étage et l'intro de boss [synergies] |
 
 **Défauts du banc de test** : huit codes de mission invalides tombaient sur une graine aléatoire (tests instables) ; le test manette dépendait de l'ordre d'exécution ; le test de secours ne mesurait que l'écart horizontal. Tous corrigés.
 
@@ -106,7 +108,7 @@ Les écarts plus anciens (pics devant des portes, familiers accumulés, faisceau
 | 22 personnages de base et 34 variantes de la cible (§25) | non produits | les 12 produits couvrent les familles de règles |
 | Coopération locale (§28) | non produite, non annoncée | spécification à écrire (butin, santé, caméra, portes) |
 | Courses quotidiennes (§28) | non produites | extension possible, sans récompense exclusive |
-| Trios et quatuors de synergies (§35) | non documentés | 60 paires seulement |
+| Trios et quatuors de synergies (§35) | 3 trios, aucun quatuor | 84 paires et 9 fusions de natures (dont une à trois natures) |
 | Vingt-quatre variantes d'étage (§35) | 18 | 10 thèmes sur 12 ; les deux thèmes de l'étage 9 (Mont Myōboku, Profondeurs du sceau) n'ont qu'une variante |
 
 ## I6. Capacités présentes dans le moteur mais sans contenu

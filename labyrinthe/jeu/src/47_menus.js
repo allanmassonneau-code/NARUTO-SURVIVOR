@@ -254,13 +254,13 @@ const SceneCommandes = {
 const SceneRegistre = {
   entrer() { this.onglet = 0; this.i = 0; },
   maj() {
-    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 4) % 4; this.i = 0; Son.jouer('menu'); }
+    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 5) % 5; this.i = 0; Son.jouer('menu'); }
     if (Entrees.nav.dy) { this.i = Math.max(0, this.i + Entrees.nav.dy * (this.onglet === 1 ? 14 : 1)); Son.jouer('menu'); }
     if (Entrees.menuRetour()) Scenes.depiler();
   },
   rendre(g) {
     fondMenu(g); cadreMenu(g, 14, 26, 612, 312);
-    const titres = ['Marques', 'Collection', 'Missions', 'Secrets']; titres.forEach((t, k) => { const x = 140 + k * 120, sel = k === this.onglet; Police.ecrire(g, t, x, 10, sel ? '#ffe0a0' : '#8a8098', { a: 'c' }); if (sel) { const w = Police.largeur(t); losange(g, x - w / 2 - 8, 14, '#e0b870', 2); losange(g, x + w / 2 + 7, 14, '#e0b870', 2); g.fillStyle = '#c8a060'; g.fillRect(x - w / 2, 21, w, 1); } });
+    const titres = ['Marques', 'Collection', 'Missions', 'Secrets', 'Synergies']; titres.forEach((t, k) => { const x = 80 + k * 120, sel = k === this.onglet; Police.ecrire(g, t, x, 10, sel ? '#ffe0a0' : '#8a8098', { a: 'c' }); if (sel) { const w = Police.largeur(t); losange(g, x - w / 2 - 8, 14, '#e0b870', 2); losange(g, x + w / 2 + 7, 14, '#e0b870', 2); g.fillStyle = '#c8a060'; g.fillRect(x - w / 2, 21, w, 1); } });
     const P = Progression.profil;
     if (this.onglet === 0) {
       const L = DON.personnages; const deb = Math.min(this.i, Math.max(0, L.length - 18));
@@ -270,6 +270,18 @@ const SceneRegistre = {
       const L = DON.objets.concat(DON.talismans); const cols = 14; const deb = Math.floor(Math.min(this.i, L.length - 1) / cols) * cols; const vis = L.slice(Math.max(0, deb - cols * 3), Math.max(0, deb - cols * 3) + cols * 12);
       vis.forEach((o, k) => { const x = 40 + (k % cols) * 40, y = 34 + Math.floor(k / cols) * 24; const conn = P.decouverts.includes(o.id); const vu = P.vus.includes(o.id); if (conn) g.drawImage(o.type === 'talisman' ? spriteRamassable('talisman', o.couleur) : iconeObjet(o.id), x, y); else { g.fillStyle = vu ? '#3a3048' : '#1a1622'; g.fillRect(x + 2, y + 2, 16, 16); Police.ecrire(g, '?', x + 10, y + 6, '#5a5268', { a: 'c' }); } });
       Police.ecrire(g, 'Découverts : ' + P.decouverts.filter(id => INDEX[id] && (INDEX[id].type === 'passif' || INDEX[id].type === 'actif' || INDEX[id].type === 'talisman')).length + ' / ' + L.length, 320, 326, '#a8a0b8', { a: 'c' });
+    } else if (this.onglet === 4) { // synergies : réunies au moins une fois ; indices pour les autres
+      const L = DON.synergies; this.i = Math.min(this.i, L.length - 1); const deb = Math.max(0, Math.min(this.i - 7, L.length - 16)); const connue = s => P.decouverts.includes(s.id);
+      L.slice(deb, deb + 16).forEach((sy, k) => { const j = deb + k, ok = connue(sy), y = 36 + k * 18; if (j === this.i) { g.fillStyle = 'rgba(240,200,112,0.18)'; g.fillRect(24, y - 3, 250, 16); } Police.ecrire(g, (ok ? '✓ ' : '· ') + (ok ? sy.nom : sy.type === 'fusion' ? 'Fusion inconnue' : 'Synergie inconnue'), 30, y, ok ? (sy.type === 'fusion' ? '#8af0e0' : '#a0e0a0') : '#8a8098'); });
+      const sy = L[this.i], ok = connue(sy); g.fillStyle = 'rgba(20,14,28,0.95)'; g.fillRect(290, 32, 330, 200);
+      g.drawImage(iconeSynergie(), 300, 36); Police.ecrire(g, ok ? sy.nom : '???', 324, 42, '#fff0d0');
+      let y = 62; const hint = [];
+      if (sy.elements) hint.push('Natures : ' + sy.elements.map(n => NOMS_NATURES[n] || n).join(' + '));
+      if (sy.composants.length) hint.push('Composants : ' + sy.composants.map(c => P.decouverts.includes(c) || ok ? INDEX[c].nom : '?').join(' + '));
+      if (ok) { y += Police.paragraphe(g, sy.desc, 300, y, 310, '#e8dcc0') + 6; }
+      for (const h of hint) y += Police.paragraphe(g, h, 300, y, 310, ok ? '#a8a0b8' : '#c8b8a0') + 2;
+      if (!ok) Police.paragraphe(g, 'Réunissez ces pièces pendant une partie pour l’inscrire ici.', 300, y + 6, 310, '#6a6078');
+      Police.ecrire(g, 'Réunies : ' + L.filter(connue).length + ' / ' + L.length, 455, 244, '#a8a0b8', { a: 'c' });
     } else if (this.onglet === 3) { // indices consultables en jeu ; la solution apparaît une fois le secret trouvé
       const L = DON.secrets; this.i = Math.min(this.i, L.length - 1);
       L.forEach((sc, k) => { const ok = P.decouverts.includes(sc.id); const y = 36 + k * 18; if (k === this.i) { g.fillStyle = 'rgba(240,200,112,0.18)'; g.fillRect(24, y - 3, 250, 16); } Police.ecrire(g, (ok ? '✓ ' : '· ') + (ok ? sc.nom : 'Secret inconnu'), 30, y, ok ? '#a0e0a0' : '#c8c0d8'); });

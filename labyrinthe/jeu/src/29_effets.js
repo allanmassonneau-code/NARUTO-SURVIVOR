@@ -87,7 +87,34 @@ function dessinerEffet(g, e, X, Y) {
     case 'flammes_noires': case 'tsukuyomi': { g.globalAlpha = 0.4 * (1 - k); g.fillStyle = e.type === 'tsukuyomi' ? '#a00020' : '#1a0a1a'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); g.globalAlpha = 1; break; }
     case 'sphere_noire': { const r = Math.round(6 + 10 * Math.sin(k * Math.PI)); g.drawImage(disque(r, '#141018'), x - r, y - r - 20); break; }
     case 'spirale': { for (let i = 0; i < 12; i++) { const a = i * 0.5 + e.age * 10; const d = i * 1.5 * (1 - k); g.fillStyle = '#8a7ab0'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d), 2, 2); } break; }
-    case 'racines': { g.fillStyle = '#6a4a2a'; for (let i = 0; i < 5; i++) g.fillRect(x - 10 + i * 5, y - Math.round(12 * Math.min(1, e.age * 4)), 2, Math.round(12 * Math.min(1, e.age * 4))); break; }
+    case 'manteau': { // chakra de la bête : flammes orangées autour du joueur
+      const t = G.temps; for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2 + t * 2.2, rr = 12 + Math.sin(t * 7 + i) * 2, fx = Math.round(x + Math.cos(a) * rr), fy = Math.round(y - 12 + Math.sin(a) * rr * 0.8), h = 3 + Math.round(3 * (0.5 + 0.5 * Math.sin(t * 11 + i * 2))); g.fillStyle = '#5a1408'; g.fillRect(fx - 1, fy - h, 4, h + 1); g.fillStyle = i % 2 ? '#ff6a2a' : '#ffb84a'; g.fillRect(fx, fy - h + 1, 2, h); }
+      if (Math.random() < 0.3 && !G.reglages.confort) G.particules.push({ x: e.x + (Math.random() - 0.5) * 18, y: e.y - 6 - Math.random() * 18, vx: 0, vy: -30, age: 0, duree: 0.35, couleur: Math.random() < 0.5 ? '#ff7a3a' : '#ffd070', taille: 2 });
+      break;
+    }
+    case 'foudre_ciel': { // éclair qui tombe du ciel, éclair blanc à cœur bleu
+      let px = x + 6, py = y - 190; g.globalAlpha = 1 - k * 0.8; for (let i = 1; i <= 9; i++) { const nx = x + (i < 9 ? (Math.random() - 0.5) * 18 : 0), ny = y - 190 + 190 * i / 9; lignePixel(g, px, py, nx, ny, '#ffffff', 3); lignePixel(g, px, py, nx, ny, '#6ab8ff', 1); px = nx; py = ny; }
+      const r = Math.round(8 + 18 * k); g.drawImage(anneau(r, 2, '#c8ecff'), x - r - 1, y - r - 1); if (k < 0.3 && !G.reglages.sansFlash) g.drawImage(disque(10, '#ffffff'), x - 10, y - 10); g.globalAlpha = 1; break;
+    }
+    case 'jinton': { // rayon de particules : faisceau blanc, cube au point d'origine
+      g.save(); g.translate(x, y); g.rotate(e.a); g.globalAlpha = 1 - k; const w = Math.round(12 * (1 - k)) + 2; g.fillStyle = '#d8f0ff'; g.fillRect(0, -w / 2 - 2, e.l, w + 4); g.fillStyle = '#ffffff'; g.fillRect(0, -w / 2, e.l, w);
+      g.rotate(G.temps * 6); g.strokeStyle = '#ffffff'; g.lineWidth = 2; g.strokeRect(-6, -6, 12, 12); g.restore(); g.globalAlpha = 1; break;
+    }
+    case 'attraction': { // grains de sable de fer qui convergent
+      for (let i = 0; i < 14; i++) { const a = i * 0.45 + e.x * 0.01, d = (e.r || 60) * (1 - k) * (0.5 + (i % 3) * 0.25); g.fillStyle = i % 2 ? '#3a3440' : '#8a8494'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d * 0.6), 2, 2); }
+      break;
+    }
+    case 'nuage_venin': { for (let i = 0; i < 5; i++) { const a = i * 1.26, d = 4 + k * 16, r = Math.max(1, Math.round(6 * (1 - k * 0.5))); g.globalAlpha = 0.6 * (1 - k); g.drawImage(disque(r, i % 2 ? '#8ae05a' : '#5aa040'), Math.round(x + Math.cos(a) * d - r), Math.round(y + Math.sin(a) * d * 0.6 - r)); } g.globalAlpha = 1; break; }
+    case 'racines': { // racines qui jaillissent en couronne autour de l'impact, puis rentrent sous terre
+      const R = e.r || 18, cr = Math.min(1, e.age * 6), dec = k > 0.7 ? (k - 0.7) / 0.3 : 0, h = Math.round(14 * cr * (1 - dec));
+      for (let i = 0; i < 7; i++) {
+        const a = i * 0.9 + (e.x % 7), px = Math.round(x + Math.cos(a) * R * 0.7), py = Math.round(y + Math.sin(a) * R * 0.4), pl = h - (i % 3) * 2;
+        g.fillStyle = 'rgba(28,18,10,0.45)'; g.fillRect(px - 3, py - 1, 7, 3);
+        for (let s = 0; s < pl; s += 2) { const ox = Math.round(Math.sin(s * 0.3 + i) * s / 6); g.fillStyle = '#5a3c20'; g.fillRect(px + ox - 1, py - s - 2, s < pl / 2 ? 3 : 2, 2); g.fillStyle = '#9a7040'; g.fillRect(px + ox - 1, py - s - 2, 1, 2); }
+        if (pl > 8) { const tx = px + Math.round(Math.sin(pl * 0.3 + i) * pl / 6); g.fillStyle = '#7ac050'; g.fillRect(tx + 1, py - pl + 1, 2, 2); g.fillStyle = '#4a8a30'; g.fillRect(tx - 2, py - pl + 4, 2, 1); }
+      }
+      break;
+    }
     case 'sceau_scellement': { const r = Math.round(16 * (1 - k)) + 2; g.drawImage(anneau(r, 2, '#e8d060'), x - r - 1, y - r - 11); break; }
     case 'coeur_charme': Police.ecrire(g, '♥', x, y - k * 10, '#ff7ab0', { a: 'c' }); break;
     case 'lotus': { g.globalAlpha = 1 - k; g.drawImage(anneau(Math.round(8 + k * 20), 2, '#6ae07a'), x - Math.round(9 + k * 20), y - Math.round(9 + k * 20) - 10); g.globalAlpha = 1; break; }

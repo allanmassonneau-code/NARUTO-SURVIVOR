@@ -16,7 +16,7 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 | Consommables (rouleaux, sceaux) | 30 | 30 | 80 |
 | Pilules (effets) | 15 | — | — |
 | Familiers (comportements distincts) | 16 | — | — |
-| Synergies documentées | 60 | 60 | 300 |
+| Synergies documentées | 96 | 60 | 300 |
 | Transformations d’ensemble | 13 | 12 | 40 |
 | Thèmes d’étage | 10 | 6 | 12 |
 | Variantes d’étage | 18 | 12 | 24 |
@@ -533,7 +533,7 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | TRF_012 | Huit Portes | portes | 3 distincts | Plafond de cadence +1, vitesse +0,5, dégâts +1 ; vapeur verte. | PSV_032, PSV_040, PSV_041, PSV_092, ACT_007, ACT_030 |
 | TRF_013 | Artiste explosif | argile | 3 distincts | Vos tirs explosent légèrement ; vos explosions ne vous blessent plus. | PSV_019, PSV_071, PSV_110, PSV_149 |
 
-## Synergies documentées (SYN) — 60
+## Synergies documentées (SYN) — 96
 
 | ID | Nom | Composants | Type | Effet | Test d’acceptation |
 |---|---|---|---|---|---|
@@ -597,6 +597,42 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | SYN_058 | Clone de relais armé | PSV_023 Clone de relais + PSV_028 Chidori nagashi (empreinte) | emergente | Le clone copie les impacts : sa foudre s’enchaîne aussi (génération 1). | Chaîne issue du clone. |
 | SYN_059 | Onde et chaîne | PSV_029 Poing de Doton + PSV_028 Chidori nagashi (empreinte) | emergente | Chaque impact : onde puis chaîne (budget partagé). | Deux effets secondaires par impact. |
 | SYN_060 | Artiste complet | PSV_110 Argile infinie + PSV_019 Argile explosive C1 | emergente | Bombes d’argile sans risque pour vous (immunité aux explosions). | Aucun dégât subi par ses propres bombes. |
+| SYN_061 | Yōton — Lave | natures : katon + doton | fusion | Feu et terre : vos impacts laissent une coulée de lave qui brûle et ralentit. | Flaque de lave à l’impact, brûlure et ralentissement. |
+| SYN_062 | Futton — Vapeur | natures : katon + suiton | fusion | Feu et eau : vos impacts libèrent une vapeur brûlante qui ronge et ralentit. | Nuage de vapeur à l’impact, dégâts par seconde. |
+| SYN_063 | Shakuton — Incandescence | natures : katon + futon | fusion | Feu et vent : les ennemis en feu subissent 40 % de dégâts en plus ; en mourant, ils embrasent leurs voisins. | Dégâts ×1,4 sur cible brûlée ; brûlure propagée à la mort. |
+| SYN_064 | Ranton — Tempête | natures : raiton + suiton | fusion | Foudre et eau : vos impacts laissent une flaque électrisée qui foudroie ce qui s’y tient. | Flaque électrique : décharges et paralysie brève. |
+| SYN_065 | Jiton — Sable de fer | natures : futon + doton | fusion | Vent et terre : vos impacts aimantent les ennemis proches vers le point touché ; tirs légèrement guidés. | Ennemis attirés vers l’impact. |
+| SYN_066 | Mokuton — Bois | natures : doton + suiton | fusion | Terre et eau : des racines jaillissent à l’impact (30 %) et immobilisent la cible et ses voisins. | Immobilisation de groupe à l’impact. |
+| SYN_067 | Hyōton — Glace | natures : futon + suiton | fusion | Vent et eau : vos tirs gèlent (20 %) ; un ennemi gelé éclate en éclats de glace. | Gel puis éclats à la mort. |
+| SYN_068 | Bakuton — Explosion | natures : doton + raiton | fusion | Terre et foudre : chaque impact déclenche une petite détonation. | Explosion à chaque impact. |
+| SYN_069 | Jinton — Particule | natures : katon + futon + doton | fusion | Feu, vent et terre : toutes les six émissions, un rayon de particules désintègre tout ce qu’il traverse. | Rayon blanc perçant ×3 tous les six tirs. |
+| SYN_070 | Éclair jaune de Konoha | PSV_005 Kunai à marque de téléportation + PSV_031 Kunai du vent | dediee | Marque et vent : tirs bien plus rapides et guidés, déplacement +0,3. | Vitesse de tir +2, guidage visible. |
+| SYN_071 | Manteau à une queue | PSV_055 Chakra du renard + PSV_056 Bulle de chakra rouge | dediee | Blessé, le chakra du renard vous enveloppe 5 s : dégâts +1, vitesse +0,4, brûlure au contact. | Manteau visible après un coup reçu. |
+| SYN_072 | Gamayu Endan | PSV_057 Crapaud d’huile + PSV_043 Grande boule de feu (empreinte) | dediee | Huile et feu : vos impacts s’embrasent en larges nappes de feu. | Nappe de feu large à l’impact. |
+| SYN_073 | Danse du camélia | PSV_060 Os de l’ossature + PSV_090 Ossature renforcée | dediee | Os renforcés : trois ricochets de plus et dégâts +0,8. | Os qui ricochent davantage. |
+| SYN_074 | Amaterasu et Tsukuyomi | PSV_053 Flammes noires + PSV_049 Genjutsu du regard | dediee | Le regard qui brûle : les ennemis confus subissent 25 % de dégâts en plus ; confusion +8 %. | Dégâts ×1,25 sur cible confuse. |
+| SYN_075 | Corbeaux d’illusion | PSV_067 Corbeau messager + PSV_049 Genjutsu du regard | dediee | Chaque élimination a 25 % de chances de rendre confus les ennemis proches. | Confusion de groupe après une élimination. |
+| SYN_076 | Ange de papier | PSV_075 Papillons de papier + PSV_116 Ailes de papier | dediee | Toutes les six émissions, une pluie de shuriken de papier s’abat sur les ennemis. | Pluie tous les six tirs. |
+| SYN_077 | Mer de papiers | PSV_155 Shuriken de papier + PSV_156 Mer de papiers explosifs | dediee | Vos papiers sont piégés : chaque impact détone. | Explosion à l’impact des papiers. |
+| SYN_078 | Culte de Jashin | PSV_054 Marque de Jashin + PSV_135 Rituel du sang | dediee | Chaque coup reçu : dégâts +0,5 pour la salle (jusqu’à quatre fois). | Bonus cumulé après plusieurs coups. |
+| SYN_079 | Les cinq cœurs | PSV_129 Contrat de Kakuzu + PSV_089 Cœur volé | dediee | Chaque boss vaincu vous offre un contenant de vitalité. | Contenant ajouté après un boss. |
+| SYN_080 | Maîtresse des armes | PSV_145 Pluie d’armes + PSV_024 Arsenal de Tenten (empreinte) | dediee | La pluie d’armes tombe deux fois plus souvent. | Pluie supplémentaire tous les cinq tirs. |
+| SYN_081 | Kirin | PSV_147 Lance de foudre + PSV_028 Chidori nagashi (empreinte) | dediee | Toutes les huit émissions, la foudre tombe du ciel sur l’ennemi le plus proche (×4) et s’enchaîne. | Éclair céleste tous les huit tirs. |
+| SYN_082 | Armure du Raikage | PSV_058 Armure de foudre + PSV_045 Courant foudroyant | dediee | Vitesse +0,3 ; quand on vous frappe, une décharge paralyse les ennemis proches. | Paralysie de groupe après un coup reçu. |
+| SYN_083 | Rasenshuriken parfait | PSV_146 Rasenshuriken (empreinte) + PSV_144 Nature du sage | dediee | Le tourbillon de vent s’élargit : explosions de rayon 2,2. | Rayon d’explosion mesuré à 2,2 tuiles. |
+| SYN_084 | Réceptacle éveillé | PSV_141 Cœur du réceptacle + PSV_132 Rage du réceptacle | dediee | À santé basse, chaque coup reçu réveille le manteau de la bête (8 s). | Manteau à santé basse. |
+| SYN_085 | Venin de Sasori | PSV_048 Poison de scorpion + PSV_142 Main du scorpion | dediee | Un ennemi empoisonné qui meurt libère un nuage de venin sur ses voisins. | Poison propagé à la mort. |
+| SYN_086 | Les trois Sannin | PSV_062 Gamakichi + PSV_063 Katsuyu miniature + PSV_064 Serpent des manches | dediee | Crapaud, limace et serpent : familiers +25 % et un demi-cœur rendu toutes les quatre salles. | Soin à la 4e salle, familiers renforcés. |
+| SYN_087 | Équipe 7 | PSV_001 Empreinte du Rasengan + PSV_028 Chidori nagashi (empreinte) + PSV_040 Gants de taijutsu | dediee | Rasengan, Chidori et force de Sakura : dégâts +1,5, cadence +0,3. | Statistiques augmentées. |
+| SYN_088 | Ino-Shika-Chō | PSV_051 Ombre liante + PSV_012 Baika (expansion) + PSV_049 Genjutsu du regard | dediee | Ombre, expansion et esprit : les ennemis immobilisés subissent 50 % de dégâts en plus. | Dégâts ×1,5 sur cible immobilisée. |
+| SYN_089 | Ruche d’Aburame | PSV_070 Kikaichū + PSV_153 Ruche de chakra | dediee | Poison +15 % ; une élimination sur cinq libère un essaim pour la salle. | Essaim temporaire après une élimination. |
+| SYN_090 | Défense absolue du sable | PSV_150 Tempête de sable + PSV_097 Armure de sable absolue | dediee | Un orbital de sable de plus ; ralentissement +20 %. | Orbitaux supplémentaires, ralenti fréquent. |
+| SYN_091 | Lame du vent | PSV_017 Empreinte du Kubikiribōchō + PSV_046 Lame de vent | dediee | Le grand sabre porte le vent : portée +1, dégâts ×1,15. | Frappe étendue plus longue. |
+| SYN_092 | Lotus de la porte | PSV_092 Porte de la Vie + PSV_041 Cadence de la fleur de lotus | dediee | Cadence ×1,15 et vitesse +0,4. | Cadence et vitesse augmentées. |
+| SYN_093 | Poing souple | PSV_113 Byakugan (empreinte) + PSV_040 Gants de taijutsu | dediee | Vos coups ferment les points de chakra : ralentissement 25 %, dégâts +0,4. | Ralenti fréquent. |
+| SYN_094 | Gardiens de Katsuyu | PSV_063 Katsuyu miniature + PSV_093 Chakra de la limace | dediee | Katsuyu soigne un demi-cœur toutes les quatre salles (doublé par la limace). | Soin à la 4e salle. |
+| SYN_095 | Sceau maudit, niveau 2 | PSV_091 Sceau maudit + PSV_133 Volonté du feu | dediee | À santé basse, un coup reçu déploie les ailes du sceau : lévitation et dégâts +1 pour la salle. | Lévitation à santé basse. |
+| SYN_096 | Onde du démon | PSV_055 Chakra du renard + PSV_098 Chakra du démon scellé | dediee | Dégâts +1 ; chaque coup reçu libère une onde de chakra rouge autour de vous. | Explosion autour du joueur après un coup. |
 
 ## Objectifs de déblocage (OBJ) — 60
 

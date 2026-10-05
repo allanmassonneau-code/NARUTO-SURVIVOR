@@ -324,6 +324,20 @@ function dessinerZone(g, z, X, Y) {
       const n = Math.max(5, Math.round(z.r / 3)); for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2 + z.r, rr = z.r * (0.25 + 0.6 * ((i * 37) % 10) / 10), fx = Math.round(x + Math.cos(a) * rr), fy = Math.round(y + Math.sin(a) * rr * 0.55), h = 3 + Math.round(4 * (0.5 + 0.5 * Math.sin(G.temps * 9 + i * 1.7))); g.fillStyle = '#0c0410'; g.fillRect(fx - 1, fy - h, 3, h + 1); g.fillStyle = i % 3 ? '#2a0e38' : '#8a4ac0'; g.fillRect(fx, fy - h + 1, 1, h - 1); }
       break;
     }
+    case 'lave_alliee': { // croûte sombre, cœur orangé, bulles qui crèvent
+      g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(60,14,6,0.85)'), x - z.r, y - Math.round(z.r * 0.55)); g.drawImage(ellipse(Math.max(2, z.r - 3), Math.max(1, z.r * 0.55 - 2), 'rgba(240,96,24,0.85)'), x - z.r + 3, y - Math.round(z.r * 0.55) + 2); g.drawImage(ellipse(Math.max(1, z.r - 7), Math.max(1, z.r * 0.55 - 4), 'rgba(255,200,80,0.8)'), x - z.r + 7, y - Math.round(z.r * 0.55) + 4);
+      for (let i = 0; i < 3; i++) { const ph = (G.temps * 1.7 + i * 0.37 + z.x * 0.01) % 1, bx = Math.round(x + Math.cos(i * 2.1 + z.y) * z.r * 0.45), by = Math.round(y + Math.sin(i * 2.1 + z.y) * z.r * 0.22); g.fillStyle = ph < 0.8 ? '#ffe090' : '#3a1006'; g.fillRect(bx, by - Math.round(ph * 2), ph < 0.8 ? 2 : 3, ph < 0.8 ? 2 : 1); }
+      break;
+    }
+    case 'vapeur_alliee': { // volutes blanches qui montent et se dissipent
+      for (let i = 0; i < 4; i++) { const ph = (G.temps * 0.8 + i * 0.25) % 1, r = Math.round(z.r * (0.35 + ph * 0.35)), vx = Math.round(x + Math.cos(i * 1.7 + z.x) * z.r * 0.4), vy = Math.round(y - 4 - ph * 12 + Math.sin(i * 1.7) * 4); g.globalAlpha = fin * 0.45 * (1 - ph * 0.7); g.drawImage(disque(r, i % 2 ? '#f4f8ff' : '#d8e4f0'), vx - r, vy - r); }
+      g.globalAlpha = fin; break;
+    }
+    case 'eau_electrique': { // flaque bleue parcourue d'étincelles
+      g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(50,110,190,0.45)'), x - z.r, y - Math.round(z.r * 0.55)); g.drawImage(anneau(Math.round(z.r * 0.75), 1, 'rgba(160,220,255,0.6)'), x - Math.round(z.r * 0.75) - 1, y - Math.round(z.r * 0.75) - 1);
+      if (Math.floor(G.temps * 14 + z.x) % 3 === 0) { g.fillStyle = '#f8f8ff'; const a = Math.random() * 6.28, d = Math.random() * z.r * 0.8; lignePixel(g, x + Math.cos(a) * d, y + Math.sin(a) * d * 0.5, x + Math.cos(a) * d + 4, y + Math.sin(a) * d * 0.5 - 3, '#e8f4ff'); }
+      break;
+    }
     case 'eau_alliee': case 'eau': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(80,150,220,0.4)'), x - z.r, y - z.r * 0.55); break;
     case 'acide': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(20,40,10,0.6)'), x - z.r - 1, y - z.r * 0.55 - 1); g.drawImage(ellipse(z.r - 1, z.r * 0.5, 'rgba(130,220,60,0.7)'), x - z.r + 1, y - z.r * 0.5); if (Math.random() < 0.05) G.particules.push({ x: z.x, y: z.y - 2, vx: 0, vy: -10, age: 0, duree: 0.4, couleur: '#c0ff80', taille: 2 }); break;
     case 'glace': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(190,230,255,0.5)'), x - z.r, y - z.r * 0.55); break;

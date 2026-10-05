@@ -833,5 +833,772 @@
   "desc": "Bombes d’argile sans risque pour vous (immunité aux explosions).",
   "test": "Aucun dégât subi par ses propres bombes.",
   "effets": []
+ },
+ {
+  "id": "SYN_061",
+  "nom": "Yōton — Lave",
+  "composants": [],
+  "elements": [
+   "katon",
+   "doton"
+  ],
+  "type": "fusion",
+  "desc": "Feu et terre : vos impacts laissent une coulée de lave qui brûle et ralentit.",
+  "test": "Flaque de lave à l’impact, brûlure et ralentissement.",
+  "effets": [
+   {
+    "impact": "lave",
+    "coef": 0.5
+   }
+  ]
+ },
+ {
+  "id": "SYN_062",
+  "nom": "Futton — Vapeur",
+  "composants": [],
+  "elements": [
+   "katon",
+   "suiton"
+  ],
+  "type": "fusion",
+  "desc": "Feu et eau : vos impacts libèrent une vapeur brûlante qui ronge et ralentit.",
+  "test": "Nuage de vapeur à l’impact, dégâts par seconde.",
+  "effets": [
+   {
+    "impact": "vapeur",
+    "coef": 0.4
+   }
+  ]
+ },
+ {
+  "id": "SYN_063",
+  "nom": "Shakuton — Incandescence",
+  "composants": [],
+  "elements": [
+   "katon",
+   "futon"
+  ],
+  "type": "fusion",
+  "desc": "Feu et vent : les ennemis en feu subissent 40 % de dégâts en plus ; en mourant, ils embrasent leurs voisins.",
+  "test": "Dégâts ×1,4 sur cible brûlée ; brûlure propagée à la mort.",
+  "effets": [
+   {
+    "drapeau": "incandescence"
+   },
+   {
+    "statut": "brulure",
+    "chance": 0.12
+   }
+  ]
+ },
+ {
+  "id": "SYN_064",
+  "nom": "Ranton — Tempête",
+  "composants": [],
+  "elements": [
+   "raiton",
+   "suiton"
+  ],
+  "type": "fusion",
+  "desc": "Foudre et eau : vos impacts laissent une flaque électrisée qui foudroie ce qui s’y tient.",
+  "test": "Flaque électrique : décharges et paralysie brève.",
+  "effets": [
+   {
+    "impact": "flaque_electrique",
+    "coef": 0.35
+   }
+  ]
+ },
+ {
+  "id": "SYN_065",
+  "nom": "Jiton — Sable de fer",
+  "composants": [],
+  "elements": [
+   "futon",
+   "doton"
+  ],
+  "type": "fusion",
+  "desc": "Vent et terre : vos impacts aimantent les ennemis proches vers le point touché ; tirs légèrement guidés.",
+  "test": "Ennemis attirés vers l’impact.",
+  "effets": [
+   {
+    "impact": "attraction",
+    "r": 2.6
+   },
+   {
+    "traj": "guidage",
+    "force": 0.6
+   }
+  ]
+ },
+ {
+  "id": "SYN_066",
+  "nom": "Mokuton — Bois",
+  "composants": [],
+  "elements": [
+   "doton",
+   "suiton"
+  ],
+  "type": "fusion",
+  "desc": "Terre et eau : des racines jaillissent à l’impact (30 %) et immobilisent la cible et ses voisins.",
+  "test": "Immobilisation de groupe à l’impact.",
+  "effets": [
+   {
+    "impact": "racines",
+    "r": 1.2,
+    "chance": 0.3
+   }
+  ]
+ },
+ {
+  "id": "SYN_067",
+  "nom": "Hyōton — Glace",
+  "composants": [],
+  "elements": [
+   "futon",
+   "suiton"
+  ],
+  "type": "fusion",
+  "desc": "Vent et eau : vos tirs gèlent (20 %) ; un ennemi gelé éclate en éclats de glace.",
+  "test": "Gel puis éclats à la mort.",
+  "effets": [
+   {
+    "statut": "gel",
+    "chance": 0.2,
+    "duree": 1.4
+   },
+   {
+    "drapeau": "eclatsGlace"
+   }
+  ]
+ },
+ {
+  "id": "SYN_068",
+  "nom": "Bakuton — Explosion",
+  "composants": [],
+  "elements": [
+   "doton",
+   "raiton"
+  ],
+  "type": "fusion",
+  "desc": "Terre et foudre : chaque impact déclenche une petite détonation.",
+  "test": "Explosion à chaque impact.",
+  "effets": [
+   {
+    "impact": "explosion",
+    "r": 1.1,
+    "coef": 0.55
+   }
+  ]
+ },
+ {
+  "id": "SYN_069",
+  "nom": "Jinton — Particule",
+  "composants": [],
+  "elements": [
+   "katon",
+   "futon",
+   "doton"
+  ],
+  "type": "fusion",
+  "desc": "Feu, vent et terre : toutes les six émissions, un rayon de particules désintègre tout ce qu’il traverse.",
+  "test": "Rayon blanc perçant ×3 tous les six tirs.",
+  "effets": [
+   {
+    "quand": "emission_primaire",
+    "tousLes": 6,
+    "faire": {
+     "type": "jinton",
+     "coef": 3
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_070",
+  "nom": "Éclair jaune de Konoha",
+  "composants": [
+   "PSV_005",
+   "PSV_031"
+  ],
+  "type": "dediee",
+  "desc": "Marque et vent : tirs bien plus rapides et guidés, déplacement +0,3.",
+  "test": "Vitesse de tir +2, guidage visible.",
+  "effets": [
+   {
+    "traj": "guidage",
+    "force": 0.8
+   },
+   {
+    "s": "vitesseTir",
+    "a": 2
+   },
+   {
+    "s": "vitesse",
+    "a": 0.3
+   }
+  ]
+ },
+ {
+  "id": "SYN_071",
+  "nom": "Manteau à une queue",
+  "composants": [
+   "PSV_055",
+   "PSV_056"
+  ],
+  "type": "dediee",
+  "desc": "Blessé, le chakra du renard vous enveloppe 5 s : dégâts +1, vitesse +0,4, brûlure au contact.",
+  "test": "Manteau visible après un coup reçu.",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "faire": {
+     "type": "manteau",
+     "duree": 5
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_072",
+  "nom": "Gamayu Endan",
+  "composants": [
+   "PSV_057",
+   "PSV_043"
+  ],
+  "type": "dediee",
+  "desc": "Huile et feu : vos impacts s’embrasent en larges nappes de feu.",
+  "test": "Nappe de feu large à l’impact.",
+  "effets": [
+   {
+    "impact": "flamme",
+    "r": 22,
+    "dps": 0.9
+   }
+  ]
+ },
+ {
+  "id": "SYN_073",
+  "nom": "Danse du camélia",
+  "composants": [
+   "PSV_060",
+   "PSV_090"
+  ],
+  "type": "dediee",
+  "desc": "Os renforcés : trois ricochets de plus et dégâts +0,8.",
+  "test": "Os qui ricochent davantage.",
+  "effets": [
+   {
+    "traj": "rebond"
+   },
+   {
+    "s": "degats",
+    "a": 0.8
+   }
+  ]
+ },
+ {
+  "id": "SYN_074",
+  "nom": "Amaterasu et Tsukuyomi",
+  "composants": [
+   "PSV_053",
+   "PSV_049"
+  ],
+  "type": "dediee",
+  "desc": "Le regard qui brûle : les ennemis confus subissent 25 % de dégâts en plus ; confusion +8 %.",
+  "test": "Dégâts ×1,25 sur cible confuse.",
+  "effets": [
+   {
+    "drapeau": "mangekyo"
+   },
+   {
+    "statut": "confus",
+    "chance": 0.08,
+    "duree": 2
+   }
+  ]
+ },
+ {
+  "id": "SYN_075",
+  "nom": "Corbeaux d’illusion",
+  "composants": [
+   "PSV_067",
+   "PSV_049"
+  ],
+  "type": "dediee",
+  "desc": "Chaque élimination a 25 % de chances de rendre confus les ennemis proches.",
+  "test": "Confusion de groupe après une élimination.",
+  "effets": [
+   {
+    "quand": "elimination",
+    "chance": 0.25,
+    "faire": {
+     "type": "statut_proches",
+     "statut": "confus",
+     "r": 2.5,
+     "duree": 2.5
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_076",
+  "nom": "Ange de papier",
+  "composants": [
+   "PSV_075",
+   "PSV_116"
+  ],
+  "type": "dediee",
+  "desc": "Toutes les six émissions, une pluie de shuriken de papier s’abat sur les ennemis.",
+  "test": "Pluie tous les six tirs.",
+  "effets": [
+   {
+    "quand": "emission_primaire",
+    "tousLes": 6,
+    "faire": {
+     "type": "pluie_armes",
+     "n": 6,
+     "coef": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_077",
+  "nom": "Mer de papiers",
+  "composants": [
+   "PSV_155",
+   "PSV_156"
+  ],
+  "type": "dediee",
+  "desc": "Vos papiers sont piégés : chaque impact détone.",
+  "test": "Explosion à l’impact des papiers.",
+  "effets": [
+   {
+    "impact": "explosion",
+    "r": 0.9,
+    "coef": 0.45
+   }
+  ]
+ },
+ {
+  "id": "SYN_078",
+  "nom": "Culte de Jashin",
+  "composants": [
+   "PSV_054",
+   "PSV_135"
+  ],
+  "type": "dediee",
+  "desc": "Chaque coup reçu : dégâts +0,5 pour la salle (jusqu’à quatre fois).",
+  "test": "Bonus cumulé après plusieurs coups.",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "faire": {
+     "type": "bonus",
+     "bonus": {
+      "s": "degats",
+      "a": 0.5
+     },
+     "duree": "salle",
+     "cumulMax": 4
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_079",
+  "nom": "Les cinq cœurs",
+  "composants": [
+   "PSV_129",
+   "PSV_089"
+  ],
+  "type": "dediee",
+  "desc": "Chaque boss vaincu vous offre un contenant de vitalité.",
+  "test": "Contenant ajouté après un boss.",
+  "effets": [
+   {
+    "quand": "boss_vaincu",
+    "faire": {
+     "type": "ressource_sante"
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_080",
+  "nom": "Maîtresse des armes",
+  "composants": [
+   "PSV_145",
+   "PSV_024"
+  ],
+  "type": "dediee",
+  "desc": "La pluie d’armes tombe deux fois plus souvent.",
+  "test": "Pluie supplémentaire tous les cinq tirs.",
+  "effets": [
+   {
+    "quand": "emission_primaire",
+    "tousLes": 5,
+    "faire": {
+     "type": "pluie_armes",
+     "n": 6,
+     "coef": 1.2
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_081",
+  "nom": "Kirin",
+  "composants": [
+   "PSV_147",
+   "PSV_028"
+  ],
+  "type": "dediee",
+  "desc": "Toutes les huit émissions, la foudre tombe du ciel sur l’ennemi le plus proche (×4) et s’enchaîne.",
+  "test": "Éclair céleste tous les huit tirs.",
+  "effets": [
+   {
+    "quand": "emission_primaire",
+    "tousLes": 8,
+    "faire": {
+     "type": "foudre_ciel",
+     "coef": 4
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_082",
+  "nom": "Armure du Raikage",
+  "composants": [
+   "PSV_058",
+   "PSV_045"
+  ],
+  "type": "dediee",
+  "desc": "Vitesse +0,3 ; quand on vous frappe, une décharge paralyse les ennemis proches.",
+  "test": "Paralysie de groupe après un coup reçu.",
+  "effets": [
+   {
+    "s": "vitesse",
+    "a": 0.3
+   },
+   {
+    "quand": "degat_recu",
+    "faire": {
+     "type": "statut_proches",
+     "statut": "immobilise",
+     "r": 2.2,
+     "duree": 1.2
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_083",
+  "nom": "Rasenshuriken parfait",
+  "composants": [
+   "PSV_146",
+   "PSV_144"
+  ],
+  "type": "dediee",
+  "desc": "Le tourbillon de vent s’élargit : explosions de rayon 2,2.",
+  "test": "Rayon d’explosion mesuré à 2,2 tuiles.",
+  "effets": [
+   {
+    "impact": "explosion",
+    "r": 2.2,
+    "coef": 0.45
+   }
+  ]
+ },
+ {
+  "id": "SYN_084",
+  "nom": "Réceptacle éveillé",
+  "composants": [
+   "PSV_141",
+   "PSV_132"
+  ],
+  "type": "dediee",
+  "desc": "À santé basse, chaque coup reçu réveille le manteau de la bête (8 s).",
+  "test": "Manteau à santé basse.",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "si": "santeBasse",
+    "faire": {
+     "type": "manteau",
+     "duree": 8
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_085",
+  "nom": "Venin de Sasori",
+  "composants": [
+   "PSV_048",
+   "PSV_142"
+  ],
+  "type": "dediee",
+  "desc": "Un ennemi empoisonné qui meurt libère un nuage de venin sur ses voisins.",
+  "test": "Poison propagé à la mort.",
+  "effets": [
+   {
+    "drapeau": "nuageVenin"
+   }
+  ]
+ },
+ {
+  "id": "SYN_086",
+  "nom": "Les trois Sannin",
+  "composants": [
+   "PSV_062",
+   "PSV_063",
+   "PSV_064"
+  ],
+  "type": "dediee",
+  "desc": "Crapaud, limace et serpent : familiers +25 % et un demi-cœur rendu toutes les quatre salles.",
+  "test": "Soin à la 4e salle, familiers renforcés.",
+  "effets": [
+   {
+    "drapeau": "familiersForts"
+   },
+   {
+    "quand": "salle_nettoyee",
+    "tousLes": 4,
+    "faire": {
+     "type": "soin",
+     "demis": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_087",
+  "nom": "Équipe 7",
+  "composants": [
+   "PSV_001",
+   "PSV_028",
+   "PSV_040"
+  ],
+  "type": "dediee",
+  "desc": "Rasengan, Chidori et force de Sakura : dégâts +1,5, cadence +0,3.",
+  "test": "Statistiques augmentées.",
+  "effets": [
+   {
+    "s": "degats",
+    "a": 1.5
+   },
+   {
+    "s": "cadence",
+    "a": 0.3
+   }
+  ]
+ },
+ {
+  "id": "SYN_088",
+  "nom": "Ino-Shika-Chō",
+  "composants": [
+   "PSV_051",
+   "PSV_012",
+   "PSV_049"
+  ],
+  "type": "dediee",
+  "desc": "Ombre, expansion et esprit : les ennemis immobilisés subissent 50 % de dégâts en plus.",
+  "test": "Dégâts ×1,5 sur cible immobilisée.",
+  "effets": [
+   {
+    "drapeau": "inoShikaCho"
+   },
+   {
+    "statut": "immobilise",
+    "chance": 0.08,
+    "duree": 1
+   }
+  ]
+ },
+ {
+  "id": "SYN_089",
+  "nom": "Ruche d’Aburame",
+  "composants": [
+   "PSV_070",
+   "PSV_153"
+  ],
+  "type": "dediee",
+  "desc": "Poison +15 % ; une élimination sur cinq libère un essaim pour la salle.",
+  "test": "Essaim temporaire après une élimination.",
+  "effets": [
+   {
+    "statut": "poison",
+    "chance": 0.15
+   },
+   {
+    "quand": "elimination",
+    "chance": 0.2,
+    "faire": {
+     "type": "familier",
+     "familier": "FAM_INSECTES",
+     "salle": true
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_090",
+  "nom": "Défense absolue du sable",
+  "composants": [
+   "PSV_150",
+   "PSV_097"
+  ],
+  "type": "dediee",
+  "desc": "Un orbital de sable de plus ; ralentissement +20 %.",
+  "test": "Orbitaux supplémentaires, ralenti fréquent.",
+  "effets": [
+   {
+    "familier": "FAM_SABLE"
+   },
+   {
+    "statut": "ralenti",
+    "chance": 0.2,
+    "duree": 2
+   }
+  ]
+ },
+ {
+  "id": "SYN_091",
+  "nom": "Lame du vent",
+  "composants": [
+   "PSV_017",
+   "PSV_046"
+  ],
+  "type": "dediee",
+  "desc": "Le grand sabre porte le vent : portée +1, dégâts ×1,15.",
+  "test": "Frappe étendue plus longue.",
+  "effets": [
+   {
+    "s": "portee",
+    "a": 1
+   },
+   {
+    "coefDegats": 1.15
+   }
+  ]
+ },
+ {
+  "id": "SYN_092",
+  "nom": "Lotus de la porte",
+  "composants": [
+   "PSV_092",
+   "PSV_041"
+  ],
+  "type": "dediee",
+  "desc": "Cadence ×1,15 et vitesse +0,4.",
+  "test": "Cadence et vitesse augmentées.",
+  "effets": [
+   {
+    "s": "cadence",
+    "m": 1.15
+   },
+   {
+    "s": "vitesse",
+    "a": 0.4
+   }
+  ]
+ },
+ {
+  "id": "SYN_093",
+  "nom": "Poing souple",
+  "composants": [
+   "PSV_113",
+   "PSV_040"
+  ],
+  "type": "dediee",
+  "desc": "Vos coups ferment les points de chakra : ralentissement 25 %, dégâts +0,4.",
+  "test": "Ralenti fréquent.",
+  "effets": [
+   {
+    "statut": "ralenti",
+    "chance": 0.25,
+    "duree": 2
+   },
+   {
+    "s": "degats",
+    "a": 0.4
+   }
+  ]
+ },
+ {
+  "id": "SYN_094",
+  "nom": "Gardiens de Katsuyu",
+  "composants": [
+   "PSV_063",
+   "PSV_093"
+  ],
+  "type": "dediee",
+  "desc": "Katsuyu soigne un demi-cœur toutes les quatre salles (doublé par la limace).",
+  "test": "Soin à la 4e salle.",
+  "effets": [
+   {
+    "quand": "salle_nettoyee",
+    "tousLes": 4,
+    "faire": {
+     "type": "soin",
+     "demis": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_095",
+  "nom": "Sceau maudit, niveau 2",
+  "composants": [
+   "PSV_091",
+   "PSV_133"
+  ],
+  "type": "dediee",
+  "desc": "À santé basse, un coup reçu déploie les ailes du sceau : lévitation et dégâts +1 pour la salle.",
+  "test": "Lévitation à santé basse.",
+  "effets": [
+   {
+    "quand": "degat_recu",
+    "si": "santeBasse",
+    "faire": {
+     "type": "bonus",
+     "bonus": {
+      "s": "degats",
+      "a": 1,
+      "vol": true
+     },
+     "duree": "salle",
+     "cumulMax": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_096",
+  "nom": "Onde du démon",
+  "composants": [
+   "PSV_055",
+   "PSV_098"
+  ],
+  "type": "dediee",
+  "desc": "Dégâts +1 ; chaque coup reçu libère une onde de chakra rouge autour de vous.",
+  "test": "Explosion autour du joueur après un coup.",
+  "effets": [
+   {
+    "s": "degats",
+    "a": 1
+   },
+   {
+    "quand": "degat_recu",
+    "faire": {
+     "type": "explosion",
+     "r": 1.8,
+     "coef": 1.5
+    }
+   }
+  ]
  }
 ]

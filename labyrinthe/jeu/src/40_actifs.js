@@ -161,7 +161,7 @@ function utiliserPoche() {
   const c = J.poches[0]; const d = INDEX[c.id]; if (!d) { J.poches.shift(); return; }
   let garder = false;
   if (c.type === 'pilule') { garder = !!prendrePilule(J, c); }
-  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); G.banniere = { t: 0, nom: d.nom, desc: d.desc, mineur: true }; }
+  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true }); }
   if (aTalisman(J, 'TAL_031') && Math.random() < 0.15) garder = true;
   if (!garder) J.poches.shift();
   evenement('consommable_utilise', { id: c.id });
@@ -206,7 +206,7 @@ function prendrePilule(J, c) {
   if (E.reveler) EFFETS_CONSOMMABLES.reveler(J, {});
   if (E.oubli) for (const s of Object.values(G.etage.salles)) if (!s.visitee) s.apercue = false;
   if (E.volcan) for (let i = 0; i < 3; i++) setTimeoutJeu(() => { const a = Math.random() * Math.PI * 2; explosion(J.x + Math.cos(a) * 40, J.y + Math.sin(a) * 30, 1.3 * TUILE, 25, { proprio: 'joueur', blesseJoueur: false }); }, 0.2 + i * 0.25);
-  G.banniere = { t: 0, nom: d.nom, desc: d.desc, mineur: true, pilule: true };
+  annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true, pilule: true });
   Son.jouer('pilule'); Progression.decouvrir(d.id);
   return false;
 }

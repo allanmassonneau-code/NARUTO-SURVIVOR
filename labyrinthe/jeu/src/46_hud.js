@@ -21,8 +21,26 @@ function inviteSon(g, cx, y) {
   g.fillStyle = '#ff7a5a'; for (let k = 0; k < 5; k++) { g.fillRect(x + 15 + k, y + 6 + k, 1, 1); g.fillRect(x + 19 - k, y + 6 + k, 1, 1); }
   Police.ecrire(g, t, x + 24, y + 5, '#f4e0c0');
 }
-// Un bandeau (objet, transformation, étage) occupe le haut de l'écran : les notifications attendent
-function banniereVisible() { const B = G.banniere, E = G.banniereEtage; return !!(B && B.t < (B.mineur ? 1.6 : 2.6) || E && E.t < 3.2 || G.introBoss); }
+// Un bandeau (objet, transformation, synergie, étage) occupe le haut de l'écran : les notifications attendent.
+// Celui d'un objet s'affiche aussitôt (il remplace un autre bandeau d'objet) ; transformations et synergies
+// passent ensuite, sans jamais être perdues. Le titre d'étage et l'intro de boss retiennent la file.
+function dureeBanniere(B) { return B.mineur ? 1.6 : 2.6; }
+function annoncer(b) {
+  const F = G.banniereFile || (G.banniereFile = []), B = G.banniere;
+  if (!B || B.t >= dureeBanniere(B)) { G.banniere = b; return; }
+  if (b.synergie || b.transformation) { F.push(b); return; }
+  if (B.synergie || B.transformation) { B.t = 0; F.unshift(B); }
+  G.banniere = b;
+}
+function bannieresRetenues() { const E = G.banniereEtage; return !!(E && E.t < 3.2 || G.introBoss); }
+function banniereVisible() { const B = G.banniere; return !!(B && B.t < dureeBanniere(B) || bannieresRetenues()); }
+// Icône des synergies : deux anneaux enlacés (turquoise et or)
+let _iconeSyn = null;
+function iconeSynergie() {
+  if (_iconeSyn) return _iconeSyn; const c = toile(20, 20), g = ctxDe(c);
+  g.drawImage(anneau(6, 2, '#1c1420'), 1, 3); g.drawImage(anneau(6, 2, '#1c1420'), 7, 3); g.drawImage(anneau(5, 2, '#5ae0d0'), 3, 5); g.drawImage(anneau(5, 2, '#e8c050'), 8, 5);
+  g.fillStyle = '#5ae0d0'; g.fillRect(9, 7, 2, 2); return (_iconeSyn = c);
+}
 function losange(g, x, y, c, n = 2) { x = Math.round(x); y = Math.round(y); g.fillStyle = c; for (let k = -n; k <= n; k++) { const w = n - Math.abs(k); g.fillRect(x - w, y + k, 2 * w + 1, 1); } }
 // Bandeau cinématographique : bords estompés, filets dorés, losanges au centre
 function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
@@ -100,7 +118,7 @@ function dessinerHUD(g) {
     Police.ecrire(g, boss[0].def.nom, 320, 329, '#f8e0d4', { a: 'c', contour: '#1c1420' });
   } else _traceBoss = null;
   // bannières et panneaux
-  if (G.banniere) dessinerBanniere(g);
+  if (G.banniere && !bannieresRetenues()) dessinerBanniere(g);
   if (G.banniereEtage) dessinerBanniereEtage(g);
   if (G.achatPropose) dessinerPanneauAchat(g, G.achatPropose);
   else if (Entrees.enfonce('description') && G.piedestalProche && G.piedestalProche.id) dessinerDescription(g, G.piedestalProche.ramassable ? null : G.piedestalProche.id);
@@ -118,12 +136,12 @@ function dessinerStats(g, J, x, y) {
   L.forEach(([k, v], i) => { Police.ecrire(g, k, x, y + i * 10, '#8a8098'); Police.ecrire(g, v, x + 24, y + i * 10, '#e8e0f0'); });
 }
 function dessinerBanniere(g) {
-  const B = G.banniere; const d = B.mineur ? 1.6 : 2.6; if (B.t > d) return;
+  const B = G.banniere; const d = dureeBanniere(B); if (B.t > d) return;
   const a = B.t < 0.15 ? B.t / 0.15 : B.t > d - 0.4 ? (d - B.t) / 0.4 : 1;
   g.globalAlpha = a;
   const y = B.transformation ? 130 : 84; const w = Math.max(Police.largeur(B.nom) * 2, Police.largeur(B.desc || '')) + 24;
-  bandeau(g, 320 - w / 2 - 30, y - 7, w + 60, B.desc ? 38 : 26, B.transformation ? '#f0c040' : B.pilule ? '#a0e0a0' : '#d8c8a0');
-  Police.ecrire(g, B.nom, 320, y, B.transformation ? '#ffe080' : '#fff4e0', { a: 'c', e: 2, contour: '#1c1420' });
+  bandeau(g, 320 - w / 2 - 30, y - 7, w + 60, B.desc ? 38 : 26, B.transformation ? '#f0c040' : B.synergie ? '#5ae0d0' : B.pilule ? '#a0e0a0' : '#d8c8a0');
+  Police.ecrire(g, B.nom, 320, y, B.transformation ? '#ffe080' : B.synergie ? '#b8fff4' : '#fff4e0', { a: 'c', e: Police.largeur(B.nom) * 2 > 420 ? 1 : 2, contour: '#1c1420' });
   if (B.desc) Police.ecrire(g, B.desc, 320, y + 20, '#c8c0d8', { a: 'c' });
   g.globalAlpha = 1;
 }
@@ -183,7 +201,7 @@ function detailsObjet(d) {
     if (e.multi) L.push('+' + e.multi + ' émission(s)' + (e.coefCadence ? ', cadence ×' + f(e.coefCadence) : ''));
     if (e.forme) L.push('Forme de tir : ' + ({ orbe: 'orbe chargé', rayon: 'rayon chargé', laser: 'trait instantané', faisceau: 'faisceau continu', boomerang: 'arme revenante', lame: 'frappe courte', lame_longue: 'frappe étendue', bombe: 'bombe lancée', frappe: 'frappe différée au sol', controle: 'émission contrôlée', rotation: 'attaque circulaire' }[e.forme] || e.forme));
     if (e.traj) L.push('Trajectoire : ' + ({ guidage: 'guidée', rebond: 'ricochet', percant: 'perçante', spectral: 'traverse les obstacles', orbite: 'en orbite', onde: 'ondulante', lent: 'orbe lent (×2 taille)', acceleration: 'accélérée', retour: 'revient' }[e.traj] || e.traj));
-    if (e.impact) L.push('Impact : ' + ({ explosion: 'explosion', chaine: 'chaîne de foudre', eclat: 'éclatement', mine: 'mine', flamme: 'flammes au sol', flaque: 'flaque', onde: 'onde de choc' }[e.impact]) + (e.coef ? ' (×' + f(e.coef) + ')' : ''));
+    if (e.impact) L.push('Impact : ' + ({ lave: 'coulée de lave', vapeur: 'vapeur brûlante', flaque_electrique: 'flaque électrisée', attraction: 'attraction magnétique', racines: 'racines', explosion: 'explosion', chaine: 'chaîne de foudre', eclat: 'éclatement', mine: 'mine', flamme: 'flammes au sol', flaque: 'flaque', onde: 'onde de choc' }[e.impact]) + (e.coef ? ' (×' + f(e.coef) + ')' : ''));
     if (e.statut) L.push(({ brulure: 'Brûlure', poison: 'Poison', ralenti: 'Ralentissement', immobilise: 'Immobilisation', charme: 'Charme', peur: 'Peur', confus: 'Confusion', gel: 'Gel' }[e.statut]) + ' : ' + Math.round((e.chance || 0) * 100) + ' %' + (e.chanceParChance ? ' + ' + Math.round(e.chanceParChance * 100) + ' % par chance' : '') + (e.max ? ' (max ' + Math.round(e.max * 100) + ' %)' : ''));
     if (e.sante) { const s = e.sante; if (s.cont) L.push('+' + s.cont + ' contenant(s) de vitalité'); if (s.prot) L.push('+' + s.prot / 2 + ' réserve(s) de chakra'); if (s.instable) L.push('+' + s.instable / 2 + ' réserve(s) instable(s)'); if (s.os) L.push('+' + s.os + ' enveloppe(s) osseuse(s)'); if (s.retraitCont) L.push('−' + s.retraitCont + ' contenant(s)'); if (s.cicatrice) L.push('+' + s.cicatrice + ' cicatrice(s) de sceau'); }
     if (e.res) for (const [k, v] of Object.entries(e.res)) L.push('+' + v + ' ' + ({ ryo: 'Ryō', cles: 'clé(s)', explosifs: 'explosif(s)' }[k]));
@@ -193,6 +211,8 @@ function detailsObjet(d) {
   }
   if (d.type === 'actif') L.push(d.recharge ? 'Recharge : ' + d.recharge + ' s en combat' : d.unique ? 'Usage unique' : 'Charges : ' + d.charges + ' salle(s)');
   if (d.contrepartie) L.push('Contrepartie : ' + d.contrepartie);
+  if (d.composants && d.composants.length) L.push('Composants : ' + d.composants.map(c => INDEX[c] ? INDEX[c].nom : c).join(' + '));
+  if (d.elements) L.push('Natures : ' + d.elements.map(n => NOMS_NATURES[n] || n).join(' + '));
   if (d.ensemble) L.push('Ensemble : ' + ((DON.transformations.find(t => t.ensemble === d.ensemble) || {}).nom || d.ensemble));
   return L;
 }

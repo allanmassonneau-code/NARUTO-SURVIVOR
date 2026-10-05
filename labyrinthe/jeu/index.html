@@ -273,7 +273,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_008', 'Senbon perforant', 'projectile', 2, 'H2 S1', 'Les tirs traversent les ennemis.', [{ traj: 'percant' }, s('vitesseTir', 1)], { icone: ic('senbon', '#f0f0f8', '#a0a0b0', '#6a2a2a'), tags: ['percement'] });
   O('PSV_009', 'Parchemin fantôme', 'projectile', 1, 'H2 L1', 'Les tirs passent au-dessus des obstacles.', [{ traj: 'spectral' }], { icone: ic('rouleau', '#c8d0e8', '#8890a8', '#6a6a88'), tags: ['spectral'] });
   O('PSV_010', 'Sable en orbite', 'projectile', 2, 'H2 L1', 'Les tirs tournent autour de vous avant de se disperser.', [{ traj: 'orbite' }, s('portee', 1)], { statut: 'adaptation', ensemble: 'sable', icone: ic('sable', '#d8b070', '#a8804a', '#f8e0a8'), visuel: { couche: 'aura', motif: 'sable_flottant', prio: 2 }, tags: ['orbite'] });
-  O('PSV_011', 'Onde de la vague', 'projectile', 1, 'H2 S1', 'Les tirs ondulent : couverture plus large, précision moindre.', [{ traj: 'onde' }, s('degats', 0.3)], { icone: ic('goutte', '#4a8ae8', '#2a5aa8', '#c0e0ff'), tags: ['onde', 'suiton'] });
+  O('PSV_011', 'Onde de la vague', 'projectile', 1, 'H2 S1', 'Les tirs ondulent : couverture plus large, précision moindre.', [{ traj: 'onde' }, s('degats', 0.3), { element: 'suiton' }], { icone: ic('goutte', '#4a8ae8', '#2a5aa8', '#c0e0ff'), tags: ['onde', 'suiton'] });
   O('PSV_012', 'Baika (expansion)', 'projectile', 3, 'H2 B1', 'Des tirs énormes et lents, deux fois plus forts.', [{ traj: 'lent' }, sm('degats', 2), { cadenceTir: 0.6 }, s('vitesseTir', -2)], { statut: 'adaptation', icone: ic('poing', '#e8a060', '#b8703a', '#c83a2a'), tags: ['orbe_lent'] });
   O('PSV_013', 'Fūma shuriken', 'projectile', 3, 'H2 B1', 'Lance un grand shuriken qui revient dans la main.', [{ forme: 'boomerang' }], { statut: 'adaptation', icone: ic('fuma', '#c8ccd8', '#6a7080', '#2a2a34'), tags: ['boomerang'], cumul: 'unique' });
   O('PSV_014', 'Canon de chakra', 'projectile', 4, 'P2 H1', 'Charge un rayon rougeoyant qui traverse tout.', [{ forme: 'rayon', charge: 1.0, duree: 0.33, coefTick: 0.9 }], { icone: ic('tete_renard', '#e05a2a', '#a03a1a', '#ffe060'), ensemble: 'renard', visuel: { couche: 'yeux', motif: 'yeux_rouges', couleur: '#ff4a2a', prio: 5 }, tags: ['rayon', 'charge'], cumul: 'unique' });
@@ -426,7 +426,7 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_147', 'Lance de foudre', 'hybride', 3, 'H1 B1', 'Un trait de foudre accompagne chaque tir (×0,5).', [{ forme: 'laser' }, { element: 'raiton' }], { statut: 'adaptation', ensemble: 'tonnerre', icone: ic('lame', '#a8d8ff', '#5a90d8', '#ffffff') });
   O('PSV_148', 'Double dragon', 'hybride', 3, 'H1 L1', 'Tir multiple et guidage léger réunis.', [{ multi: 1, coefCadence: 0.95 }, { traj: 'guidage', force: 0.6 }], { icone: ic('rouleau', '#6a9a3a', '#c83a2a', '#e8d0a0') });
   O('PSV_149', 'Explosion de chakra', 'hybride', 3, 'H1 P1', 'Les tirs explosent à l’impact (souffle léger, ne vous blesse pas).', [{ impact: 'explosion', r: 0.9, coef: 0.6 }, sp('degats', -10)], { ensemble: 'argile', icone: ic('etoile', '#ffb050', '#f07820', '#fff0c0') });
-  O('PSV_150', 'Tempête de sable', 'hybride', 3, 'H1 B1', 'Tirs de sable qui ralentissent et tournent.', [{ traj: 'orbite' }, { statut: 'ralenti', chance: 0.35, duree: 2 }, s('degats', 0.5)], { ensemble: 'sable', icone: ic('tornade', '#d8b070', '#a8804a', '#f8e0a8') });
+  O('PSV_150', 'Tempête de sable', 'hybride', 3, 'H1 B1', 'Tirs de sable qui ralentissent et tournent.', [{ traj: 'orbite' }, { statut: 'ralenti', chance: 0.35, duree: 2 }, s('degats', 0.5), { element: 'doton' }], { ensemble: 'sable', icone: ic('tornade', '#d8b070', '#a8804a', '#f8e0a8') });
   O('PSV_151', 'Chakra partagé', 'hybride', 2, 'A1 H1', 'Vos familiers infligent 25 % de plus.', [{ drapeau: 'familiersForts' }], { ensemble: 'meute', icone: ic('etoile', '#8af07a', '#3a9a4a', '#ffffff') });
   O('PSV_152', 'Encre vivante', 'hybride', 2, 'L1 H1', 'Les ennemis tués laissent parfois un fauve d’encre pour la salle (10 %).', [{ quand: 'elimination', chance: 0.1, faire: { type: 'familier', familier: 'FAM_TIGRE_ENCRE', salle: true } }], { icone: ic('pinceau', '#1a1a2a', '#e8e0d0', '#6a6a88') });
   // Compléments d'ensembles (essaim Aburame, messager de papier)
@@ -1629,6 +1629,47 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   SY('SYN_058', 'Clone de relais armé', ['PSV_023', 'PSV_028'], 'emergente', 'Le clone copie les impacts : sa foudre s’enchaîne aussi (génération 1).', 'Chaîne issue du clone.');
   SY('SYN_059', 'Onde et chaîne', ['PSV_029', 'PSV_028'], 'emergente', 'Chaque impact : onde puis chaîne (budget partagé).', 'Deux effets secondaires par impact.');
   SY('SYN_060', 'Artiste complet', ['PSV_110', 'PSV_019'], 'emergente', 'Bombes d’argile sans risque pour vous (immunité aux explosions).', 'Aucun dégât subi par ses propres bombes.');
+
+  // ── Fusions de natures (kekkei genkai) : actives dès que vos objets portent ces natures ──
+  const FU = (id, nom, elements, desc, test, effets) => DON.synergies.push({ id, nom, composants: [], elements, type: 'fusion', desc, test, effets });
+  FU('SYN_061', 'Yōton — Lave', ['katon', 'doton'], 'Feu et terre : vos impacts laissent une coulée de lave qui brûle et ralentit.', 'Flaque de lave à l’impact, brûlure et ralentissement.', [{ impact: 'lave', coef: 0.5 }]);
+  FU('SYN_062', 'Futton — Vapeur', ['katon', 'suiton'], 'Feu et eau : vos impacts libèrent une vapeur brûlante qui ronge et ralentit.', 'Nuage de vapeur à l’impact, dégâts par seconde.', [{ impact: 'vapeur', coef: 0.4 }]);
+  FU('SYN_063', 'Shakuton — Incandescence', ['katon', 'futon'], 'Feu et vent : les ennemis en feu subissent 40 % de dégâts en plus ; en mourant, ils embrasent leurs voisins.', 'Dégâts ×1,4 sur cible brûlée ; brûlure propagée à la mort.', [{ drapeau: 'incandescence' }, { statut: 'brulure', chance: 0.12 }]);
+  FU('SYN_064', 'Ranton — Tempête', ['raiton', 'suiton'], 'Foudre et eau : vos impacts laissent une flaque électrisée qui foudroie ce qui s’y tient.', 'Flaque électrique : décharges et paralysie brève.', [{ impact: 'flaque_electrique', coef: 0.35 }]);
+  FU('SYN_065', 'Jiton — Sable de fer', ['futon', 'doton'], 'Vent et terre : vos impacts aimantent les ennemis proches vers le point touché ; tirs légèrement guidés.', 'Ennemis attirés vers l’impact.', [{ impact: 'attraction', r: 2.6 }, { traj: 'guidage', force: 0.6 }]);
+  FU('SYN_066', 'Mokuton — Bois', ['doton', 'suiton'], 'Terre et eau : des racines jaillissent à l’impact (30 %) et immobilisent la cible et ses voisins.', 'Immobilisation de groupe à l’impact.', [{ impact: 'racines', r: 1.2, chance: 0.3 }]);
+  FU('SYN_067', 'Hyōton — Glace', ['futon', 'suiton'], 'Vent et eau : vos tirs gèlent (20 %) ; un ennemi gelé éclate en éclats de glace.', 'Gel puis éclats à la mort.', [{ statut: 'gel', chance: 0.2, duree: 1.4 }, { drapeau: 'eclatsGlace' }]);
+  FU('SYN_068', 'Bakuton — Explosion', ['doton', 'raiton'], 'Terre et foudre : chaque impact déclenche une petite détonation.', 'Explosion à chaque impact.', [{ impact: 'explosion', r: 1.1, coef: 0.55 }]);
+  FU('SYN_069', 'Jinton — Particule', ['katon', 'futon', 'doton'], 'Feu, vent et terre : toutes les six émissions, un rayon de particules désintègre tout ce qu’il traverse.', 'Rayon blanc perçant ×3 tous les six tirs.', [{ quand: 'emission_primaire', tousLes: 6, faire: { type: 'jinton', coef: 3 } }]);
+
+  // ── Synergies dédiées : paires et trios ──
+  SY('SYN_070', 'Éclair jaune de Konoha', ['PSV_005', 'PSV_031'], 'dediee', 'Marque et vent : tirs bien plus rapides et guidés, déplacement +0,3.', 'Vitesse de tir +2, guidage visible.', [{ traj: 'guidage', force: 0.8 }, { s: 'vitesseTir', a: 2 }, { s: 'vitesse', a: 0.3 }]);
+  SY('SYN_071', 'Manteau à une queue', ['PSV_055', 'PSV_056'], 'dediee', 'Blessé, le chakra du renard vous enveloppe 5 s : dégâts +1, vitesse +0,4, brûlure au contact.', 'Manteau visible après un coup reçu.', [{ quand: 'degat_recu', faire: { type: 'manteau', duree: 5 } }]);
+  SY('SYN_072', 'Gamayu Endan', ['PSV_057', 'PSV_043'], 'dediee', 'Huile et feu : vos impacts s’embrasent en larges nappes de feu.', 'Nappe de feu large à l’impact.', [{ impact: 'flamme', r: 22, dps: 0.9 }]);
+  SY('SYN_073', 'Danse du camélia', ['PSV_060', 'PSV_090'], 'dediee', 'Os renforcés : trois ricochets de plus et dégâts +0,8.', 'Os qui ricochent davantage.', [{ traj: 'rebond' }, { s: 'degats', a: 0.8 }]);
+  SY('SYN_074', 'Amaterasu et Tsukuyomi', ['PSV_053', 'PSV_049'], 'dediee', 'Le regard qui brûle : les ennemis confus subissent 25 % de dégâts en plus ; confusion +8 %.', 'Dégâts ×1,25 sur cible confuse.', [{ drapeau: 'mangekyo' }, { statut: 'confus', chance: 0.08, duree: 2 }]);
+  SY('SYN_075', 'Corbeaux d’illusion', ['PSV_067', 'PSV_049'], 'dediee', 'Chaque élimination a 25 % de chances de rendre confus les ennemis proches.', 'Confusion de groupe après une élimination.', [{ quand: 'elimination', chance: 0.25, faire: { type: 'statut_proches', statut: 'confus', r: 2.5, duree: 2.5 } }]);
+  SY('SYN_076', 'Ange de papier', ['PSV_075', 'PSV_116'], 'dediee', 'Toutes les six émissions, une pluie de shuriken de papier s’abat sur les ennemis.', 'Pluie tous les six tirs.', [{ quand: 'emission_primaire', tousLes: 6, faire: { type: 'pluie_armes', n: 6, coef: 1 } }]);
+  SY('SYN_077', 'Mer de papiers', ['PSV_155', 'PSV_156'], 'dediee', 'Vos papiers sont piégés : chaque impact détone.', 'Explosion à l’impact des papiers.', [{ impact: 'explosion', r: 0.9, coef: 0.45 }]);
+  SY('SYN_078', 'Culte de Jashin', ['PSV_054', 'PSV_135'], 'dediee', 'Chaque coup reçu : dégâts +0,5 pour la salle (jusqu’à quatre fois).', 'Bonus cumulé après plusieurs coups.', [{ quand: 'degat_recu', faire: { type: 'bonus', bonus: { s: 'degats', a: 0.5 }, duree: 'salle', cumulMax: 4 } }]);
+  SY('SYN_079', 'Les cinq cœurs', ['PSV_129', 'PSV_089'], 'dediee', 'Chaque boss vaincu vous offre un contenant de vitalité.', 'Contenant ajouté après un boss.', [{ quand: 'boss_vaincu', faire: { type: 'ressource_sante' } }]);
+  SY('SYN_080', 'Maîtresse des armes', ['PSV_145', 'PSV_024'], 'dediee', 'La pluie d’armes tombe deux fois plus souvent.', 'Pluie supplémentaire tous les cinq tirs.', [{ quand: 'emission_primaire', tousLes: 5, faire: { type: 'pluie_armes', n: 6, coef: 1.2 } }]);
+  SY('SYN_081', 'Kirin', ['PSV_147', 'PSV_028'], 'dediee', 'Toutes les huit émissions, la foudre tombe du ciel sur l’ennemi le plus proche (×4) et s’enchaîne.', 'Éclair céleste tous les huit tirs.', [{ quand: 'emission_primaire', tousLes: 8, faire: { type: 'foudre_ciel', coef: 4 } }]);
+  SY('SYN_082', 'Armure du Raikage', ['PSV_058', 'PSV_045'], 'dediee', 'Vitesse +0,3 ; quand on vous frappe, une décharge paralyse les ennemis proches.', 'Paralysie de groupe après un coup reçu.', [{ s: 'vitesse', a: 0.3 }, { quand: 'degat_recu', faire: { type: 'statut_proches', statut: 'immobilise', r: 2.2, duree: 1.2 } }]);
+  SY('SYN_083', 'Rasenshuriken parfait', ['PSV_146', 'PSV_144'], 'dediee', 'Le tourbillon de vent s’élargit : explosions de rayon 2,2.', 'Rayon d’explosion mesuré à 2,2 tuiles.', [{ impact: 'explosion', r: 2.2, coef: 0.45 }]);
+  SY('SYN_084', 'Réceptacle éveillé', ['PSV_141', 'PSV_132'], 'dediee', 'À santé basse, chaque coup reçu réveille le manteau de la bête (8 s).', 'Manteau à santé basse.', [{ quand: 'degat_recu', si: 'santeBasse', faire: { type: 'manteau', duree: 8 } }]);
+  SY('SYN_085', 'Venin de Sasori', ['PSV_048', 'PSV_142'], 'dediee', 'Un ennemi empoisonné qui meurt libère un nuage de venin sur ses voisins.', 'Poison propagé à la mort.', [{ drapeau: 'nuageVenin' }]);
+  SY('SYN_086', 'Les trois Sannin', ['PSV_062', 'PSV_063', 'PSV_064'], 'dediee', 'Crapaud, limace et serpent : familiers +25 % et un demi-cœur rendu toutes les quatre salles.', 'Soin à la 4e salle, familiers renforcés.', [{ drapeau: 'familiersForts' }, { quand: 'salle_nettoyee', tousLes: 4, faire: { type: 'soin', demis: 1 } }]);
+  SY('SYN_087', 'Équipe 7', ['PSV_001', 'PSV_028', 'PSV_040'], 'dediee', 'Rasengan, Chidori et force de Sakura : dégâts +1,5, cadence +0,3.', 'Statistiques augmentées.', [{ s: 'degats', a: 1.5 }, { s: 'cadence', a: 0.3 }]);
+  SY('SYN_088', 'Ino-Shika-Chō', ['PSV_051', 'PSV_012', 'PSV_049'], 'dediee', 'Ombre, expansion et esprit : les ennemis immobilisés subissent 50 % de dégâts en plus.', 'Dégâts ×1,5 sur cible immobilisée.', [{ drapeau: 'inoShikaCho' }, { statut: 'immobilise', chance: 0.08, duree: 1 }]);
+  SY('SYN_089', 'Ruche d’Aburame', ['PSV_070', 'PSV_153'], 'dediee', 'Poison +15 % ; une élimination sur cinq libère un essaim pour la salle.', 'Essaim temporaire après une élimination.', [{ statut: 'poison', chance: 0.15 }, { quand: 'elimination', chance: 0.2, faire: { type: 'familier', familier: 'FAM_INSECTES', salle: true } }]);
+  SY('SYN_090', 'Défense absolue du sable', ['PSV_150', 'PSV_097'], 'dediee', 'Un orbital de sable de plus ; ralentissement +20 %.', 'Orbitaux supplémentaires, ralenti fréquent.', [{ familier: 'FAM_SABLE' }, { statut: 'ralenti', chance: 0.2, duree: 2 }]);
+  SY('SYN_091', 'Lame du vent', ['PSV_017', 'PSV_046'], 'dediee', 'Le grand sabre porte le vent : portée +1, dégâts ×1,15.', 'Frappe étendue plus longue.', [{ s: 'portee', a: 1 }, { coefDegats: 1.15 }]);
+  SY('SYN_092', 'Lotus de la porte', ['PSV_092', 'PSV_041'], 'dediee', 'Cadence ×1,15 et vitesse +0,4.', 'Cadence et vitesse augmentées.', [{ s: 'cadence', m: 1.15 }, { s: 'vitesse', a: 0.4 }]);
+  SY('SYN_093', 'Poing souple', ['PSV_113', 'PSV_040'], 'dediee', 'Vos coups ferment les points de chakra : ralentissement 25 %, dégâts +0,4.', 'Ralenti fréquent.', [{ statut: 'ralenti', chance: 0.25, duree: 2 }, { s: 'degats', a: 0.4 }]);
+  SY('SYN_094', 'Gardiens de Katsuyu', ['PSV_063', 'PSV_093'], 'dediee', 'Katsuyu soigne un demi-cœur toutes les quatre salles (doublé par la limace).', 'Soin à la 4e salle.', [{ quand: 'salle_nettoyee', tousLes: 4, faire: { type: 'soin', demis: 1 } }]);
+  SY('SYN_095', 'Sceau maudit, niveau 2', ['PSV_091', 'PSV_133'], 'dediee', 'À santé basse, un coup reçu déploie les ailes du sceau : lévitation et dégâts +1 pour la salle.', 'Lévitation à santé basse.', [{ quand: 'degat_recu', si: 'santeBasse', faire: { type: 'bonus', bonus: { s: 'degats', a: 1, vol: true }, duree: 'salle', cumulMax: 1 } }]);
+  SY('SYN_096', 'Onde du démon', ['PSV_055', 'PSV_098'], 'dediee', 'Dégâts +1 ; chaque coup reçu libère une onde de chakra rouge autour de vous.', 'Explosion autour du joueur après un coup.', [{ s: 'degats', a: 1 }, { quand: 'degat_recu', faire: { type: 'explosion', r: 1.8, coef: 1.5 } }]);
 
   // ── Objectifs (missions) : conditions → déblocages ──
   const OB = (id, nom, desc, condition, debloque, texte) => DON.objectifs.push({ id, nom, desc, condition, recompense: { debloque: debloque || [], texte } });
@@ -4606,6 +4647,20 @@ function dessinerZone(g, z, X, Y) {
       const n = Math.max(5, Math.round(z.r / 3)); for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2 + z.r, rr = z.r * (0.25 + 0.6 * ((i * 37) % 10) / 10), fx = Math.round(x + Math.cos(a) * rr), fy = Math.round(y + Math.sin(a) * rr * 0.55), h = 3 + Math.round(4 * (0.5 + 0.5 * Math.sin(G.temps * 9 + i * 1.7))); g.fillStyle = '#0c0410'; g.fillRect(fx - 1, fy - h, 3, h + 1); g.fillStyle = i % 3 ? '#2a0e38' : '#8a4ac0'; g.fillRect(fx, fy - h + 1, 1, h - 1); }
       break;
     }
+    case 'lave_alliee': { // croûte sombre, cœur orangé, bulles qui crèvent
+      g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(60,14,6,0.85)'), x - z.r, y - Math.round(z.r * 0.55)); g.drawImage(ellipse(Math.max(2, z.r - 3), Math.max(1, z.r * 0.55 - 2), 'rgba(240,96,24,0.85)'), x - z.r + 3, y - Math.round(z.r * 0.55) + 2); g.drawImage(ellipse(Math.max(1, z.r - 7), Math.max(1, z.r * 0.55 - 4), 'rgba(255,200,80,0.8)'), x - z.r + 7, y - Math.round(z.r * 0.55) + 4);
+      for (let i = 0; i < 3; i++) { const ph = (G.temps * 1.7 + i * 0.37 + z.x * 0.01) % 1, bx = Math.round(x + Math.cos(i * 2.1 + z.y) * z.r * 0.45), by = Math.round(y + Math.sin(i * 2.1 + z.y) * z.r * 0.22); g.fillStyle = ph < 0.8 ? '#ffe090' : '#3a1006'; g.fillRect(bx, by - Math.round(ph * 2), ph < 0.8 ? 2 : 3, ph < 0.8 ? 2 : 1); }
+      break;
+    }
+    case 'vapeur_alliee': { // volutes blanches qui montent et se dissipent
+      for (let i = 0; i < 4; i++) { const ph = (G.temps * 0.8 + i * 0.25) % 1, r = Math.round(z.r * (0.35 + ph * 0.35)), vx = Math.round(x + Math.cos(i * 1.7 + z.x) * z.r * 0.4), vy = Math.round(y - 4 - ph * 12 + Math.sin(i * 1.7) * 4); g.globalAlpha = fin * 0.45 * (1 - ph * 0.7); g.drawImage(disque(r, i % 2 ? '#f4f8ff' : '#d8e4f0'), vx - r, vy - r); }
+      g.globalAlpha = fin; break;
+    }
+    case 'eau_electrique': { // flaque bleue parcourue d'étincelles
+      g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(50,110,190,0.45)'), x - z.r, y - Math.round(z.r * 0.55)); g.drawImage(anneau(Math.round(z.r * 0.75), 1, 'rgba(160,220,255,0.6)'), x - Math.round(z.r * 0.75) - 1, y - Math.round(z.r * 0.75) - 1);
+      if (Math.floor(G.temps * 14 + z.x) % 3 === 0) { g.fillStyle = '#f8f8ff'; const a = Math.random() * 6.28, d = Math.random() * z.r * 0.8; lignePixel(g, x + Math.cos(a) * d, y + Math.sin(a) * d * 0.5, x + Math.cos(a) * d + 4, y + Math.sin(a) * d * 0.5 - 3, '#e8f4ff'); }
+      break;
+    }
     case 'eau_alliee': case 'eau': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(80,150,220,0.4)'), x - z.r, y - z.r * 0.55); break;
     case 'acide': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(20,40,10,0.6)'), x - z.r - 1, y - z.r * 0.55 - 1); g.drawImage(ellipse(z.r - 1, z.r * 0.5, 'rgba(130,220,60,0.7)'), x - z.r + 1, y - z.r * 0.5); if (Math.random() < 0.05) G.particules.push({ x: z.x, y: z.y - 2, vx: 0, vy: -10, age: 0, duree: 0.4, couleur: '#c0ff80', taille: 2 }); break;
     case 'glace': g.drawImage(ellipse(z.r, z.r * 0.55, 'rgba(190,230,255,0.5)'), x - z.r, y - z.r * 0.55); break;
@@ -4709,7 +4764,34 @@ function dessinerEffet(g, e, X, Y) {
     case 'flammes_noires': case 'tsukuyomi': { g.globalAlpha = 0.4 * (1 - k); g.fillStyle = e.type === 'tsukuyomi' ? '#a00020' : '#1a0a1a'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); g.globalAlpha = 1; break; }
     case 'sphere_noire': { const r = Math.round(6 + 10 * Math.sin(k * Math.PI)); g.drawImage(disque(r, '#141018'), x - r, y - r - 20); break; }
     case 'spirale': { for (let i = 0; i < 12; i++) { const a = i * 0.5 + e.age * 10; const d = i * 1.5 * (1 - k); g.fillStyle = '#8a7ab0'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d), 2, 2); } break; }
-    case 'racines': { g.fillStyle = '#6a4a2a'; for (let i = 0; i < 5; i++) g.fillRect(x - 10 + i * 5, y - Math.round(12 * Math.min(1, e.age * 4)), 2, Math.round(12 * Math.min(1, e.age * 4))); break; }
+    case 'manteau': { // chakra de la bête : flammes orangées autour du joueur
+      const t = G.temps; for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2 + t * 2.2, rr = 12 + Math.sin(t * 7 + i) * 2, fx = Math.round(x + Math.cos(a) * rr), fy = Math.round(y - 12 + Math.sin(a) * rr * 0.8), h = 3 + Math.round(3 * (0.5 + 0.5 * Math.sin(t * 11 + i * 2))); g.fillStyle = '#5a1408'; g.fillRect(fx - 1, fy - h, 4, h + 1); g.fillStyle = i % 2 ? '#ff6a2a' : '#ffb84a'; g.fillRect(fx, fy - h + 1, 2, h); }
+      if (Math.random() < 0.3 && !G.reglages.confort) G.particules.push({ x: e.x + (Math.random() - 0.5) * 18, y: e.y - 6 - Math.random() * 18, vx: 0, vy: -30, age: 0, duree: 0.35, couleur: Math.random() < 0.5 ? '#ff7a3a' : '#ffd070', taille: 2 });
+      break;
+    }
+    case 'foudre_ciel': { // éclair qui tombe du ciel, éclair blanc à cœur bleu
+      let px = x + 6, py = y - 190; g.globalAlpha = 1 - k * 0.8; for (let i = 1; i <= 9; i++) { const nx = x + (i < 9 ? (Math.random() - 0.5) * 18 : 0), ny = y - 190 + 190 * i / 9; lignePixel(g, px, py, nx, ny, '#ffffff', 3); lignePixel(g, px, py, nx, ny, '#6ab8ff', 1); px = nx; py = ny; }
+      const r = Math.round(8 + 18 * k); g.drawImage(anneau(r, 2, '#c8ecff'), x - r - 1, y - r - 1); if (k < 0.3 && !G.reglages.sansFlash) g.drawImage(disque(10, '#ffffff'), x - 10, y - 10); g.globalAlpha = 1; break;
+    }
+    case 'jinton': { // rayon de particules : faisceau blanc, cube au point d'origine
+      g.save(); g.translate(x, y); g.rotate(e.a); g.globalAlpha = 1 - k; const w = Math.round(12 * (1 - k)) + 2; g.fillStyle = '#d8f0ff'; g.fillRect(0, -w / 2 - 2, e.l, w + 4); g.fillStyle = '#ffffff'; g.fillRect(0, -w / 2, e.l, w);
+      g.rotate(G.temps * 6); g.strokeStyle = '#ffffff'; g.lineWidth = 2; g.strokeRect(-6, -6, 12, 12); g.restore(); g.globalAlpha = 1; break;
+    }
+    case 'attraction': { // grains de sable de fer qui convergent
+      for (let i = 0; i < 14; i++) { const a = i * 0.45 + e.x * 0.01, d = (e.r || 60) * (1 - k) * (0.5 + (i % 3) * 0.25); g.fillStyle = i % 2 ? '#3a3440' : '#8a8494'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d * 0.6), 2, 2); }
+      break;
+    }
+    case 'nuage_venin': { for (let i = 0; i < 5; i++) { const a = i * 1.26, d = 4 + k * 16, r = Math.max(1, Math.round(6 * (1 - k * 0.5))); g.globalAlpha = 0.6 * (1 - k); g.drawImage(disque(r, i % 2 ? '#8ae05a' : '#5aa040'), Math.round(x + Math.cos(a) * d - r), Math.round(y + Math.sin(a) * d * 0.6 - r)); } g.globalAlpha = 1; break; }
+    case 'racines': { // racines qui jaillissent en couronne autour de l'impact, puis rentrent sous terre
+      const R = e.r || 18, cr = Math.min(1, e.age * 6), dec = k > 0.7 ? (k - 0.7) / 0.3 : 0, h = Math.round(14 * cr * (1 - dec));
+      for (let i = 0; i < 7; i++) {
+        const a = i * 0.9 + (e.x % 7), px = Math.round(x + Math.cos(a) * R * 0.7), py = Math.round(y + Math.sin(a) * R * 0.4), pl = h - (i % 3) * 2;
+        g.fillStyle = 'rgba(28,18,10,0.45)'; g.fillRect(px - 3, py - 1, 7, 3);
+        for (let s = 0; s < pl; s += 2) { const ox = Math.round(Math.sin(s * 0.3 + i) * s / 6); g.fillStyle = '#5a3c20'; g.fillRect(px + ox - 1, py - s - 2, s < pl / 2 ? 3 : 2, 2); g.fillStyle = '#9a7040'; g.fillRect(px + ox - 1, py - s - 2, 1, 2); }
+        if (pl > 8) { const tx = px + Math.round(Math.sin(pl * 0.3 + i) * pl / 6); g.fillStyle = '#7ac050'; g.fillRect(tx + 1, py - pl + 1, 2, 2); g.fillStyle = '#4a8a30'; g.fillRect(tx - 2, py - pl + 4, 2, 1); }
+      }
+      break;
+    }
     case 'sceau_scellement': { const r = Math.round(16 * (1 - k)) + 2; g.drawImage(anneau(r, 2, '#e8d060'), x - r - 1, y - r - 11); break; }
     case 'coeur_charme': Police.ecrire(g, '♥', x, y - k * 10, '#ff7ab0', { a: 'c' }); break;
     case 'lotus': { g.globalAlpha = 1 - k; g.drawImage(anneau(Math.round(8 + k * 20), 2, '#6ae07a'), x - Math.round(9 + k * 20), y - Math.round(9 + k * 20) - 10); g.globalAlpha = 1; break; }
@@ -5255,7 +5337,7 @@ function copieSante(S) { return JSON.parse(JSON.stringify(S)); }
 // ═══════════════════════════════════════════════════════════════════════════
 
 const BUDGET_CYCLE = 14;   // déclenchements secondaires max par cycle d'attaque
-const GEN_MAX = { explosion: 2, chaine: 2, eclat: 1, onde: 2, mine: 1, flamme: 2, flaque: 2 };
+const GEN_MAX = { explosion: 2, chaine: 2, eclat: 1, onde: 2, mine: 1, flamme: 2, flaque: 2, lave: 1, vapeur: 1, flaque_electrique: 1, attraction: 1, racines: 1 };
 let _cycle = 0;
 
 // Durée de charge convertie explicitement par la cadence (registre §R8c)
@@ -5490,6 +5572,7 @@ function toucherEnnemi(p, e) {
 function declencherImpacts(p, cible) {
   for (const im of p.impacts) {
     if (p.gen >= (GEN_MAX[im.impact] ?? 1)) continue;
+    if (im.chance !== undefined && Math.random() >= im.chance) continue;
     if (p.budget.n <= 0) break;
     p.budget.n--;
     const deg = p.degats * (im.coef || 0.5);
@@ -5498,8 +5581,13 @@ function declencherImpacts(p, cible) {
       case 'chaine': if (cible) chaineFoudre(cible, deg, im.sauts || 2, (im.r || 3) * TUILE, p.gen + 1); break;
       case 'eclat': for (let i = 0; i < (im.n || 4); i++) { const a = p.angle + Math.PI / 4 + i * Math.PI * 2 / (im.n || 4); const q = creerSousProjectile(p, a, deg); q.touches.add(cible); } break;
       case 'onde': onde(p.x, p.y, (im.r || 1) * TUILE, deg, p.gen + 1); break;
-      case 'flamme': creerZone(p.x, p.y, 'feu_allie', 1.6, { r: 14, dps: p.degats * 0.6 }); break;
+      case 'flamme': creerZone(p.x, p.y, 'feu_allie', 1.6, { r: im.r || 14, dps: p.degats * (im.dps || 0.6) }); break;
       case 'flaque': creerZone(p.x, p.y, 'eau_alliee', 2.5, { r: 16 }); break;
+      case 'lave': creerZone(p.x, p.y, 'lave_alliee', 2.4, { r: im.r || 15, dps: deg * 2 }); break;
+      case 'vapeur': creerZone(p.x, p.y, 'vapeur_alliee', 1.8, { r: im.r || 20, dps: deg * 1.6 }); break;
+      case 'flaque_electrique': creerZone(p.x, p.y, 'eau_electrique', 2.4, { r: im.r || 16, deg }); break;
+      case 'attraction': attirer(p.x, p.y, (im.r || 2.5) * TUILE, im.force || 70); break;
+      case 'racines': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.boss && dist(e.x, e.y, p.x, p.y) < (im.r || 1.2) * TUILE + e.r) appliquerStatut(e, 'immobilise', im.duree || 1.2, deg); G.effets.push({ type: 'racines', x: p.x, y: p.y, r: (im.r || 1.2) * TUILE, age: 0, duree: 0.9 }); break;
     }
   }
 }
@@ -5716,7 +5804,12 @@ function chaineFoudre(depart, deg, sauts, r, gen) {
   if (chaine.length > 1) Son.jouer('eclair', 0.6);
 }
 function creerMine(x, y, deg) { G.zones.push({ type: 'mine', x, y, r: 10, age: 0, duree: 4, deg, proprio: 'joueur', armee: 0.3 }); }
-function creerZone(x, y, type, duree, o = {}) { const z = Object.assign({ type, x, y, age: 0, duree, r: 14 }, o); G.zones.push(z); return z; }
+const ZONES_PLAFONNEES = new Set(['feu_allie', 'lave_alliee', 'vapeur_alliee', 'eau_electrique', 'eau_alliee']);
+function creerZone(x, y, type, duree, o = {}) {
+  // tirs rapides : au-delà de 24 zones alliées d'un même type, la plus ancienne s'efface
+  if (ZONES_PLAFONNEES.has(type)) { const L = G.zones.filter(z => z.type === type); if (L.length >= 24) L[0].fini = true, G.zones = G.zones.filter(z => !z.fini); }
+  const z = Object.assign({ type, x, y, age: 0, duree, r: 14 }, o); G.zones.push(z); return z;
+}
 
 // ─── 35_ennemis.js ───
 // ═══════════════════════════════════════════════════════════════════════════
@@ -5811,6 +5904,7 @@ function infligerDegats(e, deg, src = {}) {
   // aura d'un protecteur voisin : dégâts ×0,5
   for (const p of G.ennemis) if (p !== e && !p.mort && p.def.params && p.def.params.bouclier === 'aura' && dist(p.x, p.y, e.x, e.y) < 2.5 * TUILE) { deg *= 0.5; break; }
   if (G.joueur.drapeaux.bonusBoss && e.boss) deg *= 1.1;
+  if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if (D.inoShikaCho && e.statuts.immobilise) deg *= 1.5; }
   e.pv -= deg; e.dernierCoup = G.temps;
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
   if (!src.sansFlash) e.flash = 0.08;
@@ -5832,6 +5926,9 @@ function tuerEnnemi(e, src = {}) {
   ajouterDecal(G.salle, e.x, e.y, e.def.tache || 'encre', e.r);
   Son.jouer('ennemi_mort');
   if (e.statuts.gel && G.joueur.drapeaux.eclatsGlace) { for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; const q = creerSousProjectile({ x: e.x, y: e.y - 8, vitesse: 7 * TUILE, degats: G.joueur.stats.degats, recul: 30, taille: 0.8, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 6 }, cycleId: 0 }, a, G.joueur.stats.degats * 0.5); q.dureeVie = 0.5; } }
+  const D = G.joueur.drapeaux; // synergies : la brûlure (Shakuton) et le venin (Sasori) se propagent à la mort
+  if (D.incandescence && e.statuts.brulure) { for (const f of G.ennemis) if (f !== e && !f.mort && !f.cache && dist(f.x, f.y, e.x, e.y) < 2 * TUILE) appliquerStatut(f, 'brulure', 2.5, G.joueur.stats.degats); G.effets.push({ type: 'onde', x: e.x, y: e.y - 6, r: 2 * TUILE, age: 0, duree: 0.35, couleur: '#ff8a3a' }); }
+  if (D.nuageVenin && e.statuts.poison) { for (const f of G.ennemis) if (f !== e && !f.mort && !f.cache && dist(f.x, f.y, e.x, e.y) < 2.2 * TUILE) appliquerStatut(f, 'poison', 3, G.joueur.stats.degats); G.effets.push({ type: 'nuage_venin', x: e.x, y: e.y - 6, age: 0, duree: 0.7 }); }
   const mortDef = e.def.mort;
   if (mortDef === 'division' || (C && C.mort === 'division')) {
     if (!e.parentDivision) for (let i = 0; i < 2; i++) { const f = creerEnnemi(e.def.enfant || e.def.id, e.x + (i ? 8 : -8), e.y, { sansApparition: true, pvMult: 0.45, echelle: 0.75 }); f.parentDivision = true; f.vx = (i ? 1 : -1) * 60; if (e.parent) f.parent = e.parent; }
@@ -6165,7 +6262,7 @@ function creerJoueur(defId) {
     actif: null, actif2: null, talisman: null, poches: [], maxPoches: 1, maxTalismans: 1, talisman2: null,
     tir: { cooldown: 0, charge: 0, dir: 'bas', salveFile: [], salveT: 0, alterne: false, anim: 0 },
     drapeaux: {}, compteurs: { sallesNettoyees: 0, elims: 0 }, bloqueTir: 0, force: 0, sceau: 0, clones: 0,
-    stats: null, profil: null, vol: false,
+    stats: null, profil: null, vol: false, synergiesVues: [],
   };
   const rc = d.regleCode; const B = J.drapeauxBase = {};
   if (rc === 'corps_marionnette') B.sansVitalite = true;
@@ -6415,10 +6512,12 @@ function recalculer(J) {
   J.drapeaux = Object.assign({}, J.drapeauxBase || {}); if (obst) J.drapeaux.obstination = true;
   const sources = J.passifs.map(id => INDEX[id]).concat(J.transformations.map(t => INDEX[t]), J.talisman ? [INDEX[J.talisman]] : [], J.talisman2 ? [INDEX[J.talisman2]] : [], synergiesActives(J));
   for (const d of sources) for (const e of (d && d.effets) || []) if (e.drapeau) J.drapeaux[e.drapeau] = e.valeur === undefined ? true : e.valeur;
+  for (const b of J.bonus) if (b.drapeau) J.drapeaux[b.drapeau] = true; // bonus minutés (manteau de la bête…)
   J.maxPoches = 1 + (J.drapeaux.pocheDouble ? 1 : 0); J.maxTalismans = 1 + (J.drapeaux.talismanDouble ? 1 : 0);
   J.stats = calculerStats(J); J.profil = calculerProfil(J);
   J.vol = J.passifs.some(id => (INDEX[id].effets || []).some(e => e.vol)) || J.transformations.some(t => (INDEX[t].effets || []).some(e => e.vol)) || J.bonus.some(b => b.vol);
   majMutations(J);
+  annoncerSynergies(J);
 }
 // Acquisition d'un passif (règles de doublons : cumul / conversion / unique)
 function acquerirPassif(J, id, source = 'piedestal') {
@@ -6562,7 +6661,7 @@ function nouvellePartie(o) {
   G.partie = P;
   // états transitoires de la partie précédente (une transition entamée finirait dans le nouvel étage)
   Object.assign(G, { transition: null, introBoss: null, animMort: null, conseil: null, pousse: null, attraction: null, appat: null, gelGlobal: 0, marqueJashin: 0,
-    fondu: null, enAnimationObjet: null, achatPropose: null, flashDegat: 0, causeMort: null, bossActifs: [], bombes: [], banniere: null, banniereEtage: null, dernierePorte: null });
+    fondu: null, enAnimationObjet: null, achatPropose: null, flashDegat: 0, causeMort: null, bossActifs: [], bombes: [], banniere: null, banniereFile: [], banniereEtage: null, dernierePorte: null });
   G.stats = { degats: 0, eliminations: 0, degatsRecus: 0, sallesVisitees: 0, objets: 0, depenses: 0 };
   P.joueur = creerJoueur(o.perso); G.joueur = P.joueur;
   const al = new Alea(code + '|pilules|' + VERSION_DONNEES);
@@ -6920,7 +7019,7 @@ function prendreTalisman(J, id) {
   if (J.talisman && J.maxTalismans > 1 && !J.talisman2) J.talisman2 = J.talisman;
   else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; }
   J.talisman = id; recalculer(J); Son.jouer('objet_mineur');
-  G.banniere = { t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true };
+  annoncer({ t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true });
   Progression.decouvrir(id);
 }
 
@@ -7055,6 +7154,9 @@ function majDangersTerrain(dt) {
     switch (z.type) {
       case 'feu_allie': for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { if (!e.ia.feuT || G.temps - e.ia.feuT > 0.5) { e.ia.feuT = G.temps; infligerDegats(e, z.dps * 0.5 || 3, { proprio: 'joueur', type: 'feu', sansRecul: true }); appliquerStatut(e, 'brulure', 1.5, G.joueur.stats.degats); } } break;
       case 'eau_alliee': for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, z.x, z.y) < z.r + e.r) appliquerStatut(e, 'ralenti', 0.5, 0); break;
+      case 'lave_alliee': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.def.vol && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { appliquerStatut(e, 'ralenti', 0.4, 0); if (!e.ia.laveT || G.temps - e.ia.laveT > 0.5) { e.ia.laveT = G.temps; infligerDegats(e, z.dps * 0.5, { proprio: 'joueur', type: 'lave', sansRecul: true, sansFlash: true }); appliquerStatut(e, 'brulure', 1.5, G.joueur.stats.degats); } } break;
+      case 'vapeur_alliee': for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { appliquerStatut(e, 'ralenti', 0.4, 0); if (!e.ia.vapeurT || G.temps - e.ia.vapeurT > 0.5) { e.ia.vapeurT = G.temps; infligerDegats(e, z.dps * 0.5, { proprio: 'joueur', type: 'vapeur', sansRecul: true, sansFlash: true }); } } break;
+      case 'eau_electrique': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.def.vol && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { if (!e.ia.elecT || G.temps - e.ia.elecT > 0.6) { e.ia.elecT = G.temps; infligerDegats(e, z.deg, { proprio: 'joueur', type: 'foudre', sansRecul: true }); appliquerStatut(e, 'immobilise', 0.25, 0); G.effets.push({ type: 'eclair', x0: z.x, y0: z.y, x1: e.x, y1: e.y - 8, age: 0, duree: 0.12 }); } } break;
       case 'mine': if (z.armee <= 0) for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, z.x, z.y) < z.r + e.r) { z.fini = true; explosion(z.x, z.y, 0.9 * TUILE, z.deg, { proprio: 'joueur', petite: true, gen: 1 }); break; } break;
       case 'parchemin': if (z.armee <= 0 && (dist(J.x, J.y, z.x, z.y) < 24 || z.age > z.duree - 0.05)) { z.fini = true; explosion(z.x, z.y, 1.2 * TUILE, 8, { proprio: 'ennemi', blesseJoueur: true, degatsJoueur: G.degatsEnnemis }); } break;
       case 'acide': case 'feu_ennemi': if (!J.vol && !(z.naissance && z.age < z.naissance) && dist(J.x, J.y, z.x, z.y) < z.r) blesserJoueur(G.degatsEnnemis, { type: z.type }); break;
@@ -7224,7 +7326,7 @@ function retirerPiedestalVide() { /* les piédestaux vides restent visibles (lec
 function animationObjet(d) {
   G.enAnimationObjet = { d, t: 0, duree: G.reglages.confort ? 0.55 : 0.8 };
   G.joueur.etat = 'objet';
-  G.banniere = { t: 0, nom: d.nom, desc: d.desc, mineur: false };
+  annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: false });
   Son.jouer('objet'); Entrees.vibrer('objet');
 }
 function majAnimationObjet(dt) {
@@ -7682,7 +7784,7 @@ function utiliserPoche() {
   const c = J.poches[0]; const d = INDEX[c.id]; if (!d) { J.poches.shift(); return; }
   let garder = false;
   if (c.type === 'pilule') { garder = !!prendrePilule(J, c); }
-  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); G.banniere = { t: 0, nom: d.nom, desc: d.desc, mineur: true }; }
+  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true }); }
   if (aTalisman(J, 'TAL_031') && Math.random() < 0.15) garder = true;
   if (!garder) J.poches.shift();
   evenement('consommable_utilise', { id: c.id });
@@ -7727,7 +7829,7 @@ function prendrePilule(J, c) {
   if (E.reveler) EFFETS_CONSOMMABLES.reveler(J, {});
   if (E.oubli) for (const s of Object.values(G.etage.salles)) if (!s.visitee) s.apercue = false;
   if (E.volcan) for (let i = 0; i < 3; i++) setTimeoutJeu(() => { const a = Math.random() * Math.PI * 2; explosion(J.x + Math.cos(a) * 40, J.y + Math.sin(a) * 30, 1.3 * TUILE, 25, { proprio: 'joueur', blesseJoueur: false }); }, 0.2 + i * 0.25);
-  G.banniere = { t: 0, nom: d.nom, desc: d.desc, mineur: true, pilule: true };
+  annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true, pilule: true });
   Son.jouer('pilule'); Progression.decouvrir(d.id);
   return false;
 }
@@ -7929,7 +8031,14 @@ function executerAction(A, J, data, src) {
     case 'ramassable': { const x = data.e ? data.e.x : J.x + 12, y = data.e ? data.e.y : J.y; creerRamassable(A.ramassable, x, y, {}); break; }
     case 'charge_actif': chargerActif(J, A.n || 1, 'declencheur'); break;
     case 'familier': { const f = ajouterFamilier(J, A.familier, src.id); if (A.salle) f.dureeSalle = true; break; }
-    case 'statut_proches': for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, J.x, J.y) < (A.r || 2) * TUILE) appliquerStatut(e, A.statut, A.duree || 2, deg); break;
+    case 'statut_proches': { const x = data.e ? data.e.x : J.x, y = data.e ? data.e.y : J.y; for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, x, y) < (A.r || 2) * TUILE) appliquerStatut(e, A.statut, A.duree || 2, deg); G.effets.push({ type: 'onde', x, y: y - 6, r: (A.r || 2) * TUILE, age: 0, duree: 0.4, couleur: COUL_STATUTS[A.statut] || '#e0e0ff' }); break; }
+    case 'manteau': { // chakra de la bête : bonus minutés (dégâts, vitesse, brûlure au contact) et aura visible
+      const cle = src.id + '_manteau', d = A.duree || 5; J.bonus = J.bonus.filter(b => b.source !== cle); G.effets = G.effets.filter(e => e.type !== 'manteau');
+      J.bonus.push({ s: 'degats', a: 1, duree: d, t: d, source: cle }, { s: 'vitesse', a: 0.4, duree: d, t: d, source: cle, drapeau: 'auraContact' }); recalculer(J);
+      G.effets.push({ type: 'manteau', x: J.x, y: J.y, age: 0, duree: d, attache: true }); Son.jouer('transformation', 0.5); secousse(3, null); break;
+    }
+    case 'foudre_ciel': { const c = G.ennemis.filter(e => !e.mort && !e.cache && !e.allie && !e.statuts.charme).sort((a, b) => dist(a.x, a.y, J.x, J.y) - dist(b.x, b.y, J.x, J.y))[0]; if (!c) break; G.effets.push({ type: 'foudre_ciel', x: c.x, y: c.y, age: 0, duree: 0.35 }); infligerDegats(c, deg * (A.coef || 4), { proprio: 'joueur', type: 'foudre' }); if (!c.mort) chaineFoudre(c, deg * 1.2, 2, 3 * TUILE, 1); secousse(4, null); Son.jouer('eclair'); break; }
+    case 'jinton': { const d = data.dir || Entrees.visee.dir || J.tir.dir; rayonJinton(J, viseeAssistee(J, Math.atan2(DIRS[d][1], DIRS[d][0]), 13 * TUILE, 0.5), deg * (A.coef || 3)); break; }
     case 'invisibilite': G.appat = { x: J.x + 999, y: J.y + 999, fini: false }; setTimeoutJeu(() => { if (G.appat) G.appat.fini = true; }, A.duree || 3); break;
     case 'allie': if (data.e && !data.e.boss) { const f = creerEnnemi(data.e.id, data.e.x, data.e.y, { sansApparition: true }); f.allie = true; f.statuts.charme = { t: A.duree || 10 }; setTimeoutJeu(() => { if (!f.mort) { f.mort = true; G.effets.push({ type: 'fumee', x: f.x, y: f.y, age: 0, duree: 0.4 }); } }, A.duree || 10); } break;
     case 'revelation': if (G.salle.portes.some(p => p.etat === 'secrete')) signalerSecrets(G.salle); break;
@@ -7942,14 +8051,63 @@ function executerAction(A, J, data, src) {
   }
 }
 
-// ── Synergies documentées : actives quand tous les composants sont possédés ──
-function synergiesActives(J) {
-  if (J._synCache && J._synCle === J.passifs.length + ':' + J.transformations.length) return J._synCache;
-  const L = DON.synergies.filter(s => s.effets && s.effets.length && s.composants.every(c => J.passifs.includes(c) || J.acquis.includes(c) && INDEX[c] && INDEX[c].type === 'actif' && J.actif && J.actif.id === c));
-  J._synCache = L; J._synCle = J.passifs.length + ':' + J.transformations.length; return L;
+// ── Synergies : paires et trios d'objets, ou fusions de natures (kekkei genkai) ──
+const NOMS_NATURES = { katon: 'Katon', futon: 'Fūton', suiton: 'Suiton', raiton: 'Raiton', doton: 'Doton', hyoton: 'Hyōton' };
+// natures portées par vos objets, transformations et talismans (les synergies n'en ajoutent pas)
+function naturesJoueur(J) {
+  const E = new Set(), voir = d => { for (const e of (d && d.effets) || []) if (e.element) E.add(e.element); };
+  J.passifs.forEach(id => voir(INDEX[id])); J.transformations.forEach(t => voir(INDEX[t])); for (const t of [J.talisman, J.talisman2]) if (t) voir(INDEX[t]);
+  return E;
 }
+function synergieReunie(J, s, E) {
+  if (!s.composants.length && !(s.elements && s.elements.length)) return false;
+  return s.composants.every(c => J.passifs.includes(c) || J.acquis.includes(c) && INDEX[c] && INDEX[c].type === 'actif' && J.actif && J.actif.id === c) && (!s.elements || s.elements.every(n => E.has(n)));
+}
+// la clé change avec les passifs (permutation comprise), les transformations, l'actif tenu et les talismans
+function cleSynergies(J) { return J.passifs.join(',') + '|' + J.transformations.length + '|' + (J.actif ? J.actif.id : '') + '|' + (J.talisman || '') + '|' + (J.talisman2 || ''); }
+function synergiesReunies(J) {
+  const k = cleSynergies(J); if (J._synToutes && J._synToutesCle === k) return J._synToutes;
+  const E = naturesJoueur(J); J._synToutes = DON.synergies.filter(s => synergieReunie(J, s, E)); J._synToutesCle = k; return J._synToutes;
+}
+function synergiesActives(J) {
+  const k = cleSynergies(J); if (J._synCache && J._synCle === k) return J._synCache;
+  J._synCache = synergiesReunies(J).filter(s => s.effets && s.effets.length); J._synCle = k; return J._synCache;
+}
+// Une synergie nouvellement réunie s'annonce (bandeau turquoise, son) et s'inscrit au registre
+function annoncerSynergies(J) {
+  if (!J.synergiesVues) J.synergiesVues = [];
+  for (const s of synergiesReunies(J)) {
+    if (J.synergiesVues.includes(s.id)) continue;
+    J.synergiesVues.push(s.id); Progression.decouvrir(s.id);
+    if (G.partie && G.joueur === J) { annoncer({ t: 0, nom: 'Synergie : ' + s.nom, desc: s.desc, synergie: true, mineur: !(s.effets && s.effets.length) }); Son.jouer('sceau'); }
+  }
+}
+// Attraction magnétique (Jiton) : tire les ennemis proches vers un point
+function attirer(x, y, r, force) {
+  for (const e of G.ennemis) { if (e.mort || e.cache || e.boss || e.def.fixe || e.def.lourd) continue; const d = dist(e.x, e.y, x, y); if (d < r && d > 6) { e.vx += (x - e.x) / d * force; e.vy += (y - e.y) / d * force; } }
+  G.effets.push({ type: 'attraction', x, y, r, age: 0, duree: 0.35 });
+}
+// Visée assistée : l'ennemi le mieux aligné dans un cône autour de la direction de tir
+function viseeAssistee(J, a, portee, cone) {
+  let best = null, score = Infinity;
+  for (const e of G.ennemis) {
+    if (e.mort || e.cache || e.intangible || e.allie || e.apparition > 0) continue;
+    const dx = e.x - J.x, dy = (e.y - (e.hauteur || 8)) - (J.y - 10), d = Math.hypot(dx, dy); if (d > portee) continue;
+    const ec = Math.abs(Math.atan2(Math.sin(Math.atan2(dy, dx) - a), Math.cos(Math.atan2(dy, dx) - a))); if (ec > cone) continue;
+    const sc = ec * 3 + d / portee; if (sc < score) { score = sc; best = Math.atan2(dy, dx); }
+  }
+  return best === null ? a : best;
+}
+// Rayon de particules (Jinton) : tout ce qu'il traverse est frappé, obstacles compris ; les murs l'arrêtent
+function rayonJinton(J, a, deg) {
+  const x = J.x, y = J.y - 10, ca = Math.cos(a), sa = Math.sin(a); let l = 8;
+  while (l < 13 * TUILE) { const t = tuilePx(G.salle, x + ca * (l + 4), J.y + sa * (l + 4)); if (t === T.VIDE || t === T.PORTE || PROP[t].mur) break; l += 4; }
+  for (const e of ennemisSurSegment(x, y, a, l, 12)) infligerDegats(e, deg, { proprio: 'joueur', type: 'jinton', vx: Math.cos(a), vy: Math.sin(a), recul: 30 });
+  G.effets.push({ type: 'jinton', x, y, a, l, age: 0, duree: 0.4 }); secousse(3, a); Son.jouer('laser');
+}
+const COUL_STATUTS = { confus: '#c8a0ff', immobilise: '#ffe080', ralenti: '#80c8ff', poison: '#8ae05a', brulure: '#ff8a3a', gel: '#bfe8ff', charme: '#ff8ac8', peur: '#b0b0b8' };
 function annoncerTransformation(t) {
-  G.banniere = { t: 0, nom: t.nom, desc: t.desc, transformation: true };
+  annoncer({ t: 0, nom: t.nom, desc: t.desc, transformation: true });
   G.effets.push({ type: 'transformation', x: G.joueur.x, y: G.joueur.y - 12, age: 0, duree: 1.0 });
   Son.jouer('transformation'); secousse(5, null);
 }
@@ -8440,7 +8598,7 @@ const COUL_COLLECTE = { coeur: '#ff5a6a', protection: '#70a8ff', instable: '#c08
 const COUL_TIR = { orbe: '#7ac8ff', rasenshuriken: '#9ad8ff', poing: '#ff8ac0', paume: '#b8d8ff', sable: '#f0c070', element: '#ffb050', glace: '#9ae0ff', dragon_feu: '#ff8030', argile: '#fff0d0', papier: '#fff8e8', encre: '#8a8ad0', lame_poison: '#c080ff', kunai_ombre: '#9a88d0' };
 const COUL_TIR_ENNEMI = { eau: '#4a9aff', sable_ennemi: '#e0a040', feu: '#ff6030', son: '#c0a0ff', glace_ennemie: '#8ad0ff' };
 const COUL_ELEMENT = { katon: '#ff7a30', raiton: '#b0e0ff', suiton: '#60a8ff', futon: '#c8ffd8', doton: '#d8a868' };
-const COUL_ZONE = { feu_allie: '#ff9040', feu_ennemi: '#c050ff', acide: '#8ae050', glace: '#bfe8ff', eau: '#5aa0e0', eau_alliee: '#5aa0e0' };
+const COUL_ZONE = { feu_allie: '#ff9040', feu_ennemi: '#c050ff', acide: '#8ae050', glace: '#bfe8ff', eau: '#5aa0e0', eau_alliee: '#5aa0e0', lave_alliee: '#ff6a20', eau_electrique: '#8ad0ff' };
 function couleurTir(p) {
   if (p.foudre) return ['#b8e4ff', 1];
   if (p.elements && p.elements.size) { const c = COUL_ELEMENT[p.elements.values().next().value]; if (c) return [c, 1]; }
@@ -8491,6 +8649,9 @@ function collecterLumieres(s, A) {
       case 'transformation': case 'resurrection': aj(e.x, e.y, 150, '#ffe080', 0.8 * (1 - k), 0.3); break;
       case 'aura_sage': aj(e.x, e.y - 12, 72, '#ff9a30', 0.5 * (1 - k)); break;
       case 'etoile_impact': aj(e.x, e.y, 34, '#fff0c0', 0.6 * (1 - k), 0.5); break;
+      case 'foudre_ciel': aj(e.x, e.y, 150, '#c8e8ff', 1.1 * (1 - k), 0.5); break;
+      case 'jinton': for (let i = 0; i <= 6; i++) aj(e.x + Math.cos(e.a) * e.l * i / 6, e.y + Math.sin(e.a) * e.l * i / 6, 60, '#f0f8ff', 0.8 * (1 - k), 0.35); break;
+      case 'manteau': aj(e.x, e.y - 12, 80, '#ff7a30', 0.55, 0.3); break;
       case 'cercle_soin': aj(e.x, e.y, e.r * 1.6, '#60f080', 0.35); break;
       case 'cercle_sceau': aj(e.x, e.y, e.r * 1.6, '#f0e060', 0.35); break;
       case 'sceau_soin': case 'lotus': aj(e.x, e.y - 10, 52, '#90ffa0', 0.4 * (1 - k)); break;
@@ -9156,8 +9317,26 @@ function inviteSon(g, cx, y) {
   g.fillStyle = '#ff7a5a'; for (let k = 0; k < 5; k++) { g.fillRect(x + 15 + k, y + 6 + k, 1, 1); g.fillRect(x + 19 - k, y + 6 + k, 1, 1); }
   Police.ecrire(g, t, x + 24, y + 5, '#f4e0c0');
 }
-// Un bandeau (objet, transformation, étage) occupe le haut de l'écran : les notifications attendent
-function banniereVisible() { const B = G.banniere, E = G.banniereEtage; return !!(B && B.t < (B.mineur ? 1.6 : 2.6) || E && E.t < 3.2 || G.introBoss); }
+// Un bandeau (objet, transformation, synergie, étage) occupe le haut de l'écran : les notifications attendent.
+// Celui d'un objet s'affiche aussitôt (il remplace un autre bandeau d'objet) ; transformations et synergies
+// passent ensuite, sans jamais être perdues. Le titre d'étage et l'intro de boss retiennent la file.
+function dureeBanniere(B) { return B.mineur ? 1.6 : 2.6; }
+function annoncer(b) {
+  const F = G.banniereFile || (G.banniereFile = []), B = G.banniere;
+  if (!B || B.t >= dureeBanniere(B)) { G.banniere = b; return; }
+  if (b.synergie || b.transformation) { F.push(b); return; }
+  if (B.synergie || B.transformation) { B.t = 0; F.unshift(B); }
+  G.banniere = b;
+}
+function bannieresRetenues() { const E = G.banniereEtage; return !!(E && E.t < 3.2 || G.introBoss); }
+function banniereVisible() { const B = G.banniere; return !!(B && B.t < dureeBanniere(B) || bannieresRetenues()); }
+// Icône des synergies : deux anneaux enlacés (turquoise et or)
+let _iconeSyn = null;
+function iconeSynergie() {
+  if (_iconeSyn) return _iconeSyn; const c = toile(20, 20), g = ctxDe(c);
+  g.drawImage(anneau(6, 2, '#1c1420'), 1, 3); g.drawImage(anneau(6, 2, '#1c1420'), 7, 3); g.drawImage(anneau(5, 2, '#5ae0d0'), 3, 5); g.drawImage(anneau(5, 2, '#e8c050'), 8, 5);
+  g.fillStyle = '#5ae0d0'; g.fillRect(9, 7, 2, 2); return (_iconeSyn = c);
+}
 function losange(g, x, y, c, n = 2) { x = Math.round(x); y = Math.round(y); g.fillStyle = c; for (let k = -n; k <= n; k++) { const w = n - Math.abs(k); g.fillRect(x - w, y + k, 2 * w + 1, 1); } }
 // Bandeau cinématographique : bords estompés, filets dorés, losanges au centre
 function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
@@ -9235,7 +9414,7 @@ function dessinerHUD(g) {
     Police.ecrire(g, boss[0].def.nom, 320, 329, '#f8e0d4', { a: 'c', contour: '#1c1420' });
   } else _traceBoss = null;
   // bannières et panneaux
-  if (G.banniere) dessinerBanniere(g);
+  if (G.banniere && !bannieresRetenues()) dessinerBanniere(g);
   if (G.banniereEtage) dessinerBanniereEtage(g);
   if (G.achatPropose) dessinerPanneauAchat(g, G.achatPropose);
   else if (Entrees.enfonce('description') && G.piedestalProche && G.piedestalProche.id) dessinerDescription(g, G.piedestalProche.ramassable ? null : G.piedestalProche.id);
@@ -9253,12 +9432,12 @@ function dessinerStats(g, J, x, y) {
   L.forEach(([k, v], i) => { Police.ecrire(g, k, x, y + i * 10, '#8a8098'); Police.ecrire(g, v, x + 24, y + i * 10, '#e8e0f0'); });
 }
 function dessinerBanniere(g) {
-  const B = G.banniere; const d = B.mineur ? 1.6 : 2.6; if (B.t > d) return;
+  const B = G.banniere; const d = dureeBanniere(B); if (B.t > d) return;
   const a = B.t < 0.15 ? B.t / 0.15 : B.t > d - 0.4 ? (d - B.t) / 0.4 : 1;
   g.globalAlpha = a;
   const y = B.transformation ? 130 : 84; const w = Math.max(Police.largeur(B.nom) * 2, Police.largeur(B.desc || '')) + 24;
-  bandeau(g, 320 - w / 2 - 30, y - 7, w + 60, B.desc ? 38 : 26, B.transformation ? '#f0c040' : B.pilule ? '#a0e0a0' : '#d8c8a0');
-  Police.ecrire(g, B.nom, 320, y, B.transformation ? '#ffe080' : '#fff4e0', { a: 'c', e: 2, contour: '#1c1420' });
+  bandeau(g, 320 - w / 2 - 30, y - 7, w + 60, B.desc ? 38 : 26, B.transformation ? '#f0c040' : B.synergie ? '#5ae0d0' : B.pilule ? '#a0e0a0' : '#d8c8a0');
+  Police.ecrire(g, B.nom, 320, y, B.transformation ? '#ffe080' : B.synergie ? '#b8fff4' : '#fff4e0', { a: 'c', e: Police.largeur(B.nom) * 2 > 420 ? 1 : 2, contour: '#1c1420' });
   if (B.desc) Police.ecrire(g, B.desc, 320, y + 20, '#c8c0d8', { a: 'c' });
   g.globalAlpha = 1;
 }
@@ -9318,7 +9497,7 @@ function detailsObjet(d) {
     if (e.multi) L.push('+' + e.multi + ' émission(s)' + (e.coefCadence ? ', cadence ×' + f(e.coefCadence) : ''));
     if (e.forme) L.push('Forme de tir : ' + ({ orbe: 'orbe chargé', rayon: 'rayon chargé', laser: 'trait instantané', faisceau: 'faisceau continu', boomerang: 'arme revenante', lame: 'frappe courte', lame_longue: 'frappe étendue', bombe: 'bombe lancée', frappe: 'frappe différée au sol', controle: 'émission contrôlée', rotation: 'attaque circulaire' }[e.forme] || e.forme));
     if (e.traj) L.push('Trajectoire : ' + ({ guidage: 'guidée', rebond: 'ricochet', percant: 'perçante', spectral: 'traverse les obstacles', orbite: 'en orbite', onde: 'ondulante', lent: 'orbe lent (×2 taille)', acceleration: 'accélérée', retour: 'revient' }[e.traj] || e.traj));
-    if (e.impact) L.push('Impact : ' + ({ explosion: 'explosion', chaine: 'chaîne de foudre', eclat: 'éclatement', mine: 'mine', flamme: 'flammes au sol', flaque: 'flaque', onde: 'onde de choc' }[e.impact]) + (e.coef ? ' (×' + f(e.coef) + ')' : ''));
+    if (e.impact) L.push('Impact : ' + ({ lave: 'coulée de lave', vapeur: 'vapeur brûlante', flaque_electrique: 'flaque électrisée', attraction: 'attraction magnétique', racines: 'racines', explosion: 'explosion', chaine: 'chaîne de foudre', eclat: 'éclatement', mine: 'mine', flamme: 'flammes au sol', flaque: 'flaque', onde: 'onde de choc' }[e.impact]) + (e.coef ? ' (×' + f(e.coef) + ')' : ''));
     if (e.statut) L.push(({ brulure: 'Brûlure', poison: 'Poison', ralenti: 'Ralentissement', immobilise: 'Immobilisation', charme: 'Charme', peur: 'Peur', confus: 'Confusion', gel: 'Gel' }[e.statut]) + ' : ' + Math.round((e.chance || 0) * 100) + ' %' + (e.chanceParChance ? ' + ' + Math.round(e.chanceParChance * 100) + ' % par chance' : '') + (e.max ? ' (max ' + Math.round(e.max * 100) + ' %)' : ''));
     if (e.sante) { const s = e.sante; if (s.cont) L.push('+' + s.cont + ' contenant(s) de vitalité'); if (s.prot) L.push('+' + s.prot / 2 + ' réserve(s) de chakra'); if (s.instable) L.push('+' + s.instable / 2 + ' réserve(s) instable(s)'); if (s.os) L.push('+' + s.os + ' enveloppe(s) osseuse(s)'); if (s.retraitCont) L.push('−' + s.retraitCont + ' contenant(s)'); if (s.cicatrice) L.push('+' + s.cicatrice + ' cicatrice(s) de sceau'); }
     if (e.res) for (const [k, v] of Object.entries(e.res)) L.push('+' + v + ' ' + ({ ryo: 'Ryō', cles: 'clé(s)', explosifs: 'explosif(s)' }[k]));
@@ -9328,6 +9507,8 @@ function detailsObjet(d) {
   }
   if (d.type === 'actif') L.push(d.recharge ? 'Recharge : ' + d.recharge + ' s en combat' : d.unique ? 'Usage unique' : 'Charges : ' + d.charges + ' salle(s)');
   if (d.contrepartie) L.push('Contrepartie : ' + d.contrepartie);
+  if (d.composants && d.composants.length) L.push('Composants : ' + d.composants.map(c => INDEX[c] ? INDEX[c].nom : c).join(' + '));
+  if (d.elements) L.push('Natures : ' + d.elements.map(n => NOMS_NATURES[n] || n).join(' + '));
   if (d.ensemble) L.push('Ensemble : ' + ((DON.transformations.find(t => t.ensemble === d.ensemble) || {}).nom || d.ensemble));
   return L;
 }
@@ -9725,13 +9906,13 @@ const SceneCommandes = {
 const SceneRegistre = {
   entrer() { this.onglet = 0; this.i = 0; },
   maj() {
-    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 4) % 4; this.i = 0; Son.jouer('menu'); }
+    if (Entrees.nav.dx) { this.onglet = (this.onglet + Entrees.nav.dx + 5) % 5; this.i = 0; Son.jouer('menu'); }
     if (Entrees.nav.dy) { this.i = Math.max(0, this.i + Entrees.nav.dy * (this.onglet === 1 ? 14 : 1)); Son.jouer('menu'); }
     if (Entrees.menuRetour()) Scenes.depiler();
   },
   rendre(g) {
     fondMenu(g); cadreMenu(g, 14, 26, 612, 312);
-    const titres = ['Marques', 'Collection', 'Missions', 'Secrets']; titres.forEach((t, k) => { const x = 140 + k * 120, sel = k === this.onglet; Police.ecrire(g, t, x, 10, sel ? '#ffe0a0' : '#8a8098', { a: 'c' }); if (sel) { const w = Police.largeur(t); losange(g, x - w / 2 - 8, 14, '#e0b870', 2); losange(g, x + w / 2 + 7, 14, '#e0b870', 2); g.fillStyle = '#c8a060'; g.fillRect(x - w / 2, 21, w, 1); } });
+    const titres = ['Marques', 'Collection', 'Missions', 'Secrets', 'Synergies']; titres.forEach((t, k) => { const x = 80 + k * 120, sel = k === this.onglet; Police.ecrire(g, t, x, 10, sel ? '#ffe0a0' : '#8a8098', { a: 'c' }); if (sel) { const w = Police.largeur(t); losange(g, x - w / 2 - 8, 14, '#e0b870', 2); losange(g, x + w / 2 + 7, 14, '#e0b870', 2); g.fillStyle = '#c8a060'; g.fillRect(x - w / 2, 21, w, 1); } });
     const P = Progression.profil;
     if (this.onglet === 0) {
       const L = DON.personnages; const deb = Math.min(this.i, Math.max(0, L.length - 18));
@@ -9741,6 +9922,18 @@ const SceneRegistre = {
       const L = DON.objets.concat(DON.talismans); const cols = 14; const deb = Math.floor(Math.min(this.i, L.length - 1) / cols) * cols; const vis = L.slice(Math.max(0, deb - cols * 3), Math.max(0, deb - cols * 3) + cols * 12);
       vis.forEach((o, k) => { const x = 40 + (k % cols) * 40, y = 34 + Math.floor(k / cols) * 24; const conn = P.decouverts.includes(o.id); const vu = P.vus.includes(o.id); if (conn) g.drawImage(o.type === 'talisman' ? spriteRamassable('talisman', o.couleur) : iconeObjet(o.id), x, y); else { g.fillStyle = vu ? '#3a3048' : '#1a1622'; g.fillRect(x + 2, y + 2, 16, 16); Police.ecrire(g, '?', x + 10, y + 6, '#5a5268', { a: 'c' }); } });
       Police.ecrire(g, 'Découverts : ' + P.decouverts.filter(id => INDEX[id] && (INDEX[id].type === 'passif' || INDEX[id].type === 'actif' || INDEX[id].type === 'talisman')).length + ' / ' + L.length, 320, 326, '#a8a0b8', { a: 'c' });
+    } else if (this.onglet === 4) { // synergies : réunies au moins une fois ; indices pour les autres
+      const L = DON.synergies; this.i = Math.min(this.i, L.length - 1); const deb = Math.max(0, Math.min(this.i - 7, L.length - 16)); const connue = s => P.decouverts.includes(s.id);
+      L.slice(deb, deb + 16).forEach((sy, k) => { const j = deb + k, ok = connue(sy), y = 36 + k * 18; if (j === this.i) { g.fillStyle = 'rgba(240,200,112,0.18)'; g.fillRect(24, y - 3, 250, 16); } Police.ecrire(g, (ok ? '✓ ' : '· ') + (ok ? sy.nom : sy.type === 'fusion' ? 'Fusion inconnue' : 'Synergie inconnue'), 30, y, ok ? (sy.type === 'fusion' ? '#8af0e0' : '#a0e0a0') : '#8a8098'); });
+      const sy = L[this.i], ok = connue(sy); g.fillStyle = 'rgba(20,14,28,0.95)'; g.fillRect(290, 32, 330, 200);
+      g.drawImage(iconeSynergie(), 300, 36); Police.ecrire(g, ok ? sy.nom : '???', 324, 42, '#fff0d0');
+      let y = 62; const hint = [];
+      if (sy.elements) hint.push('Natures : ' + sy.elements.map(n => NOMS_NATURES[n] || n).join(' + '));
+      if (sy.composants.length) hint.push('Composants : ' + sy.composants.map(c => P.decouverts.includes(c) || ok ? INDEX[c].nom : '?').join(' + '));
+      if (ok) { y += Police.paragraphe(g, sy.desc, 300, y, 310, '#e8dcc0') + 6; }
+      for (const h of hint) y += Police.paragraphe(g, h, 300, y, 310, ok ? '#a8a0b8' : '#c8b8a0') + 2;
+      if (!ok) Police.paragraphe(g, 'Réunissez ces pièces pendant une partie pour l’inscrire ici.', 300, y + 6, 310, '#6a6078');
+      Police.ecrire(g, 'Réunies : ' + L.filter(connue).length + ' / ' + L.length, 455, 244, '#a8a0b8', { a: 'c' });
     } else if (this.onglet === 3) { // indices consultables en jeu ; la solution apparaît une fois le secret trouvé
       const L = DON.secrets; this.i = Math.min(this.i, L.length - 1);
       L.forEach((sc, k) => { const ok = P.decouverts.includes(sc.id); const y = 36 + k * 18; if (k === this.i) { g.fillStyle = 'rgba(240,200,112,0.18)'; g.fillRect(24, y - 3, 250, 16); } Police.ecrire(g, (ok ? '✓ ' : '· ') + (ok ? sc.nom : 'Secret inconnu'), 30, y, ok ? '#a0e0a0' : '#c8c0d8'); });
@@ -9813,7 +10006,7 @@ function serialiserSalle(s) {
 }
 function serialiserJoueur(J) {
   const o = {};
-  for (const k of ['cle', 'x', 'y', 'dirCorps', 'dirTete', 'sante', 'ryo', 'cles', 'explosifs', 'clesDorees', 'explosifsDores', 'passifs', 'acquis', 'transformations', 'bonusPermanents', 'actif', 'actif2', 'talisman', 'talisman2', 'poches', 'maxPoches', 'maxTalismans', 'drapeaux', 'compteurs', 'force', 'sceau', 'clones', 'coeursReserve', 'marionnette', 'deuxActifs']) o[k] = J[k];
+  for (const k of ['cle', 'x', 'y', 'dirCorps', 'dirTete', 'sante', 'ryo', 'cles', 'explosifs', 'clesDorees', 'explosifsDores', 'passifs', 'acquis', 'transformations', 'bonusPermanents', 'actif', 'actif2', 'talisman', 'talisman2', 'poches', 'maxPoches', 'maxTalismans', 'drapeaux', 'compteurs', 'force', 'sceau', 'clones', 'coeursReserve', 'marionnette', 'deuxActifs', 'synergiesVues']) o[k] = J[k];
   o.def = J.def.id; o.bonus = J.bonus.filter(b => b.duree === 'etage' || b.duree === 'permanent');
   o.familiers = J.familiers.filter(f => !f.dureeSalle && f.def.comportement !== 'clone_res').map(f => ({ id: f.def.id, source: f.source, etage: f.etage, variante: f.variante }));
   return o;
@@ -9979,7 +10172,10 @@ const G = {
 function majJeu(dt) {
   const J = G.joueur; const P = G.partie;
   // bannières : minutées par la simulation (pas par l'affichage)
-  if (G.banniere) { G.banniere.t += dt; if (G.banniere.t > (G.banniere.mineur ? 1.6 : 2.6)) G.banniere = null; }
+  if (!bannieresRetenues()) {
+    if (!G.banniere && G.banniereFile && G.banniereFile.length) G.banniere = G.banniereFile.shift();
+    if (G.banniere) { G.banniere.t += dt; if (G.banniere.t > dureeBanniere(G.banniere)) G.banniere = (G.banniereFile && G.banniereFile.shift()) || null; }
+  }
   if (G.banniereEtage) { G.banniereEtage.t += dt; if (G.banniereEtage.t > 3.2) G.banniereEtage = null; }
   if (G.fondu) { G.fondu.t += dt; if (G.fondu.t >= G.fondu.duree / 2 && !G.fondu.fait) { G.fondu.fait = true; G.fondu.action(); } if (G.fondu.t >= G.fondu.duree) G.fondu = null; return; }
   if (G.transition) { majTransition(dt); return; }
@@ -10062,13 +10258,13 @@ const ScenePause = {
 };
 const SceneInventaire = {
   entrer() { this.i = 0; },
-  liste() { const J = G.joueur; const L = []; if (J.actif) L.push(J.actif.id); if (J.actif2) L.push(J.actif2.id); if (J.talisman) L.push(J.talisman); for (const id of J.passifs) L.push(id); for (const t of J.transformations) L.push(t); return L; },
+  liste() { const J = G.joueur; const L = []; if (J.actif) L.push(J.actif.id); if (J.actif2) L.push(J.actif2.id); if (J.talisman) L.push(J.talisman); for (const id of J.passifs) L.push(id); for (const t of J.transformations) L.push(t); for (const s of synergiesReunies(J)) L.push(s.id); return L; },
   maj() { const L = this.liste(); const c = 12; if (Entrees.nav.dx) this.i = borne(this.i + Entrees.nav.dx, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dy) this.i = borne(this.i + Entrees.nav.dy * c, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dx || Entrees.nav.dy) Son.jouer('menu'); if (Entrees.menuRetour()) Scenes.depiler(); },
   rendre(g) {
     fondMenu(g); cadreMenu(g, 26, 32, 376, 304); cadreMenu(g, 408, 32, 226, 304);
     Police.ecrire(g, 'Objets, transformations et mutations', 320, 10, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
     const L = this.liste(); const c = 12;
-    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : iconeObjet(id), x, y); });
+    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : id.startsWith('SYN_') ? iconeSynergie() : iconeObjet(id), x, y); });
     const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + (d.visuel.nom || d.visuel.motif || d.visuel.couche), 420, y + 30, 200, '#8a9aa8'); }
     if (!L.length) Police.ecrire(g, 'Aucun objet pour l’instant.', 320, 160, '#8a8098', { a: 'c' });
     aideBoutons(g, [['retour', 'Retour']]);
@@ -10143,7 +10339,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

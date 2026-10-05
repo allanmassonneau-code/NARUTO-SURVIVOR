@@ -43,6 +43,8 @@ const nombreFini = (v, m) => { if (typeof v !== 'number' || !Number.isFinite(v))
 // Effets déclaratifs (passifs, talismans, transformations, synergies)
 const POOLS_VALIDES = ['heritage', 'boss', 'boutique', 'pacte', 'sanctuaire', 'cache', 'isolee', 'bibliotheque', 'defi', 'coffre', 'machine'];
 const STATS = ['degats', 'cadence', 'portee', 'vitesseTir', 'vitesse', 'chance', 'plafondCadence'];
+const NATURES = ['katon', 'futon', 'suiton', 'raiton', 'doton', 'hyoton'];
+const IMPACTS = ['explosion', 'chaine', 'eclat', 'onde', 'mine', 'flamme', 'flaque', 'lave', 'vapeur', 'flaque_electrique', 'attraction', 'racines'];
 function verifierEffets(d) {
   for (const e of d.effets || []) {
     if (e.s && !STATS.includes(e.s)) err(`${d.id} : statistique inconnue ${e.s}`);
@@ -52,6 +54,9 @@ function verifierEffets(d) {
     if (e.faire && !actionsDeclencheurs.has(e.faire.type)) err(`${d.id} : action « ${e.faire.type} » non implémentée`);
     if (e.faire && e.faire.familier && !fam(e.faire.familier)) err(`${d.id} : familier inconnu ${e.faire.familier}`);
     if (e.chance !== undefined && !(e.chance >= 0 && e.chance <= 1)) err(`${d.id} : chance hors [0,1]`);
+    if (e.element && !NATURES.includes(e.element)) err(`${d.id} : nature inconnue ${e.element}`);
+    if (e.impact && !IMPACTS.includes(e.impact)) err(`${d.id} : impact inconnu ${e.impact}`);
+    if (e.impact && !texte('34_tir.js').includes("'" + e.impact + "'")) err(`${d.id} : impact « ${e.impact} » non implémenté`); // au contact (case) ou en fin de vie (mine)
   }
 }
 // Personnages
@@ -77,7 +82,7 @@ for (const o of DON.objets) {
 }
 for (const t of DON.talismans) verifierEffets(t);
 for (const t of DON.transformations) { verifierEffets(t); const membres = DON.objets.filter(o => o.ensemble === t.ensemble); if (membres.length < t.seuil) err(`${t.id} : ensemble « ${t.ensemble} » trop petit (${membres.length} < ${t.seuil})`); }
-for (const s of DON.synergies) { verifierEffets(s); for (const c of s.composants) if (!existe(c)) err(`${s.id} : composant inconnu ${c}`); if (new Set(s.composants).size !== s.composants.length) err(`${s.id} : composant répété`); }
+for (const s of DON.synergies) { verifierEffets(s); if (!s.composants.length && !(s.elements || []).length) err(`${s.id} : ni composant ni nature`); for (const n of s.elements || []) if (!NATURES.includes(n)) err(`${s.id} : nature inconnue ${n}`); if (s.elements && !NATURES.filter(n => s.elements.includes(n)).every(n => DON.objets.some(o => (o.effets || []).some(e => e.element === n)))) err(`${s.id} : nature portée par aucun objet`); for (const c of s.composants) if (!existe(c)) err(`${s.id} : composant inconnu ${c}`); if (new Set(s.composants).size !== s.composants.length) err(`${s.id} : composant répété`); }
 for (const c of DON.consommables) if (!effetsActifs.has(c.effet) && !texte('40_actifs.js').includes('  ' + c.effet + '(J')) err(`${c.id} : effet « ${c.effet} » non implémenté`);
 for (const p of DON.pilules) if (p.contraire && !existe(p.contraire)) err(`${p.id} : contraire inconnu`);
 // Pools non vides
@@ -209,7 +214,7 @@ const tables = {
   routes: { titre: 'Routes et fins (RTE)', col: ['ID', 'Nom', 'Bifurcation', 'Prérequis', 'Boss', 'Récompense', 'Marque'], lignes: DON.routes.map(r => [r.id, r.nom, r.bifurcation, r.prerequis, r.boss.split('|').map(nomDe).join(' / '), r.recompense, r.marque]) },
   transformations: { titre: 'Transformations d’ensemble (TRF)', col: ['ID', 'Nom', 'Ensemble', 'Seuil', 'Effet', 'Objets de l’ensemble'],
     lignes: DON.transformations.map(t => [t.id, t.nom, t.ensemble, t.seuil + ' distincts', t.desc, DON.objets.filter(o => o.ensemble === t.ensemble).map(o => o.id).join(', ')]) },
-  synergies: { titre: 'Synergies documentées (SYN)', col: ['ID', 'Nom', 'Composants', 'Type', 'Effet', 'Test d’acceptation'], lignes: DON.synergies.map(s => [s.id, s.nom, s.composants.map(c => c + ' ' + nomDe(c)).join(' + '), s.type, s.desc, s.test]) },
+  synergies: { titre: 'Synergies documentées (SYN)', col: ['ID', 'Nom', 'Composants', 'Type', 'Effet', 'Test d’acceptation'], lignes: DON.synergies.map(s => [s.id, s.nom, s.composants.length ? s.composants.map(c => c + ' ' + nomDe(c)).join(' + ') : 'natures : ' + s.elements.join(' + '), s.type, s.desc, s.test]) },
   objectifs: { titre: 'Objectifs de déblocage (OBJ)', col: ['ID', 'Nom', 'Condition', 'Débloque'], lignes: DON.objectifs.map(o => [o.id, o.nom, condTxt(o.condition), o.recompense.debloque.map(id => id + ' ' + nomDe(id)).join(', ')]) },
   defis: { titre: 'Défis — contrats de mission (DEF)', col: ['ID', 'Nom', 'Règles', 'Récompense'], lignes: DON.defis.map(d => [d.id, d.nom, d.desc, d.recompenseTexte]) },
   secrets: { titre: 'Secrets (SEC)', col: ['ID', 'Nom', 'Indice en jeu', 'Solution'], lignes: DON.secrets.map(s => [s.id, s.nom, s.indice, s.solution]) },

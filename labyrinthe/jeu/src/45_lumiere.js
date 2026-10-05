@@ -52,7 +52,7 @@ const COUL_COLLECTE = { coeur: '#ff5a6a', protection: '#70a8ff', instable: '#c08
 const COUL_TIR = { orbe: '#7ac8ff', rasenshuriken: '#9ad8ff', poing: '#ff8ac0', paume: '#b8d8ff', sable: '#f0c070', element: '#ffb050', glace: '#9ae0ff', dragon_feu: '#ff8030', argile: '#fff0d0', papier: '#fff8e8', encre: '#8a8ad0', lame_poison: '#c080ff', kunai_ombre: '#9a88d0' };
 const COUL_TIR_ENNEMI = { eau: '#4a9aff', sable_ennemi: '#e0a040', feu: '#ff6030', son: '#c0a0ff', glace_ennemie: '#8ad0ff' };
 const COUL_ELEMENT = { katon: '#ff7a30', raiton: '#b0e0ff', suiton: '#60a8ff', futon: '#c8ffd8', doton: '#d8a868' };
-const COUL_ZONE = { feu_allie: '#ff9040', feu_ennemi: '#c050ff', acide: '#8ae050', glace: '#bfe8ff', eau: '#5aa0e0', eau_alliee: '#5aa0e0' };
+const COUL_ZONE = { feu_allie: '#ff9040', feu_ennemi: '#c050ff', acide: '#8ae050', glace: '#bfe8ff', eau: '#5aa0e0', eau_alliee: '#5aa0e0', lave_alliee: '#ff6a20', eau_electrique: '#8ad0ff' };
 function couleurTir(p) {
   if (p.foudre) return ['#b8e4ff', 1];
   if (p.elements && p.elements.size) { const c = COUL_ELEMENT[p.elements.values().next().value]; if (c) return [c, 1]; }
@@ -103,6 +103,9 @@ function collecterLumieres(s, A) {
       case 'transformation': case 'resurrection': aj(e.x, e.y, 150, '#ffe080', 0.8 * (1 - k), 0.3); break;
       case 'aura_sage': aj(e.x, e.y - 12, 72, '#ff9a30', 0.5 * (1 - k)); break;
       case 'etoile_impact': aj(e.x, e.y, 34, '#fff0c0', 0.6 * (1 - k), 0.5); break;
+      case 'foudre_ciel': aj(e.x, e.y, 150, '#c8e8ff', 1.1 * (1 - k), 0.5); break;
+      case 'jinton': for (let i = 0; i <= 6; i++) aj(e.x + Math.cos(e.a) * e.l * i / 6, e.y + Math.sin(e.a) * e.l * i / 6, 60, '#f0f8ff', 0.8 * (1 - k), 0.35); break;
+      case 'manteau': aj(e.x, e.y - 12, 80, '#ff7a30', 0.55, 0.3); break;
       case 'cercle_soin': aj(e.x, e.y, e.r * 1.6, '#60f080', 0.35); break;
       case 'cercle_sceau': aj(e.x, e.y, e.r * 1.6, '#f0e060', 0.35); break;
       case 'sceau_soin': case 'lotus': aj(e.x, e.y - 10, 52, '#90ffa0', 0.4 * (1 - k)); break;
