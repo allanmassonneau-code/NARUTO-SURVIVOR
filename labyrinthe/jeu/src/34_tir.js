@@ -17,9 +17,12 @@ function majTirJoueur(J, dt) {
   majOrbeAppoint(J, dt);
   // salves en attente
   while (TI.salveFile.length && TI.salveT <= 0) { const s = TI.salveFile.shift(); emettre(J, s.dir, s.mult, s.cycleId, true); TI.salveT = 0.07; }
-  if (J.bloqueTir > 0 || J.etat === 'objet' || J.etat === 'mort') { TI.charge = 0; return; }
+  if (J.etat === 'mort') { TI.charge = 0; return; }
+  // tir empêché (prise d'objet, Kamui…) : une charge tenue est gardée telle quelle, relâchée elle se perd
+  if (J.bloqueTir > 0 || J.etat === 'objet') { if (!Entrees.visee.dir) TI.charge = 0; return; }
   const dir = Entrees.visee.dir; const tenu = !!dir;
-  if (tenu) TI.dir = dir;
+  // la tête suit la visée tenue, même pendant une charge (le tir partira dans cette direction)
+  if (tenu) { TI.dir = dir; if (!J.kaiten) J.dirTete = dir; }
   const forme = P.forme;
   const reglAuto = (G.reglages && G.reglages.chargeAuto);
   // Formes chargées : orbe (déclenchement à charge suffisante), charge libre, rayon

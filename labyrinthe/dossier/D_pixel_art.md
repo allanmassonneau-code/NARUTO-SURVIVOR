@@ -192,7 +192,8 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 - **Sélection** : carrousel des 12 personnages ; ▲▼ bascule vers la variante altérée ; fiche (santé, statistiques, actif, règle, faiblesse, marques de fin) ; « Description » bascule Standard/Difficile.
 - **Mission à code** : clavier virtuel de 32 caractères (sans I, O, 0, 1), saisie entièrement à la manette.
 - **Pause** : reprendre, objets et mutations (inventaire par pages avec descriptions à deux niveaux), options, sauvegarder et quitter, abandonner (confirmation) ; la carte étendue reste au maintien de *Carte*.
-- **Descriptions** : bouton *Description* près d’un piédestal → phrase courte, puis valeurs et interactions découvertes ; panneau d’achat qui affiche le **résultat exact** d’un pacte (contenants restants, santé après paiement, risque de mort, confirmation à deux temps si mortel).
+- **Fiche de l’objet proche** (façon *External Item Descriptions* d’*Isaac*) : à moins de 72 px (2,25 tuiles) d’un piédestal, d’un article d’échoppe, d’un talisman, d’un rouleau ou d’une pilule, un cadre s’affiche de lui-même en haut à gauche (à droite si l’objet ou le joueur seraient dessous, en bas en dernier recours ; masqué pendant les bandeaux) : icône, nom, type, qualité (★), « nouveau » si l’objet n’a jamais été obtenu, phrase, valeurs calculées depuis les données, progression d’ensemble (« 1/3 → 2/3 », « se déclenche ! »), synergies avec ce que vous portez (ou ce qui manque encore), fusion de natures complétée, ce qu’il remplacerait, prix, choix lié, délai d’actif. Une pilule inconnue garde son effet secret ; sous la malédiction aveugle, l’objet reste voilé. Liseré par type (passif or, actif bleu, talisman rose, poche vert, ressource vert clair). Option *Descriptions automatiques* (sinon : au maintien de *Description*).
+- **Achat** : panneau d’achat qui affiche le **résultat exact** d’un pacte (contenants restants, santé après paiement, risque de mort, confirmation à deux temps si mortel) ; la fiche porte la description.
 - **Carte** : minicarte (salles aperçues, pictogrammes des spéciales : étoile dorée pour l’héritage, pièce verte pour l’échoppe, crâne pour le boss), carte étendue au maintien (légende aux mêmes pictogrammes, code de mission, temps).
 - **Échoppe et héritage** : deux lieux qu’on reconnaît dès la porte. L’**échoppe** est un marché : porte brune à seuil vert flanquée de deux lanternes de papier rouges, tapis rouge, étals à auvent rayé vert et blanc, étagères de marchandises, lanternes, piédestaux en étals de bois à nappe verte avec le prix en Ryō. L’**héritage** est un sanctuaire : porte dorée flanquée de deux flammes, cercle de sceau doré au sol, quatre bougies, corde sacrée à papiers pliés, puits de lumière dorée, piédestal unique à liseré doré.
 
@@ -217,7 +218,8 @@ Tout est **synthétisé** (WebAudio) ; aucune musique ni aucun son n’est impor
 | Confort | non | transitions 0,18 s, animation d’objet 0,55 s, pas de ralenti décoratif (mort de boss), moins d’éclats, pas de poussière de pas, écrasement réduit |
 | Éclairage dynamique | oui | lumières, halos et air du thème (décoratifs) ; à couper sur une machine modeste |
 | Zones mortes, seuils de visée, hystérésis | B2 | réglables |
-| Profil de tir | stick + croix | stick seul, croix seule |
+| Profil de tir | stick + boutons (comme *Isaac*) | stick + croix, stick seul, croix seule |
+| Descriptions automatiques | oui | fiche de l’objet proche ; sinon au maintien de *Description* |
 | Charge automatique | non | tir à pleine charge sans relâcher |
 | Statistiques à l’écran | oui | masquables |
 | Chiffres de dégâts | non | nombres au-dessus des ennemis |

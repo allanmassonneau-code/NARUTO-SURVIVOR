@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // HUD : santé (haut gauche), actif et charge, ressources, talisman (bas gauche),
 // poche (bas droite), minicarte (haut droite), boss (bas centre). Aucun élément
-// ne recouvre une porte. Descriptions à deux niveaux (phrase + valeurs).
+// ne recouvre une porte. Fiche de l'objet proche (phrase, valeurs, ensemble, synergies, prix).
 // ═══════════════════════════════════════════════════════════════════════════
 
 // Plaque de HUD : fond translucide, liseré, coins adoucis — lisible sur n'importe quel sol
@@ -137,8 +137,9 @@ function dessinerHUD(g) {
   // bannières et panneaux
   if (G.banniere && !bannieresRetenues()) dessinerBanniere(g);
   if (G.banniereEtage) dessinerBanniereEtage(g);
+  // fiche de l'objet proche (façon « External Item Descriptions ») : d'elle-même, ou au maintien de Description
+  if (!G.transition && !banniereVisible() && !Entrees.enfonce('carte') && (G.reglages.descriptionsAuto !== false || Entrees.enfonce('description'))) dessinerFicheProche(g);
   if (G.achatPropose) dessinerPanneauAchat(g, G.achatPropose);
-  else if (Entrees.enfonce('description') && G.piedestalProche && G.piedestalProche.id) dessinerDescription(g, G.piedestalProche.ramassable ? null : G.piedestalProche.id);
   if (Entrees.enfonce('carte') && !G.transition) dessinerCarteEtendue(g);
   // messages d'écran : le plus récent en bas, les précédents empilés au-dessus, coupés à 460 px
   { const M = G.textes.filter(t => t.ecran); let y = 300; for (let i = M.length - 1; i >= 0 && y > 200; i--) { const t = M[i], k = t.age / t.duree, lignes = Police.couper(t.t, 460); g.globalAlpha = k > 0.8 ? (1 - k) / 0.2 : Math.min(1, t.age / 0.12); for (let j = lignes.length - 1; j >= 0; j--) { Police.ecrire(g, lignes[j], 320, y, t.couleur || '#fff', { a: 'c', contour: '#1c1420' }); y -= 12; } y -= 4; } g.globalAlpha = 1; }
@@ -195,19 +196,123 @@ function dessinerPanneauAchat(g, p) {
     else if (v.instable) L.push('Prix : ' + v.instable + ' demis de chakra instable');
     else if (v.detail) { if (v.detail.type === 'contenants') { retirerConteneur(apres, p.prix.n); L.push('Prix : ' + p.prix.n + ' contenant(s) de vitalité'); } else { apres.prot.splice(-v.detail.n); L.push('Prix : ' + v.detail.n / 2 + ' réserve(s) de chakra'); } L.push('Après : ' + nbVit(apres) + ' contenant(s), santé ' + santeTotale(apres) / 2 + ' cœur(s)'); if (santeTotale(apres) <= 0) L.push('CE PAIEMENT SERAIT MORTEL'); }
   }
-  if (!p.ramassable) L.push(INDEX[p.id].desc);
+  if (!p.ramassable && G.reglages.descriptionsAuto === false) L.push(INDEX[p.id].desc); // sinon : la fiche le décrit déjà
   L.push(v.ok ? 'Confirmer : ' + Entrees.libelle('interagir') : v.manque);
   const w = Math.max(...L.map(l => Police.largeur(l))) + 16, h = L.length * 11 + 8; const x = borne(Math.round(320 - w / 2), 4, 636 - w), y = 250;
   plaqueHUD(g, x, y, w, h, p.prix.type === 'pacte' ? '#8a2a5a' : '#8a7a4a');
   L.forEach((l, i) => Police.ecrire(g, l, x + 8, y + 5 + i * 11, i === 0 ? '#fff0d0' : l.startsWith('CE PAIEMENT') ? '#ff5050' : i === L.length - 1 ? (v.ok ? '#a0e0a0' : '#ff9a8a') : '#c8c0d8'));
 }
-function dessinerDescription(g, id) {
-  if (!id) return; const d = INDEX[id]; const L = [d.nom, d.desc]; for (const l of detailsObjet(d)) L.push('· ' + l);
-  if (d.statut) L.push('[' + d.statut + ']');
-  const w = Math.min(420, Math.max(...L.map(l => Police.largeur(l))) + 16); const lignes = []; for (const l of L) lignes.push(...Police.couper(l, w - 16));
-  const h = lignes.length * 11 + 8, x = 320 - w / 2, y = 230;
-  plaqueHUD(g, x, y, w, h, '#6a5a8a');
-  lignes.forEach((l, i) => Police.ecrire(g, l, x + 8, y + 5 + i * 11, i === 0 ? '#fff0d0' : '#c8c0d8'));
+// ── Fiche de l'objet proche (façon « External Item Descriptions » d'Isaac) ──
+// L'objet le plus proche — piédestal, article de l'échoppe, talisman, rouleau ou pilule au sol — se décrit
+// de lui-même dans un cadre en haut à gauche : icône, nom, type et qualité, phrase, valeurs, ensemble en
+// cours, synergies avec ce que vous portez, prix, ce qu'il remplacerait, et pourquoi il ne se prend pas encore.
+const PORTEE_FICHE = 72; // px entre les pieds et l'objet
+const NOMS_RAMASSABLES = { coeur: 'Cœur de vitalité', cle: 'Clé de sceau', explosif: 'Parchemin explosif', rouleau: 'Rouleau tactique', protection: 'Réserve de chakra', pilule: 'Pilule militaire', condensateur: 'Condensateur de chakra', coeur_double: 'Double cœur' };
+const DESCS_RAMASSABLES = {
+  coeur: 'Soigne un cœur de vitalité.', coeur_double: 'Soigne deux cœurs de vitalité.',
+  cle: 'Ouvre l’héritage, l’échoppe, les coffres verrouillés et les blocs à clé.', explosif: 'Un parchemin explosif de plus : rochers, murs secrets, 30 dégâts.',
+  rouleau: 'Un rouleau tactique tiré au hasard, pour la poche.', protection: 'Une réserve de chakra : un cœur de protection, sans contenant.',
+  pilule: 'Une pilule militaire au hasard : effet inconnu tant qu’elle n’est pas identifiée.', condensateur: 'Recharge votre technique de deux charges.',
+};
+function cibleFiche() {
+  const J = G.joueur, s = G.salle; if (!J || !s || J.etat !== 'normal') return null;
+  let best = null, bd = PORTEE_FICHE;
+  for (const p of s.piedestaux) { if (!p.id || p.apparu > 0.3) continue; const d = dist(p.x, p.y + 4, J.x, J.y); if (d < bd) { bd = d; best = { p, x: p.x, y: p.y - 14 }; } }
+  for (const r of s.ramassables) { if (!r.id || r.pris || !['talisman', 'rouleau', 'pilule'].includes(r.type)) continue; const d = dist(r.x, r.y, J.x, J.y); if (d < bd) { bd = d; best = { r, x: r.x, y: r.y }; } }
+  return best;
+}
+function ficheObjet(c) {
+  const J = G.joueur, L = [], ligne = (t, coul, puce) => { if (t) L.push({ t, c: coul || '#b8b0c8', puce }); };
+  const F = { icone: null, nom: '', type: '', lisere: '#6a5a8a', etoiles: 0, nouveau: false, lignes: L };
+  let d = null;
+  if (c.p && c.p.ramassable) { // ressource vendue à l'échoppe
+    const t = c.p.ramassable; Object.assign(F, { nom: NOMS_RAMASSABLES[t] || t, icone: spriteRamassable(t), type: 'Ressource', lisere: '#58d08a' });
+    ligne(DESCS_RAMASSABLES[t], '#e8e0f0');
+  } else if (c.p && G.etage && G.etage.malediction === 'aveugle') {
+    Object.assign(F, { nom: 'Objet voilé', icone: iconeObjet('?'), type: 'Malédiction aveugle' });
+    ligne('Impossible de savoir ce qu’il fait avant de le prendre.', '#e8e0f0');
+  } else {
+    const id = c.p ? c.p.id : c.r.id; d = INDEX[id]; if (!d) return null;
+    const pilule = !!(c.r && c.r.type === 'pilule'), connue = !pilule || G.partie.pilulesIdentifiees.includes(id) || aTalisman(J, 'TAL_014');
+    F.nom = pilule ? nomPilule({ id }) : d.nom;
+    F.icone = c.p ? iconeObjet(id) : pilule ? spriteRamassable('pilule', c.r.apparence) : c.r.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : spriteRamassable(d.famille === 'sceau' ? 'sceau_poche' : 'rouleau', d.couleur);
+    F.type = { passif: 'Objet passif', actif: 'Technique (actif)', talisman: 'Talisman', consommable: d.famille === 'sceau' ? 'Sceau de poche' : 'Rouleau de poche', pilule: 'Pilule de poche' }[d.type] || '';
+    F.lisere = { passif: '#c8a870', actif: '#5aa0e0', talisman: '#c070a0', consommable: '#6ac080', pilule: '#6ac080' }[d.type] || F.lisere;
+    F.etoiles = d.type === 'passif' || d.type === 'actif' ? (d.qualite || 0) : 0;
+    F.nouveau = ['passif', 'actif', 'talisman'].includes(d.type) && !!Progression.profil && !Progression.profil.decouverts.includes(id); // objets suivis par le registre
+    if (!connue) ligne('Effet inconnu : avalez-la pour l’identifier.', '#e8e0f0');
+    else {
+      ligne(d.desc, '#e8e0f0');
+      for (const t of detailsObjet(d)) if (!t.startsWith('Ensemble')) ligne(t, '#b8b0c8', 'point');
+      // ensemble en cours (résonance à 3 objets)
+      const T = d.ensemble && DON.transformations.find(t => t.ensemble === d.ensemble);
+      if (T) {
+        const n = J.acquis.filter(x => INDEX[x] && INDEX[x].ensemble === d.ensemble).length, seuil = T.seuil || 3;
+        if (J.transformations.includes(T.id)) ligne(T.nom + ' : déjà éveillé', '#c8a870', 'ens');
+        else if (J.acquis.includes(id)) ligne(T.nom + ' : ' + n + '/' + seuil + ' (déjà compté)', '#e0c060', 'ens');
+        else ligne(T.nom + ' : ' + n + '/' + seuil + (n + 1 >= seuil ? ', se déclenche !' : ' → ' + (n + 1) + '/' + seuil), '#ffd860', 'ens');
+      }
+      // synergies avec ce que vous portez (déjà réunies : ignorées)
+      const tient = x => J.passifs.includes(x) || (J.actif && J.actif.id === x) || (J.actif2 && J.actif2.id === x);
+      const vues = J.synergiesVues || [], S = [];
+      for (const s of DON.synergies) {
+        if (!s.composants.includes(id) || vues.includes(s.id)) continue;
+        const autres = s.composants.filter(x => x !== id), ont = autres.filter(tient); if (!ont.length) continue;
+        S.push({ s, manque: autres.filter(x => !tient(x)) });
+      }
+      const E = naturesJoueur(J), mien = (d.effets || []).filter(e => e.element).map(e => e.element);
+      if (mien.length) for (const s of DON.synergies) if (s.elements && s.elements.length && !vues.includes(s.id) && s.elements.some(n => mien.includes(n)) && s.elements.every(n => E.has(n) || mien.includes(n)) && !s.elements.every(n => E.has(n))) S.push({ s, manque: [] });
+      S.sort((a, b) => a.manque.length - b.manque.length);
+      for (const o of S.slice(0, 3)) {
+        if (o.manque.length) ligne(o.s.nom + ' : il manque ' + o.manque.map(x => INDEX[x] ? INDEX[x].nom : x).join(', '), '#5ab0a8', 'syn');
+        else ligne('Synergie : ' + o.s.nom + ' — ' + o.s.desc, '#7af0e0', 'syn');
+      }
+    }
+    // ce qu'il remplacerait
+    if (d.type === 'actif' && J.actif && J.actif.id !== id && !(J.deuxActifs && !J.actif2)) ligne('Remplace ' + INDEX[J.actif.id].nom + ' (qui reste sur le piédestal)', '#ffb080');
+    if (d.type === 'talisman' && J.talisman && !(J.maxTalismans > 1 && !J.talisman2)) ligne('Remplace ' + INDEX[J.talisman].nom + ' (qui tombe au sol)', '#ffb080');
+    if ((d.type === 'consommable' || d.type === 'pilule') && J.poches.length >= J.maxPoches) { const q = J.poches[0]; ligne('Remplace ' + (q.type === 'pilule' ? nomPilule(q) : INDEX[q.id].nom) + ' (qui tombe au sol)', '#ffb080'); }
+  }
+  if (c.p) { // piédestal : prix, choix lié, délai
+    const p = c.p;
+    if (p.prix && p.prix.type === 'ryo') { const n = prixRyo(p); ligne('Prix : ' + (n === 0 ? 'gratuit' : n + ' Ryō') + (n < p.prix.n ? ' (au lieu de ' + p.prix.n + ')' : '') + ' — vous : ' + J.ryo, J.ryo >= n ? '#f8e8b0' : '#ff8a7a', 'ryo'); }
+    else if (p.prix && p.prix.type === 'pacte') ligne('Prix du pacte : ' + prixPacteTexte(p), '#ff9ac0', 'pacte');
+    if (p.groupe && G.salle.piedestaux.some(q => q !== p && q.groupe === p.groupe && q.id)) ligne('Choix lié : le prendre fait disparaître les autres', '#a898b8');
+    if (d && d.type === 'actif') { if (J.delaiActif > 0) ligne('Pas d’autre technique avant ' + formatNombre(arrondi(J.delaiActif, 1)) + ' s', '#a898b8'); else if (p.attendSortie) ligne('Éloignez-vous du piédestal, puis revenez pour le prendre', '#a898b8'); }
+  }
+  return F;
+}
+function dessinerFicheProche(g) {
+  const c = cibleFiche(); if (!c) return; const F = ficheObjet(c); if (!F) return;
+  const LU = 236; // largeur utile du texte
+  const rangs = [];
+  for (const l of F.lignes) { const ind = l.puce ? 9 : 0; Police.couper(l.t, LU - ind).forEach((t, k) => rangs.push({ t, c: l.c, puce: k === 0 ? l.puce : null, ind })); }
+  const noms = Police.couper(F.nom, LU - 24), queue = F.etoiles * 7 + (F.nouveau ? Police.largeur('nouveau') + 6 : 0);
+  const w = Math.min(LU, Math.max(132, ...noms.map(t => Police.largeur(t) + 24), Police.largeur(F.type) + 30 + queue, ...rangs.map(r => Police.largeur(r.t) + r.ind))) + 12;
+  const hTete = Math.max(24, noms.length * 10 + 14), h = hTete + rangs.length * 10 + (rangs.length ? 6 : 0);
+  // en haut à gauche ; à droite si l'objet ou le joueur seraient dessous ; en bas à gauche en dernier recours
+  const [cx, cy] = camera(G.salle, G.joueur), J = G.joueur;
+  const couvre = (x, y) => [[c.x - cx, c.y - cy], [J.x - cx, J.y - 20 - cy]].some(([px, py]) => px > x - 12 && px < x + w + 12 && py > y - 16 && py < y + h + 24);
+  let x = 67, y = 40;
+  if (couvre(x, y)) { x = 560 - w; if (couvre(x, y)) { x = 67; y = 326 - h; } }
+  plaqueHUD(g, x, y, w, h, F.lisere);
+  g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x + 4, y + 4, 20, 20);
+  if (F.icone) g.drawImage(F.icone, x + 4 + Math.floor((20 - F.icone.width) / 2), y + 4 + Math.floor((20 - F.icone.height) / 2));
+  noms.forEach((t, k) => Police.ecrire(g, t, x + 28, y + 4 + k * 10, '#fff0d0'));
+  const ty = y + 4 + noms.length * 10; Police.ecrire(g, F.type, x + 28, ty, '#9a90b0');
+  let ex = x + 28 + Police.largeur(F.type) + 5;
+  for (let k = 0; k < F.etoiles; k++) { Police.ecrire(g, '★', ex, ty, '#f0c040'); ex += 7; }
+  if (F.nouveau) Police.ecrire(g, 'nouveau', ex + 3, ty, '#8af07a');
+  if (!rangs.length) return;
+  let yy = y + hTete + 1; g.fillStyle = 'rgba(255,240,220,0.12)'; g.fillRect(x + 4, yy - 3, w - 8, 1);
+  for (const r of rangs) {
+    if (r.puce === 'point') { g.fillStyle = r.c; g.fillRect(x + 8, yy + 3, 2, 2); }
+    else if (r.puce === 'ens') losange(g, x + 9, yy + 3, '#f0c040', 2);
+    else if (r.puce === 'syn') losange(g, x + 9, yy + 3, '#5ae0d0', 2);
+    else if (r.puce === 'ryo') g.drawImage(ICONES.ryo, x + 5, yy - 1);
+    else if (r.puce === 'pacte') { g.fillStyle = '#ff6a8a'; g.fillRect(x + 7, yy + 1, 4, 4); }
+    Police.ecrire(g, r.t, x + 6 + r.ind, yy, r.c); yy += 10;
+  }
 }
 // Détails chiffrés générés depuis les valeurs réelles (jamais un texte figé)
 function detailsObjet(d) {

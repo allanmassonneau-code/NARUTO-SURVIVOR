@@ -10,8 +10,8 @@ const CLES = { reglages: 'lds_reglages', profil: 'lds_profil', partie: 'lds_part
 const REGLAGES_DEFAUT = {
   volMusique: 0.6, volEffets: 0.8, vibrations: 0.7, secousses: 0.7, sansFlash: false, confort: false,
   zoneMorteG: 0.18, zoneMorteD: 0.12, courbeG: 1.0, seuilVisee: 0.5, seuilRepos: 0.35, hysteresisAngle: 12,
-  profilTir: 'stick+croix', chargeAuto: false, afficherStats: true, chiffresDegats: false, echelle: 'entiere', eclairage: true,
-  liaisons: { manette: {}, clavier: {} }, viseeLibreControle: false, version: 1,
+  profilTir: 'stick+boutons', chargeAuto: false, afficherStats: true, chiffresDegats: false, echelle: 'entiere', eclairage: true,
+  liaisons: { manette: {}, clavier: {} }, viseeLibreControle: false, descriptionsAuto: true, version: 2,
 };
 const Stockage = {
   lire(cle) {
@@ -36,6 +36,8 @@ const Stockage = {
 function chargerReglages() {
   const r = Stockage.lire(CLES.reglages) || {};
   const R = Object.assign({}, REGLAGES_DEFAUT, r); R.liaisons = Object.assign({ manette: {}, clavier: {} }, r.liaisons || {});
+  // version 2 : tir aux boutons de face par défaut (comme Isaac) ; l'ancien défaut « stick + croix » bascule
+  if ((r.version || 1) < 2) { if (R.profilTir === 'stick+croix') R.profilTir = 'stick+boutons'; R.version = 2; }
   return R;
 }
 function sauverReglages() { Stockage.ecrire(CLES.reglages, G.reglages); }

@@ -258,7 +258,7 @@ function dessinerPiedestal(g, p, X, Y) {
   if (p.ramassable) { const s = spriteRamassable(p.ramassable); g.drawImage(s, x - Math.round(s.width / 2), y - s.height - 4 + flotte); }
   else {
     const ic = G.etage && G.etage.malediction === 'aveugle' ? iconeObjet('?') : iconeObjet(p.id);
-    const bloque = G.joueur && G.joueur.delaiActif > 0 && INDEX[p.id] && INDEX[p.id].type === 'actif'; // pas encore reprenable
+    const bloque = p.attendSortie || G.joueur && G.joueur.delaiActif > 0 && INDEX[p.id] && INDEX[p.id].type === 'actif'; // pas encore reprenable
     g.drawImage(ellipse(8, 3, 'rgba(0,0,0,0.3)'), x - 8, y - 5);
     if (bloque) g.globalAlpha = 0.4 + 0.15 * Math.sin(G.temps * 8);
     g.drawImage(ic, x - 10, y - 26 + flotte); g.globalAlpha = 1;

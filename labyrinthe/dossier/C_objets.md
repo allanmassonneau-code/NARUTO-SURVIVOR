@@ -137,7 +137,7 @@ Un objet appartient à plusieurs pools avec des poids différents (notation des 
 | Emplacement | Par défaut | Extensions | Remplacement |
 |---|---|---|---|
 | Passifs | illimités | — | ne se déséquipent pas (sauf permutation, rituels) |
-| Actif | 1 | Kakashi : 2 (échange avec le bouton supérieur gauche) | l’ancien actif reste sur le piédestal **avec ses charges** (anti-duplication) ; il ne se reprend qu’après s’être éloigné du piédestal (pas de va-et-vient) ; **2 s** après la prise d’un actif, aucun actif ne se prend ni ne s’achète (les actifs indisponibles sont pâlis) |
+| Actif | 1 | Kakashi : 2 (échange avec le bouton supérieur gauche) | l’ancien actif reste sur le piédestal **avec ses charges** (anti-duplication) ; il ne se reprend qu’après s’être éloigné du piédestal (pas de va-et-vient) ; **3 s** de jeu après la prise d’un actif (décomptées après l’animation), aucun actif ne se prend ni ne s’achète ; un actif touché pendant ce délai ne se prend qu’après s’en être éloigné (rien ne part tout seul) ; les actifs indisponibles sont pâlis et la fiche dit pourquoi |
 | Talisman | 1 | « talisman double » : 2 | l’ancien tombe à vos pieds ; repris seulement après s’en être éloigné |
 | Poche | 1 | « poche double » : 2 | l’ancien consommable tombe à vos pieds ; repris seulement après s’en être éloigné |
 

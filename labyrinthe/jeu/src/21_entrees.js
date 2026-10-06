@@ -29,6 +29,11 @@ const NOMS_ACTIONS = {
   tirHaut: 'Tir haut', tirBas: 'Tir bas', tirGauche: 'Tir gauche', tirDroite: 'Tir droite',
 };
 const DUREE_DEPOT = 0.8; // maintien confirmé pour déposer talisman / poche
+// Profil « stick + boutons » (comme Isaac) : en jeu, les quatre boutons de face tirent dans leur direction
+// (et le stick droit aussi) ; les actions qu'ils portaient passent sur la croix. Les menus ne changent pas.
+const FACE_DIRS = [[BTN.HAUT, 'haut'], [BTN.BAS, 'bas'], [BTN.GAUCHE, 'gauche'], [BTN.DROITE, 'droite']];
+const FACE = FACE_DIRS.map(([b]) => b);
+const LIAISONS_CROIX = { interagir: [BTN.CR_BAS], description: [BTN.CR_HAUT], deposer: [BTN.CR_GAUCHE], retour: [BTN.CR_DROITE] };
 
 const Entrees = {
   touches: new Set(), touchesAvant: new Set(),
@@ -44,6 +49,7 @@ const Entrees = {
   deconnexion: false,
   vibrationsDernier: {},
   reglages: null,
+  enJeu: false, contexteJeu: null, // en jeu (pas dans un menu) : fixé à chaque pas par contexteJeu()
 
   init(reglages) {
     this.reglages = reglages;
@@ -92,7 +98,15 @@ const Entrees = {
   },
   bouton(i) { return !!this.boutons[i]; },
   boutonAvant(i) { return !!this.boutonsAvant[i]; },
-  liaisonsManette(a) { return (this.reglages && this.reglages.liaisons.manette[a]) || LIAISONS_DEFAUT.manette[a] || []; },
+  tirBoutons() { return ((this.reglages && this.reglages.profilTir) || '').includes('boutons'); },
+  // jeu : liaisons en jeu (par défaut, le contexte courant) ; avec le tir aux boutons, une action posée
+  // sur un bouton de face passe sur la croix
+  liaisonsManette(a, jeu = this.enJeu) {
+    const L = (this.reglages && this.reglages.liaisons.manette[a]) || LIAISONS_DEFAUT.manette[a] || [];
+    if (!(jeu && this.tirBoutons())) return L;
+    const reste = L.filter(b => !FACE.includes(b));
+    return reste.length ? reste : (LIAISONS_CROIX[a] || []);
+  },
   liaisonsClavier(a) { return (this.reglages && this.reglages.liaisons.clavier[a]) || LIAISONS_DEFAUT.clavier[a] || []; },
   brutEnfonce(a) {
     for (const b of this.liaisonsManette(a)) if (this.bouton(b)) return true;
@@ -146,6 +160,7 @@ const Entrees = {
   // Appelé une fois par pas de simulation (60 Hz).
   maj(dt) {
     this.lireManettes();
+    this.enJeu = !!(this.contexteJeu && this.contexteJeu());
     const R = this.reglages || {};
     // Levée des blocages : une action consommée redevient utilisable après relâchement.
     for (const a of ACTIONS_JEU) if (this.bloque[a] && !this.brutEnfonce(a)) this.bloque[a] = false;
@@ -165,7 +180,12 @@ const Entrees = {
     const sd = this.traiterStick(this.axes[2], this.axes[3], R.zoneMorteD ?? 0.12, 1.0);
     this.viseeLibre.x = sd.x; this.viseeLibre.y = sd.y;
     let dir = null, source = null;
-    if (profil.includes('croix')) {
+    if (profil.includes('boutons') && this.enJeu) { // la dernière direction enfoncée garde la priorité
+      for (const [b, d] of FACE_DIRS) if (this.bouton(b) && !this.boutonAvant(b)) this.faceDerniere = d;
+      const tenues = FACE_DIRS.filter(([b]) => this.bouton(b)).map(([, d]) => d);
+      if (tenues.length) { dir = tenues.includes(this.faceDerniere) ? this.faceDerniere : tenues[0]; source = 'boutons'; }
+    }
+    if (!dir && profil.includes('croix')) {
       const cr = [[BTN.CR_HAUT, 'haut'], [BTN.CR_BAS, 'bas'], [BTN.CR_GAUCHE, 'gauche'], [BTN.CR_DROITE, 'droite']];
       // la dernière direction enfoncée de la croix garde la priorité
       for (const [b, d] of cr) if (this.bouton(b) && !this.boutonAvant(b)) this.croixDerniere = d;
@@ -246,6 +266,14 @@ const Entrees = {
     if (code.startsWith('Key')) return code.slice(3);
     if (code.startsWith('Digit')) return code.slice(5);
     return code;
+  },
+  // Commandes de tir à la manette selon le profil (une direction, ou les quatre)
+  libelleTirManette(d) {
+    const p = (this.reglages && this.reglages.profilTir) || 'stick+croix', L = [];
+    if (p.includes('stick')) L.push('Stick droit');
+    if (p.includes('boutons')) L.push(d ? this.nomBouton(FACE_DIRS.find(x => x[1] === d)[0]) : this.glyphes === 'xbox' || this.glyphes === 'nintendo' ? [BTN.BAS, BTN.DROITE, BTN.GAUCHE, BTN.HAUT].map(b => this.nomBouton(b)).join(' ') : 'boutons de face');
+    if (p.includes('croix')) L.push(d ? this.nomBouton({ haut: BTN.CR_HAUT, bas: BTN.CR_BAS, gauche: BTN.CR_GAUCHE, droite: BTN.CR_DROITE }[d]) : 'Croix');
+    return L.join(' ou ');
   },
   // Libellé court de la première liaison d'une action pour le périphérique courant.
   libelle(a) {

@@ -83,7 +83,8 @@ function majPiedestaux(dt) {
     if (p.attendSortie) { if (d > 24) p.attendSortie = false; continue; }
     if (d > 14 || p.apparu > 0) continue;
     // après la prise d'un actif, aucun autre actif ne se prend ni ne s'achète pendant DELAI_ACTIF
-    if (J.delaiActif > 0 && INDEX[p.id] && INDEX[p.id].type === 'actif') continue;
+    // touché pendant ce délai, il ne se prendra qu'après s'en être éloigné (rien ne part tout seul à la fin du délai)
+    if (J.delaiActif > 0 && INDEX[p.id] && INDEX[p.id].type === 'actif') { p.attendSortie = true; continue; }
     if (p.prix) { G.achatPropose = p; continue; }       // un achat se confirme (bouton d'interaction)
     if (G.transition || G.enAnimationObjet) continue;
     prendrePiedestal(p);
@@ -122,7 +123,7 @@ function acheter(p) {
   if (p.ramassable) { const r = creerRamassable(p.ramassable, J.x, J.y, { immobile: true }); r.age = 1; collecter(r, J); if (!r.pris) { r.x = p.x; r.y = p.y + 14; } p.id = null; retirerPiedestalVide(); return; }
   p.prix = null; prendrePiedestal(p);
 }
-const DELAI_ACTIF = 2; // s : pas de second actif juste après en avoir pris un (échanges en boucle)
+const DELAI_ACTIF = 3; // s de jeu après l'animation de prise : pas de second actif juste après un premier (échanges en boucle)
 function prendrePiedestal(p) {
   const J = G.joueur, s = G.salle; const d = INDEX[p.id]; if (!d) return;
   // choix liés : prendre l'un fait disparaître les autres

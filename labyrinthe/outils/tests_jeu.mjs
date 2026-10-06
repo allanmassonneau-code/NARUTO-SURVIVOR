@@ -139,8 +139,9 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       if (J.talisman !== tal[1].id || !lache) out.ko.push('prise de talisman sans dépôt de l’ancien');
       else { for (let i = 0; i < 30; i++) { J.x = lache.x - 16 + i; T.pas(1); } if (J.talisman !== tal[1].id) out.ko.push('talisman lâché repris en passant dessus (va-et-vient)'); }
     } catch (err) { out.ko.push('échanges ' + String(err.stack || err).slice(0, 200)); }
-    // Délai de 2 s après la prise d'un actif : ni l'actif reposé (même en s'éloignant puis revenant aussitôt)
-    // ni un autre actif voisin ne se prennent ; le délai écoulé, le second se prend normalement
+    // Délai de 3 s après la prise d'un actif, décompté après l'animation : ni l'actif reposé (même en s'éloignant
+    // puis revenant aussitôt) ni un autre actif voisin ne se prennent ; touché pendant le délai, un actif ne part
+    // pas tout seul à la fin du délai : il faut s'en éloigner puis revenir
     try {
       L.nouvellePartie({ perso: 'CHR_001', code: 'ACTG2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
       const J = G.joueur, S = G.salle, A = L.DON.objets.filter(x => x.type === 'actif');
@@ -148,11 +149,14 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       const p = L.poserPiedestal(S, x0, y0 - 4, A[1].id), q = L.poserPiedestal(S, x0 + 70, y0 - 4, A[2].id);
       let k = 0; while (J.actif.id !== A[1].id && k++ < 60) T.pas(1);
       let f = 0; while (J.etat !== 'normal' && f++ < 90) T.pas(1); // fin de l'animation de prise (≈ 0,8 s)
+      if (!(J.delaiActif > 2.9)) out.ko.push('délai d’actif entamé pendant l’animation de prise (' + J.delaiActif.toFixed(2) + ' s restantes)');
       J.x = x0 + 40; T.pas(3); J.x = x0; J.y = y0; T.pas(3);
-      if (J.actif.id !== A[1].id) out.ko.push('actif reposé repris pendant le délai de 2 s');
+      if (J.actif.id !== A[1].id) out.ko.push('actif reposé repris pendant le délai');
       J.x = q.x; J.y = q.y + 4; T.pas(3);
-      if (J.actif.id !== A[1].id) out.ko.push('second actif pris pendant le délai de 2 s');
-      T.pas(90);
+      if (J.actif.id !== A[1].id) out.ko.push('second actif pris pendant le délai');
+      T.pas(190);
+      if (J.actif.id !== A[1].id) out.ko.push('actif pris tout seul à la fin du délai, sans bouger');
+      J.x = q.x + 40; T.pas(3); J.x = q.x; J.y = q.y + 4; T.pas(3);
       if (J.actif.id !== A[2].id || q.id !== A[1].id) out.ko.push('second actif impossible à prendre une fois le délai écoulé');
     } catch (err) { out.ko.push('délai actif ' + String(err.stack || err).slice(0, 200)); }
     return out;
@@ -294,6 +298,14 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       pad.axes = [0, 0, 0.62, 0.6]; L.Entrees.maj(1 / 60); const d1 = L.Entrees.visee.dir; pad.axes = [0, 0, 0.6, 0.62]; L.Entrees.maj(1 / 60); const d2 = L.Entrees.visee.dir;
       if (d1 !== d2) out.ko.push('hystérésis : oscillation ' + d1 + '/' + d2);
       pad.axes = [0, 0, 0, 0]; L.Entrees.maj(1 / 60); if (L.Entrees.visee.dir) out.ko.push('le tir ne s’arrête pas au centre');
+      // profil par défaut (comme Isaac) : en jeu, Y tire vers le haut ; interagir passe sur la croix, les menus gardent A
+      pad.buttons[3].pressed = true; let viseY = null; for (let i = 0; i < 30; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); viseY = viseY || L.Entrees.visee.dir; }
+      pad.buttons[3].pressed = false; for (let i = 0; i < 2; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); }
+      if (viseY !== 'haut' || !L.G.proj.some(p => p.proprio === 'joueur' && p.vy < -1)) out.ko.push('les boutons de face ne tirent pas en jeu (visée ' + viseY + ')');
+      if (!L.Entrees.liaisonsManette('interagir', true).includes(13) || !L.Entrees.liaisonsManette('interagir', false).includes(0)) out.ko.push('interagir : croix ↓ en jeu, A dans les menus attendus');
+      L.G.reglages.profilTir = 'stick+croix'; pad.buttons[3].pressed = true; for (let i = 0; i < 3; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); }
+      if (L.Entrees.visee.dir) out.ko.push('profil stick + croix : Y tire encore'); pad.buttons[3].pressed = false; L.G.reglages.profilTir = 'stick+boutons';
+      for (let i = 0; i < 2; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); }
       // consommation : la validation qui ferme un menu ne pose pas d'explosif
       const ex = L.G.joueur.explosifs; appui(9); pad.buttons[5].pressed = true; appui(1); pad.buttons[5].pressed = false; for (let i = 0; i < 3; i++) { L.Entrees.maj(1 / 60); L.Scenes.maj(1 / 60); L.Entrees.finPas(); }
       if (L.G.joueur.explosifs !== ex) out.ko.push('explosif posé en fermant un menu');
@@ -476,6 +488,29 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       if (L.santeTotale(J.sante) < pv0) out.ko.push('feu : brûlé à 12 px de la flamme');
       for (let i = 0; i < 10; i++) { J.x = fx * 32; J.y = fy * 32 + 16; T.pas(1, []); }
       if (!(L.santeTotale(J.sante) < pv0)) out.ko.push('feu : pas de brûlure au contact de la flamme'); }
+    // Charge (Sasuke) : la tête suit la visée pendant la charge ; une charge tenue traverse la porte et part à la sortie
+    L.nouvellePartie({ perso: 'CHR_002', code: 'CHRG2345' }); L.Scenes.aller(L.SceneJeu); T.pas(200);
+    { const J = G.joueur; T.pas(25, ['ArrowRight']); const c0 = J.tir.charge;
+      T.pas(5, ['ArrowUp']); if (J.dirTete !== 'haut' || !(J.tir.charge > c0)) out.ko.push('charge : tête ' + J.dirTete + ', charge ' + J.tir.charge.toFixed(2) + ' (la tête doit suivre la visée, la charge continuer)');
+      const sv = Object.values(G.etage.salles).find(x => x.type === 'combat'); sv.visitee = true; sv.ennemisDef = [];
+      L.demarrerTransition('droite', sv.id); for (let i = 0; i < 40 && G.transition; i++) T.pas(1, ['ArrowUp']); T.pas(2, ['ArrowUp']);
+      if (!(G.salle === sv && J.tir.charge > c0)) out.ko.push('charge perdue en changeant de salle (' + J.tir.charge.toFixed(2) + ')');
+      const n0 = G.proj.filter(p => p.proprio === 'joueur').length; T.pas(2, []);
+      if (!(G.proj.filter(p => p.proprio === 'joueur').length > n0)) out.ko.push('charge gardée mais pas déclenchée au relâchement'); }
+    // Fiches d'objets (façon « External Item Descriptions ») : objet proche, synergie, ensemble, remplacement, prix
+    L.nouvellePartie({ perso: 'CHR_001', code: 'FICH2345' }); L.Scenes.aller(L.SceneJeu); T.pas(200);
+    { const J = G.joueur, S = G.salle; S.piedestaux = []; S.ramassables = [];
+      const p = L.poserPiedestal(S, J.x, J.y - 50, 'PSV_001'); p.apparu = 0; J.passifs.push('PSV_002'); J.acquis.push('PSV_002'); T.pas(2, []);
+      const c = L.cibleFiche(), F = c && L.ficheObjet(c), txt = F ? F.lignes.map(l => l.t).join(' | ') : '';
+      if (!F || F.nom !== L.INDEX.PSV_001.nom) out.ko.push('fiche : objet proche non décrit');
+      else { if (!/Synergie : Rasengan jumeau/.test(txt)) out.ko.push('fiche : synergie avec un objet porté absente'); if (!/0\/3 → 1\/3/.test(txt)) out.ko.push('fiche : progression d’ensemble absente (' + txt.slice(0, 120) + ')'); }
+      p.id = 'ACT_004'; J.actif = { id: 'ACT_003', charges: 1 }; p.prix = { type: 'ryo', n: 15 }; T.pas(1, []);
+      const t2 = L.ficheObjet(L.cibleFiche()).lignes.map(l => l.t).join(' | ');
+      if (!/Remplace Chidori/.test(t2) || !/Prix : 15 Ryō/.test(t2)) out.ko.push('fiche : remplacement ou prix absents (' + t2.slice(0, 160) + ')');
+      J.x += 200; T.pas(1, []); if (L.cibleFiche()) out.ko.push('fiche affichée loin de tout objet');
+      const r = L.creerRamassable('pilule', J.x + 20, J.y, { immobile: true }); r.age = 1; T.pas(1, []);
+      const F3 = L.ficheObjet(L.cibleFiche()); if (!F3 || !/Pilule inconnue/.test(F3.nom) || F3.lignes.some(l => l.t === L.INDEX[r.id].desc)) out.ko.push('fiche : une pilule inconnue révèle son effet');
+      G.reglages.descriptionsAuto = true; L.Scenes.rendre(L.Rendu.gi); }
     return out;
   });
 

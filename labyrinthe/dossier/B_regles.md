@@ -11,24 +11,27 @@ Les boutons sont désignés par **position** (disposition « standard » de l’
 | Action logique | Position | Xbox | PlayStation | Nintendo | Générique | Clavier (secours) |
 |---|---|---|---|---|---|---|
 | Déplacement analogique | Stick gauche | Stick G | Stick G | Stick G | Stick G | W A S D (Z Q S D affichés en AZERTY) |
-| Direction de tir / tir maintenu | Stick droit | Stick D | Stick D | Stick D | Stick D | Flèches |
-| Tir, profil secondaire | Croix directionnelle | Croix | Croix | Croix | Croix | — |
+| Direction de tir / tir maintenu | Stick droit **et boutons de face** (profil par défaut) | Stick D, Y A X B | Stick D, Triangle Croix Carré Rond | Stick D, X B Y A | Stick D, faces | Flèches |
+| Tir, profil « stick + croix » | Croix directionnelle | Croix | Croix | Croix | Croix | — |
 | Technique scellée (actif) | Gâchette gauche | LT | L2 | ZL | Gâchette G | Espace |
 | Poser un parchemin explosif | Bouton supérieur droit | RB | R1 | R | Haut droit | E |
 | Utiliser la poche | Gâchette droite | RT | R2 | ZR | Gâchette D | Q (A en AZERTY) |
 | Interagir / confirmer | Face bas | A | Croix | B | Face bas | Entrée ou F |
 | Retour / annuler | Face droite | B | Rond | A | Face droite | Échap (ou Retour arrière) |
-| Description d’un objet proche | Face haut | Y | Triangle | X | Face haut | R |
+| Description d’un objet proche (si la fiche automatique est coupée) | Face haut | Y | Triangle | X | Face haut | R |
 | Carte étendue (maintien) | Vue | View | Create | − | Vue | Tab |
 | Pause | Menu | Menu | Options | + | Menu | Échap ou P |
 | Échanger (actifs, marionnettes) | Bouton supérieur gauche | LB | L1 | L | Haut gauche | Maj |
 | Déposer talisman / poche | Face gauche, **maintien 0,8 s** | X | Carré | Y | Face gauche | Ctrl (maintien) |
 
+**En jeu, avec le profil par défaut** (« stick + boutons », comme *Isaac*), les quatre boutons de face tirent (haut, bas, gauche, droite) : les actions qu’ils portent passent sur la croix — interagir et confirmer ↓, description ↑, déposer ← (maintien), retour →. Les menus gardent la table ci-dessus (A confirme, B revient).
+
 Les gâchettes analogiques s’activent au-delà de 0,35. Le type de manette est détecté par l’identifiant (Xbox, PlayStation, Nintendo, sinon générique) ; les glyphes affichés suivent le **dernier périphérique utilisé**. Toutes les actions sont réassignables dans *Options → Commandes* (manette et clavier séparément) ; les liaisons sont stockées dans les réglages, pas dans le profil ni dans la partie.
 
 ### B1.2 Profils de tir
 
-- **Stick + croix** (défaut) : stick droit et croix tirent tous deux ; si les deux sont utilisés, la croix l’emporte (entrée numérique explicite).
+- **Stick + boutons** (défaut, comme *Isaac*) : stick droit et boutons de face tirent tous deux ; la dernière direction enfoncée l’emporte ; en jeu, interagir, description, déposer et retour passent sur la croix ; les menus ne changent pas. Les réglages enregistrés avec l’ancien défaut (stick + croix) passent à ce profil.
+- **Stick + croix** : stick droit et croix tirent ; si les deux sont utilisés, la croix l’emporte (entrée numérique explicite) ; les boutons de face gardent leurs actions.
 - **Stick seul** ou **croix seule** : réglables. Le profil croix ne crée aucun conflit : en jeu, la croix n’a pas d’autre action ; dans les menus, elle navigue.
 - Aucune action de combat essentielle n’exige de lâcher les deux sticks : actif, explosif et poche sont sur les gâchettes et boutons supérieurs.
 
@@ -39,8 +42,8 @@ Les gâchettes analogiques s’activent au-delà de 0,35. Le type de manette est
 ### B1.4 Attaques chargées, salles, pause
 
 - **Charge** : maintenir une direction charge ; la jauge apparaît sous le personnage. *Orbe* et *rayon* partent au relâchement si la charge est complète ; *charge libre* (Sasuke) part au relâchement quelle que soit la charge (×0,5 à ×3). Relâcher avant 20 % annule sans tirer pour les formes rendues « chargeables » par un objet secondaire. Option d’accessibilité *Charge automatique* : l’attaque part seule à pleine charge, au même cycle minimal.
-- **Annulation** : retour du stick au centre avant la fin de la charge (orbe, rayon) ; changer de direction conserve la charge et vise la nouvelle direction.
-- **Changement de salle** : on franchit une porte ouverte en la touchant ; une aide d’alignement attire doucement vers l’axe de la porte quand on pousse vers elle (3 tuiles de portée, ±18 px). Les charges en cours sont perdues ; les projectiles ne franchissent pas les portes.
+- **Annulation** : retour du stick au centre avant la fin de la charge (orbe, rayon) ; changer de direction conserve la charge et vise la nouvelle direction (la tête du personnage la suit pendant la charge).
+- **Changement de salle** : on franchit une porte ouverte en la touchant ; une aide d’alignement attire doucement vers l’axe de la porte quand on pousse vers elle (3 tuiles de portée, ±18 px). Une charge tenue traverse la porte : elle se poursuit dans la salle suivante et part au relâchement (de même pendant la prise d’un objet) ; les projectiles ne franchissent pas les portes.
 - **Pause** : immédiate (Menu ou Échap), simulation gelée (y compris invulnérabilités, télégraphes et minuteries). La reprise consomme les entrées.
 
 ## B2. Sticks et comportements d’entrée (brief §06)

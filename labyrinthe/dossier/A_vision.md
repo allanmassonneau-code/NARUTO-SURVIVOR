@@ -23,7 +23,7 @@ Le joueur comprend les commandes en quelques secondes (bouger, viser, tirer, pos
 
 | Décision du brief (§02) | Application dans le jeu | Module |
 |---|---|---|
-| Visée et tir volontaires, pas d’auto-ciblage | Stick droit (ou croix, ou flèches) ; le retour au centre arrête le tir. La visée libre à 360° n’existe que pour la sphère contrôlée (option `viseeLibreControle`). | `21_entrees.js`, `34_tir.js` |
+| Visée et tir volontaires, pas d’auto-ciblage | Stick droit ou boutons de face, comme *Isaac* (ou croix, ou flèches) ; le retour au centre arrête le tir. La visée libre à 360° n’existe que pour la sphère contrôlée (option `viseeLibreControle`). | `21_entrees.js`, `34_tir.js` |
 | Déplacement libre, tir cardinal | Quantification en 4 directions avec hystérésis de 12° ; les objets modifient la géométrie (éventail, croix, arrière, orbite). | `21_entrees.js`, `34_tir.js` |
 | Pas d’expérience ni de montée de niveau | Aucune ; les ennemis ne lâchent que des ressources selon les tables de salle. | `38_monde.js` |
 | Puissance par objets, échanges, transformations, exploration | Passifs illimités, 1 actif, 1 talisman, 1 poche (extensibles par objets). | `37_objets.js` |

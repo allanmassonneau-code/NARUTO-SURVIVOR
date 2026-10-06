@@ -106,7 +106,7 @@ function entrerSalle(id, depuisDir) {
     else { const [cx, cy] = centreSalle(s); J.x = cx; J.y = cy; }
   } else if (G.positionEntree) { J.x = G.positionEntree.x; J.y = G.positionEntree.y; G.positionEntree = null; }
   else { const [cx, cy] = centreSalle(s); J.x = cx; J.y = cy + 16; }
-  J.vx = 0; J.vy = 0; J.tir.charge = 0; // une charge ne traverse pas les portes
+  J.vx = 0; J.vy = 0; // une charge tenue traverse la porte (relâcher la visée dans la nouvelle salle la déclenche)
   // zone sûre : jamais sur une fosse ou un obstacle
   if (solidePour(s, Math.floor(J.x / TUILE), Math.floor(J.y / TUILE), J.vol ? 'vol' : 'marche')) { const [tx, ty] = tuileLibreProche(s, J.x, J.y); [J.x, J.y] = centreTuile(tx, ty); }
   for (const f of J.familiers) { f.x = J.x + (Math.random() - 0.5) * 12; f.y = J.y + 6; f.vx = 0; f.vy = 0; }

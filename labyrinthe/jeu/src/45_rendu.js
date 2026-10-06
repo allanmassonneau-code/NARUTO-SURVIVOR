@@ -487,7 +487,7 @@ function dessinerObstacle(g, t, tx, ty, X, Y, D, s) {
 function dessinerConsignes(g, s, X, Y) {
   const E = Entrees, pad = E.dernierPeripherique === 'manette', [cx, cy] = centreSalle(s);
   const dep = pad ? 'Stick gauche' : ['haut', 'gauche', 'bas', 'droite'].map(a => E.libelle(a)).join(' ');
-  const tir = pad ? 'Stick droit' : ['tirHaut', 'tirGauche', 'tirBas', 'tirDroite'].map(a => E.libelle(a)).join(' ');
+  const tir = pad ? E.libelleTirManette() : ['tirHaut', 'tirGauche', 'tirBas', 'tirDroite'].map(a => E.libelle(a)).join(' ');
   const L = [[cx - 120, cy - 30, 'Se déplacer', dep], [cx + 120, cy - 30, 'Lancer', tir], [cx - 120, cy + 34, 'Technique', E.libelle('actif')], [cx + 120, cy + 34, 'Parchemin explosif', E.libelle('explosif')]];
   g.globalAlpha = 0.4;
   for (const [x, y, t, k] of L) { Police.ecrire(g, t, X(x), Y(y), '#e8dcc0', { a: 'c' }); Police.ecrire(g, k, X(x), Y(y + 11), '#fff4d8', { a: 'c' }); }

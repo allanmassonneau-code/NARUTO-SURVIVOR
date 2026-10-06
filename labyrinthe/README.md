@@ -11,19 +11,19 @@ Ouvrez **[`jeu/index.html`](jeu/index.html)** dans un navigateur récent (Chrome
 | Action | Manette | Clavier |
 |---|---|---|
 | Se déplacer | stick gauche | Z Q S D (W A S D en QWERTY) |
-| Tirer (quatre directions) | stick droit | flèches |
+| Tirer (quatre directions) | stick droit ou A B X Y, comme dans Isaac | flèches |
 | Technique (actif) | LT | Espace |
 | Explosif | RB | E |
 | Consommable de poche | RT | Q (A en AZERTY) |
-| Interagir, acheter, valider | A | Entrée ou F |
-| Retour | B | Retour arrière |
-| Description d'un objet proche | Y | R |
+| Interagir, acheter | croix ↓ (A dans les menus) | Entrée ou F |
+| Retour | B dans les menus | Retour arrière |
+| Description d'un objet proche | automatique, comme le mod External Item Descriptions d'Isaac | automatique |
 | Échanger d'actif (Kakashi, Kankurō altéré) | LB | Maj |
-| Déposer talisman ou consommable (maintenir) | X | Ctrl |
+| Déposer talisman ou consommable (maintenir) | croix ← | Ctrl |
 | Carte | Vue | Tab |
 | Pause | Menu | Échap ou P |
 
-Toutes les touches se reconfigurent (Options → Commandes). Réglages de zones mortes, vibrations, secousses, mode confort, « sans flash » et éclairage dynamique dans les Options.
+Le profil de tir se change dans Options (stick + boutons par défaut, ou stick + croix, où les boutons de face gardent interagir, description et déposer). Toutes les touches se reconfigurent (Options → Commandes). Réglages de zones mortes, vibrations, secousses, mode confort, « sans flash » et éclairage dynamique dans les Options.
 
 ## Ce qu'il y a dans le jeu
 

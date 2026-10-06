@@ -207,7 +207,8 @@ const SceneOptions = {
       curseur('Courbe du déplacement', () => R.courbeG, v => { R.courbeG = v; maj(); }, 0.6, 2, 0.1, v => formatNombre(v)),
       curseur('Seuil de visée', () => R.seuilVisee, v => { R.seuilVisee = v; if (R.seuilRepos > v - 0.05) R.seuilRepos = arrondi(v - 0.1, 2); maj(); }, 0.25, 0.9, 0.05, v => formatNombre(v)),
       curseur('Hystérésis diagonale', () => R.hysteresisAngle, v => { R.hysteresisAngle = v; maj(); }, 0, 25, 1, v => v + '°'),
-      choix('Profil de tir', [['stick+croix', 'Stick droit + croix'], ['stick', 'Stick droit'], ['croix', 'Croix directionnelle']], () => R.profilTir, v => { R.profilTir = v; maj(); }, 'La croix directionnelle n’est utilisée par aucune autre action en jeu.'),
+      choix('Profil de tir', [['stick+boutons', 'Stick + boutons (Isaac)'], ['stick+croix', 'Stick droit + croix'], ['stick', 'Stick droit'], ['croix', 'Croix directionnelle']], () => R.profilTir, v => { R.profilTir = v; maj(); }, 'Boutons : en jeu, les quatre boutons de face tirent comme dans Isaac ; interagir, description et déposer passent sur la croix. Les menus ne changent pas.'),
+      bascule('Descriptions automatiques', () => R.descriptionsAuto !== false, v => { R.descriptionsAuto = v; maj(); }, 'Comme le mod « External Item Descriptions » d’Isaac : la fiche d’un objet proche s’affiche d’elle-même. Sinon, maintenir le bouton Description.'),
       bascule('Tir chargé automatique', () => R.chargeAuto, v => { R.chargeAuto = v; maj(); }, 'À pleine charge, l’attaque part seule tant que la visée est maintenue (même cycle minimal).'),
       bascule('Statistiques à l’écran', () => R.afficherStats, v => { R.afficherStats = v; maj(); }),
       bascule('Chiffres de dégâts', () => R.chiffresDegats, v => { R.chiffresDegats = v; maj(); }),
@@ -215,7 +216,7 @@ const SceneOptions = {
       { label: 'Commandes…', action: () => Scenes.empiler(SceneCommandes) },
       { label: 'Plein écran', action: () => { try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch (e) { /* refusé */ } } },
       { label: 'Profil…', action: () => Scenes.empiler(SceneProfil) },
-    ]);
+    ], { visibles: 18 });
   },
   maj() { this.menu.maj(); if (Entrees.menuRetour()) { Son.jouer('annuler'); Scenes.depiler(); } },
   rendre(g, actif) { if (Scenes.pile[0] === SceneJeu) { g.fillStyle = 'rgba(6,4,10,0.6)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); } else fondMenu(g); cadreMenu(g, 110, 6, 420, 334, 'Options'); this.menu.rendre(g, 130, 34, 380, actif); aideBoutons(g, [['interagir', 'Modifier'], ['retour', 'Retour']]); },
@@ -251,7 +252,7 @@ const SceneCommandes = {
     fondMenu(g); cadreMenu(g, 80, 6, 480, 334, 'Commandes');
     this.actions.forEach((a, k) => { const y = 34 + k * 14; const f = k === this.i; if (f) { g.fillStyle = 'rgba(240,200,120,0.14)'; g.fillRect(94, y - 3, 452, 14); }
       Police.ecrire(g, NOMS_ACTIONS[a], 100, y, f ? '#fff4d8' : '#c8c0d8');
-      const m = ACTIONS_JEU.includes(a) ? Entrees.liaisonsManette(a).map(b => Entrees.nomBouton(b)).join(', ') : (a.startsWith('tir') ? 'Stick droit / croix' : 'Stick gauche');
+      const m = ACTIONS_JEU.includes(a) ? Entrees.liaisonsManette(a, true).map(b => Entrees.nomBouton(b)).join(', ') : (a.startsWith('tir') ? Entrees.libelleTirManette({ tirHaut: 'haut', tirBas: 'bas', tirGauche: 'gauche', tirDroite: 'droite' }[a]) : 'Stick gauche');
       Police.ecrire(g, m, 420, y, '#a8a0b8', { a: 'd' }); Police.ecrire(g, Entrees.liaisonsClavier(a).map(c => Entrees.nomTouche(c)).join(', '), 540, y, '#a8a0b8', { a: 'd' }); });
     if (this.attente) Police.ecrire(g, 'Appuyez sur ' + (this.attente.periph === 'manette' ? 'un bouton de la manette' : 'une touche') + ' pour « ' + NOMS_ACTIONS[this.attente.a] + ' »', 320, 322, '#ffe0a0', { a: 'c' });
     aideBoutons(g, [['interagir', 'Réassigner'], ['description', 'Défaut'], ['retour', 'Retour']]);

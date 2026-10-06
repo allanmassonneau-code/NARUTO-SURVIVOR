@@ -14,7 +14,6 @@ const G = {
 // ── Ordre de mise à jour d'un pas ──
 function majJeu(dt) {
   const J = G.joueur; const P = G.partie;
-  if (J && J.delaiActif > 0) J.delaiActif -= dt; // délai après la prise d'un actif (animation comprise)
   // bannières : minutées par la simulation (pas par l'affichage)
   if (!bannieresRetenues()) {
     if (!G.banniere && G.banniereFile && G.banniereFile.length) G.banniere = G.banniereFile.shift();
@@ -33,7 +32,7 @@ function majJeu(dt) {
   P.temps += dt; G.temps += dt;
   // pouls à santé basse (un cœur ou moins quand on en a eu davantage), seulement en combat
   if (santeTotale(J.sante) <= 2 && J.sante.cont.length * 2 + J.sante.prot.length > 3 && G.salle.combat && J.etat !== 'mort') { G.pouls = (G.pouls || 0) - dt; if (G.pouls <= 0) { G.pouls = 1.15; Son.jouer('battement', 0.9); } } else G.pouls = 0;
-  if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
+  if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (J.delaiActif > 0) J.delaiActif -= dt; // délai d'actif : hors animation de prise if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
   if (Entrees.vientEnfonce('explosif')) poserExplosif();
   if (Entrees.vientEnfonce('actif')) utiliserActif();
   if (Entrees.vientEnfonce('poche')) utiliserPoche();
@@ -75,6 +74,7 @@ const SceneJeu = {
     if (G.notifications.length && !banniereVisible() && !Entrees.enfonce('carte')) { const n = G.notifications[0]; plaqueHUD(g, 420, 76, 210, 34, '#c8a040'); Police.ecrire(g, n.titre, 428, 81, '#f0c040'); Police.ecrire(g, n.nom, 428, 93, '#fff0d0'); }
   },
 };
+Entrees.contexteJeu = () => Scenes.courante() === SceneJeu; // liaisons « en jeu » (tir aux boutons de face)
 const ScenePause = {
   entrer() { this.menu = menuListe([
     { label: 'Reprendre', action: () => Scenes.depiler() },
@@ -101,7 +101,7 @@ const ScenePause = {
       Police.ecrire(g, 'pacte ' + pc(O.pacte) + ' · sanctuaire ' + pc(O.sanctuaire), 50, 286, '#c8a0b0');
       Police.paragraphe(g, O.detail.map(([n, v]) => n + ' ' + (v >= 1 ? '' : '+' + pc(v))).join(' · ') + (P.pactesAchetes ? ' · pacte conclu : plus de sanctuaire' : P.pactesRefuses ? ' · pactes refusés : ' + P.pactesRefuses : ''), 50, 298, 222, '#8a8098');
     }
-    aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Reprendre']]);
+    if (actif) aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Reprendre']]); // sous un autre menu : ses propres consignes
   },
 };
 const SceneInventaire = {
@@ -187,5 +187,5 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
