@@ -17,7 +17,7 @@
 
 ## H1. Architecture
 
-**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 853 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 44 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture.
+**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 1 060 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 47 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture. Seule exception, facultative : un pack de sons personnel `sons_perso.js` posé à côté du jeu (fabriqué avec `outils/pack_sons.html`, exclu du dépôt) remplace les effets synthétisés qu'il nomme ; absent, rien ne change.
 
 **Couches** (un module ne dépend que des couches précédentes, sauf la boucle de jeu qui les orchestre) :
 
@@ -25,7 +25,7 @@
 |---|---|---|
 | Noyau | `00_noyau` | constantes (tuile 32 px, salle 13×7, 60 Hz), utilitaires, hasard (sfc32 + cyrb128), codes de mission, index des données |
 | Données | `10`–`19` | données **déclaratives** : personnages, objets, actifs, poche, ennemis, boss, salles, étages, progression ; validées hors navigateur par `outils/catalogues.mjs` |
-| Présentation de base | `20`–`29` | police bitmap, entrées (manette, clavier), audio synthétisé, outils pixel, sprites, dessin, effets |
+| Présentation de base | `20`–`29` | police bitmap, entrées (manette, clavier), audio synthétisé (et pack de sons personnel facultatif), outils pixel, sprites (héros, shinobi ennemis et créatures peints par volumes, objets, décor, sols), dessin, effets |
 | Simulation | `30`–`38` | salle et collisions, génération d'étage, santé, pipeline de tir, ennemis, joueur, objets et profil, monde (étages, salles, portes, ramassables) |
 | Systèmes | `39`–`44` | salles spéciales et économie, actifs, familiers, événements, boss et mécaniques signatures, variantes d'étage |
 | Interface | `45`–`49` | rendu, lumière et ambiance, HUD, décor des menus, menus, sauvegardes, progression durable |

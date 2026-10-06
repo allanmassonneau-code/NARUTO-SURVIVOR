@@ -2,6 +2,9 @@
 // Audio original, entièrement synthétisé (WebAudio) : effets à budget de voix,
 // priorités et variations ; musique par couches (ambiance + percussions de combat),
 // gammes japonaises (in / yo) et motifs générés depuis une graine fixe par thème.
+// Pack de sons personnel (facultatif) : un fichier sons_perso.js posé à côté du jeu,
+// fabriqué avec outils/pack_sons.html à partir de ses propres fichiers, remplace les
+// effets qu'il nomme. Il reste sur la machine du joueur : jamais publié avec le jeu.
 // ═══════════════════════════════════════════════════════════════════════════
 
 const Son = {
@@ -30,7 +33,20 @@ const Son = {
     const n = this.ctx.sampleRate * 1.5, b = this.ctx.createBuffer(1, n, this.ctx.sampleRate), d = b.getChannelData(0);
     let s = 12345; for (let i = 0; i < n; i++) { s = (s * 1103515245 + 12345) & 0x7fffffff; d[i] = (s / 0x3fffffff) - 1; }
     this.bruit = b; this.actif = true;
+    this.chargerPack();
     Musique.init(this);
+  },
+  // window.SONS_PERSO = { nom: 'data:audio/…;base64,…' | [variantes…], _volume: { nom: 0…2 } }
+  pack: null, packVol: {},
+  chargerPack() {
+    const P = window.SONS_PERSO; if (!P || typeof P !== 'object' || !this.ctx) return;
+    this.pack = {}; this.packVol = P._volume || {};
+    for (const [nom, v] of Object.entries(P)) {
+      if (nom[0] === '_') continue; const L = this.pack[nom] = [];
+      for (const src of (Array.isArray(v) ? v : [v])) {
+        try { const bin = atob(String(src).slice(String(src).indexOf(',') + 1)), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); this.ctx.decodeAudioData(u.buffer).then(b => L.push(b)).catch(() => {}); } catch (e) { /* entrée illisible : son synthétisé */ }
+      }
+    }
   },
   suspendu() { return !this.ctx || this.ctx.state !== 'running'; },
   appliquerVolumes() {
@@ -85,6 +101,12 @@ const Son = {
     }
     this.dernier[nom] = t;
     const d = this.busEffets, v = vol, h = hauteur * (0.94 + Math.random() * 0.12);
+    const Pk = this.pack && this.pack[nom];
+    if (Pk && Pk.length) { // son du pack personnel
+      const b = Pk[(Math.random() * Pk.length) | 0], s = this.ctx.createBufferSource(), g = this.ctx.createGain();
+      s.buffer = b; s.playbackRate.value = h; g.gain.value = 0.22 * v * (this.packVol[nom] ?? 1); s.connect(g); g.connect(d); s.start(t);
+      this.voix.push({ nom, fin: t + b.duration / h, prio: L[2] }); return;
+    }
     let duree = 0.2;
     switch (nom) {
       case 'tir': this.souffle(t, 0.07, 0.16 * v, 'bandpass', 2600 * h, 1500 * h, 1.2, d); this.osc('square', 880 * h, 560 * h, t, 0.05, 0.05 * v, d); duree = 0.08; break;

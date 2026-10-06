@@ -25,6 +25,10 @@ Ouvrez **[`jeu/index.html`](jeu/index.html)** dans un navigateur récent (Chrome
 
 Le profil de tir se change dans Options (stick + boutons par défaut, ou stick + croix, où les boutons de face gardent interagir, description et déposer). Toutes les touches se reconfigurent (Options → Commandes). Réglages de zones mortes, vibrations, secousses, mode confort, « sans flash » et éclairage dynamique dans les Options.
 
+### Sons personnels (facultatif, pour jouer chez soi)
+
+Les sons du jeu sont synthétisés. Pour les remplacer par vos propres fichiers, ouvrez **[`outils/pack_sons.html`](outils/pack_sons.html)**, déposez-y vos sons (WAV, OGG, MP3…), laissez la proposition automatique ou choisissez un son par événement (tir, impact, explosion, ramassage, portes, boss…), écoutez, puis exportez **`sons_perso.js`** et posez-le à côté de `jeu/index.html`. Le jeu le charge s'il est présent ; sinon rien ne change. Ce fichier reste sur votre machine : il est exclu du dépôt (`.gitignore`) et n'est pas fait pour être publié.
+
 ## Ce qu'il y a dans le jeu
 
 - **18 personnages jouables** : 12 personnages et 6 variantes altérées, chacun avec une règle propre (Naruto, Sasuke, Sakura, Kakashi, Rock Lee, Hinata, Shikamaru, Gaara, Kankurō, Kiba, et les experts Sasori et Kakuzu).
@@ -47,5 +51,7 @@ node labyrinthe/outils/catalogues.mjs              # valide les données, écrit
 node labyrinthe/outils/tests_jeu.mjs [sections…]   # banc de tests Playwright (Chromium) : 18 sections
 node labyrinthe/outils/journal_partie.mjs CHR_001 PARC2345 6   # journal reproductible d'une mission à code
 ```
+
+`outils/pack_sons.html` (navigateur, sans Node) fabrique un pack de sons personnel : voir *Sons personnels* ci-dessus.
 
 Le banc de tests joue réellement le jeu dans un navigateur sans écran : génération de 400 étages, trois parties complètes, chaque objet, actif, boss, ennemi et personnage, sauvegarde, manette simulée, économie, pactes, contrats, mécaniques de boss et visibilité des sprites.

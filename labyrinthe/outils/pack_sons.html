@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pack de sons personnel</title>
+<style>
+  :root { --fond: #120f17; --carte: #1d1824; --ligne: #2e2738; --texte: #e8e2ef; --doux: #9a90a8; --accent: #f0a040; --ok: #6ad08a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fond); color: var(--texte); font: 14px/1.45 system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 22px; margin: 0 0 4px; } h2 { font-size: 16px; margin: 24px 0 8px; color: var(--accent); }
+  p { color: var(--doux); margin: 4px 0 10px; }
+  .barre { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; }
+  button, label.bouton { background: #2b2335; color: var(--texte); border: 1px solid #4a3d58; border-radius: 6px; padding: 7px 12px; font: inherit; cursor: pointer; }
+  button:hover, label.bouton:hover { border-color: var(--accent); }
+  button.principal { background: #6a3a14; border-color: var(--accent); }
+  input[type=file] { display: none; }
+  #depot { border: 2px dashed #4a3d58; border-radius: 10px; padding: 18px; text-align: center; color: var(--doux); margin: 10px 0; }
+  #depot.survol { border-color: var(--accent); color: var(--texte); }
+  table { width: 100%; border-collapse: collapse; background: var(--carte); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--ligne); vertical-align: middle; }
+  th { color: var(--doux); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  td.nom { white-space: nowrap; } td.nom b { display: block; } td.nom small { color: var(--doux); }
+  select { background: #241d2c; color: var(--texte); border: 1px solid #4a3d58; border-radius: 5px; padding: 4px; max-width: 280px; font: inherit; }
+  input[type=range] { width: 90px; vertical-align: middle; }
+  .petit { font-size: 12px; color: var(--doux); }
+  .lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; }
+  .son { background: var(--carte); border: 1px solid var(--ligne); border-radius: 6px; padding: 5px 8px; display: flex; gap: 8px; align-items: center; min-width: 0; }
+  .son span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; } .son em { color: var(--doux); font-style: normal; font-size: 12px; }
+  .lecture { padding: 2px 8px; }
+  #etat { color: var(--ok); min-height: 20px; }
+  @media (max-width: 700px) { td:nth-child(4), th:nth-child(4) { display: none; } select { max-width: 160px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pack de sons personnel</h1>
+  <p>Remplacez les sons synthétisés du <i>Labyrinthe des Sceaux</i> par vos propres fichiers, pour jouer chez vous. Ajoutez des sons (WAV, OGG, MP3…), choisissez-les pour chaque événement (ou laissez la proposition automatique), écoutez, puis exportez <code>sons_perso.js</code> et posez-le à côté de <code>index.html</code> (dossier <code>jeu/</code>). Rien n'est envoyé nulle part ; ce fichier reste sur votre machine et n'est pas fait pour être publié.</p>
+  <div id="depot">Déposez ici des fichiers ou un dossier de sons
+    <div class="barre" style="justify-content:center">
+      <label class="bouton">Choisir des fichiers<input id="fichiers" type="file" accept="audio/*,.wav,.ogg,.mp3,.flac,.m4a" multiple></label>
+      <label class="bouton">Choisir un dossier<input id="dossier" type="file" webkitdirectory multiple></label>
+      <label class="bouton">Reprendre un sons_perso.js<input id="reprendre" type="file" accept=".js"></label>
+    </div>
+  </div>
+  <div class="barre">
+    <button id="auto">Proposer automatiquement</button>
+    <button id="vider">Tout remettre aux sons du jeu</button>
+    <button id="exporter" class="principal">Exporter sons_perso.js</button>
+    <span id="etat"></span>
+  </div>
+  <h2>Événements du jeu</h2>
+  <table><thead><tr><th>Événement</th><th>Son</th><th>Variante</th><th>Volume</th></tr></thead><tbody id="evenements"></tbody></table>
+  <h2>Bibliothèque <span id="nbLib" class="petit"></span></h2>
+  <div id="bibliotheque" class="lib"></div>
+</main>
+<script>
+'use strict';
+// Événements sonores du jeu (clés de Son.jouer) : libellé, et profil attendu pour la proposition automatique
+// profil : d = durée visée (s) [min, max] ; b = brillance (0 grave … 1 aigu) ; t = tonalité (0 bruit … 1 note) ; g = poids des graves
+const EVENEMENTS = [
+  ['tir', 'Tir du joueur (kunai lancé)', { d: [0.06, 0.35], b: 0.75, t: 0.2 }],
+  ['lame', 'Coup de lame (mêlée)', { d: [0.08, 0.4], b: 0.85, t: 0.15 }],
+  ['impact', 'Coup qui touche un ennemi', { d: [0.05, 0.3], b: 0.45, t: 0.2, g: 0.5 }],
+  ['impact_mur', 'Tir contre un mur', { d: [0.03, 0.2], b: 0.7, t: 0.2 }],
+  ['ennemi_mort', 'Ennemi vaincu', { d: [0.2, 0.8], b: 0.4, t: 0.2, g: 0.4 }],
+  ['degat_joueur', 'Le joueur est touché', { d: [0.15, 0.6], b: 0.45, t: 0.4 }],
+  ['tir_ennemi', 'Tir ennemi', { d: [0.06, 0.35], b: 0.6, t: 0.3 }],
+  ['telegraphe', 'Alerte d’attaque ennemie', { d: [0.08, 0.4], b: 0.8, t: 0.8 }],
+  ['explosion', 'Explosion (parchemin explosif, argile)', { d: [0.6, 2.5], b: 0.3, t: 0.1, g: 0.8 }],
+  ['meche', 'Mèche qui grésille', { d: [0.3, 1.2], b: 0.9, t: 0.05 }],
+  ['laser', 'Rayon, laser', { d: [0.2, 0.9], b: 0.6, t: 0.6 }],
+  ['eclair', 'Foudre (Raiton)', { d: [0.08, 0.6], b: 0.9, t: 0.1 }],
+  ['feu', 'Feu (Katon)', { d: [0.2, 1.0], b: 0.45, t: 0.1, g: 0.3 }],
+  ['eau', 'Eau (Suiton)', { d: [0.15, 0.9], b: 0.4, t: 0.15 }],
+  ['vent', 'Vent (Fūton)', { d: [0.2, 1.0], b: 0.7, t: 0.1 }],
+  ['sable', 'Sable, terre', { d: [0.15, 0.8], b: 0.65, t: 0.05 }],
+  ['fumee', 'Fumée (apparition, disparition)', { d: [0.2, 0.8], b: 0.4, t: 0.1, g: 0.3 }],
+  ['invocation', 'Invocation', { d: [0.3, 1.2], b: 0.4, t: 0.2, g: 0.4 }],
+  ['pics', 'Pics, piège', { d: [0.05, 0.3], b: 0.8, t: 0.4 }],
+  ['rocher', 'Rocher brisé', { d: [0.15, 0.6], b: 0.35, t: 0.1, g: 0.6 }],
+  ['jarre', 'Jarre brisée', { d: [0.1, 0.5], b: 0.7, t: 0.3 }],
+  ['pas_lourd', 'Pas lourd, choc au sol', { d: [0.1, 0.5], b: 0.15, t: 0.2, g: 0.9 }],
+  ['charge', 'Charge du tir', { d: [0.3, 1.2], b: 0.5, t: 0.6 }],
+  ['charge_pleine', 'Charge pleine', { d: [0.08, 0.4], b: 0.85, t: 0.85 }],
+  ['actif', 'Technique active utilisée', { d: [0.2, 0.9], b: 0.55, t: 0.4 }],
+  ['ryo', 'Ryō ramassé', { d: [0.08, 0.4], b: 0.85, t: 0.85 }],
+  ['cle', 'Clé ramassée', { d: [0.1, 0.5], b: 0.8, t: 0.8 }],
+  ['coeur', 'Cœur ramassé', { d: [0.15, 0.6], b: 0.6, t: 0.8 }],
+  ['protection', 'Protection ramassée', { d: [0.15, 0.6], b: 0.7, t: 0.8 }],
+  ['pilule', 'Pilule avalée', { d: [0.15, 0.6], b: 0.5, t: 0.6 }],
+  ['objet', 'Objet majeur ramassé (fanfare)', { d: [0.6, 2.5], b: 0.6, t: 0.8 }],
+  ['objet_mineur', 'Objet mineur ramassé', { d: [0.15, 0.6], b: 0.7, t: 0.8 }],
+  ['coffre', 'Coffre ouvert', { d: [0.3, 1.0], b: 0.55, t: 0.5 }],
+  ['achat', 'Achat', { d: [0.15, 0.6], b: 0.8, t: 0.8 }],
+  ['refus', 'Achat ou action refusés', { d: [0.1, 0.4], b: 0.3, t: 0.6 }],
+  ['porte_ferme', 'Portes qui se ferment (combat)', { d: [0.2, 0.7], b: 0.2, t: 0.2, g: 0.8 }],
+  ['porte_ouvre', 'Portes qui s’ouvrent', { d: [0.2, 0.9], b: 0.45, t: 0.3 }],
+  ['secret', 'Salle secrète découverte', { d: [0.5, 2.0], b: 0.65, t: 0.8 }],
+  ['nettoyee', 'Salle nettoyée', { d: [0.4, 1.5], b: 0.7, t: 0.8 }],
+  ['sceau', 'Sceau (relance, pacte)', { d: [0.3, 1.0], b: 0.6, t: 0.6 }],
+  ['transformation', 'Transformation', { d: [0.8, 3.0], b: 0.6, t: 0.6 }],
+  ['boss_intro', 'Arrivée d’un boss', { d: [1.0, 4.0], b: 0.3, t: 0.4, g: 0.6 }],
+  ['boss_mort', 'Boss vaincu', { d: [1.0, 4.0], b: 0.35, t: 0.3, g: 0.7 }],
+  ['gong', 'Gong', { d: [1.0, 4.0], b: 0.35, t: 0.8, g: 0.5 }],
+  ['rire', 'Rire de boss', { d: [0.4, 2.0], b: 0.45, t: 0.5 }],
+  ['battement', 'Battement de cœur (vie basse)', { d: [0.15, 0.6], b: 0.1, t: 0.3, g: 0.9 }],
+  ['menu', 'Menu : déplacement', { d: [0.02, 0.2], b: 0.8, t: 0.7 }],
+  ['valider', 'Menu : valider', { d: [0.05, 0.4], b: 0.75, t: 0.8 }],
+  ['annuler', 'Menu : annuler', { d: [0.05, 0.4], b: 0.55, t: 0.7 }],
+];
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const lib = []; // { nom, buf, f: caractéristiques }
+const choix = {}; // clé → { a: index, b: index, vol }
+const $ = id => document.getElementById(id);
+const etat = t => { $('etat').textContent = t; };
+
+// ── Analyse : durée utile, brillance, tonalité, poids des graves (assez pour proposer, pas pour juger) ──
+function analyser(buf) {
+  const sr = buf.sampleRate, n = buf.length, ch = buf.numberOfChannels, m = new Float32Array(n);
+  for (let c = 0; c < ch; c++) { const d = buf.getChannelData(c); for (let i = 0; i < n; i++) m[i] += d[i] / ch; }
+  let pic = 0; for (let i = 0; i < n; i++) pic = Math.max(pic, Math.abs(m[i]));
+  const seuil = Math.max(1e-4, pic * 0.03); let a = 0, z = n - 1; while (a < n && Math.abs(m[a]) < seuil) a++; while (z > a && Math.abs(m[z]) < seuil) z--;
+  const L = Math.max(1, z - a), duree = L / sr;
+  let zc = 0, e = 0, eb = 0, lp = 0; const k = Math.exp(-2 * Math.PI * 250 / sr);
+  for (let i = a + 1; i <= z; i++) { if ((m[i] >= 0) !== (m[i - 1] >= 0)) zc++; e += m[i] * m[i]; lp = lp * k + m[i] * (1 - k); eb += lp * lp; }
+  const brillance = Math.min(1, (zc / duree) / 6000), graves = Math.min(1, eb / Math.max(1e-9, e) * 1.6);
+  // tonalité : autocorrélation normalisée maximale entre 2 et 20 ms, sur une fenêtre au tiers du son
+  const w = Math.min(4096, L), o = a + Math.floor((L - w) / 3); let ton = 0;
+  if (w > 512) { let e0 = 0; for (let i = 0; i < w; i++) e0 += m[o + i] * m[o + i];
+    for (let lag = Math.floor(sr * 0.002); lag < Math.min(w / 2, sr * 0.02); lag += 2) { let s = 0, e1 = 0; for (let i = 0; i + lag < w; i++) { s += m[o + i] * m[o + i + lag]; e1 += m[o + i + lag] * m[o + i + lag]; } ton = Math.max(ton, s / Math.sqrt(e0 * e1 + 1e-12)); } }
+  return { duree, brillance, graves, ton: Math.max(0, ton), debut: a / sr, fin: z / sr };
+}
+function score(f, p) {
+  const [d0, d1] = p.d, dd = f.duree < d0 ? (d0 - f.duree) / d0 : f.duree > d1 ? (f.duree - d1) / d1 : 0;
+  return 2.2 * Math.min(2, dd) + 1.4 * Math.abs(f.brillance - p.b) + 1.2 * Math.abs(f.ton - p.t) + (p.g !== undefined ? 0.8 * Math.abs(f.graves - p.g) : 0);
+}
+function proposer() {
+  if (!lib.length) { etat('Ajoutez d’abord des sons.'); return; }
+  const pris = new Set(), paires = [];
+  for (const [cle, , p] of EVENEMENTS) lib.forEach((s, i) => paires.push([score(s.f, p), cle, i]));
+  paires.sort((x, y) => x[0] - y[0]); const fait = new Set();
+  for (const [sc, cle, i] of paires) { if (fait.has(cle) || pris.has(i) || sc > 3.2) continue; choix[cle] = Object.assign(choix[cle] || { vol: 1 }, { a: i, b: -1 }); fait.add(cle); pris.add(i); }
+  dessiner(); etat(fait.size + ' événements reçoivent une proposition — écoutez et ajustez.');
+}
+
+// ── Chargement ──
+async function ajouter(fichiers) {
+  const L = [...fichiers].filter(f => /\.(wav|ogg|mp3|flac|m4a|aac|opus|webm)$/i.test(f.name) || (f.type || '').startsWith('audio/'));
+  let n = 0; etat('Lecture de ' + L.length + ' fichiers…');
+  for (const f of L) {
+    try { const buf = await ctx.decodeAudioData(await f.arrayBuffer()); lib.push({ nom: (f.webkitRelativePath || f.name), buf, f: analyser(buf) }); n++; }
+    catch (e) { console.warn('illisible', f.name); }
+    if (n % 10 === 0) etat('Lecture… ' + n + ' / ' + L.length);
+  }
+  lib.sort((a, b) => a.nom.localeCompare(b.nom, 'fr', { numeric: true }));
+  dessiner(); etat(n + ' sons ajoutés (' + lib.length + ' au total).');
+}
+async function reprendre(f) {
+  const t = await f.text(), i = t.indexOf('{'), j = t.lastIndexOf('}'); let P;
+  try { P = JSON.parse(t.slice(i, j + 1)); } catch (e) { etat('Fichier illisible.'); return; }
+  for (const [cle, v] of Object.entries(P)) {
+    if (cle[0] === '_') continue; const L = Array.isArray(v) ? v : [v];
+    for (let k = 0; k < L.length; k++) { const b64 = L[k].slice(L[k].indexOf(',') + 1), bin = atob(b64), u = new Uint8Array(bin.length); for (let x = 0; x < bin.length; x++) u[x] = bin.charCodeAt(x);
+      try { const buf = await ctx.decodeAudioData(u.buffer); lib.push({ nom: 'pack · ' + cle + (k ? ' (' + (k + 1) + ')' : ''), buf, f: analyser(buf) }); const c = choix[cle] = choix[cle] || { a: -1, b: -1, vol: 1 }; if (k === 0) c.a = lib.length - 1; else c.b = lib.length - 1; } catch (e) { /* ignoré */ } }
+    if (P._volume && P._volume[cle] !== undefined) choix[cle].vol = P._volume[cle];
+  }
+  dessiner(); etat('Pack repris : ' + Object.keys(choix).length + ' événements.');
+}
+
+// ── Écoute ──
+let lecture = null;
+function ecouter(i, vol = 1) { if (lecture) try { lecture.stop(); } catch (e) {} const s = lib[i]; if (!s) return; const src = ctx.createBufferSource(), g = ctx.createGain(); src.buffer = s.buf; g.gain.value = vol; src.connect(g); g.connect(ctx.destination); src.start(0, s.f.debut); lecture = src; if (ctx.state === 'suspended') ctx.resume(); }
+
+// ── Affichage ──
+function options(sel) { return '<option value="-1">— son du jeu —</option>' + lib.map((s, i) => '<option value="' + i + '"' + (i === sel ? ' selected' : '') + '>' + s.nom.replace(/</g, '&lt;') + ' (' + s.f.duree.toFixed(2) + ' s)</option>').join(''); }
+function dessiner() {
+  $('evenements').innerHTML = EVENEMENTS.map(([cle, lib2]) => { const c = choix[cle] || { a: -1, b: -1, vol: 1 };
+    return '<tr><td class="nom"><b>' + lib2 + '</b><small>' + cle + '</small></td>'
+      + '<td><select data-cle="' + cle + '" data-q="a">' + options(c.a) + '</select> <button class="lecture" data-ecoute="' + cle + '" data-q="a">▶</button></td>'
+      + '<td><select data-cle="' + cle + '" data-q="b">' + options(c.b) + '</select> <button class="lecture" data-ecoute="' + cle + '" data-q="b">▶</button></td>'
+      + '<td><input type="range" min="0" max="2" step="0.05" value="' + c.vol + '" data-vol="' + cle + '"> <span class="petit">' + Math.round(c.vol * 100) + ' %</span></td></tr>'; }).join('');
+  $('bibliotheque').innerHTML = lib.map((s, i) => '<div class="son"><button class="lecture" data-lib="' + i + '">▶</button><span title="' + s.nom.replace(/"/g, '&quot;') + '">' + s.nom.replace(/</g, '&lt;') + '</span><em>' + s.f.duree.toFixed(2) + ' s</em></div>').join('');
+  $('nbLib').textContent = lib.length ? '(' + lib.length + ' sons)' : '';
+}
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.cle) { const c = choix[t.dataset.cle] = choix[t.dataset.cle] || { a: -1, b: -1, vol: 1 }; c[t.dataset.q] = +t.value; }
+  if (t.dataset.vol) { const c = choix[t.dataset.vol] = choix[t.dataset.vol] || { a: -1, b: -1, vol: 1 }; c.vol = +t.value; t.nextElementSibling.textContent = Math.round(c.vol * 100) + ' %'; }
+});
+document.addEventListener('click', e => {
+  const t = e.target;
+  if (t.dataset.lib !== undefined) ecouter(+t.dataset.lib);
+  if (t.dataset.ecoute) { const c = choix[t.dataset.ecoute]; if (c && c[t.dataset.q] >= 0) ecouter(c[t.dataset.q], c.vol); }
+});
+$('fichiers').onchange = e => ajouter(e.target.files);
+$('dossier').onchange = e => ajouter(e.target.files);
+$('reprendre').onchange = e => e.target.files[0] && reprendre(e.target.files[0]);
+$('auto').onclick = proposer;
+$('vider').onclick = () => { for (const k of Object.keys(choix)) delete choix[k]; dessiner(); etat('Tous les événements reprennent les sons du jeu.'); };
+const depot = $('depot');
+depot.ondragover = e => { e.preventDefault(); depot.classList.add('survol'); };
+depot.ondragleave = () => depot.classList.remove('survol');
+depot.ondrop = async e => { e.preventDefault(); depot.classList.remove('survol'); const F = []; const lire = async en => { if (en.isFile) F.push(await new Promise(r => en.file(r))); else if (en.isDirectory) { const R = en.createReader(); let lot; do { lot = await new Promise(r => R.readEntries(r)); for (const x of lot) await lire(x); } while (lot.length); } };
+  const items = [...(e.dataTransfer.items || [])].map(it => it.webkitGetAsEntry && it.webkitGetAsEntry()).filter(Boolean); if (items.length) { for (const en of items) await lire(en); ajouter(F); } else ajouter(e.dataTransfer.files); };
+
+// ── Export : mono 22 050 Hz, silences rognés, crête à −1 dB, WAV 16 bits en base64 ──
+async function preparer(s) {
+  const sr = 22050, d0 = Math.max(0, s.f.debut - 0.005), d1 = Math.min(s.buf.duration, s.f.fin + 0.04), n = Math.max(1, Math.ceil((d1 - d0) * sr));
+  const oc = new OfflineAudioContext(1, n, sr), src = oc.createBufferSource(); src.buffer = s.buf; src.connect(oc.destination); src.start(0, d0, d1 - d0);
+  const r = (await oc.startRendering()).getChannelData(0); let pic = 0; for (const v of r) pic = Math.max(pic, Math.abs(v)); const k = pic > 0 ? 0.89 / pic : 1;
+  const fade = Math.min(r.length, Math.round(sr * 0.012)); for (let i = 0; i < fade; i++) r[r.length - 1 - i] *= i / fade; // fin sans clic
+  const o = new DataView(new ArrayBuffer(44 + r.length * 2)), str = (p, t) => { for (let i = 0; i < t.length; i++) o.setUint8(p + i, t.charCodeAt(i)); };
+  str(0, 'RIFF'); o.setUint32(4, 36 + r.length * 2, true); str(8, 'WAVE'); str(12, 'fmt '); o.setUint32(16, 16, true); o.setUint16(20, 1, true); o.setUint16(22, 1, true); o.setUint32(24, sr, true); o.setUint32(28, sr * 2, true); o.setUint16(32, 2, true); o.setUint16(34, 16, true); str(36, 'data'); o.setUint32(40, r.length * 2, true);
+  for (let i = 0; i < r.length; i++) o.setInt16(44 + i * 2, Math.max(-1, Math.min(1, r[i] * k)) * 32767, true);
+  const u = new Uint8Array(o.buffer); let bin = ''; for (let i = 0; i < u.length; i += 0x8000) bin += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000));
+  return 'data:audio/wav;base64,' + btoa(bin);
+}
+async function exporter() {
+  const P = { _volume: {} }; let n = 0;
+  for (const [cle] of EVENEMENTS) { const c = choix[cle]; if (!c) continue; const L = [c.a, c.b].filter(i => i >= 0 && lib[i]); if (!L.length) continue;
+    etat('Préparation… ' + cle); P[cle] = []; for (const i of L) P[cle].push(await preparer(lib[i])); if (c.vol !== 1) P._volume[cle] = c.vol; n++; }
+  if (!n) { etat('Aucun événement n’a de son choisi.'); return; }
+  const texte = '// Pack de sons personnel du Labyrinthe des Sceaux (fabriqué avec outils/pack_sons.html).\n// À poser à côté de index.html. Usage personnel : ne pas publier.\nwindow.SONS_PERSO = ' + JSON.stringify(P) + ';\n';
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([texte], { type: 'text/javascript' })); a.download = 'sons_perso.js'; document.body.appendChild(a); a.click(); a.remove();
+  etat('sons_perso.js exporté : ' + n + ' événements (' + Math.round(texte.length / 1024) + ' Kio). Posez-le dans le dossier jeu/.');
+}
+$('exporter').onclick = exporter;
+dessiner();
+</script>
+</body>
+</html>
