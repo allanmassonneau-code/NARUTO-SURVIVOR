@@ -81,6 +81,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       out.boss[out.boss.length - 1] += ' ' + Math.round(G.temps - t0) + ' s';
       if (G.ennemis.some(x => x.boss && !x.mort)) { out.ko.push('boss ' + nomBoss + ' invaincu après 150 s : ' + G.ennemis.filter(x => x.boss).map(x => Math.round(x.pv) + '/' + Math.round(x.pvMax)).join(',')); for (const x of G.ennemis) x.pv = 1; T.bot(10, { dieu: true }); }
       if (G.partie && G.partie.etage > et) continue; // le pilote a emprunté la trappe tout seul
+      if (G.salle.id !== E.boss && E.salles[E.boss]) T.allerA(E.boss); // le pilote a pu errer dans la salle de pacte ouverte après le boss
       T.prendreTout();
       const s = G.salle; const sorties = s.sorties || [];
       if (!sorties.length) { const sb = E.salles[E.boss]; out.ko.push('aucune sortie étage ' + et + ' (salle courante ' + s.id + ' ' + s.type + ', salle boss : sorties ' + (sb.sorties || []).length + ', bossVaincu ' + !!sb.bossVaincu + ', ennemis ' + G.ennemis.map(x => x.id + (x.mort ? '†' : '')).join(',') + ')'); break; }

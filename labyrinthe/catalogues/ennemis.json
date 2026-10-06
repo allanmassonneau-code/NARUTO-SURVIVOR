@@ -128,7 +128,8 @@
    "intervalle": 2.2,
    "portee": 3.5,
    "duree": 0.6,
-   "atterrissage": "anneau"
+   "atterrissage": "anneau",
+   "proj": "boue"
   },
   "statut": "création originale",
   "contact": 1,
@@ -190,7 +191,8 @@
   "params": {
    "tele": 0.6,
    "dureeDehors": 1.6,
-   "jet": true
+   "jet": true,
+   "proj": "terre"
   },
   "statut": "création originale",
   "contact": 1,
@@ -238,7 +240,8 @@
   "params": {
    "cadence": 2.2,
    "vProj": 6,
-   "tele": 0.45
+   "tele": 0.45,
+   "proj": "eau"
   },
   "statut": "création originale",
   "contact": 1,
@@ -350,7 +353,8 @@
    "motif": "rotation",
    "cadence": 2,
    "vProj": 4.2,
-   "tele": 0.3
+   "tele": 0.3,
+   "proj": "papier_ennemi"
   },
   "statut": "création originale",
   "contact": 0,
@@ -377,7 +381,8 @@
    "cadence": 2.6,
    "rOnde": 2,
    "tele": 0.6,
-   "anneau": true
+   "anneau": true,
+   "proj": "papier_ennemi"
   },
   "statut": "création originale",
   "contact": 1,
@@ -452,7 +457,8 @@
    "cadence": 0.9,
    "dureeActive": 2.2,
    "cacheDuree": 1.4,
-   "cache": true
+   "cache": true,
+   "proj": "epine"
   },
   "statut": "création originale",
   "contact": 1,
@@ -512,7 +518,8 @@
   "params": {
    "tele": 0.65,
    "dureeDehors": 1.8,
-   "jet": true
+   "jet": true,
+   "proj": "sable_ennemi"
   },
   "statut": "création originale",
   "contact": 1,
@@ -539,7 +546,8 @@
    "motif": "eventail",
    "cadence": 2.2,
    "vProj": 5,
-   "tele": 0.4
+   "tele": 0.4,
+   "proj": "vent"
   },
   "statut": "création originale",
   "contact": 1,
@@ -606,7 +614,8 @@
   "params": {
    "cadence": 2.4,
    "duree": 0.9,
-   "eclabousse": "anneau"
+   "eclabousse": "anneau",
+   "proj": "tesson"
   },
   "statut": "création originale",
   "contact": 1,
@@ -632,7 +641,8 @@
    "motif": "8",
    "cadence": 2.6,
    "vProj": 4.2,
-   "tele": 0.4
+   "tele": 0.4,
+   "proj": "senbon_ennemi"
   },
   "statut": "création originale",
   "contact": 0,
@@ -866,7 +876,8 @@
    "cadence": 2.5,
    "rOnde": 2,
    "tele": 0.6,
-   "anneau": true
+   "anneau": true,
+   "proj": "tesson"
   },
   "statut": "création originale",
   "contact": 1,
@@ -998,7 +1009,8 @@
    "duree": 1,
    "eclabousse": "croix",
    "zone": "acide",
-   "fixe": true
+   "fixe": true,
+   "proj": "acide"
   },
   "statut": "création originale",
   "contact": 0,
@@ -1285,7 +1297,8 @@
    "cadence": 0.8,
    "dureeActive": 2,
    "cacheDuree": 1.5,
-   "cache": true
+   "cache": true,
+   "proj": "senbon_ennemi"
   },
   "statut": "création originale",
   "contact": 1
@@ -1305,7 +1318,8 @@
   "params": {
    "tele": 0.55,
    "dureeDehors": 1.5,
-   "jet": true
+   "jet": true,
+   "proj": "eau"
   },
   "statut": "création originale",
   "contact": 1,
@@ -1428,7 +1442,8 @@
    "cadence": 2.2,
    "rOnde": 2.2,
    "tele": 0.6,
-   "anneau": true
+   "anneau": true,
+   "proj": "sable_fer"
   },
   "statut": "création originale",
   "contact": 1,
@@ -1470,7 +1485,8 @@
   "params": {
    "cadence": 1.8,
    "vProj": 6.5,
-   "tele": 0.4
+   "tele": 0.4,
+   "proj": "eau"
   },
   "statut": "création originale",
   "contact": 1
@@ -1672,7 +1688,8 @@
    "cadence": 2.4,
    "duree": 0.9,
    "zone": "huile",
-   "eclabousse": "anneau"
+   "eclabousse": "anneau",
+   "proj": "huile"
   },
   "statut": "création originale",
   "contact": 1
@@ -1715,7 +1732,8 @@
    "intervalle": 2,
    "portee": 4,
    "duree": 0.6,
-   "atterrissage": "anneau"
+   "atterrissage": "anneau",
+   "proj": "boue"
   },
   "statut": "création originale",
   "contact": 1

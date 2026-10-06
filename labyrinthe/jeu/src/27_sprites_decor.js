@@ -56,31 +56,7 @@ function decorsTheme(themeId) {
   for (let v = 0; v < 3; v++) D.rochers.push(dessinerRocher(R, R.forme, v, themeId));
   D.rocherSceau = dessinerRocher(R, R.forme, 0, themeId, true);
   D.totem = dessinerTotem(V);
-  D.bloc = contourner(peindre([
-    '..............................',
-    '.bbbbbbbbbbbbbbbbbbbbbbbbbbbb.',
-    '.bllllllllllllllllllllllllllb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmrmmmmmmmmmmmmmmmmmmrmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.blmmrmmmmmmmmmmmmmmmmmmrmmdb.',
-    '.blmmmmmmmmmmmmmmmmmmmmmmmmdb.',
-    '.bddddddddddddddddddddddddddb.',
-    '.bddddddddddddddddddddddddddb.',
-    '.bddddddddddddddddddddddddddb.',
-    '.bbbbbbbbbbbbbbbbbbbbbbbbbbbb.'], { b: '#3a3a44', l: '#9aa0b0', m: '#6c7282', d: '#4a4e5a', r: '#2a2c34' }, 30, 24));
+  D.bloc = dessinerBloc(V, themeId);
   D.jarre = contourner(peindre([
     '.......nnnnnn.......',
     '......nNNNNNNn......',
@@ -161,30 +137,69 @@ function decorsTheme(themeId) {
 }
 
 function dessinerRocher(R, forme, v, graine, sceau) {
-  const c = toile(30, 26), g = ctxDe(c); const r = new Alea(graine + 'roc' + v + forme);
-  const base = R.base, om = R.ombre, lu = R.lum;
-  if (forme === 'caisse') { // tonneau / caisse de marionnettiste
-    g.fillStyle = om; g.fillRect(3, 4, 24, 20); g.fillStyle = base; g.fillRect(4, 4, 22, 17); g.fillStyle = lu; g.fillRect(4, 4, 22, 2);
-    g.fillStyle = nuancer(om, 0.8); g.fillRect(4, 11, 22, 1); g.fillRect(14, 4, 1, 17);
-  } else if (forme === 'cuve') {
-    g.fillStyle = om; g.fillRect(4, 3, 22, 21); g.fillStyle = base; g.fillRect(5, 3, 20, 18); g.fillStyle = '#5a9a7a'; g.fillRect(8, 6, 14, 10); g.fillStyle = '#8ad0a8'; g.fillRect(9, 7, 4, 2); g.fillStyle = lu; g.fillRect(5, 3, 20, 2);
-  } else if (forme === 'souche') {
-    g.fillStyle = om; g.fillRect(4, 8, 22, 16); g.fillStyle = base; g.fillRect(5, 8, 20, 13); g.fillStyle = '#9c8458'; g.fillRect(6, 5, 18, 7); g.fillStyle = '#b89c6a'; g.fillRect(8, 6, 14, 5); g.fillStyle = '#8a7048'; g.fillRect(11, 7, 8, 3); g.fillStyle = om; g.fillRect(9, 12, 1, 8); g.fillRect(19, 13, 1, 7);
-  } else if (forme === 'bloc') {
-    g.fillStyle = om; g.fillRect(3, 5, 24, 19); g.fillStyle = base; g.fillRect(3, 4, 24, 15); g.fillStyle = lu; g.fillRect(3, 4, 24, 2); g.fillRect(3, 4, 2, 13);
-    g.fillStyle = nuancer(om, 0.9); g.fillRect(14 + (v % 2) * 3, 6, 1, 8); g.fillRect(6, 12 - v, 6, 1);
-  } else { // rond
-    const cx = 15, cy = 13;
+  const c = toile(30, 26), g = ctxDe(c); const r = new Alea(graine + 'roc' + v + forme), k0 = hacher(graine + '|' + forme + '|' + v)[0] % 99991;
+  const th = graine, base = hexRgb(R.base), px = (x, y, col) => { g.fillStyle = col; g.fillRect(x, y, 1, 1); };
+  const ton = k => rgbHex(...nuancerRgb(base, k)), T5 = [ton(0.58), ton(0.76), ton(1), ton(1.14), ton(1.3)];
+  const L = [-0.52, -0.68, 0.52]; // lumière : haut gauche, un peu de face
+  if (forme === 'caisse') { // bloc de chêne cerclé de fer (ateliers) : lourd, indestructible aux tirs
+    const bois = R.base, fer = '#4a4a54', ferC = '#8a8a98';
+    g.fillStyle = nuancer(bois, 0.7); g.fillRect(3, 6, 24, 18); g.fillStyle = bois; g.fillRect(3, 4, 24, 15); g.fillStyle = nuancer(bois, 1.15); g.fillRect(3, 4, 24, 3);
+    for (let x = 5; x < 26; x += 5) { g.fillStyle = nuancer(bois, 0.82); g.fillRect(x, 7, 1, 12); }
+    for (const y of [8, 15]) { g.fillStyle = fer; g.fillRect(3, y, 24, 2); g.fillStyle = ferC; g.fillRect(3, y, 24, 1); for (const x of [5, 15, 24]) px(x, y + 1, '#d8d8e0'); }
+    g.fillStyle = nuancer(bois, 0.55); g.fillRect(3, 19, 24, 5); g.fillStyle = fer; g.fillRect(3, 21, 24, 1);
+  } else if (forme === 'cuve') { // cuve de verre : liquide vert, spécimen en ombre, cerclages
+    const verre = '#5a9a7a';
+    g.fillStyle = '#3a4048'; g.fillRect(4, 2, 22, 3); g.fillStyle = '#8a929c'; g.fillRect(4, 2, 22, 1);
+    g.fillStyle = '#2a4a3a'; g.fillRect(5, 5, 20, 15); g.fillStyle = verre; g.fillRect(6, 6, 18, 13);
+    g.fillStyle = '#3a6a52'; g.fillRect(12, 9, 6, 8); g.fillRect(13, 7, 4, 3); g.fillStyle = '#2a5040'; g.fillRect(14, 8, 2, 1); // spécimen
+    g.fillStyle = '#9ae0b8'; g.fillRect(7, 7, 1, 10); g.fillRect(8, 7, 1, 3); px(20, 9, '#c8ffd8'); px(18, 13, '#c8ffd8'); px(9, 15, '#c8ffd8');
+    g.fillStyle = '#3a4048'; g.fillRect(4, 19, 22, 5); g.fillStyle = '#6a7078'; g.fillRect(4, 19, 22, 1); g.fillStyle = '#1c2024'; g.fillRect(6, 21, 18, 1);
+  } else if (forme === 'souche') { // souche : cernes sur le dessus, écorce striée, racines, mousse
+    const ec = R.base, ecS = nuancer(ec, 0.7), ecC = nuancer(ec, 1.2);
+    g.fillStyle = ecS; g.fillRect(5, 9, 20, 13); g.fillStyle = ec; g.fillRect(5, 9, 19, 11);
+    for (let x = 6; x < 24; x += 3) { g.fillStyle = r.chance(0.5) ? ecS : ecC; g.fillRect(x, 10 + r.entier(3), 1, 6 + r.entier(4)); }
+    g.fillStyle = ecS; g.fillRect(2, 19, 5, 3); g.fillRect(23, 18, 5, 3); g.fillRect(12, 21, 6, 3); g.fillStyle = ec; g.fillRect(3, 19, 3, 1); g.fillRect(24, 18, 3, 1);
+    for (let y = 0; y < 9; y++) for (let x = 0; x < 22; x++) { const dx = (x - 10.5) / 10.5, dy = (y - 4) / 4.2, d = dx * dx + dy * dy; if (d > 1) continue; const anneau = Math.floor(Math.sqrt(d) * 4); px(x + 4, y + 3, ['#d8bc88', '#c8a870', '#b8985e', '#8a6a42'][Math.min(3, anneau)]); if (anneau === 1 && (x + y) % 5 === 0) px(x + 4, y + 3, '#a8884e'); }
+    px(14, 7, '#7a5a34'); px(15, 7, '#7a5a34'); g.fillStyle = '#5a7a3a'; g.fillRect(5, 9, 4, 2); g.fillRect(19, 10, 4, 2); px(6, 8, '#7aa04a');
+  } else if (forme === 'bloc') { // pierre taillée : dessus éclairé, face sombre, arêtes biseautées, éclats
+    const top = ton(1.12), face = ton(0.86), faceS = ton(0.68);
+    g.fillStyle = faceS; g.fillRect(3, 9, 24, 15); g.fillStyle = face; g.fillRect(3, 9, 24, 12);
+    g.fillStyle = top; g.fillRect(3, 3, 24, 7); g.fillStyle = ton(1.3); g.fillRect(3, 3, 24, 1); g.fillRect(3, 3, 1, 7); g.fillStyle = ton(0.95); g.fillRect(3, 9, 24, 1);
+    if (th === 'THM_SUN') for (const y of [13, 17]) { g.fillStyle = ton(0.78); g.fillRect(3, y, 24, 1); } // strates de grès
+    g.fillStyle = faceS; const fx = 9 + v * 4; for (let y = 10; y < 19; y++) px(fx + ((y * 3) % 2), y, faceS);
+    px(23, 4, ton(0.9)); px(24, 5, ton(0.9)); g.fillStyle = ton(0.7); g.fillRect(4, 20, 3, 1);
+    if (th === 'THM_BIJ' || th === 'THM_AKA') { g.fillStyle = '#c83a2a'; for (const [x, y] of [[13, 12], [14, 13], [14, 14], [15, 15], [16, 15]]) px(x, y, '#e05a3a'); }
+  } else { // rocher rond : volume éclairé en cinq tons, contour irrégulier, base posée au sol, fissures
+    const cx = 15, cy = 13.5, rx = 12.5 - v * 0.6, ry = 10.6 - v * 0.3;
     for (let y = 0; y < 26; y++) for (let x = 0; x < 30; x++) {
-      const dx = (x - cx) / (12 - v * 0.5), dy = (y - cy) / (10.5 - v * 0.3); const d = dx * dx + dy * dy;
-      if (d > 1) continue;
-      g.fillStyle = (y > cy + 5 || (dx > 0.45 && dy > -0.1)) ? om : (dx < -0.2 && dy < -0.25) ? lu : base; g.fillRect(x, y, 1, 1);
+      const dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry, a = Math.atan2(dy, dx);
+      const lim = 1 + (bruitValeur(a * 1.6 + 10, v * 3, k0) - 0.5) * 0.22; const d = Math.sqrt(dx * dx + dy * dy);
+      if (d > lim || y > 23) continue;
+      const nz = Math.sqrt(Math.max(0, 1 - Math.min(1, d * d))); let e = dx * L[0] + dy * L[1] + nz * L[2];
+      e += (bruitValeur(x / 2.6, y / 2.6, k0 + 3) - 0.5) * 0.35;
+      px(x, y, T5[e < -0.25 ? 0 : e < 0.15 ? 1 : e < 0.48 ? 2 : e < 0.72 ? 3 : 4]);
     }
-    g.fillStyle = om; for (let k = 0; k < 3; k++) { const x = 7 + r.entier(14), y = 8 + r.entier(8); g.fillRect(x, y, 2 + r.entier(3), 1); }
+    // fissures et éclats
+    let fxs = 8 + r.entier(12), fy = 5 + r.entier(4); for (let i = 0; i < 6 + r.entier(4); i++) { px(fxs, fy, T5[0]); if (r.chance(0.4)) px(fxs + 1, fy, T5[3]); fxs += r.entier(3) - 1; fy += 1; }
+    for (let k = 0; k < 2; k++) { const x = 6 + r.entier(16), y = 7 + r.entier(9); px(x, y, T5[4]); px(x + 1, y, T5[3]); }
+    // matière du thème
+    if (th === 'THM_FOR' || th === 'THM_MYO') for (let y = 0; y < 12; y++) for (let x = 0; x < 30; x++) { const dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry; if (dx * dx + dy * dy > 0.92 || dy > -0.25) continue; const m = bruitValeur(x / 3, y / 2, k0 + 9); if (m > 0.5) px(x, y, m > 0.72 ? '#8ab85a' : '#5a8a3a'); }
+    if (th === 'THM_KIR') { px(9, 6, '#e8f8ff'); px(10, 6, '#e8f8ff'); px(9, 7, '#c0e0f0'); }
+    if (th === 'THM_GUE') for (let k = 0; k < 4; k++) px(6 + r.entier(18), 5 + r.entier(12), '#b8b878');
   }
-  if (sceau) { // marque discrète mais fiable : sceau clair en spirale
-    g.fillStyle = '#e8d8a0'; for (const [x, y] of [[13, 9], [14, 9], [15, 9], [16, 10], [16, 11], [15, 12], [14, 12], [13, 11], [14, 10]]) g.fillRect(x, y, 1, 1);
+  if (sceau) { // sceau de papier collé : rectangle crème, inscription rouge, coins sombres
+    g.fillStyle = '#1c1420'; g.fillRect(11, 5, 9, 12); g.fillStyle = '#efe4c4'; g.fillRect(12, 6, 7, 10); g.fillStyle = '#b02a2a'; g.fillRect(15, 7, 1, 8); g.fillRect(13, 9, 5, 1); g.fillRect(13, 12, 5, 1); px(13, 14, '#b02a2a'); px(17, 14, '#b02a2a');
   }
+  return contourner(c);
+}
+// Bloc indestructible : pierre (ou métal) du thème, renforcée de cornières de fer — se distingue d'un rocher, qu'un explosif brise
+function dessinerBloc(V, th) {
+  const c = toile(30, 24), g = ctxDe(c), R = (x, y, l, h, col) => { g.fillStyle = col; g.fillRect(x, y, l, h); };
+  const pierre = th === 'THM_ORO' || th === 'THM_MAR' ? '#6c7282' : nuancer(V.rocher.ombre, 0.95), fer = '#3a3a44', ferC = '#9a9aa8';
+  R(1, 7, 28, 16, nuancer(pierre, 0.62)); R(1, 7, 28, 13, nuancer(pierre, 0.8)); // face avant
+  R(1, 1, 28, 7, nuancer(pierre, 1.1)); R(1, 1, 28, 1, nuancer(pierre, 1.3)); R(1, 7, 28, 1, nuancer(pierre, 0.95)); // dessus éclairé
+  for (let x = 8; x < 28; x += 7) R(x, 8, 1, 12, nuancer(pierre, 0.68)); R(1, 13, 28, 1, nuancer(pierre, 0.68)); // appareillage
+  for (const [x, y] of [[1, 1], [24, 1], [1, 17], [24, 17]]) { R(x, y, 5, 5, fer); R(x + 1, y + 1, 3, 3, nuancer(fer, 1.5)); R(x + 2, y + 2, 1, 1, ferC); } // cornières rivetées
   return contourner(c);
 }
 function dessinerTotem(V) {

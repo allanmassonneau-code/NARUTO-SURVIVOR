@@ -88,9 +88,10 @@ function fondSalle(s) {
     _lumCollecte = s._lumieres = [];
     g.fillStyle = '#07060a'; g.fillRect(0, 0, c.width, c.height);
     const estSol = (tx, ty) => { const t = tuileA(s, tx, ty); return t !== T.VIDE && t !== T.MUR && t !== T.PORTE; };
+    const SOL = solPeint(s, th);
     for (let ty = 0; ty < s.H; ty++) for (let tx = 0; tx < s.W; tx++) {
       const t = s.tuiles[ty * s.W + tx]; const x = tx * TUILE, y = ty * TUILE;
-      if (t === T.VIDE) continue;
+      if (t === T.VIDE) { g.drawImage(M.rebord, x, y); g.fillStyle = 'rgba(6,4,8,0.55)'; g.fillRect(x, y, 32, 32); continue; } // masse de roche hors de la salle
       if (t === T.MUR || t === T.PORTE) {
         if (estSol(tx, ty + 1)) g.drawImage(M.face, x, y);
         else if (estSol(tx - 1, ty) || estSol(tx + 1, ty)) { g.drawImage(M.cote, x, y); if (estSol(tx + 1, ty)) { g.fillStyle = nuancer(V.mur.haut, 0.7); g.fillRect(x + 29, y, 3, 32); } if (estSol(tx - 1, ty)) { g.fillStyle = nuancer(V.mur.haut, 0.7); g.fillRect(x, y, 3, 32); } }
@@ -99,15 +100,8 @@ function fondSalle(s) {
         continue;
       }
       // sol
-      const v = Math.floor(hasardTuile(tx, ty) * 4); g.drawImage(D.sols[v], x, y);
-      if (t === T.FOSSE) {
-        g.fillStyle = V.fosse; g.fillRect(x, y, 32, 32);
-        if (tuileA(s, tx, ty - 1) !== T.FOSSE) { g.fillStyle = nuancer(V.sol.base, 0.55); g.fillRect(x, y, 32, 7); g.fillStyle = nuancer(V.sol.base, 0.35); g.fillRect(x, y + 7, 32, 3); g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x, y + 10, 32, 4); g.fillStyle = nuancer(V.sol.base, 0.42); for (let k = 3; k < 32; k += 6) g.fillRect(x + k, y + 1, 1, 8); g.fillStyle = nuancer(V.sol.base, 1.2); g.fillRect(x, y, 32, 1); }
-        g.fillStyle = 'rgba(255,255,255,0.05)'; for (let k = 0; k < 3; k++) { const h = hasardTuile(tx, ty, 5 + k); g.fillRect(x + 4 + Math.floor(h * 24), y + 14 + Math.floor(h * 97) % 14, 1, 1); }
-        if (tuileA(s, tx - 1, ty) !== T.FOSSE) { g.fillStyle = nuancer(V.sol.base, 0.4); g.fillRect(x, y, 2, 32); }
-        if (tuileA(s, tx + 1, ty) !== T.FOSSE) { g.fillStyle = nuancer(V.sol.base, 0.4); g.fillRect(x + 30, y, 2, 32); }
-        if (tuileA(s, tx, ty + 1) !== T.FOSSE) { g.fillStyle = nuancer(V.sol.base, 1.12); g.fillRect(x, y + 31, 32, 1); }
-      }
+      g.drawImage(SOL, x, y, 32, 32, x, y, 32, 32);
+      if (t === T.FOSSE) dessinerFosse(g, s, tx, ty, V, th);
       if (t === T.PONT) { g.fillStyle = nuancer(V.rocher.ombre, 0.9); g.fillRect(x + 2, y + 2, 28, 28); g.fillStyle = V.rocher.base; for (let k = 0; k < 5; k++) g.fillRect(x + 4 + (k * 7) % 22, y + 5 + (k * 11) % 20, 6, 4); }
       if (t === T.TOILE) g.drawImage(D.toile, x, y);
       // ombre portée douce des murs sur le sol (dégradé en bandes de 2 px)
@@ -224,40 +218,100 @@ function decorSalle(g, s, V) {
       for (const [dx, dy] of [[-58, -26], [54, -26], [-58, 30], [54, 30]]) bougie(g, I[0] + dx, I[1] + dy);
       shimenawa(g, Math.round(larg / 2 - 80), 38, 160); break;
     }
-    case 'boss': case 'defi_boss': cercleSceau(g, cx, cy, 70, s.type === 'boss' ? '#c83a3a' : '#b85a9a'); lumiere(cx, cy, 230, s.type === 'boss' ? '#ff4030' : '#d060b0', 0.2); break;
-    case 'sacrifice': { const A = pts('A')[0] || [cx, cy]; cercleSceau(g, A[0], A[1], 40, '#a02a2a'); lumiere(A[0], A[1], 130, '#ff3030', 0.3); break; }
-    case 'defi': { g.globalAlpha = 0.3; g.fillStyle = '#c8c8d8'; for (let k = -18; k <= 18; k++) { g.fillRect(cx + k - 1, cy + k - 1, 3, 3); g.fillRect(cx + k - 1, cy - k - 1, 3, 3); } g.globalAlpha = 1; cercleSceau(g, cx, cy, 34, '#9a9ab0'); break; }
-    case 'bibliotheque': { lumiere(cx, cy, 200, '#ffd8a0', 0.25); // étagères le long du mur du haut
+    case 'boss': cercleSceau(g, cx, cy, 70, '#c83a3a'); lumiere(cx, cy, 230, '#ff4030', 0.2); break;
+    case 'defi_boss': { // épreuve de jōnin : arène sombre, sceau pourpre, bannières au crâne
+      const H = s.H * TUILE; voile(g, cx, cy, larg * 0.48, H * 0.42, '#1a0a1c', 0.45); cercleSceau(g, cx, cy, 70, '#b85a9a'); cercleSceau(g, cx, cy, 34, '#d07ab8'); lumiere(cx, cy, 230, '#d060b0', 0.22);
+      for (const x of [56, larg - 76]) banniere(g, x, 34, '#5a1a4a', '#d8a0c8', 'crane');
+      break;
+    }
+    case 'sacrifice': { // autel de tribut : estrade de pierre, rigole de sang, bougies rouges, lanternes de pierre
+      const A = pts('A')[0] || [cx, cy]; voile(g, A[0], A[1], 120, 70, '#3a0808', 0.4); cercleSceau(g, A[0], A[1] + 4, 44, '#a02a2a');
+      estrade(g, A[0] - 30, A[1] - 12, 60, 30); lumiere(A[0], A[1], 140, '#ff3030', 0.34);
+      for (let k = 0; k < 6; k++) { const a = Math.PI * (0.15 + k * 0.14); bougie(g, Math.round(A[0] + Math.cos(a) * 62) - 2, Math.round(A[1] + 6 - Math.sin(a) * 40), '#c83030'); }
+      for (const x of [A[0] - 92, A[0] + 82]) lanternePierre(g, x, A[1] - 34);
+      const al = new Alea('sang' + s.id); for (let k = 0; k < 9; k++) { const x = A[0] - 40 + al.entier(80), y = A[1] + 18 + al.entier(26); g.drawImage(ellipse(1 + al.entier(3), 1, 'rgba(110,10,16,0.55)'), x, y); }
+      break;
+    }
+    case 'defi': { // épreuve chūnin : arène tracée à la craie, emblème des kunai croisés, bannières
+      g.globalAlpha = 0.22; g.fillStyle = '#e8e4d8'; const H = s.H * TUILE, m = 64;
+      g.fillRect(m, m, larg - 2 * m, 2); g.fillRect(m, H - m, larg - 2 * m, 2); g.fillRect(m, m, 2, H - 2 * m); g.fillRect(larg - m, m, 2, H - 2 * m + 2);
+      for (let k = -18; k <= 18; k++) { g.fillRect(cx + k - 1, cy + k - 1, 3, 3); g.fillRect(cx + k - 1, cy - k - 1, 3, 3); } g.globalAlpha = 1;
+      cercleSceau(g, cx, cy, 34, '#9a9ab0'); for (const x of [56, larg - 76]) banniere(g, x, 34, '#2a3a5a', '#e8e4d8', 'kunais');
+      break;
+    }
+    case 'bibliotheque': { lumiere(cx, cy, 200, '#ffd8a0', 0.25); // étagères le long du mur du haut, tapis, piles de rouleaux
       for (let x = 44; x < larg - 44; x += 40) { g.fillStyle = '#4a3222'; g.fillRect(x, 34, 34, 22); g.fillStyle = '#2a1c14'; g.fillRect(x, 44, 34, 2);
         for (let k = 0; k < 7; k++) { g.fillStyle = ['#c8b890', '#a88a5a', '#d8c8a0', '#8a3a2a', '#3a5a8a'][(x + k * 3) % 5]; g.fillRect(x + 2 + k * 4, 37, 3, 6); g.fillRect(x + 3 + k * 4, 47, 3, 6); } }
+      const I = pts('I'); if (I.length) { const xs = I.map(p => p[0]); tapis(g, Math.min(...xs) - 30, I[0][1] - 22, Math.max(...xs) - Math.min(...xs) + 60, 44, '#1e3a32', '#b0985a', '#2e5a4a'); }
+      const H = s.H * TUILE; for (const [x, y] of [[44, H - 64], [larg - 64, H - 64], [larg / 2 - 70, 62], [larg / 2 + 52, 62]]) pileRouleaux(g, x, y);
       break;
     }
-    case 'coffres': { // salle aux coffres : voile doré, sceau de mosaïque, pièces éparses qui accrochent la lumière
+    case 'coffres': { // salle aux coffres : voile doré, sceau de mosaïque, pièces, tas d'or aux angles, barreaux
       lumiere(cx, cy, 200, '#ffd870', 0.25); const H = s.H * TUILE; voile(g, cx, cy, larg * 0.36, H * 0.3, '#ffd870', 0.18); cercleSceau(g, cx, cy, 52, '#e8c050');
       const al = new Alea('pieces' + s.id); for (let k = 0; k < 28; k++) { const x = 44 + al.entier(larg - 88), y = 48 + al.entier(H - 96); g.fillStyle = '#7a5a18'; g.fillRect(x, y + 1, 4, 2); g.fillStyle = '#e8c050'; g.fillRect(x, y, 4, 2); g.fillStyle = '#fff4b0'; g.fillRect(x, y, 1, 1); }
+      for (const [x, y] of [[40, 44], [larg - 64, 44], [40, H - 66], [larg - 64, H - 66]]) tasOr(g, x, y);
+      for (let x = 70; x < larg - 70; x += 56) barreaux(g, x, 33);
       break;
     }
-    case 'malediction': { lumiere(cx, cy, 220, '#c02040', 0.28); g.fillStyle = 'rgba(120,20,40,0.35)'; const al = new Alea('fissures' + s.id); for (let k = 0; k < 14; k++) { let x = 40 + al.entier(larg - 80), y = 40 + al.entier(s.H * TUILE - 80); for (let n = 0; n < 12; n++) { g.fillRect(x, y, 2, 2); x += al.entier(5) - 2; y += al.entier(5) - 2; } } break; }
-    case 'repos': { cercleSceau(g, cx, cy, 44, '#6ac8e8'); lumiere(cx, cy, 150, '#70e0ff', 0.35); break; }
-    case 'pacte': { // empreinte interdite : pénombre violette, sceau serpentin sous les offres, bougies noires
+    case 'malediction': { // chambre maudite : pénombre cramoisie, double sceau, fissures rayonnantes, chaînes, crânes, bougies
+      const H = s.H * TUILE; voile(g, cx, cy, larg * 0.5, H * 0.46, '#2a0612', 0.6); lumiere(cx, cy, 220, '#c02040', 0.3);
+      g.fillStyle = 'rgba(110,16,34,0.55)'; const al = new Alea('fissures' + s.id);
+      for (let k = 0; k < 10; k++) { const a = k * Math.PI / 5 + al.suivant() * 0.4; let x = cx + Math.cos(a) * 58, y = cy + Math.sin(a) * 36; for (let n = 0; n < 14; n++) { g.fillRect(Math.round(x), Math.round(y), 2, 1); x += Math.cos(a) * 3 + al.entier(3) - 1; y += Math.sin(a) * 2 + al.entier(3) - 1; } }
+      cercleSceau(g, cx, cy, 60, '#a02a4a'); cercleSceau(g, cx, cy, 30, '#d04a6a');
+      for (const x of [70, 150, larg - 160, larg - 80]) chaine(g, x, 33, 18 + (x % 3) * 6);
+      for (const [x, y] of [[40, 46], [larg - 58, 46], [40, H - 62], [larg - 58, H - 62]]) amasCranes(g, x, y);
+      for (const [dx, dy] of [[-72, 0], [72, 0], [0, -46], [0, 46]]) bougie(g, cx + dx - 2, cy + dy, '#8a2040');
+      break;
+    }
+    case 'repos': { // source chaude : bassin cerclé de pierres, ponton, bambous, lanternes de pierre
+      const A = pts('A')[0] || [cx, cy], S = { x: A[0], y: A[1] }, H = s.H * TUILE;
+      ponton(g, S.x - 70, S.y + 18, 140); bassin(g, S.x, S.y, 46, 24); lumiere(S.x, S.y, 170, '#70e0ff', 0.36);
+      for (const x of [40, 50, 60]) bambou(g, x, H - 40, 54 + (x % 20)); for (const x of [larg - 46, larg - 56, larg - 66]) bambou(g, x, H - 40, 50 + (x % 17));
+      for (const x of [S.x - 96, S.x + 86]) lanternePierre(g, x, S.y - 36);
+      break;
+    }
+    case 'dispositifs': { // comptoir des contrebandiers : tapis, lanternes rouges, caisses et tonneaux contre les murs
+      const H = s.H * TUILE; tapis(g, cx - 120, cy - 40, 240, 92, '#3a1e14', '#9a7a3a', '#5a2e1e'); lumiere(cx, cy, 200, '#ffb060', 0.28);
+      for (const x of [60, 140, larg - 150, larg - 70]) lanterneRouge(g, x, 36);
+      for (const [x, y] of [[40, H - 66], [62, H - 60], [larg - 70, H - 66], [larg - 50, 50]]) tonneau(g, x, y);
+      break;
+    }
+    case 'cache': { // cache secrète : pénombre, toiles d'araignée aux angles, tonneaux, poussière
+      const H = s.H * TUILE; voile(g, cx, cy, larg * 0.55, H * 0.5, '#000000', 0.38);
+      toileCoin(g, 32, 32, 1, 1); toileCoin(g, larg - 33, 32, -1, 1); toileCoin(g, 32, H - 33, 1, -1); toileCoin(g, larg - 33, H - 33, -1, -1);
+      for (const [x, y] of [[44, 48], [larg - 66, H - 70]]) tonneau(g, x, y);
+      break;
+    }
+    case 'isolee': { // chambre de scellement isolée : chaînes au sol vers le centre, sceau bleuté, papiers aux murs
+      const H = s.H * TUILE, I = pts('I')[0] || [cx, cy]; voile(g, I[0], I[1], larg * 0.5, H * 0.45, '#08101c', 0.45);
+      cercleSceau(g, I[0], I[1], 48, '#6a8ac8'); lumiere(I[0], I[1], 160, '#8ab0ff', 0.3);
+      for (const [x, y] of [[40, 44], [larg - 40, 44], [40, H - 44], [larg - 40, H - 44]]) chaineSol(g, x, y, I[0], I[1] + 4);
+      break;
+    }
+    case 'pacte': { // empreinte interdite : pénombre violette, sceau serpentin, statues de serpents, tentures, bougies noires
       const H = s.H * TUILE; voile(g, cx, cy, larg * 0.46, H * 0.4, '#2a0830', 0.6);
       const I = pts('I'); cercleSceau(g, cx, I.length ? I[0][1] : cy, 64, '#7a3a9a'); lumiere(cx, I.length ? I[0][1] : cy, 190, '#a040e0', 0.34);
-      for (const [x, y] of [[48, 48], [larg - 56, 48], [48, H - 64], [larg - 56, H - 64]]) bougie(g, x, y);
+      for (const [x, y] of [[48, 48], [larg - 56, 48], [48, H - 64], [larg - 56, H - 64]]) bougie(g, x, y, '#1c1420');
+      for (const x of [100, larg - 124]) tenture(g, x, 33, '#3a1040', '#a050c0');
+      statueSerpent(g, 76, 58, false); statueSerpent(g, larg - 100, 58, true);
       break;
     }
-    case 'sanctuaire': { // ermites : halo doré, corde sacrée et papiers, mousse
-      const H = s.H * TUILE; voile(g, cx, cy, larg * 0.44, H * 0.38, '#fff0b0', 0.22);
-      cercleSceau(g, cx, cy, 56, '#d8c060'); shimenawa(g, 40, 36, larg - 80); lumiere(cx, cy, 240, '#fff0b0', 0.42);
-      const al = new Alea('mousse' + s.id); for (let k = 0; k < 18; k++) { g.fillStyle = k % 2 ? 'rgba(90,140,60,0.5)' : 'rgba(120,170,80,0.45)'; g.fillRect(40 + al.entier(larg - 80), 48 + al.entier(H - 96), 3 + al.entier(4), 2); }
+    case 'sanctuaire': { // sanctuaire des ermites : lumière blanc-vert, sceau de jade, statues de crapauds, étangs aux nénuphars, mousse
+      const H = s.H * TUILE; voile(g, cx, cy, larg * 0.44, H * 0.38, '#e8fff0', 0.2);
+      cercleSceau(g, cx, cy, 56, '#7ac8a0'); lumiere(cx, cy, 240, '#d8ffe8', 0.4);
+      for (const x of [56, larg - 92]) etang(g, x, H - 74);
+      statueCrapaud(g, cx - 84, cy - 34); statueCrapaud(g, cx + 64, cy - 34);
+      const al = new Alea('mousse' + s.id); for (let k = 0; k < 22; k++) { g.fillStyle = k % 2 ? 'rgba(90,140,60,0.5)' : 'rgba(120,170,80,0.45)'; g.fillRect(40 + al.entier(larg - 80), 48 + al.entier(H - 96), 3 + al.entier(4), 2); }
+      for (const x of [60, larg - 72]) lanternePierre(g, x, 40);
       break;
     }
   }
 }
 // Voile doux (dégradé radial) cuit dans le fond : pénombre ou halo sans bord net
 function voile(g, x, y, rx, ry, c, a) { g.save(); g.imageSmoothingEnabled = true; g.globalAlpha = a; g.drawImage(halo(c, true), x - rx, y - ry, rx * 2, ry * 2); g.restore(); }
-function bougie(g, x, y) {
+function bougie(g, x, y, cire = '#2a2230') {
   g.globalAlpha = 0.18; g.drawImage(disque(9, '#ffb040'), x - 7, y - 12); g.globalAlpha = 1;
-  g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 1, 6, 11); g.fillStyle = '#2a2230'; g.fillRect(x, y, 4, 9);
+  g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 1, 6, 11); g.fillStyle = cire; g.fillRect(x, y, 4, 9); g.fillStyle = nuancer(cire, 1.3); g.fillRect(x, y, 1, 9);
   g.fillStyle = '#ffb040'; g.fillRect(x + 1, y - 4, 2, 3); g.fillStyle = '#fff0a0'; g.fillRect(x + 1, y - 3, 2, 1);
   lumiere(x + 2, y - 3, 48, '#ffb040', 0.55, true, 0.35);
 }
@@ -272,6 +326,65 @@ function etagereMarchandises(g, x, y) { // étagère : rouleaux, fioles et sacs 
     for (let k = 0; k < n; k++) { const c = al.choix(['#c8b890', '#8a3a2a', '#3a5a8a', '#5a9a5a', '#d8a040', '#e8dcc0']); const h = 4 + al.entier(4), w = n === 6 ? 5 : 6, xx = x + 2 + k * (n === 6 ? 8 : 10); g.fillStyle = '#1c1420'; g.fillRect(xx - 1, ry - h - 1, w + 2, h + 1); g.fillStyle = c; g.fillRect(xx, ry - h, w, h); g.fillStyle = nuancer(c, 1.3); g.fillRect(xx, ry - h, 1, h); }
     g.fillStyle = '#5a3a22'; g.fillRect(x, ry, 52, 3); g.fillStyle = '#2a1c14'; g.fillRect(x, ry + 3, 52, 1);
   }
+}
+// ── Mobilier des salles spéciales (cuit dans le fond, sans collision) ──
+const RECT = (g, x, y, l, h, c) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), l, h); };
+function banniere(g, x, y, fond, motif, embleme) { // bannière de tissu suspendue, bas en pointe, emblème
+  RECT(g, x - 2, y, 24, 2, '#3a2a1c'); RECT(g, x, y + 2, 20, 22, '#1c1420'); RECT(g, x + 1, y + 2, 18, 21, fond); RECT(g, x + 1, y + 2, 2, 21, nuancer(fond, 1.25));
+  for (let k = 0; k < 9; k++) { RECT(g, x + 1 + k, y + 23 + Math.floor(k / 2), 1, 1, '#1c1420'); RECT(g, x + 18 - k, y + 23 + Math.floor(k / 2), 1, 1, '#1c1420'); RECT(g, x + 2 + k, y + 22 + Math.floor(k / 2), 16 - 2 * k > 0 ? 16 - 2 * k : 0, 1, fond); }
+  const cx = x + 10, cy = y + 11;
+  if (embleme === 'kunais') for (let k = -5; k <= 5; k++) { RECT(g, cx + k, cy + k, 1, 1, motif); RECT(g, cx + k, cy - k, 1, 1, motif); }
+  else if (embleme === 'crane') { RECT(g, cx - 4, cy - 4, 8, 6, motif); RECT(g, cx - 3, cy + 2, 6, 2, motif); RECT(g, cx - 3, cy - 2, 2, 2, fond); RECT(g, cx + 1, cy - 2, 2, 2, fond); RECT(g, cx - 1, cy + 2, 1, 2, fond); RECT(g, cx + 1, cy + 2, 1, 2, fond); }
+}
+function chaine(g, x, y, l) { for (let k = 0; k < l; k += 3) { RECT(g, x, y + k, 3, 3, '#1c1420'); RECT(g, x + (k % 6 ? 1 : 0), y + k + 1, k % 6 ? 1 : 3, 1, '#8a8a94'); } RECT(g, x - 1, y + l, 5, 3, '#4a4a54'); }
+function chaineSol(g, x0, y0, x1, y1) { const n = Math.round(Math.hypot(x1 - x0, y1 - y0) / 4); for (let k = 0; k < n; k++) { const x = x0 + (x1 - x0) * k / n, y = y0 + (y1 - y0) * k / n; RECT(g, x - 1, y - 1, 3, 3, 'rgba(20,16,24,0.7)'); RECT(g, x, y, 1, 1, k % 2 ? '#8a8a9a' : '#5a5a68'); } }
+function crane(g, x, y) { RECT(g, x - 1, y - 1, 8, 7, '#1c1420'); RECT(g, x, y, 6, 4, '#e0d8c8'); RECT(g, x + 1, y + 4, 4, 1, '#c8c0b0'); RECT(g, x + 1, y + 1, 1, 2, '#1c1420'); RECT(g, x + 4, y + 1, 1, 2, '#1c1420'); RECT(g, x + 2, y + 3, 1, 1, '#5a5048'); }
+function amasCranes(g, x, y) { g.drawImage(ellipse(11, 3, 'rgba(0,0,0,0.3)'), x - 2, y + 10); crane(g, x, y + 5); crane(g, x + 7, y + 6); crane(g, x + 3, y); RECT(g, x + 12, y + 9, 5, 1, '#d8d0c0'); }
+function estrade(g, x, y, l, h) { RECT(g, x - 2, y + h, l + 4, 3, 'rgba(0,0,0,0.3)'); RECT(g, x, y, l, h, '#4a3a3e'); RECT(g, x, y, l, 2, '#7a6a6e'); RECT(g, x, y + h - 3, l, 3, '#2a2024'); RECT(g, x + 4, y + h / 2, l - 8, 1, '#6a1a1a'); RECT(g, x + l / 2, y + h / 2, 1, h / 2 - 3, '#6a1a1a'); }
+function lanternePierre(g, x, y) { // tōrō : chapeau, foyer lumineux, fût, socle
+  g.drawImage(ellipse(8, 2, 'rgba(0,0,0,0.3)'), x - 2, y + 26); RECT(g, x - 1, y, 14, 4, '#1c1420'); RECT(g, x, y, 12, 3, '#9a948a'); RECT(g, x + 2, y + 4, 8, 7, '#1c1420'); RECT(g, x + 3, y + 5, 6, 5, '#ffd890'); RECT(g, x + 5, y + 5, 2, 5, '#fff4c0');
+  RECT(g, x + 4, y + 11, 4, 11, '#1c1420'); RECT(g, x + 5, y + 11, 2, 11, '#8a847a'); RECT(g, x + 1, y + 22, 10, 4, '#1c1420'); RECT(g, x + 2, y + 22, 8, 3, '#7a746a');
+  lumiere(x + 6, y + 8, 60, '#ffd890', 0.5, true, 0.3);
+}
+function lanterneRouge(g, x, y) { RECT(g, x + 4, y, 1, 4, '#1c1420'); RECT(g, x, y + 4, 9, 12, '#1c1420'); RECT(g, x + 1, y + 5, 7, 10, '#d8303a'); RECT(g, x + 3, y + 6, 3, 8, '#ff9a6a'); RECT(g, x + 1, y + 8, 7, 1, '#7a1a20'); RECT(g, x + 1, y + 12, 7, 1, '#7a1a20'); lumiere(x + 4, y + 10, 70, '#ff9a60', 0.55, true, 0.3); }
+function tonneau(g, x, y) { g.drawImage(ellipse(9, 3, 'rgba(0,0,0,0.3)'), x - 1, y + 16); RECT(g, x - 1, y - 1, 18, 20, '#1c1420'); RECT(g, x, y, 16, 18, '#8a5a32'); RECT(g, x, y, 16, 3, '#a87444'); RECT(g, x + 2, y + 3, 1, 14, '#6a4226'); RECT(g, x + 8, y + 3, 1, 14, '#6a4226'); RECT(g, x + 13, y + 3, 1, 14, '#6a4226'); for (const yy of [5, 13]) { RECT(g, x, y + yy, 16, 2, '#3a3a44'); RECT(g, x, y + yy, 16, 1, '#7a7a88'); } }
+function toileCoin(g, x, y, sx, sy) { for (let k = 0; k < 4; k++) { const r = 6 + k * 6; for (let a = 0; a <= 8; a++) { const t = a / 8 * Math.PI / 2; RECT(g, x + sx * Math.round(Math.cos(t) * r), y + sy * Math.round(Math.sin(t) * r), 1, 1, 'rgba(225,225,235,0.42)'); } } for (let a = 0; a <= 3; a++) { const t = a / 3 * Math.PI / 2; lignePixel(g, x, y, x + sx * Math.cos(t) * 26, y + sy * Math.sin(t) * 26, 'rgba(225,225,235,0.35)'); } }
+function tasOr(g, x, y) { g.drawImage(ellipse(12, 4, 'rgba(0,0,0,0.25)'), x - 1, y + 10); for (let r = 0; r < 4; r++) for (let k = 0; k < 6 - r; k++) { const xx = x + k * 4 + r * 2, yy = y + 10 - r * 3; RECT(g, xx, yy + 1, 4, 2, '#7a5a18'); RECT(g, xx, yy, 4, 2, '#e8c050'); RECT(g, xx, yy, 1, 1, '#fff4b0'); } }
+function barreaux(g, x, y) { RECT(g, x - 1, y + 2, 22, 20, '#0e0a10'); for (let k = 0; k < 5; k++) { RECT(g, x + k * 5, y + 2, 2, 20, '#4a4a54'); RECT(g, x + k * 5, y + 2, 1, 20, '#8a8a98'); } RECT(g, x - 1, y + 2, 22, 2, '#5a5a66'); RECT(g, x - 1, y + 20, 22, 2, '#3a3a44'); }
+function pileRouleaux(g, x, y) { for (const [dx, dy, c] of [[0, 6, '#e8dcc0'], [7, 6, '#d8c8a0'], [3, 2, '#c8b890'], [11, 3, '#e0d0b0']]) { RECT(g, x + dx - 1, y + dy - 1, 10, 6, '#1c1420'); RECT(g, x + dx, y + dy, 8, 4, c); RECT(g, x + dx, y + dy, 2, 4, '#a8885a'); RECT(g, x + dx + 4, y + dy, 1, 4, '#b02a2a'); } }
+function bassin(g, x, y, rx, ry) { // source chaude : margelle de pierres, eau claire, reflets
+  g.drawImage(ellipse(rx + 6, ry + 5, '#3a3a3e'), x - rx - 6, y - ry - 5); g.drawImage(ellipse(rx + 4, ry + 3, '#8a8478'), x - rx - 4, y - ry - 3);
+  const al = new Alea('margelle' + x); for (let k = 0; k < 22; k++) { const a = k / 22 * Math.PI * 2, px = x + Math.cos(a) * (rx + 2), py = y + Math.sin(a) * (ry + 1.5); RECT(g, px - 2, py - 1, 4 + al.entier(2), 3, al.chance(0.5) ? '#a8a294' : '#6a665e'); RECT(g, px - 2, py - 1, 2, 1, '#c8c2b4'); }
+  g.drawImage(ellipse(rx, ry, '#2a6a8a'), x - rx, y - ry); g.drawImage(ellipse(rx - 4, ry - 3, '#3a8ab0'), x - rx + 4, y - ry + 3);
+  for (let k = 0; k < 6; k++) { const a = al.suivant() * Math.PI * 2, d = al.suivant() * 0.7; RECT(g, x + Math.cos(a) * rx * d, y + Math.sin(a) * ry * d, 4, 1, 'rgba(220,250,255,0.45)'); }
+}
+function ponton(g, x, y, l) { for (let k = 0; k < l; k += 8) { RECT(g, x + k, y, 7, 10, '#1c1420'); RECT(g, x + k, y, 6, 9, '#8a6a42'); RECT(g, x + k, y, 6, 1, '#a88a5a'); } RECT(g, x, y + 9, l, 2, '#3a2a1a'); }
+function bambou(g, x, y, h) { for (let k = 0; k < h; k++) { RECT(g, x, y - k, 3, 1, k % 12 === 0 ? '#3a5a2a' : '#6aa04a'); RECT(g, x, y - k, 1, 1, '#9ac87a'); } RECT(g, x + 3, y - h + 4, 4, 2, '#5a9a3a'); RECT(g, x - 4, y - h + 14, 4, 2, '#5a9a3a'); }
+function etang(g, x, y) { g.drawImage(ellipse(20, 9, '#2a4a3a'), x - 2, y - 2); g.drawImage(ellipse(18, 7, '#3a7a6a'), x, y); for (const [dx, dy] of [[8, 3], [22, 6], [14, 9]]) { g.drawImage(disque(3, '#4a9a4a'), x + dx, y + dy); RECT(g, x + dx + 2, y + dy + 1, 2, 1, '#f0a0c0'); } }
+function statueCrapaud(g, x, y) { // crapaud de pierre assis sur un socle
+  g.drawImage(ellipse(12, 3, 'rgba(0,0,0,0.3)'), x - 1, y + 24); RECT(g, x - 1, y + 17, 24, 8, '#1c1420'); RECT(g, x, y + 18, 22, 6, '#7a7468'); RECT(g, x, y + 18, 22, 1, '#9a9488');
+  RECT(g, x + 1, y + 5, 20, 14, '#1c1420'); RECT(g, x + 2, y + 6, 18, 12, '#8a9a7a'); RECT(g, x + 2, y + 6, 18, 2, '#aabb98'); RECT(g, x + 3, y + 2, 5, 5, '#1c1420'); RECT(g, x + 14, y + 2, 5, 5, '#1c1420'); RECT(g, x + 4, y + 3, 3, 3, '#aabb98'); RECT(g, x + 15, y + 3, 3, 3, '#aabb98');
+  RECT(g, x + 5, y + 4, 1, 1, '#1c1420'); RECT(g, x + 16, y + 4, 1, 1, '#1c1420'); RECT(g, x + 6, y + 12, 10, 1, '#5e6c52'); RECT(g, x + 2, y + 16, 5, 2, '#5e6c52'); RECT(g, x + 15, y + 16, 5, 2, '#5e6c52');
+}
+function statueSerpent(g, x, y, miroir) { // serpent dressé de pierre sombre, yeux violets
+  const sx = miroir ? -1 : 1, X = dx => x + (miroir ? 22 - dx : dx);
+  g.drawImage(ellipse(11, 3, 'rgba(0,0,0,0.35)'), x, y + 26); RECT(g, x, y + 20, 22, 7, '#1c1420'); RECT(g, x + 1, y + 21, 20, 5, '#3a3440');
+  for (let k = 0; k < 16; k++) { const xx = X(8 + Math.round(Math.sin(k * 0.6) * 4)); RECT(g, xx - 1, y + 20 - k, 6, 1, '#1c1420'); RECT(g, xx, y + 20 - k, 4, 1, k % 4 ? '#4a4252' : '#5a5264'); }
+  RECT(g, X(6) - (miroir ? 8 : 0), y, 10, 6, '#1c1420'); RECT(g, X(7) - (miroir ? 8 : 0), y + 1, 8, 4, '#5a5264'); RECT(g, X(8) - (miroir ? 1 : 0), y + 2, 1, 1, '#c070ff'); RECT(g, X(12) - (miroir ? 1 : 0), y + 4, 4 * sx > 0 ? 3 : 3, 1, '#c03040');
+  lumiere(x + 11, y + 4, 36, '#c070ff', 0.4, true, 0.3);
+}
+function tenture(g, x, y, fond, liseré) { RECT(g, x - 2, y, 28, 2, '#2a1c14'); for (let k = 0; k < 24; k++) { const h = 26 + Math.round(Math.sin(k * 0.7) * 2); RECT(g, x + k, y + 2, 1, h, k % 6 === 0 ? nuancer(fond, 0.7) : fond); } RECT(g, x, y + 2, 24, 1, liseré); RECT(g, x, y + 27, 24, 1, liseré); }
+// Épines autour d'une porte de chambre maudite (côté salle) : sortir coûte une demi-unité
+function epinesPorte(g, p, x, y) {
+  // une rangée de pointes d'os qui sortent du cadre vers la salle : longues, base sombre, pointe claire
+  const V = { haut: [0, 1], bas: [0, -1], gauche: [1, 0], droite: [-1, 0] }[p.dir]; if (!V) return;
+  const [dx, dy] = V, ox = p.dir === 'gauche' ? x + 30 : p.dir === 'droite' ? x + 1 : x, oy = p.dir === 'haut' ? y + 30 : p.dir === 'bas' ? y + 1 : y;
+  for (let i = 0; i < 6; i++) {
+    const o = 2 + i * 5 + (i > 2 ? 1 : 0), L = i % 2 ? 6 : 9, px = dx ? ox : ox + o, py = dy ? oy : oy + o;
+    for (let k = 0; k < L; k++) { const l = k < 2 ? 3 : k < L - 2 ? 2 : 1, c = k < 2 ? '#5a1a24' : k < L - 2 ? '#c8bcb4' : '#fff8f0';
+      if (dx) RECT(g, px + dx * k, py - (l >> 1), 1, l, c); else RECT(g, px - (l >> 1), py + dy * k, l, 1, c); }
+  }
+  lumiere(x + 16 + dx * 14, y + 16 + dy * 14, 40, '#ff3050', 0.35, true, 0.3);
 }
 function shimenawa(g, x, y, l) { // corde tressée en arc et papiers shide en zigzag
   const o = i => Math.round(Math.sin(i / l * Math.PI) * 6);
@@ -327,6 +440,7 @@ function dessinerCadrePorte(g, s, p, V) {
   dessinerSymbolePorte(g, C.sym, p.dir === 'gauche' ? x + 5 : p.dir === 'droite' ? x + 27 : sx, sy, C.lum);
   g.restore();
   if (p.type === 'boutique' || p.type === 'heritage') ornementsPorte(g, p, x, y);
+  if (s.type === 'malediction' && !p.revelee) epinesPorte(g, p, x, y);
 }
 // De part et d'autre de la porte : deux lanternes de papier rouges (échoppe) ou deux flammes d'or (héritage)
 function ornementsPorte(g, p, x, y) {
@@ -393,7 +507,10 @@ function rendreJeu(g) {
     return;
   }
   rendreSalle(g, Math.round(_secousse.x), Math.round(_secousse.y));
+  // préchauffage : hors combat, le fond d'une salle voisine se construit en avance (pas d'à-coup à la porte)
+  if (s && !s.combat && G.etage && (++_prechauffe % 6) === 0) for (const p of s.portes) { const v = G.etage.salles[p.vers]; if (v && !v._fond && p.etat !== 'secrete') { fondSalle(v); break; } }
 }
+let _prechauffe = 0;
 function capturerVue() { const c = toile(ECRAN_L, ECRAN_H); const g = ctxDe(c); g.fillStyle = '#07060a'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); rendreSalle(g, 0, 0); return c; }
 
 function rendreSalle(g, ox, oy) {

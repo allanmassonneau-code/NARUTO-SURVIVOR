@@ -255,7 +255,7 @@ const IA = {
     const J = cibleEnnemi(e); const I = e.ia;
     if (I.phase === 'saut') {
       I.t += dt; const k = Math.min(1, I.t / I.duree); e.x = lerp(I.x0, I.x1, k); e.y = lerp(I.y0, I.y1, k); e.z = Math.sin(k * Math.PI) * 30; e.intangible = e.z > 10;
-      if (k >= 1) { I.phase = null; e.z = 0; e.intangible = false; e.tAtt = P.intervalle; if (P.atterrissage === 'anneau') for (let i = 0; i < 6; i++) tirEnnemi(e.x, e.y - 6, i * Math.PI / 3, 4); if (P.atterrissage === 'onde') ondeEnnemie(e.x, e.y, 1.6 * TUILE); Son.jouer('pas_lourd', 0.6); }
+      if (k >= 1) { I.phase = null; e.z = 0; e.intangible = false; e.tAtt = P.intervalle; if (P.atterrissage === 'anneau') for (let i = 0; i < 6; i++) tirEnnemi(e.x, e.y - 6, i * Math.PI / 3, 4, { source: e.id, apparence: P.proj }); if (P.atterrissage === 'onde') ondeEnnemie(e.x, e.y, 1.6 * TUILE); Son.jouer('pas_lourd', 0.6); }
       return;
     }
     e.vx *= 0.8; e.vy *= 0.8; e.tAtt -= dt;
@@ -272,7 +272,7 @@ const IA = {
       const n = P.nombre || 1;
       for (let i = 0; i < n; i++) {
         const cx = J.x + (n > 1 ? (Math.random() - 0.5) * 60 : 0), cy = J.y + (n > 1 ? (Math.random() - 0.5) * 40 : 0);
-        lancerArc(e.x, e.y - 10, cx, cy, P.duree || 0.9, { eclabousse: P.eclabousse || 'anneau', zone: P.zone, source: e.id });
+        lancerArc(e.x, e.y - 10, cx, cy, P.duree || 0.9, { eclabousse: P.eclabousse || 'anneau', zone: P.zone, source: e.id, proj: P.proj });
       }
     }
   },
@@ -306,7 +306,7 @@ const IA = {
       I.t -= dt;
       if (P.attaque === 'poursuite') IA.poursuivant(e, dt, P); else { e.vx *= 0.8; e.vy *= 0.8; }
       e.tAtt -= dt;
-      if (e.tAtt <= 0 && P.attaque !== 'poursuite') { e.tAtt = P.cadence || 1; const a = angleVers(e.x, e.y, J.x, J.y); if (P.attaque === 'eventail') for (let i = -1; i <= 1; i++) tirEnnemi(e.x, e.y - 8, a + i * 0.28, P.vProj || 5, { source: e.id }); else tirEnnemi(e.x, e.y - 8, a, P.vProj || 5, { source: e.id }); Son.jouer('tir_ennemi'); }
+      if (e.tAtt <= 0 && P.attaque !== 'poursuite') { e.tAtt = P.cadence || 1; const a = angleVers(e.x, e.y, J.x, J.y); if (P.attaque === 'eventail') for (let i = -1; i <= 1; i++) tirEnnemi(e.x, e.y - 8, a + i * 0.28, P.vProj || 5, { source: e.id, apparence: P.proj }); else tirEnnemi(e.x, e.y - 8, a, P.vProj || 5, { source: e.id, apparence: P.proj }); Son.jouer('tir_ennemi'); }
       if (I.t <= 0) { I.phase = 'retour'; I.t = 0.4; }
       return;
     }
@@ -337,7 +337,7 @@ const IA = {
   },
   lourd(e, dt, P) {
     const J = cibleEnnemi(e);
-    if (e.ia.tele) { e.vx *= 0.6; e.vy *= 0.6; if (e.ia.tele.t <= 0) { e.ia.tele = null; ondeEnnemie(e.x, e.y, (P.rOnde || 2) * TUILE); if (P.anneau) for (let i = 0; i < 8; i++) tirEnnemi(e.x, e.y - 6, i * Math.PI / 4 + Math.PI / 8, 4); secousse(4, null); Son.jouer('pas_lourd'); } return; }
+    if (e.ia.tele) { e.vx *= 0.6; e.vy *= 0.6; if (e.ia.tele.t <= 0) { e.ia.tele = null; ondeEnnemie(e.x, e.y, (P.rOnde || 2) * TUILE); if (P.anneau) for (let i = 0; i < 8; i++) tirEnnemi(e.x, e.y - 6, i * Math.PI / 4 + Math.PI / 8, 4, { source: e.id, apparence: P.proj }); secousse(4, null); Son.jouer('pas_lourd'); } return; }
     IA.poursuivant(e, dt, P);
     e.tAtt -= dt;
     if (e.tAtt <= 0 && dist(e.x, e.y, J.x, J.y) < 2.6 * TUILE) { telegraphe(e, 'frappe', P.tele || 0.6); e.tAtt = P.cadence || 2.5; G.effets.push({ type: 'cercle_danger', x: e.x, y: e.y, r: (P.rOnde || 2) * TUILE, age: 0, duree: P.tele || 0.6 }); }
@@ -351,7 +351,7 @@ const IA = {
       if (I.t <= 0 && dist(e.x, e.y, J.x, J.y) < 2.2 * TUILE) { I.phase = 'monte'; I.t = P.tele || 0.6; G.effets.push({ type: 'fissure', x: e.x, y: e.y, r: e.r + 4, age: 0, duree: I.t }); }
       return;
     }
-    if (I.phase === 'monte') { I.t -= dt; if (I.t <= 0) { I.phase = 'dehors'; I.t = P.dureeDehors || 1.6; e.cache = false; if (P.jet) for (let i = 0; i < 4; i++) tirEnnemi(e.x, e.y - 6, i * Math.PI / 2 + Math.PI / 4, 4.2, { source: e.id }); Son.jouer('rocher', 0.6); } return; }
+    if (I.phase === 'monte') { I.t -= dt; if (I.t <= 0) { I.phase = 'dehors'; I.t = P.dureeDehors || 1.6; e.cache = false; if (P.jet) for (let i = 0; i < 4; i++) tirEnnemi(e.x, e.y - 6, i * Math.PI / 2 + Math.PI / 4, 4.2, { source: e.id, apparence: P.proj }); Son.jouer('rocher', 0.6); } return; }
     if (I.phase === 'dehors') { I.t -= dt; e.vx *= 0.8; e.vy *= 0.8; if (I.t <= 0) { I.phase = 'sous'; I.t = P.sous || 1.4; e.cache = true; } }
   },
   nuee(e, dt, P) { IA.volant(e, dt, Object.assign({ erratique: 1.2 }, P)); },
@@ -419,8 +419,8 @@ function majArcs(dt) {
     a.t += dt; if (a.t < a.duree) continue; a.fini = true;
     const o = a.o; Son.jouer('eau', 0.5);
     const J = G.joueur; if (!J.intangible && dist(a.x1, a.y1, J.x, J.y) < (o.r || 14) + 4) blesserJoueur(G.degatsEnnemis, { type: 'arc' });
-    if (o.eclabousse === 'anneau') for (let i = 0; i < 4; i++) tirEnnemi(a.x1, a.y1 - 4, i * Math.PI / 2 + Math.PI / 4, 3.5, { source: o.source });
-    if (o.eclabousse === 'croix') for (let i = 0; i < 4; i++) tirEnnemi(a.x1, a.y1 - 4, i * Math.PI / 2, 3.5, { source: o.source });
+    if (o.eclabousse === 'anneau') for (let i = 0; i < 4; i++) tirEnnemi(a.x1, a.y1 - 4, i * Math.PI / 2 + Math.PI / 4, 3.5, { source: o.source, apparence: o.proj });
+    if (o.eclabousse === 'croix') for (let i = 0; i < 4; i++) tirEnnemi(a.x1, a.y1 - 4, i * Math.PI / 2, 3.5, { source: o.source, apparence: o.proj });
     if (o.zone) creerZone(a.x1, a.y1, o.zone, 5, { r: 18, proprio: 'ennemi' });
     G.effets.push({ type: 'eclaboussure', x: a.x1, y: a.y1, age: 0, duree: 0.3 });
   }
