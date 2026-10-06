@@ -11425,7 +11425,7 @@ const Rendu = {
   ajuster() {
     const dpr = window.devicePixelRatio || 1; const L = innerWidth * dpr, H = innerHeight * dpr;
     let e = Math.min(L / ECRAN_L, H / ECRAN_H);
-    if (!G.reglages || G.reglages.echelle !== 'ajustee') e = Math.max(1, Math.floor(e));
+    if (e >= 1 && (!G.reglages || G.reglages.echelle !== 'ajustee')) e = Math.floor(e); // fenêtre plus petite que l'écran interne : on réduit au lieu de rogner
     this.echelle = e;
     this.ecran.width = Math.round(ECRAN_L * e); this.ecran.height = Math.round(ECRAN_H * e);
     this.ecran.style.width = (this.ecran.width / dpr) + 'px'; this.ecran.style.height = (this.ecran.height / dpr) + 'px';

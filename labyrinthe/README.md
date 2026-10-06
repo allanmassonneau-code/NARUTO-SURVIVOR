@@ -6,7 +6,7 @@ Roguelike de salles en pixel art, jouable à la manette, dans l'univers de *Naru
 
 ## Jouer
 
-Ouvrez **[`jeu/index.html`](jeu/index.html)** dans un navigateur récent (Chrome, Edge, Firefox). Un seul fichier, aucune installation, fonctionne hors ligne. Branchez une manette avant ou pendant la partie.
+Ouvrez **[`jeu/index.html`](jeu/index.html)** dans un navigateur récent (Chrome, Edge, Firefox). Un seul fichier, aucune installation, fonctionne hors ligne. Branchez une manette avant ou pendant la partie. Une version en ligne (privée) est publiée sur claude.ai : [Labyrinthe des Sceaux](https://claude.ai/artifact/25uwJF1LF2Vw5XeKkW2J7V).
 
 | Action | Manette | Clavier |
 |---|---|---|
