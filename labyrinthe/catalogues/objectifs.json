@@ -258,7 +258,7 @@
  },
  {
   "id": "OBJ_017",
-  "nom": "Première fin",
+  "nom": "Les mues du serpent",
   "desc": "Vaincre Orochimaru.",
   "condition": {
    "type": "boss",

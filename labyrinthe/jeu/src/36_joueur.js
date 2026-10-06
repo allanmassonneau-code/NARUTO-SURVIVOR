@@ -36,6 +36,7 @@ function creerJoueur(defId) {
 }
 
 // ── Déplacement ──
+const DERIVE_POUSSEE = 0.75; // force 2 ≈ 48 px/s, soit un tiers de la marche
 function majDeplacementJoueur(J, dt) {
   const s = G.salle; const E = Entrees;
   let mx = E.deplacement.x, my = E.deplacement.y;
@@ -51,12 +52,13 @@ function majDeplacementJoueur(J, dt) {
   const acc = (Math.hypot(mx, my) > 0.05 ? 12.5 : 14.5) * dt;
   J.vx = lerp(J.vx, cx, Math.min(1, acc)); J.vy = lerp(J.vy, cy, Math.min(1, acc));
   if (Math.abs(J.vx) < 0.5) J.vx = 0; if (Math.abs(J.vy) < 0.5) J.vy = 0;
-  // courant (variante Écluses) et aspiration (Pain)
-  if (G.pousse) { J.vx += G.pousse.x * dt * 60; J.vy += G.pousse.y * dt * 60; }
+  // courant (variante Écluses), aspiration (Pain, Danzō, gourde), bourrasque : une dérive en tuiles/s ajoutée au
+  // déplacement (pas à la vitesse, que le freinage effacerait) — on peut toujours marcher contre elle
+  const derive = G.pousse ? [G.pousse.x * TUILE * DERIVE_POUSSEE, G.pousse.y * TUILE * DERIVE_POUSSEE] : [0, 0];
   // aide d'alignement devant une porte ouverte
   aideAlignementPorte(J, mx, my, dt);
   const mode = J.vol ? 'vol' : 'marche';
-  const bute = deplacerCercle(s, J, J.vx * dt, J.vy * dt, mode);
+  const bute = deplacerCercle(s, J, (J.vx + derive[0]) * dt, (J.vy + derive[1]) * dt, mode);
   if (bute.bloqueX) J.vx = 0; if (bute.bloqueY) J.vy = 0; // contre un mur, la vitesse ne pousse plus (ni ne dévie les tirs)
   // animation
   const m = Math.hypot(J.vx, J.vy);

@@ -4,10 +4,11 @@
 // durcissement, attraction, présence intangible, arène évolutive, météore.
 // ═══════════════════════════════════════════════════════════════════════════
 
+const SPRITE_KARASU = { type: 'boss', perso: 'karasu' }; // objet partagé : un seul cache de sprite
 const INIT_BOSS = {
   serpent(e) { e.segments = []; for (let i = 0; i < 6; i++) e.segments.push({ x: e.x, y: e.y + i * 10 }); },
   freres(e) {
-    const f = creerEnnemi('BOS_003', e.x + 70, e.y, { sansApparition: false }); f.boss = true; f.phase = 0; f.etatB = 'choix'; f.tB = 1.6; f.lies = [e]; e.lies = [f]; f.derniere = null; f.contact = G.degatsContact;
+    const f = creerEnnemi('BOS_003', e.x + 70, e.y, { sansApparition: false }); f.boss = true; f.forme = 1; f.phase = 0; f.etatB = 'choix'; f.tB = 1.6; f.lies = [e]; e.lies = [f]; f.derniere = null; f.contact = G.degatsContact;
     e.chaine = f; f.chaineAvec = e;
   },
   brume(e) { e.brume = 0; },
@@ -17,11 +18,11 @@ const INIT_BOSS = {
   },
   kankuro(e) { // le marionnettiste se cache ; Karasu attaque
     const s = G.salle; const [tx, ty] = tuileLibreLoin(s, G.joueur.x, G.joueur.y); [e.x, e.y] = centreTuile(tx, ty);
-    const k = creerEnnemi('ENM_035', e.x - 60, e.y, { sansApparition: false, pvMult: 5 }); k.def = Object.assign({}, k.def, { nom: 'Karasu' }); k.parent = e.uid; k.boss = false; e.lies = [k]; e.karasu = k;
+    const k = creerEnnemi('ENM_035', e.x - 60, e.y, { sansApparition: false, pvMult: 5 }); k.def = Object.assign({}, k.def, { nom: 'Karasu', sprite: SPRITE_KARASU, r: 12 }); k.r = 12; k.parent = e.uid; k.boss = false; e.lies = [k]; e.karasu = k;
   },
   trio(e) {
     e.role = 'dosu'; const s = G.salle;
-    for (const [role, dx] of [['zaku', -90], ['kin', 90]]) { const f = creerEnnemi('BOS_007', e.x + dx, e.y + 20); f.boss = true; f.role = role; f.phase = 0; f.etatB = 'choix'; f.tB = 1.2 + Math.random(); f.lies = [e]; e.lies.push(f); f.contact = G.degatsContact;
+    for (const [role, dx] of [['zaku', -90], ['kin', 90]]) { const f = creerEnnemi('BOS_007', e.x + dx, e.y + 20); f.boss = true; f.role = role; f.forme = role === 'zaku' ? 1 : 2; f.phase = 0; f.etatB = 'choix'; f.tB = 1.2 + Math.random(); f.lies = [e]; e.lies.push(f); f.contact = G.degatsContact;
       if (role === 'zaku') f.def = Object.assign({}, f.def, { attaques: [{ id: 'souffle', type: 'spirale', duree: 1.6, bras: 1, v: 5, intervalle: 0.08, pas: 0.12, tele: 0.6, recup: 0.8 }, { id: 'salve', type: 'salve', n: 5, v: 5, ecart: 0.15, tele: 0.5, recup: 0.6 }] });
       if (role === 'kin') f.def = Object.assign({}, f.def, { attaques: [{ id: 'clochettes', type: 'zone', zone: 'acide', n: 2, r: 1, dureeZone: 4, tele: 0.6, recup: 0.8 }, { id: 'senbon', type: 'salve', n: 3, v: 6.5, ecart: 0.12, rafales: 2, tele: 0.45, recup: 0.6, proj: 'kunai_ennemi' }] }); }
   },
@@ -176,4 +177,112 @@ const SPECIAUX_BOSS = {
   arene_change(e, a, m) { if (m === 'debut') basculerArene(e); },
   dragons_bois(e, a, m) { if (m === 'debut') { for (let i = 0; i < 3; i++) setTimeoutJeu(() => { if (e.mort) return; const p = tirEnnemi(e.x, e.y - 12, ciblerJoueur(e) + (i - 1) * 0.5, 3.4, { taille: 2.4, duree: 3.2, source: e.id, apparence: 'kunai_ennemi' }); p.traj = { guidageEnnemi: 1.0 }; p.lourd = true; }, i * 0.35); } },
   balayage_queues(e, a, m) { if (m === 'debut') { const base = ciblerJoueur(e); for (let k = -1; k <= 1; k++) { const ang = base + k * 0.9; setTimeoutJeu(() => { if (e.mort) return; G.effets.push({ type: 'arc_danger', x: e.x, y: e.y, a: ang, arc: 0.7, r: 200, age: 0, duree: 0.5 }); setTimeoutJeu(() => { const J = G.joueur; if (!J.intangible && dist(e.x, e.y, J.x, J.y) < 200 && Math.abs(diffAngle(ang, angleVers(e.x, e.y, J.x, J.y))) < 0.35) blesserJoueur(2, { type: 'queue', x: e.x, y: e.y }); G.effets.push({ type: 'balayage', x: e.x, y: e.y, a: ang, arc: 0.7, r: 200, age: 0, duree: 0.25 }); Son.jouer('vent'); }, 0.5); }, (k + 1) * 0.35); } } },
+};
+
+// ═══ Nouveaux boss : initialisations, changements de phase, attaques signatures ═══
+Object.assign(INIT_BOSS, {
+  mille_pattes(e) { e.segments = []; for (let i = 0; i < 8; i++) e.segments.push({ x: e.x, y: e.y + i * 9 }); },
+  kinkaku(e) { // le cadet (argent) : gourde qui aspire, corde dorée qui balaie, sabre
+    const f = creerEnnemi('BOS_035', e.x + 80, e.y, { sansApparition: false }); f.boss = true; f.forme = 1; f.phase = 0; f.etatB = 'choix'; f.tB = 1.4; f.lies = [e]; e.lies = [f]; f.derniere = null; f.contact = G.degatsContact;
+    f.def = Object.assign({}, f.def, { nom: 'Ginkaku', attaques: [
+      { id: 'gourde', type: 'attraction', force: 2, tele: 0.7, duree: 1.6, recup: 0.7 },
+      { id: 'corde', type: 'rayon', couleur: '#e8c050', duree: 0.7, balaye: 1.4, tele: 0.8, recup: 0.6 },
+      { id: 'sabre', type: 'lame', portee: 2.6, arc: 150, tele: 0.55, recup: 0.6, vague: true },
+    ] });
+  },
+});
+// Moitiés qui se détachent (Sakon → Ukon, Zetsu → moitié blanche) : leurs propres attaques
+const MOITIES = {
+  BOS_031: { nom: 'Ukon', attaques: [{ id: 'surgir', type: 'special', nom: 'saisie_obito', tele: 0.2, duree: 1.3, recup: 0.9 }, { id: 'enchainement', type: 'special', nom: 'enchainement', cone: { arc: 130, portee: 2.4 }, tele: 0.45, duree: 0.8, recup: 0.6 }] },
+  BOS_034: { nom: 'Zetsu blanc', attaques: [{ id: 'spores', type: 'special', nom: 'spores', tele: 0.5, duree: 1.2, recup: 0.6 }, { id: 'charge', type: 'charge', vCharge: 9, tele: 0.5, duree: 0.9, recup: 0.8 }, { id: 'clones', type: 'invocation', ennemi: 'ENM_053', n: 1, max: 2, tele: 0.6, recup: 0.4, recharge: 7 }] },
+};
+Object.assign(ACTIONS_PHASE, {
+  rage(e) { e.forme = 1; e.acceleration = (e.acceleration || 1) * 1.3; G.effets.push({ type: 'onde', x: e.x, y: e.y, r: 120, age: 0, duree: 0.5, couleur: '#ff8a3a' }); secousse(6, null); },
+  muter(e) { e.forme = (e.forme || 0) + 1; G.effets.push({ type: 'mue', x: e.x, y: e.y, age: 0, duree: 0.8 }); G.effets.push({ type: 'debris', x: e.x, y: e.y, age: 0, duree: 0.6, n: 16, couleur: '#8ac860' }); Son.jouer('fumee'); },
+  separer(e) { // une moitié se détache : un boss lié qui emporte une part de la vitalité (la barre reste continue)
+    const M = MOITIES[e.def.id]; if (!M) return;
+    const [x, y] = pointAleatoire(G.salle, 3), part = Math.max(20, Math.round(e.pv * 0.4));
+    const f = creerEnnemi(e.def.id, x, y, { sansApparition: false }); f.boss = true; f.forme = 1; f.phase = 99; f.etatB = 'choix'; f.tB = 1.2; f.derniere = null; f.contact = G.degatsContact;
+    f.def = Object.assign({}, f.def, { nom: M.nom, attaques: M.attaques, phases: [] }); f.pv = f.pvMax = part; e.pv -= part; e.pvMax -= part;
+    f.lies = [e]; e.lies.push(f); e.forme = 2;
+    G.effets.push({ type: 'fumee', x, y: y - 10, age: 0, duree: 0.6, taille: 3 }); Son.jouer('invocation');
+  },
+  izanagi(e) { // Danzō : une illusion tombe à sa place ; il réapparaît ailleurs, vitalité en partie rendue
+    G.effets.push(Object.assign({ type: 'cadavre_boss', x: e.x, y: e.y - (e.z || 0), r: e.r, age: 0, duree: 1.1 }, imageMort(e)));
+    const [x, y] = pointAleatoire(G.salle, 3); e.x = x; e.y = y; e.pv = Math.min(e.pvMax, e.pv + e.pvMax * 0.25); e.forme = 1;
+    e.invulnerable = true; setTimeoutJeu(() => { e.invulnerable = false; }, 1.0); e.etatB = 'choix'; e.tB = 1.0;
+    G.effets.push({ type: 'fumee', x, y: y - 10, age: 0, duree: 0.6, taille: 3 }); Son.jouer('gong', 0.5);
+  },
+});
+Object.assign(SPECIAUX_BOSS, {
+  kaiten(e, a, m, dt) { // Neji : dôme tournant — efface vos tirs proches, repousse et blesse au contact
+    const J = G.joueur, R = 2.8 * TUILE;
+    if (m === 'debut') { e.kaiten = true; e.kaitenTouche = false; G.effets.push({ type: 'kaiten', x: e.x, y: e.y, r: 1.6 * TUILE, age: 0, duree: a.duree || 0.9, suit: e }); Son.jouer('vent'); }
+    if (m === 'maj') {
+      for (const p of G.proj) if (p.proprio !== 'ennemi' && !p.mort && dist(p.x, p.y, e.x, e.y - 10) < R) { p.mort = true; G.effets.push({ type: 'etincelle', x: p.x, y: p.y, age: 0, duree: 0.15 }); }
+      if (!J.intangible && dist(e.x, e.y, J.x, J.y) < 1.7 * TUILE) { const [dx, dy] = normaliser(J.x - e.x, J.y - e.y); J.vx += dx * 2000 * dt; J.vy += dy * 2000 * dt; if (!e.kaitenTouche) { e.kaitenTouche = true; blesserJoueur(G.degatsEnnemis, { type: 'kaiten', x: e.x, y: e.y }); } }
+    }
+    if (m === 'fin') e.kaiten = false;
+  },
+  soixante_quatre(e, a, m) { // Neji : tout le cercle annoncé est frappé (sortez-en)
+    if (m === 'debut') { const r = 2.3 * TUILE; G.effets.push({ type: 'trigramme', x: e.x, y: e.y, r, age: 0, duree: 0.7 }); cercleDanger(e.x, e.y, r, 0.65);
+      setTimeoutJeu(() => { if (e.mort) return; const J = G.joueur; if (!J.intangible && dist(e.x, e.y, J.x, J.y) < r + 3) blesserJoueur(G.degatsEnnemis, { type: 'paumes', x: e.x, y: e.y }); for (let k = 0; k < 10; k++) { const an = Math.random() * Math.PI * 2, d = Math.random() * r; G.effets.push({ type: 'etoile_impact', x: e.x + Math.cos(an) * d, y: e.y + Math.sin(an) * d * 0.7, age: 0, duree: 0.12 + k * 0.02, r: 5 }); } Son.jouer('impact', 0.8); secousse(4, null); }, 0.65); }
+  },
+  bourrasque(e, a, m, dt) { // Temari : cône de vent annoncé — repousse et efface vos tirs dans le cône
+    const J = G.joueur, R = (a.cone.portee || 6) * TUILE, demi = (a.cone.arc || 70) * Math.PI / 360;
+    const dans = (x, y) => dist(e.x, e.y, x, y) < R && Math.abs(diffAngle(e.aCone, angleVers(e.x, e.y, x, y))) < demi;
+    if (m === 'debut') Son.jouer('vent');
+    if (m === 'maj') {
+      if (dans(J.x, J.y) && !J.intangible) G.pousse = { x: Math.cos(e.aCone) * (a.force || 2.6), y: Math.sin(e.aCone) * (a.force || 2.6), boss: true, vent: true }; else if (G.pousse && G.pousse.vent) G.pousse = null;
+      for (const p of G.proj) if (p.proprio !== 'ennemi' && !p.mort && dans(p.x, p.y)) p.mort = true;
+      if (Math.random() < 0.8) { const an = e.aCone + (Math.random() - 0.5) * 2 * demi, d = Math.random() * R * 0.8; G.particules.push({ x: e.x + Math.cos(an) * d, y: e.y - 8 + Math.sin(an) * d, vx: Math.cos(an) * 180, vy: Math.sin(an) * 180, age: 0, duree: 0.25, couleur: '#e8fff4', taille: 2 }); }
+    }
+    if (m === 'fin' && G.pousse && G.pousse.vent) G.pousse = null;
+  },
+  kamatari(e, a, m) { // Temari : la belette à la faux traverse la salle sur une ligne annoncée
+    if (m === 'debut') { const s = G.salle, an = ciblerJoueur(e), L = longueurJusquAuMur(s, e.x, e.y - 8, an, true); ligneDanger(e.x, e.y - 8, an, L, 22, 0.75);
+      setTimeoutJeu(() => { if (e.mort) return; tirEnnemi(e.x, e.y - 8, an, 13, { taille: 2.6, r: 9, duree: 2, source: e.id, apparence: 'vent', spectral: true }); Son.jouer('vent'); secousse(3, an); }, 0.75); }
+  },
+  toile_kidomaru(e, a, m) { // Kidōmaru : boules de toile qui collent au sol et ralentissent 8 s
+    if (m === 'debut') { const J = G.joueur; for (let k = 0; k < 4; k++) { const [x, y] = k === 0 ? [J.x, J.y] : [J.x + (Math.random() - 0.5) * 5 * TUILE, J.y + (Math.random() - 0.5) * 3.5 * TUILE]; cercleDanger(x, y, 18, 0.6); setTimeoutJeu(() => { if (e.mort) return; creerZone(x, y, 'toile_zone', 8, { r: 18, proprio: 'ennemi' }); G.effets.push({ type: 'impact_sol', x, y, r: 14, age: 0, duree: 0.3 }); }, 0.6); } Son.jouer('lame', 0.4); }
+  },
+  fleche_doree(e, a, m, dt) { // Kidōmaru : la visée suit le joueur 1 s, se fige 0,35 s, puis la flèche d'or traverse les obstacles
+    const s = G.salle, ox = e.x, oy = e.y - e.hauteur;
+    if (m === 'debut') { e.fleche = { t: 0, a: ciblerJoueur(e) }; e.fleche.ligne = { type: 'ligne_danger', x: ox, y: oy, a: e.fleche.a, l: longueurJusquAuMur(s, ox, oy, e.fleche.a, true), largeur: 6, age: 0, duree: 1.0 }; G.effets.push(e.fleche.ligne); Son.jouer('telegraphe', 0.5); }
+    if (m === 'maj' && e.fleche) { const F = e.fleche; F.t += dt;
+      if (F.t < 1.0) { F.a = ciblerJoueur(e); Object.assign(F.ligne, { x: ox, y: oy, a: F.a, l: longueurJusquAuMur(s, ox, oy, F.a, true) }); }
+      else if (!F.fige) { F.fige = true; ligneDanger(ox, oy, F.a, longueurJusquAuMur(s, ox, oy, F.a, true), 12, 0.35); Son.jouer('telegraphe', 0.7); }
+      else if (F.t >= 1.35 && !F.tire) { F.tire = true; tirEnnemi(ox, oy, F.a, 15, { taille: 2.2, r: 6, duree: 2, source: e.id, apparence: 'fleche_or', spectral: true }); Son.jouer('lame'); secousse(3, F.a); }
+    }
+    if (m === 'fin') e.fleche = null;
+  },
+  esprits_flute(e, a, m) { if (m === 'debut') { for (let i = 0; i < 3; i++) setTimeoutJeu(() => { if (e.mort) return; const p = tirEnnemi(e.x, e.y - 14, ciblerJoueur(e) + (i - 1) * 0.6, 3.2, { taille: 1.8, duree: 3.4, source: e.id, apparence: 'son' }); p.traj = { guidageEnnemi: 1.3 }; }, i * 0.22); Son.jouer('vent', 0.5); } },
+  liquefaction(e, a, m, dt) { // Suigetsu : flaque intangible qui file vers vous, puis surgit couperet levé ; la foudre l'en empêche
+    const J = G.joueur;
+    if (m === 'debut') { if (e.secheT > G.temps) { e.tB = 0; G.textes.push({ x: e.x, y: e.y - 44, t: 'Trop sec pour se liquéfier !', age: 0, duree: 1, couleur: '#a8d8ff' }); return; } e.liquide = true; e.alpha = 0.22; e.intangible = true; Son.jouer('eau'); }
+    if (m === 'maj' && e.liquide) { const [dx, dy] = normaliser(J.x - e.x, J.y - e.y); deplacerEnnemi(e, dx, dy, 3.6 * TUILE, dt); if (Math.random() < 0.5) G.particules.push({ x: e.x + (Math.random() - 0.5) * 16, y: e.y - 1, vx: 0, vy: -10, age: 0, duree: 0.3, couleur: '#8ac8f0', taille: 2 }); }
+    if (m === 'fin' && e.liquide) { e.liquide = false; e.alpha = 1; e.intangible = false; G.effets.push({ type: 'eclaboussure', x: e.x, y: e.y, age: 0, duree: 0.4 }); const at = e.def.attaques.find(x => x.id === 'couperet'); if (at) { e.attaque = at; e.etatB = 'tele'; e.tB = 0.5; lancerTelegraphe(e, at); } }
+  },
+  enchainement(e, a, m) { // Sakon, Ukon : deux arcs successifs, le second réorienté et annoncé
+    if (m === 'debut') {
+      const r = (a.cone.portee || 2.4) * TUILE, demi = (a.cone.arc || 130) * Math.PI / 360;
+      const frappe = an => { const J = G.joueur; if (!J.intangible && dist(e.x, e.y, J.x, J.y) < r + 4 && Math.abs(diffAngle(an, angleVers(e.x, e.y, J.x, J.y))) < demi) blesserJoueur(G.degatsEnnemis, { type: 'lame', x: e.x, y: e.y }); G.effets.push({ type: 'balayage', x: e.x, y: e.y - 6, a: an, arc: demi * 2, r, age: 0, duree: 0.2 }); Son.jouer('lame', 0.7); };
+      frappe(e.aCone);
+      setTimeoutJeu(() => { if (e.mort) return; const an = ciblerJoueur(e); G.effets.push({ type: 'arc_danger', x: e.x, y: e.y - 6, a: an, arc: demi * 2, r, age: 0, duree: 0.3 }); setTimeoutJeu(() => !e.mort && frappe(an), 0.3); }, 0.15);
+    }
+  },
+  spores(e, a, m) { if (m === 'debut') { for (let i = 0; i < 5; i++) setTimeoutJeu(() => { if (e.mort) return; const p = tirEnnemi(e.x, e.y - 14, ciblerJoueur(e) + (i - 2) * 0.5, 2.6, { taille: 1.5, duree: 4, source: e.id, apparence: 'spore' }); p.traj = { guidageEnnemi: 0.9 }; }, i * 0.15); Son.jouer('vent', 0.4); } },
+  racines(e, a, m) { // Zetsu, Danzō : trois lignes de racines percent le sol vers vous
+    if (m === 'debut') { const base = ciblerJoueur(e); for (const d of [-0.45, 0, 0.45]) for (let k = 1; k <= 6; k++) { const an = base + d, x = e.x + Math.cos(an) * k * 30, y = e.y + Math.sin(an) * k * 30; setTimeoutJeu(() => !e.mort && frappeSolEnnemie(x, y, 13, 0.55, { visuel: 'racines', son: k === 1 && d === 0 ? 'rocher' : false }), k * 0.09); } }
+  },
+  bashosen(e, a, m) { // Kinkaku : l'éventail souffle un cône de flammes et laisse deux foyers
+    if (m === 'debut') { for (let k = 0; k < 2; k++) setTimeoutJeu(() => !e.mort && salveBoss(e, 7, 5.2, 0.15, { apparence: 'feu' }), k * 0.3); const R = (a.cone.portee || 5) * TUILE * 0.7; for (const d of [-0.35, 0.35]) creerZone(e.x + Math.cos(e.aCone + d) * R, e.y + Math.sin(e.aCone + d) * R, 'feu_ennemi', 5, { r: 0.9 * TUILE, proprio: 'ennemi', naissance: 0.6 }); Son.jouer('feu'); }
+  },
+});
+// Suigetsu : la foudre le dessèche (+50 %, pas de liquéfaction pendant 4 s) ; Neji : rien ne traverse le tourbillon
+const _infligerNouveaux = infligerDegats;
+infligerDegats = function (e, deg, src = {}) {
+  if (e.def && e.def.faibleRaiton && src.elements && src.elements.has && src.elements.has('raiton')) { deg *= 1.5; e.secheT = G.temps + 4; }
+  if (e.kaiten && (src.type === 'projectile' || src.type === 'laser' || src.type === 'faisceau')) return false;
+  return _infligerNouveaux(e, deg, src);
 };

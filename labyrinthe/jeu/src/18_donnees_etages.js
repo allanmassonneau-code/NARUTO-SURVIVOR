@@ -91,13 +91,13 @@
   DON.positions = [
     null,
     { pos: 1, chapitre: 1, themes: ['THM_ACA', 'THM_FOR'], salles: [8, 10], speciales: { heritage: 1, boutique: 1 }, boss: ['BOS_001', 'BOS_002', 'BOS_003'], objetsAttendus: '2 à 3', degats: 1 },
-    { pos: 2, chapitre: 1, themes: ['THM_ACA', 'THM_FOR'], salles: [10, 12], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.3, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.1, coffres: 0.1 }, boss: ['BOS_004', 'BOS_005'], objetsAttendus: '2 à 4', degats: 1 },
-    { pos: 3, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [11, 13], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.1, repos: 0.15 }, boss: ['BOS_006', 'BOS_007', 'BOS_008'], objetsAttendus: '2 à 4', degats: 1 },
-    { pos: 4, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [12, 14], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.15 }, boss: ['BOS_009', 'BOS_010'], objetsAttendus: '2 à 4', degats: 1 },
-    { pos: 5, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [13, 15], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_011', 'BOS_012', 'BOS_013'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 6, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [14, 16], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_014'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 7, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [15, 17], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.15, coffres: 0.12, repos: 0.2 }, boss: ['BOS_015', 'BOS_016', 'BOS_017'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019', 'BOS_023'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 2, chapitre: 1, themes: ['THM_ACA', 'THM_FOR'], salles: [10, 12], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.3, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.1, coffres: 0.1 }, boss: ['BOS_004', 'BOS_005', 'BOS_025', 'BOS_026'], objetsAttendus: '2 à 4', degats: 1 },
+    { pos: 3, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [11, 13], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.1, repos: 0.15 }, boss: ['BOS_006', 'BOS_007', 'BOS_008', 'BOS_024'], objetsAttendus: '2 à 4', degats: 1 },
+    { pos: 4, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [12, 14], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.15 }, boss: ['BOS_009', 'BOS_010', 'BOS_027', 'BOS_028'], objetsAttendus: '2 à 4', degats: 1 },
+    { pos: 5, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [13, 15], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_011', 'BOS_012', 'BOS_013', 'BOS_029'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 6, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [14, 16], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_014', 'BOS_030', 'BOS_031', 'BOS_033'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 7, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [15, 17], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.15, coffres: 0.12, repos: 0.2 }, boss: ['BOS_015', 'BOS_016', 'BOS_017', 'BOS_034', 'BOS_032'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019', 'BOS_023', 'BOS_035'], objetsAttendus: '2 à 4', degats: 2 },
   ];
   DON.branches = {
     lumiere: { pos: 9, chapitre: 5, themes: ['THM_MYO'], salles: [16, 18], speciales: { heritage: 1, boutique: 0.6 }, boss: ['BOS_020'], degats: 2 },
@@ -106,9 +106,9 @@
 
   // Routes et fins (RTE) — graphe des dépendances documenté dans le dossier
   const RT = o => DON.routes.push(o);
-  RT({ id: 'RTE_01', nom: 'Première fin : le sceau fissuré', bifurcation: 'étage 6', prerequis: 'aucun', boss: 'BOS_014', etages: 6,
-    recompense: 'Ouvre les étages 7-8 (chapitre IV) ; Mue du serpent (PSV_143) et Rituel de permutation (ACT_031) via OBJ_017', marque: 'Serpent', indice: 'Toujours ouverte.' });
-  RT({ id: 'RTE_02', nom: 'Deuxième fin : la pluie sans fin', bifurcation: 'étage 8', prerequis: 'RTE_01 accomplie', boss: 'BOS_018|BOS_019', etages: 8,
+  RT({ id: 'RTE_01', nom: 'Première fin : le sceau fissuré', bifurcation: 'étage 6', prerequis: 'aucun', boss: 'BOS_014|BOS_030|BOS_031|BOS_033', etages: 6,
+    recompense: 'Ouvre les étages 7-8 (chapitre IV) ; vaincre Orochimaru (OBJ_017) donne en plus Mue du serpent (PSV_143) et Rituel de permutation (ACT_031)', marque: 'Serpent', indice: 'Toujours ouverte.' });
+  RT({ id: 'RTE_02', nom: 'Deuxième fin : la pluie sans fin', bifurcation: 'étage 8', prerequis: 'RTE_01 accomplie', boss: 'BOS_018|BOS_019|BOS_023|BOS_035', etages: 8,
     recompense: 'Ouvre les deux branches de l’étage 9 ; Sceau de la mort (PSV_131) et Transfert d’esprit (ACT_029) via OBJ_039', marque: 'Nuage rouge', indice: 'Après la première fin, le labyrinthe s’approfondit.' });
   RT({ id: 'RTE_03', nom: 'Branche de la Lumière : Mont Myōboku', bifurcation: 'après le boss de l’étage 8', prerequis: 'RTE_02 accomplie ; aucun pacte interdit acheté pendant la partie', boss: 'BOS_020', etages: 9,
     recompense: 'Nature du sage (PSV_144) et Sceau de scellement (ACT_027) ajoutés aux pools (OBJ_046)', marque: 'Crapaud', indice: 'Un rayon de lumière ne s’ouvre qu’à ceux qui n’ont rien vendu d’eux-mêmes.' });

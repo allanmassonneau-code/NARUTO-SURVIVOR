@@ -182,6 +182,9 @@ function dessinerIntroBoss(g) {
   g.globalAlpha = a; bandeau(g, -40, 128, ECRAN_L + 80, 84, '#c02838', 'rgba(10,6,16,0.9)');
   g.fillStyle = '#6a1020'; g.fillRect(0, 131, ECRAN_L, 1); g.fillRect(0, 208, ECRAN_L, 1);
   const x = lerp(-200, 320, Math.min(1, k * 4));
+  // portrait : le boss peint entre par la droite, arme levée, découpé par le bandeau
+  const sp = spriteEnnemi({ def: I.d, frame: 0 }), im = sp.frames[sp.attaque ? 2 : 0];
+  if (im) { const px = Math.round(lerp(ECRAN_L + 40, ECRAN_L - 120, Math.min(1, k * 3.2))); g.save(); g.beginPath(); g.rect(0, 132, ECRAN_L, 76); g.clip(); g.drawImage(im, px - Math.round(im.width / 2), 207 - im.height + (sp.base || 0)); g.restore(); }
   Police.ecrire(g, I.d.titre || '', x, 146, '#d8a0a0', { a: 'c' });
   Police.ecrire(g, I.d.nom, x, 162, '#fff0e0', { a: 'c', e: 3, contour: '#1c1420' });
   g.globalAlpha = 1;

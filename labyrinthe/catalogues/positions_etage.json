@@ -45,7 +45,9 @@
   },
   "boss": [
    "BOS_004",
-   "BOS_005"
+   "BOS_005",
+   "BOS_025",
+   "BOS_026"
   ],
   "objetsAttendus": "2 à 4",
   "degats": 1
@@ -75,7 +77,8 @@
   "boss": [
    "BOS_006",
    "BOS_007",
-   "BOS_008"
+   "BOS_008",
+   "BOS_024"
   ],
   "objetsAttendus": "2 à 4",
   "degats": 1
@@ -105,7 +108,9 @@
   },
   "boss": [
    "BOS_009",
-   "BOS_010"
+   "BOS_010",
+   "BOS_027",
+   "BOS_028"
   ],
   "objetsAttendus": "2 à 4",
   "degats": 1
@@ -135,7 +140,8 @@
   "boss": [
    "BOS_011",
    "BOS_012",
-   "BOS_013"
+   "BOS_013",
+   "BOS_029"
   ],
   "objetsAttendus": "2 à 4",
   "degats": 2
@@ -164,7 +170,10 @@
    "repos": 0.2
   },
   "boss": [
-   "BOS_014"
+   "BOS_014",
+   "BOS_030",
+   "BOS_031",
+   "BOS_033"
   ],
   "objetsAttendus": "2 à 4",
   "degats": 2
@@ -194,7 +203,9 @@
   "boss": [
    "BOS_015",
    "BOS_016",
-   "BOS_017"
+   "BOS_017",
+   "BOS_034",
+   "BOS_032"
   ],
   "objetsAttendus": "2 à 4",
   "degats": 2
@@ -225,7 +236,8 @@
   "boss": [
    "BOS_018",
    "BOS_019",
-   "BOS_023"
+   "BOS_023",
+   "BOS_035"
   ],
   "objetsAttendus": "2 à 4",
   "degats": 2

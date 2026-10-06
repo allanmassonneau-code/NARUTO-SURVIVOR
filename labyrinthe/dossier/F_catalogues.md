@@ -20,8 +20,8 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 | Transformations d’ensemble | 13 | 12 | 40 |
 | Thèmes d’étage | 10 | 6 | 12 |
 | Variantes d’étage | 18 | 12 | 24 |
-| Boss (dont mini-boss) | 25 | 25 | 70 |
-| Archétypes ennemis | 76 | 60 | 140 |
+| Boss (dont mini-boss) | 37 | 25 | 70 |
+| Archétypes ennemis | 77 | 60 | 140 |
 | Modèles de salles | 120 | 120 | 500 |
 | Objectifs de déblocage | 80 | 80 | 250 |
 | Défis jouables | 30 | 30 | 80 |
@@ -380,7 +380,7 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | FAM_LUCIOLE | Luciole | luciole | — | — | — |
 | FAM_POUPEE | Poupée d’entraînement | bloqueur | — | — | bloque les tirs |
 
-## Ennemis (ENM) — 76
+## Ennemis (ENM) — 77
 
 | ID | Nom | Rôle | Comportement | PV | Vitesse | Rayon | Thèmes | Description |
 |---|---|---|---|---|---|---|---|---|
@@ -460,8 +460,9 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | ENM_094 | Ombre de chakra | p | poursuivant | 30 | 1.9 | 10 | BIJ |  |
 | ENM_095 | Queue de chakra | c | chargeur | 30 | 1.6 | 10 | BIJ |  |
 | ENM_096 | Papillon de papier | v | kamikaze | 8 | 2.8 | 6 | invocation | Invoqué par Konan : fond sur vous et explose au contact (il clignote avant). |
+| ENM_097 | Démon de la flûte | l | lourd | 40 | 0.9 | 13 | invocation | Invoqué par Tayuya : colosse aux yeux bandés, frappe le sol en onde et en anneau de notes ; il disparaît avec elle. |
 
-## Boss (BOS) — 25
+## Boss (BOS) — 37
 
 | ID | Nom | Titre | Étage | PV | Attaques | Phases | Mécanique |
 |---|---|---|---|---|---|---|---|
@@ -488,6 +489,18 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | BOS_020 | Le Gardien du Sceau | Celui qui tient le labyrinthe | 9 | 800 | chaines, anneaux, spirale, arene | 66 %, 33 % | Arène évolutive : des blocs apparaissent entre les phases ; chaînes balayantes. |
 | BOS_021 | Madara (empreinte) | L’ancien rival | 9 | 900 | meteore, feu, bois, sabre | 50 % | Attaques massives : météore (abri : loin du centre marqué), dragons de bois, grands balayages. |
 | BOS_022 | Empreinte des Dix Queues | La brèche instable | 8 | 1000 | queues, bombe, pluie, anneau | — | Immobile et gigantesque : queues balayantes, rayon, anneaux à brèche. |
+| BOS_025 | Neji | Le tourbillon céleste | 2 | 290 | kaiten, paumes, paume, elan | 50 % | Tourbillon défensif annoncé : il efface vos tirs proches et repousse au contact ; les soixante-quatre paumes frappent tout son cercle (sortez-en) ; paumes d’air à distance. |
+| BOS_026 | Mille-pattes géant | La chose sous la forêt | 2 | 280 | terrier, ruee, venin | 50 % | Plonge sous terre et ressurgit sous vos pieds ; ses ruées laissent une traînée de venin ; son long corps blesse au contact. |
+| BOS_024 | Temari | La tempête de l’éventail | 3 | 320 | lames, bourrasque, tornade, kamatari | 50 % | Lames de vent en éventail, bourrasque en cône (annoncée) qui repousse et efface vos tirs, tornade, et la belette à la faux qui traverse la salle sur une ligne annoncée. |
+| BOS_027 | Kidōmaru | La toile dorée | 4 | 370 | toile, kunai, araignees, fleche | 50 % | Tisse des toiles collantes au sol, lance six kunai à la fois, appelle des araignées tisseuses ; à mi-vie, la flèche d’or : la ligne de visée vous suit, se fige, puis la flèche traverse tout. |
+| BOS_028 | Tayuya | La flûte des démons | 4 | 330 | demons, melodie, notes, esprits | 50 % | Garde ses distances en jouant de la flûte : démons géants aux yeux bandés (ils tombent avec elle), ondes sonores à brèche, spirales de notes, esprits chercheurs. |
+| BOS_029 | Suigetsu | L’homme-eau | 5 | 410 | liquefaction, couperet, pistolet, flot | 45 % | Se liquéfie en flaque intangible pour surgir près de vous, couperet levé ; pistolet à eau, flots ralentissants. La foudre lui inflige 50 % de plus et l’empêche de se liquéfier pendant 4 s. |
+| BOS_030 | Jūgo | La marque de la rage | 6 | 500 | poing, oiseaux, secousse, massue, propulsion, canon, pluie | 60 % | Calme, il appelle les oiseaux, frappe le sol et cogne. À 60 %, la marque le recouvre (forme enragée, plus rapide) : massue de chair, ruées explosives, canon de chakra, pluie de rochers. |
+| BOS_031 | Sakon et Ukon | Deux en un seul corps | 6 | 420 | enchainement, charge, salve | 55 % | Enchaînements à deux têtes (deux arcs successifs). À 55 %, Ukon se détache : deux adversaires liés ; Ukon plonge dans le sol et surgit à côté de vous. |
+| BOS_033 | Chimère des cuves | L’expérience évadée | 6 | 540 | ruee, crachat, pince, mares, tentacules, sujets | 66 %, 33 % | Une expérience évadée des cuves. À chaque tiers de vitalité perdu, elle mute (nouvelle silhouette, nouvelles attaques) : ruées acides, pince, mares, tentacules et sujets réanimés. |
+| BOS_034 | Zetsu | Celui qui pousse sous le champ de bataille | 7 | 440 | surgir, spores, clones, racines | 50 % | Plonge dans le sol et ressurgit sous vous, spores chercheuses, clones blancs, racines qui percent le sol en lignes. À 50 %, la moitié blanche se détache et combat à part. |
+| BOS_032 | Danzō | La racine | 7 | 430 | vent, baku, balles, racines | 30 % | Rafales de lames de vent, aspiration du tapir qui vous attire, anneaux de vent à brèche, racines qui percent le sol. Une seule fois, à 30 %, l’Izanagi : une illusion tombe à sa place et il reprend 25 % de vitalité ailleurs. |
+| BOS_035 | Kinkaku et Ginkaku | Les frères d’or et d’argent | 8 | 330 | eventail, flammes, charge | — | Deux frères liés : l’aîné (or) souffle des vagues de feu à l’éventail, le cadet (argent) aspire avec sa gourde et fouette de sa corde dorée. Quand l’un tombe, l’autre entre en rage. |
 | BOS_M01 | Mue gardienne | Gardienne du pacte | mini-boss | 150 | charge, anneau | — | — |
 | BOS_M02 | Crapaud gardien | Gardien du sanctuaire | mini-boss | 150 | saut, langue | — | — |
 
@@ -510,8 +523,8 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 
 | ID | Nom | Bifurcation | Prérequis | Boss | Récompense | Marque |
 |---|---|---|---|---|---|---|
-| RTE_01 | Première fin : le sceau fissuré | étage 6 | aucun | Orochimaru | Ouvre les étages 7-8 (chapitre IV) ; Mue du serpent (PSV_143) et Rituel de permutation (ACT_031) via OBJ_017 | Serpent |
-| RTE_02 | Deuxième fin : la pluie sans fin | étage 8 | RTE_01 accomplie | Pain / Obito | Ouvre les deux branches de l’étage 9 ; Sceau de la mort (PSV_131) et Transfert d’esprit (ACT_029) via OBJ_039 | Nuage rouge |
+| RTE_01 | Première fin : le sceau fissuré | étage 6 | aucun | Orochimaru / Jūgo / Sakon et Ukon / Chimère des cuves | Ouvre les étages 7-8 (chapitre IV) ; vaincre Orochimaru (OBJ_017) donne en plus Mue du serpent (PSV_143) et Rituel de permutation (ACT_031) | Serpent |
+| RTE_02 | Deuxième fin : la pluie sans fin | étage 8 | RTE_01 accomplie | Pain / Obito / Konan / Kinkaku et Ginkaku | Ouvre les deux branches de l’étage 9 ; Sceau de la mort (PSV_131) et Transfert d’esprit (ACT_029) via OBJ_039 | Nuage rouge |
 | RTE_03 | Branche de la Lumière : Mont Myōboku | après le boss de l’étage 8 | RTE_02 accomplie ; aucun pacte interdit acheté pendant la partie | Le Gardien du Sceau | Nature du sage (PSV_144) et Sceau de scellement (ACT_027) ajoutés aux pools (OBJ_046) | Crapaud |
 | RTE_04 | Branche de l’Ombre : Profondeurs du sceau | après le boss de l’étage 8 | RTE_02 accomplie | Madara (empreinte) | Réincarnation impure (PSV_140) et Espace-temps intangible (ACT_021) ajoutés aux pools (OBJ_047) | Éventail |
 | RTE_05 | Conseil des épreuves (Boss Rush) | étage 6 | boss de l’étage 6 vaincu en moins de 20:00 (chronomètre de partie) | vagues de boss | Défis « Course de l’examen » (DEF_010) et « Collectionneur pressé » (DEF_011) (OBJ_048) | Parchemin d’or |
@@ -656,7 +669,7 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | OBJ_014 | Requin échoué | vaincre Kisame | PSV_136 Écailles de Samehada |
 | OBJ_015 | Stratégie de l’examen | epreuvesChunin ≥ 2 (cumulé) | CHR_007 Shikamaru, PSV_051 Ombre liante, DEF_016 Ombres et nuages |
 | OBJ_016 | Rituel rompu | vaincre Hidan | PSV_054 Marque de Jashin, PSV_135 Rituel du sang |
-| OBJ_017 | Première fin | vaincre Orochimaru | PSV_143 Mue du serpent, ACT_031 Rituel de permutation |
+| OBJ_017 | Les mues du serpent | vaincre Orochimaru | PSV_143 Mue du serpent, ACT_031 Rituel de permutation |
 | OBJ_018 | Protection absolue | état : protections3 | CHR_008 Gaara |
 | OBJ_019 | L’art éclate | vaincre Deidara | PSV_019 Argile explosive C1, PSV_071 Oiseau d’argile, PSV_110 Argile infinie |
 | OBJ_020 | Au-delà de l’illusion | vaincre Itachi | PSV_053 Flammes noires, ACT_017 Amaterasu (empreinte), ACT_018 Tsukuyomi (empreinte) |

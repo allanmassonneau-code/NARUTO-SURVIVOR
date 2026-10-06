@@ -5,7 +5,6 @@
 // ═══════════════════════════════════════════════════════════════════════════
 (function () {
   const E = (id, nom, role, comportement, pv, vitesse, sprite, params = {}, x = {}) => DON.ennemis.push(Object.assign({ id, nom, role, comportement, pv, vitesse, r: 9, sprite, params, statut: 'création originale', contact: 1 }, x));
-  const N = (masque, corps, o = {}) => Object.assign({ type: 'ninja', masque, corps }, o);
   const K = (cle, couleurs) => ({ type: 'carte', cle, couleurs });
   const S = perso => ({ type: 'shinobi', perso }); // personnage dessiné à part (25_shinobi.js)
   // ── Chapitre I : Académie, Forêt de la Mort ──
@@ -89,5 +88,6 @@
   E('ENM_094', 'Ombre de chakra', 'p', 'poursuivant', 30, 1.9, K('ombre'), {}, { r: 10, champion: 'fantome' });
   E('ENM_095', 'Queue de chakra', 'c', 'chargeur', 30, 1.6, K('queue'), { vCharge: 10, tele: 0.35, recup: 0.6 }, { r: 10 });
   E('ENM_096', 'Papillon de papier', 'v', 'kamikaze', 8, 2.8, K('papillon_papier'), { declenche: 1.2, meche: 0.5 }, { vol: true, r: 6, tache: 'parchemin', desc: 'Invoqué par Konan : fond sur vous et explose au contact (il clignote avant).' });
+  E('ENM_097', 'Démon de la flûte', 'l', 'lourd', 40, 0.9, S('doki'), { cadence: 2.8, rOnde: 2.2, tele: 0.7, anneau: true, proj: 'son' }, { r: 13, desc: 'Invoqué par Tayuya : colosse aux yeux bandés, frappe le sol en onde et en anneau de notes ; il disparaît avec elle.' });
   for (const e of DON.ennemis) if (e.champion) { e.championDefaut = e.champion; delete e.champion; }
 })();

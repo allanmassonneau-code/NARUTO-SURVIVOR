@@ -48,9 +48,13 @@ function mortBoss(e) {
   G.effets.push(Object.assign({ type: 'cadavre_boss', x: e.x, y: e.y - (e.z || 0), r: e.r, age: 0, duree: 1.1 }, imageMort(e)));
   if (!G.reglages.confort && !G.ennemis.some(x => x.boss && !x.mort && x !== e)) G.ralenti = { t: 0, duree: 1.2, k: 0.25 };
   Son.jouer('boss_mort'); secousse(8, null); Entrees.vibrer('boss');
-  for (const f of G.ennemis) if (f.parent === e.uid || e.lies.includes(f)) { if (!f.mort) { f.mort = true; G.effets.push({ type: 'fumee', x: f.x, y: f.y, age: 0, duree: 0.5 }); } }
+  for (const f of G.ennemis) if ((f.parent === e.uid || e.lies.includes(f)) && !f.boss) { if (!f.mort) { f.mort = true; G.effets.push({ type: 'fumee', x: f.x, y: f.y, age: 0, duree: 0.5 }); } } // invocations et marionnettes tombent avec lui ; les boss liés, non
   // boss liés (duo, trio) : la salle se termine quand tous sont vaincus
-  if (G.ennemis.some(x => x.boss && !x.mort && x !== e)) { evenement('elimination', { e }); return; }
+  if (G.ennemis.some(x => x.boss && !x.mort && x !== e)) {
+    const surv = G.ennemis.find(x => x.boss && !x.mort && x !== e && x.lies.includes(e));
+    if (surv && e.def.rageDuo && !surv.enRage) { surv.enRage = true; surv.acceleration = (surv.acceleration || 1) * 1.35; G.textes.push({ x: surv.x, y: surv.y - 50, t: e.def.rageDuo, age: 0, duree: 1.6, couleur: '#ffb070' }); G.effets.push({ type: 'onde', x: surv.x, y: surv.y, r: 90, age: 0, duree: 0.45, couleur: '#ffb070' }); Son.jouer('gong', 0.5); }
+    evenement('elimination', { e }); return;
+  }
   const s = G.salle; G.partie.bossVaincus.push(e.id); Progression.bossVaincu(e.id);
   evenement('elimination', { e }); evenement('boss_vaincu', { id: e.id });
   if (s.type === 'boss') {
@@ -102,7 +106,7 @@ const ACTIONS_PHASE = {
   },
   murs_sable(e) { lancerMursSable(G.salle); Son.jouer('sable'); },
   accelerer(e) { e.acceleration = (e.acceleration || 1) * 1.25; },
-  fin_hiruko(e) { e.def = Object.assign({}, e.def, { ia: 'sasori2' }); e.hiruko = false; G.effets.push({ type: 'debris', x: e.x, y: e.y, age: 0, duree: 0.6, n: 20, couleur: '#6a5a4a' }); },
+  fin_hiruko(e) { e.def = Object.assign({}, e.def, { ia: 'sasori2' }); e.hiruko = false; e.forme = 1; G.effets.push({ type: 'debris', x: e.x, y: e.y, age: 0, duree: 0.6, n: 20, couleur: '#6a5a4a' }); },
   susanoo(e) { e.susanoo = { t: 0, a: ciblerJoueur(e), actif: false }; },
   c3(e) { e.c3Pret = true; },
   arene(e) { basculerArene(e); },
@@ -122,7 +126,7 @@ const IA_BOSS = {
       return;
     }
     if (e.etatB === 'tele') { e.vx *= 0.8; e.vy *= 0.8; if (e.tB <= 0) { e.etatB = 'actif'; e.tB = a_duree(e.attaque); e.sousT = 0; executerAttaqueBoss(e, e.attaque, 'debut'); } return; }
-    if (e.etatB === 'actif') { e.sousT += dt; executerAttaqueBoss(e, e.attaque, 'maj', dt); if (e.tB <= 0) { executerAttaqueBoss(e, e.attaque, 'fin'); e.etatB = 'recup'; e.tB = (e.attaque.recup || 0.6) / (e.acceleration || 1); } return; }
+    if (e.etatB === 'actif') { e.sousT += dt; executerAttaqueBoss(e, e.attaque, 'maj', dt); if (e.tB <= 0) { executerAttaqueBoss(e, e.attaque, 'fin'); if (e.etatB === 'actif') { e.etatB = 'recup'; e.tB = (e.attaque.recup || 0.6) / (e.acceleration || 1); } } return; } // (une fin peut enchaîner une nouvelle annonce)
     if (e.etatB === 'recup') { e.vx *= 0.85; e.vy *= 0.85; if (e.tB <= 0) { e.etatB = 'choix'; e.tB = (d.pause || 0.6) / (e.acceleration || 1); } }
   },
 };
@@ -135,6 +139,7 @@ function lancerTelegraphe(e, a) {
     case 'lame': e.aLame = ciblerJoueur(e); G.effets.push({ type: 'arc_danger', x: e.x, y: e.y - 6, a: e.aLame, arc: (a.arc || 150) * Math.PI / 180, r: (a.portee || 2.6) * TUILE, age: 0, duree: a.tele || 0.5 }); break;
     case 'rayon': e.aRayon = ciblerJoueur(e); ligneDanger(e.x, e.y - e.hauteur, e.aRayon, 700, 16, a.tele || 0.7); break;
     case 'meteore': e.cibleMet = [J.x, J.y]; cercleDanger(J.x, J.y, (a.r || 3) * TUILE, (a.tele || 1.5) + 0.1); break;
+    case 'special': if (a.cone) { e.aCone = ciblerJoueur(e); G.effets.push({ type: 'arc_danger', x: e.x, y: e.y - 6, a: e.aCone, arc: (a.cone.arc || 90) * Math.PI / 180, r: (a.cone.portee || 3) * TUILE, age: 0, duree: a.tele || 0.5 }); break; } // sinon : aura
     default: G.effets.push({ type: 'aura_tele', x: e.x, y: e.y - e.hauteur, age: 0, duree: a.tele || 0.5, r: e.r + 6 });
   }
   if ((a.tele || 0.5) >= 0.45) Son.jouer('telegraphe', 0.6);
@@ -146,7 +151,8 @@ function executerAttaqueBoss(e, a, moment, dt) {
     case 'salve': if (moment === 'debut') { for (let k = 0; k < (a.rafales || 1); k++) setTimeoutJeu(() => !e.mort && salveBoss(e, a.n || 3, v, a.ecart || 0.22, { apparence: a.proj, taille: a.taille, degats: a.degats }), k * (a.intervalle || 0.3)); } break;
     case 'anneau': if (moment === 'debut') { for (let k = 0; k < (a.vagues || 1); k++) setTimeoutJeu(() => !e.mort && anneauBoss(e, a.n || 12, v, { trou: a.trou ? Math.floor(Math.random() * (a.n || 12)) : undefined, largeurTrou: a.largeurTrou || 1.5, proj: { apparence: a.proj } }), k * (a.intervalle || 0.35)); } break;
     case 'spirale': { e.tSp = (e.tSp || 0) + (dt || 0); if (moment === 'maj' && e.tSp > (a.intervalle || 0.09)) { e.tSp = 0; e.angSp = (e.angSp || 0) + (a.pas || 0.35); for (let b = 0; b < (a.bras || 2); b++) tirEnnemi(e.x, e.y - e.hauteur, e.angSp + b * Math.PI * 2 / (a.bras || 2), v, { source: e.id, apparence: a.proj }); } break; }
-    case 'charge': if (moment === 'maj') { const V = (a.vCharge || 9) * TUILE; e.vx = Math.cos(e.dirCharge) * V; e.vy = Math.sin(e.dirCharge) * V; const r = deplacerCercle(s, e, 0, 0, e.vol ? 'vol' : 'marche'); const tx = Math.floor((e.x + Math.cos(e.dirCharge) * (e.r + 6)) / TUILE), ty = Math.floor((e.y + Math.sin(e.dirCharge) * (e.r + 6)) / TUILE); if (solidePour(s, tx, ty, 'marche')) { e.tB = 0; if (a.impact === 'anneau') anneauBoss(e, 10, 4.5); secousse(6, e.dirCharge); Son.jouer('pas_lourd'); } } if (moment === 'fin') { e.vx = 0; e.vy = 0; } break;
+    case 'charge': if (moment === 'maj' && a.trainee) { e.tTrainee = (e.tTrainee || 0) + dt; if (e.tTrainee > 0.2) { e.tTrainee = 0; const q = e.segments && e.segments.length ? e.segments[e.segments.length - 1] : e; creerZone(q.x, q.y, a.trainee, 3, { r: 0.6 * TUILE, proprio: 'ennemi', naissance: 0.3 }); } }
+      if (moment === 'maj') { const V = (a.vCharge || 9) * TUILE; e.vx = Math.cos(e.dirCharge) * V; e.vy = Math.sin(e.dirCharge) * V; const r = deplacerCercle(s, e, 0, 0, e.vol ? 'vol' : 'marche'); const tx = Math.floor((e.x + Math.cos(e.dirCharge) * (e.r + 6)) / TUILE), ty = Math.floor((e.y + Math.sin(e.dirCharge) * (e.r + 6)) / TUILE); if (solidePour(s, tx, ty, 'marche')) { e.tB = 0; if (a.impact === 'anneau') anneauBoss(e, 10, 4.5); secousse(6, e.dirCharge); Son.jouer('pas_lourd'); } } if (moment === 'fin') { e.vx = 0; e.vy = 0; } break;
     case 'saut': if (moment === 'debut') { e.sautDe = [e.x, e.y]; e.intangible = true; } if (moment === 'maj') { const k = Math.min(1, e.sousT / (a.duree || 0.6)); e.x = lerp(e.sautDe[0], e.cibleSaut[0], k); e.y = lerp(e.sautDe[1], e.cibleSaut[1], k); e.z = Math.sin(k * Math.PI) * 50; } if (moment === 'fin') { e.z = 0; e.intangible = false; ondeEnnemie(e.x, e.y, (a.r || 1.6) * TUILE); if (a.anneau) anneauBoss(e, a.anneau, 4.2); secousse(8, null); Son.jouer('pas_lourd'); const [tx, ty] = [Math.floor(e.x / TUILE), Math.floor(e.y / TUILE)]; if (solidePour(s, tx, ty, 'marche')) { const [a2, b2] = tuileLibreProche(s, e.x, e.y); [e.x, e.y] = centreTuile(a2, b2); } } break;
     case 'lame': if (moment === 'debut') { const r = (a.portee || 2.6) * TUILE; if (!J.intangible && dist(e.x, e.y, J.x, J.y) < r + 4 && Math.abs(diffAngle(e.aLame, angleVers(e.x, e.y, J.x, J.y))) < (a.arc || 150) * Math.PI / 360) blesserJoueur(a.degats || G.degatsEnnemis, { type: 'lame', x: e.x, y: e.y }); G.effets.push({ type: 'balayage', x: e.x, y: e.y - 6, a: e.aLame, arc: (a.arc || 150) * Math.PI / 180, r, age: 0, duree: 0.25 }); Son.jouer('lame'); if (a.vague) for (let i = -1; i <= 1; i++) tirEnnemi(e.x, e.y - 8, e.aLame + i * 0.25, 5, { source: e.id, taille: 1.4, apparence: 'lame' }); } break;
     case 'invocation': if (moment === 'debut') { const n = G.ennemis.filter(f => f.parent === e.uid && !f.mort).length; for (let i = 0; i < Math.min(a.n || 2, (a.max || 4) - n); i++) { const [x, y] = pointAleatoire(s); G.effets.push({ type: 'cercle_sceau', x, y, r: 14, age: 0, duree: 0.6 }); setTimeoutJeu(() => { if (e.mort) return; const f = creerEnnemi(a.ennemi, x, y, { parent: e.uid }); f.parent = e.uid; }, 0.6); } Son.jouer('invocation'); } break;
@@ -156,7 +162,7 @@ function executerAttaqueBoss(e, a, moment, dt) {
     case 'zone': if (moment === 'debut') { for (let i = 0; i < (a.n || 3); i++) { const [x, y] = i === 0 && a.surJoueur ? [J.x, J.y] : pointAleatoire(s, 1); const z = creerZone(x, y, a.zone || 'acide', a.dureeZone || 6, { r: (a.r || 0.9) * TUILE, proprio: 'ennemi', naissance: 0.6 }); } Son.jouer(a.son || 'eau'); } break;
     case 'meteore': if (moment === 'fin') { const [x, y] = e.cibleMet; const r = (a.r || 3) * TUILE; G.effets.push({ type: 'meteore', x, y, r, age: 0, duree: 0.6 }); if (!J.intangible && dist(x, y, J.x, J.y) < r) blesserJoueur(4, { type: 'meteore', x, y }); exploserDecor(x, y, r * 0.7); secousse(14, null); Son.jouer('explosion'); for (let i = 0; i < 10; i++) tirEnnemi(x, y - 6, i * Math.PI / 5, 3.8, { source: e.id }); } break;
     case 'onde': if (moment === 'debut') { for (let k = 0; k < (a.n || 1); k++) setTimeoutJeu(() => { if (e.mort) return; G.effets.push({ type: 'anneau_expansif', x: e.x, y: e.y, r: 10, v: (a.vOnde || 3.5) * TUILE, age: 0, duree: 2.2, trou: Math.random() * Math.PI * 2, largeurTrou: 0.7, proprio: 'ennemi', touche: false }); Son.jouer('vent'); }, k * 0.7); } break;
-    case 'attraction': if (moment === 'maj') { const [dx, dy] = normaliser(e.x - J.x, e.y - J.y); G.pousse = { x: dx * (a.force || 2.2), y: dy * (a.force || 2.2) }; e.tSp = (e.tSp || 0) + dt; if (e.tSp > 0.45) { e.tSp = 0; anneauBoss(e, 10, 3.5); } } if (moment === 'fin') G.pousse = null; break;
+    case 'attraction': if (moment === 'maj') { const [dx, dy] = normaliser(e.x - J.x, e.y - J.y); G.pousse = { x: dx * (a.force || 2.2), y: dy * (a.force || 2.2), boss: true }; e.tSp = (e.tSp || 0) + dt; if (e.tSp > 0.45) { e.tSp = 0; anneauBoss(e, 10, 3.5); } } if (moment === 'fin') G.pousse = null; break;
     case 'repulsion': if (moment === 'debut') { const [dx, dy] = normaliser(J.x - e.x, J.y - e.y); J.vx += dx * 700; J.vy += dy * 700; for (const p of G.proj) if (p.proprio !== 'ennemi') p.mort = true; G.effets.push({ type: 'onde', x: e.x, y: e.y, r: 300, age: 0, duree: 0.45, couleur: '#f0e0ff' }); Son.jouer('explosion'); secousse(8, null); if (dist(e.x, e.y, J.x, J.y) < 2 * TUILE) blesserJoueur(G.degatsEnnemis, { type: 'repulsion', x: e.x, y: e.y }); } break;
     case 'special': { const f = SPECIAUX_BOSS[a.nom]; if (f) f(e, a, moment, dt); break; }
   }

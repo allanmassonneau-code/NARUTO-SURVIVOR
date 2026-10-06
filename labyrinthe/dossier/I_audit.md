@@ -18,8 +18,8 @@
 | Transformations d'ensemble | 13 | 12 | 40 |
 | Thèmes d'étage | 10 | 6 | 12 |
 | Variantes d'étage | 18 | 12 | 24 |
-| Boss (dont mini-boss) | 25 | 25 | 70 |
-| Archétypes ennemis | 76 | 60 | 140 |
+| Boss (dont mini-boss) | 37 | 25 | 70 |
+| Archétypes ennemis | 77 | 60 | 140 |
 | Modèles de salles | 120 | 120 | 500 |
 | Objectifs de déblocage | 80 | 80 | 250 |
 | Défis jouables | 30 | 30 | 80 |
@@ -86,6 +86,12 @@ Le dossier a été relu contre le code, et le code contre le dossier. Chaque éc
 | Shinobi ennemis encore « le même personnage avec un autre chapeau » (corps du chibi partagé, couvre-chef et équipement par comportement) | un personnage dessiné à part pour chacun des 31 (gabarit, posture, tenue, tête, arme) ; la posture dit la mécanique, une image d'attaque montrée pendant le télégraphe (D §4) [visibilite] |
 | Créatures plates et frustes à côté des nouveaux shinobi (cartes de 12 pixels doublées, une seule teinte par zone) | les 31 formes repeintes au même peintre de volumes, à la taille de leur zone de contact, variantes par attaque et image d'attaque (D §4) [visibilite] |
 | Tirs élémentaires mal lus (Grande boule de feu tirée comme un orbe ennemi rose, faute de dessin) ; impacts identiques quel que soit l'élément | boule de feu dessinée ; lueur, teinte et particules propres à chaque nature, gerbe d'impact par nature ; explosions à onde de choc et fumée |
+| Toujours les mêmes boss : un seul possible à l'étage 6, deux aux étages 2 et 4 | 12 nouveaux boss : trois à cinq possibles par étage (E §3) [boss] |
+| Boss en « chibi » de héros agrandis, tous semblables | chaque boss peint deux fois plus finement, arme et silhouette propres, formes visibles (D §4) [visibilite] |
+| Poussées et aspirations sans effet réel (attraction de Pain, courants des Écluses : ≈ 10 px/s, effacés par le freinage du joueur ; l'attraction était en plus annulée à chaque image par la mise à jour des courants) | dérive en tuiles/s ajoutée au déplacement (force 2 ≈ 48 px/s), conservée pendant toute l'attaque [mecaniques de boss] |
+| Tuer un boss d'un duo ou du trio tuait aussi les autres (la mort d'un boss emportait tout ce qui lui était lié) | seules les invocations et marionnettes tombent avec lui ; la salle finit quand tous les boss liés sont vaincus [boss] |
+| Zabuza : après la brume, l'arc du coup de sabre s'affichait mais le coup ne partait jamais (la récupération écrasait l'attaque enchaînée) | une attaque qui en enchaîne une autre garde son annonce et son exécution |
+| « Première fin » liée à Orochimaru alors que l'étage 6 a désormais quatre boss | la fin s'obtient contre n'importe quel boss de l'étage 6 (et de l'étage 8 pour la deuxième) ; son texte d'ouverture dépend du boss vaincu ; OBJ_017 devient « Les mues du serpent » |
 
 **Défauts du banc de test** : huit codes de mission invalides tombaient sur une graine aléatoire (tests instables) ; le test manette dépendait de l'ordre d'exécution ; le test de secours ne mesurait que l'écart horizontal ; le pilote employait le *Parchemin de téléportation* au milieu d'un combat de boss (comportement voulu du jeu, mais le parcours ne finissait plus l'étage). Tous corrigés ; la section [synergies] laissait le mode invincible actif, et [mecaniques] lancée juste après concluait à tort que le sable et le feu ne blessaient pas (mode remis à zéro aux deux bouts).
 

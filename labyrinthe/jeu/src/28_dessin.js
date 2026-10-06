@@ -49,6 +49,8 @@ function spriteProjectile(app, taille) {
       const C = { sable_ennemi: ['#c8903a', '#f0c878', '#8a6020'], terre: ['#7a5a3a', '#a8865a', '#4a3420'], boue: ['#5a5a32', '#8a8a4a', '#34341c'], sable_fer: ['#3a3e52', '#8a90b8', '#1c1e2a'], acide: ['#5ac850', '#c8ff9a', '#2a7a2a'], huile: ['#8a6a1a', '#e8c050', '#4a3608'] }[app];
       s = [PE(['..aaa..', '.allaa.', 'aalaapa', 'aaaaaad', '.aaadd.', '..ddd..'], { a: C[0], l: C[1], d: C[2], p: '#ff6a9a' })]; break;
     }
+    case 'fleche_or': s = rotations(PE(['rr.......yy..', 'ryyyyyyyypyyw', 'rr.......yy..'], { r: '#c8382a', y: '#f0c040', w: '#fff8d0', p: '#ff6a9a' }), 16); break;
+    case 'spore': s = [PE(['.www.', 'wlllw', 'wlplw', 'wlllw', '.www.'], { w: '#eef4e0', l: '#b8d8a0', p: '#ff6a9a' })]; break;
     case 'papier_ennemi': s = rotations(P(['...r...', '..rwr..', '.rwwwr.', 'rwwwwwr', '.rwwwr.', '..rwr..', '...r...'], { w: '#f4f0e8', r: '#d0306a' }, '#1a0810'), 16); break;
     case 'ennemi': default: {
       const r = Math.max(3, Math.round(4 * taille));
@@ -222,11 +224,18 @@ function dessinerCouche(g, v, x, y, J, couche) {
 // ── Ennemis ──
 // Image d'attaque (sprites peints) : pendant le télégraphe, pendant la charge, au moment où l'embusqué jaillit ou tire
 function poseAttaque(e) {
+  if (e.boss) return e.etatB === 'tele' || e.etatB === 'actif'; // les boss lèvent leur arme dès l'annonce
   const I = e.ia, co = e.def.comportement, P = e.def.params || {};
   if (I.tele) return true;
   if (co === 'chargeur') return I.phase === 'charge';
   if (co === 'embusque' && I.phase === 'actif') return P.attaque === 'poursuite' ? I.t > (P.dureeActive || 2.4) - 0.45 : e.tAtt < 0.3;
   return false;
+}
+// Image affichée : forme du boss (frères, trio, carapace…), pose d'attaque ou pas de marche
+function imageCourante(e, sp) {
+  if (!sp.attaque) return sp.frames[e.frame % sp.frames.length];
+  const o = sp.formes > 1 ? 3 * Math.min(sp.formes - 1, Math.max(0, formeBoss(e))) : 0;
+  return sp.frames[o + (poseAttaque(e) ? 2 : e.frame % 2)];
 }
 function dessinerEnnemi(g, e, x, y) {
   if (e.cache) {
@@ -241,20 +250,22 @@ function dessinerEnnemi(g, e, x, y) {
   g.globalAlpha = Math.max(0.15, alpha);
   const tele = e.ia.tele; let dx = 0, dy = 0, sc = 1;
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
-  const base = sp.attaque ? sp.frames[poseAttaque(e) ? 2 : e.frame % 2] : sp.frames[e.frame % sp.frames.length];
+  const base = imageCourante(e, sp);
   const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
   const ech = (e.echelle || 1) * sc, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
   // écrasement bref au coup reçu (plus discret sur les boss et en mode confort)
   const tc = G.temps - (e.coupT ?? -9), sq = tc >= 0 && tc < 0.1 ? (1 - tc / 0.1) * (e.boss ? 0.4 : 1) * (G.reglages.confort ? 0.5 : 1) : 0;
   const w = Math.round(img.width * f * (1 + 0.2 * sq)), h = Math.round(img.height * f * (1 - 0.15 * sq));
-  const miroirG = sp.miroir && e.dir === 'gauche';
+  // un boss qui attaque (ou qui ne se déplace pas) fait face au joueur ; sinon chacun regarde où il va
+  const faceJoueur = e.boss && (e.etatB === 'tele' || e.etatB === 'actif' || e.etatB === 'recup' || Math.abs(e.vx) + Math.abs(e.vy) < 8);
+  const miroirG = sp.miroir && (faceJoueur ? G.joueur.x < e.x - 2 : e.dir === 'gauche');
   const poser = im => { if (miroirG) { g.save(); g.translate(x + dx, 0); g.scale(-1, 1); g.drawImage(im, -Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); g.restore(); } else g.drawImage(im, x + dx - Math.round(w / 2), y + dy - h + (sp.base || 0), w, h); };
   // cercle au sol des invocateurs (violet) et des soigneurs (vert) : leur rôle se lit de loin
   const co = e.def.comportement; if (!e.boss && (co === 'invocateur' || co === 'guerisseur')) { const inv = co === 'invocateur', t = G.temps * (inv ? 1.2 : -1.6), rr = e.r + 6; g.fillStyle = inv ? '#b070f0' : '#5ae080'; for (let k = 0; k < 8; k++) { const a = t + k * Math.PI / 4; g.fillRect(Math.round(x + Math.cos(a) * rr), Math.round(y + Math.sin(a) * rr * 0.4), 2, 1); } }
   poser(img);
   // états de boss lisibles : peau durcie (gris pierre), carapace d'Hiruko (bois cerclé)
   if (e.durci > 0 && !(e.flash > 0)) { g.globalAlpha = 0.5 + 0.12 * Math.sin(G.temps * 14); poser(silhouetteMemo(base, '#8a8a92')); }
-  if (e.hiruko && !(e.flash > 0)) { g.globalAlpha = 0.42; poser(silhouetteMemo(base, '#6a4a2e')); g.globalAlpha = 1; g.fillStyle = '#c8b070'; for (const k of [-1, 0, 1]) g.fillRect(x + k * 6 - 1, y - Math.round(h * 0.55) + Math.abs(k) * 3, 2, 2); }
+  if (e.hiruko && !(e.flash > 0)) { if (!sp.formes) { g.globalAlpha = 0.42; poser(silhouetteMemo(base, '#6a4a2e')); } g.globalAlpha = 1; g.fillStyle = '#c8b070'; for (const k of [-1, 0, 1]) g.fillRect(x + k * 6 - 1, y - Math.round(h * 0.55) + Math.abs(k) * 3, 2, 2); }
   if (!(e.flash > 0)) effetsStatuts(g, e, base, poser, x, y + dy, h);
   g.globalAlpha = 1;
   if (e.bouclierSable) { const a = (e.grainsSable || 0) * 2.4; for (let i = 0; i < 8; i++) { const b = a + i * Math.PI / 4; g.fillStyle = i % 2 ? '#d8b070' : '#b08848'; g.fillRect(Math.round(x + Math.cos(b) * (e.r + 7)), Math.round(y - h * 0.45 + Math.sin(b) * (e.r * 0.6 + 4)), 2, 2); } }

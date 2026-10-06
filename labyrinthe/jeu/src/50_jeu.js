@@ -143,15 +143,25 @@ const TEXTES_FINS = {
   RTE_05: ['Le conseil des épreuves se lève et vous tourne le dos, satisfait.', 'Votre nom est ajouté au registre des candidats trop rapides pour être oubliés.'],
   RTE_06: ['La brèche se referme sur les dix queues.', 'Pendant un instant, toutes les empreintes du labyrinthe se sont souvenues de leur nom.'],
 };
+// La première phrase de la fin dépend du gardien vaincu (plusieurs boss possibles par étage)
+const DEBUTS_FINS = {
+  BOS_030: 'La marque reflue de la peau de Jūgo ; apaisé, il s’écarte, et le sceau se fissure.',
+  BOS_031: 'Les deux frères ne forment plus qu’une ombre immobile, et le sceau se fissure.',
+  BOS_033: 'La chimère se dissout dans le liquide de sa propre cuve, et le sceau se fissure.',
+  BOS_019: 'Le masque se fend ; au-dehors, la pluie cesse pour la première fois depuis votre entrée.',
+  BOS_023: 'Les papiers retombent comme une neige silencieuse ; la pluie cesse pour la première fois depuis votre entrée.',
+  BOS_035: 'L’or et l’argent se ternissent ; au-dehors, la pluie cesse pour la première fois depuis votre entrée.',
+};
+function textesFin(route, boss) { const L = (TEXTES_FINS[route] || []).slice(); if ((route === 'RTE_01' || route === 'RTE_02') && DEBUTS_FINS[boss]) L[0] = DEBUTS_FINS[boss]; return L; }
 const SceneVictoire = {
-  entrer(o) { this.route = o.route; this.t = 0; },
+  entrer(o) { this.route = o.route; this.t = 0; this.boss = G.partie && G.partie.bossVaincus ? G.partie.bossVaincus[G.partie.bossVaincus.length - 1] : null; },
   maj(dt) { this.t += dt; if (this.t > 1.5 && Entrees.menuConfirmer()) { Scenes.aller(SceneTitre); } },
   rendre(g) {
     g.drawImage(fondTitre(), 0, 0); animerFond(g, this.t); g.fillStyle = 'rgba(8,6,14,0.5)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
     cadreMenu(g, 90, 26, 460, 290);
     const R = INDEX[this.route] || { nom: 'Victoire' };
     titreOrne(g, R.nom, 320, 40, '#f8e0a8');
-    let y = 90; for (const l of TEXTES_FINS[this.route] || []) y += Police.paragraphe(g, l, 120, y, 400, '#e0d8e8') + 10;
+    let y = 90; for (const l of textesFin(this.route, this.boss)) y += Police.paragraphe(g, l, 120, y, 400, '#e0d8e8') + 10;
     Police.ecrire(g, 'Marque obtenue pour ' + G.joueur.def.nom + ' : ' + (R.marque || ''), 320, y + 20, '#c0e0a0', { a: 'c' });
     if (R.recompense) Police.couper(R.recompense, 540).forEach((l, i) => Police.ecrire(g, l, 320, y + 36 + i * 12, '#a8a0b8', { a: 'c' }));
     if (G.partie.defi) Police.ecrire(g, 'Contrat « ' + INDEX[G.partie.defi].nom + ' » : ' + (G.partie.defiEchoue ? 'non rempli (conditions non tenues)' : 'rempli'), 320, 284, G.partie.defiEchoue ? '#e0a080' : '#a0e0a0', { a: 'c' });
@@ -187,5 +197,5 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, dessinerPerso, spriteFamilier, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, dessinerPerso, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }

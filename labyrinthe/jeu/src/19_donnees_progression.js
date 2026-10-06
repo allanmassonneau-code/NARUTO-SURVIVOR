@@ -142,7 +142,7 @@
   OB('OBJ_014', 'Requin échoué', 'Vaincre Kisame.', { type: 'boss', id: 'BOS_012' }, ['PSV_136'], 'Écailles de Samehada');
   OB('OBJ_015', 'Stratégie de l’examen', 'Réussir 2 épreuves chūnin (cumulé).', { type: 'compteur', nom: 'epreuvesChunin', min: 2 }, ['CHR_007', 'PSV_051', 'DEF_016'], 'Shikamaru, Ombre liante ; contrat « Ombres et nuages »');
   OB('OBJ_016', 'Rituel rompu', 'Vaincre Hidan.', { type: 'boss', id: 'BOS_013' }, ['PSV_054', 'PSV_135'], 'Marque de Jashin, Rituel du sang');
-  OB('OBJ_017', 'Première fin', 'Vaincre Orochimaru.', { type: 'boss', id: 'BOS_014' }, ['PSV_143', 'ACT_031'], 'Mue du serpent, Rituel de permutation');
+  OB('OBJ_017', 'Les mues du serpent', 'Vaincre Orochimaru.', { type: 'boss', id: 'BOS_014' }, ['PSV_143', 'ACT_031'], 'Mue du serpent, Rituel de permutation');
   OB('OBJ_018', 'Protection absolue', 'Posséder 3 réserves de chakra protecteur en même temps.', { type: 'etat', nom: 'protections3' }, ['CHR_008'], 'Gaara');
   OB('OBJ_019', 'L’art éclate', 'Vaincre Deidara.', { type: 'boss', id: 'BOS_015' }, ['PSV_019', 'PSV_071', 'PSV_110'], 'Argile');
   OB('OBJ_020', 'Au-delà de l’illusion', 'Vaincre Itachi.', { type: 'boss', id: 'BOS_016' }, ['PSV_053', 'ACT_017', 'ACT_018'], 'Flammes noires, Amaterasu, Tsukuyomi');

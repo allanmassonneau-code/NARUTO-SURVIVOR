@@ -1635,5 +1635,28 @@
   "vol": true,
   "tache": "parchemin",
   "desc": "Invoqué par Konan : fond sur vous et explose au contact (il clignote avant)."
+ },
+ {
+  "id": "ENM_097",
+  "nom": "Démon de la flûte",
+  "role": "l",
+  "comportement": "lourd",
+  "pv": 40,
+  "vitesse": 0.9,
+  "r": 13,
+  "sprite": {
+   "type": "shinobi",
+   "perso": "doki"
+  },
+  "params": {
+   "cadence": 2.8,
+   "rOnde": 2.2,
+   "tele": 0.7,
+   "anneau": true,
+   "proj": "son"
+  },
+  "statut": "création originale",
+  "contact": 1,
+  "desc": "Invoqué par Tayuya : colosse aux yeux bandés, frappe le sol en onde et en anneau de notes ; il disparaît avec elle."
  }
 ]

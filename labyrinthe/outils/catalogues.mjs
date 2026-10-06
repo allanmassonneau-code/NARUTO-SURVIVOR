@@ -248,6 +248,18 @@ const SPECIAUX_TXT = {
   arene_change: ['les blocs de l’arène sont redistribués (jamais à moins de 2 tuiles de vous)', '—', 'se repositionner, rechercher les nouvelles lignes de tir'],
   dragons_bois: ['3 dragons de bois chercheurs (2,4×, guidage 1 rad/s, 3,2 s), ils brisent les obstacles', 'coup d’étage', 'les attirer en arc large ; ne pas compter sur la couverture'],
   balayage_queues: ['3 balayages de queue (arc 40°, 200 px) décalés de 0,35 s, préavis 0,5 s chacun', '1 unité', 'sortir des arcs annoncés, se rapprocher entre deux'],
+  kaiten: ['tourbillon 0,9 s : efface vos tirs à moins de 2,8 tuiles, rien ne le touche à distance ; à moins de 1,7 tuile, il vous repousse et vous blesse une fois', 'coup d’étage', 'cesser de tirer pendant le tourbillon, garder ses distances ; frapper pendant la récupération'],
+  soixante_quatre: ['cercle de 2,3 tuiles autour de lui (trigrammes), annoncé 0,65 s, puis toutes les paumes frappent le cercle', 'coup d’étage', 'sortir du cercle avant la frappe'],
+  bourrasque: ['cône de vent (70°, 6,5 tuiles) annoncé : 1,1 s de poussée qui vous éloigne et efface vos tirs dans le cône', '— (poussée)', 'sortir latéralement du cône ; attention aux dangers derrière vous'],
+  kamatari: ['ligne jusqu’au mur annoncée 0,75 s, puis une grande lame de vent (13 t/s) qui traverse les obstacles', 'coup d’étage', 'sortir de la ligne annoncée'],
+  toile_kidomaru: ['4 boules de toile (cercles annoncés 0,6 s, une sur vous) : toiles collantes 8 s qui ralentissent à 65 %', '— (ralentissement)', 'sortir des cercles ; brûler les toiles au feu'],
+  fleche_doree: ['la ligne de visée vous suit 1 s, se fige 0,35 s, puis la flèche d’or (15 t/s) part et traverse les obstacles', 'coup d’étage', 'bouger juste après le figement de la ligne'],
+  esprits_flute: ['3 esprits sonores chercheurs (guidage 1,3 rad/s, 3,4 s), 0,22 s d’écart', 'coup d’étage', 'tourner autour, les faire percuter les obstacles'],
+  liquefaction: ['flaque intangible 1,4 s qui file vers vous (3,6 t/s), puis surgit et enchaîne le couperet annoncé 0,5 s ; impossible 4 s après un coup de foudre', 'selon le couperet', 'suivre la flaque, sortir de l’arc annoncé ; la foudre l’en empêche'],
+  enchainement: ['deux arcs successifs (130°, 2,4 tuiles) : le premier annoncé, le second réorienté vers vous et annoncé 0,3 s', 'coup d’étage par arc', 'reculer hors du premier arc, puis du second'],
+  spores: ['5 spores chercheuses lentes (2,6 t/s, guidage 0,9 rad/s, 4 s)', 'coup d’étage', 'les distancer en cercle large ; les détruire au tir'],
+  racines: ['3 lignes de 6 racines vers vous (en éventail), chaque point annoncé 0,55 s', 'coup d’étage', 'se placer entre deux lignes ou sortir latéralement'],
+  bashosen: ['cône de feu annoncé (60°, 5 tuiles) : 2 éventails de 7 flammes et deux foyers de feu 5 s dans le cône', 'coup d’étage', 'sortir du cône par le côté ; éviter les foyers ensuite'],
 };
 // Préparations d'arène (init) et effets de phase (action) : texte obligatoire pour chaque mécanique utilisée
 const INIT_TXT = {
@@ -263,6 +275,8 @@ const INIT_TXT = {
   itachi: 'seul le vrai Itachi projette une ombre ; les illusions n’en ont pas',
   kakuzu: '3 masques élémentaires (feu en anneau, vent en éventail, foudre visée) ; la peau durcie grise signale la réduction ×0,3',
   obito: 'intangible hors de ses attaques : il se matérialise dès l’annonce et jusqu’à la fin de la récupération',
+  mille_pattes: 'corps de 8 anneaux à pattes qui suivent la tête et blessent au contact ; ses ruées laissent une traînée de venin (3 s)',
+  kinkaku: 'deux frères liés : Kinkaku (éventail de feu, ondes, charge) et Ginkaku (gourde qui aspire, corde dorée balayante, sabre) ; quand l’un tombe, l’autre entre en rage (×1,35)',
 };
 const ACTION_TXT = {
   accelerer: 'le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25',
@@ -273,6 +287,10 @@ const ACTION_TXT = {
   c3: 'débloque la grande œuvre C3',
   arene: 'les blocs de l’arène sont redistribués (jamais à moins de 2 tuiles de vous)',
   invoquer: 'appelle des renforts',
+  rage: 'forme enragée (marque visible) : ×1,3 en vitesse et préparation, nouvelles attaques ; invulnérable 0,8 s pendant la transformation',
+  muter: 'mutation visible : nouvelle silhouette (pince, puis tentacules) et nouvelles attaques',
+  separer: 'une moitié se détache et combat à part (boss lié) en emportant 40 % de la vitalité restante : la barre reste continue',
+  izanagi: 'une seule fois : une illusion tombe à sa place, il réapparaît ailleurs avec 25 % de vitalité en plus, invulnérable 1 s, le bras dévoilé',
 };
 const zoneAttaque = a => ({
   salve: `${a.n || 3} projectile(s) visé(s)${a.rafales > 1 ? ' × ' + a.rafales + ' rafales' : ''}, écart ${a.ecart ?? 0.22} rad, ${a.v || 5} t/s`,

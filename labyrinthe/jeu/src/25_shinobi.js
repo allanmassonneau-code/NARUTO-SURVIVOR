@@ -21,8 +21,10 @@ function rampeShinobi(c) {
   return [melange(nuancer(c, 0.52), '#22143a', 0.3), melange(nuancer(c, 0.75), '#3a2850', 0.16), c, melange(nuancer(c, 1.17), '#fff0c8', 0.12), melange(nuancer(c, 1.36), '#fffbe8', 0.22)].map(hexRgb);
 }
 // pal : { clé: '#rrggbb' | { c: '#rrggbb', brille: true } | [5 tons] }
-function peintreShinobi(pal) {
-  const W = SH.L, H = SH.H, N = W * H, mat = new Uint8Array(N), niv = new Uint8Array(N), piece = new Uint16Array(N);
+// E : échelle de peinture (1 = ennemis ; 2 = boss, peints deux fois plus finement dans les mêmes unités).
+// Toutes les coordonnées sont en unités de la toile 52 × 60 ; « point » et « ligneFine » posent un seul pixel réel.
+function peintreShinobi(pal, E = 1) {
+  const W = SH.L * E, H = SH.H * E, N = W * H, mat = new Uint8Array(N), niv = new Uint8Array(N), piece = new Uint16Array(N);
   const id = {}, ramp = [null], brille = [false];
   for (const k of Object.keys(pal)) { const v = pal[k]; id[k] = ramp.length; ramp.push(rampeShinobi(v && v.c ? v.c : v)); brille.push(!!(v && v.brille)); }
   let pc = 0, bx0 = W, by0 = H, bx1 = -1, by1 = -1; const apres = [];
@@ -37,42 +39,48 @@ function peintreShinobi(pal) {
       for (const j of [x > 0 ? i - 1 : -1, x < W - 1 ? i + 1 : -1, i - W, i + W]) if (j >= 0 && j < N && mat[j] && piece[j] < pc) niv[j] = 0;
     }
   };
-  const fin = o => { if (o.trait !== false) trait(); };
+  const finir = o => { if (o.trait !== false) trait(); };
+  const bres = (x0, y0, x1, y1, m, v, b) => { // tracé de Bresenham en pixels réels, pinceau b × b
+    const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1; let e = dx + dy;
+    for (let n = 0; n < 400; n++) { for (let j = 0; j < b; j++) for (let i = 0; i < b; i++) poser(x0 + i, y0 + j, m, v); if (x0 === x1 && y0 === y1) break; const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; } }
+  };
   const P = {
+    E,
     // boule éclairée (tête, mains, épaulières, jarres)
     boule(cx, cy, rx, ry, k, o = {}) {
-      const m = M(k); neuve();
+      const m = M(k); neuve(); cx *= E; cy *= E; rx *= E; ry *= E;
       for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x++) {
         const dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry, d = dx * dx + dy * dy; if (d > 1) continue;
+        if (o.coupe !== undefined && (y + 0.5) / E > o.coupe) continue; // calotte : rien sous la ligne « coupe » (unités)
         poser(x, y, m, o.niv ?? niveau(dx * LUM[0] + dy * LUM[1] + Math.sqrt(1 - d) * LUM[2] + (o.plus || 0), m));
       }
-      fin(o); return P;
+      finir(o); return P;
     },
     // segment épais arrondi, éclairé comme un cylindre (membres, manches, hampes, lames épaisses) ; r1 : rayon au bout
     membre(x0, y0, x1, y1, r, k, o = {}) {
-      const m = M(k); neuve(); const dx = x1 - x0, dy = y1 - y0, l2 = dx * dx + dy * dy || 1e-6, r1 = o.r1 ?? r, R = Math.max(r, r1) + 1;
+      const m = M(k); neuve(); x0 *= E; y0 *= E; x1 *= E; y1 *= E; r *= E; const dx = x1 - x0, dy = y1 - y0, l2 = dx * dx + dy * dy || 1e-6, r1 = (o.r1 ?? r / E) * E, R = Math.max(r, r1) + 1;
       for (let y = Math.floor(Math.min(y0, y1) - R); y <= Math.ceil(Math.max(y0, y1) + R); y++) for (let x = Math.floor(Math.min(x0, x1) - R); x <= Math.ceil(Math.max(x0, x1) + R); x++) {
         const px = x + 0.5 - x0, py = y + 0.5 - y0, t = Math.max(0, Math.min(1, (px * dx + py * dy) / l2)), rr = r + (r1 - r) * t;
         const qx = px - dx * t, qy = py - dy * t, d2 = (qx * qx + qy * qy) / (rr * rr); if (d2 > 1) continue;
         poser(x, y, m, o.niv ?? niveau(qx / rr * LUM[0] + qy / rr * LUM[1] + Math.sqrt(1 - d2) * LUM[2] + (o.plus || 0), m));
       }
-      fin(o); return P;
+      finir(o); return P;
     },
     // tronc trapézoïdal (torse, robe, manteau) éclairé comme un cylindre vertical ; arrondi : épaules ; degrade : bas plus sombre
     tronc(yh, yb, xgh, xdh, xgb, xdb, k, o = {}) {
-      const m = M(k); neuve();
+      const m = M(k); neuve(); yh *= E; yb *= E; xgh *= E; xdh *= E; xgb *= E; xdb *= E; const arr = (o.arrondi || 0) * E;
       for (let y = Math.round(yh); y <= Math.round(yb); y++) {
-        const t = yb > yh ? (y - yh) / (yb - yh) : 0, xg = xgh + (xgb - xgh) * t, xd = xdh + (xdb - xdh) * t, a = o.arrondi ? Math.max(0, o.arrondi - (y - Math.round(yh))) : 0;
+        const t = yb > yh ? (y - yh) / (yb - yh) : 0, xg = xgh + (xgb - xgh) * t, xd = xdh + (xdb - xdh) * t, a = arr ? Math.max(0, arr - (y - Math.round(yh))) : 0;
         for (let x = Math.round(xg + a); x < Math.round(xd - a); x++) {
           const s = ((x + 0.5 - xg) / Math.max(1, xd - xg)) * 2 - 1, nz = Math.sqrt(Math.max(0, 1 - s * s * 0.92));
           poser(x, y, m, o.niv ?? niveau(s * LUM[0] + nz * LUM[2] - (o.degrade || 0) * t + (o.plus || 0), m));
         }
       }
-      fin(o); return P;
+      finir(o); return P;
     },
     // polygone plein (capes, chapeaux, lames, éventails) : niveau fixe, bord haut-gauche éclairé si « relief »
     poly(pts, k, o = {}) {
-      const m = M(k); neuve(); const ys = pts.map(p => p[1]), y0 = Math.floor(Math.min(...ys)), y1 = Math.ceil(Math.max(...ys));
+      const m = M(k); neuve(); pts = pts.map(([x, y]) => [x * E, y * E]); const ys = pts.map(p => p[1]), y0 = Math.floor(Math.min(...ys)), y1 = Math.ceil(Math.max(...ys));
       for (let y = y0; y <= y1; y++) {
         const yc = y + 0.5, xs = [];
         for (let i = 0; i < pts.length; i++) { const [ax, ay] = pts[i], [bx, by] = pts[(i + 1) % pts.length]; if ((ay <= yc && by > yc) || (by <= yc && ay > yc)) xs.push(ax + (yc - ay) / (by - ay) * (bx - ax)); }
@@ -87,30 +95,28 @@ function peintreShinobi(pal) {
           }
         }
       }
-      fin(o); return P;
+      finir(o); return P;
     },
-    rect(x, y, l, h, k, v = 2) { const m = M(k); for (let j = 0; j < h; j++) for (let i = 0; i < l; i++) poser(Math.round(x) + i, Math.round(y) + j, m, v); return P; },
-    px(x, y, k, v = 2) { poser(Math.round(x), Math.round(y), M(k), v); return P; },
-    ligne(x0, y0, x1, y1, k, v = 2) {
-      const m = M(k); x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
-      const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1; let e = dx + dy;
-      for (let n = 0; n < 200; n++) { poser(x0, y0, m, v); if (x0 === x1 && y0 === y1) break; const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; } }
-      return P;
-    },
+    rect(x, y, l, h, k, v = 2) { const m = M(k), X = Math.round(x * E), Y = Math.round(y * E), L = Math.ceil(l * E - 1e-9), Hh = Math.ceil(h * E - 1e-9); for (let j = 0; j < Hh; j++) for (let i = 0; i < L; i++) poser(X + i, Y + j, m, v); return P; },
+    px(x, y, k, v = 2) { const m = M(k), X = Math.round(x * E), Y = Math.round(y * E); for (let j = 0; j < E; j++) for (let i = 0; i < E; i++) poser(X + i, Y + j, m, v); return P; },
+    point(x, y, k, v = 2) { poser(Math.round(x * E), Math.round(y * E), M(k), v); return P; },
+    ligne(x0, y0, x1, y1, k, v = 2) { bres(Math.round(x0 * E), Math.round(y0 * E), Math.round(x1 * E), Math.round(y1 * E), M(k), v, E); return P; },
+    ligneFine(x0, y0, x1, y1, k, v = 2) { bres(Math.round(x0 * E), Math.round(y0 * E), Math.round(x1 * E), Math.round(y1 * E), M(k), v, 1); return P; },
     // pièce séparée de la suivante par un trait intérieur (détails posés à la main)
     piece() { neuve(); return P; },
     traitPiece() { trait(); return P; },
-    assombrir(x, y, l, h, d = 1) { for (let j = Math.max(0, y); j < Math.min(H, y + h); j++) for (let i = Math.max(0, x); i < Math.min(W, x + l); i++) { const q = j * W + i; if (mat[q]) niv[q] = Math.max(0, niv[q] - d); } return P; },
-    eclaircir(x, y, l, h, d = 1) { for (let j = Math.max(0, y); j < Math.min(H, y + h); j++) for (let i = Math.max(0, x); i < Math.min(W, x + l); i++) { const q = j * W + i; if (mat[q]) niv[q] = Math.min(4, niv[q] + d); } return P; },
+    assombrir(x, y, l, h, d = 1) { const X = Math.round(x * E), Y = Math.round(y * E), L = Math.ceil(l * E), Hh = Math.ceil(h * E); for (let j = Math.max(0, Y); j < Math.min(H, Y + Hh); j++) for (let i = Math.max(0, X); i < Math.min(W, X + L); i++) { const q = j * W + i; if (mat[q]) niv[q] = Math.max(0, niv[q] - d); } return P; },
+    eclaircir(x, y, l, h, d = 1) { const X = Math.round(x * E), Y = Math.round(y * E), L = Math.ceil(l * E), Hh = Math.ceil(h * E); for (let j = Math.max(0, Y); j < Math.min(H, Y + Hh); j++) for (let i = Math.max(0, X); i < Math.min(W, X + L); i++) { const q = j * W + i; if (mat[q]) niv[q] = Math.min(4, niv[q] + d); } return P; },
     // retire des pixels (fentes, trous)
-    effacer(x, y, l = 1, h = 1) { for (let j = 0; j < h; j++) for (let i = 0; i < l; i++) { const xx = Math.round(x) + i, yy = Math.round(y) + j; if (xx >= 0 && yy >= 0 && xx < W && yy < H) mat[yy * W + xx] = 0; } return P; },
-    // dessins posés après le contour (lueurs, fils de chakra, étincelles) : fn(g)
+    effacer(x, y, l = 1, h = 1) { const X = Math.round(x * E), Y = Math.round(y * E), L = Math.ceil(l * E - 1e-9), Hh = Math.ceil(h * E - 1e-9); for (let j = 0; j < Hh; j++) for (let i = 0; i < L; i++) { const xx = X + i, yy = Y + j; if (xx >= 0 && yy >= 0 && xx < W && yy < H) mat[yy * W + xx] = 0; } return P; },
+    // dessins posés après le contour (lueurs, fils de chakra, étincelles) : fn(g, E)
     apres(fn) { apres.push(fn); return P; },
-    vide(x, y) { return !mat[y * W + x]; },
-    toile() {
+    vide(x, y) { return !mat[Math.round(y * E) * W + Math.round(x * E)]; },
+    // contours : épaisseur du contour extérieur en pixels réels (E par défaut)
+    toile(contours = E) {
       const c = toile(W, H), g = ctxDe(c), img = g.createImageData(W, H), d = img.data;
       for (let i = 0; i < N; i++) { const m = mat[i]; if (!m) continue; const t = ramp[m][niv[i]]; d[i * 4] = t[0]; d[i * 4 + 1] = t[1]; d[i * 4 + 2] = t[2]; d[i * 4 + 3] = 255; }
-      g.putImageData(img, 0, 0); const o = contourner(c); const go = ctxDe(o); for (const f of apres) f(go); return o;
+      g.putImageData(img, 0, 0); let o = contourner(c); for (let i = 1; i < contours; i++) o = contourner(o); const go = ctxDe(o); for (const f of apres) f(go, E); return o;
     },
   };
   return P;
@@ -159,9 +165,9 @@ function shPointes(P, hx, hy, R, k, L) {
   }
 }
 // Fils de chakra (dessinés après le contour : fins et lumineux)
-function shFils(P, pts, couleur) { P.apres(g => { for (const [x0, y0, x1, y1] of pts) lignePixel(g, x0, y0, x1, y1, couleur); }); }
+function shFils(P, pts, couleur) { P.apres((g, E = 1) => { for (const [x0, y0, x1, y1] of pts) lignePixel(g, x0 * E, y0 * E, x1 * E, y1 * E, couleur); }); }
 // Lueur douce (après le contour) : disque clair + cœur
-function shLueur(P, x, y, r, c1, c2) { P.apres(g => { g.globalAlpha = 0.55; g.drawImage(disque(r + 1, c1), Math.round(x - r - 1), Math.round(y - r - 1)); g.globalAlpha = 1; g.drawImage(disque(Math.max(1, r - 1), c2), Math.round(x - r + 1), Math.round(y - r + 1)); }); }
+function shLueur(P, x, y, r, c1, c2) { P.apres((g, E = 1) => { x *= E; y *= E; r *= E; g.globalAlpha = 0.55; g.drawImage(disque(r + E, c1), Math.round(x - r - E), Math.round(y - r - E)); g.globalAlpha = 1; g.drawImage(disque(Math.max(1, r - E), c2), Math.round(x - r + E), Math.round(y - r + E)); }); }
 
 // Éventail ouvert : secteur de lames alternées autour du point (cx, cy)
 function shEventail(P, cx, cy, R, a0, a1, n, k1, k2) {
@@ -931,16 +937,37 @@ SHINOBI.zetsu_soigneur = {
   },
 };
 
+// ENM_097 Démon de la flûte (invoqué par Tayuya ; lourd) — colosse voûté à la peau violacée, bandeau sur les yeux,
+// crinière blanche, bouche hérissée de dents, pagne et massue cloutée ; à l'attaque, la massue levée.
+SHINOBI.doki = {
+  pal: pal({ peau: '#8a7a9a', peau2: '#6a5a7a', cheveux: '#e8e4ec', bandeau: '#3a2a3a', dent: '#f0e8d8', pagne: '#5a3a2a', massue: '#7a5a3a', clou: { c: '#c8ccd8', brille: true } }),
+  f(P, i, att) {
+    const b = i, J = { k: 'peau', kp: 'peau2', pied: 'nu', r: 2.6 };
+    if (i) { shJambe(P, 21, 46, 19, 50, 18.5, 55, J); shJambe(P, 31, 46, 33, 50, 33.5, 54, J); }
+    else { shJambe(P, 21, 46, 19, 50, 18.5, 54, J); shJambe(P, 31, 46, 33, 50, 33.5, 55, J); }
+    shBras(P, 17, 31 + b, 13, 38 + b, 14, 45 + b, 'peau', 'peau', { r: 2.6, rm: 2.6 });
+    P.tronc(28 + b, 47, 14.5, 37.5, 18, 34, 'peau', { arrondi: 5, degrade: 0.15 });
+    P.poly([[19, 44], [33, 44], [34, 50], [29, 48.5], [26, 51], [23, 48.5], [18, 50]], 'pagne', { cyl: true });
+    const hx = 26, hy = 24 + b;
+    shPointes(P, hx, hy - 1, 6, 'cheveux', [[-125, 6, 3.6], [-95, 7.5, 4], [-60, 8, 4], [-25, 7, 4], [10, 7.5, 4], [45, 8, 4], [80, 7.5, 4], [115, 6, 3.6]]);
+    P.boule(hx, hy, 6, 5.6, 'peau');
+    P.tronc(hy - 1.5, hy + 1, hx - 6, hx + 6, hx - 6, hx + 6, 'bandeau'); P.ligneFine(hx + 5.5, hy, hx + 8, hy + 3, 'bandeau', 1);
+    P.rect(hx - 3.5, hy + 2.5, 7, 2, 'oeil', 0); for (let x = -3; x <= 3; x += 1.5) { P.px(x + hx - 0.5, hy + 2.5, 'dent', 3); P.px(x + hx, hy + 4, 'dent', 2); }
+    if (att) { shBras(P, 35, 31 + b, 39, 26, 37, 20, 'peau', 'peau', { r: 2.6, rm: 2.6 }); P.membre(37, 20, 33, 6, 2.4, 'massue', { r1: 3.4 }); for (const [x, y] of [[32, 8], [35.5, 9], [33.5, 12]]) P.px(x, y, 'clou', 3); }
+    else { shBras(P, 35, 31 + b, 39, 38 + b, 38, 45 + b, 'peau', 'peau', { r: 2.6, rm: 2.6 }); P.membre(38, 45 + b, 44, 54, 2.2, 'massue', { r1: 3 }); for (const [x, y] of [[42, 50], [44, 53], [41, 52.5]]) P.px(x, y, 'clou', 3); }
+  },
+};
+
 // ── Assemblage : trois images recadrées ensemble, axe du corps au centre (miroir quand l'ennemi va à gauche) ──
-function peindreTrois(pal, dessin) {
-  const brutes = [0, 1, 2].map(n => { const P = peintreShinobi(pal); dessin(P, n === 1 ? 1 : 0, n === 2); return P.toile(); });
-  let haut = SH.H, dmax = 4;
+function peindreTrois(pal, dessin, E = 1, n = 3, contours = E) {
+  const brutes = []; for (let q = 0; q < n; q++) { const P = peintreShinobi(pal, E); dessin(P, q % 3 === 1 ? 1 : 0, q % 3 === 2, Math.floor(q / 3)); brutes.push(P.toile(contours)); }
+  let haut = SH.H * E, dmax = 4 * E; const X = SH.X * E;
   for (const c of brutes) {
     const d = ctxDe(c).getImageData(0, 0, c.width, c.height).data;
-    for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 0) { if (y < haut) haut = y; dmax = Math.max(dmax, x < SH.X ? SH.X - x : x + 1 - SH.X); }
+    for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 0) { if (y < haut) haut = y; dmax = Math.max(dmax, x < X ? X - x : x + 1 - X); }
   }
-  const bas = SH.SOL + 1, l = 2 * dmax, h = bas - haut + 1;
-  return brutes.map(c => { const o = toile(l, h); ctxDe(o).drawImage(c, SH.X - dmax, haut, l, h, 0, 0, l, h); return o; });
+  const bas = E === 1 ? SH.SOL + 1 : (SH.SOL + 1) * E - 1, l = 2 * dmax, h = bas - haut + 1;
+  return brutes.map(c => { const o = toile(l, h); ctxDe(o).drawImage(c, X - dmax, haut, l, h, 0, 0, l, h); return o; });
 }
 const _shinobi = {};
 function spriteShinobi(nom) {
@@ -953,6 +980,9 @@ function spriteShinobi(nom) {
 // (ceux du thème de l'étage d'abord)
 let _aPrechauffer = null, _themePrechauffe = null;
 function prechaufferEnnemis() {
+  // le boss de l'étage d'abord (le plus long à peindre), puis les ennemis du thème
+  const bd = G.etage && G.etage.cfg && INDEX[G.etage.cfg.boss];
+  if (bd && bd.sprite && bd.sprite.type === 'boss' && !(_spEnn.get(bd.sprite) || new Map()).size) { spriteEnnemi({ def: bd }); return; }
   const th = G.etage && G.etage.cfg ? INDEX[G.etage.cfg.theme] : null;
   if (!_aPrechauffer || th !== _themePrechauffe) {
     _themePrechauffe = th;

@@ -316,7 +316,7 @@ Unités : santé en demis (1 contenant = 2 demis) ; distances en tuiles de 32 px
 | Identité visuelle | Silhouette de Kakuzu, teinte #1a3a2a |
 | Directions de build | 1. Adaptation permanente 2. Qualité élevée 3. Survie par résurrections |
 
-## 2. Boss — 25 fiches, attaque par attaque
+## 2. Boss — 37 fiches, attaque par attaque
 
 Chaque attaque suit le même cycle : **préparation** (télégraphe visible et sonore), **phase active**, **récupération** (boss vulnérable et immobile), puis une pause de 0,6 s par défaut. Aucune attaque n’exige un objet : toutes s’esquivent à la vitesse de base (4,5 t/s) et avec le tir de départ. Les attaques ne se répètent jamais deux fois de suite ; une « recharge » impose un délai minimal entre deux usages.
 
@@ -692,6 +692,213 @@ Immobile et gigantesque : queues balayantes, rayon, anneaux à brèche.
 | pluie | 14 impacts (r 1 t, préavis 0,9 s), un sur trois sur vous | 0,5 s | 0,5 s | 0,6 s | coup d’étage | rester mobile hors des cercles |
 | anneau | anneau de 18 à brèche × 3 vagues, 3,4 t/s | 0,6 s | 0,5 s | 0,6 s | coup d’étage | passer par la brèche |
 
+### BOS_025 — Neji, « Le tourbillon céleste »
+
+Étage 2 · 290 PV · déplacement poursuite (1,9 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Tourbillon défensif annoncé : il efface vos tirs proches et repousse au contact ; les soixante-quatre paumes frappent tout son cercle (sortez-en) ; paumes d’air à distance.
+
+Phases :
+
+- à 50 % des PV — « Les soixante-quatre points s’enchaînent plus vite ! » : le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| kaiten | tourbillon 0,9 s : efface vos tirs à moins de 2,8 tuiles, rien ne le touche à distance ; à moins de 1,7 tuile, il vous repousse et vous blesse une fois | 0,45 s | 0,9 s | 0,7 s | coup d’étage | cesser de tirer pendant le tourbillon, garder ses distances ; frapper pendant la récupération |
+| paumes | cercle de 2,3 tuiles autour de lui (trigrammes), annoncé 0,65 s, puis toutes les paumes frappent le cercle | 0,3 s | 1 s | 0,8 s | coup d’étage | sortir du cercle avant la frappe |
+| paume | 1 projectile(s) visé(s) × 3 rafales, écart 0,22 rad, 8,5 t/s | 0,4 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
+| elan | charge en ligne droite (10 t/s) jusqu’au mur | 0,45 s | 0,6 s | 0,6 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+
+### BOS_026 — Mille-pattes géant, « La chose sous la forêt »
+
+Étage 2 · 280 PV · déplacement poursuite (1,6 t/s) · contact coup d’étage · création originale.
+
+Plonge sous terre et ressurgit sous vos pieds ; ses ruées laissent une traînée de venin ; son long corps blesse au contact.
+
+Mise en place : corps de 8 anneaux à pattes qui suivent la tête et blessent au contact ; ses ruées laissent une traînée de venin (3 s).
+
+Phases :
+
+- à 50 % des PV — « Ses anneaux suintent de venin ! » : le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| terrier | le boss s’enfouit et vous suit sous terre (90 px/s) ; fissure 0,5 s avant la sortie, puis anneau de 8 | 0,3 s | 1,4 s | 0,7 s | coup d’étage | bouger dès que le sol se fend ; traverser l’anneau |
+| ruee | charge en ligne droite (10 t/s) jusqu’au mur, anneau à l’impact | 0,55 s | 1,2 s | 0,9 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+| venin | 3 projectile(s) visé(s) × 2 rafales, écart 0,3 rad, 5 t/s | 0,5 s | 0,5 s | 0,6 s | coup d’étage | se décaler perpendiculairement |
+
+### BOS_024 — Temari, « La tempête de l’éventail »
+
+Étage 3 · 320 PV · déplacement errance (1,8 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Lames de vent en éventail, bourrasque en cône (annoncée) qui repousse et efface vos tirs, tornade, et la belette à la faux qui traverse la salle sur une ligne annoncée.
+
+Phases :
+
+- à 50 % des PV — « Temari déploie l’éventail en entier ! » : le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| lames | 5 projectile(s) visé(s), écart 0,2 rad, 6 t/s | 0,45 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
+| bourrasque | cône de vent (70°, 6,5 tuiles) annoncé : 1,1 s de poussée qui vous éloigne et efface vos tirs dans le cône | 0,6 s | 1,1 s | 0,6 s | — (poussée) | sortir latéralement du cône ; attention aux dangers derrière vous |
+| tornade | spirale à 3 bras, un tir toutes les 0,14 s | 0,6 s | 2,2 s | 0,6 s | coup d’étage | tourner dans le sens de la spirale à distance |
+| kamatari | ligne jusqu’au mur annoncée 0,75 s, puis une grande lame de vent (13 t/s) qui traverse les obstacles | 0,2 s | 1 s | 0,6 s | coup d’étage | sortir de la ligne annoncée |
+
+### BOS_027 — Kidōmaru, « La toile dorée »
+
+Étage 4 · 370 PV · déplacement errance (1,7 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Tisse des toiles collantes au sol, lance six kunai à la fois, appelle des araignées tisseuses ; à mi-vie, la flèche d’or : la ligne de visée vous suit, se fige, puis la flèche traverse tout.
+
+Phases :
+
+- à 50 % des PV — « Kidōmaru bande son arc d’or… » : le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| toile | 4 boules de toile (cercles annoncés 0,6 s, une sur vous) : toiles collantes 8 s qui ralentissent à 65 % | 0,5 s | 0,6 s | 0,5 s | — (ralentissement) | sortir des cercles ; brûler les toiles au feu |
+| kunai | 6 projectile(s) visé(s) × 2 rafales, écart 0,17 rad, 5,5 t/s | 0,45 s | 0,5 s | 0,6 s | coup d’étage | se décaler perpendiculairement |
+| araignees — recharge 7 s | appelle 2 × Araignée tisseuse (3 au plus) | 0,5 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
+| fleche (phase 2) | la ligne de visée vous suit 1 s, se fige 0,35 s, puis la flèche d’or (15 t/s) part et traverse les obstacles | 0,2 s | 1,5 s | 0,8 s | coup d’étage | bouger juste après le figement de la ligne |
+
+### BOS_028 — Tayuya, « La flûte des démons »
+
+Étage 4 · 330 PV · déplacement fuite (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Garde ses distances en jouant de la flûte : démons géants aux yeux bandés (ils tombent avec elle), ondes sonores à brèche, spirales de notes, esprits chercheurs.
+
+Phases :
+
+- à 50 % des PV — « La mélodie s’accélère ! » : le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| demons — recharge 9 s | appelle 1 × Démon de la flûte (2 au plus) | 0,7 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
+| melodie | 2 onde(s) en expansion à brèche (3 t/s) | 0,6 s | 0,5 s | 0,6 s | coup d’étage | traverser par la brèche |
+| notes | spirale à 2 bras, un tir toutes les 0,12 s | 0,6 s | 2 s | 0,6 s | coup d’étage | tourner dans le sens de la spirale à distance |
+| esprits | 3 esprits sonores chercheurs (guidage 1,3 rad/s, 3,4 s), 0,22 s d’écart | 0,5 s | 1,2 s | 0,6 s | coup d’étage | tourner autour, les faire percuter les obstacles |
+
+### BOS_029 — Suigetsu, « L’homme-eau »
+
+Étage 5 · 410 PV · déplacement poursuite (1,9 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Se liquéfie en flaque intangible pour surgir près de vous, couperet levé ; pistolet à eau, flots ralentissants. La foudre lui inflige 50 % de plus et l’empêche de se liquéfier pendant 4 s.
+
+Phases :
+
+- à 45 % des PV — « Suigetsu gonfle son bras d’eau ! » : le boss accélère : déplacements, préparations, récupérations et projectiles ×1,25.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| liquefaction | flaque intangible 1,4 s qui file vers vous (3,6 t/s), puis surgit et enchaîne le couperet annoncé 0,5 s ; impossible 4 s après un coup de foudre | 0,3 s | 1,4 s | 0,3 s | selon le couperet | suivre la flaque, sortir de l’arc annoncé ; la foudre l’en empêche |
+| couperet | arc de 150° à 2,8 tuiles + 3 lames projetées | 0,55 s | 0,5 s | 0,65 s | coup d’étage | reculer hors de l’arc |
+| pistolet | 1 projectile(s) visé(s) × 4 rafales, écart 0,22 rad, 9 t/s | 0,4 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
+| flot | 3 flaque(s) eau de 1,5 tuile(s), 7 s | 0,6 s | 0,5 s | 0,4 s | coup d’étage | éviter les flaques (elles blessent après 0,6 s de formation) |
+
+### BOS_030 — Jūgo, « La marque de la rage »
+
+Étage 6 · 500 PV · déplacement poursuite (1,5 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Calme, il appelle les oiseaux, frappe le sol et cogne. À 60 %, la marque le recouvre (forme enragée, plus rapide) : massue de chair, ruées explosives, canon de chakra, pluie de rochers.
+
+Phases :
+
+- à 60 % des PV — « Jūgo perd le contrôle : la marque le recouvre ! » : forme enragée (marque visible) : ×1,3 en vitesse et préparation, nouvelles attaques ; invulnérable 0,8 s pendant la transformation ; invulnérable 0,8 s (anneau visible).
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| poing | charge en ligne droite (9 t/s) jusqu’au mur | 0,55 s | 0,9 s | 0,8 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+| oiseaux — recharge 8 s | appelle 2 × Hirondelle des ermites (3 au plus) | 0,6 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
+| secousse | 1 onde(s) en expansion à brèche (3,6 t/s) | 0,6 s | 0,5 s | 0,7 s | coup d’étage | traverser par la brèche |
+| massue (phase 2) | arc de 200° à 2,8 tuiles | 0,6 s | 0,5 s | 0,6 s | coup d’étage | reculer hors de l’arc |
+| propulsion (phase 2) | charge en ligne droite (12 t/s) jusqu’au mur, anneau à l’impact | 0,5 s | 1 s | 0,7 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+| canon (phase 2) | rayon jusqu’au mur (14 px) | 0,8 s | 0,5 s | 0,8 s | coup d’étage | sortir de la ligne |
+| pluie (phase 2) | 8 impacts (r 1 t, préavis 0,9 s), un sur trois sur vous | 0,5 s | 0,5 s | 0,6 s | coup d’étage | rester mobile hors des cercles |
+
+### BOS_031 — Sakon et Ukon, « Deux en un seul corps »
+
+Étage 6 · 420 PV · déplacement poursuite (1,8 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Enchaînements à deux têtes (deux arcs successifs). À 55 %, Ukon se détache : deux adversaires liés ; Ukon plonge dans le sol et surgit à côté de vous.
+
+Phases :
+
+- à 55 % des PV — « Ukon se détache du corps de Sakon ! » : une moitié se détache et combat à part (boss lié) en emportant 40 % de la vitalité restante : la barre reste continue.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| enchainement | deux arcs successifs (130°, 2,4 tuiles) : le premier annoncé, le second réorienté vers vous et annoncé 0,3 s | 0,45 s | 0,8 s | 0,6 s | coup d’étage par arc | reculer hors du premier arc, puis du second |
+| charge | charge en ligne droite (9,5 t/s) jusqu’au mur | 0,5 s | 0,9 s | 0,7 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+| salve | 4 projectile(s) visé(s) × 2 rafales, écart 0,2 rad, 5,5 t/s | 0,45 s | 0,5 s | 0,6 s | coup d’étage | se décaler perpendiculairement |
+
+### BOS_033 — Chimère des cuves, « L’expérience évadée »
+
+Étage 6 · 540 PV · déplacement poursuite (1,2 t/s) · contact coup d’étage · création originale.
+
+Une expérience évadée des cuves. À chaque tiers de vitalité perdu, elle mute (nouvelle silhouette, nouvelles attaques) : ruées acides, pince, mares, tentacules et sujets réanimés.
+
+Phases :
+
+- à 66 % des PV — « La chimère mute : une pince lui pousse ! » : mutation visible : nouvelle silhouette (pince, puis tentacules) et nouvelles attaques.
+- à 33 % des PV — « Nouvelle mutation : des tentacules jaillissent ! » : mutation visible : nouvelle silhouette (pince, puis tentacules) et nouvelles attaques.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| ruee | charge en ligne droite (8,5 t/s) jusqu’au mur | 0,6 s | 1,1 s | 0,9 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+| crachat | 5 projectile(s) visé(s), écart 0,28 rad, 4,5 t/s | 0,5 s | 0,5 s | 0,6 s | coup d’étage | se décaler perpendiculairement |
+| pince (phase 2) | arc de 120° à 2,6 tuiles | 0,55 s | 0,5 s | 0,6 s | coup d’étage | reculer hors de l’arc |
+| mares (phase 2) | 3 flaque(s) acide de 1,1 tuile(s), 5 s | 0,6 s | 0,5 s | 0,6 s | coup d’étage | éviter les flaques (elles blessent après 0,6 s de formation) |
+| tentacules (phase 3) | spirale à 4 bras, un tir toutes les 0,15 s | 0,6 s | 2 s | 0,6 s | coup d’étage | tourner dans le sens de la spirale à distance |
+| sujets (phase 3) — recharge 9 s | appelle 2 × Sujet expérimental (3 au plus) | 0,6 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
+
+### BOS_034 — Zetsu, « Celui qui pousse sous le champ de bataille »
+
+Étage 7 · 440 PV · déplacement aucun (1,2 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Plonge dans le sol et ressurgit sous vous, spores chercheuses, clones blancs, racines qui percent le sol en lignes. À 50 %, la moitié blanche se détache et combat à part.
+
+Phases :
+
+- à 50 % des PV — « Les deux moitiés de Zetsu se séparent ! » : une moitié se détache et combat à part (boss lié) en emportant 40 % de la vitalité restante : la barre reste continue.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| surgir | le boss s’enfouit et vous suit sous terre (90 px/s) ; fissure 0,5 s avant la sortie, puis anneau de 8 | 0,3 s | 1,4 s | 0,7 s | coup d’étage | bouger dès que le sol se fend ; traverser l’anneau |
+| spores | 5 spores chercheuses lentes (2,6 t/s, guidage 0,9 rad/s, 4 s) | 0,5 s | 1,2 s | 0,6 s | coup d’étage | les distancer en cercle large ; les détruire au tir |
+| clones — recharge 8 s | appelle 2 × Zetsu blanc (armée) (3 au plus) | 0,6 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
+| racines | 3 lignes de 6 racines vers vous (en éventail), chaque point annoncé 0,55 s | 0,4 s | 1,4 s | 0,6 s | coup d’étage | se placer entre deux lignes ou sortir latéralement |
+
+### BOS_032 — Danzō, « La racine »
+
+Étage 7 · 430 PV · déplacement errance (1,3 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Rafales de lames de vent, aspiration du tapir qui vous attire, anneaux de vent à brèche, racines qui percent le sol. Une seule fois, à 30 %, l’Izanagi : une illusion tombe à sa place et il reprend 25 % de vitalité ailleurs.
+
+Phases :
+
+- à 30 % des PV — « Izanagi : celui qui est tombé n’était qu’une illusion ! » : une seule fois : une illusion tombe à sa place, il réapparaît ailleurs avec 25 % de vitalité en plus, invulnérable 1 s, le bras dévoilé.
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| vent | 3 projectile(s) visé(s) × 3 rafales, écart 0,12 rad, 7 t/s | 0,45 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
+| baku | vous attire (force 2,4) et tire des anneaux de 10 | 0,6 s | 1,8 s | 0,6 s | coup d’étage | marcher contre la force entre les anneaux |
+| balles | anneau de 16 à brèche × 2 vagues, 4 t/s | 0,5 s | 0,5 s | 0,6 s | coup d’étage | passer par la brèche |
+| racines | 3 lignes de 6 racines vers vous (en éventail), chaque point annoncé 0,55 s | 0,4 s | 1,4 s | 0,6 s | coup d’étage | se placer entre deux lignes ou sortir latéralement |
+
+### BOS_035 — Kinkaku et Ginkaku, « Les frères d’or et d’argent »
+
+Étage 8 · 330 PV · déplacement poursuite (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+
+Deux frères liés : l’aîné (or) souffle des vagues de feu à l’éventail, le cadet (argent) aspire avec sa gourde et fouette de sa corde dorée. Quand l’un tombe, l’autre entre en rage.
+
+Mise en place : deux frères liés : Kinkaku (éventail de feu, ondes, charge) et Ginkaku (gourde qui aspire, corde dorée balayante, sabre) ; quand l’un tombe, l’autre entre en rage (×1,35).
+
+| Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
+|---|---|---|---|---|---|---|
+| eventail | cône de feu annoncé (60°, 5 tuiles) : 2 éventails de 7 flammes et deux foyers de feu 5 s dans le cône | 0,6 s | 0,8 s | 0,6 s | coup d’étage | sortir du cône par le côté ; éviter les foyers ensuite |
+| flammes | 2 onde(s) en expansion à brèche (3,4 t/s) | 0,6 s | 0,5 s | 0,6 s | coup d’étage | traverser par la brèche |
+| charge | charge en ligne droite (9,5 t/s) jusqu’au mur | 0,5 s | 1 s | 0,8 s | coup d’étage | sortir de la ligne annoncée ; frapper pendant la récupération |
+
 ### BOS_M01 — Mue gardienne, « Gardienne du pacte »
 
 Mini-boss de statue · 150 PV · déplacement errance (1,4 t/s) · contact coup d’étage · création originale.
@@ -710,16 +917,16 @@ Mini-boss de statue · 150 PV · déplacement errance (1,4 t/s) · contact coup 
 | saut | saut sur votre position, cercle de 1,6 tuiles, anneau de 8 à l’atterrissage | 0,5 s | 0,7 s | 0,7 s | coup d’étage | quitter le cercle annoncé |
 | langue | 1 projectile(s) visé(s), écart 0,22 rad, 9 t/s | 0,4 s | 0,5 s | 0,5 s | coup d’étage | se décaler perpendiculairement |
 
-## 3. Ennemis par fonction — 76 archétypes
+## 3. Ennemis par fonction — 77 archétypes
 
 La silhouette annonce la fonction (voir D §3). Les chiffres sont ceux des données : PV bruts avant multiplicateurs de champion.
 
 | Comportement | Nombre | PV | Vitesse (t/s) | Archétypes |
 |---|---|---|---|---|
 | poursuivant | 11 | 8–30 | 1,1–2,1 | ENM_001 Poupée d’entraînement animée, ENM_002 Genin renégat, ENM_007 Serpent de la forêt, ENM_030 Scorpion des sables, ENM_044 Marionnette errante, ENM_050 Sujet expérimental, ENM_055 Garde du Son, ENM_062 Ninja de la brume, ENM_070 Zetsu blanc (armée), ENM_074 Bête invoquée, ENM_094 Ombre de chakra |
+| lourd | 7 | 22–44 | 0,8–1 | ENM_008 Sangsue géante, ENM_017 Gardien des archives, ENM_031 Momie de sable, ENM_047 Marionnette géante, ENM_052 Porteur du sceau maudit, ENM_073 Marionnette humaine, ENM_097 Démon de la flûte |
 | chargeur | 7 | 11–30 | 1,3–1,6 | ENM_010 Tigre de la forêt, ENM_018 Genin fonceur, ENM_035 Marionnette à lames, ENM_051 Serpent blanc géant, ENM_065 Déserteur au sabre, ENM_078 Shinobi de l’Alliance égaré, ENM_095 Queue de chakra |
 | volant | 6 | 5–16 | 1,5–2,6 | ENM_005 Chauve-souris, ENM_034 Esprit de sable, ENM_045 Marionnette volante, ENM_057 Chauve-souris d’expérience, ENM_064 Méduse de chakra, ENM_092 Hirondelle des ermites |
-| lourd | 6 | 22–44 | 0,8–1 | ENM_008 Sangsue géante, ENM_017 Gardien des archives, ENM_031 Momie de sable, ENM_047 Marionnette géante, ENM_052 Porteur du sceau maudit, ENM_073 Marionnette humaine |
 | invocateur | 6 | 16–30 | 0–1 | ENM_015 Instructeur déchu, ENM_019 Invocateur d’herbes hautes, ENM_038 Marionnettiste caché, ENM_058 Assistant de laboratoire, ENM_068 Nid de serpenteaux, ENM_076 Invocateur aux tiges |
 | tireur_predictif | 4 | 10–22 | 1,3–1,4 | ENM_011 Ninja de la pluie, ENM_040 Ninja du Son, ENM_056 Tireur du Son, ENM_075 Sentinelle de la pluie |
 | poseur | 4 | 10–20 | 1,2–1,3 | ENM_013 Araignée tisseuse, ENM_041 Poseur de sceaux de sable, ENM_060 Poseur de parchemins explosifs, ENM_079 Poseur d’argile |

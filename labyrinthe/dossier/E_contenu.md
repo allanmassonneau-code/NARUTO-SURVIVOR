@@ -1,6 +1,6 @@
 # E — Contenu jouable : roster, ennemis, boss, thèmes, routes, pactes, économie, secrets
 
-> Partie rédigée de la section E. Les fiches exhaustives générées depuis les données (18 personnages, 24 boss attaque par attaque, 75 ennemis par fonction, 10 thèmes) sont dans [`E_fiches.md`](E_fiches.md) ; les catalogues complets dans [`F_catalogues.md`](F_catalogues.md).
+> Partie rédigée de la section E. Les fiches exhaustives générées depuis les données (18 personnages, 37 boss attaque par attaque, 77 ennemis par fonction, 10 thèmes) sont dans [`E_fiches.md`](E_fiches.md) ; les catalogues complets dans [`F_catalogues.md`](F_catalogues.md).
 > Tous les chiffres cités ici sont ceux du code (données v12). Ce sont des **valeurs de projet**, pas des mesures ni des transcriptions de Naruto ou d'Isaac. Les tests qui les vérifient sont nommés entre crochets, par exemple [pactes].
 
 ## Sommaire
@@ -76,13 +76,46 @@ Probabilité par ennemi ordinaire : **5 %** (10 % en Difficile), **+2 %** à par
 
 ## E3. Boss
 
-24 boss produits (cible bibliothèque 70) : 19 d'étage (1 à 8), 2 de branche (étage 9), 1 de route chronométrée, 2 mini-boss de statues. Fiches complètes, attaque par attaque (zone, préparation, active, récupération, dégâts, réponse attendue), dans E_fiches §2.
+37 boss produits (cible bibliothèque 70) : 32 d'étage (1 à 8), 2 de branche (étage 9), 1 de route chronométrée, 2 mini-boss de statues. Fiches complètes, attaque par attaque (zone, préparation, active, récupération, dégâts, réponse attendue), dans E_fiches §2. Chaque boss est peint à double résolution (D §4).
+
+**Pour ne pas revoir toujours les mêmes**, chaque étage tire son boss parmi trois à cinq (tirage fixé par le code de mission) :
+
+| Étage | Boss possibles |
+|---|---|
+| 1 | Mizuki · Serpent géant · Frères démons |
+| 2 | Zabuza · Haku · **Neji** · **Mille-pattes géant** |
+| 3 | Kankurō et Karasu · Trio du Son · Kimimaro · **Temari** |
+| 4 | Gaara · Sasori · **Kidōmaru** · **Tayuya** |
+| 5 | Kabuto · Kisame · Hidan · **Suigetsu** |
+| 6 (première fin) | Orochimaru · **Jūgo** · **Sakon et Ukon** · **Chimère des cuves** |
+| 7 | Deidara · Itachi · Kakuzu · **Zetsu** · **Danzō** |
+| 8 (deuxième fin) | Pain · Obito · Konan · **Kinkaku et Ginkaku** |
+
+**Les douze nouveaux, chacun avec une mécanique qu'on ne voit qu'avec lui :**
+
+| Boss | Ce qui est nouveau | Réponse attendue |
+|---|---|---|
+| BOS_025 Neji | tourbillon qui efface vos tirs proches ; cercle des soixante-quatre paumes | cesser de tirer pendant le tourbillon ; sortir du cercle annoncé |
+| BOS_026 Mille-pattes géant (création originale) | corps de 8 anneaux à pattes, ruées qui laissent une traînée de venin, plongée sous terre | ne pas suivre sa trace ; bouger dès que le sol se fend |
+| BOS_024 Temari | bourrasque en cône qui repousse et efface vos tirs ; belette à la faux sur une ligne annoncée | sortir du cône par le côté ; quitter la ligne |
+| BOS_027 Kidōmaru | toiles collantes ; flèche d'or dont la visée vous suit puis se fige | bouger juste après le figement ; brûler les toiles |
+| BOS_028 Tayuya | garde ses distances, appelle des démons géants aux yeux bandés (ils tombent avec elle) | la poursuivre plutôt que les démons |
+| BOS_029 Suigetsu | se liquéfie en flaque intangible pour surgir couperet levé ; **la foudre** lui fait +50 % et l'empêche de se liquéfier 4 s | premier boss qui récompense une nature précise |
+| BOS_030 Jūgo | à 60 %, forme enragée (marque visible) : nouvelles attaques et plus de vitesse | garder ses ressources pour la seconde moitié |
+| BOS_031 Sakon et Ukon | à 55 %, Ukon se détache (40 % de la vitalité restante, barre continue) et surgit à côté de vous | séparer les deux, finir le plus faible |
+| BOS_033 Chimère des cuves (création originale) | mute à chaque tiers perdu : pince, puis tentacules et sujets réanimés | lire la nouvelle silhouette, nouvelles attaques |
+| BOS_034 Zetsu | ressurgit sous vous ; à 50 %, la moitié blanche se détache | ne pas rester immobile |
+| BOS_032 Danzō | aspiration du tapir ; une seule fois, l'Izanagi : une illusion tombe à sa place, il reprend 25 % ailleurs | ne pas brûler ses actifs sur le premier « coup fatal » |
+| BOS_035 Kinkaku et Ginkaku | duo : éventail de feu / gourde qui aspire et corde dorée ; le survivant entre en rage | choisir lequel abattre en premier |
+
+La première fin (étage 6) et la deuxième (étage 8) s'obtiennent contre n'importe lequel des boss de l'étage ; la phrase d'ouverture de la fin dépend du boss vaincu. Vaincre Orochimaru reste l'objectif OBJ_017 (*Les mues du serpent*).
 
 **Cadre commun, lisible et sans triche.**
 
 - Cycle par attaque : préparation visible et sonore (0,2 à 1,6 s), phase active, **récupération** (boss vulnérable), pause. Une seule attaque active par boss ; les duos et trios ont chacun leur cycle.
 - Pas de répétition immédiate ; une *recharge* (s) impose un délai entre deux usages et une attaque peut s'épuiser (Kabuto : soin trois fois au plus, espacé de 10 s ; invocation toutes les 8 s au plus).
-- Invulnérabilité courte et montrée par un anneau : 0,6 s (rupture d'Hiruko), 0,8 s (mue d'Orochimaru).
+- Invulnérabilité courte et montrée par un anneau : 0,6 s (rupture d'Hiruko), 0,8 s (mue d'Orochimaru, rage de Jūgo), 1 s (Izanagi de Danzō).
+- Duos et trios : chacun son cycle, la salle finit quand tous sont vaincus ; seules les invocations et marionnettes tombent avec leur maître.
 - Résistances visibles et expliquées : Kakuzu durci ×0,3 pendant 1,8 s (peau grise) ; Hiruko ×0,5 jusqu'à 55 % (teinte brune) ; Susanoo d'Itachi : bouclier frontal seulement, contournable, 2,5 s de brèche toutes les 6,5 s.
 - Aucune attaque n'exige un objet : tout s'esquive à la vitesse de base (4,5 t/s) et se gagne avec le tir de départ.
 - **Géants** : le contact est un cercle de rayon *r* (Dix Queues : 26 px) et non le rectangle du sprite ; le corps du serpent géant blesse par 6 cercles de 10 px, tous dessinés.
@@ -111,7 +144,7 @@ Dix thèmes et dix-huit variantes (fiches générées dans E_fiches §4). Chaque
 - **Identité** : planches et briques, lumière chaude, cibles d'entraînement, parchemins, lanternes ; musique en gamme *yo*, 88 bpm, koto.
 - **Variantes** : *Salles d'entraînement* (jarres et caisses fréquentes : plus de ressources cachées, moins de couverture solide) ; *Archives inondées* (flaques qui ralentissent la marche, pas le vol).
 - **Ennemis** : poupées animées, genin renégats, tireurs cardinaux, chauves-souris, instructeur déchu (invocateur).
-- **Boss** : Mizuki (éventail, grand shuriken revenant, charges), Serpent géant (corps segmenté), Frères démons (chaîne qui se tend).
+- **Boss** (étages 1-2) : Mizuki (éventail, grand shuriken revenant, charges), Serpent géant (corps segmenté), Frères démons (chaîne qui se tend) ; Zabuza, Haku, Neji (tourbillon), Mille-pattes géant (traînée de venin).
 - **Rôle dans la partie** : apprendre le tir cardinal, la lecture des télégraphes et les secrets de base.
 
 ### THM_SUN — Cavernes de Suna (chapitre II)
@@ -119,7 +152,7 @@ Dix thèmes et dix-huit variantes (fiches générées dans E_fiches §4). Chaque
 - **Identité** : sable, roche, jarres de sable, cristaux ; gamme *ryūkyū*, 92 bpm.
 - **Variantes** : *Grottes de sable* (sables mouvants qui aspirent) ; *Galeries de verre* (blocs de cristal sur lesquels les tirs rebondissent trois fois au plus [mecaniques]).
 - **Ennemis** : scorpions, momies lourdes, esprits de sable, poseurs de sceaux de sable.
-- **Boss** : Gaara (cercueil, vagues à brèche, pluie ; sous 50 %, la bande de sable se referme sur l'arène [mecaniques]).
+- **Boss** (étages 3-4) : Gaara (cercueil, vagues à brèche, pluie ; sous 50 %, la bande de sable se referme sur l'arène [mecaniques]), Sasori, Kankurō, Trio du Son, Kimimaro, Temari (bourrasque), Kidōmaru (flèche d'or), Tayuya (démons).
 - **Rôle** : la position compte (sables, rebonds), premières zones persistantes.
 
 ### THM_ORO — Laboratoires d'Orochimaru (chapitre III)
@@ -127,14 +160,14 @@ Dix thèmes et dix-huit variantes (fiches générées dans E_fiches §4). Chaque
 - **Identité** : cuves, dalles froides, lumière verdâtre ; statue du serpent (pacte).
 - **Variantes** : *Salle des cuves* (flaques d'acide) ; *Serpentarium* (nids de serpenteaux).
 - **Ennemis** : sujets expérimentaux, serpents blancs chargeurs, tireurs du Son, poseurs de parchemins explosifs.
-- **Boss** : Kabuto (soin interruptible, sujets réanimés), Orochimaru (mues).
+- **Boss** (étages 5-6) : Kabuto (soin interruptible, sujets réanimés), Kisame, Hidan, Suigetsu (liquéfaction, faible à la foudre), Orochimaru (mues), Jūgo (rage), Sakon et Ukon (séparation), Chimère des cuves (mutations).
 - **Rôle** : gestion des invocations et des dégâts de zone ; les pactes deviennent tentants.
 
 ### THM_AKA — Repaires de l'Akatsuki (chapitre IV)
 
 - **Identité** : grottes de scellement, pluie d'Ame, nuages rouges.
 - **Variantes** : *Grotte du scellement* (pénombre 55 % : lanternes et feu éclairent, les dangers restent contourés) ; *Tour d'Ame* (pluie, renforts de Zetsu).
-- **Boss** : Deidara (C3 : se cacher derrière un bloc), Itachi (illusions sans ombre, Susanoo frontal), Kakuzu (masques, peau durcie), Pain, Konan (papillons et mer de papiers), Obito.
+- **Boss** (étages 7-8) : Deidara (C3 : se cacher derrière un bloc), Itachi (illusions sans ombre, Susanoo frontal), Kakuzu (masques, peau durcie), Zetsu, Danzō (Izanagi), Pain, Konan (papillons et mer de papiers), Obito, Kinkaku et Ginkaku (duo, rage).
 - **Rôle** : lecture sous contrainte visuelle, combats de fin de partie.
 
 ## E5. Routes et fins

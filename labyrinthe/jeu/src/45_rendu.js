@@ -42,12 +42,9 @@ function dessinerMursSable(g, s, X, Y) {
   // compte à rebours lisible : l'anneau se referme sous les pieds
   if (forme && m.dedans > 0) { const J = G.joueur; const r = Math.max(3, Math.round(16 * (1 - m.dedans / SABLE_ARENE.delai))); g.drawImage(anneau(r, 2, '#e8c060'), X(J.x) - r - 1, Y(J.y) - r - 1); }
 }
-function dessinerAnneauSerpent(g, x, y, r, i) {
-  g.drawImage(disque(r + 1, '#1c1420'), x - r - 1, y - r - 1);
-  g.drawImage(disque(r, '#3f6424'), x - r, y - r);
-  g.drawImage(disque(Math.max(2, r - 2), '#5f8a34'), x - r + 2, y - r + 1);
-  g.fillStyle = '#8cb454'; g.fillRect(x - 2, y - r + 2, 3, 1); g.fillRect(x - 3 + (i % 2) * 3, y - 1, 2, 1);
-  g.fillStyle = '#d8cf98'; g.fillRect(x - Math.round(r * 0.5), y + r - 3, Math.round(r), 2);
+function dessinerAnneauSerpent(g, x, y, r, i, e) { // anneau du corps peint comme la tête (palette et pattes selon le boss)
+  const A = e && e.def.anneaux, c = anneauSerpentPeint(r, i, (A && PALETTES_ANNEAUX[A.cle]) || PAL_SERPENT, !!(A && A.pattes));
+  g.drawImage(c, Math.round(x - c.cx), Math.round(y - c.cy));
 }
 function dessinerChaineFreres(g, a, b, X, Y) {
   const d = dist(a.x, a.y, b.x, b.y), tendue = d > 110, alerte = d > 90;
@@ -550,7 +547,7 @@ function rendreSalle(g, ox, oy) {
   for (const b of G.bombes) L.push({ y: b.y, f: () => { ombre(b.x, b.y, 5); dessinerBombe(g, b, X(b.x), Y(b.y)); } });
   for (const e of G.ennemis) L.push({ y: e.y, f: () => { const v = e.def.vol && !e.boss && !e.def.fixe, hv = v ? HAUTEUR_VOL + Math.round(Math.sin(G.temps * 5 + e.uid) * 1.5) : 0; if (!e.cache && !e.illusion && !(e.alpha < 0.5)) ombre(e.x, e.y, e.r * (v ? 0.6 : 0.9)); dessinerEnnemi(g, e, X(e.x), Y(e.y - (e.z || 0) - hv)); } });
   // corps du serpent (chaque anneau blesse au contact : il doit se voir) et chaîne des frères
-  for (const e of G.ennemis) if (e.segments && !e.mort && !e.cache) e.segments.forEach((q, i) => L.push({ y: q.y - 0.5, f: () => { const r = Math.round(9 - i * 0.6); ombre(q.x, q.y, r); dessinerAnneauSerpent(g, X(q.x), Y(q.y) - 5, r, i); } }));
+  for (const e of G.ennemis) if (e.segments && !e.mort && !e.cache) e.segments.forEach((q, i) => L.push({ y: q.y - 0.5, f: () => { const r = Math.round(10 - i * 0.6); ombre(q.x, q.y, r); dessinerAnneauSerpent(g, X(q.x), Y(q.y) - 5, r, i, e); } }));
   for (const e of G.ennemis) if (e.chaine && !e.mort && !e.chaine.mort) L.push({ y: Math.max(e.y, e.chaine.y), f: () => dessinerChaineFreres(g, e, e.chaine, X, Y) });
   for (const f of J.familiers) L.push({ y: f.y, f: () => { ombre(f.x, f.y, 5); dessinerFamilier(g, f, X(f.x), Y(f.y)); } });
   if (J.etat !== 'mort' || G.animMort) L.push({ y: J.y, f: () => { ombre(J.x, J.y, 8); dessinerJoueur(g, J, X(J.x), Y(J.y - (J.z || 0))); } });

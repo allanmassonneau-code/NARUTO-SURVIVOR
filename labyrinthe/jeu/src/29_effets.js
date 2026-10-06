@@ -44,8 +44,8 @@ function couleursSprite(c) {
   _couleursSprite.set(c, L); return L;
 }
 function imageMort(e) {
-  const sp = spriteEnnemi(e), img = sp.frames[e.frame % sp.frames.length], ech = e.echelle || 1, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
-  return { img, w: Math.round(img.width * f), h: Math.round(img.height * f), base: sp.base || 0, miroir: !!(sp.miroir && e.dir === 'gauche') };
+  const sp = spriteEnnemi(e), img = sp.attaque ? sp.frames[(sp.formes > 1 ? 3 * Math.min(sp.formes - 1, formeBoss(e)) : 0) + e.frame % 2] : sp.frames[e.frame % sp.frames.length], ech = e.echelle || 1, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
+  return { img, w: Math.round(img.width * f), h: Math.round(img.height * f), base: sp.base || 0, miroir: !!(sp.miroir && (e.boss ? G.joueur.x < e.x - 2 : e.dir === 'gauche')) };
 }
 function debrisSprite(x, y, hauteur, img, n, v = 1) {
   const C = couleursSprite(img);
@@ -102,6 +102,17 @@ function dessinerEffet(g, e, X, Y) {
     case 'immunite': Police.ecrire(g, 'immunisé', x, y - k * 6, '#c0c0ff', { a: 'c' }); break;
     case 'frappe_sol': { const r = Math.round(e.r); g.globalAlpha = 0.5 + 0.4 * k; g.drawImage(anneau(r, 1, e.proprio === 'joueur' ? '#ffb060' : '#ff4a4a'), x - r - 1, y - r - 1); g.drawImage(anneau(Math.max(1, Math.round(r * k)), 1, '#ffe0a0'), x - Math.round(r * k) - 1, y - Math.round(r * k) - 1); g.globalAlpha = 1; if (!e.petite) { const h = Math.round((1 - k) * 120); g.fillStyle = '#6a3a2a'; g.fillRect(x - 5, y - h - 10, 10, 10); g.fillStyle = '#ffb040'; g.fillRect(x - 3, y - h - 16, 6, 6); } break; }
     case 'marque_sol': { const r = Math.round(e.r); g.globalAlpha = 0.35 + 0.4 * k; g.drawImage(ellipse(r, Math.round(r * 0.55), e.danger ? 'rgba(255,60,60,0.5)' : 'rgba(0,0,0,0.4)'), x - r, y - Math.round(r * 0.55)); g.globalAlpha = 1; break; }
+    case 'kaiten': { // tourbillon de Neji : arcs clairs qui tournent vite autour de lui, voile bleuté
+      const S = e.suit, cx = S ? X(S.x) : x, cy = (S ? Y(S.y) : y) - 12, R = Math.round(e.r);
+      g.globalAlpha = 0.22 * (1 - k * 0.5); g.drawImage(ellipse(R, Math.round(R * 0.8), '#c8e8ff'), cx - R, cy - Math.round(R * 0.8)); g.globalAlpha = 0.9 * (1 - k * 0.4);
+      for (let i = 0; i < 6; i++) { const a0 = e.age * 16 + i * Math.PI / 3; for (let t = 0; t < 0.8; t += 0.07) { const a = a0 + t; g.fillStyle = t > 0.6 ? '#ffffff' : '#a8d8ff'; g.fillRect(Math.round(cx + Math.cos(a) * R), Math.round(cy + Math.sin(a) * R * 0.8), 2, 2); } }
+      g.globalAlpha = 1; break;
+    }
+    case 'trigramme': { // cercle des soixante-quatre paumes : anneau et traits des huit trigrammes
+      const R = Math.round(e.r); g.globalAlpha = 0.45 + 0.45 * k; g.drawImage(anneau(R, 1, '#f0e0a8'), x - R - 1, y - R - 1);
+      for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; for (let j = 0; j < 3; j++) { const rr = R - 7 - j * 4, l = (i + j) % 3 === 0 ? 2 : 5; g.fillStyle = '#f8ecc0'; g.fillRect(Math.round(x + Math.cos(a) * rr - l / 2), Math.round(y + Math.sin(a) * rr * 0.7), l, 1); } }
+      g.globalAlpha = 1; break;
+    }
     case 'cercle_danger': { const r = Math.round(e.r); const cl = Math.floor(e.age * 10) % 2; g.globalAlpha = 0.25 + 0.35 * k; g.drawImage(disque(r, 'rgba(255,40,40,0.35)'), x - r, y - r); g.globalAlpha = 0.8; g.drawImage(anneau(r, cl ? 2 : 1, '#ff5040'), x - r - 1, y - r - 1); g.globalAlpha = 1; break; }
     case 'ligne_danger': { g.save(); g.translate(x, y); g.rotate(e.a); g.globalAlpha = 0.2 + 0.4 * k; g.fillStyle = '#ff3a3a'; g.fillRect(0, -e.largeur / 2, e.l, e.largeur); g.globalAlpha = 0.9; g.fillStyle = '#ffb0a0'; for (let i = 0; i < e.l; i += 16) g.fillRect(i + ((e.age * 120) % 16), -1, 6, 2); g.restore(); g.globalAlpha = 1; break; }
     case 'arc_danger': case 'balayage': { g.save(); g.globalAlpha = e.type === 'balayage' ? 1 - k : 0.3 + 0.4 * k; g.fillStyle = e.type === 'balayage' ? '#f0f0ff' : 'rgba(255,50,50,0.5)'; g.beginPath(); g.moveTo(x, y); g.arc(x, y, e.r, e.a - e.arc / 2, e.a + e.arc / 2); g.closePath(); g.fill(); g.restore(); g.globalAlpha = 1; break; }

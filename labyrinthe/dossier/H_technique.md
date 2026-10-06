@@ -17,7 +17,7 @@
 
 ## H1. Architecture
 
-**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 1 060 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 47 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture. Seule exception, facultative : un pack de sons personnel `sons_perso.js` posé à côté du jeu (fabriqué avec `outils/pack_sons.html`, exclu du dépôt) remplace les effets synthétisés qu'il nomme ; absent, rien ne change.
+**Livraison.** Un seul fichier autonome, `jeu/index.html` (≈ 1 220 Kio), qui s'ouvre hors ligne dans un navigateur : aucune dépendance, aucun serveur, aucune ressource externe. Il est assemblé par `outils/construire.mjs` à partir des 50 modules de `jeu/src/`, concaténés dans l'ordre de leurs préfixes, enveloppés dans une fonction en mode strict, puis vérifiés syntaxiquement avant écriture. Seule exception, facultative : un pack de sons personnel `sons_perso.js` posé à côté du jeu (fabriqué avec `outils/pack_sons.html`, exclu du dépôt) remplace les effets synthétisés qu'il nomme ; absent, rien ne change.
 
 **Couches** (un module ne dépend que des couches précédentes, sauf la boucle de jeu qui les orchestre) :
 

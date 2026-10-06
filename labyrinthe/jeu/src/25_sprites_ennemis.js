@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // Sprites des ennemis, boss et familiers. Les silhouettes annoncent la fonction :
 // formes animales, marionnettes anguleuses ; les shinobi ennemis sont des personnages
-// dessinés à part (25_shinobi.js). Deux frames par créature ; les boss shinobi
-// réutilisent le constructeur de chibi des héros (même famille de visages).
+// dessinés à part (25_shinobi.js) ; les boss sont peints deux fois plus finement (25_shinobi_boss*.js).
+// Deux frames par créature.
 // ═══════════════════════════════════════════════════════════════════════════
 
 const CARTES_CREATURES = {
@@ -182,37 +182,12 @@ const CARTES_CREATURES = {
   papier: { c: { p: '#f4f0e8', d: '#c8c0b0' }, f: [['pp..pp', 'pdp.dp', '.pppp.', 'pdp.dp', 'pp..pp'], ['......', 'pppppp', '.pddp.', 'pppppp', '......']] },
 };
 
-// Tenues des shinobi ennemis : masques et capuches (création originale)
-const MASQUES_ENNEMIS = {
-  bandana: { coiffure: 'kiba', c: { h: '#3a3440', g: '#5a5268', H: '#221e28', b: '#6a6a78', p: '#8a8a98', P: '#4a4a58', r: '#c83a2a' }, bas: 'bandana' },
-  ame: { coiffure: 'kakuzu', c: { h: '#4a5a6a', g: '#6a7a8a', H: '#2a3440', b: '#3a4a5a', p: '#a8b0c0', P: '#5a6070', k: '#6a7078', K: '#4a5058' } },
-  suna: { coiffure: 'kankuro', c: { h: '#c8a870', g: '#e0c890', H: '#a08050', b: '#8a7050', p: '#c8c0b0', P: '#6a6050', v: '#8a5a2a' } },
-  oto: { coiffure: 'hinata', c: { h: '#6a6a70', g: '#8a8a90', H: '#4a4a50' } },
-  kiri: { coiffure: 'kakashi', c: { h: '#3a4a5a', g: '#5a6a7a', H: '#26323e', b: '#6a7a8a', p: '#b8c0c8', P: '#6a7078', k: '#d8dce0', K: '#a8acb0' } },
-  zetsu: { coiffure: 'lee', c: { h: '#e8e8e0', g: '#ffffff', H: '#c8c8c0' }, peau: '#ecece4' },
-  kabuto: { coiffure: 'sasori', c: { h: '#b8b8c0', g: '#d8d8e0', H: '#8a8a94' } },
-  anbu: { coiffure: 'sasuke', c: { h: '#2a2a34', g: '#4a4a58', H: '#18181e', b: '#2a2a34', p: '#e8e4dc', P: '#c83a2a' } },
-  alliance: { coiffure: 'naruto', c: { h: '#5a4a3a', g: '#7a6a5a', H: '#3a2e24', b: '#3a3a44', p: '#cfd2de', P: '#6a7088' } },
-};
-// Signes distinctifs dessinés sur le visage (tête en (3,0), centre du visage ≈ (16,13))
-function dessinerVisage(g, type, cx, cy) {
-  const px = (x, y, c) => { g.fillStyle = c; g.fillRect(cx + x, cy + y, 1, 1); };
-  if (type === 'spirale') { // masque orange à spirale, un seul trou d'œil
-    for (let y = -6; y <= 6; y++) for (let x = -8; x <= 8; x++) {
-      const e = (x * x) / 70 + (y * y) / 40; if (e > 1) continue;
-      const ex = x - 3, ey = y; const d = Math.hypot(ex, ey), a = Math.atan2(ey, ex);
-      const bande = (((d - a * 2.4 / Math.PI) % 2.4) + 2.4) % 2.4;
-      px(x, y, e > 0.8 ? '#8a3a0a' : d < 1 ? '#1c1420' : bande < 0.9 ? '#a8480c' : '#ec8a24');
-    }
-  } else if (type === 'piercings') { for (const [x, y] of [[-5, 3], [5, 3], [-2, 5], [2, 5], [0, -1], [-6, -3], [6, -3]]) px(x, y, '#c8ccd8'); }
-  else if (type === 'branchies') { for (const [x, y] of [[-7, 2], [-7, 4], [7, 2], [7, 4]]) { px(x, y, '#2a4a6a'); px(x + (x < 0 ? 1 : -1), y, '#2a4a6a'); } }
-}
 // Cache par objet « sprite » et par échelle : les copies de définition créées en combat
 // (illusions, masques, miroirs) qui gardent le même objet sprite ne le reconstruisent pas.
 const _spEnn = new WeakMap(), SPRITE_DEFAUT = { type: 'carte', cle: 'poupee' };
 function spriteEnnemi(e) {
   const d = e.def; const S = d.sprite || SPRITE_DEFAUT;
-  // taille : les boss sont agrandis par Scale2x (×2, ou ×4 pour les géants) ; les autres restent à l'échelle 1
+  // taille : les boss non peints sont agrandis par Scale2x (×2, ou ×4 pour les géants) ; les autres restent à l'échelle 1
   const k = d.echelleSprite ? (d.echelleSprite >= 3 ? 4 : d.echelleSprite) : (d.boss && !d.mini ? 2 : 1);
   let cache = _spEnn.get(S); if (!cache) { cache = new Map(); _spEnn.set(S, cache); }
   if (cache.has(k)) return cache.get(k);
@@ -227,14 +202,7 @@ function spriteEnnemi(e) {
     r = { frames: brut.map(b => contourner(avecMarge(kc === 2 ? agrandir2x(b) : agrandir(b)))), miroir: C.miroir, base: 1 };
   } else if (S.type === 'shinobi') {
     const B = spriteShinobi(S.perso); r = k > 1 ? Object.assign({}, B, { frames: B.frames.map(agrandir), base: k }) : B;
-  } else if (S.type === 'ninja') {
-    const M = MASQUES_ENNEMIS[S.masque] || MASQUES_ENNEMIS.bandana;
-    const cs = Object.assign({}, M.c, S.cheveux || {}); const peau = S.peau || M.peau; if (peau) { cs.s = peau; cs.d = nuancer(peau, 0.82); cs.l = nuancer(peau, 1.12); }
-    const V = { coiffure: S.coiffure || M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages, dos: S.dos };
-    const cle = 'enn_' + d.id + '_' + d.nom; VISUELS[cle] = V;
-    const P = spritesPerso(cle);
-    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); return c; };
-    r = { frames: [frame(0), frame(1)].map(agrandir), base: k }; // pieds à 1 px du bas, ×k après agrandissement
+  } else if (S.type === 'boss') { r = spriteBossPeint(S.perso) || spriteShinobi('genin_renegat'); // boss peints à l'échelle 2 (25_shinobi_boss*.js)
   } else r = { frames: [contourner(disque(d.r || 8, '#a04a6a'))], base: 0 };
   cache.set(k, r); return r;
 }
