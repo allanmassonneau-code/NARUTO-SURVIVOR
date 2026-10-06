@@ -1,7 +1,8 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // Sprites des ennemis, boss et familiers. Les silhouettes annoncent la fonction :
-// masques pour les shinobi hostiles, formes animales, marionnettes anguleuses.
-// Deux frames par créature ; les shinobi réutilisent le constructeur de chibi.
+// formes animales, marionnettes anguleuses ; les shinobi ennemis sont des personnages
+// dessinés à part (25_shinobi.js). Deux frames par créature ; les boss shinobi
+// réutilisent le constructeur de chibi des héros (même famille de visages).
 // ═══════════════════════════════════════════════════════════════════════════
 
 const CARTES_CREATURES = {
@@ -208,103 +209,6 @@ function dessinerVisage(g, type, cx, cy) {
 }
 // Cache par objet « sprite » et par échelle : les copies de définition créées en combat
 // (illusions, masques, miroirs) qui gardent le même objet sprite ne le reconstruisent pas.
-// ── Équipements par comportement : un comportement d'attaque = une silhouette ──
-// Rouleau dans le dos = invocateur ; tablier à croix verte = soigneur ; épaulières et grande
-// lame = chargeur ; bandoulière et kunai (éventail, glace selon le tir) = tireur en ligne ;
-// visière rouge et arbalète (ou amplificateur) = tireur qui anticipe ; jarre sur le dos =
-// lanceur en cloche ; parchemins pendus à la ceinture = poseur de pièges ; plastron et
-// massue = lourd ; cape à capuche = embusqué ; bandages et kunai = poursuivant.
-const ARME_PROPRE = new Set(['chargeur', 'lourd', 'tireur', 'tireur_predictif', 'lanceur_arc', 'guerisseur', 'invocateur', 'embusque']);
-const _equip = {};
-function piece(nom, lignes, couleurs) { return _equip[nom] || (_equip[nom] = contourner(avecMarge(peindre(lignes, couleurs)))); }
-const EQUIPEMENTS = {
-  rouleau: [['RsssssssssssssssssssssssR', 'RlllllllllllllllllllllllR', 'RsssssssssssssssssssssssR', 'RdddddddddddddddddddddddR'], { R: '#b83a3a', s: '#e8dcb8', l: '#fff4dc', d: '#b8a888' }],
-  tablier: [['wwwwwwwwww', 'wwwwggwwww', 'wwwwggwwww', 'wwggggggww', 'wwwwggwwww', 'wwwwggwwww', 'dwwwwwwwwd'], { w: '#f4f0e6', g: '#2ab050', d: '#c8c0b0' }],
-  epauliere: [['.mmmm.', 'mllllm', 'mmmmmm'], { m: '#5a5e6a', l: '#a8aebc' }],
-  lame: [['.......w', '......wl', '.....wl.', '....wl..', '...wl...', '..wl....', '.wl.....', 'bb......', 'bb......'], { w: '#f4f8ff', l: '#a0a8b8', b: '#5a3a24' }],
-  kunai: [['.bb....', 'rbbsssw', '.bb....'], { r: '#8a8a94', b: '#4a3a2a', s: '#c8ccd8', w: '#ffffff' }],
-  eventail: [['..wpwpw..', '.wpwpwpw.', 'wpwpwpwpw', '.wpwpwpw.', '..wpwpw..', '...wpw...', '....k....', '....k....'], { w: '#f0e8d8', p: '#c84a3a', k: '#4a3a2a' }],
-  glace: [['...c...', '..cwc.c', '.cwwwc.', 'c.cwc..', '...c...'], { c: '#7ac8f0', w: '#e8f8ff' }],
-  arbalete: [['kk.....kk', '.kwwwwwk.', '...bbb...', '...b.b...'], { k: '#3a3040', w: '#c8ccd8', b: '#6a4a2a' }],
-  amplificateur: [['.mmm.', 'mkmkm', 'mmmmm', 'mkmkm', 'mmmmm', '.lll.'], { m: '#8a8a94', k: '#2a2a34', l: '#c8c8d0' }],
-  jarre: [['..nnnn..', '...jj...', '.jjjjjj.', 'jjlljjjj', 'jljjjjjd', 'jjjjjjjd', 'jjjjjjdd', '.jjjjdd.', '..dddd..'], { n: '#6a4a36', j: '#b86a44', l: '#e0a07a', d: '#8a4a30' }],
-  jarrette: [['.nn.', 'jjjj', 'jljj', 'jjjd', '.dd.'], { n: '#6a4a36', j: '#b86a44', l: '#e0a07a', d: '#8a4a30' }],
-  etiquette: [['ppp', 'prp', 'ppp', 'prp', 'ppp'], { p: '#f4f0e8', r: '#c83a2a' }],
-  sacoche: [['.bbb.', 'bdddb', 'bdbdb', 'bdddb', '.bbb.'], { b: '#6a4a2a', d: '#8a6a3a' }],
-  plastron: [['mmmmmmmmmm', 'mlmmmmmmlm', 'mmmmkkmmmm', 'mlmmmmmmlm', 'mmmmmmmmmm'], { m: '#6a6e7a', l: '#a8aeb8', k: '#3a3e48' }],
-  massue: [['.w......', '.ww.....', '..ww....', '...ww...', '...ww...', '..hhhhh.', '.hhlhhhh', 'hhhhbhhh', 'hbhhhhhh', 'hhhhhbhh', 'hhhhhhhh', '.hhhhhh.', '..hhhh..'], { w: '#7a5a3a', h: '#4e4450', l: '#8a8098', b: '#1c1420' }],
-};
-const eq = (g, nom, x, y) => { const [l, c] = EQUIPEMENTS[nom]; g.drawImage(piece(nom, l, c), x - 1, y - 1); };
-function equiperNinja(g, d, couche, i) {
-  const P = d.params || {}, R = (x, y, l, h, c) => { g.fillStyle = c; g.fillRect(x, y, l, h); };
-  switch (d.comportement) {
-    case 'invocateur': if (couche === 'dos') eq(g, 'rouleau', 3, 21); else { R(12, 25, 1, 1, '#e0b0ff'); R(19, 25, 1, 1, '#e0b0ff'); R(15, 24 + i, 2, 1, '#c080ff'); } break;
-    case 'guerisseur': if (couche === 'face') { eq(g, 'tablier', 11, 21); R(9, 26, 3, 2, '#7af09a'); R(20, 26, 3, 2, '#7af09a'); R(10, 26, 1, 1, '#e8ffec'); R(21, 26, 1, 1, '#e8ffec'); } break;
-    case 'chargeur': if (couche === 'face') { eq(g, 'epauliere', 5, 20); eq(g, 'epauliere', 21, 20); eq(g, 'lame', 21, 18); } break;
-    case 'tireur':
-      if (couche === 'face') {
-        for (let k = 0; k < 7; k++) { R(10 + Math.round(k * 1.7), 22 + k, 2, 1, '#6a4a2a'); if (k % 2) R(10 + Math.round(k * 1.7), 22 + k, 1, 1, '#d8dce8'); }
-        if (P.motif === 'eventail') eq(g, 'eventail', 22, 18); else if (P.proj === 'glace_ennemie') eq(g, 'glace', 23, 21); else eq(g, 'kunai', 22, 25);
-      }
-      break;
-    case 'tireur_predictif':
-      if (couche === 'face') { R(6, 12, 20, 3, '#24202c'); R(18, 12, 5, 3, '#ff4a4a'); R(19, 12, 1, 1, '#ffd0c8'); R(8, 13, 3, 1, '#4a4454'); if (P.proj === 'son') eq(g, 'amplificateur', 21, 22); else eq(g, 'arbalete', 11, 23); }
-      break;
-    case 'lanceur_arc': if (couche === 'dos') eq(g, 'jarre', 22, 19); else eq(g, 'jarrette', 5, 24); break;
-    case 'poseur': if (couche === 'face') { eq(g, 'sacoche', 4, 24); eq(g, 'etiquette', 10, 27); eq(g, 'etiquette', 15, 28 + i); eq(g, 'etiquette', 20, 27); } break;
-    case 'lourd': if (couche === 'face') { eq(g, 'plastron', 11, 22); eq(g, 'massue', 21, 20); } break;
-    case 'embusque':
-      if (couche === 'face') { // cape à capuche : seul le visage reste visible
-        const cape = '#2a2432', clair = '#4a4058', bord = '#120e16';
-        for (let y = 20; y <= 32; y++) { const w = 7 + Math.round((y - 20) * 0.35); R(16 - w - 1, y, 2 * w + 2, 1, bord); R(16 - w, y, 2 * w, 1, cape); R(16 - w, y, 1, 1, clair); }
-        for (let x = 16 - 11; x < 16 + 11; x += 2) R(x, 32 + ((x + i) % 2), 1, 1, bord);
-        const capuche = [[0, 11, 20], [1, 9, 22], [2, 7, 24], [3, 4, 27], [4, 3, 28], [5, 3, 28], [6, 3, 28], [7, 3, 28], [8, 3, 28], [9, 3, 28]];
-        for (const [y, a, b] of capuche) { R(a - 1, y, b - a + 3, 1, bord); R(a, y, b - a + 1, 1, y === 9 ? clair : cape); }
-        R(4, 10, 2, 9, cape); R(26, 10, 2, 9, cape); R(3, 10, 1, 9, bord); R(28, 10, 1, 9, bord);
-      }
-      break;
-    case 'poursuivant': if (couche === 'face') { R(9, 25, 3, 1, '#e8e4dc'); R(20, 25, 3, 1, '#e8e4dc'); R(9, 27, 3, 1, '#e8e4dc'); R(20, 27, 3, 1, '#e8e4dc'); if (!d.sprite.arme) { R(22, 26, 1, 2, '#4a3a2a'); R(22, 28, 1, 4, '#c8ccd8'); R(22, 32, 1, 1, '#ffffff'); } } break;
-  }
-}
-// ── Couvre-chefs par comportement : la tête, la partie la plus lisible du chibi, annonce la façon de bouger
-// et d'attaquer, quelle que soit la faction (coiffure et couleurs) : bandeau à longues pointes = fonce au
-// contact ; casque à cornes = charge ; chapeau de paille = tire en ligne ; lunette de visée = anticipe ;
-// turban de porteur = lance en cloche ; lunettes de mineur = pose des pièges ; heaume de fer = lourd ;
-// haut bonnet scellé = invoque ; foulard à croix verte = soigne. (L'embusqué garde sa capuche.)
-function coiffer(c0, d, S, i) {
-  const co = d.comportement; if (!COIFFES.has(co)) return c0;
-  const c = toile(40, 44), g = ctxDe(c), R = (x, y, l, h, col) => { g.fillStyle = col; g.fillRect(x, y, l, h); }, K = '#1c1420';
-  const tissu = (S.corps && S.corps.t) || '#4a4a58', tissuC = nuancer(tissu, 1.3);
-  if (co === 'poursuivant') for (let k = 0; k < 9; k++) { const y = 15 + k + Math.round(Math.sin(k * 0.9 + i * 1.6) * 1.2); R(33 + k, y - 1, 2, 3, K); R(33 + k, y, 1, 1, '#c83a2a'); R(34 + k, y + (k % 2), 1, 1, '#e85a3a'); } // pointes du bandeau qui flottent
-  g.drawImage(c0, 4, 10);
-  switch (co) {
-    case 'poursuivant': R(9, 18, 22, 3, K); R(10, 19, 20, 1, '#c83a2a'); R(18, 18, 4, 3, '#a8acb8'); R(19, 19, 2, 1, '#e8ecf4'); break; // bandeau rouge à plaque
-    case 'chargeur': { // casque à cornes de cerf-volant
-      R(8, 7, 24, 8, K); R(9, 8, 22, 6, '#6a6e7a'); R(9, 8, 22, 1, '#a8aebc'); R(19, 6, 2, 9, K); R(19, 7, 2, 7, '#8a8e9a');
-      for (let k = 0; k < 6; k++) { R(10 - k, 7 - k, 3, 2, K); R(11 - k, 7 - k, 1, 1, '#e8c050'); R(28 + k, 7 - k, 3, 2, K); R(28 + k, 7 - k, 1, 1, '#e8c050'); }
-      break;
-    }
-    case 'tireur': { // chapeau de paille conique (kasa)
-      for (let y = 0; y < 8; y++) { const w = 3 + y * 2.4 | 0; R(20 - w - 1, 5 + y, 2 * w + 2, 1, K); R(20 - w, 5 + y, 2 * w, 1, y % 3 === 2 ? '#8a6a3a' : '#c8a868'); R(20 - w, 5 + y, 1, 1, '#e8d098'); }
-      R(1, 13, 38, 2, K); R(2, 13, 36, 1, '#a8884e'); break;
-    }
-    case 'tireur_predictif': R(30, 3, 3, 13, K); R(31, 4, 1, 11, '#5a5e6a'); R(29, 2, 5, 4, K); R(30, 3, 3, 2, '#ff4a4a'); R(30, 3, 1, 1, '#ffd0c8'); break; // lunette de visée
-    case 'lanceur_arc': R(9, 9, 22, 6, K); R(10, 10, 20, 4, '#e8e0d0'); for (let x = 11; x < 30; x += 3) R(x, 10, 1, 4, '#b8b0a0'); R(29, 13, 4, 5, K); R(30, 14, 2, 3, '#e8e0d0'); break; // turban de porteur
-    case 'poseur': for (const x of [11, 22]) { R(x - 1, 13, 9, 7, K); R(x, 14, 7, 5, '#b08a3a'); R(x + 1, 15, 5, 3, '#8ad0e8'); R(x + 1, 15, 2, 1, '#e8fbff'); } R(8, 15, 3, 2, K); R(29, 15, 3, 2, K); break; // lunettes de mineur
-    case 'lourd': { // heaume de fer riveté, crête, protège-joues
-      R(7, 6, 26, 12, K); R(8, 7, 24, 10, '#4e4450'); R(8, 7, 24, 2, '#8a8098'); R(18, 3, 4, 6, K); R(19, 4, 2, 4, '#8a8098');
-      for (const x of [10, 15, 24, 29]) R(x, 11, 1, 1, '#c8c0d0'); R(7, 16, 4, 8, K); R(8, 17, 2, 6, '#5e5460'); R(29, 16, 4, 8, K); R(30, 17, 2, 6, '#5e5460');
-      break;
-    }
-    case 'invocateur': { // haut bonnet noir et sceau d'invocation
-      for (let y = 0; y < 11; y++) { const w = 4 + Math.round(y * 0.45); R(20 - w - 1, y, 2 * w + 2, 1, K); R(20 - w, y, 2 * w, 1, '#2a2434'); }
-      R(17, 3, 6, 6, K); R(18, 4, 4, 4, '#e8dcb8'); R(19, 5, 2, 2, '#c03ad0'); R(13, 10, 14, 2, '#c080ff'); break;
-    }
-    case 'guerisseur': R(8, 9, 24, 5, K); R(9, 10, 22, 3, '#f4f0e6'); R(18, 9, 4, 5, K); R(19, 9, 2, 5, '#2ab050'); R(17, 11, 6, 1, '#2ab050'); break; // foulard à croix verte
-  }
-  return c;
-}
-const COIFFES = new Set(['poursuivant', 'chargeur', 'tireur', 'tireur_predictif', 'lanceur_arc', 'poseur', 'lourd', 'invocateur', 'guerisseur']);
 // Créatures partageant une même forme : l'accessoire annonce l'attaque
 function accessoireCreature(d, S) {
   const P = d.params || {}, co = d.comportement;
@@ -367,13 +271,15 @@ function spriteEnnemi(e) {
       A(g, M, T, f.width, f.height, i, 'dos'); g.drawImage(kc === 2 ? f : contourner(f), M, T); A(g, M, T, f.width, f.height, i, 'face');
       return kc === 2 ? contourner(avecMarge(agrandir2x(c))) : c;
     });
+  } else if (S.type === 'shinobi') {
+    const B = spriteShinobi(S.perso); r = k > 1 ? Object.assign({}, B, { frames: B.frames.map(agrandir), base: k }) : B;
   } else if (S.type === 'ninja') {
     const M = MASQUES_ENNEMIS[S.masque] || MASQUES_ENNEMIS.bandana;
     const cs = Object.assign({}, M.c, S.cheveux || {}); const peau = S.peau || M.peau; if (peau) { cs.s = peau; cs.d = nuancer(peau, 0.82); cs.l = nuancer(peau, 1.12); }
     const V = { coiffure: S.coiffure || M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages, dos: S.dos };
     const cle = 'enn_' + d.id + '_' + d.nom; VISUELS[cle] = V;
     const P = spritesPerso(cle);
-    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); equiperNinja(g, d, 'dos', i); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme && !ARME_PROPRE.has(d.comportement)) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); equiperNinja(g, d, 'face', i); return coiffer(c, d, S, i); };
+    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); return c; };
     r = { frames: [frame(0), frame(1)].map(agrandir), base: k }; // pieds à 1 px du bas, ×k après agrandissement
   } else r = { frames: [contourner(disque(d.r || 8, '#a04a6a'))], base: 0 };
   cache.set(k, r); return r;

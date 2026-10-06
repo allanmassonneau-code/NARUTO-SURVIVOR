@@ -92,26 +92,32 @@ Une **carte de lumière** à demi-résolution est multipliée sur la salle à ch
 
 **Matière.** Le sol reçoit des taches d'usure en dégradé doux et des détails du thème (nœuds et clous de planches, touffes d'herbe et feuilles, rides de sable, grilles et flaques d'acide, flaques d'eau, fissures, fleurs, veines rougeoyantes), jamais sous un obstacle ni dans une fosse ; les murs gagnent un volume (face qui s'assombrit vers le sol, arête éclairée), une ombre portée en dégradé sur trois côtés et des détails (lierre, suintements, tuyau continu, dunes au pied du mur, chaînes, avis placardés, fils) ; les obstacles ont une ombre de contact, les fosses une paroi striée. Les tirs alliés laissent deux images fantômes le long de leur vitesse (sauf *Confort*).
 
-### Équipement par comportement (`25_sprites_ennemis.js`)
+### Shinobi ennemis : un personnage par ennemi (`25_shinobi.js`)
 
-Règle : **un comportement d'attaque = une silhouette**. Les shinobi hostiles partagent le corps du chibi ; la faction se lit à la coiffure et aux couleurs, le **comportement à l'équipement**, dessiné dans le sprite (aucun coût à l'image) :
+Les 31 shinobi hostiles ne partagent plus le petit corps des héros : chacun est **un personnage à part** (création originale), avec son gabarit, sa posture, sa tenue, sa tête et son accessoire. Proportions moins « chibi » que les héros (tête ≈ un tiers de la hauteur) : on distingue au premier regard un ennemi d’un allié.
 
-| Comportement | Équipement | Variante d'attaque |
+**Technique.** Un petit peintre de volumes : boules (têtes, mains, épaulières, jarres), membres (segments arrondis éclairés comme des cylindres), troncs (torse, robes, manteaux éclairés en cylindre vertical), polygones (capes, chapeaux, lames, éventails). Lumière en haut à gauche, rampe de cinq tons par matière (ombres froides, lumières chaudes, éclat réservé au métal, au verre et à la glace), **trait intérieur** quand une pièce passe devant une autre, contour sombre commun à tous les sprites ; les lueurs (fils de chakra, mains de soin, sceaux) sont posées après le contour, fines et lumineuses. Trois images, recadrées ensemble autour de l’axe du corps (miroir quand l’ennemi va à gauche) : deux de marche et **une d’attaque, montrée pendant le télégraphe**. Construits une fois (2 à 10 ms), puis préchauffés un par un hors combat.
+
+**La posture dit la mécanique** :
+
+| Comportement | Langage du corps | Image d’attaque |
 |---|---|---|
-| Poursuivant | bandages aux poings, kunai | — |
-| Chargeur | épaulières, grande lame en avant | — |
-| Tireur en ligne | bandoulière | kunai (ligne), éventail rouge (éventail), cristaux (salves de glace) |
-| Tireur qui anticipe | visière à lentille rouge | arbalète, ou amplificateur au bras (ondes sonores) |
-| Lanceur en cloche | jarre sur le dos, petite jarre en main | — |
-| Poseur de pièges | sacoche, parchemins pendus à la ceinture | — |
-| Lourd | plastron riveté, massue | — |
-| Invocateur | grand rouleau dans le dos, cercle violet au sol, lueur violette | — |
-| Soigneur | tablier à croix verte, mains vertes, cercle vert au sol, lueur verte | — |
-| Embusqué | cape à capuche (seul le visage reste visible) | — |
+| Poursuivant (fonce au contact) | penché en pleine course, une jambe tendue en arrière | arme pointée devant lui |
+| Chargeur | épaules énormes ou arme longue tenue basse | se ramasse, lame ou lance couchée vers la cible |
+| Tireur en ligne | projectiles en main (kunai en éventail, éventail fermé, aiguilles de glace) | bras armé levé, éventail ouvert en demi-roue |
+| Tireur qui anticipe | arme d’épaule (tube à eau, gantelet sonore, corne, ombrelle) | épaule et vise ; ondes ou gouttes à la bouche de l’arme |
+| Lanceur en cloche | énorme jarre sur le dos | brandit une jarrette au-dessus de la tête |
+| Poseur de pièges | accroupi, étiquette à la main, besace ou plastron d’explosifs | — |
+| Lourd | colosse, poings ou bras multiples | poings levés au-dessus de la tête |
+| Invocateur | fils de chakra, bâton, tiges, seringue ; cercle violet au sol | mains levées, fils tendus, sceau violet |
+| Soigneur | robe ou blouse claire, mains vertes ; cercle vert au sol | deux mains levées, lueur verte |
+| Embusqué | tapi sous une cape, ou à demi enraciné (Zetsu) | jaillit, bras levés ou salve d’aiguilles |
+
+**Le roster.** Académie et Forêt : genin renégat (écharpe rouge qui claque, bandeau rayé), lanceur de kunai (demi-masque, chignon, bandoulière), ninja de la pluie (imperméable, respirateur, tube à eau), instructeur déchu (vieux, cicatrice, gilet déchiré, fils de chakra vers ses poupées), gardien des archives (colosse au crâne rasé, chapelet, pile de rouleaux sanglée dans le dos), genin fonceur (trapu, casque rembourré, gantelets de fer), invocateur d’herbes hautes (manteau d’herbes, chapeau de paille hérissé, yeux jaunes, serpent sur les épaules). Suna : ninja à l’éventail (tunique, voile, éventail géant), lanceur de jarres (porteur voûté, turban, moustache), marionnettiste caché (capuche, visage peint, coffre dans le dos), ninja du Son (visage bandé, col de fourrure, gantelet percé), poseur de sceaux de sable (petit, accroupi, lunettes orange), médecin de Suna (vieil homme, barbiche, bâton à clochettes). Laboratoires et Kiri : porteur du sceau maudit (brute aux marques noires qui rougeoient à l’attaque), Zetsu blanc (créature végétale, pousses sur le crâne, racines aux jambes), garde du Son (griffes d’acier), tireur du Son (cheveux longs, corne de chasse), assistant de laboratoire (blouse, lunettes rondes, seringue géante), poseur de parchemins explosifs (masque animal, plastron d’étiquettes), ninja médical (chignon à aiguilles, masque chirurgical), ninja de la brume (poncho effiloché, masque à gaz, brume aux pieds), clone de glace (cristal facetté), déserteur au sabre (rōnin, manteau en lambeaux, long sabre), assassin de la brume (masque blanc, cape sarcelle). Repaires et champs de guerre : Zetsu de l’armée (gilet volé, en course), marionnette humaine (bois articulé, six bras, mâchoire à charnière, sable de fer), sentinelle de la pluie (grande ombrelle qui se referme en canon), invocateur aux tiges (cheveux orange, tiges de métal, sceau au sol), shinobi de l’Alliance égaré (tête bandée, lance), poseur d’argile (tablier taché, oiseau d’argile sur l’épaule), Zetsu soigneur (grand bourgeon rose).
+
+Les boss shinobi gardent le constructeur des héros (mêmes familles de visages), sans équipement ajouté : leurs illusions et clones leur ressemblent trait pour trait.
 
 Les créatures qui partageaient une forme reçoivent un accessoire d'attaque : marionnette à lames (lames dépliées), marionnette lanceuse (tubes et socle), marionnette inerte (fils et croix de manipulation), marionnette volante (fils), oiseau d'argile kamikaze (mèche allumée, marque rouge), statue bouclier (grand pavois), statue d'aura (runes et couronne bleues, lueur), statue géante (massue), crapaud cracheur (goitre d'huile), sujet qui se divise (couture médiane), momie lourde (poings de pierre), serpent chargeur (crête), cuve d'acide (buse), nid de serpenteaux (têtes qui dépassent), masque de feu (couronne de flammes, lueur), tourelle à parchemins (bandes de papier).
-
-**Couvre-chefs par comportement** (toutes factions) : la tête, la partie la plus lisible du chibi, annonce la façon de bouger et d’attaquer — bandeau rouge à longues pointes flottantes (poursuit au contact), casque à cornes (charge en ligne), chapeau de paille conique (tire en ligne), lunette de visée à lentille rouge (anticipe), turban de porteur (lance en cloche), lunettes de mineur (pose des pièges), heaume de fer riveté à crête (lourd), haut bonnet noir scellé (invoque), foulard à croix verte (soigne) ; l’embusqué garde sa capuche. La faction se lit toujours à la coiffure et aux couleurs.
 
 **Créatures à la taille de leur zone de contact** : une créature nettement plus petite que son rayon de contact est doublée (Scale2x, comme les boss) — tigre, crapauds, sangsue, araignée tisseuse, marionnettes, scorpion, ver, requin, méduse, statues, tourelles… ; l’accessoire d’attaque est posé avant l’agrandissement. Les petites (rat, chauve-souris, araignée d’argile) restent à l’échelle 1. **Les volants flottent** 5 px au-dessus d’une ombre plus petite, avec un léger balancement ; leur point d’impact est relevé d’autant.
 

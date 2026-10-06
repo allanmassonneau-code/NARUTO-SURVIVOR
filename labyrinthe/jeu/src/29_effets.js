@@ -61,6 +61,9 @@ function effetImpact(x, y, app, force, elements) {
   for (let i = 0; i < n * force; i++) { const a = Math.random() * Math.PI * 2, v = 30 + Math.random() * 50; G.particules.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, age: 0, duree: 0.18 + Math.random() * 0.1, couleur: col, taille: 1 + (Math.random() < 0.3 ? 1 : 0) }); }
   if (app === 'orbe') G.effets.push({ type: 'anneau_impact', x, y, age: 0, duree: 0.2, r: 10 });
   if (app !== 'ennemi' && !G.reglages.sansFlash) G.effets.push({ type: 'etoile_impact', x, y, age: 0, duree: 0.1, r: Math.min(9, 4 + force * 2) });
+  // éclat de nature à l'impact : la forme dit l'élément (gerbe, arcs, éclaboussure, tourbillon, mottes, cristaux)
+  const nat = elements && elements.size ? [...elements].find(n => NATURES_FX[n]) : null;
+  if (nat) G.effets.push({ type: 'impact_nature', nature: nat, x, y, age: 0, duree: nat === 'raiton' ? 0.16 : 0.26, r: 5 + Math.round(force * 4), graine: Math.random() * 6.28 });
 }
 function dessinerEffet(g, e, X, Y) {
   const k = Math.min(1, e.age / e.duree); const x = X(e.x || 0), y = Y(e.y || 0);
@@ -69,8 +72,22 @@ function dessinerEffet(g, e, X, Y) {
       // papier et argile : silhouette en éclats ; feu : volume rond ; cœur clair
       const r = Math.round(e.r * (0.5 + k * 0.6));
       if (k < 0.18 && !G.reglages.sansFlash) { g.drawImage(disque(r, '#fff8e0'), x - r, y - r); break; }
-      g.globalAlpha = 1 - k; g.drawImage(disque(r, '#f07a2a'), x - r, y - r); g.drawImage(disque(Math.round(r * 0.65), '#ffd060'), x - Math.round(r * 0.65), y - Math.round(r * 0.65));
+      const ro = Math.round(e.r * (0.75 + k * 0.75)); g.globalAlpha = (1 - k) * 0.75; g.drawImage(anneau(ro, 2, '#ffe8c0'), x - ro - 1, y - ro - 1); // onde de choc
+      if (k > 0.35) for (let i = 0; i < 5; i++) { const a = i * 1.257 + e.x * 0.1, d = r * 0.7, rf = Math.max(2, Math.round(r * 0.32 * (1.2 - k))); g.globalAlpha = 0.55 * (1 - k); g.drawImage(disque(rf, i % 2 ? '#5a4a4a' : '#3a3036'), Math.round(x + Math.cos(a) * d - rf), Math.round(y + Math.sin(a) * d * 0.6 - rf - k * 10)); } // fumée qui monte
+      g.globalAlpha = 1 - k; g.drawImage(disque(r, '#f07a2a'), x - r, y - r); g.drawImage(disque(Math.round(r * 0.65), '#ffd060'), x - Math.round(r * 0.65), y - Math.round(r * 0.65)); if (k < 0.5) g.drawImage(disque(Math.max(1, Math.round(r * 0.3)), '#fff4d0'), x - Math.max(1, Math.round(r * 0.3)), y - Math.max(1, Math.round(r * 0.3)));
       g.globalAlpha = (1 - k) * 0.8; for (let i = 0; i < 8; i++) { const a = i * 0.785 + e.x; const d = r * (0.8 + k * 0.6); g.fillStyle = '#3a3036'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d * 0.8), 3, 3); g.fillStyle = '#e8dcc0'; g.fillRect(Math.round(x + Math.cos(a + 0.4) * d * 0.9), Math.round(y + Math.sin(a + 0.4) * d * 0.7), 2, 3); }
+      g.globalAlpha = 1; break;
+    }
+    case 'impact_nature': { // gerbe propre à chaque nature (dessinée nette, quelques pixels)
+      const F = NATURES_FX[e.nature], r = e.r * (0.5 + k * 0.9), a0 = e.graine; g.globalAlpha = 1 - k * k;
+      switch (e.nature) {
+        case 'katon': for (let i = 0; i < 6; i++) { const a = a0 + i * 1.047, d = r * (0.6 + (i % 2) * 0.4); g.fillStyle = i % 2 ? F[1] : F[0]; g.fillRect(Math.round(x + Math.cos(a) * d) - 1, Math.round(y + Math.sin(a) * d * 0.8 - k * 5) - 1, 2, 3); } if (k < 0.4) g.drawImage(disque(3, '#fff0b0'), x - 3, y - 3); break;
+        case 'raiton': for (let i = 0; i < 3; i++) { let px = x, py = y; const a = a0 + i * 2.09; for (let s = 1; s <= 3; s++) { const nx = Math.round(x + Math.cos(a + (s % 2 ? 0.5 : -0.5)) * r * s / 3), ny = Math.round(y + Math.sin(a + (s % 2 ? 0.5 : -0.5)) * r * s / 3); lignePixel(g, px, py, nx, ny, s === 3 ? F[0] : F[1]); px = nx; py = ny; } } break;
+        case 'suiton': { const rr = Math.round(r); g.drawImage(anneau(rr, 1, F[1]), x - rr - 1, y - rr - 1); for (let i = 0; i < 5; i++) { const a = -Math.PI * (0.15 + 0.7 * i / 4), d = r * 0.9; g.fillStyle = F[0]; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d + k * k * 8), 2, 2); } break; }
+        case 'futon': for (let i = 0; i < 2; i++) { const b = a0 + i * Math.PI + k * 5; for (let s = 0; s < 5; s++) { const a = b + s * 0.35, d = r * (0.4 + s * 0.15); g.fillStyle = s > 2 ? F[1] : F[0]; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d * 0.7), 2, 1); } } break;
+        case 'doton': for (let i = 0; i < 5; i++) { const a = -Math.PI * (0.1 + 0.8 * i / 4), d = r * 0.8; g.fillStyle = i % 2 ? F[0] : '#7a5a34'; g.fillRect(Math.round(x + Math.cos(a) * d) - 1, Math.round(y + Math.sin(a) * d * 0.6 + k * k * 10), 3, 2); } break;
+        case 'hyoton': for (let i = 0; i < 4; i++) { const a = a0 + i * 1.571, d = r * 0.8, cx = Math.round(x + Math.cos(a) * d), cy = Math.round(y + Math.sin(a) * d * 0.8); g.fillStyle = F[1]; g.fillRect(cx - 1, cy, 3, 1); g.fillRect(cx, cy - 1, 1, 3); g.fillStyle = F[0]; g.fillRect(cx, cy, 1, 1); } break;
+      }
       g.globalAlpha = 1; break;
     }
     case 'explosion_petite': { const r = Math.round(e.r * (0.4 + k * 0.6)); g.globalAlpha = 1 - k; g.drawImage(disque(r, '#ffb050'), x - r, y - r); g.drawImage(disque(Math.max(1, Math.round(r * 0.5)), '#fff0c0'), x - Math.round(r * 0.5), y - Math.round(r * 0.5)); g.globalAlpha = 1; break; }

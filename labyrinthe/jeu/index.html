@@ -622,10 +622,11 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   const E = (id, nom, role, comportement, pv, vitesse, sprite, params = {}, x = {}) => DON.ennemis.push(Object.assign({ id, nom, role, comportement, pv, vitesse, r: 9, sprite, params, statut: 'création originale', contact: 1 }, x));
   const N = (masque, corps, o = {}) => Object.assign({ type: 'ninja', masque, corps }, o);
   const K = (cle, couleurs) => ({ type: 'carte', cle, couleurs });
+  const S = perso => ({ type: 'shinobi', perso }); // personnage dessiné à part (25_shinobi.js)
   // ── Chapitre I : Académie, Forêt de la Mort ──
   E('ENM_001', 'Poupée d’entraînement animée', 'p', 'poursuivant', 8, 1.1, K('poupee'), {}, { desc: 'Un mannequin réveillé par un sceau égaré. Lent, avance droit sur vous.' });
-  E('ENM_002', 'Genin renégat', 'p', 'poursuivant', 10, 1.7, N('bandana', { t: '#5a4a3a', T: '#3e3228', a: '#5a4a3a', A: '#3e3228', p: '#3a3a44', P: '#26262e' }, { arme: true }), {}, { desc: 'Bandeau rayé, fonce au contact.' });
-  E('ENM_003', 'Lanceur de kunai', 't', 'tireur', 9, 1.0, N('bandana', { t: '#4a5a4a', T: '#34403a', a: '#4a5a4a', A: '#34403a' }), { motif: 'aligne', cadence: 1.7, vProj: 5.2, tele: 0.35, proj: 'kunai_ennemi' }, { desc: 'Tire quand vous êtes aligné sur sa ligne ou sa colonne.' });
+  E('ENM_002', 'Genin renégat', 'p', 'poursuivant', 10, 1.7, S('genin_renegat'), {}, { desc: 'Bandeau rayé, fonce au contact.' });
+  E('ENM_003', 'Lanceur de kunai', 't', 'tireur', 9, 1.0, S('lanceur_kunai'), { motif: 'aligne', cadence: 1.7, vProj: 5.2, tele: 0.35, proj: 'kunai_ennemi' }, { desc: 'Tire quand vous êtes aligné sur sa ligne ou sa colonne.' });
   E('ENM_004', 'Rat des sous-sols', 'n', 'errant', 4, 3.0, K('rat'), {}, { r: 6, desc: 'Rapide et erratique, fragile.' });
   E('ENM_005', 'Chauve-souris', 'v', 'volant', 5, 2.3, K('chauve_souris'), { erratique: 0.8 }, { vol: true, r: 7, desc: 'Vole au-dessus des fosses et obstacles.' });
   E('ENM_006', 'Crapaud d’égout', 's', 'sauteur', 12, 1.0, K('crapaud', { g: '#5a7a4a', l: '#8aa870' }), { intervalle: 2.2, portee: 3.5, duree: 0.6, atterrissage: 'anneau', proj: 'boue' }, { desc: 'Bondit vers vous ; ses atterrissages éclaboussent en quatre directions.' });
@@ -633,31 +634,31 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   E('ENM_008', 'Sangsue géante', 'l', 'lourd', 22, 0.8, K('sangsue'), { cadence: 3, rOnde: 1.6, tele: 0.7 }, { r: 12, mort: 'flaque', desc: 'Lente ; écrase le sol quand vous approchez.' });
   E('ENM_009', 'Mille-pattes fouisseur', 'r', 'rampant', 14, 2.2, K('mille_pattes'), { tele: 0.6, dureeDehors: 1.6, jet: true, proj: 'terre' }, { desc: 'Circule sous terre (sol qui remue) et surgit près de vous.' });
   E('ENM_010', 'Tigre de la forêt', 'c', 'chargeur', 14, 1.4, K('tigre'), { vCharge: 8, tele: 0.4, recup: 0.8 }, { r: 11, desc: 'Charge en ligne droite quand vous êtes aligné ; étourdi contre un mur.' });
-  E('ENM_011', 'Ninja de la pluie', 'q', 'tireur_predictif', 10, 1.4, N('ame', { t: '#4a5a6a', T: '#34404e', a: '#4a5a6a', A: '#34404e' }), { cadence: 2.2, vProj: 6, tele: 0.45, proj: 'eau' }, { desc: 'Anticipe vos déplacements.' });
+  E('ENM_011', 'Ninja de la pluie', 'q', 'tireur_predictif', 10, 1.4, S('ninja_pluie'), { cadence: 2.2, vProj: 6, tele: 0.45, proj: 'eau' }, { desc: 'Anticipe vos déplacements.' });
   E('ENM_012', 'Nuée de moustiques', 'n', 'nuee', 3, 2.6, K('moustique'), {}, { vol: true, r: 5, desc: 'Trois par nuée ; très fragiles.' });
   E('ENM_013', 'Araignée tisseuse', 'm', 'poseur', 10, 1.3, K('araignee'), { piege: 'toile_zone', intervalle: 4, max: 2 }, { desc: 'Tend des toiles qui ralentissent.' });
   E('ENM_014', 'Jarre hantée', 'e', 'inerte', 8, 2.2, K('jarre_hantee'), { detection: 2 }, { r: 8, desc: 'Ressemble à une jarre… jusqu’à ce que vous approchiez.' });
-  E('ENM_015', 'Instructeur déchu', 'i', 'invocateur', 18, 0.9, N('anbu', { t: '#6a5a4a', T: '#4a3e34', a: '#6a5a4a', A: '#4a3e34' }), { intervalle: 3.2, max: 3, invocation: 'ENM_001', liees: true }, { desc: 'Anime des poupées ; les tuer d’abord libère la salle.' });
+  E('ENM_015', 'Instructeur déchu', 'i', 'invocateur', 18, 0.9, S('instructeur_dechu'), { intervalle: 3.2, max: 3, invocation: 'ENM_001', liees: true }, { desc: 'Anime des poupées ; les tuer d’abord libère la salle.' });
   E('ENM_016', 'Tourelle à parchemins', 'f', 'tourelle', 12, 0, K('masque', { m: '#c8b890', f: '#8a2a2a' }), { motif: 'rotation', cadence: 2, vProj: 4.2, tele: 0.3, proj: 'papier_ennemi' }, { fixe: true, r: 10, contact: 0, desc: 'Fixe ; tire en croix, puis en diagonale.' });
-  E('ENM_017', 'Gardien des archives', 'l', 'lourd', 26, 0.9, N('kiri', { t: '#5a4a3a', T: '#3e3228' }), { cadence: 2.6, rOnde: 2, tele: 0.6, anneau: true, proj: 'papier_ennemi' }, { r: 11, desc: 'Massif ; frappe le sol en onde et en anneau.' });
-  E('ENM_018', 'Genin fonceur', 'c', 'chargeur', 11, 1.5, N('bandana', { t: '#6a3a3a', T: '#4a2828' }), { vCharge: 7.5, tele: 0.4, recup: 0.7 }, { desc: 'Charge dès que vous êtes aligné.' });
-  E('ENM_019', 'Invocateur d’herbes hautes', 'i', 'invocateur', 16, 1.0, N('suna', { t: '#4a6a3a', T: '#34502a' }), { intervalle: 3.5, max: 3, invocation: 'ENM_007' }, { desc: 'Invoque des serpents.' });
+  E('ENM_017', 'Gardien des archives', 'l', 'lourd', 26, 0.9, S('gardien_archives'), { cadence: 2.6, rOnde: 2, tele: 0.6, anneau: true, proj: 'papier_ennemi' }, { r: 11, desc: 'Massif ; frappe le sol en onde et en anneau.' });
+  E('ENM_018', 'Genin fonceur', 'c', 'chargeur', 11, 1.5, S('genin_fonceur'), { vCharge: 7.5, tele: 0.4, recup: 0.7 }, { desc: 'Charge dès que vous êtes aligné.' });
+  E('ENM_019', 'Invocateur d’herbes hautes', 'i', 'invocateur', 16, 1.0, S('invocateur_herbes'), { intervalle: 3.5, max: 3, invocation: 'ENM_007' }, { desc: 'Invoque des serpents.' });
   E('ENM_020', 'Racine griffue', 'e', 'embusque', 12, 1.6, K('racine'), { detection: 4, surgitPres: true, attaque: 'eventail', cadence: 0.9, dureeActive: 2.2, cacheDuree: 1.4, cache: true, proj: 'epine' }, { desc: 'Surgit du sol à distance (le sol se fissure avant).' });
   // ── Chapitre II : Suna, ateliers de marionnettes ──
   E('ENM_030', 'Scorpion des sables', 'p', 'poursuivant', 14, 1.9, K('scorpion'), {}, { desc: 'Rapide ; son dard empoisonne au contact.' });
   E('ENM_031', 'Momie de sable', 'l', 'lourd', 30, 0.8, K('momie'), { cadence: 2.8, rOnde: 1.8, tele: 0.7 }, { r: 11, tache: 'sable', desc: 'Lente, écrase le sol.' });
   E('ENM_032', 'Ver des sables', 'r', 'rampant', 18, 2.4, K('ver'), { tele: 0.65, dureeDehors: 1.8, jet: true, proj: 'sable_ennemi' }, { tache: 'sable', desc: 'Traverse le sable et jaillit sous vos pieds.' });
-  E('ENM_033', 'Ninja de Suna à l’éventail', 't', 'tireur', 14, 1.1, N('suna', { t: '#8a6a4a', T: '#6a4e34' }), { motif: 'eventail', cadence: 2.2, vProj: 5, tele: 0.4, proj: 'vent' }, { desc: 'Lames de vent en éventail.' });
+  E('ENM_033', 'Ninja de Suna à l’éventail', 't', 'tireur', 14, 1.1, S('suna_eventail'), { motif: 'eventail', cadence: 2.2, vProj: 5, tele: 0.4, proj: 'vent' }, { desc: 'Lames de vent en éventail.' });
   E('ENM_034', 'Esprit de sable', 'v', 'volant', 8, 2.1, K('esprit_sable'), { erratique: 0.9 }, { vol: true, r: 8, tache: 'sable', desc: 'Volant, imprévisible.' });
   E('ENM_035', 'Marionnette à lames', 'c', 'chargeur', 16, 1.3, K('marionnette'), { vCharge: 9, tele: 0.35, recup: 0.6 }, { desc: 'Charge avec des lames dépliées.' });
-  E('ENM_036', 'Lanceur de jarres', 's', 'lanceur_arc', 14, 0.8, N('suna', { t: '#9a7a5a', T: '#7a5a3a' }), { cadence: 2.4, duree: 0.9, eclabousse: 'anneau', proj: 'tesson' }, { desc: 'Lance des jarres en cloche : leur point de chute est marqué.' });
+  E('ENM_036', 'Lanceur de jarres', 's', 'lanceur_arc', 14, 0.8, S('lanceur_jarres'), { cadence: 2.4, duree: 0.9, eclabousse: 'anneau', proj: 'tesson' }, { desc: 'Lance des jarres en cloche : leur point de chute est marqué.' });
   E('ENM_037', 'Marionnette lanceuse', 'f', 'tourelle', 16, 0, K('marionnette', { m: '#5a4a6a', d: '#3a3048' }), { motif: '8', cadence: 2.6, vProj: 4.2, tele: 0.4, proj: 'senbon_ennemi' }, { fixe: true, contact: 0, desc: 'Fixe ; senbon dans huit directions.' });
-  E('ENM_038', 'Marionnettiste caché', 'i', 'invocateur', 20, 1.0, N('suna', { t: '#3a2a3a', T: '#2a1e2a' }), { intervalle: 3.4, max: 2, invocation: 'ENM_035', liees: true }, { desc: 'Ses marionnettes tombent quand il meurt.' });
+  E('ENM_038', 'Marionnettiste caché', 'i', 'invocateur', 20, 1.0, S('marionnettiste'), { intervalle: 3.4, max: 2, invocation: 'ENM_035', liees: true }, { desc: 'Ses marionnettes tombent quand il meurt.' });
   E('ENM_039', 'Araignée mécanique', 'n', 'nuee', 5, 2.4, K('araignee_meca'), {}, { r: 6, desc: 'Trois par groupe.' });
-  E('ENM_040', 'Ninja du Son', 'q', 'tireur_predictif', 14, 1.3, N('oto', { t: '#6a6a70', T: '#4a4a50' }), { cadence: 2.2, vProj: 5.5, tele: 0.45, proj: 'son' }, { desc: 'Ondes sonores visées.' });
-  E('ENM_041', 'Poseur de sceaux de sable', 'm', 'poseur', 14, 1.2, N('suna', { t: '#c8a870', T: '#a08050' }), { piege: 'parchemin', intervalle: 3.4, max: 3 }, { desc: 'Pose des parchemins qui explosent quand vous passez.' });
+  E('ENM_040', 'Ninja du Son', 'q', 'tireur_predictif', 14, 1.3, S('ninja_son'), { cadence: 2.2, vProj: 5.5, tele: 0.45, proj: 'son' }, { desc: 'Ondes sonores visées.' });
+  E('ENM_041', 'Poseur de sceaux de sable', 'm', 'poseur', 14, 1.2, S('poseur_sable'), { piege: 'parchemin', intervalle: 3.4, max: 3 }, { desc: 'Pose des parchemins qui explosent quand vous passez.' });
   E('ENM_042', 'Marionnette bouclier', 'g', 'protecteur', 22, 0.9, K('statue', { s: '#8a6a4a', l: '#aa8a6a', d: '#5a4630' }), { bouclier: 'frontal' }, { r: 11, desc: 'Bloque les tirs de face : contournez-la.' });
-  E('ENM_043', 'Médecin de Suna', 'h', 'guerisseur', 12, 1.4, N('suna', { t: '#e8e0d0', T: '#c8c0b0' }), { intervalle: 3, soin: 0.25 }, { desc: 'Soigne ses alliés (cercle vert) ; fuit.' });
+  E('ENM_043', 'Médecin de Suna', 'h', 'guerisseur', 12, 1.4, S('medecin_suna'), { intervalle: 3, soin: 0.25 }, { desc: 'Soigne ses alliés (cercle vert) ; fuit.' });
   E('ENM_044', 'Marionnette errante', 'p', 'poursuivant', 14, 1.6, K('marionnette', { m: '#7a6a5a' }), {}, { desc: 'Avance par saccades.' });
   E('ENM_045', 'Marionnette volante', 'v', 'volant', 10, 2.0, K('oiseau_argile', { a: '#8a6a4a', d: '#5a4630' }), {}, { vol: true, desc: 'Plane au-dessus des fosses.' });
   E('ENM_046', 'Marionnette inerte', 'e', 'inerte', 16, 1.8, K('marionnette', { m: '#6a5a4a', w: '#b8a888' }), { detection: 2.2 }, { desc: 'Immobile… jusqu’à ce qu’on s’approche ou qu’on la frappe.' });
@@ -665,36 +666,36 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   // ── Chapitre III : laboratoires, canaux de Kiri ──
   E('ENM_050', 'Sujet expérimental', 'p', 'poursuivant', 18, 1.7, K('momie', { w: '#c8d8c0', d: '#98a890' }), {}, { mort: 'division', enfant: 'ENM_050', desc: 'Se divise en deux à sa mort.' });
   E('ENM_051', 'Serpent blanc géant', 'c', 'chargeur', 18, 1.5, K('serpent', { s: '#e8e4d0', d: '#b8b4a0' }), { vCharge: 9.5, tele: 0.4, recup: 0.7 }, { r: 10, desc: 'Charge en ligne.' });
-  E('ENM_052', 'Porteur du sceau maudit', 'l', 'lourd', 36, 1.0, N('oto', { t: '#4a3a5a', T: '#34283e' }, { cheveux: { h: '#3a2a4a' } }), { cadence: 2.4, rOnde: 2, tele: 0.6 }, { r: 11, desc: 'S’enrage sous la moitié de ses PV.', champion: 'enrage' });
-  E('ENM_053', 'Zetsu blanc', 'e', 'embusque', 20, 1.6, N('zetsu', { t: '#e8e8e0', T: '#c8c8c0', a: '#e8e8e0', A: '#c8c8c0', p: '#e8e8e0', P: '#c8c8c0' }), { detection: 5, surgitPres: true, attaque: 'poursuite', dureeActive: 3, cacheDuree: 1.2, cache: true }, { desc: 'Émerge du sol près de vous et poursuit.' });
+  E('ENM_052', 'Porteur du sceau maudit', 'l', 'lourd', 36, 1.0, S('porteur_sceau'), { cadence: 2.4, rOnde: 2, tele: 0.6 }, { r: 11, desc: 'S’enrage sous la moitié de ses PV.', champion: 'enrage' });
+  E('ENM_053', 'Zetsu blanc', 'e', 'embusque', 20, 1.6, S('zetsu_blanc'), { detection: 5, surgitPres: true, attaque: 'poursuite', dureeActive: 3, cacheDuree: 1.2, cache: true }, { desc: 'Émerge du sol près de vous et poursuit.' });
   E('ENM_054', 'Cuve vivante', 's', 'lanceur_arc', 20, 0, K('cuve'), { cadence: 2.6, duree: 1, eclabousse: 'croix', zone: 'acide', fixe: true, proj: 'acide' }, { fixe: true, r: 12, contact: 0, tache: 'acide', desc: 'Crache de l’acide en cloche (flaque au point de chute).' });
-  E('ENM_055', 'Garde du Son', 'p', 'poursuivant', 16, 1.8, N('oto', { t: '#5a5a60', T: '#3a3a40' }, { arme: true }), {}, { desc: 'Rapide au contact.' });
-  E('ENM_056', 'Tireur du Son', 'q', 'tireur_predictif', 16, 1.3, N('oto', { t: '#7a6a8a', T: '#5a4a6a' }), { cadence: 2, vProj: 6, tele: 0.4, proj: 'son' }, { desc: 'Tirs visés.' });
+  E('ENM_055', 'Garde du Son', 'p', 'poursuivant', 16, 1.8, S('garde_son'), {}, { desc: 'Rapide au contact.' });
+  E('ENM_056', 'Tireur du Son', 'q', 'tireur_predictif', 16, 1.3, S('tireur_son'), { cadence: 2, vProj: 6, tele: 0.4, proj: 'son' }, { desc: 'Tirs visés.' });
   E('ENM_057', 'Chauve-souris d’expérience', 'v', 'volant', 10, 2.5, K('chauve_souris', { b: '#4a5a3a', r: '#c0f060' }), {}, { vol: true, r: 7 });
-  E('ENM_058', 'Assistant de laboratoire', 'i', 'invocateur', 24, 1.0, N('kabuto', { t: '#6a5a8a', T: '#4a3e6a' }), { intervalle: 3.2, max: 3, invocation: 'ENM_050' }, { desc: 'Réanime des sujets.' });
+  E('ENM_058', 'Assistant de laboratoire', 'i', 'invocateur', 24, 1.0, S('assistant_labo'), { intervalle: 3.2, max: 3, invocation: 'ENM_050' }, { desc: 'Réanime des sujets.' });
   E('ENM_059', 'Nuée de serpenteaux', 'n', 'nuee', 5, 2.4, K('serpenteau'), {}, { r: 5 });
-  E('ENM_060', 'Poseur de parchemins explosifs', 'm', 'poseur', 16, 1.3, N('anbu', { t: '#3a3a44', T: '#26262e' }), { piege: 'parchemin', intervalle: 3, max: 3 }, { desc: 'Pièges explosifs (cercle d’alerte).' });
-  E('ENM_061', 'Ninja médical', 'h', 'guerisseur', 16, 1.4, N('kabuto', { t: '#e8e0d0', T: '#c8c0b0' }), { intervalle: 3, soin: 0.25 });
-  E('ENM_062', 'Ninja de la brume', 'p', 'poursuivant', 16, 1.8, N('kiri', { t: '#4a5a6a', T: '#34404e' }, { arme: true }), {}, { desc: 'Silhouette contourée dans la brume.' });
-  E('ENM_063', 'Clone de glace', 't', 'tireur', 16, 1.1, N('kiri', { t: '#8ab0d0', T: '#6a90b0' }), { motif: 'aligne', cadence: 1.6, vProj: 6, tele: 0.35, rafale: 3, ecart: 0.12, proj: 'glace_ennemie' }, { mort: 'glace', desc: 'Salves de senbon de glace ; laisse du verglas.' });
+  E('ENM_060', 'Poseur de parchemins explosifs', 'm', 'poseur', 16, 1.3, S('poseur_explosifs'), { piege: 'parchemin', intervalle: 3, max: 3 }, { desc: 'Pièges explosifs (cercle d’alerte).' });
+  E('ENM_061', 'Ninja médical', 'h', 'guerisseur', 16, 1.4, S('ninja_medical'), { intervalle: 3, soin: 0.25 });
+  E('ENM_062', 'Ninja de la brume', 'p', 'poursuivant', 16, 1.8, S('ninja_brume'), {}, { desc: 'Silhouette contourée dans la brume.' });
+  E('ENM_063', 'Clone de glace', 't', 'tireur', 16, 1.1, S('clone_glace'), { motif: 'aligne', cadence: 1.6, vProj: 6, tele: 0.35, rafale: 3, ecart: 0.12, proj: 'glace_ennemie' }, { mort: 'glace', desc: 'Salves de senbon de glace ; laisse du verglas.' });
   E('ENM_064', 'Méduse de chakra', 'v', 'volant', 12, 1.5, K('meduse'), { erratique: 0.5 }, { vol: true, r: 9, desc: 'Flotte lentement.' });
-  E('ENM_065', 'Déserteur au sabre', 'c', 'chargeur', 18, 1.5, N('kiri', { t: '#3a4a5a', T: '#26323e' }, { arme: true }), { vCharge: 9, tele: 0.35, recup: 0.7 }, { desc: 'Charge sabre en avant.' });
-  E('ENM_066', 'Assassin de la brume', 'e', 'embusque', 16, 1.8, N('kiri', { t: '#2a3440', T: '#1a222c' }), { detection: 4, surgitPres: true, attaque: 'eventail', cadence: 0.8, dureeActive: 2, cacheDuree: 1.5, cache: true, proj: 'senbon_ennemi' });
+  E('ENM_065', 'Déserteur au sabre', 'c', 'chargeur', 18, 1.5, S('deserteur_sabre'), { vCharge: 9, tele: 0.35, recup: 0.7 }, { desc: 'Charge sabre en avant.' });
+  E('ENM_066', 'Assassin de la brume', 'e', 'embusque', 16, 1.8, S('assassin_brume'), { detection: 4, surgitPres: true, attaque: 'eventail', cadence: 0.8, dureeActive: 2, cacheDuree: 1.5, cache: true, proj: 'senbon_ennemi' });
   E('ENM_067', 'Requin des canaux', 'r', 'rampant', 22, 2.6, K('requin'), { tele: 0.55, dureeDehors: 1.5, jet: true, proj: 'eau' }, { desc: 'Son aileron trahit sa position.' });
   E('ENM_068', 'Nid de serpenteaux', 'i', 'invocateur', 20, 0, K('cuve', { m: '#5a4a3a', g: '#8a7a5a', l: '#c8b890' }), { intervalle: 3.5, max: 3, invocation: 'ENM_059', liees: true }, { fixe: true, r: 11, contact: 0, desc: 'Libère des serpenteaux ; les détruit en mourant.' });
   // ── Chapitre IV : repaires de l'organisation, champs de guerre ──
-  E('ENM_070', 'Zetsu blanc (armée)', 'p', 'poursuivant', 24, 1.7, N('zetsu', { t: '#e8e8e0', T: '#c8c8c0', a: '#e8e8e0', A: '#c8c8c0', p: '#e8e8e0', P: '#c8c8c0' }), {}, { desc: 'En nombre, sans relâche.' });
+  E('ENM_070', 'Zetsu blanc (armée)', 'p', 'poursuivant', 24, 1.7, S('zetsu_armee'), {}, { desc: 'En nombre, sans relâche.' });
   E('ENM_071', 'Oiseau d’argile', 'v', 'kamikaze', 12, 2.4, K('oiseau_argile'), { declenche: 1.4, meche: 0.6 }, { vol: true, r: 8, tache: 'argile', desc: 'Plonge et explose (il clignote avant).' });
   E('ENM_072', 'Araignée d’argile', 'n', 'kamikaze', 6, 2.6, K('araignee_argile'), { declenche: 1.1, meche: 0.5 }, { r: 6, tache: 'argile', desc: 'Explose au contact (mèche visible).' });
-  E('ENM_073', 'Marionnette humaine', 'l', 'lourd', 44, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true }), { cadence: 2.2, rOnde: 2.2, tele: 0.6, anneau: true, proj: 'sable_fer' }, { r: 12, desc: 'Écrase le sol et projette du sable de fer.' });
+  E('ENM_073', 'Marionnette humaine', 'l', 'lourd', 44, 1.0, S('marionnette_humaine'), { cadence: 2.2, rOnde: 2.2, tele: 0.6, anneau: true, proj: 'sable_fer' }, { r: 12, desc: 'Écrase le sol et projette du sable de fer.' });
   E('ENM_074', 'Bête invoquée', 'p', 'poursuivant', 20, 2.1, K('bete'), {}, { r: 11, desc: 'Rapide et massive.' });
-  E('ENM_075', 'Sentinelle de la pluie', 'q', 'tireur_predictif', 22, 1.4, N('ame', { t: '#3a4a5a', T: '#26323e' }), { cadence: 1.8, vProj: 6.5, tele: 0.4, proj: 'eau' });
-  E('ENM_076', 'Invocateur aux tiges', 'i', 'invocateur', 30, 1.0, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#e87a2a' } }), { intervalle: 5.0, max: 2, invocation: 'ENM_074', liees: true }, { desc: 'Invoque des bêtes.' });
+  E('ENM_075', 'Sentinelle de la pluie', 'q', 'tireur_predictif', 22, 1.4, S('sentinelle_pluie'), { cadence: 1.8, vProj: 6.5, tele: 0.4, proj: 'eau' });
+  E('ENM_076', 'Invocateur aux tiges', 'i', 'invocateur', 30, 1.0, S('invocateur_tiges'), { intervalle: 5.0, max: 2, invocation: 'ENM_074', liees: true }, { desc: 'Invoque des bêtes.' });
   E('ENM_077', 'Masque élémentaire', 'f', 'tourelle', 26, 0, K('masque'), { motif: 'anneau', cadence: 2.8, vProj: 3.8, tele: 0.45, proj: 'feu' }, { fixe: true, vol: true, r: 10, contact: 0, desc: 'Flotte, émet des anneaux de feu (un espace toujours libre).' });
-  E('ENM_078', 'Shinobi de l’Alliance égaré', 'c', 'chargeur', 24, 1.6, N('alliance', { t: '#5e7e3e', T: '#46612c' }, { arme: true }), { vCharge: 10, tele: 0.35, recup: 0.6 });
-  E('ENM_079', 'Poseur d’argile', 'm', 'poseur', 20, 1.3, N('anbu', { t: '#1e1e28', T: '#121218' }, { nuages: true, cheveux: { h: '#f0d060' } }), { piege: 'parchemin', intervalle: 2.8, max: 3 });
+  E('ENM_078', 'Shinobi de l’Alliance égaré', 'c', 'chargeur', 24, 1.6, S('alliance_egare'), { vCharge: 10, tele: 0.35, recup: 0.6 });
+  E('ENM_079', 'Poseur d’argile', 'm', 'poseur', 20, 1.3, S('poseur_argile'), { piege: 'parchemin', intervalle: 2.8, max: 3 });
   E('ENM_080', 'Statue de pierre', 'g', 'protecteur', 40, 0.7, K('statue'), { bouclier: 'aura' }, { r: 12, desc: 'Ses alliés proches subissent moitié moins de dégâts (anneau bleu).' });
-  E('ENM_081', 'Zetsu soigneur', 'h', 'guerisseur', 20, 1.4, N('zetsu', { t: '#e8e8e0', T: '#c8c8c0', a: '#e8e8e0', A: '#c8c8c0' }), { intervalle: 2.8, soin: 0.3 });
+  E('ENM_081', 'Zetsu soigneur', 'h', 'guerisseur', 20, 1.4, S('zetsu_soigneur'), { intervalle: 2.8, soin: 0.3 });
   // ── Branches ──
   E('ENM_090', 'Crapaud gardien', 'p', 'sauteur', 30, 1.2, K('crapaud', { g: '#c86a2a', l: '#f0a060' }), { intervalle: 1.8, portee: 4, duree: 0.6, atterrissage: 'onde' }, { r: 11 });
   E('ENM_091', 'Crapaud cracheur d’huile', 't', 'lanceur_arc', 26, 0.9, K('crapaud', { g: '#8a6a3a', l: '#b8984a' }), { cadence: 2.4, duree: 0.9, zone: 'huile', eclabousse: 'anneau', proj: 'huile' }, { r: 10 });
@@ -4145,11 +4146,965 @@ function dessinerPerso(g, cle, x, y, o = {}) {
   g.drawImage(tete, X - 13, Y - 32 + bob + (o.etatTete === 'tir' ? 1 : 0) + (o.dy || 0));
 }
 
+// ─── 25_shinobi.js ───
+// ═══════════════════════════════════════════════════════════════════════════
+// Shinobi ennemis : chaque ennemi humain est un personnage à part entière
+// (création originale) — gabarit, posture, tenue, tête et accessoire propres,
+// et non plus un même petit corps coiffé autrement.
+// Peints par primitives en volume (boules, membres, troncs) éclairées en haut à
+// gauche, séparées par des traits intérieurs, puis contournées.
+// La posture dit la mécanique : penché en pleine course = fonce au contact ;
+// épaules en avant, arme pointée = charge en ligne ; bras armé = tire en ligne ;
+// arme épaulée = anticipe et vise ; charge sur le dos = tire en cloche ;
+// accroupi parmi ses parchemins = pose des pièges ; massif = frappe le sol ;
+// mains levées et fils de chakra = invoque ; mains vertes = soigne ;
+// tapi sous une cape = surgit en embuscade.
+// Trois images : deux de marche et une d'attaque, montrée pendant le télégraphe.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const SH = { L: 52, H: 60, X: 26, SOL: 56 }; // toile de travail ; axe du corps entre les colonnes 25 et 26 ; pieds sur la ligne 56
+const LUM = (() => { const v = [-0.55, -0.7, 0.6], n = Math.hypot(...v); return v.map(x => x / n); })();
+// Rampe de 5 tons (creux, ombre, base, clair, éclat) : ombres froides, lumières chaudes
+function rampeShinobi(c) {
+  if (Array.isArray(c)) return c.map(hexRgb);
+  return [melange(nuancer(c, 0.52), '#22143a', 0.3), melange(nuancer(c, 0.75), '#3a2850', 0.16), c, melange(nuancer(c, 1.17), '#fff0c8', 0.12), melange(nuancer(c, 1.36), '#fffbe8', 0.22)].map(hexRgb);
+}
+// pal : { clé: '#rrggbb' | { c: '#rrggbb', brille: true } | [5 tons] }
+function peintreShinobi(pal) {
+  const W = SH.L, H = SH.H, N = W * H, mat = new Uint8Array(N), niv = new Uint8Array(N), piece = new Uint16Array(N);
+  const id = {}, ramp = [null], brille = [false];
+  for (const k of Object.keys(pal)) { const v = pal[k]; id[k] = ramp.length; ramp.push(rampeShinobi(v && v.c ? v.c : v)); brille.push(!!(v && v.brille)); }
+  let pc = 0, bx0 = W, by0 = H, bx1 = -1, by1 = -1; const apres = [];
+  const M = k => { const m = id[k]; if (!m) throw new Error('matière inconnue : ' + k); return m; };
+  const niveau = (I, m) => I > 0.88 && brille[m] ? 4 : I > 0.6 ? 3 : I > 0.06 ? 2 : I > -0.42 ? 1 : 0;
+  const poser = (x, y, m, v) => { if (x < 0 || y < 0 || x >= W || y >= H) return; const i = y * W + x; mat[i] = m; niv[i] = v; piece[i] = pc; if (x < bx0) bx0 = x; if (x > bx1) bx1 = x; if (y < by0) by0 = y; if (y > by1) by1 = y; };
+  const neuve = () => { pc++; bx0 = W; by0 = H; bx1 = -1; by1 = -1; };
+  // trait intérieur : ce qui est derrière la pièce qu'on vient de poser s'assombrit à son bord
+  const trait = () => {
+    for (let y = by0; y <= by1; y++) for (let x = bx0; x <= bx1; x++) {
+      const i = y * W + x; if (piece[i] !== pc || !mat[i]) continue;
+      for (const j of [x > 0 ? i - 1 : -1, x < W - 1 ? i + 1 : -1, i - W, i + W]) if (j >= 0 && j < N && mat[j] && piece[j] < pc) niv[j] = 0;
+    }
+  };
+  const fin = o => { if (o.trait !== false) trait(); };
+  const P = {
+    // boule éclairée (tête, mains, épaulières, jarres)
+    boule(cx, cy, rx, ry, k, o = {}) {
+      const m = M(k); neuve();
+      for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x++) {
+        const dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry, d = dx * dx + dy * dy; if (d > 1) continue;
+        poser(x, y, m, o.niv ?? niveau(dx * LUM[0] + dy * LUM[1] + Math.sqrt(1 - d) * LUM[2] + (o.plus || 0), m));
+      }
+      fin(o); return P;
+    },
+    // segment épais arrondi, éclairé comme un cylindre (membres, manches, hampes, lames épaisses) ; r1 : rayon au bout
+    membre(x0, y0, x1, y1, r, k, o = {}) {
+      const m = M(k); neuve(); const dx = x1 - x0, dy = y1 - y0, l2 = dx * dx + dy * dy || 1e-6, r1 = o.r1 ?? r, R = Math.max(r, r1) + 1;
+      for (let y = Math.floor(Math.min(y0, y1) - R); y <= Math.ceil(Math.max(y0, y1) + R); y++) for (let x = Math.floor(Math.min(x0, x1) - R); x <= Math.ceil(Math.max(x0, x1) + R); x++) {
+        const px = x + 0.5 - x0, py = y + 0.5 - y0, t = Math.max(0, Math.min(1, (px * dx + py * dy) / l2)), rr = r + (r1 - r) * t;
+        const qx = px - dx * t, qy = py - dy * t, d2 = (qx * qx + qy * qy) / (rr * rr); if (d2 > 1) continue;
+        poser(x, y, m, o.niv ?? niveau(qx / rr * LUM[0] + qy / rr * LUM[1] + Math.sqrt(1 - d2) * LUM[2] + (o.plus || 0), m));
+      }
+      fin(o); return P;
+    },
+    // tronc trapézoïdal (torse, robe, manteau) éclairé comme un cylindre vertical ; arrondi : épaules ; degrade : bas plus sombre
+    tronc(yh, yb, xgh, xdh, xgb, xdb, k, o = {}) {
+      const m = M(k); neuve();
+      for (let y = Math.round(yh); y <= Math.round(yb); y++) {
+        const t = yb > yh ? (y - yh) / (yb - yh) : 0, xg = xgh + (xgb - xgh) * t, xd = xdh + (xdb - xdh) * t, a = o.arrondi ? Math.max(0, o.arrondi - (y - Math.round(yh))) : 0;
+        for (let x = Math.round(xg + a); x < Math.round(xd - a); x++) {
+          const s = ((x + 0.5 - xg) / Math.max(1, xd - xg)) * 2 - 1, nz = Math.sqrt(Math.max(0, 1 - s * s * 0.92));
+          poser(x, y, m, o.niv ?? niveau(s * LUM[0] + nz * LUM[2] - (o.degrade || 0) * t + (o.plus || 0), m));
+        }
+      }
+      fin(o); return P;
+    },
+    // polygone plein (capes, chapeaux, lames, éventails) : niveau fixe, bord haut-gauche éclairé si « relief »
+    poly(pts, k, o = {}) {
+      const m = M(k); neuve(); const ys = pts.map(p => p[1]), y0 = Math.floor(Math.min(...ys)), y1 = Math.ceil(Math.max(...ys));
+      for (let y = y0; y <= y1; y++) {
+        const yc = y + 0.5, xs = [];
+        for (let i = 0; i < pts.length; i++) { const [ax, ay] = pts[i], [bx, by] = pts[(i + 1) % pts.length]; if ((ay <= yc && by > yc) || (by <= yc && ay > yc)) xs.push(ax + (yc - ay) / (by - ay) * (bx - ax)); }
+        xs.sort((a, b) => a - b);
+        for (let j = 0; j + 1 < xs.length; j += 2) {
+          const xa = Math.round(xs[j]), xb = Math.round(xs[j + 1]);
+          for (let x = xa; x < xb; x++) {
+            let v = o.niv ?? 2;
+            if (o.cyl) { const s = ((x + 0.5 - xs[j]) / Math.max(1, xs[j + 1] - xs[j])) * 2 - 1; v = niveau(s * LUM[0] + Math.sqrt(Math.max(0, 1 - s * s * 0.92)) * LUM[2] + (o.plus || 0), m); }
+            else if (o.relief && (x === xa || y === y0)) v = Math.min(4, v + 1);
+            poser(x, y, m, v);
+          }
+        }
+      }
+      fin(o); return P;
+    },
+    rect(x, y, l, h, k, v = 2) { const m = M(k); for (let j = 0; j < h; j++) for (let i = 0; i < l; i++) poser(Math.round(x) + i, Math.round(y) + j, m, v); return P; },
+    px(x, y, k, v = 2) { poser(Math.round(x), Math.round(y), M(k), v); return P; },
+    ligne(x0, y0, x1, y1, k, v = 2) {
+      const m = M(k); x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
+      const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1; let e = dx + dy;
+      for (let n = 0; n < 200; n++) { poser(x0, y0, m, v); if (x0 === x1 && y0 === y1) break; const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; } }
+      return P;
+    },
+    // pièce séparée de la suivante par un trait intérieur (détails posés à la main)
+    piece() { neuve(); return P; },
+    traitPiece() { trait(); return P; },
+    assombrir(x, y, l, h, d = 1) { for (let j = Math.max(0, y); j < Math.min(H, y + h); j++) for (let i = Math.max(0, x); i < Math.min(W, x + l); i++) { const q = j * W + i; if (mat[q]) niv[q] = Math.max(0, niv[q] - d); } return P; },
+    eclaircir(x, y, l, h, d = 1) { for (let j = Math.max(0, y); j < Math.min(H, y + h); j++) for (let i = Math.max(0, x); i < Math.min(W, x + l); i++) { const q = j * W + i; if (mat[q]) niv[q] = Math.min(4, niv[q] + d); } return P; },
+    // retire des pixels (fentes, trous)
+    effacer(x, y, l = 1, h = 1) { for (let j = 0; j < h; j++) for (let i = 0; i < l; i++) { const xx = Math.round(x) + i, yy = Math.round(y) + j; if (xx >= 0 && yy >= 0 && xx < W && yy < H) mat[yy * W + xx] = 0; } return P; },
+    // dessins posés après le contour (lueurs, fils de chakra, étincelles) : fn(g)
+    apres(fn) { apres.push(fn); return P; },
+    vide(x, y) { return !mat[y * W + x]; },
+    toile() {
+      const c = toile(W, H), g = ctxDe(c), img = g.createImageData(W, H), d = img.data;
+      for (let i = 0; i < N; i++) { const m = mat[i]; if (!m) continue; const t = ramp[m][niv[i]]; d[i * 4] = t[0]; d[i * 4 + 1] = t[1]; d[i * 4 + 2] = t[2]; d[i * 4 + 3] = 255; }
+      g.putImageData(img, 0, 0); const o = contourner(c); const go = ctxDe(o); for (const f of apres) f(go); return o;
+    },
+  };
+  return P;
+}
+
+// ── Pièces communes ──────────────────────────────────────────────────────────
+const XS = SH.X; // axe du corps
+// Jambe : hanche → genou → cheville, pied posé sur la ligne fy. o : k pantalon, kp chaussure, pied (sandale, botte, nu), bandes (bandages du tibia)
+function shJambe(P, hx, hy, gx, gy, fx, fy, o) {
+  const r = o.r ?? 1.8, c = fx >= hx ? 1 : -1, kp = o.kp || 'sandale';
+  P.membre(hx, hy, gx, gy, r + 0.25, o.k, { trait: false }).membre(gx, gy, fx, fy - 1.5, r, o.kb || o.k, { trait: false });
+  if (o.bandes) for (let y = Math.round(fy - 6); y <= fy - 3; y += 2) P.rect(Math.round(fx - r + 0.2), y, Math.max(2, Math.round(2 * r - 0.4)), 1, o.bandes, 3);
+  if (o.pied === 'botte') P.boule(fx + c * 0.5, fy - 1, r + 0.8, 2.1, kp);
+  else if (o.pied === 'nu') P.boule(fx + c * 0.6, fy - 0.5, r + 0.5, 1.3, kp);
+  else { P.boule(fx + c * 0.6, fy - 0.6, r + 0.6, 1.4, kp); P.px(fx + c * (r + 0.4), fy - 1, 'peau', 2); }
+}
+// Bras : épaule → coude → main ; k : manche ; kh : main (peau ou gant)
+function shBras(P, sx, sy, cx, cy, hx, hy, k, kh = 'peau', o = {}) {
+  const r = o.r ?? 1.6; P.membre(sx, sy, cx, cy, r + 0.2, k, { trait: o.trait }).membre(cx, cy, hx, hy, o.r1 ?? r, o.kav || k, { trait: o.trait });
+  if (o.main !== false) P.boule(hx, hy, o.rm ?? 1.7, o.rm ?? 1.7, kh, { trait: o.trait });
+}
+// Yeux de face : « fente » (sourcils froncés), « rond » (blanc + pupille), « points », « lueur » (couleur unie), « vide » (orbites noires)
+function shYeux(P, cx, cy, type = 'fente', o = {}) {
+  const e = o.ecart ?? 3, k = o.k || 'oeil';
+  for (const c of [-1, 1]) {
+    const x = c < 0 ? Math.round(cx - e - 1) : Math.round(cx + e - 1), y = Math.round(cy);
+    if (type === 'fente') { P.rect(x, y, 2, 1, k, 2); P.px(c < 0 ? x : x + 1, y - 1, o.sourcil || k, 2); }
+    else if (type === 'rond') { P.rect(x, y - 1, 2, 2, 'blanc', 3); P.px(c < 0 ? x + 1 : x, y, k, 2); P.px(c < 0 ? x + 1 : x, y - 1, k, 2); }
+    else if (type === 'points') P.rect(x + (c < 0 ? 1 : 0), y - 1, 1, 2, k, 2);
+    else if (type === 'lueur') P.rect(x, y, 2, 1, k, 3).px(c < 0 ? x : x + 1, y, k, 4);
+    else if (type === 'vide') P.rect(x, y - 1, 2, 3, k, 0);
+  }
+}
+// Bandeau frontal : bande de tissu + plaque de métal (rayée chez les renégats)
+function shBandeau(P, cx, y, rx, k = 'bandeau', o = {}) {
+  P.piece(); P.rect(cx - rx, y, rx * 2, 2, k, 2); P.rect(cx - rx, y + 1, rx * 2, 1, k, 1);
+  const l = o.plaque ?? 5; P.rect(cx - l / 2, y, l, 2, 'metal', 3); P.px(cx - l / 2, y, 'metal', 4); P.rect(cx - l / 2, y + 1, l, 1, 'metal', 2);
+  if (o.raye) { P.px(cx - 1, y + 1, 'oeil', 1); P.px(cx, y, 'oeil', 1); P.px(cx + 1, y, 'oeil', 1); }
+  P.traitPiece();
+}
+// Mèches en pointes autour d'une tête : [angle en degrés (0 = haut, + vers la droite), longueur, largeur]
+function shPointes(P, hx, hy, R, k, L) {
+  for (const [a, l, w = 3] of L) {
+    const t = a * Math.PI / 180, ux = Math.sin(t), uy = -Math.cos(t), bx = hx + ux * (R - 2.2), by = hy + uy * (R - 2.2), qx = -uy * w / 2, qy = ux * w / 2;
+    P.poly([[bx - qx, by - qy], [hx + ux * (R - 2.2 + l), hy + uy * (R - 2.2 + l)], [bx + qx, by + qy]], k, { niv: a < -20 ? 3 : a > 35 ? 1 : 2, trait: false });
+  }
+}
+// Fils de chakra (dessinés après le contour : fins et lumineux)
+function shFils(P, pts, couleur) { P.apres(g => { for (const [x0, y0, x1, y1] of pts) lignePixel(g, x0, y0, x1, y1, couleur); }); }
+// Lueur douce (après le contour) : disque clair + cœur
+function shLueur(P, x, y, r, c1, c2) { P.apres(g => { g.globalAlpha = 0.55; g.drawImage(disque(r + 1, c1), Math.round(x - r - 1), Math.round(y - r - 1)); g.globalAlpha = 1; g.drawImage(disque(Math.max(1, r - 1), c2), Math.round(x - r + 1), Math.round(y - r + 1)); }); }
+
+// Éventail ouvert : secteur de lames alternées autour du point (cx, cy)
+function shEventail(P, cx, cy, R, a0, a1, n, k1, k2) {
+  for (let j = 0; j < n; j++) { const u = a0 + (a1 - a0) * j / n, v = a0 + (a1 - a0) * (j + 1) / n; P.poly([[cx, cy], [cx + Math.cos(u) * R, cy + Math.sin(u) * R], [cx + Math.cos((u + v) / 2) * (R + 0.8), cy + Math.sin((u + v) / 2) * (R + 0.8)], [cx + Math.cos(v) * R, cy + Math.sin(v) * R]], j % 2 ? k2 : k1, { niv: j % 2 ? 2 : 3, trait: j === n - 1 }); }
+}
+// ── Les personnages ─────────────────────────────────────────────────────────
+// Chaque fiche : pal (matières) et f(P, i, att) — i : image de marche (0/1), att : image d'attaque (télégraphe).
+// Toile 52×60, axe du corps x = 26, pieds sur la ligne 55. Lumière en haut à gauche.
+const PEAUX = { claire: '#f2c8a0', mate: '#d8a070', brune: '#a8704a', pale: '#ece4dc' };
+const SHINOBI = {};
+const P_BASE = { peau: PEAUX.claire, oeil: '#1c1420', blanc: '#ffffff', metal: { c: '#b8c0cc', brille: true }, lame: { c: '#d0d8e4', brille: true } };
+const pal = o => Object.assign({}, P_BASE, o);
+
+// ── Chapitre I : Académie, Forêt de la Mort ──
+// ENM_002 Genin renégat (fonce au contact) — sec et nerveux, penché en pleine course, kunai en prise inversée,
+// écharpe rouge qui claque derrière lui, bandeau rayé de renégat.
+SHINOBI.genin_renegat = {
+  pal: pal({ cheveux: '#4a3022', veste: '#8a6040', pantalon: '#383444', sandale: '#34466a', bandes: '#e8e0cc', echarpe: '#d03a2a', bandeau: '#2a2a34', manche: '#6a4630' }),
+  f(P, i, att) {
+    const b = i, fl = i ? 1 : 0;
+    // pans d'écharpe qui flottent vers l'arrière (il court vers la droite)
+    P.poly([[25, 35 + b], [18, 32 + fl], [11, 32 + 2 * fl], [13, 35 + fl], [19, 36 + fl], [25, 38 + b]], 'echarpe', { relief: true });
+    P.poly([[24, 37 + b], [17, 37 + fl], [12, 40 - fl], [15, 40], [23, 40 + b]], 'echarpe', { niv: 1 });
+    // foulée : une jambe tendue en arrière, l'autre pliée en avant
+    const J = { k: 'pantalon', bandes: 'bandes', r: 1.7 };
+    if (i) { shJambe(P, 24, 46, 22, 50, 22, 55, J); shJambe(P, 28, 46, 31, 48, 32, 53, J); }
+    else { shJambe(P, 24, 46, 20, 49, 18, 53, J); shJambe(P, 28, 46, 30, 50, 30, 55, J); }
+    shBras(P, 24, 37 + b, 20, 40 + b, 17, 42 + b, 'manche'); // bras arrière, lancé vers l'arrière
+    P.poly([[22, 36 + b], [31, 35 + b], [30, 47], [22, 47]], 'veste', { cyl: true }); // buste penché vers l'avant
+    P.rect(22, 44, 9, 2, 'pantalon', 1); P.px(26, 44, 'metal', 3);
+    P.boule(27, 36 + b, 5, 2.2, 'echarpe');
+    const hx = 29, hy = 29 + b; // tête en avant
+    shPointes(P, hx, hy, 6, 'cheveux', [[-95, 6, 4], [-70, 7, 4], [-45, 6, 4], [-15, 5, 4], [15, 3, 3]]);
+    P.boule(hx - 0.5, hy - 1, 6.2, 5.6, 'cheveux');
+    P.boule(hx + 0.6, hy + 1, 5, 4.6, 'peau');
+    shBandeau(P, hx + 0.5, hy - 3, 5.6, 'bandeau', { raye: true, plaque: 4 });
+    P.poly([[hx - 4, hy], [hx - 2, hy - 1], [hx - 3, hy + 2]], 'cheveux', { niv: 1, trait: false });
+    shYeux(P, hx + 1, hy + 1, 'fente', { ecart: 2.4 }); P.px(hx + 2, hy + 2, 'peau', 1); P.rect(hx, hy + 4, 2, 1, 'oeil', 1);
+    if (att) { shBras(P, 30, 37 + b, 34, 37, 38, 36, 'manche'); P.ligne(39, 35, 44, 32, 'lame', 3).ligne(39, 36, 43, 34, 'lame', 1).px(38, 37, 'bois', 2); }
+    else { shBras(P, 30, 37 + b, 33, 40 + b, 35, 41 + b, 'manche'); P.ligne(35, 42 + b, 38, 46 + b, 'lame', 3).px(36, 44 + b, 'lame', 1); }
+  },
+};
+SHINOBI.genin_renegat.pal.bois = '#6a4428';
+
+// ENM_003 Lanceur de kunai (tire quand on est aligné) — veste olive à capuche baissée, demi-masque de tissu,
+// chignon haut, bandoulière garnie de kunai ; à l'attaque, le bras armé passe derrière la tête, trois kunai en éventail.
+SHINOBI.lanceur_kunai = {
+  pal: pal({ cheveux: '#24202a', veste: '#5e6e3a', capuche: '#4a5a2e', pantalon: '#3a3a40', sandale: '#3a4258', masque: '#3a3a44', cuir: '#8a6438', anneau: '#c8b070', bandes: '#ddd6c4' }),
+  f(P, i, att) {
+    const b = i;
+    const J = { k: 'pantalon', bandes: 'bandes' };
+    if (i) { shJambe(P, 23.5, 46, 22, 51, 21, 55, J); shJambe(P, 28.5, 46, 30, 50, 31, 54, J); }
+    else { shJambe(P, 23.5, 46, 22, 50, 21, 54, J); shJambe(P, 28.5, 46, 30, 51, 31, 55, J); }
+    P.rect(29, 47, 3, 4, 'cuir', 2).px(30, 48, 'anneau', 3); // étui de cuisse
+    P.boule(26, 34.5 + b, 6.5, 3, 'capuche'); // capuche baissée sur les épaules
+    shBras(P, 21, 37 + b, 20, 42 + b, 21, 45 + b, 'veste');
+    P.tronc(35.5 + b, 47, 20.5, 31.5, 21, 31, 'veste', { arrondi: 2 });
+    P.rect(21, 45, 10, 2, 'cuir', 1);
+    // bandoulière en diagonale, poignées de kunai
+    P.piece(); for (let k = 0; k < 9; k++) { P.rect(21 + k, 37 + b + k, 2, 1, 'cuir', 2); if (k % 2 === 0 && k > 0) P.px(21 + k, 36 + b + k, 'anneau', 3).px(21 + k, 35 + b + k, 'metal', 3); } P.traitPiece();
+    const hx = 26, hy = 29 + b;
+    P.boule(hx, hy - 1, 5.8, 5.4, 'cheveux'); P.boule(hx, hy - 7, 2.2, 2, 'cheveux'); P.rect(hx - 1, hy - 5.5, 2, 1, 'anneau', 3); // chignon
+    P.boule(hx, hy + 1, 5, 4.6, 'peau');
+    P.poly([[hx - 5, hy - 1], [hx - 1, hy - 3], [hx + 2, hy - 1], [hx + 5, hy - 2], [hx + 5, hy - 4], [hx - 5, hy - 4]], 'cheveux', { niv: 2, trait: false });
+    P.tronc(hy + 2, hy + 5, hx - 5, hx + 5, hx - 4, hx + 4, 'masque'); // demi-masque
+    shYeux(P, hx, hy + 1, 'fente', { ecart: 2.2 });
+    if (att) { // bras armé derrière la tête : trois kunai en éventail
+      shBras(P, 31, 37 + b, 35, 31, 33, 25, 'veste');
+      for (const [dx, dy] of [[-3, -5], [0, -6], [3, -5]]) P.ligne(33, 25, 33 + dx, 25 + dy, 'lame', 3);
+    } else {
+      shBras(P, 31, 37 + b, 33, 42 + b, 32, 45 + b, 'veste');
+      for (const [dx, dy] of [[1, 4], [3, 3], [4, 1]]) P.ligne(33, 46 + b, 33 + dx, 46 + b + dy, 'lame', 3);
+    }
+  },
+};
+
+// ENM_011 Ninja de la pluie (anticipe et vise) — long imperméable à haut col, respirateur à cartouche,
+// tube à eau en bambou ; à l'attaque, il épaule le tube et vise.
+SHINOBI.ninja_pluie = {
+  pal: pal({ peau: '#e0c0a8', manteau: '#4a5e70', col: '#3a4a5a', capuche: '#2e3a46', pantalon: '#2e3440', sandale: '#2e3440', respi: { c: '#8a96a4', brille: true }, tuyau: '#3a3a44', bambou: '#7a9a4a', eau: '#8ac8f0' }),
+  f(P, i, att) {
+    const b = i;
+    const J = { k: 'pantalon', pied: 'botte', kp: 'sandale' };
+    if (i) { shJambe(P, 23.5, 47, 23, 51, 22.5, 55, J); shJambe(P, 28.5, 47, 29, 51, 29.5, 54, J); }
+    else { shJambe(P, 23.5, 47, 23, 51, 22.5, 54, J); shJambe(P, 28.5, 47, 29, 51, 29.5, 55, J); }
+    // imperméable long, pans évasés et fendus
+    P.tronc(35 + b, 51, 20, 32, 17.5, 34.5, 'manteau', { arrondi: 2, degrade: 0.3 });
+    P.effacer(25, 48, 2, 4); P.rect(25, 47, 2, 1, 'manteau', 0);
+    for (const y of [39, 42, 45]) P.px(27, y + b, 'respi', 3);
+    P.rect(20, 44 + b, 12, 1, 'col', 1);
+    P.tronc(32.5 + b, 36 + b, 20.5, 31.5, 20, 32, 'col'); // haut col
+    const hx = 26, hy = 28 + b;
+    P.boule(hx, hy - 0.5, 5.8, 5.6, 'capuche');
+    P.boule(hx, hy + 0.8, 4.6, 4.2, 'peau');
+    P.rect(hx - 5, hy - 3, 10, 2, 'capuche', 1); P.rect(hx - 2, hy - 3, 4, 2, 'metal', 3); for (const x of [-1, 0, 1]) P.px(hx + x, hy - 3, 'oeil', 1);
+    shYeux(P, hx, hy, 'fente', { ecart: 2.2 });
+    P.rect(hx - 5, hy + 2, 10, 1, 'tuyau', 1); // sangle du respirateur
+    P.boule(hx, hy + 3.6, 2.7, 2.2, 'respi'); P.rect(hx - 1, hy + 3, 2, 2, 'oeil', 1); P.px(hx - 2, hy + 3, 'respi', 4); // cartouche et grille
+    P.membre(hx + 2.5, hy + 4.5, hx + 6, hy + 8, 0.9, 'tuyau', { trait: false });
+    if (att) { // tube épaulé, pointé vers l'avant
+      shBras(P, 21, 37 + b, 24, 41, 28, 39, 'manteau');
+      P.membre(22, 37, 41, 36, 1.4, 'bambou'); P.rect(27, 36, 1, 2, 'col', 1); P.rect(34, 35, 1, 2, 'col', 1); P.px(42, 36, 'eau', 3);
+      shBras(P, 31, 37 + b, 33, 40, 34, 37, 'manteau');
+    } else {
+      shBras(P, 21, 37 + b, 19, 42 + b, 20, 45 + b, 'manteau');
+      P.membre(28, 49, 38, 41, 1.3, 'bambou'); P.rect(33, 44, 1, 2, 'col', 1); P.px(38, 40, 'eau', 3);
+      shBras(P, 31, 37 + b, 33, 42 + b, 33, 45, 'manteau');
+    }
+  },
+};
+
+
+// ENM_015 Instructeur déchu (invoque des poupées) — grand, vieux, cheveux gris en catogan, cicatrice, gilet
+// d'instructeur déchiré ; ses doigts tiennent des fils de chakra. À l'attaque, mains levées, fils tendus vers le haut.
+SHINOBI.instructeur_dechu = {
+  pal: pal({ peau: '#e2b896', cheveux: '#a8a4ac', gilet: '#5e6a44', poche: '#4e5838', haut: '#2e3448', pantalon: '#2a2e3e', sandale: '#2e3a50', bandes: '#d8d0bc', cicatrice: '#b0685a' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', bandes: 'bandes', r: 1.6 };
+    if (i) { shJambe(P, 24, 45, 23.5, 50, 23, 55, J); shJambe(P, 28, 45, 29, 50, 29.5, 54, J); }
+    else { shJambe(P, 24, 45, 23.5, 50, 23, 54, J); shJambe(P, 28, 45, 29, 50, 29.5, 55, J); }
+    P.membre(27, 26 + b, 30, 38, 1.8, 'cheveux', { trait: false }); // catogan dans le dos
+    P.tronc(32.5 + b, 46, 20.5, 31.5, 21.5, 30.5, 'haut', { arrondi: 2 });
+    P.tronc(33 + b, 45, 21, 31, 21, 31, 'gilet', { arrondi: 2 });
+    P.effacer(25, 33 + b, 2, 9); P.rect(25, 33 + b, 2, 9, 'haut', 1); // gilet ouvert
+    for (const x of [21.5, 27.5]) { P.rect(x, 37 + b, 3, 3, 'poche', 2); P.rect(x, 37 + b, 3, 1, 'gilet', 3); }
+    for (const x of [21, 23, 26, 29]) P.effacer(x, 45, 1, 1); // bas déchiré
+    const hx = 26, hy = 26 + b;
+    P.boule(hx, hy - 0.5, 5.4, 5.2, 'cheveux');
+    P.boule(hx + 0.3, hy + 1, 4.4, 4.3, 'peau');
+    P.poly([[hx - 5, hy - 1], [hx - 1, hy - 4], [hx + 3, hy - 3], [hx + 5, hy], [hx + 5, hy - 5], [hx - 5, hy - 5]], 'cheveux', { niv: 3, trait: false });
+    P.poly([[hx + 1, hy - 3], [hx + 4, hy + 2], [hx + 5, hy - 3]], 'cheveux', { niv: 2, trait: false }); // mèche sur l'œil
+    shYeux(P, hx - 0.5, hy + 1, 'fente', { ecart: 2.2 });
+    P.ligne(hx - 4, hy - 1, hx - 2, hy + 3, 'cicatrice', 2);
+    P.rect(hx - 2, hy + 4, 4, 1, 'cheveux', 1); P.px(hx - 1, hy + 3, 'cheveux', 1); // barbe de trois jours
+    const fils = '#c890ff';
+    if (att) {
+      shBras(P, 21, 35 + b, 18, 31, 19, 26, 'haut'); shBras(P, 31, 35 + b, 34, 31, 33, 26, 'haut');
+      shFils(P, [[18, 25, 15, 13], [20, 25, 21, 12], [32, 25, 31, 12], [34, 25, 37, 13]], fils); shLueur(P, 19, 25, 2, '#a060f0', '#f0d8ff'); shLueur(P, 33, 25, 2, '#a060f0', '#f0d8ff');
+    } else {
+      shBras(P, 21, 35 + b, 18, 39 + b, 21, 41 + b, 'haut'); shBras(P, 31, 35 + b, 34, 39 + b, 31, 41 + b, 'haut');
+      shFils(P, [[20, 42 + b, 18, 57], [22, 42 + b, 22, 57], [30, 42 + b, 30, 57], [32, 42 + b, 34, 57]], fils);
+    }
+  },
+};
+
+// ENM_017 Gardien des archives (lourd : frappe le sol, anneau de papier) — colosse au crâne rasé, robe brune
+// constellée de talismans, chapelet de grosses perles, pile de rouleaux sanglée dans le dos ; poings levés pour frapper.
+SHINOBI.gardien_archives = {
+  pal: pal({ peau: '#c89070', robe: '#6a4a34', ceinture: '#d8c8a0', papier: '#f0e8d0', sceau: '#c8382a', perle: { c: '#7a3a2a', brille: true }, rouleau: '#e8dcb8', bout: '#a83a2a', sangle: '#4a3222', pantalon: '#4a3628', sandale: '#3a2a20' }),
+  f(P, i, att) {
+    const b = i;
+    // pile de rouleaux sanglée dans le dos, plus haute que la tête
+    for (const [y, l] of [[13, 15], [17, 17], [21, 19]]) { P.membre(26 - l / 2, y + b, 26 + l / 2, y + b, 2.2, 'rouleau'); P.boule(26 - l / 2, y + b, 1.5, 2.2, 'bout'); P.boule(26 + l / 2, y + b, 1.5, 2.2, 'bout'); }
+    P.rect(25, 11 + b, 2, 14, 'sangle', 1);
+    const J = { k: 'pantalon', r: 2.6, kp: 'sandale' };
+    if (i) { shJambe(P, 21, 46, 18.5, 50, 18, 55, J); shJambe(P, 31, 46, 33.5, 50, 34, 54, J); }
+    else { shJambe(P, 21, 46, 18.5, 50, 18, 54, J); shJambe(P, 31, 46, 33.5, 50, 34, 55, J); }
+    P.tronc(29 + b, 49, 14, 38, 15, 37, 'robe', { arrondi: 4, degrade: 0.2 });
+    P.rect(15, 42 + b, 22, 3, 'ceinture', 2); P.rect(15, 44 + b, 22, 1, 'ceinture', 1);
+    for (const [x, y] of [[17, 33], [31, 35], [21, 47], [33, 46]]) { P.piece().rect(x, y + b, 3, 4, 'papier', 3).px(x + 1, y + 1 + b, 'sceau', 2).px(x + 1, y + 2 + b, 'sceau', 2).traitPiece(); }
+    for (let k = 0; k < 9; k++) { const a = Math.PI * (0.1 + 0.8 * k / 8); P.boule(26 + Math.cos(a) * 6.5, 30.5 + b + Math.sin(a) * 4.5, 1, 1, 'perle', { trait: false }); } // chapelet
+    const hx = 26, hy = 25 + b;
+    P.boule(hx, hy, 4.8, 4.6, 'peau'); P.px(hx, hy - 3, 'sceau', 2);
+    shYeux(P, hx, hy + 0.5, 'fente', { ecart: 2 }); P.rect(hx - 1, hy + 3, 3, 1, 'robe', 0);
+    if (att) { shBras(P, 15, 32 + b, 11, 24, 15, 16, 'robe', 'peau', { r: 2.4, rm: 2.8 }); shBras(P, 37, 32 + b, 41, 24, 37, 16, 'robe', 'peau', { r: 2.4, rm: 2.8 }); }
+    else { shBras(P, 15, 32 + b, 11, 39 + b, 12, 46 + b, 'robe', 'peau', { r: 2.4, rm: 2.8 }); shBras(P, 37, 32 + b, 41, 39 + b, 40, 46 + b, 'robe', 'peau', { r: 2.4, rm: 2.8 }); }
+  },
+};
+
+// ENM_018 Genin fonceur (charge en ligne) — trapu, épaules énormes, tête rentrée dans un casque rembourré,
+// gantelets de fer en avant ; à l'attaque il se ramasse, tête baissée, vapeur au casque.
+SHINOBI.genin_fonceur = {
+  pal: pal({ peau: '#e0b08a', casque: '#a8482e', gilet: '#b8563a', pantalon: '#3e3238', sandale: '#2e2a34', fer: { c: '#8a90a0', brille: true }, sangle: '#5a3a2a' }),
+  f(P, i, att) {
+    const b = i, d = att ? 2 : 0;
+    const J = { k: 'pantalon', r: 2.2, pied: 'botte', kp: 'sandale' };
+    if (i) { shJambe(P, 22, 48, 20, 51, 19.5, 55, J); shJambe(P, 30, 48, 32, 51, 33, 54, J); }
+    else { shJambe(P, 22, 48, 20, 51, 19.5, 54, J); shJambe(P, 30, 48, 32, 51, 33, 55, J); }
+    P.tronc(36 + b + d, 49, 17, 35, 19, 33, 'gilet', { arrondi: 3 });
+    P.rect(19, 46, 14, 2, 'sangle', 1);
+    for (let y = 39; y < 46; y += 3) P.rect(20, y + b + d, 12, 1, 'gilet', 1); // rembourrage
+    P.boule(17.5, 37 + b + d, 3.6, 3.2, 'fer'); P.boule(34.5, 37 + b + d, 3.6, 3.2, 'fer'); // épaulières
+    const hx = 26, hy = 34 + b + d;
+    P.boule(hx, hy, 5, 4.6, 'peau');
+    P.boule(hx, hy - 2.2, 5.6, 4, 'casque'); P.rect(hx - 6, hy - 1, 2, 4, 'casque', 1); P.rect(hx + 4, hy - 1, 2, 4, 'casque', 2);
+    P.rect(hx - 3, hy - 2, 6, 2, 'fer', 3); P.px(hx - 3, hy - 2, 'fer', 4);
+    shYeux(P, hx, hy + 1, 'fente', { ecart: 2 }); P.rect(hx - 2, hy + 3, 4, 1, 'oeil', 1);
+    P.rect(hx - 4, hy + 3, 1, 2, 'sangle', 1); P.rect(hx + 3, hy + 3, 1, 2, 'sangle', 1);
+    if (att) { shBras(P, 18, 39 + b + d, 21, 45, 24, 46, 'gilet', 'fer', { r: 2, rm: 2.8 }); shBras(P, 34, 39 + b + d, 31, 45, 29, 46, 'gilet', 'fer', { r: 2, rm: 2.8 });
+      P.apres(g => { g.fillStyle = 'rgba(240,240,250,0.85)'; for (const [x, y] of [[17, 28], [19, 26], [33, 27], [35, 25], [16, 25]]) g.fillRect(x - SH.X + 26, y, 2, 1); }); }
+    else { shBras(P, 18, 39 + b, 16, 44 + b, 19, 47 + b, 'gilet', 'fer', { r: 2, rm: 2.8 }); shBras(P, 34, 39 + b, 36, 44 + b, 33, 47 + b, 'gilet', 'fer', { r: 2, rm: 2.8 }); }
+  },
+};
+
+// ENM_019 Invocateur d'herbes hautes (invoque des serpents) — drapé d'un manteau d'herbes, large chapeau de paille
+// hérissé, visage dans l'ombre aux yeux jaunes, serpent violet sur les épaules, bâton noueux.
+SHINOBI.invocateur_herbes = {
+  pal: pal({ herbe: '#6a8a3a', herbe2: '#4a6a2a', paille: '#c8a860', ombre: '#2a2420', serpent: '#7a4a9a', ventre: '#d8c8a0', langue: '#e03a3a', baton: '#6a4a2a', oeilj: '#f0e040', pantalon: '#3a3a2a', sandale: '#3a3424' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.6 };
+    if (i) { shJambe(P, 24, 47, 23.5, 51, 23, 55, J); shJambe(P, 28, 47, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 47, 23.5, 51, 23, 54, J); shJambe(P, 28, 47, 28.5, 51, 29, 55, J); }
+    if (att) P.membre(16, 49, 14, 18, 1.2, 'baton'); else P.membre(16, 55, 15, 26 + b, 1.2, 'baton'); // bâton
+    P.boule(att ? 14 : 15, att ? 17 : 25 + b, 1.8, 1.8, 'baton');
+    // manteau d'herbes : franges verticales
+    P.tronc(32 + b, 50, 19, 33, 16, 36, 'herbe', { arrondi: 3 });
+    P.piece(); for (let x = 17; x < 36; x += 2) P.ligne(x, 40 + b + (x % 4 ? 0 : 2), x + (x < 26 ? -1 : 1), 50, 'herbe2', 1); for (let x = 17; x < 36; x += 3) P.px(x, 51 - (x % 2), 'herbe', 3);
+    P.traitPiece();
+    // serpent autour des épaules
+    P.membre(18, 35 + b, 26, 38 + b, 1.4, 'serpent'); P.membre(26, 38 + b, 34, 35 + b, 1.4, 'serpent');
+    const sx = att ? 36 : 35, sy = att ? 27 : 31 + b; P.membre(34, 35 + b, sx, sy, 1.3, 'serpent'); P.boule(sx + 0.5, sy - 1, 2, 1.6, 'serpent'); P.px(sx + 1, sy - 1.5, 'oeilj', 3); P.ligne(sx + 2, sy, sx + 4, sy + (att ? -1 : 0), 'langue', 2);
+    // chapeau de paille large et hérissé, visage dans l'ombre
+    const hx = 26, hy = 28 + b;
+    P.boule(hx, hy + 1, 4.6, 4.4, 'ombre');
+    P.poly([[hx - 11, hy - 1], [hx, hy - 7], [hx + 11, hy - 1], [hx + 10, hy + 1], [hx - 10, hy + 1]], 'paille', { relief: true });
+    P.piece(); for (let x = hx - 9; x <= hx + 9; x += 3) P.ligne(x, hy, x + (x < hx ? 1 : -1), hy - 4 + Math.abs(x - hx) * 0.4, 'paille', 1); P.traitPiece();
+    for (const [x, h] of [[-3, 4], [0, 5], [3, 3]]) P.ligne(hx + x, hy - 7, hx + x + (x > 0 ? 1 : x < 0 ? -1 : 0), hy - 7 - h, 'herbe', 3);
+    shYeux(P, hx, hy + 2, 'lueur', { ecart: 2, k: 'oeilj' });
+    if (att) shLueur(P, 14, 17, 2, '#a060f0', '#f0d8ff');
+  },
+};
+
+
+// ── Chapitre II : Suna, ateliers de marionnettes ──
+// ENM_033 Ninja de Suna à l'éventail (lames de vent en éventail) — grande, tunique de sable à ceinture turquoise,
+// foulard et voile ; l'éventail géant, fermé en marchant, s'ouvre en demi-roue pour frapper.
+SHINOBI.suna_eventail = {
+  pal: pal({ peau: '#e8b890', tunique: '#d8c49a', foulard: '#c8b088', voile: '#ece0c4', ceinture: '#2a9a8a', pantalon: '#6a5a44', sandale: '#5a4630', eventail: '#f0ece0', eventail2: '#2a9a8a', manche: '#6a4a2a', cheveux: '#3a2a22' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.5 };
+    if (i) { shJambe(P, 24, 46, 23.5, 51, 23, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 23.5, 51, 23, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    if (!att) { P.membre(18, 52, 20, 27 + b, 1.6, 'manche'); for (let y = 30; y < 50; y += 3) P.rect(18.5 + (y - 30) * -0.05, y + b * (y < 40 ? 1 : 0), 3, 1, 'eventail2', 2); P.boule(20, 26 + b, 1.6, 1.6, 'eventail2'); } // éventail fermé, porté comme un bâton
+    P.tronc(34.5 + b, 49, 21, 31, 19.5, 32.5, 'tunique', { arrondi: 2, degrade: 0.15 });
+    P.effacer(28, 46, 1, 4); // fente de la tunique
+    P.rect(21, 41 + b, 10, 2, 'ceinture', 2); P.rect(29, 43 + b, 2, 4, 'ceinture', 1);
+    const hx = 26, hy = 28 + b;
+    P.boule(hx, hy - 0.5, 5.4, 5.4, 'foulard'); P.poly([[hx - 5, hy], [hx - 7, hy + 7], [hx - 3, hy + 4]], 'foulard', { niv: 1 });
+    P.boule(hx, hy + 1, 4.3, 4, 'peau');
+    shBandeau(P, hx, hy - 3, 5, 'foulard', { plaque: 4 });
+    P.tronc(hy + 2, hy + 5, hx - 4.5, hx + 4.5, hx - 3.5, hx + 3.5, 'voile');
+    shYeux(P, hx, hy + 0.5, 'fente', { ecart: 2.1 }); P.px(hx - 4, hy + 0.5, 'oeil', 1); P.px(hx + 3, hy + 0.5, 'oeil', 1); // khôl
+    shBras(P, 21, 36 + b, 19, 41 + b, 20, 44 + b, 'tunique');
+    if (att) { shEventail(P, 33, 40, 15, -2.4, 0.15, 7, 'eventail', 'eventail2'); shBras(P, 31, 36 + b, 33, 39, 33, 40, 'tunique'); }
+    else shBras(P, 31, 36 + b, 33, 41 + b, 32, 44 + b, 'tunique');
+  },
+};
+
+// ENM_036 Lanceur de jarres (tire en cloche) — petit porteur voûté sous une énorme jarre sanglée, turban blanc,
+// grosse moustache ; à l'attaque, il brandit une jarrette au-dessus de sa tête.
+SHINOBI.lanceur_jarres = {
+  pal: pal({ peau: '#c88a5a', turban: '#ece4d4', jarre: '#b86a44', bouchon: '#6a4a36', moustache: '#2a1e18', gilet: '#6a4a2e', pantalon: '#a08050', sandale: '#4a3424', sangle: '#4a3020' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 2, kp: 'sandale' };
+    // la grande jarre dans le dos, par-dessus l'épaule
+    P.boule(22, 33 + b, 8.5, 9, 'jarre'); P.boule(22, 23.5 + b, 3.6, 1.6, 'bouchon'); P.rect(15, 31 + b, 14, 1, 'jarre', 1); P.rect(16, 36 + b, 12, 1, 'jarre', 3);
+    if (i) { shJambe(P, 24, 47, 22, 51, 21.5, 55, J); shJambe(P, 30, 47, 31.5, 51, 32, 54, J); }
+    else { shJambe(P, 24, 47, 22, 51, 21.5, 54, J); shJambe(P, 30, 47, 31.5, 51, 32, 55, J); }
+    P.poly([[23, 38 + b], [33, 36 + b], [34, 48], [23, 48]], 'gilet', { cyl: true }); // buste voûté vers l'avant
+    P.ligne(24, 37 + b, 30, 47, 'sangle', 1); P.ligne(23, 41 + b, 33, 40 + b, 'sangle', 1);
+    const hx = 31, hy = 33 + b; // tête basse, en avant
+    P.boule(hx, hy, 4.4, 4.2, 'peau');
+    P.boule(hx - 0.3, hy - 2.6, 5, 3, 'turban'); P.rect(hx - 4, hy - 3, 8, 1, 'turban', 1); P.px(hx + 4, hy - 1, 'turban', 2);
+    shYeux(P, hx + 0.5, hy, 'points', { ecart: 1.8 });
+    P.poly([[hx - 3, hy + 2], [hx + 4, hy + 2], [hx + 5, hy + 4], [hx + 1, hy + 3], [hx - 4, hy + 4]], 'moustache', { niv: 2 });
+    if (att) { shBras(P, 33, 38 + b, 36, 32, 35, 26, 'peau', 'peau', { r: 1.7 }); P.boule(35, 22, 3, 3.2, 'jarre'); P.rect(34, 18.5, 3, 1.5, 'bouchon', 2); }
+    else shBras(P, 33, 38 + b, 36, 42 + b, 34, 45 + b, 'peau', 'peau', { r: 1.7 });
+    shBras(P, 24, 39 + b, 25, 43 + b, 27, 44 + b, 'peau', 'peau', { r: 1.7 });
+  },
+};
+
+// ENM_038 Marionnettiste caché (ses marionnettes tombent à sa mort) — maigre, voûté sous une capuche violette,
+// visage peint, coffre à marionnette sanglé dans le dos ; dix fils de chakra partent de ses doigts levés.
+SHINOBI.marionnettiste = {
+  pal: pal({ peau: '#e8dcd0', cape: '#4a2e58', cape2: '#3a2246', peinture: '#7a3a9a', coffre: '#9a7a54', bandes: '#ddd4c0', pantalon: '#2e2434', sandale: '#2e2434' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.4 };
+    P.tronc(24 + b, 40 + b, 16, 30, 16, 30, 'coffre', { arrondi: 1 }); for (const y of [28, 34]) P.rect(16, y + b, 14, 2, 'bandes', 2); // coffre dans le dos
+    if (i) { shJambe(P, 24.5, 47, 24, 51, 23.5, 55, J); shJambe(P, 28.5, 47, 29, 51, 29.5, 54, J); }
+    else { shJambe(P, 24.5, 47, 24, 51, 23.5, 54, J); shJambe(P, 28.5, 47, 29, 51, 29.5, 55, J); }
+    P.poly([[21, 34 + b], [32, 33 + b], [35, 50], [19, 50]], 'cape', { cyl: true }); // cape voûtée
+    for (const x of [20, 24, 29, 33]) P.px(x, 50, 'cape2', 1);
+    const hx = 28, hy = 31 + b;
+    P.poly([[hx - 6, hy + 4], [hx - 5, hy - 5], [hx, hy - 8], [hx + 5, hy - 4], [hx + 7, hy + 3]], 'cape2', { cyl: true }); // capuche tombante
+    P.boule(hx + 0.6, hy + 0.8, 3.8, 3.8, 'peau');
+    P.rect(hx - 3, hy - 2, 8, 2, 'cape2', 0);
+    shYeux(P, hx + 0.6, hy + 0.5, 'fente', { ecart: 1.8 }); P.ligne(hx - 2, hy + 1, hx - 1, hy + 4, 'peinture', 2); P.ligne(hx + 3, hy + 1, hx + 2, hy + 4, 'peinture', 2); P.rect(hx, hy + 3, 2, 1, 'peinture', 2);
+    const f = 'rgba(130,230,255,0.8)';
+    if (att) { shBras(P, 23, 37 + b, 19, 32, 18, 27, 'cape'); shBras(P, 33, 37 + b, 37, 32, 37, 27, 'cape'); shFils(P, [[17, 26, 13, 12], [18, 26, 17, 12], [19, 26, 21, 13], [36, 26, 34, 13], [37, 26, 38, 12], [38, 26, 42, 12]], f); }
+    else { shBras(P, 23, 37 + b, 20, 39 + b, 21, 36 + b, 'cape'); shBras(P, 33, 37 + b, 37, 38 + b, 37, 35 + b, 'cape'); shFils(P, [[20, 35 + b, 17, 22], [21, 35 + b, 21, 21], [36, 34 + b, 35, 21], [38, 34 + b, 40, 22]], f); }
+  },
+};
+
+// ENM_040 Ninja du Son (ondes sonores visées) — dos rond, manteau à col de fourrure, visage bandé sauf un œil,
+// corde violette nouée à la taille, gantelet d'acier percé d'évents ; à l'attaque, il braque le gantelet.
+SHINOBI.ninja_son = {
+  pal: pal({ peau: '#d8b090', bandes: '#e0d8c4', fourrure: '#8a7a68', manteau: '#5a5458', corde: '#7a4aa0', pantalon: '#3a3640', sandale: '#2e2a34', gantelet: { c: '#9aa0ac', brille: true }, onde: '#e0c8ff' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.7, bandes: 'bandes' };
+    if (i) { shJambe(P, 23.5, 47, 22.5, 51, 22, 55, J); shJambe(P, 28.5, 47, 29.5, 51, 30, 54, J); }
+    else { shJambe(P, 23.5, 47, 22.5, 51, 22, 54, J); shJambe(P, 28.5, 47, 29.5, 51, 30, 55, J); }
+    P.poly([[19, 36 + b], [32, 35 + b], [33, 49], [19, 49]], 'manteau', { cyl: true });
+    P.piece(); P.rect(19, 44 + b, 14, 2, 'corde', 2); for (let x = 19; x < 33; x += 2) P.px(x, 44 + b, 'corde', 3); P.rect(18, 45 + b, 2, 4, 'corde', 1); P.traitPiece(); // corde nouée
+    P.boule(25.5, 35 + b, 8, 3.2, 'fourrure'); for (let x = 19; x < 33; x += 2) P.px(x, 37 + b + (x % 4 ? 1 : 0), 'fourrure', 1); // col de fourrure
+    const hx = 26.5, hy = 30 + b;
+    P.boule(hx, hy, 5, 4.8, 'bandes');
+    P.piece(); for (let y = -3; y <= 3; y += 2) P.ligne(hx - 4.5, hy + y, hx + 4.5, hy + y - 1, 'bandes', 1); P.traitPiece();
+    P.rect(hx - 3.5, hy - 1, 3, 2, 'peau', 2); P.rect(hx - 3, hy, 2, 1, 'oeil', 2); P.px(hx - 3, hy - 1, 'oeil', 2); // un seul œil
+    P.rect(hx + 3, hy - 6, 1, 3, 'pantalon', 2); P.rect(hx - 1, hy - 7, 2, 3, 'pantalon', 2); // mèches
+    shBras(P, 20, 38 + b, 18, 43 + b, 19, 46 + b, 'manteau');
+    if (att) { shBras(P, 32, 38 + b, 35, 37, 38, 36, 'manteau', 'gantelet', { rm: 0.1, main: false }); P.membre(36, 36, 42, 35, 2.6, 'gantelet'); for (const x of [38, 40]) P.px(x, 34, 'oeil', 1).px(x, 36, 'oeil', 1);
+      P.apres(g => { g.globalAlpha = 0.9; for (const r of [3, 6]) { g.drawImage(anneau(r, 1, '#e0c8ff'), 44 - r - 1 + SH.X - 26, 35 - r - 1); } g.globalAlpha = 1; g.fillStyle = 'rgba(0,0,0,0)'; }); }
+    else { shBras(P, 32, 38 + b, 34, 42 + b, 34, 45 + b, 'manteau', 'gantelet', { main: false }); P.membre(34, 43 + b, 34, 48 + b, 2.5, 'gantelet'); for (const y of [45, 47]) P.px(33, y + b, 'oeil', 1).px(35, y + b, 'oeil', 1); }
+  },
+};
+
+// ENM_041 Poseur de sceaux de sable (pose des parchemins piégés) — petit, accroupi, foulard de sable et grosses
+// lunettes orange, besace qui déborde d'étiquettes ; une étiquette à la main, prête à être posée.
+SHINOBI.poseur_sable = {
+  pal: pal({ peau: '#c88a60', foulard: '#d0b484', lunettes: { c: '#f08a30', brille: true }, monture: '#4a3a2a', tunique: '#a88a5a', pantalon: '#7a6444', sandale: '#4a3828', besace: '#7a5432', papier: '#f4ecd8', sceau: '#c8382a', bandes: '#e0d6c0' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.8 };
+    // accroupi : genoux hauts
+    if (i) { shJambe(P, 23, 48, 19.5, 47, 20, 55, J); shJambe(P, 29, 48, 33, 48, 32, 54, J); }
+    else { shJambe(P, 23, 48, 19.5, 48, 20, 54, J); shJambe(P, 29, 48, 33, 47, 32, 55, J); }
+    P.boule(18, 47 + b, 4, 3.6, 'besace'); for (const [x, y] of [[16, 43], [18, 42], [20, 43]]) P.rect(x, y + b, 2, 3, 'papier', 3); P.px(18, 43 + b, 'sceau', 2);
+    P.tronc(39 + b, 49, 21, 31, 20.5, 31.5, 'tunique', { arrondi: 2 });
+    P.boule(26, 39 + b, 5.6, 2.4, 'foulard');
+    const hx = 26, hy = 33 + b;
+    P.boule(hx, hy, 5.2, 5, 'foulard');
+    P.boule(hx, hy + 1.3, 3.8, 3.2, 'peau');
+    P.tronc(hy + 2.5, hy + 5, hx - 5, hx + 5, hx - 4, hx + 4, 'foulard');
+    for (const x of [-2.6, 2.6]) { P.boule(hx + x, hy + 0.5, 2.1, 1.9, 'monture'); P.boule(hx + x, hy + 0.5, 1.4, 1.2, 'lunettes'); }
+    shBras(P, 21, 41 + b, 22, 45 + b, 24, 47 + b, 'peau', 'peau', { r: 1.5 });
+    shBras(P, 31, 41 + b, 35, 45 + b, 37, 50 + b, 'peau', 'peau', { r: 1.5 }); P.rect(36, 51 + b, 3, 4, 'papier', 3); P.px(37, 52 + b, 'sceau', 2).px(37, 53 + b, 'sceau', 2);
+  },
+};
+
+// ENM_043 Médecin de Suna (soigne ses alliés, fuit) — vieil homme en longue robe à capuche, barbiche blanche,
+// gourde de remèdes à la hanche, bâton à clochettes ; les mains s'illuminent de vert pour soigner.
+SHINOBI.medecin_suna = {
+  pal: pal({ peau: '#d8a880', robe: '#e6dcc4', liseré: '#7a8a4a', barbe: '#f4f0e8', gourde: '#b8743a', baton: '#7a5634', clochette: { c: '#e0c050', brille: true }, sandale: '#5a4430', pantalon: '#8a7a60' }),
+  f(P, i, att) {
+    const b = i;
+    P.membre(16, 55, 16, 26, 1.1, 'baton'); P.boule(16, 25, 1.6, 1.6, 'baton'); for (const y of [28, 31]) P.boule(15, y + b, 1.1, 1.1, 'clochette');
+    P.tronc(34 + b, 54, 20.5, 31.5, 18, 34, 'robe', { arrondi: 2, degrade: 0.2 });
+    P.rect(18, 53, 16, 1, 'liseré', 2); P.rect(25.5, 35 + b, 1, 19, 'liseré', 1);
+    P.boule(19 + (i ? 1 : 0), 55, 2.2, 1.2, 'sandale'); P.boule(32 - (i ? 0 : 1), 55, 2.2, 1.2, 'sandale');
+    P.boule(31.5, 46 + b, 2.2, 2.6, 'gourde'); P.rect(31, 43 + b, 1, 1, 'baton', 2);
+    const hx = 26, hy = 28 + b;
+    P.boule(hx, hy - 0.5, 5.6, 5.6, 'robe'); P.rect(hx - 5, hy - 2, 10, 1, 'liseré', 2);
+    P.boule(hx, hy + 1, 4.2, 4, 'peau');
+    shYeux(P, hx, hy + 0.5, 'points', { ecart: 2 }); P.rect(hx - 3, hy - 1, 2, 1, 'barbe', 3); P.rect(hx + 1, hy - 1, 2, 1, 'barbe', 3);
+    P.poly([[hx - 2.5, hy + 3], [hx + 2.5, hy + 3], [hx, hy + 8]], 'barbe', { niv: 3 });
+    if (att) { shBras(P, 21, 36 + b, 18, 33, 19, 29, 'robe'); shBras(P, 31, 36 + b, 34, 33, 33, 29, 'robe'); shLueur(P, 19, 29, 3, '#5ae080', '#e8ffe8'); shLueur(P, 33, 29, 3, '#5ae080', '#e8ffe8'); }
+    else { shBras(P, 21, 36 + b, 18, 40 + b, 17, 38 + b, 'robe'); shBras(P, 31, 36 + b, 33, 40 + b, 31, 43 + b, 'robe'); shLueur(P, 31, 43 + b, 2, '#5ae080', '#e8ffe8'); }
+  },
+};
+
+
+// ── Chapitre III : laboratoires, canaux de Kiri ──
+// ENM_052 Porteur du sceau maudit (lourd, s'enrage) — brute torse nu, crête violette, marques noires en flammes
+// qui gagnent la peau, corde violette ; à l'attaque, poings joints au-dessus de la tête, marques rougeoyantes.
+SHINOBI.porteur_sceau = {
+  pal: pal({ peau: '#d49a70', marque: '#2a1430', marque2: '#a03ad0', cheveux: '#5a2a7a', corde: '#7a4aa0', pantalon: '#3a2e44', sandale: '#2a2430', bandes: '#e0d6c4' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 2.4, bandes: 'bandes' };
+    if (i) { shJambe(P, 21.5, 46, 19, 50, 18.5, 55, J); shJambe(P, 30.5, 46, 33, 50, 33.5, 54, J); }
+    else { shJambe(P, 21.5, 46, 19, 50, 18.5, 54, J); shJambe(P, 30.5, 46, 33, 50, 33.5, 55, J); }
+    P.tronc(32 + b, 47, 14.5, 37.5, 19, 33, 'peau', { arrondi: 4 }); // torse en V
+    P.rect(19, 44 + b, 14, 3, 'corde', 2); for (let x = 19; x < 33; x += 2) P.px(x, 44 + b, 'corde', 3);
+    const mk = att ? 'marque2' : 'marque'; // marques en flammes depuis le cou
+    P.piece(); for (const [x0, y0, x1, y1] of [[23, 33, 19, 37], [19, 37, 20, 40], [29, 33, 33, 36], [33, 36, 31, 41], [24, 35, 23, 40], [16, 34, 15, 38]]) P.ligne(x0, y0 + b, x1, y1 + b, mk, 1);
+    P.poly([[21, 33 + b], [26, 37 + b], [31, 33 + b]], mk, { niv: 2, trait: false });
+    const hx = 26, hy = 27 + b;
+    P.boule(hx, hy, 4.4, 4.6, 'peau');
+    shPointes(P, hx, hy, 4.6, 'cheveux', [[-12, 4, 3], [0, 5, 3], [14, 4, 3]]);
+    shYeux(P, hx, hy + 0.5, att ? 'lueur' : 'fente', { ecart: 2, k: att ? 'marque2' : 'oeil' }); P.rect(hx - 2, hy + 3, 4, 1, 'marque', 1); P.px(hx - 2, hy + 2, 'blanc', 3); P.px(hx + 1, hy + 2, 'blanc', 3);
+    P.ligne(hx - 3, hy - 2, hx - 4, hy + 3, mk, 1);
+    const B = { r: 2.6, rm: 3, kav: 'peau' };
+    if (att) { shBras(P, 16, 34 + b, 14, 26, 21, 19, 'peau', 'peau', B); shBras(P, 36, 34 + b, 38, 26, 31, 19, 'peau', 'peau', B); P.boule(26, 18, 3.6, 3, 'peau'); }
+    else { shBras(P, 16, 34 + b, 12, 40 + b, 13, 46 + b, 'peau', 'peau', B); shBras(P, 36, 34 + b, 40, 40 + b, 39, 46 + b, 'peau', 'peau', B); for (const x of [13, 39]) P.rect(x - 2, 42 + b, 4, 1, 'bandes', 3); }
+  },
+};
+
+// ENM_053 Zetsu blanc (surgit du sol et poursuit) — créature végétale blanche et lisse, longiligne, petits yeux noirs
+// brillants, sourire trop large, deux pousses sur le crâne ; des racines grimpent encore à ses jambes.
+// Le Zetsu de l'armée (ENM_070) et le Zetsu soigneur (ENM_081) partagent la tête, pas le reste.
+function teteZetsu(P, hx, hy, o = {}) {
+  P.boule(hx, hy, 5.4, 6, 'peau');
+  P.assombrir(Math.round(hx + 3), Math.round(hy - 2), 3, 7, 1);
+  for (const c of [-1, 1]) { P.rect(hx + c * 2.4 - 1, hy - 0.5, 2, 2, 'oeil', 2); P.px(hx + c * 2.4 - 1, hy - 0.5, 'blanc', 4); }
+  P.ligne(hx - 3.5, hy + 2.5, hx - 1.5, hy + 3.5, 'oeil', 2); P.ligne(hx - 1.5, hy + 3.5, hx + 1.5, hy + 3.5, 'oeil', 2); P.ligne(hx + 1.5, hy + 3.5, hx + 3.5, hy + 2.5, 'oeil', 2);
+  if (o.pousses !== false) { P.ligne(hx - 1, hy - 6, hx - 2, hy - 8, 'tige', 2); P.boule(hx - 3, hy - 8.5, 1.6, 1, 'feuille'); P.ligne(hx + 1, hy - 6, hx + 2, hy - 9, 'tige', 2); P.boule(hx + 3.2, hy - 9.5, 1.8, 1.1, 'feuille'); }
+}
+const PAL_ZETSU = { peau: '#eeeee4', ombre: '#c8c8c0', racine: '#7a6a44', terre: '#5a4a34', tige: '#5a8a3a', feuille: '#7ac04a' };
+SHINOBI.zetsu_blanc = {
+  pal: pal(PAL_ZETSU),
+  f(P, i, att) {
+    const b = i;
+    P.boule(26, 55, 7, 1.8, 'terre');
+    const J = { k: 'peau', kp: 'racine', pied: 'nu', r: 1.4 };
+    if (i) { shJambe(P, 24, 45, 23, 50, 22.5, 55, J); shJambe(P, 28, 45, 29, 50, 29.5, 54, J); }
+    else { shJambe(P, 24, 45, 23, 50, 22.5, 54, J); shJambe(P, 28, 45, 29, 50, 29.5, 55, J); }
+    P.piece(); for (const [x0, y0, x1, y1] of [[21, 55, 23, 49], [23, 49, 22, 46], [31, 55, 29, 50], [29, 50, 30, 47], [19, 55, 18, 53], [33, 55, 35, 53]]) P.ligne(x0, y0, x1, y1, 'racine', 2); P.traitPiece();
+    P.tronc(35 + b, 46, 21, 31, 22.5, 29.5, 'peau', { arrondi: 2 });
+    teteZetsu(P, 27, 29 + b);
+    if (att) { shBras(P, 22, 37 + b, 18, 31, 17, 25, 'peau', 'peau', { r: 1.3 }); shBras(P, 30, 37 + b, 35, 31, 37, 25, 'peau', 'peau', { r: 1.3 }); }
+    else { shBras(P, 22, 37 + b, 19, 43 + b, 19, 49 + b, 'peau', 'peau', { r: 1.3 }); shBras(P, 30, 37 + b, 33, 43 + b, 34, 48 + b, 'peau', 'peau', { r: 1.3 }); }
+  },
+};
+
+// ENM_055 Garde du Son (rapide au contact) — griffes d'acier aux deux mains, cheveux hirsutes sur un œil,
+// gilet à fourrure et corde violette ; penché, griffes en avant.
+SHINOBI.garde_son = {
+  pal: pal({ peau: '#dcae88', cheveux: '#2a2430', gilet: '#4e4a52', fourrure: '#9a8a74', corde: '#7a4aa0', pantalon: '#34303a', sandale: '#2a2630', bandes: '#ddd4c0', griffe: { c: '#c8d0dc', brille: true } }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.7, bandes: 'bandes' };
+    if (i) { shJambe(P, 24, 46, 21.5, 50, 21, 55, J); shJambe(P, 28, 46, 31, 49, 32, 53, J); }
+    else { shJambe(P, 24, 46, 21, 49, 19, 53, J); shJambe(P, 28, 46, 30, 50, 30.5, 55, J); }
+    const griffes = (x, y, d) => { for (const k of [-1, 0, 1]) P.ligne(x, y + k, x + d * 5, y + k * 2 - 2, 'griffe', 3); };
+    shBras(P, 23, 37 + b, 20, 41 + b, 22, 44 + b, 'peau'); griffes(22, 45 + b, 1);
+    P.poly([[21, 36 + b], [31, 35 + b], [31, 47], [22, 47]], 'gilet', { cyl: true });
+    P.rect(22, 44, 9, 2, 'corde', 2); P.px(22, 46, 'corde', 1);
+    P.boule(26.5, 36 + b, 5.5, 2.2, 'fourrure');
+    const hx = 29, hy = 29 + b;
+    shPointes(P, hx, hy, 5.6, 'cheveux', [[-80, 5], [-50, 6], [-20, 5], [10, 4], [40, 3]]);
+    P.boule(hx, hy, 5.2, 5, 'peau');
+    P.poly([[hx - 5.5, hy - 1], [hx - 3, hy - 6], [hx + 4, hy - 6], [hx + 6, hy - 2], [hx + 3, hy + 2], [hx + 1, hy - 2], [hx - 2, hy - 1]], 'cheveux', { niv: 2, trait: false }); // mèche sur un œil
+    P.rect(hx - 3, hy + 1, 2, 1, 'oeil', 2); P.px(hx - 3, hy, 'oeil', 2);
+    P.ligne(hx - 2, hy + 3, hx + 2, hy + 4, 'oeil', 1); P.px(hx, hy + 4, 'blanc', 3);
+    if (att) { shBras(P, 31, 37 + b, 35, 37, 38, 36, 'peau'); griffes(39, 37, 1); }
+    else { shBras(P, 31, 37 + b, 34, 41 + b, 36, 41 + b, 'peau'); griffes(37, 42 + b, 1); }
+  },
+};
+
+// ENM_056 Tireur du Son (tirs visés) — grand et maigre, long manteau violet à haut col, cheveux longs sur les yeux,
+// grande corne de chasse en bandoulière ; à l'attaque, il porte la corne à la bouche et vise.
+SHINOBI.tireur_son = {
+  pal: pal({ peau: '#e0c0a8', cheveux: '#c8b8d8', manteau: '#5a3a6e', col: '#3e2850', corde: '#8a5ab0', corne: { c: '#e8d8b0', brille: true }, pavillon: { c: '#c8a050', brille: true }, pantalon: '#2e2836', sandale: '#2e2836' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.4, pied: 'botte', kp: 'sandale' };
+    if (i) { shJambe(P, 24, 46, 24, 51, 23.5, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 24, 51, 23.5, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    P.tronc(33 + b, 51, 21, 31, 19.5, 32.5, 'manteau', { arrondi: 2, degrade: 0.2 }); P.effacer(25, 48, 2, 4);
+    P.rect(21, 43 + b, 10, 2, 'corde', 2);
+    P.tronc(30 + b, 34 + b, 21, 31, 20.5, 31.5, 'col');
+    const hx = 26, hy = 25 + b;
+    P.boule(hx, hy, 5, 5.2, 'cheveux'); P.tronc(hy, hy + 10, hx - 5.5, hx + 5.5, hx - 6, hx + 6, 'cheveux'); // cheveux longs
+    P.boule(hx, hy + 1.5, 3.6, 3.8, 'peau');
+    P.poly([[hx - 4, hy - 2], [hx + 4, hy - 2], [hx + 3, hy + 2], [hx + 1, hy], [hx - 1, hy + 2], [hx - 3, hy]], 'cheveux', { niv: 3, trait: false });
+    P.px(hx - 2, hy + 2, 'oeil', 2); P.rect(hx - 1, hy + 4, 2, 1, 'col', 1);
+    if (att) { P.membre(hx + 1, hy + 4, 38, 30, 1.2, 'corne'); P.boule(39.5, 29, 2.6, 3.2, 'pavillon'); P.px(40, 29, 'oeil', 1);
+      shBras(P, 21, 35 + b, 24, 38, 28, 33, 'manteau'); shBras(P, 31, 35 + b, 34, 36, 35, 31, 'manteau');
+      P.apres(g => { g.globalAlpha = 0.85; for (const r of [2, 5]) g.drawImage(anneau(r, 1, '#e8d0ff'), 44 - r - 1, 29 - r - 1); g.globalAlpha = 1; }); }
+    else { P.ligne(21, 34 + b, 32, 45 + b, 'corde', 1); P.membre(30, 47 + b, 34, 40 + b, 1.2, 'corne'); P.boule(34.5, 38.5 + b, 2.4, 2.8, 'pavillon');
+      shBras(P, 21, 35 + b, 19, 41 + b, 20, 45 + b, 'manteau'); shBras(P, 31, 35 + b, 33, 41 + b, 32, 45 + b, 'manteau'); }
+  },
+};
+
+// ENM_058 Assistant de laboratoire (réanime des sujets) — blouse blanche ouverte sur une chemise violette, lunettes
+// rondes qui brillent, queue de cheval argentée, seringue géante ; à l'attaque, il brandit seringue et fiole.
+SHINOBI.assistant_labo = {
+  pal: pal({ peau: '#ecd0b8', cheveux: '#c8ccd8', blouse: '#eef0f0', chemise: '#5a3a8a', pantalon: '#3a3448', sandale: '#2e2a3a', verre: { c: '#e8f4ff', brille: true }, seringue: { c: '#d8e8f0', brille: true }, liquide: '#7af07a', fiole: '#9ae0a0' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.5 };
+    if (i) { shJambe(P, 24, 46, 23.5, 51, 23, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 23.5, 51, 23, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    P.membre(28, 26 + b, 31, 36 + b, 1.3, 'cheveux', { trait: false }); // queue de cheval
+    P.tronc(33.5 + b, 50, 20.5, 31.5, 19, 33, 'blouse', { arrondi: 2 });
+    P.tronc(34 + b, 46, 24, 28, 24.5, 27.5, 'chemise'); P.rect(25, 45, 2, 5, 'pantalon', 1);
+    P.rect(21, 41 + b, 3, 2, 'blouse', 1); P.px(29, 38 + b, 'liquide', 3);
+    const hx = 26, hy = 28 + b;
+    P.boule(hx, hy - 0.5, 5.2, 5.2, 'cheveux');
+    P.boule(hx, hy + 1, 4.3, 4.2, 'peau');
+    P.poly([[hx - 5, hy], [hx - 2, hy - 4], [hx + 5, hy - 3], [hx + 5, hy - 5], [hx - 5, hy - 5]], 'cheveux', { niv: 3, trait: false });
+    for (const c of [-1, 1]) { P.rect(hx + c * 2.3 - 1.5, hy, 3, 3, 'oeil', 1); P.rect(hx + c * 2.3 - 0.5, hy + 1, 1, 1, 'verre', 3); P.px(hx + c * 2.3 - 0.5, hy, 'verre', 4); }
+    P.rect(hx - 1, hy + 1, 2, 1, 'oeil', 1); P.rect(hx - 1, hy + 4, 3, 1, 'peau', 0);
+    if (att) { shBras(P, 21, 35 + b, 18, 31, 17, 27, 'blouse'); P.membre(17, 26, 17, 18, 1.5, 'seringue'); P.rect(16, 21, 2, 4, 'liquide', 3); P.ligne(17, 17, 17, 14, 'lame', 3);
+      shBras(P, 31, 35 + b, 34, 31, 35, 27, 'blouse'); P.boule(35, 24, 2.2, 2.6, 'fiole'); P.rect(34, 20, 2, 2, 'blouse', 1); shLueur(P, 35, 24, 2, '#5ae080', '#e8ffe8'); }
+    else { shBras(P, 21, 35 + b, 19, 40 + b, 20, 43 + b, 'blouse'); shBras(P, 31, 35 + b, 33, 40 + b, 34, 43 + b, 'blouse'); P.membre(34, 44 + b, 37, 37 + b, 1.4, 'seringue'); P.ligne(36, 39 + b, 37, 38 + b, 'liquide', 3); P.ligne(37, 36 + b, 39, 33 + b, 'lame', 3); }
+  },
+};
+
+// ENM_060 Poseur de parchemins explosifs (pièges explosifs) — masque animal blanc aux marques rouges, tenue noire,
+// plastron couvert de parchemins explosifs, sabre court dans le dos ; accroupi, une étiquette à la main.
+SHINOBI.poseur_explosifs = {
+  pal: pal({ peau: '#e0c0a0', masque: '#f0ece4', marque: '#c8302a', cheveux: '#2a2a34', tenue: '#24242e', plastron: '#6a6e7a', papier: '#f0e6c8', pantalon: '#22222a', sandale: '#2a2a34', sabre: '#4a3a2a' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.8 };
+    P.membre(18, 47 + b, 31, 31 + b, 1.1, 'sabre'); P.px(31, 30 + b, 'metal', 3);
+    if (i) { shJambe(P, 23, 48, 19.5, 47, 20, 55, J); shJambe(P, 29, 48, 33, 48, 32, 54, J); }
+    else { shJambe(P, 23, 48, 19.5, 48, 20, 54, J); shJambe(P, 29, 48, 33, 47, 32, 55, J); }
+    P.tronc(38 + b, 49, 20.5, 31.5, 21, 31, 'tenue', { arrondi: 2 });
+    P.tronc(39 + b, 46, 21.5, 30.5, 22, 30, 'plastron', { arrondi: 1 });
+    for (const [x, y] of [[22, 40], [25, 41], [28, 40], [23, 44], [27, 44]]) { P.piece().rect(x, y + b, 2, 3, 'papier', 3).px(x, y + 1 + b, 'marque', 2).traitPiece(); }
+    const hx = 26, hy = 32 + b;
+    P.boule(hx, hy - 0.5, 5.2, 5.2, 'cheveux');
+    P.boule(hx, hy + 0.8, 4.4, 4.4, 'masque'); P.poly([[hx - 4.5, hy - 2], [hx - 3.5, hy - 6], [hx - 1.5, hy - 3]], 'masque', { niv: 3 }); P.poly([[hx + 1.5, hy - 3], [hx + 3.5, hy - 6], [hx + 4.5, hy - 2]], 'masque', { niv: 2 }); // oreilles du masque
+    P.rect(hx - 3, hy + 0.5, 2, 1, 'oeil', 2); P.rect(hx + 1, hy + 0.5, 2, 1, 'oeil', 2);
+    P.ligne(hx - 3, hy - 1, hx - 1, hy - 2, 'marque', 2); P.ligne(hx + 1, hy - 2, hx + 3, hy - 1, 'marque', 2); P.rect(hx - 0.5, hy + 3, 1, 2, 'marque', 2);
+    shBras(P, 21, 40 + b, 20, 45 + b, 22, 47 + b, 'tenue');
+    shBras(P, 31, 40 + b, 35, 45 + b, 37, 50 + b, 'tenue'); P.rect(36, 51 + b, 3, 4, 'papier', 3); P.px(37, 52 + b, 'marque', 2).px(37, 53 + b, 'marque', 2);
+  },
+};
+
+// ENM_061 Ninja médical (soigne) — chignon piqué d'aiguilles, masque chirurgical, blouse claire à brassard vert,
+// trousse à la ceinture ; mains lumineuses, levées pour soigner.
+SHINOBI.ninja_medical = {
+  pal: pal({ peau: '#f0d0b4', cheveux: '#6a3a2a', aiguille: { c: '#e0e4ec', brille: true }, masque: '#d8ecf4', blouse: '#cfe0e8', brassard: '#2ab050', pantalon: '#9ab0c0', sandale: '#4a5a6a', trousse: '#a8483a' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.5 };
+    if (i) { shJambe(P, 24, 46, 23.5, 51, 23, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 23.5, 51, 23, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    P.tronc(34 + b, 47, 21, 31, 20.5, 31.5, 'blouse', { arrondi: 2 });
+    P.boule(31, 45 + b, 2.2, 2, 'trousse'); P.rect(30.5, 44 + b, 1, 2, 'blanc', 3);
+    const hx = 26, hy = 28 + b;
+    P.boule(hx, hy - 6, 2.8, 2.4, 'cheveux'); P.ligne(hx - 4, hy - 8, hx + 1, hy - 5, 'aiguille', 3); P.ligne(hx + 4, hy - 9, hx + 1, hy - 6, 'aiguille', 3); // chignon et aiguilles
+    P.boule(hx, hy - 0.5, 5.2, 5, 'cheveux');
+    P.boule(hx, hy + 1, 4.3, 4.1, 'peau');
+    P.poly([[hx - 5, hy + 1], [hx - 3, hy - 3], [hx + 3, hy - 3], [hx + 5, hy + 1], [hx + 5, hy - 5], [hx - 5, hy - 5]], 'cheveux', { niv: 2, trait: false });
+    shYeux(P, hx, hy + 0.5, 'rond', { ecart: 2.2 });
+    P.tronc(hy + 2, hy + 5, hx - 4.5, hx + 4.5, hx - 3.5, hx + 3.5, 'masque'); P.rect(hx - 5, hy + 2, 1, 1, 'blanc', 2); P.rect(hx + 4, hy + 2, 1, 1, 'blanc', 2);
+    if (att) { shBras(P, 21, 36 + b, 18, 32, 19, 28, 'blouse'); shBras(P, 31, 36 + b, 34, 32, 33, 28, 'blouse'); P.rect(17, 31, 3, 2, 'brassard', 2); shLueur(P, 19, 28, 3, '#5ae080', '#e8ffe8'); shLueur(P, 33, 28, 3, '#5ae080', '#e8ffe8'); }
+    else { shBras(P, 21, 36 + b, 19, 41 + b, 20, 44 + b, 'blouse'); shBras(P, 31, 36 + b, 34, 40 + b, 31, 42 + b, 'blouse'); P.rect(18.5, 38 + b, 3, 2, 'brassard', 2); shLueur(P, 31, 42 + b, 2, '#5ae080', '#e8ffe8'); }
+  },
+};
+
+// ENM_062 Ninja de la brume (rapide au contact) — poncho gris-vert effiloché, masque à gaz à deux filtres,
+// tantō court ; il court plié en deux, la brume colle à ses pieds.
+SHINOBI.ninja_brume = {
+  pal: pal({ peau: '#d8c0a8', poncho: '#5a6a68', poncho2: '#465452', masque: { c: '#5a5e66', brille: true }, filtre: '#3a3e46', verre: { c: '#9ae0e0', brille: true }, pantalon: '#2e3438', sandale: '#2a3034', cheveux: '#2e3438' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.6 };
+    if (i) { shJambe(P, 24, 47, 21.5, 51, 21, 55, J); shJambe(P, 28, 47, 31, 50, 32, 53, J); }
+    else { shJambe(P, 24, 47, 21, 50, 19, 53, J); shJambe(P, 28, 47, 30, 51, 30.5, 55, J); }
+    P.poly([[20, 37 + b], [33, 36 + b], [36, 47], [18, 48]], 'poncho', { cyl: true }); // poncho
+    P.piece(); for (let x = 18; x < 36; x += 2) P.rect(x, 47 + ((x / 2) % 2), 1, 2, 'poncho2', 1); P.traitPiece();
+    const hx = 29, hy = 31 + b;
+    P.boule(hx, hy - 0.5, 5, 5, 'poncho2'); // capuche
+    P.boule(hx + 0.5, hy + 1, 4.2, 3.8, 'masque');
+    for (const c of [-1, 1]) { P.boule(hx + 0.5 + c * 2, hy, 1.4, 1.3, 'verre'); P.boule(hx + 0.5 + c * 2.2, hy + 4, 1.6, 1.6, 'filtre'); }
+    P.apres(g => { g.fillStyle = 'rgba(220,232,236,0.55)'; for (const [x, y] of [[15, 54], [18, 55], [35, 54], [38, 55], [13, 52]]) g.fillRect(x, y, 3, 1); });
+    if (att) { shBras(P, 32, 38 + b, 36, 38, 39, 37, 'poncho'); P.ligne(40, 36, 45, 34, 'lame', 3); P.ligne(40, 37, 44, 35, 'lame', 1); }
+    else { shBras(P, 32, 38 + b, 34, 42 + b, 36, 43 + b, 'poncho'); P.ligne(37, 43 + b, 41, 41 + b, 'lame', 3); }
+    shBras(P, 21, 38 + b, 18, 42 + b, 16, 44 + b, 'poncho');
+  },
+};
+
+// ENM_063 Clone de glace (salves de senbon, laisse du verglas) — silhouette de cristal facetté, translucide,
+// yeux pâles ; à l'attaque, un éventail d'aiguilles de glace se forme dans sa main levée.
+SHINOBI.clone_glace = {
+  pal: pal({ glace: '#9cd0ec', glace2: '#6aa8d0', facette: '#e8f8ff', oeilg: '#ffffff', aiguille: { c: '#e0f8ff', brille: true } }),
+  f(P, i, att) {
+    const b = i, J = { k: 'glace2', kp: 'glace2', pied: 'nu', r: 1.7 };
+    if (i) { shJambe(P, 24, 46, 23.5, 51, 23, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 23.5, 51, 23, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    P.poly([[20, 35 + b], [26, 33 + b], [32, 35 + b], [31, 41 + b], [29, 47], [23, 47], [21, 41 + b]], 'glace', { cyl: true });
+    P.piece(); P.ligne(21, 36 + b, 26, 41 + b, 'facette', 3); P.ligne(26, 41 + b, 30, 36 + b, 'glace2', 1); P.ligne(26, 41 + b, 26, 46, 'glace2', 1); P.traitPiece();
+    const hx = 26, hy = 27 + b; // tête en diamant
+    P.poly([[hx - 5, hy], [hx - 3, hy - 5], [hx + 2, hy - 6], [hx + 5, hy - 1], [hx + 4, hy + 4], [hx, hy + 6], [hx - 4, hy + 4]], 'glace', { cyl: true });
+    P.ligne(hx - 3, hy - 4, hx, hy + 5, 'facette', 3); P.ligne(hx + 2, hy - 5, hx + 4, hy + 3, 'glace2', 1);
+    P.rect(hx - 3, hy + 1, 2, 1, 'oeilg', 4); P.rect(hx + 1, hy + 1, 2, 1, 'oeilg', 4);
+    const Bg = { r: 1.4, rm: 1.6 };
+    shBras(P, 21, 36 + b, 19, 41 + b, 20, 45 + b, 'glace2', 'glace', Bg);
+    if (att) { shBras(P, 31, 36 + b, 34, 32, 34, 27, 'glace2', 'glace', Bg); for (const [dx, dy] of [[-4, -5], [-1, -7], [2, -7], [5, -5]]) P.ligne(34, 26, 34 + dx, 26 + dy, 'aiguille', 3); }
+    else { shBras(P, 31, 36 + b, 33, 41 + b, 33, 45 + b, 'glace2', 'glace', Bg); for (const d of [1, 2, 3]) P.ligne(33, 46 + b, 33 + d, 49 + b, 'aiguille', 3); }
+    P.apres(g => { g.fillStyle = 'rgba(255,255,255,0.9)'; for (const [x, y] of [[19, 34], [33, 30], [24, 22]]) { g.fillRect(x, y + b, 1, 1); } });
+  },
+};
+
+// ENM_065 Déserteur au sabre (charge sabre en avant) — grand rōnin au manteau en lambeaux, chignon, bas du visage
+// bandé, long sabre tenu à deux mains ; à l'attaque, il se ramasse, lame pointée vers sa cible.
+SHINOBI.deserteur_sabre = {
+  pal: pal({ peau: '#d8b090', cheveux: '#1e1e26', manteau: '#2e3a4e', manteau2: '#24304a', bandes: '#e0d8c4', hakama: '#3a3a46', sandale: '#2a2a34', sabre: { c: '#dce4f0', brille: true }, tsuka: '#6a2a2a' }),
+  f(P, i, att) {
+    const b = i, d = att ? 2 : 0, J = { k: 'hakama', r: 2 };
+    if (i) { shJambe(P, 23.5, 46, 21.5, 51, 20.5, 55, J); shJambe(P, 28.5, 46, 30.5, 51, 31.5, 54, J); }
+    else { shJambe(P, 23.5, 46, 21.5, 51, 20.5, 54, J); shJambe(P, 28.5, 46, 30.5, 51, 31.5, 55, J); }
+    P.poly([[19, 33 + b + d], [33, 33 + b + d], [36, 50], [32, 52], [28, 49], [24, 52], [20, 49], [16, 51]], 'manteau', { cyl: true }); // manteau en lambeaux
+    P.tronc(34 + b + d, 46, 24, 28, 24.5, 27.5, 'manteau2'); P.rect(21, 43, 10, 2, 'tsuka', 1);
+    const hx = 26, hy = 27 + b + d;
+    P.boule(hx, hy - 6, 2, 1.6, 'cheveux'); P.boule(hx, hy - 0.5, 5, 5, 'cheveux');
+    P.boule(hx, hy + 1, 4.2, 4, 'peau');
+    P.rect(hx - 4.5, hy - 4, 9, 2, 'cheveux', 2);
+    shYeux(P, hx, hy, 'fente', { ecart: 2.1 });
+    P.tronc(hy + 2, hy + 5, hx - 4.5, hx + 4.5, hx - 4, hx + 4, 'bandes'); P.ligne(hx - 4, hy + 3, hx + 4, hy + 4, 'bandes', 1);
+    if (att) { // lame pointée vers l'avant, tenue basse à deux mains
+      shBras(P, 21, 36 + b + d, 25, 42, 30, 43, 'manteau'); shBras(P, 31, 36 + b + d, 33, 41, 32, 43, 'manteau');
+      P.rect(29, 42, 6, 2, 'tsuka', 2); P.poly([[35, 41.5], [48, 39], [49, 40], [35, 44]], 'sabre', { niv: 3 }); P.ligne(36, 43, 48, 40, 'sabre', 1);
+    } else { // sabre au repos, lame vers le sol derrière lui
+      shBras(P, 21, 36 + b, 19, 41 + b, 20, 44 + b, 'manteau'); shBras(P, 31, 36 + b, 33, 40 + b, 33, 43 + b, 'manteau');
+      P.rect(32, 42 + b, 2, 4, 'tsuka', 2); P.poly([[32, 46 + b], [34, 46 + b], [39, 56], [37, 56]], 'sabre', { niv: 3 });
+    }
+  },
+};
+
+// ENM_066 Assassin de la brume (surgit, salve de senbon) — masque blanc ovale à fentes, longue cape à capuche
+// sarcelle ; tapi au sol, des senbon entre les doigts.
+SHINOBI.assassin_brume = {
+  pal: pal({ masque: '#f0eee6', motif: '#4a8a9a', cape: '#2a4a52', cape2: '#1e383e', pantalon: '#1e262c', sandale: '#1e262c', aiguille: { c: '#e0e8f0', brille: true }, peau: '#e8d0b8' }),
+  f(P, i, att) {
+    const b = i;
+    P.poly([[19, 37 + b], [33, 37 + b], [37, 54], [33, 55], [26, 53], [19, 55], [15, 54]], 'cape', { cyl: true }); // cape tombante, accroupi dessous
+    P.boule(22, 55, 2.4, 1.3, 'sandale'); P.boule(30.5, 55, 2.4, 1.3, 'sandale');
+    for (const x of [18, 23, 29, 34]) P.px(x, 54, 'cape2', 1);
+    const hx = 26, hy = 32 + b;
+    P.poly([[hx - 7, hy + 5], [hx - 6, hy - 4], [hx, hy - 8], [hx + 6, hy - 4], [hx + 7, hy + 5]], 'cape2', { cyl: true }); // capuche
+    P.boule(hx, hy + 0.5, 4, 4.6, 'masque');
+    P.rect(hx - 3, hy, 2, 1, 'oeil', 2); P.rect(hx + 1, hy, 2, 1, 'oeil', 2);
+    P.ligne(hx - 1, hy + 2, hx + 1, hy + 4, 'motif', 2); P.ligne(hx - 2, hy - 3, hx + 2, hy - 3, 'motif', 2);
+    if (att) { shBras(P, 31, 40 + b, 35, 39, 38, 37, 'cape'); for (const [dx, dy] of [[5, -4], [6, -1], [5, 2]]) P.ligne(39, 37, 39 + dx, 37 + dy, 'aiguille', 3); }
+    else { shBras(P, 30, 41 + b, 32, 45 + b, 31, 47 + b, 'cape', 'peau', { r: 1.4 }); for (const d of [-1, 0, 1]) P.ligne(31 + d, 48 + b, 31 + d * 2, 51 + b, 'aiguille', 3); }
+  },
+};
+
+
+// ── Chapitre IV : repaires de l'organisation, champs de guerre ──
+// ENM_070 Zetsu blanc de l'armée (en nombre, sans relâche) — même tête végétale, mais gilet de soldat volé,
+// et il court, bras en arrière.
+SHINOBI.zetsu_armee = {
+  pal: pal(Object.assign({ gilet: '#56703a', poche: '#46602e', pantalon: '#e2e2d8' }, PAL_ZETSU)),
+  f(P, i, att) {
+    const b = i, J = { k: 'peau', kp: 'ombre', pied: 'nu', r: 1.5 };
+    if (i) { shJambe(P, 24, 46, 22, 50, 22, 55, J); shJambe(P, 28, 46, 31, 48, 32, 53, J); }
+    else { shJambe(P, 24, 46, 20, 49, 18, 53, J); shJambe(P, 28, 46, 30, 50, 30, 55, J); }
+    shBras(P, 23, 37 + b, 19, 40 + b, 15, 41 + b, 'peau', 'peau', { r: 1.3 });
+    P.poly([[21, 36 + b], [31, 35 + b], [31, 47], [22, 47]], 'gilet', { cyl: true });
+    P.tronc(36 + b, 38 + b, 22, 31, 22, 31, 'poche'); for (const x of [22.5, 27]) P.rect(x, 40 + b, 3, 3, 'poche', 2);
+    teteZetsu(P, 29, 29 + b, { pousses: false });
+    if (att) shBras(P, 30, 37 + b, 35, 35, 38, 33, 'peau', 'peau', { r: 1.3 });
+    else shBras(P, 30, 37 + b, 33, 39 + b, 37, 37 + b, 'peau', 'peau', { r: 1.3 });
+  },
+};
+
+// ENM_073 Marionnette humaine (écrase le sol, projette du sable de fer) — grand corps de bois articulé, mâchoire
+// à charnière, six bras, cape noire en lambeaux ; du sable de fer coule de ses mains.
+SHINOBI.marionnette_humaine = {
+  pal: pal({ bois: '#c8b090', bois2: '#9a8466', joint: '#5a4a3a', cape: '#24202c', cape2: '#3a3444', fer: '#3a3a44', oeilr: '#e04a3a', cheveux: '#a02a2a' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'bois2', kp: 'bois2', pied: 'nu', r: 2 };
+    for (const c of [-1, 1]) { const y = att ? 26 : 34 + b; P.membre(26 + c * 7, 37 + b, 26 + c * 15, y, 1.5, 'bois2'); P.boule(26 + c * 15, y - 1, 1.8, 1.8, 'joint'); P.membre(26 + c * 6, 41 + b, 26 + c * 14, y + 9, 1.4, 'bois2'); P.boule(26 + c * 14, y + 9, 1.6, 1.6, 'joint'); } // bras supplémentaires
+    if (i) { shJambe(P, 22, 46, 20, 50, 19.5, 55, J); shJambe(P, 30, 46, 32, 50, 32.5, 54, J); }
+    else { shJambe(P, 22, 46, 20, 50, 19.5, 54, J); shJambe(P, 30, 46, 32, 50, 32.5, 55, J); }
+    for (const x of [20, 32]) P.boule(x, 50, 1.5, 1.5, 'joint');
+    P.tronc(33 + b, 47, 17, 35, 20, 32, 'bois', { arrondi: 3 });
+    P.piece(); for (let y = 37; y < 46; y += 3) P.ligne(21, y + b, 31, y + b, 'joint', 1); P.rect(25.5, 34 + b, 1, 12, 'joint', 1); P.traitPiece();
+    P.poly([[15, 33 + b], [37, 33 + b], [39, 44], [35, 42], [31, 45], [26, 42], [21, 45], [17, 42], [13, 44]], 'cape', { cyl: true });
+    const hx = 26, hy = 26 + b;
+    P.boule(hx, hy - 1, 5, 4.6, 'cheveux'); P.boule(hx, hy, 4.3, 4.4, 'bois');
+    P.rect(hx - 3, hy - 1, 2, 2, 'oeil', 1); P.rect(hx + 1, hy - 1, 2, 2, 'oeil', 1); P.px(hx - 2, hy, 'oeilr', 3); P.px(hx + 2, hy, 'oeilr', 3);
+    P.rect(hx - 3, hy + 2, 6, att ? 3 : 2, 'oeil', 0); P.rect(hx - 4, hy + 1, 1, 4, 'joint', 1); P.rect(hx + 3, hy + 1, 1, 4, 'joint', 1); // mâchoire à charnière
+    const B = { r: 2, rm: 2.4, kav: 'bois2' };
+    if (att) { shBras(P, 18, 35 + b, 13, 27, 16, 20, 'bois', 'bois', B); shBras(P, 34, 35 + b, 39, 27, 36, 20, 'bois', 'bois', B); P.apres(g => { g.fillStyle = '#2a2a34'; for (let k = 0; k < 14; k++) g.fillRect(14 + (k * 7) % 24, 13 + (k * 5) % 6, 2, 2); }); }
+    else { shBras(P, 18, 35 + b, 14, 41 + b, 15, 47 + b, 'bois', 'bois', B); shBras(P, 34, 35 + b, 38, 41 + b, 37, 47 + b, 'bois', 'bois', B); P.apres(g => { g.fillStyle = '#2a2a34'; for (const [x, y] of [[15, 50], [14, 53], [37, 50], [38, 53]]) g.fillRect(x, y + b, 1, 2); }); }
+  },
+};
+
+// ENM_075 Sentinelle de la pluie (tirs visés) — haute silhouette sous une grande ombrelle de papier indigo,
+// long manteau, respirateur ; à l'attaque, l'ombrelle se referme et se pointe comme un canon.
+SHINOBI.sentinelle_pluie = {
+  pal: pal({ peau: '#dcc0aa', manteau: '#34445a', col: '#26324a', ombrelle: '#3a3a7a', ombrelle2: '#c8383a', baleine: '#d8c8a0', manche: '#6a4a2a', respi: { c: '#8a96a4', brille: true }, pantalon: '#26303e', sandale: '#26303e', eau: '#8ac8f0' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.5, pied: 'botte', kp: 'sandale' };
+    if (i) { shJambe(P, 24, 46, 24, 51, 23.5, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 24, 51, 23.5, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    P.tronc(33 + b, 52, 20.5, 31.5, 18.5, 33.5, 'manteau', { arrondi: 2, degrade: 0.25 }); P.effacer(25, 49, 2, 4);
+    P.tronc(30 + b, 34 + b, 21, 31, 20.5, 31.5, 'col');
+    const hx = 26, hy = 26 + b;
+    P.boule(hx, hy - 0.5, 4.8, 4.8, 'col'); P.boule(hx, hy + 0.8, 3.8, 3.6, 'peau');
+    shYeux(P, hx, hy, 'fente', { ecart: 1.9 });
+    P.rect(hx - 4, hy + 2, 8, 1, 'col', 1); P.boule(hx, hy + 3.4, 2.3, 1.9, 'respi'); P.rect(hx - 1, hy + 3, 2, 1, 'oeil', 1);
+    shBras(P, 21, 35 + b, 19, 40 + b, 20, 44 + b, 'manteau');
+    if (att) { // ombrelle refermée, pointée vers l'avant
+      shBras(P, 31, 35 + b, 34, 38, 36, 37, 'manteau');
+      P.poly([[33, 35], [47, 36], [33, 39]], 'ombrelle', { niv: 2 }); P.ligne(33, 37, 47, 36, 'ombrelle2', 2); P.ligne(29, 38, 33, 37, 'manche', 2); P.px(48, 36, 'eau', 3).px(50, 35, 'eau', 3);
+    } else { // ombrelle ouverte au-dessus de la tête
+      shBras(P, 31, 35 + b, 34, 33 + b, 32, 28 + b, 'manteau'); P.ligne(32, 29 + b, 27, 15 + b, 'manche', 2);
+      P.poly([[12, 20 + b], [17, 13 + b], [27, 10 + b], [37, 13 + b], [42, 20 + b], [38, 19 + b], [33, 21 + b], [27, 19 + b], [21, 21 + b], [16, 19 + b]], 'ombrelle', { cyl: true });
+      P.piece(); for (const x of [16, 21, 27, 33, 38]) P.ligne(27, 11 + b, x, 19 + b + (x % 2), 'baleine', 1); P.ligne(13, 19 + b, 41, 19 + b, 'ombrelle2', 2); P.traitPiece(); P.px(27, 9 + b, 'manche', 2);
+    }
+  },
+};
+
+// ENM_076 Invocateur aux tiges (invoque des bêtes) — cheveux orange hérissés, visage pâle percé de clous,
+// manteau sombre à haut col ; des tiges de métal noir sortent de ses épaules. À l'attaque, paume au sol : sceau violet.
+SHINOBI.invocateur_tiges = {
+  pal: pal({ peau: '#ecd8c8', cheveux: '#e87a2a', manteau: '#1e1e28', col: '#2e2a3a', tige: { c: '#4a4a56', brille: true }, clou: { c: '#c8ccd8', brille: true }, pantalon: '#1a1a22', sandale: '#1a1a22', liseré: '#8a3aa0' }),
+  f(P, i, att) {
+    const b = i, d = att ? 3 : 0, J = { k: 'pantalon', r: 1.6 };
+    for (const [x0, x1, y1] of [[22, 15, 22], [24, 19, 18], [28, 33, 18], [30, 37, 22]]) { P.membre(x0, 37 + b + d, x1, y1 + b + d, 0.9, 'tige'); P.px(x1, y1 + b + d, 'clou', 4); } // tiges dans le dos
+    if (att) { shJambe(P, 23, 47, 20, 49, 20, 55, J); shJambe(P, 29, 47, 33, 47, 32, 55, J); }
+    else if (i) { shJambe(P, 24, 46, 23.5, 51, 23, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 23.5, 51, 23, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    P.tronc(34 + b + d, 50, 20.5, 31.5, 19, 33, 'manteau', { arrondi: 2, degrade: 0.2 }); P.rect(25.5, 36 + b + d, 1, 14, 'liseré', 2);
+    P.tronc(31 + b + d, 35 + b + d, 20.5, 31.5, 20, 32, 'col');
+    const hx = 26, hy = 26 + b + d;
+    shPointes(P, hx, hy, 5.2, 'cheveux', [[-70, 4], [-40, 5], [-10, 5], [20, 5], [50, 4], [75, 3]]);
+    P.boule(hx, hy - 0.5, 5.2, 5, 'cheveux'); P.boule(hx, hy + 1.2, 4.2, 3.8, 'peau');
+    P.rect(hx - 4, hy - 2.5, 8, 2, 'cheveux', 2);
+    shYeux(P, hx, hy + 0.8, 'rond', { ecart: 2, k: 'liseré' });
+    for (const [x, y] of [[-3, 3], [3, 3], [0, 2], [-4, 0], [4, 0]]) P.px(hx + x, hy + y, 'clou', 4);
+    if (att) { shBras(P, 21, 37 + b + d, 18, 43, 17, 50, 'manteau'); shBras(P, 31, 37 + b + d, 34, 42, 36, 50, 'manteau'); shLueur(P, 36, 51, 3, '#a060f0', '#f0d8ff'); P.apres(g => { g.globalAlpha = 0.8; g.drawImage(ellipse(8, 2, 'rgba(176,112,240,0.6)'), 28, 51); g.globalAlpha = 1; }); }
+    else { shBras(P, 21, 37 + b, 22, 41 + b, 25, 40 + b, 'manteau'); shBras(P, 31, 37 + b, 30, 41 + b, 27, 40 + b, 'manteau'); P.rect(25, 38 + b, 2, 3, 'peau', 3); } // mains jointes : signe
+  },
+};
+
+// ENM_078 Shinobi de l'Alliance égaré (charge) — gilet de l'Alliance, tête bandée, lance tenue en diagonale ;
+// à l'attaque, il se fend, lance couchée vers sa cible.
+SHINOBI.alliance_egare = {
+  pal: pal({ peau: '#dcae88', cheveux: '#5a3a28', gilet: '#5e7a3e', col: '#4e6a32', tenue: '#2e3448', pantalon: '#2e3448', sandale: '#2e3a50', bandes: '#ece4d4', sang: '#b03a3a', hampe: '#7a5634', bandeau: '#26283a' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.7, bandes: 'bandes' };
+    if (att) { shJambe(P, 23.5, 46, 20, 50, 18, 55, J); shJambe(P, 28.5, 46, 32, 48, 33, 55, J); }
+    else if (i) { shJambe(P, 24, 46, 23.5, 51, 23, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 23.5, 51, 23, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    if (!att) { P.membre(15, 54, 37, 22 + b, 1, 'hampe'); P.poly([[36, 23 + b], [40, 16 + b], [39, 23 + b]], 'lame', { niv: 3 }); }
+    P.tronc(34 + b, 47, 20.5, 31.5, 21, 31, 'tenue', { arrondi: 2 });
+    P.tronc(34.5 + b, 45, 21, 31, 21, 31, 'gilet', { arrondi: 2 }); P.boule(26, 34.5 + b, 5.5, 2.2, 'col');
+    for (const x of [21.5, 27.5]) P.rect(x, 38 + b, 3, 3, 'col', 2);
+    const hx = 26, hy = 28 + b;
+    P.boule(hx, hy - 0.5, 5.2, 5, 'cheveux'); P.boule(hx, hy + 1, 4.3, 4.1, 'peau');
+    P.tronc(hy - 4, hy - 1, hx - 5, hx + 5, hx - 5, hx + 5, 'bandes'); P.rect(hx + 1, hy - 3, 2, 2, 'sang', 2); // tête bandée
+    shYeux(P, hx, hy + 1, 'fente', { ecart: 2.2 }); P.rect(hx - 1, hy + 4, 3, 1, 'oeil', 1);
+    if (att) { shBras(P, 21, 36 + b, 24, 41, 28, 41, 'tenue'); shBras(P, 31, 36 + b, 33, 40, 34, 40, 'tenue'); P.membre(14, 42, 44, 39, 1, 'hampe'); P.poly([[44, 37.5], [51, 39], [44, 40.5]], 'lame', { niv: 3 }); }
+    else { shBras(P, 21, 36 + b, 21, 41 + b, 24, 44 + b, 'tenue'); shBras(P, 31, 36 + b, 33, 33 + b, 33, 30 + b, 'tenue'); }
+  },
+};
+
+// ENM_079 Poseur d'argile (pièges explosifs) — artisan trapu au tablier maculé d'argile, lunettes relevées sur le
+// front, oiseau d'argile perché sur l'épaule, une boule d'argile à la main ; accroupi pour piéger le sol.
+SHINOBI.poseur_argile = {
+  pal: pal({ peau: '#e0b088', cheveux: '#e8c050', tablier: '#8a6a4a', argile: '#efe6d4', tenue: '#3a4a5a', pantalon: '#2e3644', sandale: '#2e3644', lunettes: { c: '#8ad0e8', brille: true }, monture: '#4a3a2a', papier: '#f4ecd8', sceau: '#c8382a' }),
+  f(P, i, att) {
+    const b = i, J = { k: 'pantalon', r: 1.9 };
+    if (i) { shJambe(P, 23, 48, 19.5, 47, 20, 55, J); shJambe(P, 29, 48, 33, 48, 32, 54, J); }
+    else { shJambe(P, 23, 48, 19.5, 48, 20, 54, J); shJambe(P, 29, 48, 33, 47, 32, 55, J); }
+    P.tronc(37 + b, 49, 19.5, 32.5, 20, 32, 'tenue', { arrondi: 3 });
+    P.tronc(39 + b, 50, 22, 30, 21.5, 30.5, 'tablier'); for (const [x, y] of [[23, 42], [27, 45], [24, 47]]) P.rect(x, y + b, 2, 1, 'argile', 3); // tablier taché
+    // oiseau d'argile sur l'épaule
+    P.boule(19, 34 + b, 2.6, 2, 'argile'); P.poly([[17, 34 + b], [13, 31 + b + (i ? 1 : 0)], [16, 35 + b]], 'argile', { niv: 3 }); P.px(20, 33 + b, 'oeil', 2); P.px(21, 34 + b, 'cheveux', 3);
+    const hx = 27, hy = 32 + b;
+    P.membre(hx + 2, hy - 3, hx + 6, hy + 4, 1.4, 'cheveux', { trait: false }); // queue de cheval
+    P.boule(hx, hy - 0.5, 5.2, 5, 'cheveux'); P.boule(hx, hy + 1, 4.3, 4.1, 'peau');
+    for (const x of [-2.3, 2.3]) { P.boule(hx + x, hy - 3.5, 1.7, 1.4, 'monture'); P.boule(hx + x, hy - 3.5, 1, 0.8, 'lunettes'); } // lunettes relevées
+    shYeux(P, hx, hy + 1, 'fente', { ecart: 2 }); P.rect(hx - 1, hy + 4, 3, 1, 'oeil', 1); P.px(hx + 2, hy + 3, 'argile', 3);
+    shBras(P, 21, 39 + b, 21, 44 + b, 23, 46 + b, 'tenue'); P.boule(23.5, 47 + b, 2, 1.8, 'argile');
+    shBras(P, 32, 39 + b, 35, 45 + b, 37, 50 + b, 'tenue'); P.rect(36, 51 + b, 3, 4, 'papier', 3); P.px(37, 52 + b, 'sceau', 2).px(37, 53 + b, 'sceau', 2);
+  },
+};
+
+// ENM_081 Zetsu soigneur (soigne) — tête végétale coiffée d'un grand bourgeon, gourde de sève ; mains vertes.
+SHINOBI.zetsu_soigneur = {
+  pal: pal(Object.assign({ bourgeon: '#e07aa0', gourde: '#9a7a3a', seve: '#9ae070' }, PAL_ZETSU)),
+  f(P, i, att) {
+    const b = i, J = { k: 'peau', kp: 'ombre', pied: 'nu', r: 1.5 };
+    if (i) { shJambe(P, 24, 46, 23.5, 51, 23, 55, J); shJambe(P, 28, 46, 28.5, 51, 29, 54, J); }
+    else { shJambe(P, 24, 46, 23.5, 51, 23, 54, J); shJambe(P, 28, 46, 28.5, 51, 29, 55, J); }
+    P.tronc(35 + b, 47, 21, 31, 21.5, 30.5, 'peau', { arrondi: 2 });
+    P.boule(31.5, 45 + b, 2.4, 2.8, 'gourde'); P.px(31, 42 + b, 'seve', 3);
+    const hx = 26, hy = 29 + b;
+    for (const [a, c] of [[-2.4, 'feuille'], [-0.7, 'tige'], [0.7, 'feuille'], [2.4, 'tige']]) P.poly([[hx, hy - 5], [hx + Math.sin(a) * 9, hy - 5 - Math.cos(a) * 5], [hx + Math.sin(a) * 4, hy - 4 - Math.cos(a) * 2]], c, { niv: a < 0 ? 3 : 2 }); // collerette de feuilles
+    P.boule(hx, hy - 9, 2.6, 3.2, 'bourgeon');
+    teteZetsu(P, hx, hy, { pousses: false });
+    if (att) { shBras(P, 21, 37 + b, 18, 33, 19, 29, 'peau', 'peau', { r: 1.3 }); shBras(P, 31, 37 + b, 34, 33, 33, 29, 'peau', 'peau', { r: 1.3 }); shLueur(P, 19, 29, 3, '#5ae080', '#e8ffe8'); shLueur(P, 33, 29, 3, '#5ae080', '#e8ffe8'); }
+    else { shBras(P, 21, 37 + b, 19, 42 + b, 20, 45 + b, 'peau', 'peau', { r: 1.3 }); shBras(P, 31, 37 + b, 33, 41 + b, 31, 43 + b, 'peau', 'peau', { r: 1.3 }); shLueur(P, 31, 43 + b, 2, '#5ae080', '#e8ffe8'); }
+  },
+};
+
+// ── Assemblage : trois images recadrées ensemble, axe du corps au centre (miroir quand l'ennemi va à gauche) ──
+const _shinobi = {};
+function spriteShinobi(nom) {
+  if (_shinobi[nom]) return _shinobi[nom];
+  const F = SHINOBI[nom] || SHINOBI.genin_renegat;
+  const brutes = [0, 1, 2].map(n => { const P = peintreShinobi(F.pal); F.f(P, n === 1 ? 1 : 0, n === 2); return P.toile(); });
+  let haut = SH.H, dmax = 4;
+  for (const c of brutes) {
+    const d = ctxDe(c).getImageData(0, 0, c.width, c.height).data;
+    for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 0) { if (y < haut) haut = y; dmax = Math.max(dmax, x < SH.X ? SH.X - x : x + 1 - SH.X); }
+  }
+  const bas = SH.SOL + 1, l = 2 * dmax, h = bas - haut + 1;
+  const frames = brutes.map(c => { const o = toile(l, h); ctxDe(o).drawImage(c, SH.X - dmax, haut, l, h, 0, 0, l, h); return o; });
+  return (_shinobi[nom] = { frames, miroir: true, base: 1, attaque: true });
+}
+// Préchauffage : hors combat, un shinobi se construit en avance à chaque appel (pas d'à-coup à leur apparition)
+let _shAPrechauffer = null;
+function prechaufferShinobi() { if (!_shAPrechauffer) _shAPrechauffer = Object.keys(SHINOBI); const n = _shAPrechauffer.pop(); if (n && !_shinobi[n]) spriteShinobi(n); }
+
 // ─── 25_sprites_ennemis.js ───
 // ═══════════════════════════════════════════════════════════════════════════
 // Sprites des ennemis, boss et familiers. Les silhouettes annoncent la fonction :
-// masques pour les shinobi hostiles, formes animales, marionnettes anguleuses.
-// Deux frames par créature ; les shinobi réutilisent le constructeur de chibi.
+// formes animales, marionnettes anguleuses ; les shinobi ennemis sont des personnages
+// dessinés à part (25_shinobi.js). Deux frames par créature ; les boss shinobi
+// réutilisent le constructeur de chibi des héros (même famille de visages).
 // ═══════════════════════════════════════════════════════════════════════════
 
 const CARTES_CREATURES = {
@@ -4356,103 +5311,6 @@ function dessinerVisage(g, type, cx, cy) {
 }
 // Cache par objet « sprite » et par échelle : les copies de définition créées en combat
 // (illusions, masques, miroirs) qui gardent le même objet sprite ne le reconstruisent pas.
-// ── Équipements par comportement : un comportement d'attaque = une silhouette ──
-// Rouleau dans le dos = invocateur ; tablier à croix verte = soigneur ; épaulières et grande
-// lame = chargeur ; bandoulière et kunai (éventail, glace selon le tir) = tireur en ligne ;
-// visière rouge et arbalète (ou amplificateur) = tireur qui anticipe ; jarre sur le dos =
-// lanceur en cloche ; parchemins pendus à la ceinture = poseur de pièges ; plastron et
-// massue = lourd ; cape à capuche = embusqué ; bandages et kunai = poursuivant.
-const ARME_PROPRE = new Set(['chargeur', 'lourd', 'tireur', 'tireur_predictif', 'lanceur_arc', 'guerisseur', 'invocateur', 'embusque']);
-const _equip = {};
-function piece(nom, lignes, couleurs) { return _equip[nom] || (_equip[nom] = contourner(avecMarge(peindre(lignes, couleurs)))); }
-const EQUIPEMENTS = {
-  rouleau: [['RsssssssssssssssssssssssR', 'RlllllllllllllllllllllllR', 'RsssssssssssssssssssssssR', 'RdddddddddddddddddddddddR'], { R: '#b83a3a', s: '#e8dcb8', l: '#fff4dc', d: '#b8a888' }],
-  tablier: [['wwwwwwwwww', 'wwwwggwwww', 'wwwwggwwww', 'wwggggggww', 'wwwwggwwww', 'wwwwggwwww', 'dwwwwwwwwd'], { w: '#f4f0e6', g: '#2ab050', d: '#c8c0b0' }],
-  epauliere: [['.mmmm.', 'mllllm', 'mmmmmm'], { m: '#5a5e6a', l: '#a8aebc' }],
-  lame: [['.......w', '......wl', '.....wl.', '....wl..', '...wl...', '..wl....', '.wl.....', 'bb......', 'bb......'], { w: '#f4f8ff', l: '#a0a8b8', b: '#5a3a24' }],
-  kunai: [['.bb....', 'rbbsssw', '.bb....'], { r: '#8a8a94', b: '#4a3a2a', s: '#c8ccd8', w: '#ffffff' }],
-  eventail: [['..wpwpw..', '.wpwpwpw.', 'wpwpwpwpw', '.wpwpwpw.', '..wpwpw..', '...wpw...', '....k....', '....k....'], { w: '#f0e8d8', p: '#c84a3a', k: '#4a3a2a' }],
-  glace: [['...c...', '..cwc.c', '.cwwwc.', 'c.cwc..', '...c...'], { c: '#7ac8f0', w: '#e8f8ff' }],
-  arbalete: [['kk.....kk', '.kwwwwwk.', '...bbb...', '...b.b...'], { k: '#3a3040', w: '#c8ccd8', b: '#6a4a2a' }],
-  amplificateur: [['.mmm.', 'mkmkm', 'mmmmm', 'mkmkm', 'mmmmm', '.lll.'], { m: '#8a8a94', k: '#2a2a34', l: '#c8c8d0' }],
-  jarre: [['..nnnn..', '...jj...', '.jjjjjj.', 'jjlljjjj', 'jljjjjjd', 'jjjjjjjd', 'jjjjjjdd', '.jjjjdd.', '..dddd..'], { n: '#6a4a36', j: '#b86a44', l: '#e0a07a', d: '#8a4a30' }],
-  jarrette: [['.nn.', 'jjjj', 'jljj', 'jjjd', '.dd.'], { n: '#6a4a36', j: '#b86a44', l: '#e0a07a', d: '#8a4a30' }],
-  etiquette: [['ppp', 'prp', 'ppp', 'prp', 'ppp'], { p: '#f4f0e8', r: '#c83a2a' }],
-  sacoche: [['.bbb.', 'bdddb', 'bdbdb', 'bdddb', '.bbb.'], { b: '#6a4a2a', d: '#8a6a3a' }],
-  plastron: [['mmmmmmmmmm', 'mlmmmmmmlm', 'mmmmkkmmmm', 'mlmmmmmmlm', 'mmmmmmmmmm'], { m: '#6a6e7a', l: '#a8aeb8', k: '#3a3e48' }],
-  massue: [['.w......', '.ww.....', '..ww....', '...ww...', '...ww...', '..hhhhh.', '.hhlhhhh', 'hhhhbhhh', 'hbhhhhhh', 'hhhhhbhh', 'hhhhhhhh', '.hhhhhh.', '..hhhh..'], { w: '#7a5a3a', h: '#4e4450', l: '#8a8098', b: '#1c1420' }],
-};
-const eq = (g, nom, x, y) => { const [l, c] = EQUIPEMENTS[nom]; g.drawImage(piece(nom, l, c), x - 1, y - 1); };
-function equiperNinja(g, d, couche, i) {
-  const P = d.params || {}, R = (x, y, l, h, c) => { g.fillStyle = c; g.fillRect(x, y, l, h); };
-  switch (d.comportement) {
-    case 'invocateur': if (couche === 'dos') eq(g, 'rouleau', 3, 21); else { R(12, 25, 1, 1, '#e0b0ff'); R(19, 25, 1, 1, '#e0b0ff'); R(15, 24 + i, 2, 1, '#c080ff'); } break;
-    case 'guerisseur': if (couche === 'face') { eq(g, 'tablier', 11, 21); R(9, 26, 3, 2, '#7af09a'); R(20, 26, 3, 2, '#7af09a'); R(10, 26, 1, 1, '#e8ffec'); R(21, 26, 1, 1, '#e8ffec'); } break;
-    case 'chargeur': if (couche === 'face') { eq(g, 'epauliere', 5, 20); eq(g, 'epauliere', 21, 20); eq(g, 'lame', 21, 18); } break;
-    case 'tireur':
-      if (couche === 'face') {
-        for (let k = 0; k < 7; k++) { R(10 + Math.round(k * 1.7), 22 + k, 2, 1, '#6a4a2a'); if (k % 2) R(10 + Math.round(k * 1.7), 22 + k, 1, 1, '#d8dce8'); }
-        if (P.motif === 'eventail') eq(g, 'eventail', 22, 18); else if (P.proj === 'glace_ennemie') eq(g, 'glace', 23, 21); else eq(g, 'kunai', 22, 25);
-      }
-      break;
-    case 'tireur_predictif':
-      if (couche === 'face') { R(6, 12, 20, 3, '#24202c'); R(18, 12, 5, 3, '#ff4a4a'); R(19, 12, 1, 1, '#ffd0c8'); R(8, 13, 3, 1, '#4a4454'); if (P.proj === 'son') eq(g, 'amplificateur', 21, 22); else eq(g, 'arbalete', 11, 23); }
-      break;
-    case 'lanceur_arc': if (couche === 'dos') eq(g, 'jarre', 22, 19); else eq(g, 'jarrette', 5, 24); break;
-    case 'poseur': if (couche === 'face') { eq(g, 'sacoche', 4, 24); eq(g, 'etiquette', 10, 27); eq(g, 'etiquette', 15, 28 + i); eq(g, 'etiquette', 20, 27); } break;
-    case 'lourd': if (couche === 'face') { eq(g, 'plastron', 11, 22); eq(g, 'massue', 21, 20); } break;
-    case 'embusque':
-      if (couche === 'face') { // cape à capuche : seul le visage reste visible
-        const cape = '#2a2432', clair = '#4a4058', bord = '#120e16';
-        for (let y = 20; y <= 32; y++) { const w = 7 + Math.round((y - 20) * 0.35); R(16 - w - 1, y, 2 * w + 2, 1, bord); R(16 - w, y, 2 * w, 1, cape); R(16 - w, y, 1, 1, clair); }
-        for (let x = 16 - 11; x < 16 + 11; x += 2) R(x, 32 + ((x + i) % 2), 1, 1, bord);
-        const capuche = [[0, 11, 20], [1, 9, 22], [2, 7, 24], [3, 4, 27], [4, 3, 28], [5, 3, 28], [6, 3, 28], [7, 3, 28], [8, 3, 28], [9, 3, 28]];
-        for (const [y, a, b] of capuche) { R(a - 1, y, b - a + 3, 1, bord); R(a, y, b - a + 1, 1, y === 9 ? clair : cape); }
-        R(4, 10, 2, 9, cape); R(26, 10, 2, 9, cape); R(3, 10, 1, 9, bord); R(28, 10, 1, 9, bord);
-      }
-      break;
-    case 'poursuivant': if (couche === 'face') { R(9, 25, 3, 1, '#e8e4dc'); R(20, 25, 3, 1, '#e8e4dc'); R(9, 27, 3, 1, '#e8e4dc'); R(20, 27, 3, 1, '#e8e4dc'); if (!d.sprite.arme) { R(22, 26, 1, 2, '#4a3a2a'); R(22, 28, 1, 4, '#c8ccd8'); R(22, 32, 1, 1, '#ffffff'); } } break;
-  }
-}
-// ── Couvre-chefs par comportement : la tête, la partie la plus lisible du chibi, annonce la façon de bouger
-// et d'attaquer, quelle que soit la faction (coiffure et couleurs) : bandeau à longues pointes = fonce au
-// contact ; casque à cornes = charge ; chapeau de paille = tire en ligne ; lunette de visée = anticipe ;
-// turban de porteur = lance en cloche ; lunettes de mineur = pose des pièges ; heaume de fer = lourd ;
-// haut bonnet scellé = invoque ; foulard à croix verte = soigne. (L'embusqué garde sa capuche.)
-function coiffer(c0, d, S, i) {
-  const co = d.comportement; if (!COIFFES.has(co)) return c0;
-  const c = toile(40, 44), g = ctxDe(c), R = (x, y, l, h, col) => { g.fillStyle = col; g.fillRect(x, y, l, h); }, K = '#1c1420';
-  const tissu = (S.corps && S.corps.t) || '#4a4a58', tissuC = nuancer(tissu, 1.3);
-  if (co === 'poursuivant') for (let k = 0; k < 9; k++) { const y = 15 + k + Math.round(Math.sin(k * 0.9 + i * 1.6) * 1.2); R(33 + k, y - 1, 2, 3, K); R(33 + k, y, 1, 1, '#c83a2a'); R(34 + k, y + (k % 2), 1, 1, '#e85a3a'); } // pointes du bandeau qui flottent
-  g.drawImage(c0, 4, 10);
-  switch (co) {
-    case 'poursuivant': R(9, 18, 22, 3, K); R(10, 19, 20, 1, '#c83a2a'); R(18, 18, 4, 3, '#a8acb8'); R(19, 19, 2, 1, '#e8ecf4'); break; // bandeau rouge à plaque
-    case 'chargeur': { // casque à cornes de cerf-volant
-      R(8, 7, 24, 8, K); R(9, 8, 22, 6, '#6a6e7a'); R(9, 8, 22, 1, '#a8aebc'); R(19, 6, 2, 9, K); R(19, 7, 2, 7, '#8a8e9a');
-      for (let k = 0; k < 6; k++) { R(10 - k, 7 - k, 3, 2, K); R(11 - k, 7 - k, 1, 1, '#e8c050'); R(28 + k, 7 - k, 3, 2, K); R(28 + k, 7 - k, 1, 1, '#e8c050'); }
-      break;
-    }
-    case 'tireur': { // chapeau de paille conique (kasa)
-      for (let y = 0; y < 8; y++) { const w = 3 + y * 2.4 | 0; R(20 - w - 1, 5 + y, 2 * w + 2, 1, K); R(20 - w, 5 + y, 2 * w, 1, y % 3 === 2 ? '#8a6a3a' : '#c8a868'); R(20 - w, 5 + y, 1, 1, '#e8d098'); }
-      R(1, 13, 38, 2, K); R(2, 13, 36, 1, '#a8884e'); break;
-    }
-    case 'tireur_predictif': R(30, 3, 3, 13, K); R(31, 4, 1, 11, '#5a5e6a'); R(29, 2, 5, 4, K); R(30, 3, 3, 2, '#ff4a4a'); R(30, 3, 1, 1, '#ffd0c8'); break; // lunette de visée
-    case 'lanceur_arc': R(9, 9, 22, 6, K); R(10, 10, 20, 4, '#e8e0d0'); for (let x = 11; x < 30; x += 3) R(x, 10, 1, 4, '#b8b0a0'); R(29, 13, 4, 5, K); R(30, 14, 2, 3, '#e8e0d0'); break; // turban de porteur
-    case 'poseur': for (const x of [11, 22]) { R(x - 1, 13, 9, 7, K); R(x, 14, 7, 5, '#b08a3a'); R(x + 1, 15, 5, 3, '#8ad0e8'); R(x + 1, 15, 2, 1, '#e8fbff'); } R(8, 15, 3, 2, K); R(29, 15, 3, 2, K); break; // lunettes de mineur
-    case 'lourd': { // heaume de fer riveté, crête, protège-joues
-      R(7, 6, 26, 12, K); R(8, 7, 24, 10, '#4e4450'); R(8, 7, 24, 2, '#8a8098'); R(18, 3, 4, 6, K); R(19, 4, 2, 4, '#8a8098');
-      for (const x of [10, 15, 24, 29]) R(x, 11, 1, 1, '#c8c0d0'); R(7, 16, 4, 8, K); R(8, 17, 2, 6, '#5e5460'); R(29, 16, 4, 8, K); R(30, 17, 2, 6, '#5e5460');
-      break;
-    }
-    case 'invocateur': { // haut bonnet noir et sceau d'invocation
-      for (let y = 0; y < 11; y++) { const w = 4 + Math.round(y * 0.45); R(20 - w - 1, y, 2 * w + 2, 1, K); R(20 - w, y, 2 * w, 1, '#2a2434'); }
-      R(17, 3, 6, 6, K); R(18, 4, 4, 4, '#e8dcb8'); R(19, 5, 2, 2, '#c03ad0'); R(13, 10, 14, 2, '#c080ff'); break;
-    }
-    case 'guerisseur': R(8, 9, 24, 5, K); R(9, 10, 22, 3, '#f4f0e6'); R(18, 9, 4, 5, K); R(19, 9, 2, 5, '#2ab050'); R(17, 11, 6, 1, '#2ab050'); break; // foulard à croix verte
-  }
-  return c;
-}
-const COIFFES = new Set(['poursuivant', 'chargeur', 'tireur', 'tireur_predictif', 'lanceur_arc', 'poseur', 'lourd', 'invocateur', 'guerisseur']);
 // Créatures partageant une même forme : l'accessoire annonce l'attaque
 function accessoireCreature(d, S) {
   const P = d.params || {}, co = d.comportement;
@@ -4515,13 +5373,15 @@ function spriteEnnemi(e) {
       A(g, M, T, f.width, f.height, i, 'dos'); g.drawImage(kc === 2 ? f : contourner(f), M, T); A(g, M, T, f.width, f.height, i, 'face');
       return kc === 2 ? contourner(avecMarge(agrandir2x(c))) : c;
     });
+  } else if (S.type === 'shinobi') {
+    const B = spriteShinobi(S.perso); r = k > 1 ? Object.assign({}, B, { frames: B.frames.map(agrandir), base: k }) : B;
   } else if (S.type === 'ninja') {
     const M = MASQUES_ENNEMIS[S.masque] || MASQUES_ENNEMIS.bandana;
     const cs = Object.assign({}, M.c, S.cheveux || {}); const peau = S.peau || M.peau; if (peau) { cs.s = peau; cs.d = nuancer(peau, 0.82); cs.l = nuancer(peau, 1.12); }
     const V = { coiffure: S.coiffure || M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages, dos: S.dos };
     const cle = 'enn_' + d.id + '_' + d.nom; VISUELS[cle] = V;
     const P = spritesPerso(cle);
-    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); equiperNinja(g, d, 'dos', i); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme && !ARME_PROPRE.has(d.comportement)) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); equiperNinja(g, d, 'face', i); return coiffer(c, d, S, i); };
+    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); return c; };
     r = { frames: [frame(0), frame(1)].map(agrandir), base: k }; // pieds à 1 px du bas, ×k après agrandissement
   } else r = { frames: [contourner(disque(d.r || 8, '#a04a6a'))], base: 0 };
   cache.set(k, r); return r;
@@ -5206,6 +6066,7 @@ function spriteProjectile(app, taille) {
     case 'element': s = [P(['.rr.', 'rooy', 'rooy', '.yy.'], { r: '#e8603a', o: '#ffb050', y: '#ffe890' }), P(['.gg.', 'gwwg', 'gwwg', '.gg.'], { g: '#7ae0a0', w: '#e0fff0' }), P(['.bb.', 'bwwb', 'bwwb', '.bb.'], { b: '#8ac0ff', w: '#ffffff' })]; break;
     case 'argile': s = [P(['.ww.', 'wwwk', 'wwkk', '.kk.'], { w: '#f0e8d8', k: '#b8ac98' })]; break;
     case 'glace': s = rotations(P(['..w...', 'wwbbw.', 'wbbbbw', '.wbbw.', '..w...'], { w: '#e0f8ff', b: '#80c8f0' }), 16); break;
+    case 'sphere_feu': s = [P(['..oyyo..', '.oyywyo.', 'oyywwwyo', 'oywwwwyo', 'oyywwyyo', '.ooyyoo.', '..roor..'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff8d0' }, '#fff0c0'), P(['..oyo...', '.oyyyo..', 'oyywwyo.', 'oywwwwyo', 'oyywwyyo', '.oyyyoo.', '..rooo..'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff8d0' }, '#fff0c0')]; break;
     case 'dragon_feu': s = [P(['..rr...', '.rooo..', 'rooyyo.', 'royyyor', 'rooyyo.', '.rooo..', '..rr...'], { r: '#c83018', o: '#f07820', y: '#ffe060' })]; break;
     case 'insecte': s = [P(['k.k', '.k.', 'kkk'], { k: '#2a2a2a' }, '#8a8a70')]; break;
     case 'papier': s = rotations(P(['ww..', 'wwww', 'wwww', '..ww'], { w: '#f4f0e8' }, '#8a8070'), 16); break;
@@ -5238,6 +6099,18 @@ function spriteProjectile(app, taille) {
   }
   return (_proj[k] = s);
 }
+const NATURES_FX = { katon: ['#ff8a2a', '#ffe060'], raiton: ['#8ac8ff', '#ffffff'], suiton: ['#4a98f0', '#d0ecff'], futon: ['#8ae8b8', '#f0fff8'], doton: ['#b8905a', '#f0d8a8'], hyoton: ['#a8e8ff', '#ffffff'] };
+function particulesNature(g, n, p, x, y, ux, uy, dense) {
+  const R = Math.random, px = p.x, py = p.y - (p.z || 0);
+  switch (n) {
+    case 'katon': if (R() < 0.6 * dense) G.particules.push({ x: px - ux * 4 + (R() - 0.5) * 4, y: py - uy * 4, vx: -ux * 20, vy: -24 - R() * 14, age: 0, duree: 0.25 + R() * 0.15, couleur: R() < 0.5 ? '#ffb040' : '#f05a20', taille: R() < 0.3 ? 2 : 1 }); g.fillStyle = '#ffd040'; g.fillRect(Math.round(x - ux * 6), Math.round(y - uy * 6), 2, 2); break;
+    case 'raiton': if (R() < 0.55 * dense) { g.fillStyle = R() < 0.5 ? '#ffffff' : '#a8d8ff'; let cx = x + Math.round((R() - 0.5) * 8), cy = y + Math.round((R() - 0.5) * 8); for (let k = 0; k < 3; k++) { const nx = cx + Math.round((R() - 0.5) * 6), ny = cy + Math.round((R() - 0.5) * 6); lignePixel(g, cx, cy, nx, ny, g.fillStyle); cx = nx; cy = ny; } } break;
+    case 'suiton': if (R() < 0.4 * dense) G.particules.push({ x: px - ux * 3, y: py, vx: (R() - 0.5) * 20 - ux * 10, vy: 14 + R() * 10, age: 0, duree: 0.3, couleur: R() < 0.5 ? '#8ac8ff' : '#d0ecff', taille: 1 }); g.fillStyle = 'rgba(220,240,255,0.8)'; g.fillRect(Math.round(x - 1), Math.round(y - 2), 2, 1); break;
+    case 'futon': { const a = G.temps * 22 + (p.cycleId || 0); g.fillStyle = 'rgba(220,255,236,0.85)'; for (const d of [0, Math.PI]) { g.fillRect(Math.round(x + Math.cos(a + d) * 7), Math.round(y + Math.sin(a + d) * 4), 2, 1); g.fillRect(Math.round(x + Math.cos(a + d - 0.4) * 7), Math.round(y + Math.sin(a + d - 0.4) * 4), 1, 1); } g.fillStyle = 'rgba(200,255,225,0.45)'; g.fillRect(Math.round(x - ux * 10 - 3), Math.round(y - uy * 10), 6, 1); break; }
+    case 'doton': if (R() < 0.3 * dense) G.particules.push({ x: px - ux * 4, y: py, vx: (R() - 0.5) * 16, vy: -10 + R() * 8, age: 0, duree: 0.35, couleur: R() < 0.5 ? '#8a6a3a' : '#c8a070', taille: 2, g: 300, sol: py + 3 + R() * 3 }); break;
+    case 'hyoton': if (R() < 0.45 * dense) G.particules.push({ x: px - ux * 5 + (R() - 0.5) * 6, y: py + (R() - 0.5) * 6, vx: 0, vy: 4, age: 0, duree: 0.4, couleur: R() < 0.6 ? '#ffffff' : '#a8e8ff', taille: 1 }); if (R() < 0.3) { g.fillStyle = '#f0fbff'; const cx = Math.round(x + (R() - 0.5) * 10), cy = Math.round(y + (R() - 0.5) * 8); g.fillRect(cx - 1, cy, 3, 1); g.fillRect(cx, cy - 1, 1, 3); } break;
+  }
+}
 function dessinerProjectile(g, p, x, y) {
   if (p.proprio === 'ennemi') {
     const L = spriteProjectile(p.apparence && FORMES_TIR_ENNEMI.has(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
@@ -5263,11 +6136,15 @@ function dessinerProjectile(g, p, x, y) {
   const v = Math.hypot(p.vx || 0, p.vy || 0);
   if (v > 60 && !G.reglages.confort) { const ux = p.vx / v, uy = p.vy / v, d = Math.max(4, w * 0.45); g.globalAlpha = 0.3; g.drawImage(img, Math.round(x - w / 2 - ux * d), Math.round(y - h / 2 - uy * d), w, h); g.globalAlpha = 0.12; g.drawImage(img, Math.round(x - w / 2 - ux * d * 2), Math.round(y - h / 2 - uy * d * 2), w, h); g.globalAlpha = 1; }
   g.drawImage(img, Math.round(x - w / 2), Math.round(y - h / 2), w, h);
-  // signature élémentaire (forme, pas seulement couleur)
-  if (el === 'katon' && Math.random() < 0.5) G.particules.push({ x: p.x + (Math.random() - 0.5) * 4, y: p.y - p.z, vx: 0, vy: -20, age: 0, duree: 0.25, couleur: Math.random() < 0.5 ? '#ffb040' : '#f05a20', taille: 2 });
-  if (el === 'raiton' && Math.random() < 0.4) { g.fillStyle = '#e0f0ff'; g.fillRect(x + (Math.random() * 8 - 4) | 0, y + (Math.random() * 8 - 4) | 0, 1, 3); }
-  if (el === 'suiton' && Math.random() < 0.3) G.particules.push({ x: p.x, y: p.y - p.z, vx: (Math.random() - 0.5) * 20, vy: 10, age: 0, duree: 0.3, couleur: '#8ac8ff', taille: 1 });
-  if (el === 'futon') { g.fillStyle = 'rgba(220,255,230,0.5)'; g.fillRect(x - (p.vx > 0 ? 8 : -2), y - 1, 6, 1); }
+  // signature des natures : lueur et teinte de la nature, particules qui l'accompagnent (forme, pas seulement couleur)
+  const nat = el ? [...p.elements].filter(n => NATURES_FX[n]).slice(0, 2) : [];
+  if (nat.length) {
+    const F = NATURES_FX[nat[0]], r = Math.max(7, Math.round(Math.max(w, h) * 0.85));
+    if (!G.reglages.sansFlash) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.5; g.drawImage(halo(F[0], false, 32), x - r, y - r, 2 * r, 2 * r); g.restore(); }
+    g.globalAlpha = 0.4; g.drawImage(silhouetteMemo(img, F[0]), Math.round(x - w / 2), Math.round(y - h / 2), w, h); g.globalAlpha = 1;
+    const dense = G.reglages.confort ? 0.5 : 1, ux = v > 1 ? p.vx / v : 0, uy = v > 1 ? p.vy / v : 0;
+    for (const n of nat) particulesNature(g, n, p, x, y, ux, uy, dense);
+  }
   if (p.statuts && p.statuts.some(s => s.statut === 'poison')) { g.fillStyle = '#8ae05a'; g.fillRect(x - 1, y - 4, 2, 2); }
   if (p.traj && p.traj.guidage) { g.fillStyle = 'rgba(255,255,255,0.5)'; g.fillRect(x - (p.vx > 0 ? 6 : -4), y, 2, 1); }
 }
@@ -5352,6 +6229,14 @@ function dessinerCouche(g, v, x, y, J, couche) {
 }
 
 // ── Ennemis ──
+// Image d'attaque (sprites peints) : pendant le télégraphe, pendant la charge, au moment où l'embusqué jaillit ou tire
+function poseAttaque(e) {
+  const I = e.ia, co = e.def.comportement, P = e.def.params || {};
+  if (I.tele) return true;
+  if (co === 'chargeur') return I.phase === 'charge';
+  if (co === 'embusque' && I.phase === 'actif') return P.attaque === 'poursuite' ? I.t > (P.dureeActive || 2.4) - 0.45 : e.tAtt < 0.3;
+  return false;
+}
 function dessinerEnnemi(g, e, x, y) {
   if (e.cache) {
     if (e.ia.phase === 'sortie' || e.def.comportement === 'rampant' || e.ia.phase === 'cache') { // indice fiable : sol qui remue
@@ -5365,7 +6250,7 @@ function dessinerEnnemi(g, e, x, y) {
   g.globalAlpha = Math.max(0.15, alpha);
   const tele = e.ia.tele; let dx = 0, dy = 0, sc = 1;
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
-  const base = sp.frames[e.frame % sp.frames.length];
+  const base = sp.attaque ? sp.frames[poseAttaque(e) ? 2 : e.frame % 2] : sp.frames[e.frame % sp.frames.length];
   const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
   const ech = (e.echelle || 1) * sc, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
   // écrasement bref au coup reçu (plus discret sur les boss et en mode confort)
@@ -5648,6 +6533,9 @@ function effetImpact(x, y, app, force, elements) {
   for (let i = 0; i < n * force; i++) { const a = Math.random() * Math.PI * 2, v = 30 + Math.random() * 50; G.particules.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, age: 0, duree: 0.18 + Math.random() * 0.1, couleur: col, taille: 1 + (Math.random() < 0.3 ? 1 : 0) }); }
   if (app === 'orbe') G.effets.push({ type: 'anneau_impact', x, y, age: 0, duree: 0.2, r: 10 });
   if (app !== 'ennemi' && !G.reglages.sansFlash) G.effets.push({ type: 'etoile_impact', x, y, age: 0, duree: 0.1, r: Math.min(9, 4 + force * 2) });
+  // éclat de nature à l'impact : la forme dit l'élément (gerbe, arcs, éclaboussure, tourbillon, mottes, cristaux)
+  const nat = elements && elements.size ? [...elements].find(n => NATURES_FX[n]) : null;
+  if (nat) G.effets.push({ type: 'impact_nature', nature: nat, x, y, age: 0, duree: nat === 'raiton' ? 0.16 : 0.26, r: 5 + Math.round(force * 4), graine: Math.random() * 6.28 });
 }
 function dessinerEffet(g, e, X, Y) {
   const k = Math.min(1, e.age / e.duree); const x = X(e.x || 0), y = Y(e.y || 0);
@@ -5656,8 +6544,22 @@ function dessinerEffet(g, e, X, Y) {
       // papier et argile : silhouette en éclats ; feu : volume rond ; cœur clair
       const r = Math.round(e.r * (0.5 + k * 0.6));
       if (k < 0.18 && !G.reglages.sansFlash) { g.drawImage(disque(r, '#fff8e0'), x - r, y - r); break; }
-      g.globalAlpha = 1 - k; g.drawImage(disque(r, '#f07a2a'), x - r, y - r); g.drawImage(disque(Math.round(r * 0.65), '#ffd060'), x - Math.round(r * 0.65), y - Math.round(r * 0.65));
+      const ro = Math.round(e.r * (0.75 + k * 0.75)); g.globalAlpha = (1 - k) * 0.75; g.drawImage(anneau(ro, 2, '#ffe8c0'), x - ro - 1, y - ro - 1); // onde de choc
+      if (k > 0.35) for (let i = 0; i < 5; i++) { const a = i * 1.257 + e.x * 0.1, d = r * 0.7, rf = Math.max(2, Math.round(r * 0.32 * (1.2 - k))); g.globalAlpha = 0.55 * (1 - k); g.drawImage(disque(rf, i % 2 ? '#5a4a4a' : '#3a3036'), Math.round(x + Math.cos(a) * d - rf), Math.round(y + Math.sin(a) * d * 0.6 - rf - k * 10)); } // fumée qui monte
+      g.globalAlpha = 1 - k; g.drawImage(disque(r, '#f07a2a'), x - r, y - r); g.drawImage(disque(Math.round(r * 0.65), '#ffd060'), x - Math.round(r * 0.65), y - Math.round(r * 0.65)); if (k < 0.5) g.drawImage(disque(Math.max(1, Math.round(r * 0.3)), '#fff4d0'), x - Math.max(1, Math.round(r * 0.3)), y - Math.max(1, Math.round(r * 0.3)));
       g.globalAlpha = (1 - k) * 0.8; for (let i = 0; i < 8; i++) { const a = i * 0.785 + e.x; const d = r * (0.8 + k * 0.6); g.fillStyle = '#3a3036'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d * 0.8), 3, 3); g.fillStyle = '#e8dcc0'; g.fillRect(Math.round(x + Math.cos(a + 0.4) * d * 0.9), Math.round(y + Math.sin(a + 0.4) * d * 0.7), 2, 3); }
+      g.globalAlpha = 1; break;
+    }
+    case 'impact_nature': { // gerbe propre à chaque nature (dessinée nette, quelques pixels)
+      const F = NATURES_FX[e.nature], r = e.r * (0.5 + k * 0.9), a0 = e.graine; g.globalAlpha = 1 - k * k;
+      switch (e.nature) {
+        case 'katon': for (let i = 0; i < 6; i++) { const a = a0 + i * 1.047, d = r * (0.6 + (i % 2) * 0.4); g.fillStyle = i % 2 ? F[1] : F[0]; g.fillRect(Math.round(x + Math.cos(a) * d) - 1, Math.round(y + Math.sin(a) * d * 0.8 - k * 5) - 1, 2, 3); } if (k < 0.4) g.drawImage(disque(3, '#fff0b0'), x - 3, y - 3); break;
+        case 'raiton': for (let i = 0; i < 3; i++) { let px = x, py = y; const a = a0 + i * 2.09; for (let s = 1; s <= 3; s++) { const nx = Math.round(x + Math.cos(a + (s % 2 ? 0.5 : -0.5)) * r * s / 3), ny = Math.round(y + Math.sin(a + (s % 2 ? 0.5 : -0.5)) * r * s / 3); lignePixel(g, px, py, nx, ny, s === 3 ? F[0] : F[1]); px = nx; py = ny; } } break;
+        case 'suiton': { const rr = Math.round(r); g.drawImage(anneau(rr, 1, F[1]), x - rr - 1, y - rr - 1); for (let i = 0; i < 5; i++) { const a = -Math.PI * (0.15 + 0.7 * i / 4), d = r * 0.9; g.fillStyle = F[0]; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d + k * k * 8), 2, 2); } break; }
+        case 'futon': for (let i = 0; i < 2; i++) { const b = a0 + i * Math.PI + k * 5; for (let s = 0; s < 5; s++) { const a = b + s * 0.35, d = r * (0.4 + s * 0.15); g.fillStyle = s > 2 ? F[1] : F[0]; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(y + Math.sin(a) * d * 0.7), 2, 1); } } break;
+        case 'doton': for (let i = 0; i < 5; i++) { const a = -Math.PI * (0.1 + 0.8 * i / 4), d = r * 0.8; g.fillStyle = i % 2 ? F[0] : '#7a5a34'; g.fillRect(Math.round(x + Math.cos(a) * d) - 1, Math.round(y + Math.sin(a) * d * 0.6 + k * k * 10), 3, 2); } break;
+        case 'hyoton': for (let i = 0; i < 4; i++) { const a = a0 + i * 1.571, d = r * 0.8, cx = Math.round(x + Math.cos(a) * d), cy = Math.round(y + Math.sin(a) * d * 0.8); g.fillStyle = F[1]; g.fillRect(cx - 1, cy, 3, 1); g.fillRect(cx, cy - 1, 1, 3); g.fillStyle = F[0]; g.fillRect(cx, cy, 1, 1); } break;
+      }
       g.globalAlpha = 1; break;
     }
     case 'explosion_petite': { const r = Math.round(e.r * (0.4 + k * 0.6)); g.globalAlpha = 1 - k; g.drawImage(disque(r, '#ffb050'), x - r, y - r); g.drawImage(disque(Math.max(1, Math.round(r * 0.5)), '#fff0c0'), x - Math.round(r * 0.5), y - Math.round(r * 0.5)); g.globalAlpha = 1; break; }
@@ -10356,6 +11258,7 @@ function rendreJeu(g) {
   rendreSalle(g, Math.round(_secousse.x), Math.round(_secousse.y));
   // préchauffage : hors combat, le fond d'une salle voisine se construit en avance (pas d'à-coup à la porte)
   if (s && !s.combat && G.etage && (++_prechauffe % 6) === 0) for (const p of s.portes) { const v = G.etage.salles[p.vers]; if (v && !v._fond && p.etat !== 'secrete') { fondSalle(v); break; } }
+  if (s && !s.combat && _prechauffe % 6 === 3) prechaufferShinobi(); // et les shinobi ennemis, un par appel
 }
 let _prechauffe = 0;
 const HAUTEUR_VOL = 5; // px : les volants flottent au-dessus de leur ombre (leur point d'impact est relevé d'autant)
@@ -11706,7 +12609,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, dessinerPerso, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

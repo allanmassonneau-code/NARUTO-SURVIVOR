@@ -27,6 +27,7 @@ function spriteProjectile(app, taille) {
     case 'element': s = [P(['.rr.', 'rooy', 'rooy', '.yy.'], { r: '#e8603a', o: '#ffb050', y: '#ffe890' }), P(['.gg.', 'gwwg', 'gwwg', '.gg.'], { g: '#7ae0a0', w: '#e0fff0' }), P(['.bb.', 'bwwb', 'bwwb', '.bb.'], { b: '#8ac0ff', w: '#ffffff' })]; break;
     case 'argile': s = [P(['.ww.', 'wwwk', 'wwkk', '.kk.'], { w: '#f0e8d8', k: '#b8ac98' })]; break;
     case 'glace': s = rotations(P(['..w...', 'wwbbw.', 'wbbbbw', '.wbbw.', '..w...'], { w: '#e0f8ff', b: '#80c8f0' }), 16); break;
+    case 'sphere_feu': s = [P(['..oyyo..', '.oyywyo.', 'oyywwwyo', 'oywwwwyo', 'oyywwyyo', '.ooyyoo.', '..roor..'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff8d0' }, '#fff0c0'), P(['..oyo...', '.oyyyo..', 'oyywwyo.', 'oywwwwyo', 'oyywwyyo', '.oyyyoo.', '..rooo..'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff8d0' }, '#fff0c0')]; break;
     case 'dragon_feu': s = [P(['..rr...', '.rooo..', 'rooyyo.', 'royyyor', 'rooyyo.', '.rooo..', '..rr...'], { r: '#c83018', o: '#f07820', y: '#ffe060' })]; break;
     case 'insecte': s = [P(['k.k', '.k.', 'kkk'], { k: '#2a2a2a' }, '#8a8a70')]; break;
     case 'papier': s = rotations(P(['ww..', 'wwww', 'wwww', '..ww'], { w: '#f4f0e8' }, '#8a8070'), 16); break;
@@ -59,6 +60,18 @@ function spriteProjectile(app, taille) {
   }
   return (_proj[k] = s);
 }
+const NATURES_FX = { katon: ['#ff8a2a', '#ffe060'], raiton: ['#8ac8ff', '#ffffff'], suiton: ['#4a98f0', '#d0ecff'], futon: ['#8ae8b8', '#f0fff8'], doton: ['#b8905a', '#f0d8a8'], hyoton: ['#a8e8ff', '#ffffff'] };
+function particulesNature(g, n, p, x, y, ux, uy, dense) {
+  const R = Math.random, px = p.x, py = p.y - (p.z || 0);
+  switch (n) {
+    case 'katon': if (R() < 0.6 * dense) G.particules.push({ x: px - ux * 4 + (R() - 0.5) * 4, y: py - uy * 4, vx: -ux * 20, vy: -24 - R() * 14, age: 0, duree: 0.25 + R() * 0.15, couleur: R() < 0.5 ? '#ffb040' : '#f05a20', taille: R() < 0.3 ? 2 : 1 }); g.fillStyle = '#ffd040'; g.fillRect(Math.round(x - ux * 6), Math.round(y - uy * 6), 2, 2); break;
+    case 'raiton': if (R() < 0.55 * dense) { g.fillStyle = R() < 0.5 ? '#ffffff' : '#a8d8ff'; let cx = x + Math.round((R() - 0.5) * 8), cy = y + Math.round((R() - 0.5) * 8); for (let k = 0; k < 3; k++) { const nx = cx + Math.round((R() - 0.5) * 6), ny = cy + Math.round((R() - 0.5) * 6); lignePixel(g, cx, cy, nx, ny, g.fillStyle); cx = nx; cy = ny; } } break;
+    case 'suiton': if (R() < 0.4 * dense) G.particules.push({ x: px - ux * 3, y: py, vx: (R() - 0.5) * 20 - ux * 10, vy: 14 + R() * 10, age: 0, duree: 0.3, couleur: R() < 0.5 ? '#8ac8ff' : '#d0ecff', taille: 1 }); g.fillStyle = 'rgba(220,240,255,0.8)'; g.fillRect(Math.round(x - 1), Math.round(y - 2), 2, 1); break;
+    case 'futon': { const a = G.temps * 22 + (p.cycleId || 0); g.fillStyle = 'rgba(220,255,236,0.85)'; for (const d of [0, Math.PI]) { g.fillRect(Math.round(x + Math.cos(a + d) * 7), Math.round(y + Math.sin(a + d) * 4), 2, 1); g.fillRect(Math.round(x + Math.cos(a + d - 0.4) * 7), Math.round(y + Math.sin(a + d - 0.4) * 4), 1, 1); } g.fillStyle = 'rgba(200,255,225,0.45)'; g.fillRect(Math.round(x - ux * 10 - 3), Math.round(y - uy * 10), 6, 1); break; }
+    case 'doton': if (R() < 0.3 * dense) G.particules.push({ x: px - ux * 4, y: py, vx: (R() - 0.5) * 16, vy: -10 + R() * 8, age: 0, duree: 0.35, couleur: R() < 0.5 ? '#8a6a3a' : '#c8a070', taille: 2, g: 300, sol: py + 3 + R() * 3 }); break;
+    case 'hyoton': if (R() < 0.45 * dense) G.particules.push({ x: px - ux * 5 + (R() - 0.5) * 6, y: py + (R() - 0.5) * 6, vx: 0, vy: 4, age: 0, duree: 0.4, couleur: R() < 0.6 ? '#ffffff' : '#a8e8ff', taille: 1 }); if (R() < 0.3) { g.fillStyle = '#f0fbff'; const cx = Math.round(x + (R() - 0.5) * 10), cy = Math.round(y + (R() - 0.5) * 8); g.fillRect(cx - 1, cy, 3, 1); g.fillRect(cx, cy - 1, 1, 3); } break;
+  }
+}
 function dessinerProjectile(g, p, x, y) {
   if (p.proprio === 'ennemi') {
     const L = spriteProjectile(p.apparence && FORMES_TIR_ENNEMI.has(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
@@ -84,11 +97,15 @@ function dessinerProjectile(g, p, x, y) {
   const v = Math.hypot(p.vx || 0, p.vy || 0);
   if (v > 60 && !G.reglages.confort) { const ux = p.vx / v, uy = p.vy / v, d = Math.max(4, w * 0.45); g.globalAlpha = 0.3; g.drawImage(img, Math.round(x - w / 2 - ux * d), Math.round(y - h / 2 - uy * d), w, h); g.globalAlpha = 0.12; g.drawImage(img, Math.round(x - w / 2 - ux * d * 2), Math.round(y - h / 2 - uy * d * 2), w, h); g.globalAlpha = 1; }
   g.drawImage(img, Math.round(x - w / 2), Math.round(y - h / 2), w, h);
-  // signature élémentaire (forme, pas seulement couleur)
-  if (el === 'katon' && Math.random() < 0.5) G.particules.push({ x: p.x + (Math.random() - 0.5) * 4, y: p.y - p.z, vx: 0, vy: -20, age: 0, duree: 0.25, couleur: Math.random() < 0.5 ? '#ffb040' : '#f05a20', taille: 2 });
-  if (el === 'raiton' && Math.random() < 0.4) { g.fillStyle = '#e0f0ff'; g.fillRect(x + (Math.random() * 8 - 4) | 0, y + (Math.random() * 8 - 4) | 0, 1, 3); }
-  if (el === 'suiton' && Math.random() < 0.3) G.particules.push({ x: p.x, y: p.y - p.z, vx: (Math.random() - 0.5) * 20, vy: 10, age: 0, duree: 0.3, couleur: '#8ac8ff', taille: 1 });
-  if (el === 'futon') { g.fillStyle = 'rgba(220,255,230,0.5)'; g.fillRect(x - (p.vx > 0 ? 8 : -2), y - 1, 6, 1); }
+  // signature des natures : lueur et teinte de la nature, particules qui l'accompagnent (forme, pas seulement couleur)
+  const nat = el ? [...p.elements].filter(n => NATURES_FX[n]).slice(0, 2) : [];
+  if (nat.length) {
+    const F = NATURES_FX[nat[0]], r = Math.max(7, Math.round(Math.max(w, h) * 0.85));
+    if (!G.reglages.sansFlash) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.5; g.drawImage(halo(F[0], false, 32), x - r, y - r, 2 * r, 2 * r); g.restore(); }
+    g.globalAlpha = 0.4; g.drawImage(silhouetteMemo(img, F[0]), Math.round(x - w / 2), Math.round(y - h / 2), w, h); g.globalAlpha = 1;
+    const dense = G.reglages.confort ? 0.5 : 1, ux = v > 1 ? p.vx / v : 0, uy = v > 1 ? p.vy / v : 0;
+    for (const n of nat) particulesNature(g, n, p, x, y, ux, uy, dense);
+  }
   if (p.statuts && p.statuts.some(s => s.statut === 'poison')) { g.fillStyle = '#8ae05a'; g.fillRect(x - 1, y - 4, 2, 2); }
   if (p.traj && p.traj.guidage) { g.fillStyle = 'rgba(255,255,255,0.5)'; g.fillRect(x - (p.vx > 0 ? 6 : -4), y, 2, 1); }
 }
@@ -173,6 +190,14 @@ function dessinerCouche(g, v, x, y, J, couche) {
 }
 
 // ── Ennemis ──
+// Image d'attaque (sprites peints) : pendant le télégraphe, pendant la charge, au moment où l'embusqué jaillit ou tire
+function poseAttaque(e) {
+  const I = e.ia, co = e.def.comportement, P = e.def.params || {};
+  if (I.tele) return true;
+  if (co === 'chargeur') return I.phase === 'charge';
+  if (co === 'embusque' && I.phase === 'actif') return P.attaque === 'poursuite' ? I.t > (P.dureeActive || 2.4) - 0.45 : e.tAtt < 0.3;
+  return false;
+}
 function dessinerEnnemi(g, e, x, y) {
   if (e.cache) {
     if (e.ia.phase === 'sortie' || e.def.comportement === 'rampant' || e.ia.phase === 'cache') { // indice fiable : sol qui remue
@@ -186,7 +211,7 @@ function dessinerEnnemi(g, e, x, y) {
   g.globalAlpha = Math.max(0.15, alpha);
   const tele = e.ia.tele; let dx = 0, dy = 0, sc = 1;
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
-  const base = sp.frames[e.frame % sp.frames.length];
+  const base = sp.attaque ? sp.frames[poseAttaque(e) ? 2 : e.frame % 2] : sp.frames[e.frame % sp.frames.length];
   const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
   const ech = (e.echelle || 1) * sc, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
   // écrasement bref au coup reçu (plus discret sur les boss et en mode confort)
