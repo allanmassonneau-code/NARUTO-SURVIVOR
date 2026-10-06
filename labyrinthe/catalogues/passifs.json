@@ -5677,6 +5677,361 @@
   ]
  },
  {
+  "id": "PSV_181",
+  "nom": "Marque de sang : force",
+  "type": "passif",
+  "famille": "contrepartie",
+  "qualite": 2,
+  "pools": {},
+  "desc": "Dégâts +1,2.",
+  "effets": [
+   {
+    "s": "degats",
+    "a": 1.2
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "marque": true,
+  "icone": {
+   "forme": "goutte",
+   "a": "#c8202a",
+   "b": "#6a0a14",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_182",
+  "nom": "Marque de sang : vivacité",
+  "type": "passif",
+  "famille": "contrepartie",
+  "qualite": 2,
+  "pools": {},
+  "desc": "Cadence +0,6.",
+  "effets": [
+   {
+    "s": "cadence",
+    "a": 0.6
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "marque": true,
+  "icone": {
+   "forme": "goutte",
+   "a": "#e04a6a",
+   "b": "#7a1a30",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_183",
+  "nom": "Marque de sang : allonge",
+  "type": "passif",
+  "famille": "contrepartie",
+  "qualite": 2,
+  "pools": {},
+  "desc": "Portée +2,5 ; vitesse des tirs +1.",
+  "effets": [
+   {
+    "s": "portee",
+    "a": 2.5
+   },
+   {
+    "s": "vitesseTir",
+    "a": 1
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "marque": true,
+  "icone": {
+   "forme": "goutte",
+   "a": "#a03a8a",
+   "b": "#4a1040",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_184",
+  "nom": "Marque de sang : fortune",
+  "type": "passif",
+  "famille": "contrepartie",
+  "qualite": 2,
+  "pools": {},
+  "desc": "Chance +3 ; +12 Ryō.",
+  "effets": [
+   {
+    "s": "chance",
+    "a": 3
+   },
+   {
+    "res": {
+     "ryo": 12
+    }
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "marque": true,
+  "icone": {
+   "forme": "goutte",
+   "a": "#d8a030",
+   "b": "#7a4a10",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_185",
+  "nom": "Marque de sang : célérité",
+  "type": "passif",
+  "famille": "contrepartie",
+  "qualite": 2,
+  "pools": {},
+  "desc": "Vitesse +0,5 ; cadence +0,2.",
+  "effets": [
+   {
+    "s": "vitesse",
+    "a": 0.5
+   },
+   {
+    "s": "cadence",
+    "a": 0.2
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "marque": true,
+  "icone": {
+   "forme": "goutte",
+   "a": "#e07a3a",
+   "b": "#7a3010",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_186",
+  "nom": "Marque de sang : soif",
+  "type": "passif",
+  "famille": "contrepartie",
+  "qualite": 2,
+  "pools": {},
+  "desc": "Dégâts +0,5 ; chaque élimination a 6 % de chances de soigner une demi-unité.",
+  "effets": [
+   {
+    "s": "degats",
+    "a": 0.5
+   },
+   {
+    "quand": "elimination",
+    "si": "ennemiNonBoss",
+    "chance": 0.06,
+    "faire": {
+     "type": "soin",
+     "demis": 1
+    }
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "marque": true,
+  "icone": {
+   "forme": "goutte",
+   "a": "#8a0a1a",
+   "b": "#3a0408",
+   "c": "#ffffff"
+  },
+  "exclusion": [
+   "sansVitalite"
+  ]
+ },
+ {
+  "id": "PSV_187",
+  "nom": "Bénédiction du crapaud",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {},
+  "desc": "Un contenant de vitalité et soin complet ; dégâts +0,3.",
+  "effets": [
+   {
+    "sante": {
+     "cont": 1,
+     "soinTotal": true
+    }
+   },
+   {
+    "s": "degats",
+    "a": 0.3
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "benediction": true,
+  "icone": {
+   "forme": "soleil",
+   "a": "#8ab04a",
+   "b": "#4a6a2a",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_188",
+  "nom": "Bénédiction de la limace",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {},
+  "desc": "Une réserve de chakra, puis une de plus toutes les 4 salles nettoyées.",
+  "effets": [
+   {
+    "sante": {
+     "prot": 2
+    }
+   },
+   {
+    "quand": "salle_nettoyee",
+    "tousLes": 4,
+    "faire": {
+     "type": "protection",
+     "demis": 2
+    }
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "benediction": true,
+  "icone": {
+   "forme": "soleil",
+   "a": "#7ab0e8",
+   "b": "#3a5a9a",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_189",
+  "nom": "Bénédiction du serpent blanc",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {},
+  "desc": "Chance +2, cadence +0,4.",
+  "effets": [
+   {
+    "s": "chance",
+    "a": 2
+   },
+   {
+    "s": "cadence",
+    "a": 0.4
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "benediction": true,
+  "icone": {
+   "forme": "soleil",
+   "a": "#e8e4d8",
+   "b": "#9a9480",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_190",
+  "nom": "Bénédiction de l’ermite",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {},
+  "desc": "Dégâts +0,7, portée +1,5.",
+  "effets": [
+   {
+    "s": "degats",
+    "a": 0.7
+   },
+   {
+    "s": "portee",
+    "a": 1.5
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "benediction": true,
+  "icone": {
+   "forme": "soleil",
+   "a": "#f0a040",
+   "b": "#8a5a20",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_191",
+  "nom": "Bénédiction du phénix",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {},
+  "desc": "Une fois par étage, un coup mortel vous laisse à une demi-unité, invulnérable 2 s.",
+  "effets": [
+   {
+    "drapeau": "phenix"
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "horsPool": true,
+  "benediction": true,
+  "icone": {
+   "forme": "soleil",
+   "a": "#ff8a3a",
+   "b": "#a03a10",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "PSV_192",
+  "nom": "Bénédiction du sage",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {},
+  "desc": "Toutes les 2 salles nettoyées, une charge de technique ; vitesse +0,2.",
+  "effets": [
+   {
+    "quand": "salle_nettoyee",
+    "tousLes": 2,
+    "faire": {
+     "type": "charge_actif",
+     "n": 1
+    }
+   },
+   {
+    "s": "vitesse",
+    "a": 0.2
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "horsPool": true,
+  "benediction": true,
+  "icone": {
+   "forme": "soleil",
+   "a": "#c8a0f0",
+   "b": "#6a4a9a",
+   "c": "#ffffff"
+  }
+ },
+ {
   "id": "PSV_900",
   "nom": "Clé des ermites",
   "type": "passif",

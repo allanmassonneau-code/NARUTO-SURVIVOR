@@ -179,5 +179,17 @@ PSV_177;Œil du Rinnegan (empreinte);element;4;pacte 1;"Vos impacts attirent les
 PSV_178;Étiquette à retardement;ressource;2;heritage 2, boutique 1;35 % des coups plantent une étiquette qui explose une seconde plus tard (×2,4).;cumul;argile;création originale;—
 PSV_179;Rouleau de la double technique;hybride;3;bibliotheque 1, heritage 1;Utiliser un actif déclenche aussi une salve de vos tirs dans les huit directions.;cumul;;création originale;—
 PSV_180;Sang du clan;contrepartie;2;heritage 1, pacte 1;Dégâts +0,25 par contenant de vitalité vide.;unique;;création originale;—
+PSV_181;Marque de sang : force;contrepartie;2;;Dégâts +1,2.;cumul;;création originale;—
+PSV_182;Marque de sang : vivacité;contrepartie;2;;Cadence +0,6.;cumul;;création originale;—
+PSV_183;Marque de sang : allonge;contrepartie;2;;"Portée +2,5 ; vitesse des tirs +1.";cumul;;création originale;—
+PSV_184;Marque de sang : fortune;contrepartie;2;;"Chance +3 ; +12 Ryō.";cumul;;création originale;—
+PSV_185;Marque de sang : célérité;contrepartie;2;;"Vitesse +0,5 ; cadence +0,2.";cumul;;création originale;—
+PSV_186;Marque de sang : soif;contrepartie;2;;"Dégâts +0,5 ; chaque élimination a 6 % de chances de soigner une demi-unité.";cumul;;création originale;—
+PSV_187;Bénédiction du crapaud;hybride;3;;"Un contenant de vitalité et soin complet ; dégâts +0,3.";cumul;;création originale;—
+PSV_188;Bénédiction de la limace;hybride;3;;Une réserve de chakra, puis une de plus toutes les 4 salles nettoyées.;cumul;;création originale;—
+PSV_189;Bénédiction du serpent blanc;hybride;3;;Chance +2, cadence +0,4.;cumul;;création originale;—
+PSV_190;Bénédiction de l’ermite;hybride;3;;Dégâts +0,7, portée +1,5.;cumul;;création originale;—
+PSV_191;Bénédiction du phénix;hybride;3;;Une fois par étage, un coup mortel vous laisse à une demi-unité, invulnérable 2 s.;unique;;création originale;—
+PSV_192;Bénédiction du sage;hybride;3;;"Toutes les 2 salles nettoyées, une charge de technique ; vitesse +0,2.";cumul;;création originale;—
 PSV_900;Clé des ermites;exploration;0;;Objet-clé : ouvre le rayon de la Lumière même après un pacte.;unique;;création originale;—
 PSV_901;Fragment de la clé des ermites;exploration;0;;Objet-clé : un second fragment formera la clé.;conversion;;création originale;—

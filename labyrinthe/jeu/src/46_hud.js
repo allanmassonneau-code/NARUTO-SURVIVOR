@@ -94,9 +94,9 @@ function dessinerHUD(g) {
   if (J.actif2) { g.fillStyle = '#0a0710'; g.fillRect(40, 23, 14, 14); g.fillStyle = '#241c30'; g.fillRect(41, 24, 12, 12); g.drawImage(iconeObjet(J.actif2.id), 37, 20, 20, 20); }
   // ressources, compteurs de règle et statistiques : colonne gauche
   const lignes = [];
-  if (J.def.regleCode === 'controle_chakra') lignes.push(['Force ' + J.force + '/6', '#ff9ac0']);
-  if (J.def.regleCode === 'sceau_centaine') lignes.push(['Sceau ' + J.sceau + '/12', '#ff9ac0']);
-  if (J.def.regleCode === 'clones_ressource') lignes.push(['Clones ' + J.clones + '/4', '#ffc060']);
+  if (J.def.regleCode === 'controle_chakra') lignes.push(['Force ' + J.force + '/' + plafondForce(J), '#ff9ac0']);
+  if (J.def.regleCode === 'sceau_centaine') lignes.push(['Sceau ' + J.sceau + '/' + plafondSceau(J), '#ff9ac0']);
+  if (J.def.regleCode === 'clones_ressource') lignes.push(['Clones ' + J.clones + '/' + plafondClones(J), '#ffc060']);
   if (J.coeursReserve > 0) lignes.push(['Cœurs ' + J.coeursReserve, '#6ad060']);
   if (J.def.regleCode === 'trois_marionnettes') lignes.push([{ karasu: 'Karasu', kuroari: 'Kuroari', sanshouo: 'Sanshōuo' }[J.marionnette || 'karasu'], '#c0a0ff']);
   const stats = G.reglages.afficherStats; const hCol = 40 + lignes.length * 11 + (stats ? 70 : 0);
@@ -190,19 +190,20 @@ function dessinerIntroBoss(g) {
   g.globalAlpha = 1;
 }
 function dessinerPanneauAchat(g, p) {
-  const J = G.joueur; const v = peutPayer(p); const nom = p.ramassable ? ({ coeur: 'Cœur de vitalité', cle: 'Clé de sceau', explosif: 'Parchemin explosif', rouleau: 'Rouleau tactique', protection: 'Réserve de chakra', pilule: 'Pilule militaire', condensateur: 'Condensateur de chakra', coeur_double: 'Double cœur' }[p.ramassable]) : INDEX[p.id].nom;
+  const J = G.joueur; const v = peutPayer(p); const nom = p.voile ? 'Offre voilée' : p.ramassable ? ({ coeur: 'Cœur de vitalité', cle: 'Clé de sceau', explosif: 'Parchemin explosif', rouleau: 'Rouleau tactique', protection: 'Réserve de chakra', pilule: 'Pilule militaire', condensateur: 'Condensateur de chakra', coeur_double: 'Double cœur' }[p.ramassable]) : INDEX[p.id].nom;
   const L = [nom];
   if (p.prix.type === 'ryo') { const n = prixRyo(p); L.push('Prix : ' + (n === 0 ? 'gratuit (coupon)' : n + ' Ryō' + (n < p.prix.n ? ' (au lieu de ' + p.prix.n + ')' : '')) + ' (vous : ' + J.ryo + ')'); }
+  else if (p.prix.type === 'troc') { const t = objetTroc(p); if (t) L.push('Prix : « ' + INDEX[t].nom + ' », cédé pour toujours'); }
   else { // pacte : résultat exact avant confirmation
     const S = J.sante; const apres = copieSante(S);
     if (v.ryo) L.push('Prix : ' + v.ryo + ' Ryō');
     else if (v.instable) L.push('Prix : ' + v.instable + ' demis de chakra instable');
     else if (v.detail) { if (v.detail.type === 'contenants') { retirerConteneur(apres, p.prix.n); L.push('Prix : ' + p.prix.n + ' contenant(s) de vitalité'); } else { apres.prot.splice(-v.detail.n); L.push('Prix : ' + v.detail.n / 2 + ' réserve(s) de chakra'); } L.push('Après : ' + nbVit(apres) + ' contenant(s), santé ' + santeTotale(apres) / 2 + ' cœur(s)'); if (santeTotale(apres) <= 0) L.push('CE PAIEMENT SERAIT MORTEL'); }
   }
-  if (!p.ramassable && G.reglages.descriptionsAuto === false) L.push(INDEX[p.id].desc); // sinon : la fiche le décrit déjà
+  if (!p.ramassable && !p.voile && G.reglages.descriptionsAuto === false) L.push(INDEX[p.id].desc); // sinon : la fiche le décrit déjà
   L.push(v.ok ? 'Confirmer : ' + Entrees.libelle('interagir') : v.manque);
   const w = Math.max(...L.map(l => Police.largeur(l))) + 16, h = L.length * 11 + 8; const x = borne(Math.round(320 - w / 2), 4, 636 - w), y = 250;
-  plaqueHUD(g, x, y, w, h, p.prix.type === 'pacte' ? '#8a2a5a' : '#8a7a4a');
+  plaqueHUD(g, x, y, w, h, p.prix.type === 'pacte' || p.prix.type === 'troc' ? '#8a2a5a' : '#8a7a4a');
   L.forEach((l, i) => Police.ecrire(g, l, x + 8, y + 5 + i * 11, i === 0 ? '#fff0d0' : l.startsWith('CE PAIEMENT') ? '#ff5050' : i === L.length - 1 ? (v.ok ? '#a0e0a0' : '#ff9a8a') : '#c8c0d8'));
 }
 // ── Fiche de l'objet proche (façon « External Item Descriptions » d'Isaac) ──
@@ -231,6 +232,9 @@ function ficheObjet(c) {
   if (c.p && c.p.ramassable) { // ressource vendue à l'échoppe
     const t = c.p.ramassable; Object.assign(F, { nom: NOMS_RAMASSABLES[t] || t, icone: spriteRamassable(t), type: 'Ressource', lisere: '#58d08a' });
     ligne(DESCS_RAMASSABLES[t], '#e8e0f0');
+  } else if (c.p && c.p.voile) { // pari du serpent
+    Object.assign(F, { nom: 'Offre voilée', icone: iconeObjet('?voile'), type: 'Pari du serpent', lisere: '#8a4ab0' });
+    ligne('Un objet de qualité 2 ou plus, dévoilé une fois le pacte conclu.', '#e8e0f0');
   } else if (c.p && G.etage && G.etage.malediction === 'aveugle') {
     Object.assign(F, { nom: 'Objet voilé', icone: iconeObjet('?'), type: 'Malédiction aveugle' });
     ligne('Impossible de savoir ce qu’il fait avant de le prendre.', '#e8e0f0');
@@ -280,6 +284,7 @@ function ficheObjet(c) {
     const p = c.p;
     if (p.prix && p.prix.type === 'ryo') { const n = prixRyo(p); ligne('Prix : ' + (n === 0 ? 'gratuit' : n + ' Ryō') + (n < p.prix.n ? ' (au lieu de ' + p.prix.n + ')' : '') + ' — vous : ' + J.ryo, J.ryo >= n ? '#f8e8b0' : '#ff8a7a', 'ryo'); }
     else if (p.prix && p.prix.type === 'pacte') ligne('Prix du pacte : ' + prixPacteTexte(p), '#ff9ac0', 'pacte');
+    else if (p.prix && p.prix.type === 'troc') { const t = objetTroc(p); ligne(t ? 'Échange : le serpent prend « ' + INDEX[t].nom + ' »' : 'Échange : vous n’avez aucun objet à céder', '#ff9ac0', 'pacte'); }
     if (p.groupe && G.salle.piedestaux.some(q => q !== p && q.groupe === p.groupe && q.id)) ligne('Choix lié : le prendre fait disparaître les autres', '#a898b8');
     if (d && d.type === 'actif') { if (J.delaiActif > 0) ligne('Pas d’autre technique avant ' + formatNombre(arrondi(J.delaiActif, 1)) + ' s', '#a898b8'); else if (p.attendSortie) ligne('Éloignez-vous du piédestal, puis revenez pour le prendre', '#a898b8'); }
   }

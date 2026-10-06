@@ -147,6 +147,8 @@ const SceneSelection = {
       const M = Progression.profil.marques[p.id] || {}; let mx = x0 + 190;
       for (const r of ['RTE_01', 'RTE_02', 'RTE_03', 'RTE_04', 'RTE_05', 'RTE_06']) { g.fillStyle = M[r] ? (M[r] === 'difficile' ? '#f0c040' : '#c8c0d8') : '#2a2436'; g.fillRect(mx, y0 + 126, 10, 10); mx += 14; }
       Police.ecrire(g, 'Marques', mx + 4, y0 + 127, '#8a8098');
+      const V = DON.eveils.filter(v => v.perso === p.id).sort((a, b) => a.rang - b.rang); // éveils : ce que la règle deviendra
+      if (V.length) Police.ecrire(g, 'Éveils : ' + V.map(v => (v.rang === 1 ? 'I ' : 'II ') + v.nom + (v.rang === 1 ? ' (après l’étage 3)' : ' (après l’étage 6)')).join('  ·  '), x0, y0 + 144, '#e0c070');
     }
     Police.ecrire(g, 'Mode : ' + (this.difficile ? 'Difficile' : 'Standard') + (this.o.code ? '   Code : ' + codeAffiche(this.o.code) + ' (sans déblocages)' : ''), 320, 326, this.difficile ? '#ff9a7a' : '#a8a0b8', { a: 'c' });
     aideBoutons(g, [['description', 'Difficulté'], ['interagir', 'Commencer'], ['retour', 'Retour']]);

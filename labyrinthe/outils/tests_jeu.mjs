@@ -551,6 +551,96 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     return out;
   });
 
+  // 14b) Variantes des salles d'opportunité : quatre pactes, quatre sanctuaires, chacun acheté ou utilisé pour de vrai
+  if (veut('opportunites')) await lancer('opportunites', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0, vues: [] }; const verif = (c, m) => { if (c) out.ok++; else out.ko.push(m); };
+    const salle = (type, v, prep) => { L.nouvellePartie({ perso: 'CHR_001', code: 'OPPO2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); L.entrerEtage(3); T.pas(5); const J = G.joueur; G.modeTest.dieu = false; if (prep) prep(J);
+      L.ouvrirOpportunite(type, v); L.entrerSalle('opp'); T.pas(3); const s = G.salle; out.vues.push(type + '/' + v + ' : ' + s.piedestaux.filter(p => p.id).length + ' offre(s)'); verif(G.banniere && G.banniere.nom === L.VARIANTES_OPP[type].find(x => x.id === v).nom, type + '/' + v + ' : bandeau absent'); return [s, J]; };
+    const finir = () => { for (let i = 0; i < 80 && G.enAnimationObjet; i++) T.pas(1, ['Enter']); T.pas(2); };
+    // tirage : les quatre variantes de chaque type sortent sur 200 étages simulés, avec des parts proches des poids
+    L.nouvellePartie({ perso: 'CHR_001', code: 'TIRA2345' }); L.Scenes.aller(L.SceneJeu); T.pas(3);
+    for (const type of ['pacte', 'sanctuaire']) { const n = {}; for (let k = 0; k < 400; k++) { G.partie.code = 'T' + k + 'Z'; const v = L.tirerVariante(type); n[v] = (n[v] || 0) + 1; }
+      for (const v of L.VARIANTES_OPP[type]) { const att = 400 * v.p / 100; verif(Math.abs((n[v.id] || 0) - att) < att * 0.4 + 6, type + '/' + v.id + ' : ' + (n[v.id] || 0) + ' sur 400 (attendu ~' + att + ')'); }
+      out.vues.push(type + ' ' + JSON.stringify(n)); }
+    // pacte de sang : trois marques distinctes à un contenant, cumulables
+    let [s, J] = salle('pacte', 'sang'); const M = s.piedestaux.filter(p => p.id);
+    verif(M.length === 3 && M.every(p => L.INDEX[p.id].marque && p.prix.type === 'pacte' && p.prix.n === 1), 'sang : offres ' + M.map(p => p.id + '/' + (p.prix && p.prix.n)).join(','));
+    verif(new Set(M.map(p => p.id)).size === 3, 'sang : marques en double');
+    const ids = M.map(p => p.id), c0 = J.sante.cont.length, d0 = J.stats.degats + J.stats.cadence + J.stats.portee + J.stats.vitesse + J.stats.chance;
+    L.acheter(M[0]); finir(); L.acheter(M[1]); finir();
+    verif(J.sante.cont.length === c0 - 2 && J.passifs.includes(ids[0]) && J.passifs.includes(ids[1]), 'sang : deux marques, deux contenants (' + c0 + ' → ' + J.sante.cont.length + ')');
+    verif(J.stats.degats + J.stats.cadence + J.stats.portee + J.stats.vitesse + J.stats.chance > d0, 'sang : aucune statistique gagnée'); verif(G.partie.pactesAchetes === 2, 'sang : pactes non comptés');
+    // troc : le serpent prend un objet annoncé d'avance, sans toucher à la santé
+    [s, J] = salle('pacte', 'troc', J => { L.acquerirPassif(J, 'PSV_034', 'test'); }); const Tr = s.piedestaux.filter(p => p.id); const cible = L.objetTroc(Tr[0]);
+    verif(Tr.length >= 2 && Tr.every(p => p.prix.type === 'troc'), 'troc : prix');
+    verif(cible === 'PSV_034', 'troc : objet annoncé ' + cible);
+    const cont0 = J.sante.cont.length, pris = Tr[0].id; L.acheter(Tr[0]); finir();
+    verif(!J.passifs.includes('PSV_034') && (J.passifs.includes(pris) || (J.actif && J.actif.id === pris)) && J.sante.cont.length >= cont0, 'troc : échange raté ' + J.passifs.join(',') + ' / ' + cont0 + ' → ' + J.sante.cont.length);
+    verif(L.objetTroc(Tr[1]) === pris || L.objetTroc(Tr[1]) === null || J.passifs.includes(L.objetTroc(Tr[1])), 'troc : nouvel objet annoncé invalide');
+    // sans objet à céder : achat refusé
+    [s, J] = salle('pacte', 'troc'); const T0 = s.piedestaux.find(p => p.id); verif(!L.peutPayer(T0).ok, 'troc : achat possible sans rien à céder');
+    // pari : trois offres voilées de qualité 2 ou plus, un contenant chacune ; la fiche ne trahit pas l'objet
+    [s, J] = salle('pacte', 'pari'); const V = s.piedestaux.filter(p => p.id);
+    verif(V.length === 3 && V.every(p => p.voile && p.prix.n === 1 && (L.INDEX[p.id].qualite || 0) >= 2), 'pari : offres ' + V.map(p => p.id + '/q' + L.INDEX[p.id].qualite).join(','));
+    J.x = V[0].x; J.y = V[0].y + 30; const F = L.ficheObjet(L.cibleFiche()); verif(F && F.nom === 'Offre voilée' && !F.lignes.some(l => l.t.includes(L.INDEX[V[0].id].nom)), 'pari : la fiche dévoile l’objet');
+    L.relancerPiedestaux(s); verif(V.every(p => p.voile && p.prix.n === 1), 'pari : relance perd le voile ou le prix');
+    // bénédictions : trois au choix, une seule accordée
+    [s, J] = salle('sanctuaire', 'benedictions'); const B = s.piedestaux.filter(p => p.id); verif(B.length === 3 && B.every(p => L.INDEX[p.id].benediction && p.groupe), 'bénédictions : offres');
+    J.x = B[1].x; J.y = B[1].y + 6; T.pas(40, []); finir(); verif(B.filter(p => p.id).length === 0 && J.passifs.filter(id => L.INDEX[id].benediction).length === 1, 'bénédictions : choix non exclusif');
+    L.relancerPiedestaux(s); // rien à relancer : pas d'erreur
+    // source sacrée : soin complet, cicatrices effacées, un contenant, une seule fois
+    [s, J] = salle('sanctuaire', 'source', J => { J.sante.cont.forEach(c => c.p = 0); J.sante.cont[0].p = 1; J.sante.cicatrices = 2; });
+    const nc = J.sante.cont.length; J.x = s.source.x; J.y = s.source.y; T.pas(1, ['Enter']); T.pas(2);
+    verif(s.source.utilisee && J.sante.cicatrices === 0 && J.sante.cont.length === nc + 1 && L.rougeTotal(J.sante) === J.sante.cont.length * 2, 'source : ' + JSON.stringify(J.sante));
+    verif(s.piedestaux.filter(p => p.id).length === 1, 'source : présent absent');
+    // tronc des offrandes : 15 Ryō rendent les deux présents libres
+    [s, J] = salle('sanctuaire', 'offrande', J => { J.ryo = 20; }); const m = s.machines.find(x => x.type === 'tronc'); const O = s.piedestaux.filter(p => p.id);
+    verif(m && O.length === 2 && O.every(p => p.groupe === m.groupe), 'offrande : mise en place');
+    L.utiliserMachine(m); verif(J.ryo === 5 && O.every(p => !p.groupe), 'offrande : paiement ou déliaison');
+    const na = J.acquis.length; for (const p of O) { J.delaiActif = 0; J.x = p.x; J.y = p.y + 6; T.pas(5, []); finir(); J.y += 40; T.pas(2, []); } verif(J.acquis.length === na + 2, 'offrande : les deux présents ne se prennent pas (' + (J.acquis.length - na) + ')');
+    // bénédiction du phénix : une fois par étage, jamais pour un prix
+    [s, J] = salle('sanctuaire', 'classique', J => { L.acquerirPassif(J, 'PSV_191', 'test'); });
+    J.sante.cont.forEach(c => c.p = 0); J.sante.cont[0].p = 1; J.sante.prot = []; J.invuln = 0; L.blesserJoueur(2, { type: 'test' }); verif(J.etat !== 'mort' && L.santeTotale(J.sante) === 1 && G.etage.phenix, 'phénix : pas de sauvetage (' + J.etat + ', ' + L.santeTotale(J.sante) + ')');
+    return out;
+  });
+
+  // 14c) Éveils : deux par personnage (étages 3 et 6), effets réellement appliqués, règles qui évoluent
+  if (veut('eveils')) await lancer('eveils', () => {
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0, vus: 0 }; const verif = (c, m) => { if (c) out.ok++; else out.ko.push(m); };
+    const partie = id => { L.nouvellePartie({ perso: id, code: 'EVEI2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); G.modeTest.dieu = false; return G.joueur; };
+    const STATS = ['degats', 'cadence', 'portee', 'vitesseTir', 'vitesse', 'chance'];
+    for (const p of L.DON.personnages) {
+      let J = partie(p.id); const V = L.eveilsDe(J); verif(V.length === 2 && V[0].rang === 1 && V[1].rang === 2, p.id + ' : éveils ' + V.map(v => v.id));
+      L.verifierEveils(J, 2); verif(!J.transformations.some(t => L.INDEX[t].type === 'eveil'), p.id + ' : éveil avant l’étage 3');
+      for (const [n, v] of [[3, V[0]], [6, V[1]]]) {
+        const st = Object.assign({}, J.stats), fam = J.familiers.length, cont = J.sante.cont.length, prot = J.sante.prot.length, res = J.coeursReserve || 0, prof = JSON.stringify(J.profil, (k, x) => x instanceof Set ? [...x] : x);
+        L.verifierEveils(J, n); verif(J.transformations.includes(v.id), p.id + ' : ' + v.id + ' non accordé à l’étage ' + n); out.vus++;
+        verif([G.banniere].concat(G.banniereFile || []).some(b => b && b.nom === 'Éveil — ' + v.nom), v.id + ' : pas de bandeau'); // affiché ou en file
+        for (const e of v.effets) {
+          if (e.drapeau) verif(J.drapeaux[e.drapeau] !== undefined && J.drapeaux[e.drapeau] !== false, v.id + ' : drapeau ' + e.drapeau + ' absent');
+          if (e.s && STATS.includes(e.s)) verif(J.stats[e.s] !== st[e.s] || J.stats[e.s] >= 999, v.id + ' : ' + e.s + ' inchangé');
+          if (e.familier) verif(J.familiers.length > fam, v.id + ' : familier absent');
+          if (e.sante && e.sante.cont) verif(J.sante.cont.length > cont || J.drapeaux.sansVitalite && J.sante.prot.length > prot, v.id + ' : contenant absent');
+          if (e.coeurReserve) verif((J.coeursReserve || 0) === res + e.coeurReserve, v.id + ' : cœur de réserve absent');
+          if (e.statut || e.impact || e.multi || e.forme) verif(JSON.stringify(J.profil, (k, x) => x instanceof Set ? [...x] : x) !== prof, v.id + ' : profil d’attaque inchangé');
+        }
+      }
+      L.verifierEveils(J, 8); verif(J.transformations.filter(t => L.INDEX[t].type === 'eveil').length === 2, p.id + ' : éveils en double');
+    }
+    // règles qui évoluent, vérifiées en jeu
+    let J = partie('CHR_001'); L.verifierEveils(J, 3); const d0 = J.stats.degats; J.sante = L.santeInit({ vitalite: 3, pleins: 3 }); J.invuln = 0; L.blesserJoueur(1, { type: 'test' });
+    verif(J.drapeaux.obstination && Math.abs(J.stats.degats - d0 - 1.5) < 0.01, 'Volonté du feu : obstination à ' + J.stats.degats + ' (base ' + d0 + ')');
+    J = partie('CHR_002'); L.verifierEveils(J, 3); verif(J.profil.params.charge_libre.charge === 0.6, 'Sharingan : charge ' + J.profil.params.charge_libre.charge);
+    J = partie('CHR_003'); L.verifierEveils(J, 6); L.evenement('soin_excedentaire', { demis: 30 }); verif(J.force === 10, 'Force centuplée : force ' + J.force);
+    J.force = 4; J.sante.cont.forEach(c => c.p = 0); J.sante.cont[0].p = 2; J.sante.prot = []; J.invuln = 0; L.blesserJoueur(1, { type: 'test' }); verif(L.santeTotale(J.sante) === 5 && J.force === 0, 'Byakugō : santé ' + L.santeTotale(J.sante) + ', force ' + J.force);
+    J = partie('CHR_004'); L.verifierEveils(J, 3); J.actif = { id: 'ACT_022', charges: 1 }; J.actif2 = { id: 'ACT_034', charges: 0 }; L.utiliserActif(); verif(J.actif2.charges === 1, 'Copie parfaite : ' + J.actif2.charges);
+    J = partie('CHR_006'); L.verifierEveils(J, 6); let s = T.scenario('CHR_006', 'ROM_001', [{ id: 'ENM_080', tx: 10, ty: 1 }]); J = G.joueur; L.verifierEveils(J, 6); T.pas(80, []); G.ennemis.forEach(e => { e.pv = e.pvMax = 99999; }); let vu = false; for (let k = 0; k < 660; k++) { J.invuln = 1; T.pas(1, []); if (J.kaiten) vu = true; } verif(vu, 'Soixante-quatre paumes : aucune rotation en 11 s');
+    J = partie('CHR_007'); L.verifierEveils(J, 3); const h = Object.values(G.etage.salles).find(x => x.type === 'heritage'); if (h) { L.entrerSalle(h.id); T.pas(3); verif(G.salle.piedestaux.filter(q => q.id).length === 3, 'Plan à long terme : ' + G.salle.piedestaux.length + ' objets'); }
+    s = T.scenario('CHR_008', 'ROM_001', [{ id: 'ENM_080', tx: 10, ty: 1 }]); J = G.joueur; L.verifierEveils(J, 3); T.pas(80, []); G.ennemis.forEach(e => { e.pv = e.pvMax = 99999; }); J.invuln = 0; const abs = J.bouclierSable && L.blesserJoueur(2, { type: 'test' }) === false; for (let k = 0; k < 630; k++) { J.invuln = 1; T.pas(1, []); } verif(abs && J.bouclierSable, 'Armure de sable : bouclier ' + abs + '/' + J.bouclierSable);
+    J = partie('ALT_002'); L.verifierEveils(J, 6); const c = Object.values(G.etage.salles).find(x => x.type === 'combat' && !x.visitee && x.forme === '1x1'); if (c) { L.entrerSalle(c.id); T.pas(2); verif(!!J.susanoo || !G.salle.combat, 'Susanoo : pas de rempart à l’entrée'); }
+    return out;
+  });
+
   // 15) Contrats (défis) : règles imposées et conditions de réussite réellement vérifiées
   if (veut('defis')) await lancer('defis', () => {
     const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [], ok: 0 }; const verif = (c, m) => { if (c) out.ok++; else out.ko.push(m); };

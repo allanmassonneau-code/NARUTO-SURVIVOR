@@ -17,7 +17,7 @@
   },
   {
    "ensemble": "Objets passifs",
-   "produit": 182,
+   "produit": 194,
    "cible_v1": 150,
    "cible_bibliotheque": 480
   },
@@ -62,6 +62,12 @@
    "produit": 18,
    "cible_v1": 12,
    "cible_bibliotheque": 40
+  },
+  {
+   "ensemble": "Éveils de personnage",
+   "produit": 36,
+   "cible_v1": null,
+   "cible_bibliotheque": null
   },
   {
    "ensemble": "Thèmes d’étage",

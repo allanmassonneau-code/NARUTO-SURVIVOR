@@ -93,14 +93,14 @@ function fluxEtage(code, etage, nom) { return new Alea(code + '|' + VERSION_DONN
 const DON = {
   personnages: [], objets: [], talismans: [], consommables: [], pilules: [],
   ennemis: [], boss: [], salles: [], themes: [], etages: [], routes: [],
-  transformations: [], synergies: [], objectifs: [], defis: [], secrets: [],
+  transformations: [], eveils: [], synergies: [], objectifs: [], defis: [], secrets: [],
   champions: [], familiers: [], pools: {}, prix: {},
 };
 const INDEX = {}; // INDEX[id] → définition (rempli par indexerDonnees)
 function indexerDonnees() {
   for (const k of Object.keys(INDEX)) delete INDEX[k];
   const listes = ['personnages', 'objets', 'talismans', 'consommables', 'pilules', 'ennemis', 'boss', 'salles',
-    'themes', 'etages', 'routes', 'transformations', 'synergies', 'objectifs', 'defis', 'secrets', 'champions'];
+    'themes', 'etages', 'routes', 'transformations', 'eveils', 'synergies', 'objectifs', 'defis', 'secrets', 'champions'];
   for (const l of listes) for (const d of DON[l]) {
     if (!d.id) throw new Error('Entrée sans identifiant dans ' + l);
     if (INDEX[d.id]) throw new Error('Identifiant en double : ' + d.id);

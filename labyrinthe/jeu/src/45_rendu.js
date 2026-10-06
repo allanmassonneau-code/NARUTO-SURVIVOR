@@ -287,17 +287,20 @@ function decorSalle(g, s, V) {
     }
     case 'pacte': { // empreinte interdite : pénombre violette, sceau serpentin, statues de serpents, tentures, bougies noires
       const H = s.H * TUILE; voile(g, cx, cy, larg * 0.46, H * 0.4, '#2a0830', 0.6);
-      const I = pts('I'); cercleSceau(g, cx, I.length ? I[0][1] : cy, 64, '#7a3a9a'); lumiere(cx, I.length ? I[0][1] : cy, 190, '#a040e0', 0.34);
+      const I = pts('I'), T = { sang: ['#9a1a2a', '#e03040'], troc: ['#7a8a2a', '#c8d040'], pari: ['#3a4aa0', '#6a7ae0'] }[s.variante] || ['#7a3a9a', '#a040e0'];
+      cercleSceau(g, cx, I.length ? I[0][1] : cy, 64, T[0]); lumiere(cx, I.length ? I[0][1] : cy, 190, T[1], 0.34);
+      if (s.variante === 'sang') { const al = new Alea('sang' + s.id); for (let k = 0; k < 9; k++) { const x = cx + (al.suivant() - 0.5) * 300, y = (I.length ? I[0][1] : cy) + 30 + al.suivant() * 60; g.drawImage(ellipse(4 + al.entier(5), 2 + al.entier(2), k % 2 ? 'rgba(120,10,24,0.55)' : 'rgba(90,6,16,0.5)'), x, y); } }
       for (const [x, y] of [[48, 48], [larg - 56, 48], [48, H - 64], [larg - 56, H - 64]]) bougie(g, x, y, '#1c1420');
       for (const x of [100, larg - 124]) tenture(g, x, 33, '#3a1040', '#a050c0');
       statueSerpent(g, 76, 58, false); statueSerpent(g, larg - 100, 58, true);
       break;
     }
     case 'sanctuaire': { // sanctuaire des ermites : lumière blanc-vert, sceau de jade, statues de crapauds, étangs aux nénuphars, mousse
-      const H = s.H * TUILE; voile(g, cx, cy, larg * 0.44, H * 0.38, '#e8fff0', 0.2);
-      cercleSceau(g, cx, cy, 56, '#7ac8a0'); lumiere(cx, cy, 240, '#d8ffe8', 0.4);
+      const H = s.H * TUILE, T = { benedictions: ['#d8c060', '#fff4c0'], source: ['#6ab0e0', '#d0f0ff'], offrande: ['#c8a060', '#fff0d0'] }[s.variante] || ['#7ac8a0', '#d8ffe8'];
+      voile(g, cx, cy, larg * 0.44, H * 0.38, '#e8fff0', 0.2);
+      cercleSceau(g, cx, cy, 56, T[0]); lumiere(cx, cy, 240, T[1], 0.4);
       for (const x of [56, larg - 92]) etang(g, x, H - 74);
-      statueCrapaud(g, cx - 84, cy - 34); statueCrapaud(g, cx + 64, cy - 34);
+      const ec = s.variante === 'benedictions' ? 150 : 84; statueCrapaud(g, cx - ec, cy - 34); statueCrapaud(g, cx + ec - 20, cy - 34); // trois bénédictions : statues écartées
       const al = new Alea('mousse' + s.id); for (let k = 0; k < 22; k++) { g.fillStyle = k % 2 ? 'rgba(90,140,60,0.5)' : 'rgba(120,170,80,0.45)'; g.fillRect(40 + al.entier(larg - 80), 48 + al.entier(H - 96), 3 + al.entier(4), 2); }
       for (const x of [60, larg - 72]) lanternePierre(g, x, 40);
       break;

@@ -44,6 +44,7 @@ const FORMES_ICONES = {
   boussole: ['...aaaaaa...', '..awwwwwwa..', '.awwwbbwwwa.', 'awwwwbbwwwwa', 'awwwwccwwwwa', 'awwwwccwwwwa', 'awwwwccwwwwa', '.awwwwwwwwa.', '..awwwwwwa..', '...aaaaaa...'],
   poids: ['aaaa....aaaa', 'awda....awda', 'aadd....aadd', 'aadd....aadd', 'aaddbbbbaadd', 'aaddbbbbaadd', 'aadd....aadd', 'aadd....aadd', 'aaaa....aaaa'],
   sandale: ['............', '.aaaaaaaaa..', 'aawwwwwwwwa.', 'abbbbbbbbbba', 'aaaaaaaaaaaa', '.cc.....cc..'],
+  sac_voile: ['.....cc.....', '....cwwc....', '.....cc.....', '...aaaaaa...', '..aawwwwaa..', '.aawaaaawaa.', '.aaaaaawaaa.', '.aaaawwaaaa.', '.aaaawaaaaa.', '.aaaaaaaaaa.', '..aaawaaaa..', '...aaaaaa...'],
   nuage: ['....wwww....', '.wwwaaaaw...', 'waaaaaaaawww', 'waaaaaaaaaaw', '.waaaaaaaaaw', 'waaaaaaaaaw.', '.wwaawwaaw..', '...ww..ww...'],
   gant: ['.a.a.a......', '.a.a.a.a....', '.aaaaaaa....', '.awaaaaa.aa.', '.aaaaaaaaaa.', '.aaaaaaaaa..', '..bbbbbbb...', '..bbbbbbb...', '..ccccccc...'],
   anneau: ['...aaaa...', '..awwaaa..', '.aw....ad.', '.a......d.', '.a......d.', '.ad....dd.', '..aadddd..', '...dddd...'],
@@ -69,7 +70,7 @@ function hexKey(col) { return col; }
 const _icones = {};
 function iconeObjet(id) {
   if (_icones[id]) return _icones[id];
-  const d = INDEX[id] || {}; const I = d.icone || { forme: 'etoile', a: '#c8c8d0' };
+  const d = INDEX[id] || (id === '?voile' ? { icone: { forme: 'sac_voile', a: '#5a3a7a', w: '#f0e8ff', c: '#c83a2a' } } : {}); const I = d.icone || { forme: 'etoile', a: '#c8c8d0' };
   const map = FORMES_ICONES[I.forme] || FORMES_ICONES.etoile;
   const a = I.a || '#c8c8d0', b = I.b || nuancer(a, 0.7), c = I.c || '#8a6a4a';
   const col = { a, b, c, d: nuancer(a, 0.72), w: I.w || nuancer(a, 1.55), k: '#1c1420' };

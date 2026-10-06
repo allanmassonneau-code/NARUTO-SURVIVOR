@@ -18,6 +18,8 @@ function ajouterFamilier(J, id, source) {
 function bonusFamilier(J, f) {
   let k = (aTalisman(J, 'TAL_020') ? 1.2 : 1) * (J.drapeaux.familiersForts ? 1.25 : 1);
   if (J.drapeaux.marionnettesFortes && f.def.marionnette) k *= 1.5;
+  if (J.drapeaux.gatsuga && f.def.id === 'FAM_AKAMARU') k *= 2;          // Gatsūga
+  if (J.drapeaux.clonesForts && f.def.id === 'FAM_CLONE_RES') k *= 1.8;  // Rasengan des clones
   if (J.sage && f.def.id === 'FAM_GAMAKICHI' && synergiesActives(J).some(x => x.id === 'SYN_052')) k *= 1.5;
   return k;
 }
@@ -62,7 +64,7 @@ function majFamiliers(J, dt) {
       case 'contact': { // charge dans la direction de tir, revient
         if (f.charge) {
           f.charge.t += dt; f.x += f.charge.dx * 260 * dt; f.y += f.charge.dy * 260 * dt;
-          for (const e of G.ennemis) if (!e.mort && !e.cache && !f.charge.touches.has(e) && dist(e.x, e.y, f.x, f.y) < e.r + 8) { f.charge.touches.add(e); infligerDegats(e, (D.degats || 6) + J.stats.degats * (D.coefJoueur || 0) * bonusFam, { proprio: 'familier', type: 'contact', x: e.x, y: e.y, vx: f.charge.dx, vy: f.charge.dy, recul: 50 }); }
+          for (const e of G.ennemis) if (!e.mort && !e.cache && !f.charge.touches.has(e) && dist(e.x, e.y, f.x, f.y) < e.r + 8) { f.charge.touches.add(e); infligerDegats(e, ((D.degats || 6) + J.stats.degats * (D.coefJoueur || 0)) * bonusFam, { proprio: 'familier', type: 'contact', x: e.x, y: e.y, vx: f.charge.dx, vy: f.charge.dy, recul: 50 }); }
           const t = tuilePx(G.salle, f.x, f.y); if (f.charge.t > 0.5 || PROP[t].mur) f.charge = null;
         } else {
           const d = dist(f.x, f.y, J.x + 12, J.y + 6); if (d > 4) { f.x += (J.x + 12 - f.x) * 6 * dt; f.y += (J.y + 6 - f.y) * 6 * dt; }
@@ -126,7 +128,7 @@ function tirFamilier(f, a, deg, D) {
 // Kankurō altéré : trois marionnettes échangeables
 function changerMarionnette(J) {
   const L = ['karasu', 'kuroari', 'sanshouo']; const i = (L.indexOf(J.marionnette || 'karasu') + 1) % 3; J.marionnette = L[i];
-  J.bloqueTir = 0.5; const k = J.familiers.find(f => f.def.id === 'FAM_KARASU'); if (k) k.variante = J.marionnette;
+  J.bloqueTir = J.drapeaux.changementEclair ? 0 : 0.5; const k = J.familiers.find(f => f.def.id === 'FAM_KARASU'); if (k) k.variante = J.marionnette;
   J.bonus = J.bonus.filter(b => b.source !== 'marionnette');
   if (J.marionnette === 'karasu') J.bonus.push({ source: 'marionnette', tir: { multi: 2, coefCadence: 0.9 }, duree: 'permanent' });
   if (J.marionnette === 'kuroari') J.bonus.push({ source: 'marionnette', tir: { traj: 'lent', statut: 'immobilise', chance: 0.4, duree: 1.2 }, duree: 'permanent' });

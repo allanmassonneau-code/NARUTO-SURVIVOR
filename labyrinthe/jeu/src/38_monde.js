@@ -231,8 +231,10 @@ function verifierNettoyage() {
     J.compteurs.sallesNettoyees++;
     if (!s.joueurTouche) { J.compteurs.serie = (J.compteurs.serie || 0) + 1; if (J.drapeaux.serieParfaite) { J.stats = calculerStats(J); if (J.compteurs.serie <= 10) G.textes.push({ x: J.x, y: J.y - 40, t: 'Série ×' + J.compteurs.serie, age: 0, duree: 0.9, couleur: '#ffe070' }); } }
     evenement('salle_nettoyee', { s });
-    if (J.def.regleCode === 'clones_ressource' && J.clones < 4) { J.clones++; majClonesRessource(J); }
-    if (J.def.regleCode === 'flair' && Math.random() < 0.1) { creerRamassable(tirerRamassable(G.alea.recomp, 5), J.x + 16, J.y, {}); G.textes.push({ x: J.x, y: J.y - 30, t: 'Akamaru a trouvé quelque chose !', age: 0, duree: 1.2, couleur: '#fff' }); }
+    if (J.def.regleCode === 'clones_ressource' && J.clones < plafondClones(J)) { J.clones = Math.min(plafondClones(J), J.clones + (J.drapeaux.clonesNombreux ? 2 : 1)); majClonesRessource(J); }
+    if (J.drapeaux.forceCentuplee && !s.joueurTouche && J.force < plafondForce(J)) { J.force++; G.textes.push({ x: J.x, y: J.y - 30, t: 'Force +1', age: 0, duree: 0.8, couleur: '#ff9ac0' }); } // Force centuplée
+    if (J.drapeaux.sceauLarge) J.sceau = Math.min(plafondSceau(J), J.sceau + 1); // Sceau élargi
+    if (J.def.regleCode === 'flair' && Math.random() < (J.drapeaux.gatsuga ? 0.25 : 0.1)) { creerRamassable(tirerRamassable(G.alea.recomp, 5), J.x + 16, J.y, {}); G.textes.push({ x: J.x, y: J.y - 30, t: 'Akamaru a trouvé quelque chose !', age: 0, duree: 1.2, couleur: '#fff' }); }
   }
   sauvegarderPartie('salle');
 }
@@ -346,8 +348,8 @@ function collecter(r, J) {
       if (manque <= 0 && J.def.regleCode !== 'controle_chakra' && J.def.regleCode !== 'sceau_centaine') return; // reste au sol
       let n = R.n * (J.drapeaux.soinsDoubles ? 2 : 1) + (J.drapeaux.ninjaMedical ? 1 : 0);
       const ex = soignerRouge(S, n); soinDebordant(J, ex);
-      if (ex > 0 && J.def.regleCode === 'controle_chakra') { J.force = Math.min(6, J.force + ex); G.textes.push({ x: J.x, y: J.y - 32, t: 'Force +' + ex, age: 0, duree: 0.8, couleur: '#ff9ac0' }); }
-      if (ex > 0 && J.def.regleCode === 'sceau_centaine') J.sceau = Math.min(12, J.sceau + ex);
+      if (ex > 0 && J.def.regleCode === 'controle_chakra') { J.force = Math.min(plafondForce(J), J.force + ex); G.textes.push({ x: J.x, y: J.y - 32, t: 'Force +' + ex, age: 0, duree: 0.8, couleur: '#ff9ac0' }); }
+      if (ex > 0 && J.def.regleCode === 'sceau_centaine') J.sceau = Math.min(plafondSceau(J), J.sceau + ex);
       Son.jouer('coeur'); break;
     }
     case 'protection': case 'instable': {

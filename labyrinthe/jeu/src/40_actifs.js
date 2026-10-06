@@ -37,6 +37,7 @@ function utiliserActif() {
   if (d.unique) J.actif = null;
   else if (d.recharge) J.actif.temps = 0;
   else { const req = chargesRequises(J); J.actif.charges = Math.max(0, J.actif.charges - req); }
+  if (J.drapeaux.copieParfaite && J.actif2) { const d2 = INDEX[J.actif2.id]; if (d2 && !d2.unique && !d2.recharge) J.actif2.charges = Math.min(chargesMax(d2), (J.actif2.charges || 0) + 1); } // Copie parfaite
   Son.jouer('actif'); evenement('actif_utilise', { id: d.id });
   Progression.compteur('actifsUtilises', 1);
 }

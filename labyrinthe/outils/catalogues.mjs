@@ -45,7 +45,7 @@ const existe = id => !!INDEX[id];
 const fam = id => DON.familiers.some(f => f.id === id);
 const prefixes = { personnages: /^(CHR|ALT)_\d{3}$/, objets: /^(PSV|ACT)_\d{3}$/, talismans: /^TAL_\d{3}$/, consommables: /^CON_\d{3}$/, pilules: /^PIL_\d{2}$/,
   ennemis: /^ENM_\d{3}$/, boss: /^BOS_(\d{3}|M\d{2})$/, salles: /^ROM_\d{3}$/, themes: /^THM_[A-Z]{3}$/, etages: /^FLR_[A-Z]{3}_\d$/, routes: /^RTE_\d{2}$/,
-  transformations: /^TRF_\d{3}$/, synergies: /^SYN_\d{3}$/, objectifs: /^OBJ_\d{3}$/, defis: /^DEF_\d{3}$/, secrets: /^SEC_\d{3}$/ };
+  transformations: /^TRF_\d{3}$/, eveils: /^EVE_\d{3}$/, synergies: /^SYN_\d{3}$/, objectifs: /^OBJ_\d{3}$/, defis: /^DEF_\d{3}$/, secrets: /^SEC_\d{3}$/ };
 for (const [liste, re] of Object.entries(prefixes)) for (const d of DON[liste]) if (!re.test(d.id)) err(`identifiant mal formé dans ${liste} : ${d.id}`);
 const nombreFini = (v, m) => { if (typeof v !== 'number' || !Number.isFinite(v)) err(m); };
 
@@ -91,6 +91,8 @@ for (const o of DON.objets) {
 }
 for (const t of DON.talismans) verifierEffets(t);
 for (const t of DON.transformations) { verifierEffets(t); verifierVisuel(t); const membres = DON.objets.filter(o => o.ensemble === t.ensemble); if (membres.length < t.seuil) err(`${t.id} : ensemble « ${t.ensemble} » trop petit (${membres.length} < ${t.seuil})`); }
+for (const v of DON.eveils) { verifierEffets(v); verifierVisuel(v); if (!existe(v.perso) || INDEX[v.perso].type === 'eveil') err(`${v.id} : personnage inconnu ${v.perso}`); }
+for (const p of DON.personnages) for (const r of [1, 2]) { const n = DON.eveils.filter(v => v.perso === p.id && v.rang === r).length; if (n !== 1) err(`${p.id} : ${n} éveil(s) de rang ${r} (attendu : 1)`); }
 for (const s of DON.synergies) { verifierEffets(s); if (!s.composants.length && !(s.elements || []).length) err(`${s.id} : ni composant ni nature`); for (const n of s.elements || []) if (!NATURES.includes(n)) err(`${s.id} : nature inconnue ${n}`); if (s.elements && !NATURES.filter(n => s.elements.includes(n)).every(n => DON.objets.some(o => (o.effets || []).some(e => e.element === n)))) err(`${s.id} : nature portée par aucun objet`); for (const c of s.composants) if (!existe(c)) err(`${s.id} : composant inconnu ${c}`); if (new Set(s.composants).size !== s.composants.length) err(`${s.id} : composant répété`); }
 for (const c of DON.consommables) if (!effetsActifs.has(c.effet) && !texte('40_actifs.js').includes('  ' + c.effet + '(J')) err(`${c.id} : effet « ${c.effet} » non implémenté`);
 for (const p of DON.pilules) if (p.contraire && !existe(p.contraire)) err(`${p.id} : contraire inconnu`);
@@ -179,6 +181,7 @@ const compteurs = [
   ['Familiers (comportements distincts)', new Set(DON.familiers.map(f => f.comportement)).size, null, null],
   ['Synergies documentées', DON.synergies.length, 60, 300],
   ['Transformations d’ensemble', DON.transformations.length, 12, 40],
+  ['Éveils de personnage', DON.eveils.length, null, null],
   ['Thèmes d’étage', DON.themes.length, 6, 12],
   ['Variantes d’étage', DON.etages.length, 12, 24],
   ['Boss (dont mini-boss)', DON.boss.length, 25, 70],
@@ -223,6 +226,8 @@ const tables = {
   routes: { titre: 'Routes et fins (RTE)', col: ['ID', 'Nom', 'Bifurcation', 'Prérequis', 'Boss', 'Récompense', 'Marque'], lignes: DON.routes.map(r => [r.id, r.nom, r.bifurcation, r.prerequis, r.boss.split('|').map(nomDe).join(' / '), r.recompense, r.marque]) },
   transformations: { titre: 'Transformations d’ensemble (TRF)', col: ['ID', 'Nom', 'Ensemble', 'Seuil', 'Effet', 'Objets de l’ensemble'],
     lignes: DON.transformations.map(t => [t.id, t.nom, t.ensemble, t.seuil + ' distincts', t.desc, DON.objets.filter(o => o.ensemble === t.ensemble).map(o => o.id).join(', ')]) },
+  eveils: { titre: 'Éveils de personnage (EVE) — après les boss des étages 3 et 6', col: ['ID', 'Personnage', 'Rang', 'Nom', 'Effet'],
+    lignes: DON.eveils.map(v => [v.id, v.perso + ' ' + nomDe(v.perso), v.rang === 1 ? 'I (étage 3)' : 'II (étage 6)', v.nom, v.desc]) },
   synergies: { titre: 'Synergies documentées (SYN)', col: ['ID', 'Nom', 'Composants', 'Type', 'Effet', 'Test d’acceptation'], lignes: DON.synergies.map(s => [s.id, s.nom, s.composants.length ? s.composants.map(c => c + ' ' + nomDe(c)).join(' + ') : 'natures : ' + s.elements.join(' + '), s.type, s.desc, s.test]) },
   objectifs: { titre: 'Objectifs de déblocage (OBJ)', col: ['ID', 'Nom', 'Condition', 'Débloque'], lignes: DON.objectifs.map(o => [o.id, o.nom, condTxt(o.condition), o.recompense.debloque.map(id => id + ' ' + nomDe(id)).join(', ')]) },
   defis: { titre: 'Défis — contrats de mission (DEF)', col: ['ID', 'Nom', 'Règles', 'Récompense'], lignes: DON.defis.map(d => [d.id, d.nom, d.desc, d.recompenseTexte]) },
@@ -398,7 +403,7 @@ if (verifierSeulement) process.exit(erreurs.length ? 1 : 0);
 const dCat = join(racine, 'catalogues'), dDos = join(racine, 'dossier');
 mkdirSync(dCat, { recursive: true }); mkdirSync(dDos, { recursive: true });
 const brut = { personnages: DON.personnages, passifs, actifs, talismans: DON.talismans, consommables: DON.consommables, pilules: DON.pilules, familiers: DON.familiers, ennemis: DON.ennemis, boss: DON.boss,
-  salles: DON.salles, themes: DON.themes, variantes_etage: DON.etages, positions_etage: DON.positions.filter(Boolean), branches: DON.branches, routes: DON.routes, transformations: DON.transformations,
+  salles: DON.salles, themes: DON.themes, variantes_etage: DON.etages, positions_etage: DON.positions.filter(Boolean), branches: DON.branches, routes: DON.routes, transformations: DON.transformations, eveils: DON.eveils,
   synergies: DON.synergies, objectifs: DON.objectifs, defis: DON.defis, secrets: DON.secrets };
 for (const [k, v] of Object.entries(brut)) writeFileSync(join(dCat, k + '.json'), JSON.stringify(v, null, 1) + '\n');
 for (const [k, t] of Object.entries(tables)) writeFileSync(join(dCat, k + '.csv'), csv(t.col, t.lignes));

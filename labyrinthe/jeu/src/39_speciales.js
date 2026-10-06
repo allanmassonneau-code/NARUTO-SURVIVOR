@@ -32,9 +32,9 @@ function preparerSalleSpeciale(s) {
   switch (s.type) {
     case 'heritage': {
       const L = pos('I'); const [x, y] = L[0] || centreSalle(s);
-      const choix = (J.def.regleCode === 'stratege' || possede(J, 'PSV_126')) ? 2 : 1;
+      const choix = J.drapeaux.troisChoix ? 3 : (J.def.regleCode === 'stratege' || possede(J, 'PSV_126')) ? 2 : 1;
       if (choix === 1) poserPiedestal(s, x, y, tirerObjet(P, 'heritage', al), { pool: 'heritage' });
-      else { const g = 'h' + s.id; poserPiedestal(s, x - 40, y, tirerObjet(P, 'heritage', al), { groupe: g, pool: 'heritage' }); poserPiedestal(s, x + 40, y, tirerObjet(P, 'heritage', al), { groupe: g, pool: 'heritage' }); }
+      else { const g = 'h' + s.id; for (let i = 0; i < choix; i++) poserPiedestal(s, x + (i - (choix - 1) / 2) * (choix === 3 ? 56 : 80), y, tirerObjet(P, 'heritage', al), { groupe: g, pool: 'heritage' }); }
       break;
     }
     case 'boutique': {
@@ -102,6 +102,7 @@ function peutPayer(p) {
     const d = prixPacteDetail(J.sante, pr.n);
     return { ok: !d.impossible, mortel: d.mortel, detail: d, manque: 'Santé insuffisante' };
   }
+  if (pr.type === 'troc') return { ok: !!objetTroc(p), manque: 'Rien à céder au serpent' };
   return { ok: false };
 }
 function acheter(p) {
@@ -114,10 +115,16 @@ function acheter(p) {
     else if (v.instable) { for (let i = 0; i < v.instable; i++) { const k = J.sante.prot.lastIndexOf('n'); if (k >= 0) J.sante.prot.splice(k, 1); } }
     else { if (v.detail.type === 'contenants') retirerConteneur(J.sante, p.prix.n); else J.sante.prot.splice(-v.detail.n); }
     evenement('cout_paye', { raison: 'pacte', n: p.prix.n });
-    P.pactesAchetes++; G.etage.pacteAchete = true; if (J.drapeaux.serment) { J.bonusPermanents.push({ s: 'degats', a: 0.5 }); }
+    P.pactesAchetes++; G.etage.pacteAchete = true; if (J.drapeaux.serment) { J.bonusPermanents.push({ s: 'degats', a: J.drapeaux.haine ? 1 : 0.5 }); }
     Son.jouer('sceau'); Progression.compteur('pactes', 1);
     if (santeTotale(J.sante) <= 0) { verifierMort(J, { type: 'prix', raison: 'pacte' }); return; }
     // les autres offres du pacte restent achetables (pas de groupe lié)
+  }
+  else if (p.prix.type === 'troc') { // troc du serpent : un objet contre un autre, sans une goutte de sang
+    const t = objetTroc(p); cederObjet(J, t); p.troc = null;
+    evenement('cout_paye', { raison: 'troc', id: t });
+    P.pactesAchetes++; G.etage.pacteAchete = true; Son.jouer('sceau'); Progression.compteur('pactes', 1);
+    G.textes.push({ x: J.x, y: J.y - 44, t: INDEX[t].nom + ' : cédé au serpent', age: 0, duree: 1.8, couleur: '#ff9ac0' });
   }
   G.achatPropose = null;
   if (p.ramassable) { const r = creerRamassable(p.ramassable, J.x, J.y, { immobile: true }); r.age = 1; collecter(r, J); if (!r.pris) { r.x = p.x; r.y = p.y + 14; } p.id = null; retirerPiedestalVide(); return; }
@@ -164,12 +171,16 @@ function relancerPiedestaux(s, o = {}) {
   const P = G.partie; let n = 0;
   for (const p of s.piedestaux) {
     if (!p.id || p.ramassable || (INDEX[p.id] && INDEX[p.id].cle)) continue;   // ni ressources, ni objets-clés
+    if (p.pool === 'marques' || p.pool === 'benedictions') { // une marque devient une autre marque, une bénédiction une autre bénédiction
+      const L = tirerOffresSpeciales(p.pool, G.alea.butin, 1, s.piedestaux.map(q => q.id)); if (!L.length) continue;
+      p.id = L[0]; p.cycle++; p.apparu = 0.35; G.effets.push({ type: 'reecriture', x: p.x, y: p.y - 16, age: 0, duree: 0.45 }); n++; continue;
+    }
     const pool = p.pool || 'heritage';
     let id = tirerObjet(P, pool, G.alea.butin, o.qualiteMin !== undefined ? { qualiteMin: o.qualiteMin } : {});
     if (possede(G.joueur, 'PSV_127') && (INDEX[id].qualite || 0) < (INDEX[p.id].qualite || 0)) id = tirerObjet(P, pool, G.alea.butin, { qualiteMin: INDEX[p.id].qualite || 0 });
     p.id = id; p.cycle++; p.apparu = 0.35; if (INDEX[id].type === 'actif') p.charges = chargesMax(INDEX[id]);
     if (p.prix && p.prix.type === 'ryo' && !p.solde) p.prix = prixObjet(id); // règle système : prix recalculé selon la qualité
-    if (p.prix && p.prix.type === 'pacte') p.prix = prixObjet(id, 'pacte');
+    if (p.prix && p.prix.type === 'pacte' && !p.prixFixe) p.prix = prixObjet(id, 'pacte');
     G.effets.push({ type: 'reecriture', x: p.x, y: p.y - 16, age: 0, duree: 0.45 });
     n++;
   }
@@ -190,7 +201,8 @@ function permuterPassifs(J) {
 function reconstruireInventaire(J) { // Kakuzu altéré : un passif remplacé par un autre de même qualité
   const L = J.passifs.filter(id => !INDEX[id].cle); if (!L.length) return;
   const vieux = L[Math.floor(Math.random() * L.length)]; const q = INDEX[vieux].qualite || 0;
-  const nouv = tirerObjet(G.partie, 'heritage', G.alea.butin, { qualiteMin: q, qualiteMax: q, passifSeulement: true });
+  const q2 = J.drapeaux.reconstructionPlus ? Math.min(4, q + 1) : q; // Reconstruction choisie : une qualité de plus
+  const nouv = tirerObjet(G.partie, 'heritage', G.alea.butin, { qualiteMin: q2, qualiteMax: q2, passifSeulement: true });
   J.passifs[J.passifs.indexOf(vieux)] = nouv; if (!J.acquis.includes(nouv)) J.acquis.push(nouv);
   recalculer(J); verifierTransformations(J);
   texteEcran({ t: INDEX[vieux].nom + ' → ' + INDEX[nouv].nom, ecran: true, age: 0, duree: 3, couleur: '#8ae0a0' });
@@ -283,9 +295,46 @@ function tirerOpportunite() {
   if (r < T0.pacte) return 'pacte'; if (r < T0.pacte + T0.sanctuaire) return 'sanctuaire'; return null;
 }
 // Les salles d'opportunité sont virtuelles : hors de la grille, reliées à la salle du boss
-function ouvrirOpportunite(type) {
+// ── Variantes : quatre pactes, quatre sanctuaires (poids en %) ; tirage figé par partie et par étage ──
+const VARIANTES_OPP = {
+  pacte: [
+    { id: 'classique', p: 40, nom: 'Pacte interdit', desc: 'Des techniques interdites, payées en vitalité.' },
+    { id: 'sang', p: 22, nom: 'Pacte de sang', desc: 'Trois marques de puissance, un contenant chacune : prenez-en autant que vous l’osez.' },
+    { id: 'troc', p: 20, nom: 'Troc du serpent', desc: 'Pas une goutte de sang : le serpent prend l’un de vos objets en échange.' },
+    { id: 'pari', p: 18, nom: 'Pari du serpent', desc: 'Trois offres voilées de grande valeur, un contenant chacune.' },
+  ],
+  sanctuaire: [
+    { id: 'classique', p: 40, nom: 'Sanctuaire des ermites', desc: 'Un présent des ermites, sans contrepartie.' },
+    { id: 'benedictions', p: 25, nom: 'Salle des bénédictions', desc: 'Trois bénédictions durables : une seule vous sera accordée.' },
+    { id: 'source', p: 18, nom: 'Source sacrée', desc: 'Une baignade soigne tout, efface les cicatrices et ajoute un contenant ; un présent attend.' },
+    { id: 'offrande', p: 17, nom: 'Tronc des offrandes', desc: 'Deux présents liés : 15 Ryō au tronc et vous gardez les deux.' },
+  ],
+};
+function tirerVariante(type) { const al = new Alea(G.partie.code + '|variante|' + type + '|' + G.etage.numero); return al.pondere(VARIANTES_OPP[type], v => v.p).id; }
+function varianteOpp(s) { const L = VARIANTES_OPP[s.type] || []; return L.find(v => v.id === s.variante) || L[0]; }
+// Marques de sang et bénédictions : tirage sans doublon, en respectant les exclusions et les objets uniques déjà portés
+function tirerOffresSpeciales(famille, al, n, exclus = []) {
+  const J = G.joueur, cle = famille === 'marques' ? 'marque' : 'benediction';
+  const L = DON.objets.filter(o => o[cle] && !exclus.includes(o.id) && !(o.exclusion || []).some(x => J.drapeaux[x]) && !(o.cumul === 'unique' && possede(J, o.id)));
+  return al.melanger(L).slice(0, n).map(o => o.id);
+}
+// Troc : l'objet que le serpent prendra pour ce piédestal (affiché avant l'achat) ; ni objet-clé, ni objet de départ
+function objetTroc(p) {
+  const J = G.joueur, depart = J.def.passifs || [];
+  const L = J.passifs.filter(id => !INDEX[id].cle && !depart.includes(id)); if (!L.length) return null;
+  if (!p.troc || !L.includes(p.troc)) { // chaque piédestal réclame si possible un objet différent
+    const pris = G.salle ? G.salle.piedestaux.filter(q => q !== p && q.id && q.troc).map(q => q.troc) : [], libres = L.filter(id => !pris.includes(id)), C = libres.length ? libres : L;
+    p.troc = C[hacher(p.uid + '|' + J.passifs.length)[0] % C.length];
+  }
+  return p.troc;
+}
+function cederObjet(J, id) { // les compagnons donnés par cet exemplaire partent avec lui ; contenants et ressources restent acquis
+  for (const e of INDEX[id].effets || []) if (e.familier) { const k = J.familiers.findIndex(f => f.source === id); if (k >= 0) J.familiers.splice(k, 1); }
+  retirerPassif(J, id);
+}
+function ouvrirOpportunite(type, variante) {
   const E = G.etage, sb = G.salle;
-  const s = creerSalle({ id: 'opp', type, forme: '1x1', cx: -1, cy: -1 });
+  const s = creerSalle({ id: 'opp', type, forme: '1x1', cx: -1, cy: -1 }); s.variante = variante || tirerVariante(type);
   const gab = DON.salles.find(g => g.type === type); appliquerGabarit(s, gab, null);
   E.salles.opp = s; E.opportunite = type;
   // porte : mur du haut de la salle du boss si libre, sinon un autre côté
@@ -297,16 +346,23 @@ function ouvrirOpportunite(type) {
 }
 function preparerOpportunite(s) {
   const P = G.partie, al = G.alea.butin; const L = (s.pointsSpeciaux || []).filter(p => p.c === 'I').map(p => centreTuile(p.tx, p.ty));
+  const [cx, cy] = centreSalle(s), yI = L.length ? L[0][1] : cy, trois = [[cx - 3 * TUILE, yI], [cx, yI], [cx + 3 * TUILE, yI]];
+  const v = s.variante || 'classique', g = 'sa' + s.id;
   if (s.type === 'pacte') {
-    const n = al.entierEntre(1, L.length);
-    for (let i = 0; i < n; i++) { const id = tirerObjet(P, 'pacte', al); poserPiedestal(s, L[i][0], L[i][1], id, { prix: prixObjet(id, 'pacte'), pool: 'pacte' }); }
-    s.statue = { x: centreSalle(s)[0], y: centreTuile(6, 2)[1], type: 'serpent', pv: 1 };
+    if (v === 'sang') tirerOffresSpeciales('marques', al, 3).forEach((id, i) => { poserPiedestal(s, trois[i][0], trois[i][1], id, { prix: { type: 'pacte', n: 1 }, pool: 'marques' }).prixFixe = true; });
+    else if (v === 'troc') { const n = al.chance(0.5) ? 3 : 2; for (let i = 0; i < n; i++) poserPiedestal(s, trois[i][0], trois[i][1], tirerObjet(P, 'pacte', al), { prix: { type: 'troc' }, pool: 'pacte' }); }
+    else if (v === 'pari') for (let i = 0; i < 3; i++) { const pe = poserPiedestal(s, trois[i][0], trois[i][1], tirerObjet(P, 'pacte', al, { qualiteMin: 2 }), { prix: { type: 'pacte', n: 1 }, pool: 'pacte' }); pe.voile = true; pe.prixFixe = true; }
+    else { const n = al.entierEntre(1, L.length); for (let i = 0; i < n; i++) { const id = tirerObjet(P, 'pacte', al); poserPiedestal(s, L[i][0], L[i][1], id, { prix: prixObjet(id, 'pacte'), pool: 'pacte' }); } }
+    s.statue = { x: cx, y: centreTuile(6, 2)[1], type: 'serpent', pv: 1 };
   } else {
-    const g = 'sa' + s.id; const n = al.chance(0.4) ? 2 : 1;
-    for (let i = 0; i < n; i++) poserPiedestal(s, n === 1 ? centreSalle(s)[0] : L[i][0], L[i][1], tirerObjet(P, 'sanctuaire', al), { groupe: n > 1 ? g : null, pool: 'sanctuaire' });
-    s.statue = { x: centreSalle(s)[0], y: centreTuile(6, 2)[1], type: 'crapaud', pv: 1 };
+    if (v === 'benedictions') tirerOffresSpeciales('benedictions', al, 3).forEach((id, i) => poserPiedestal(s, trois[i][0], trois[i][1], id, { groupe: g, pool: 'benedictions' }));
+    else if (v === 'source') { poserPiedestal(s, cx, yI, tirerObjet(P, 'sanctuaire', al), { pool: 'sanctuaire' }); s.source = { x: cx, y: yI + 2 * TUILE, utilisee: false, sacree: true }; }
+    else if (v === 'offrande') { for (const k of [-1, 1]) poserPiedestal(s, cx + k * 1.5 * TUILE, yI, tirerObjet(P, 'sanctuaire', al), { groupe: g, pool: 'sanctuaire' }); s.machines.push({ x: cx, y: yI + 1.7 * TUILE, type: 'tronc', usages: 0, uid: 0, groupe: g }); }
+    else { const n = al.chance(0.4) ? 2 : 1; for (let i = 0; i < n; i++) poserPiedestal(s, n === 1 ? cx : L[i][0], L[i][1], tirerObjet(P, 'sanctuaire', al), { groupe: n > 1 ? g : null, pool: 'sanctuaire' }); }
+    s.statue = { x: cx, y: centreTuile(6, 2)[1], type: 'crapaud', pv: 1 };
     P.sanctuaireVisite = true;
   }
+  const V = varianteOpp(s); annoncer({ t: 0, nom: V.nom, desc: V.desc, mineur: true });
 }
 function frapperStatue(s) {
   const st = s.statue; if (st.detruite) return; st.detruite = true;
@@ -372,6 +428,14 @@ function utiliserMachine(m) {
       Son.jouer('objet_mineur'); break;
     case 'soin': if (J.ryo < 3 || rougeTotal(J.sante) >= rougeMax(J.sante)) { Son.jouer('refus'); return; } J.ryo -= 3; soignerJoueur(J, 1); Son.jouer('coeur'); break;
     case 'recharge': if (J.ryo < 5 || !J.actif) { Son.jouer('refus'); return; } J.ryo -= 5; chargerActif(J, 2, 'machine'); Son.jouer('charge_pleine'); break;
+    case 'tronc': { // tronc des offrandes : 15 Ryō d'un coup, et les deux présents liés deviennent libres
+      const L = G.salle.piedestaux.filter(p => p.groupe === m.groupe && p.id);
+      if (m.usages || L.length < 2) { Son.jouer('refus'); G.textes.push({ x: m.x, y: m.y - 24, t: m.usages ? 'Les ermites ont déjà accepté' : 'Trop tard : un présent est déjà parti', age: 0, duree: 1.2, couleur: '#c8c0a0' }); return; }
+      if (J.ryo < 15) { Son.jouer('refus'); G.textes.push({ x: m.x, y: m.y - 24, t: 'Il faut 15 Ryō (vous : ' + J.ryo + ')', age: 0, duree: 1.2, couleur: '#ff9a8a' }); return; }
+      J.ryo -= 15; m.usages = 1; G.stats.depenses += 15;
+      for (const p of L) { p.groupe = null; G.effets.push({ type: 'reecriture', x: p.x, y: p.y - 16, age: 0, duree: 0.45 }); }
+      G.textes.push({ x: m.x, y: m.y - 30, t: 'Offrande acceptée : gardez les deux', age: 0, duree: 1.8, couleur: '#fff0c0' }); Son.jouer('gong'); Son.jouer('ryo'); break;
+    }
     case 'troc': // échange la poche contre un talisman ou l'inverse
       if (J.poches.length) { J.poches.shift(); sortie('talisman'); Son.jouer('objet_mineur'); }
       else if (J.talisman) { J.talisman = null; recalculer(J); sortie('rouleau'); sortie('pilule'); Son.jouer('objet_mineur'); }
@@ -406,6 +470,12 @@ function majSource() {
   const s = G.salle, J = G.joueur; const S0 = s.source; if (!S0 || S0.utilisee) return;
   if (dist(S0.x, S0.y, J.x, J.y) > 20) return; G.machineProche = S0;
   if (!Entrees.vientEnfonce('interagir')) return;
+  if (S0.sacree) { // source sacrée : gratuite, soin complet, cicatrices effacées, un contenant (deux réserves sans vitalité)
+    S0.utilisee = true; soignerJoueur(J, 24); retirerCicatrice(J.sante, 99);
+    if (J.drapeaux.sansVitalite) ajouterProtection(J.sante, 4); else ajouterConteneur(J.sante, 1, true);
+    texteEcran({ x: 0, y: 0, t: 'Source sacrée : soin complet, cicatrices effacées, un contenant', age: 0, duree: 2.4, couleur: '#d8f4ff' });
+    Son.jouer('eau'); Son.jouer('coeur'); G.effets.push({ type: 'vapeur', x: S0.x, y: S0.y, age: 0, duree: 1.6 }); return;
+  }
   if (J.ryo >= 5) J.ryo -= 5; else if (J.cles >= 1) J.cles--; else { Son.jouer('refus'); return; }
   S0.utilisee = true; soignerJoueur(J, 4); if (J.drapeaux.sansVitalite) ajouterProtection(J.sante, 2); Son.jouer('eau'); Son.jouer('coeur');
   G.effets.push({ type: 'vapeur', x: S0.x, y: S0.y, age: 0, duree: 1.2 });

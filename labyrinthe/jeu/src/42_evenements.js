@@ -29,7 +29,7 @@ function evenement(nom, data = {}) {
     executerAction(e.faire, J, data, d);
   }
   // règles de personnage liées aux événements
-  if (nom === 'soin_excedentaire' && J.def.regleCode === 'controle_chakra') J.force = Math.min(6, J.force + data.demis);
+  if (nom === 'soin_excedentaire' && J.def.regleCode === 'controle_chakra') J.force = Math.min(plafondForce(J), J.force + data.demis);
 }
 function conditionDeclencheur(si, J, data) {
   switch (si) {
@@ -38,6 +38,7 @@ function conditionDeclencheur(si, J, data) {
     case 'boss': return G.salle.type === 'boss';
     case 'vitaliteTouchee': return data.res && data.res.perduRouge > 0;
     case 'ennemiNonBoss': return data.e && !data.e.boss;
+    case 'intacte': return !G.salle.joueurTouche;
     case 'pleineVitalite': return rougeTotal(J.sante) >= rougeMax(J.sante) && rougeMax(J.sante) > 0;
     default: return true;
   }
@@ -78,6 +79,7 @@ function executerAction(A, J, data, src) {
       const p = creerProjectileJoueur(J, J.x, J.y - 12, Math.atan2(c.y - (c.hauteur || 8) - (J.y - 12), c.x - J.x), deg * (A.coef || 2), ++_cycle, { n: 2 }, { appoint: true });
       p.apparence = 'vent'; p.perce = Math.max(p.perce, 1); p.gen = 1; Son.jouer('vent', 0.5); break;
     }
+    case 'susanoo': EFFETS_ACTIFS.susanoo(J, { duree: A.duree || 4, coef: A.coef || 4 }); break;
     case 'tir_bonus': { const d = Entrees.visee.dir || J.tir.dir; const a = Math.atan2(DIRS[d][1], DIRS[d][0]) + (Math.random() - 0.5) * 0.3; creerProjectileJoueur(J, J.x, J.y - 12, a, J.stats.degats, ++_cycle, { n: 2 }); break; }
     case 'pluie_armes': for (let i = 0; i < (A.n || 8); i++) setTimeoutJeu(() => { const c = G.ennemis.filter(e => !e.mort && !e.cache); const cible = c[Math.floor(Math.random() * c.length)]; const x = cible ? cible.x + (Math.random() - 0.5) * 20 : J.x + (Math.random() - 0.5) * 200, y = cible ? cible.y : J.y + (Math.random() - 0.5) * 120; G.effets.push({ type: 'frappe_sol', x, y, age: 0, duree: 0.45, deg: deg * (A.coef || 1.5), r: 14, proprio: 'joueur', petite: true, arme: true }); }, i * 0.08); break;
   }

@@ -1,0 +1,37 @@
+﻿ID;Personnage;Rang;Nom;Effet
+EVE_001;CHR_001 Naruto;I (étage 3);Volonté du feu;"Obstination dès le dernier cœur (et non la dernière demi-unité), à +1,5 dégâts ; un contenant de plus."
+EVE_002;CHR_001 Naruto;II (étage 6);Mode ermite;"Immobile 0,6 s, l’énergie naturelle afflue : dégâts ×1,5 jusqu’au prochain pas ; portée +1."
+EVE_003;CHR_002 Sasuke;I (étage 3);Sharingan;"Charge 25 % plus rapide ; chance +1 ; à pleine charge, la foudre saute sur trois cibles."
+EVE_004;CHR_002 Sasuke;II (étage 6);Mangekyō Sharingan;"Les tirs pleinement chargés embrasent leur cible de flammes noires ; dégâts +0,5."
+EVE_005;CHR_003 Sakura;I (étage 3);Force centuplée;"La Force monte jusqu’à 10 ; chaque salle nettoyée sans être touchée en ajoute un point."
+EVE_006;CHR_003 Sakura;II (étage 6);Sceau Byakugō;Tombée à un cœur, la Force se change en soin (une demi-unité par point), une fois par salle.
+EVE_007;CHR_004 Kakashi;I (étage 3);Copie parfaite;"Utiliser une technique charge l’autre d’une charge ; chance +1."
+EVE_008;CHR_004 Kakashi;II (étage 6);Raikiri;"Vos tirs ont 15 % de chances d’enchaîner la foudre (×0,8) ; dégâts +0,5."
+EVE_009;CHR_005 Rock Lee;I (étage 3);Lotus primaire;Une frappe sur quatre tourne sur elle-même : arc complet, dégâts ×1,6.
+EVE_010;CHR_005 Rock Lee;II (étage 6);Sixième porte;"Cadence +0,5 et son plafond +0,8 ; vitesse +0,3 ; vapeur verte."
+EVE_011;CHR_006 Hinata;I (étage 3);Points de chakra;"Vos paumes ont 30 % de chances de ralentir (2 s) ; dégâts +0,4."
+EVE_012;CHR_006 Hinata;II (étage 6);Soixante-quatre paumes;Toutes les 10 s de combat, une rotation des huit trigrammes vous protège et frappe tout autour (×4).
+EVE_013;CHR_007 Shikamaru;I (étage 3);Plan à long terme;"Les salles d’héritage proposent trois objets au choix ; chance +1."
+EVE_014;CHR_007 Shikamaru;II (étage 6);Ombre étrangleuse;"Les ennemis immobilisés subissent 50 % de dégâts en plus ; vos kunai immobilisent plus souvent (+10 %)."
+EVE_015;CHR_008 Gaara;I (étage 3);Armure de sable;Le bouclier de sable se reforme 10 s après avoir absorbé un coup.
+EVE_016;CHR_008 Gaara;II (étage 6);Tempête du désert;"Deux orbitaux de sable vous entourent ; dégâts +0,5."
+EVE_017;CHR_009 Kankurō;I (étage 3);Lames empoisonnées;Vos lames empoisonnent 45 % du temps (au lieu de 20 %), et plus longtemps.
+EVE_018;CHR_009 Kankurō;II (étage 6);Kuroari et Sanshōuo;"Une marionnette d’attaque rejoint Karasu ; vos marionnettes frappent 50 % plus fort."
+EVE_019;CHR_010 Kiba;I (étage 3);Gatsūga;"Akamaru frappe deux fois plus fort ; il fouille 25 % des salles nettoyées."
+EVE_020;CHR_010 Kiba;II (étage 6);Crocs sur crocs;"Vitesse +0,4 ; vos griffes font saigner (25 %)."
+EVE_021;CHR_011 Sasori;I (étage 3);Cœur de marionnette;Chaque salle nettoyée sans être touché rend une demi-réserve de chakra.
+EVE_022;CHR_011 Sasori;II (étage 6);Marionnettes humaines;"Deux marionnettes d’attaque ; vos senbon empoisonnent une fois sur deux."
+EVE_023;CHR_012 Kakuzu;I (étage 3);Cœur volé;"Quatre contenants au plus (au lieu de trois), et un de plus tout de suite ; chaque boss vaincu rapporte 5 Ryō."
+EVE_024;CHR_012 Kakuzu;II (étage 6);Masques élémentaires;"Un quatrième tir élémentaire ; dégâts +0,5."
+EVE_025;ALT_001 Naruto — Réceptacle fissuré;I (étage 3);Clones de relais;"Jusqu’à six clones (au lieu de quatre) ; une salle nettoyée en rend deux."
+EVE_026;ALT_001 Naruto — Réceptacle fissuré;II (étage 6);Rasengan des clones;Vos clones frappent 80 % plus fort.
+EVE_027;ALT_002 Sasuke — Serment de vengeance;I (étage 3);Haine canalisée;Chaque pacte conclu donne +1 dégâts (au lieu de +0,5).
+EVE_028;ALT_002 Sasuke — Serment de vengeance;II (étage 6);Susanoo;En entrant dans une salle de combat, Susanoo se dresse 4 s autour de vous.
+EVE_029;ALT_003 Sakura — Sceau de la centaine;I (étage 3);Sceau élargi;Le sceau contient 18 demis (au lieu de 12) et se remplit d’un demi par salle nettoyée.
+EVE_030;ALT_003 Sakura — Sceau de la centaine;II (étage 6);Création renaissance;Quand le sceau soigne, une onde frappe tout autour (×3) et vous restez invulnérable 1,5 s.
+EVE_031;ALT_004 Gaara — Shukaku déchaîné;I (étage 3);Sable compact;"Les grains suspendus arrêtent les tirs ennemis ; dégâts +0,4."
+EVE_032;ALT_004 Gaara — Shukaku déchaîné;II (étage 6);Shukaku;Vos grains explosent légèrement à l’impact.
+EVE_033;ALT_005 Kankurō — Trois marionnettes;I (étage 3);Changement éclair;"Changer de marionnette ne coupe plus le tir ; vos lames empoisonnent (30 %)."
+EVE_034;ALT_005 Kankurō — Trois marionnettes;II (étage 6);Arsenal complet;"Une marionnette d’attaque se joint au combat ; vos marionnettes frappent 50 % plus fort."
+EVE_035;ALT_006 Kakuzu — Cinq cœurs;I (étage 3);Sixième cœur;Un cœur de réserve de plus et un contenant.
+EVE_036;ALT_006 Kakuzu — Cinq cœurs;II (étage 6);Reconstruction choisie;À chaque étage, l’objet reconstruit gagne une qualité.

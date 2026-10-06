@@ -98,7 +98,7 @@ function infligerDegats(e, deg, src = {}) {
   // aura d'un protecteur voisin : dégâts ×0,5
   for (const p of G.ennemis) if (p !== e && !p.mort && p.def.params && p.def.params.bouclier === 'aura' && dist(p.x, p.y, e.x, e.y) < 2.5 * TUILE) { deg *= 0.5; break; }
   if (G.joueur.drapeaux.bonusBoss && e.boss) deg *= 1.1;
-  if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if (D.inoShikaCho && e.statuts.immobilise) deg *= 1.5; }
+  if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if ((D.inoShikaCho || D.ombreEtrangleuse) && e.statuts.immobilise) deg *= 1.5; }
   if (e.statuts.marque) deg *= e.statuts.peur && G.joueur.drapeaux.troisMarques ? 2 : 1.4; // marqué : +40 % de toutes les sources (×2 s'il fuit, avec les trois marques)
   e.pv -= deg; e.dernierCoup = G.temps;
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }

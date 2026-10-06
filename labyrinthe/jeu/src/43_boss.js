@@ -67,6 +67,7 @@ function mortBoss(e) {
       const soin = G.alea.recomp.chance(0.5) ? 'coeur' : 'protection'; creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : soin, cx - 30, cy + 20, {}); // soin mesuré, utile à tous
       if (G.joueur.def.regleCode === 'avarice') creerRamassable('ryo5', cx + 30, cy + 20, {});
       poserSortiesBoss(s);
+      verifierEveils(G.joueur, G.etage.numero);
       const opp = tirerOpportunite(); if (opp) ouvrirOpportunite(opp);
       G.partie.opportunitePrecedente = !!opp;
       Musique.jouerPiste(G.theme, INDEX[G.theme].musique);

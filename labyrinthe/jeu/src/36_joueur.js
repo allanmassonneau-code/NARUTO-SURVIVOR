@@ -98,7 +98,9 @@ function blesserJoueur(demis, src = {}) {
   if (J.invuln > 0 || J.intangible || J.etat === 'mort' || G.transition || J.etat === 'objet') return false;
   if (G.modeTest && G.modeTest.dieu) return false;
   // protections acquises (dans l'ordre) : bouclier de sable, substitution, talisman, clones
-  if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { J.bouclierSable = false; J.invuln = 0.6; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.5 }); Son.jouer('sable'); return false; }
+  if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { J.bouclierSable = false; J.invuln = 0.6; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.5 }); Son.jouer('sable');
+    if (J.drapeaux.sableReforme) { const s = G.salle; setTimeoutJeu(() => { if (G.salle === s && s.combat && !J.bouclierSable) { J.bouclierSable = true; Son.jouer('sable', 0.5); G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.4 }); } }, 10); } // Armure de sable
+    return false; }
   if (J.drapeaux.substitution && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) { J.invuln = 1; G.effets.push({ type: 'buche', x: J.x, y: J.y, age: 0, duree: 0.8 }); Son.jouer('fumee'); evenement('substitution', {}); if (J.drapeaux.serieSubstitution) { J.compteurs.serie = (J.compteurs.serie || 0) + 1; J.stats = calculerStats(J); } return false; }
   if (aTalisman(J, 'TAL_033') && !G.etage.charmeUtilise) { G.etage.charmeUtilise = true; J.invuln = 1; G.effets.push({ type: 'immunite', x: J.x, y: J.y - 20, age: 0, duree: 0.6 }); return false; }
   if (J.def.regleCode === 'clones_ressource' && J.clones > 0) { J.clones--; majClonesRessource(J); J.invuln = 1.0; G.effets.push({ type: 'fumee', x: J.x + 10, y: J.y - 8, age: 0, duree: 0.4 }); Son.jouer('fumee'); return false; }
@@ -118,8 +120,13 @@ function blesserJoueur(demis, src = {}) {
   G.salle.joueurTouche = true; if (J.compteurs.serie) { J.compteurs.serie = 0; if (J.drapeaux.serieParfaite) { J.stats = calculerStats(J); G.textes.push({ x: J.x, y: J.y - 40, t: 'Série perdue', age: 0, duree: 0.9, couleur: '#c0b0b8' }); } }
   evenement('degat_recu', { demis, src, res });
   if (res.mort) verifierMort(J, src);
-  else if (santeTotale(J.sante) <= 1 && J.def.regleCode === 'obstination' && !J.drapeaux.obstination) { J.drapeaux.obstination = true; recalculer(J); G.textes.push({ x: J.x, y: J.y - 34, t: 'Obstination !', age: 0, duree: 1, couleur: '#ffb040' }); }
-  if (J.def.regleCode === 'sceau_centaine' && santeTotale(J.sante) <= 1 && J.sceau > 0) { const k = Math.min(J.sceau, rougeMax(J.sante) - rougeTotal(J.sante)); soignerRouge(J.sante, k); J.sceau -= k; G.effets.push({ type: 'sceau_soin', x: J.x, y: J.y - 16, age: 0, duree: 0.8 }); Son.jouer('coeur'); }
+  else if (santeTotale(J.sante) <= (J.drapeaux.volonte ? 2 : 1) && J.def.regleCode === 'obstination' && !J.drapeaux.obstination) { J.drapeaux.obstination = true; recalculer(J); G.textes.push({ x: J.x, y: J.y - 34, t: 'Obstination !', age: 0, duree: 1, couleur: '#ffb040' }); }
+  if (J.def.regleCode === 'sceau_centaine' && santeTotale(J.sante) <= 1 && J.sceau > 0) { const k = Math.min(J.sceau, rougeMax(J.sante) - rougeTotal(J.sante)); soignerRouge(J.sante, k); J.sceau -= k; G.effets.push({ type: 'sceau_soin', x: J.x, y: J.y - 16, age: 0, duree: 0.8 }); Son.jouer('coeur');
+    if (J.drapeaux.renaissance) { J.invuln = Math.max(J.invuln, 1.5); onde(J.x, J.y, 2.5 * TUILE, J.stats.degats * 3, 1); G.effets.push({ type: 'onde', x: J.x, y: J.y - 10, r: 80, age: 0, duree: 0.45, couleur: '#c080f0' }); } } // Création renaissance
+  if (J.drapeaux.byakugo && santeTotale(J.sante) <= 2 && J.force > 0 && !G.salle.byakugo && rougeMax(J.sante) > rougeTotal(J.sante)) { // Sceau Byakugō : la Force devient soin
+    G.salle.byakugo = true; const k = Math.min(J.force, rougeMax(J.sante) - rougeTotal(J.sante)); soignerRouge(J.sante, k); J.force -= k;
+    G.effets.push({ type: 'sceau_soin', x: J.x, y: J.y - 16, age: 0, duree: 0.8 }); G.textes.push({ x: J.x, y: J.y - 34, t: 'Byakugō : +' + k, age: 0, duree: 1, couleur: '#d0a0ff' }); Son.jouer('coeur');
+  }
   return true;
 }
 // Éclair jaune : le coup est esquivé, on glisse loin de sa source et un kunai marqué explose à l'ancienne place
@@ -153,7 +160,12 @@ function sacrifier(demis) {
   return res;
 }
 function verifierMort(J, src) {
-  // résurrections, dans l'ordre : cœur de réserve (Kakuzu), cœur volé (objet), puis mort
+  // résurrections, dans l'ordre : phénix (une fois par étage, jamais pour un prix ou un sacrifice), cœur de réserve (Kakuzu), cœur volé (objet), puis mort
+  if (J.drapeaux.phenix && G.etage && !G.etage.phenix && src.type !== 'prix' && src.type !== 'sacrifice') {
+    G.etage.phenix = true; const c = J.sante.cont.find(x => x.t === 'vit');
+    if (c && !J.drapeaux.sansVitalite) c.p = Math.max(c.p, 1); else if (ajouterProtection(J.sante, 1, 'b')) J.sante.partiel = 1;
+    J.invuln = 2; G.effets.push({ type: 'resurrection', x: J.x, y: J.y, age: 0, duree: 1 }); Son.jouer('transformation'); G.textes.push({ x: J.x, y: J.y - 34, t: 'Bénédiction du phénix !', age: 0, duree: 1.4, couleur: '#ffb060' }); return;
+  }
   if (J.coeursReserve > 0) { J.coeursReserve--; J.sante = santeInit({ vitalite: 1 }); J.invuln = 2; G.effets.push({ type: 'resurrection', x: J.x, y: J.y, age: 0, duree: 1 }); Son.jouer('transformation'); G.textes.push({ x: J.x, y: J.y - 34, t: 'Cœur de réserve !', age: 0, duree: 1.4, couleur: '#6ad060' }); return; }
   const k = J.passifs.indexOf('PSV_089');
   if (k >= 0) { J.passifs.splice(k, 1); J.sante = santeInit({ vitalite: 1 }); if (J.drapeaux.sansVitalite) J.sante = santeInit({ protection: 1 }); recalculer(J); J.invuln = 2; G.effets.push({ type: 'resurrection', x: J.x, y: J.y, age: 0, duree: 1 }); Son.jouer('transformation'); return; }

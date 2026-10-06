@@ -448,13 +448,17 @@ function dessinerPiedestal(g, p, X, Y) {
   const flotte = Math.round(Math.sin(G.temps * 2.5 + p.x) * 2);
   if (p.ramassable) { const s = spriteRamassable(p.ramassable); g.drawImage(s, x - Math.round(s.width / 2), y - s.height - 4 + flotte); }
   else {
-    const ic = G.etage && G.etage.malediction === 'aveugle' ? iconeObjet('?') : iconeObjet(p.id);
+    const ic = p.voile ? iconeObjet('?voile') : G.etage && G.etage.malediction === 'aveugle' ? iconeObjet('?') : iconeObjet(p.id);
     const bloque = p.attendSortie || G.joueur && G.joueur.delaiActif > 0 && INDEX[p.id] && INDEX[p.id].type === 'actif'; // pas encore reprenable
     g.drawImage(ellipse(8, 3, 'rgba(0,0,0,0.3)'), x - 8, y - 5);
     if (bloque) g.globalAlpha = 0.4 + 0.15 * Math.sin(G.temps * 8);
     g.drawImage(ic, x - 10, y - 26 + flotte); g.globalAlpha = 1;
   }
-  if (p.prix) {
+  if (p.prix && p.prix.type === 'troc') { // troc : « contre » et l'icône de l'objet que le serpent prendra
+    const t = objetTroc(p), l = Police.largeur('contre');
+    g.fillStyle = '#1c1420'; g.fillRect(x - l / 2 - 14, y + 9, l + 30, t ? 22 : 10); Police.ecrire(g, t ? 'contre' : 'rien à céder', x - (t ? 12 : 0), y + 11, '#ff9a9a', { a: 'c', ombre: null });
+    if (t) { g.fillStyle = '#6a2a4a'; g.fillRect(x + l / 2 - 8, y + 9, 22, 22); g.drawImage(iconeObjet(t), x + l / 2 - 7, y + 10); }
+  } else if (p.prix) {
     const n = p.prix.type === 'ryo' ? prixRyo(p) : 0; const t = p.prix.type === 'ryo' ? (n === 0 ? 'Gratuit' : String(n)) : p.prix.type === 'pacte' ? prixPacteTexte(p) : '';
     g.fillStyle = p.solde || (p.prix.type === 'ryo' && n < p.prix.n) ? '#c83a2a' : '#1c1420'; const l = Police.largeur(t) + (p.prix.type === 'ryo' ? 10 : 2);
     g.fillRect(x - l / 2 - 2, y + 9, l + 4, 10);
@@ -469,6 +473,16 @@ function prixPacteTexte(p) {
   return p.prix.n + ' ♥ vitalité';
 }
 function dessinerMachine(g, m, x, y) {
+  if (m.type === 'tronc') { // tronc des offrandes : coffre de bois à claire-voie, corde et pompon, pièces au fond
+    const ouvert = !m.usages; g.drawImage(ellipse(13, 4, 'rgba(0,0,0,0.3)'), x - 13, y + 4);
+    g.fillStyle = '#1c1410'; g.fillRect(x - 13, y - 9, 26, 16); g.fillStyle = '#8a5a32'; g.fillRect(x - 12, y - 8, 24, 14); g.fillStyle = '#a8743e'; g.fillRect(x - 12, y - 8, 24, 2);
+    g.fillStyle = '#4a2e1a'; for (let k = -9; k <= 9; k += 3) g.fillRect(x + k, y - 6, 2, 3); // claire-voie
+    g.fillStyle = '#6a4226'; g.fillRect(x - 12, y, 24, 1); g.fillRect(x - 12, y + 4, 24, 1);
+    g.fillStyle = '#e8d8a8'; g.fillRect(x - 12, y - 11, 24, 2); g.fillStyle = '#c83a2a'; g.fillRect(x - 1, y - 11, 3, 6); // corde et pompon
+    if (ouvert && Math.sin(G.temps * 3) > 0.6) { g.fillStyle = '#f0c040'; g.fillRect(x + 4, y - 7, 2, 1); }
+    if (G.machineProche === m) Police.ecrire(g, (m.usages ? 'Offrande faite' : 'Offrande : 15 Ryō') + ' (' + Entrees.libelle('interagir') + ')', x, y - 24, '#fff0c0', { a: 'c' });
+    return;
+  }
   const col = { loterie: '#c83a2a', don_vital: '#8a1a2a', diseuse: '#5a3a8a', soin: '#d86a8a', recharge: '#3a7ad8', troc: '#6a8a3a' }[m.type] || '#888';
   if (m.detruite) { g.fillStyle = '#3a3036'; g.fillRect(x - 10, y + 2, 20, 6); return; }
   g.drawImage(contourner(peindre(['.kkkkkkkkkkkk.', 'kccccccccccccck'.slice(0, 14), 'kcwwwwwwwwwwck', 'kcwbbbbbbbbwck', 'kcwbyybyybbwck', 'kcwbbbbbbbbwck', 'kcwwwwwwwwwwck', 'kccccccccccccck'.slice(0, 14), 'kccyyyyyyyyyck'.slice(0, 14), 'kcccccccccccck', 'kkkkkkkkkkkkkk', '.kk........kk.'], { k: '#1c1420', c: col, w: '#e8e0d0', b: '#2a2a34', y: '#f0c040' })), x - 7, y - 10);
@@ -500,9 +514,11 @@ function dessinerAutel(g, A, x, y) {
   Police.ecrire(g, String(A.paiements), x, y + 12, '#d8a0a0', { a: 'c' });
 }
 function dessinerSource(g, S, x, y) {
-  g.drawImage(ellipse(26, 12, S.utilisee ? '#2a3a40' : '#3a8ab0'), x - 26, y - 12); g.drawImage(ellipse(20, 8, S.utilisee ? '#34464e' : '#6ac8e8'), x - 20, y - 8);
-  if (!S.utilisee && Math.random() < 0.2) G.particules.push({ x: S.x + (Math.random() - 0.5) * 30, y: S.y - 4, vx: 0, vy: -18, age: 0, duree: 0.8, couleur: 'rgba(230,240,255,0.5)', taille: 2 });
-  if (G.machineProche === S) Police.ecrire(g, 'Se baigner : 5 Ryō ou 1 clé (' + Entrees.libelle('interagir') + ')', x, y - 26, '#e0f4ff', { a: 'c' });
+  const sacree = S.sacree && !S.utilisee; // source sacrée : bord de pierre clair, eau de jade, lueurs dorées
+  if (S.sacree) { g.drawImage(ellipse(30, 14, '#8a8a7a'), x - 30, y - 14); g.drawImage(ellipse(28, 13, '#c8c4b0'), x - 28, y - 13); }
+  g.drawImage(ellipse(26, 12, S.utilisee ? '#2a3a40' : sacree ? '#3aa8a0' : '#3a8ab0'), x - 26, y - 12); g.drawImage(ellipse(20, 8, S.utilisee ? '#34464e' : sacree ? '#8ae8d8' : '#6ac8e8'), x - 20, y - 8);
+  if (!S.utilisee && Math.random() < 0.2) G.particules.push({ x: S.x + (Math.random() - 0.5) * 30, y: S.y - 4, vx: 0, vy: -18, age: 0, duree: 0.8, couleur: sacree && Math.random() < 0.5 ? 'rgba(255,236,160,0.7)' : 'rgba(230,240,255,0.5)', taille: 2 });
+  if (G.machineProche === S) Police.ecrire(g, (S.sacree ? 'Se baigner dans la source sacrée' : 'Se baigner : 5 Ryō ou 1 clé') + ' (' + Entrees.libelle('interagir') + ')', x, y - 26, '#e0f4ff', { a: 'c' });
 }
 function dessinerSortie(g, s, x, y) {
   const t = G.temps; const k = s.t ? Math.min(1, s.t / 0.35) : 0;

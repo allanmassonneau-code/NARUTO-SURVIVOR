@@ -10,7 +10,7 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 |---|---|---|---|
 | Personnages de base | 12 | 12 | 40 |
 | Variantes altérées | 6 | 6 | 40 |
-| Objets passifs | 182 | 150 | 480 |
+| Objets passifs | 194 | 150 | 480 |
 | Objets actifs | 39 | 30 | 120 |
 | Talismans | 35 | 35 | 100 |
 | Consommables (rouleaux, sceaux) | 30 | 30 | 80 |
@@ -18,6 +18,7 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 | Familiers (comportements distincts) | 16 | — | — |
 | Synergies documentées | 120 | 60 | 300 |
 | Transformations d’ensemble | 18 | 12 | 40 |
+| Éveils de personnage | 36 | — | — |
 | Thèmes d’étage | 10 | 6 | 12 |
 | Variantes d’étage | 18 | 12 | 24 |
 | Boss (dont mini-boss) | 37 | 25 | 70 |
@@ -53,7 +54,7 @@ Taille des pools (objets de poids non nul) : heritage 172, boss 64, boutique 80,
 | ALT_005 | Kankurō — Trois marionnettes | CHR_009 | 3 | 3.4 | 2.4 | 6.5 | 4.3 | projectile / lame_poison | Kuroari : piège | Marionnettes échangeables (bouton supérieur gauche) : Karasu (éventail de lames), Kuroari (orbe lent qui immobilise), Sanshōuo (bouclier frontal, tir faible). | OBJ_044 |
 | ALT_006 | Kakuzu — Cinq cœurs | CHR_012 | 1 | 3.4 | 2.2 | 6 | 4.3 | projectile / element | Fils de Jiongu | Inventaire reconstruit : à chaque nouvel étage, un passif au hasard est remplacé par un autre de même qualité. Quatre cœurs de réserve : à la mort, il se relève avec un contenant et en perd un. | OBJ_045 |
 
-## Objets passifs (PSV) — 182
+## Objets passifs (PSV) — 194
 
 | ID | Nom | Famille | Q | Pools (poids) | Effet | Cumul | Ensemble | Statut | Déblocage |
 |---|---|---|---|---|---|---|---|---|---|
@@ -237,6 +238,18 @@ Taille des pools (objets de poids non nul) : heritage 172, boss 64, boutique 80,
 | PSV_178 | Étiquette à retardement | ressource | 2 | heritage 2, boutique 1 | 35 % des coups plantent une étiquette qui explose une seconde plus tard (×2,4). | cumul | argile | création originale | — |
 | PSV_179 | Rouleau de la double technique | hybride | 3 | bibliotheque 1, heritage 1 | Utiliser un actif déclenche aussi une salve de vos tirs dans les huit directions. | cumul |  | création originale | — |
 | PSV_180 | Sang du clan | contrepartie | 2 | heritage 1, pacte 1 | Dégâts +0,25 par contenant de vitalité vide. | unique |  | création originale | — |
+| PSV_181 | Marque de sang : force | contrepartie | 2 |  | Dégâts +1,2. | cumul |  | création originale | — |
+| PSV_182 | Marque de sang : vivacité | contrepartie | 2 |  | Cadence +0,6. | cumul |  | création originale | — |
+| PSV_183 | Marque de sang : allonge | contrepartie | 2 |  | Portée +2,5 ; vitesse des tirs +1. | cumul |  | création originale | — |
+| PSV_184 | Marque de sang : fortune | contrepartie | 2 |  | Chance +3 ; +12 Ryō. | cumul |  | création originale | — |
+| PSV_185 | Marque de sang : célérité | contrepartie | 2 |  | Vitesse +0,5 ; cadence +0,2. | cumul |  | création originale | — |
+| PSV_186 | Marque de sang : soif | contrepartie | 2 |  | Dégâts +0,5 ; chaque élimination a 6 % de chances de soigner une demi-unité. | cumul |  | création originale | — |
+| PSV_187 | Bénédiction du crapaud | hybride | 3 |  | Un contenant de vitalité et soin complet ; dégâts +0,3. | cumul |  | création originale | — |
+| PSV_188 | Bénédiction de la limace | hybride | 3 |  | Une réserve de chakra, puis une de plus toutes les 4 salles nettoyées. | cumul |  | création originale | — |
+| PSV_189 | Bénédiction du serpent blanc | hybride | 3 |  | Chance +2, cadence +0,4. | cumul |  | création originale | — |
+| PSV_190 | Bénédiction de l’ermite | hybride | 3 |  | Dégâts +0,7, portée +1,5. | cumul |  | création originale | — |
+| PSV_191 | Bénédiction du phénix | hybride | 3 |  | Une fois par étage, un coup mortel vous laisse à une demi-unité, invulnérable 2 s. | unique |  | création originale | — |
+| PSV_192 | Bénédiction du sage | hybride | 3 |  | Toutes les 2 salles nettoyées, une charge de technique ; vitesse +0,2. | cumul |  | création originale | — |
 | PSV_900 | Clé des ermites | exploration | 0 |  | Objet-clé : ouvre le rayon de la Lumière même après un pacte. | unique |  | création originale | — |
 | PSV_901 | Fragment de la clé des ermites | exploration | 0 |  | Objet-clé : un second fragment formera la clé. | conversion |  | création originale | — |
 
@@ -582,6 +595,47 @@ Taille des pools (objets de poids non nul) : heritage 172, boss 64, boutique 80,
 | TRF_016 | Éclair jaune | espace | 3 distincts | Vitesse +0,5. Toutes les 8 s, le premier coup qui vous atteindrait est esquivé : vous vous téléportez et un kunai marqué explose à votre place (×3). | PSV_005, PSV_009, PSV_161, ACT_021, ACT_023, ACT_034, ACT_037 |
 | TRF_017 | Nuage écarlate | akatsuki | 3 distincts | Une réserve instable. Pactes plus fréquents (+20 %) et à un contenant au plus ; chaque pacte conclu dans la partie : dégâts +0,5 (jusqu’à +2). | PSV_089, PSV_129, PSV_130, PSV_136, ACT_019, ACT_020, ACT_035 |
 | TRF_018 | Ninja médical | medecin | 3 distincts | Un contenant. Chaque soin rend une demi-unité de plus ; le soin qui déborde devient du chakra protecteur (une réserve par soin au plus). | PSV_063, PSV_086, PSV_087, PSV_088, PSV_094, PSV_095, ACT_022 |
+
+## Éveils de personnage (EVE) — après les boss des étages 3 et 6 — 36
+
+| ID | Personnage | Rang | Nom | Effet |
+|---|---|---|---|---|
+| EVE_001 | CHR_001 Naruto | I (étage 3) | Volonté du feu | Obstination dès le dernier cœur (et non la dernière demi-unité), à +1,5 dégâts ; un contenant de plus. |
+| EVE_002 | CHR_001 Naruto | II (étage 6) | Mode ermite | Immobile 0,6 s, l’énergie naturelle afflue : dégâts ×1,5 jusqu’au prochain pas ; portée +1. |
+| EVE_003 | CHR_002 Sasuke | I (étage 3) | Sharingan | Charge 25 % plus rapide ; chance +1 ; à pleine charge, la foudre saute sur trois cibles. |
+| EVE_004 | CHR_002 Sasuke | II (étage 6) | Mangekyō Sharingan | Les tirs pleinement chargés embrasent leur cible de flammes noires ; dégâts +0,5. |
+| EVE_005 | CHR_003 Sakura | I (étage 3) | Force centuplée | La Force monte jusqu’à 10 ; chaque salle nettoyée sans être touchée en ajoute un point. |
+| EVE_006 | CHR_003 Sakura | II (étage 6) | Sceau Byakugō | Tombée à un cœur, la Force se change en soin (une demi-unité par point), une fois par salle. |
+| EVE_007 | CHR_004 Kakashi | I (étage 3) | Copie parfaite | Utiliser une technique charge l’autre d’une charge ; chance +1. |
+| EVE_008 | CHR_004 Kakashi | II (étage 6) | Raikiri | Vos tirs ont 15 % de chances d’enchaîner la foudre (×0,8) ; dégâts +0,5. |
+| EVE_009 | CHR_005 Rock Lee | I (étage 3) | Lotus primaire | Une frappe sur quatre tourne sur elle-même : arc complet, dégâts ×1,6. |
+| EVE_010 | CHR_005 Rock Lee | II (étage 6) | Sixième porte | Cadence +0,5 et son plafond +0,8 ; vitesse +0,3 ; vapeur verte. |
+| EVE_011 | CHR_006 Hinata | I (étage 3) | Points de chakra | Vos paumes ont 30 % de chances de ralentir (2 s) ; dégâts +0,4. |
+| EVE_012 | CHR_006 Hinata | II (étage 6) | Soixante-quatre paumes | Toutes les 10 s de combat, une rotation des huit trigrammes vous protège et frappe tout autour (×4). |
+| EVE_013 | CHR_007 Shikamaru | I (étage 3) | Plan à long terme | Les salles d’héritage proposent trois objets au choix ; chance +1. |
+| EVE_014 | CHR_007 Shikamaru | II (étage 6) | Ombre étrangleuse | Les ennemis immobilisés subissent 50 % de dégâts en plus ; vos kunai immobilisent plus souvent (+10 %). |
+| EVE_015 | CHR_008 Gaara | I (étage 3) | Armure de sable | Le bouclier de sable se reforme 10 s après avoir absorbé un coup. |
+| EVE_016 | CHR_008 Gaara | II (étage 6) | Tempête du désert | Deux orbitaux de sable vous entourent ; dégâts +0,5. |
+| EVE_017 | CHR_009 Kankurō | I (étage 3) | Lames empoisonnées | Vos lames empoisonnent 45 % du temps (au lieu de 20 %), et plus longtemps. |
+| EVE_018 | CHR_009 Kankurō | II (étage 6) | Kuroari et Sanshōuo | Une marionnette d’attaque rejoint Karasu ; vos marionnettes frappent 50 % plus fort. |
+| EVE_019 | CHR_010 Kiba | I (étage 3) | Gatsūga | Akamaru frappe deux fois plus fort ; il fouille 25 % des salles nettoyées. |
+| EVE_020 | CHR_010 Kiba | II (étage 6) | Crocs sur crocs | Vitesse +0,4 ; vos griffes font saigner (25 %). |
+| EVE_021 | CHR_011 Sasori | I (étage 3) | Cœur de marionnette | Chaque salle nettoyée sans être touché rend une demi-réserve de chakra. |
+| EVE_022 | CHR_011 Sasori | II (étage 6) | Marionnettes humaines | Deux marionnettes d’attaque ; vos senbon empoisonnent une fois sur deux. |
+| EVE_023 | CHR_012 Kakuzu | I (étage 3) | Cœur volé | Quatre contenants au plus (au lieu de trois), et un de plus tout de suite ; chaque boss vaincu rapporte 5 Ryō. |
+| EVE_024 | CHR_012 Kakuzu | II (étage 6) | Masques élémentaires | Un quatrième tir élémentaire ; dégâts +0,5. |
+| EVE_025 | ALT_001 Naruto — Réceptacle fissuré | I (étage 3) | Clones de relais | Jusqu’à six clones (au lieu de quatre) ; une salle nettoyée en rend deux. |
+| EVE_026 | ALT_001 Naruto — Réceptacle fissuré | II (étage 6) | Rasengan des clones | Vos clones frappent 80 % plus fort. |
+| EVE_027 | ALT_002 Sasuke — Serment de vengeance | I (étage 3) | Haine canalisée | Chaque pacte conclu donne +1 dégâts (au lieu de +0,5). |
+| EVE_028 | ALT_002 Sasuke — Serment de vengeance | II (étage 6) | Susanoo | En entrant dans une salle de combat, Susanoo se dresse 4 s autour de vous. |
+| EVE_029 | ALT_003 Sakura — Sceau de la centaine | I (étage 3) | Sceau élargi | Le sceau contient 18 demis (au lieu de 12) et se remplit d’un demi par salle nettoyée. |
+| EVE_030 | ALT_003 Sakura — Sceau de la centaine | II (étage 6) | Création renaissance | Quand le sceau soigne, une onde frappe tout autour (×3) et vous restez invulnérable 1,5 s. |
+| EVE_031 | ALT_004 Gaara — Shukaku déchaîné | I (étage 3) | Sable compact | Les grains suspendus arrêtent les tirs ennemis ; dégâts +0,4. |
+| EVE_032 | ALT_004 Gaara — Shukaku déchaîné | II (étage 6) | Shukaku | Vos grains explosent légèrement à l’impact. |
+| EVE_033 | ALT_005 Kankurō — Trois marionnettes | I (étage 3) | Changement éclair | Changer de marionnette ne coupe plus le tir ; vos lames empoisonnent (30 %). |
+| EVE_034 | ALT_005 Kankurō — Trois marionnettes | II (étage 6) | Arsenal complet | Une marionnette d’attaque se joint au combat ; vos marionnettes frappent 50 % plus fort. |
+| EVE_035 | ALT_006 Kakuzu — Cinq cœurs | I (étage 3) | Sixième cœur | Un cœur de réserve de plus et un contenant. |
+| EVE_036 | ALT_006 Kakuzu — Cinq cœurs | II (étage 6) | Reconstruction choisie | À chaque étage, l’objet reconstruit gagne une qualité. |
 
 ## Synergies documentées (SYN) — 120
 

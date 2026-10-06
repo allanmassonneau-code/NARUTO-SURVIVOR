@@ -1,0 +1,712 @@
+[
+ {
+  "id": "EVE_001",
+  "perso": "CHR_001",
+  "rang": 1,
+  "nom": "Volonté du feu",
+  "type": "eveil",
+  "desc": "Obstination dès le dernier cœur (et non la dernière demi-unité), à +1,5 dégâts ; un contenant de plus.",
+  "effets": [
+   {
+    "sante": {
+     "cont": 1
+    }
+   },
+   {
+    "drapeau": "volonte"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_002",
+  "perso": "CHR_001",
+  "rang": 2,
+  "nom": "Mode ermite",
+  "type": "eveil",
+  "desc": "Immobile 0,6 s, l’énergie naturelle afflue : dégâts ×1,5 jusqu’au prochain pas ; portée +1.",
+  "effets": [
+   {
+    "drapeau": "energieNaturelle"
+   },
+   {
+    "s": "portee",
+    "a": 1
+   }
+  ],
+  "visuel": {
+   "couche": "peau",
+   "motif": "maquillage",
+   "couleur": "#f08a24"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_003",
+  "perso": "CHR_002",
+  "rang": 1,
+  "nom": "Sharingan",
+  "type": "eveil",
+  "desc": "Charge 25 % plus rapide ; chance +1 ; à pleine charge, la foudre saute sur trois cibles.",
+  "effets": [
+   {
+    "forme": "charge_libre",
+    "charge": 0.6
+   },
+   {
+    "s": "chance",
+    "a": 1
+   },
+   {
+    "drapeau": "foudreTriple"
+   }
+  ],
+  "visuel": {
+   "couche": "yeux",
+   "motif": "yeux_rouges",
+   "couleur": "#e0202a"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_004",
+  "perso": "CHR_002",
+  "rang": 2,
+  "nom": "Mangekyō Sharingan",
+  "type": "eveil",
+  "desc": "Les tirs pleinement chargés embrasent leur cible de flammes noires ; dégâts +0,5.",
+  "effets": [
+   {
+    "s": "degats",
+    "a": 0.5
+   },
+   {
+    "drapeau": "flammesNoires"
+   }
+  ],
+  "visuel": {
+   "couche": "yeux",
+   "motif": "yeux_rouges",
+   "couleur": "#ff4a2a",
+   "prio": 11
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_005",
+  "perso": "CHR_003",
+  "rang": 1,
+  "nom": "Force centuplée",
+  "type": "eveil",
+  "desc": "La Force monte jusqu’à 10 ; chaque salle nettoyée sans être touchée en ajoute un point.",
+  "effets": [
+   {
+    "drapeau": "forceCentuplee"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_006",
+  "perso": "CHR_003",
+  "rang": 2,
+  "nom": "Sceau Byakugō",
+  "type": "eveil",
+  "desc": "Tombée à un cœur, la Force se change en soin (une demi-unité par point), une fois par salle.",
+  "effets": [
+   {
+    "drapeau": "byakugo"
+   }
+  ],
+  "visuel": {
+   "couche": "peau",
+   "motif": "point_front",
+   "couleur": "#a050d0"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_007",
+  "perso": "CHR_004",
+  "rang": 1,
+  "nom": "Copie parfaite",
+  "type": "eveil",
+  "desc": "Utiliser une technique charge l’autre d’une charge ; chance +1.",
+  "effets": [
+   {
+    "drapeau": "copieParfaite"
+   },
+   {
+    "s": "chance",
+    "a": 1
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_008",
+  "perso": "CHR_004",
+  "rang": 2,
+  "nom": "Raikiri",
+  "type": "eveil",
+  "desc": "Vos tirs ont 15 % de chances d’enchaîner la foudre (×0,8) ; dégâts +0,5.",
+  "effets": [
+   {
+    "impact": "chaine",
+    "sauts": 2,
+    "r": 3,
+    "coef": 0.8,
+    "chance": 0.15
+   },
+   {
+    "s": "degats",
+    "a": 0.5
+   },
+   {
+    "element": "raiton"
+   }
+  ],
+  "visuel": {
+   "couche": "yeux",
+   "motif": "yeux_rouges",
+   "couleur": "#e0202a"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_009",
+  "perso": "CHR_005",
+  "rang": 1,
+  "nom": "Lotus primaire",
+  "type": "eveil",
+  "desc": "Une frappe sur quatre tourne sur elle-même : arc complet, dégâts ×1,6.",
+  "effets": [
+   {
+    "drapeau": "lotus"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_010",
+  "perso": "CHR_005",
+  "rang": 2,
+  "nom": "Sixième porte",
+  "type": "eveil",
+  "desc": "Cadence +0,5 et son plafond +0,8 ; vitesse +0,3 ; vapeur verte.",
+  "effets": [
+   {
+    "s": "cadence",
+    "a": 0.5
+   },
+   {
+    "s": "plafondCadence",
+    "a": 0.8
+   },
+   {
+    "s": "vitesse",
+    "a": 0.3
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "couleur": "#8af07a"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_011",
+  "perso": "CHR_006",
+  "rang": 1,
+  "nom": "Points de chakra",
+  "type": "eveil",
+  "desc": "Vos paumes ont 30 % de chances de ralentir (2 s) ; dégâts +0,4.",
+  "effets": [
+   {
+    "statut": "ralenti",
+    "chance": 0.3,
+    "duree": 2
+   },
+   {
+    "s": "degats",
+    "a": 0.4
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_012",
+  "perso": "CHR_006",
+  "rang": 2,
+  "nom": "Soixante-quatre paumes",
+  "type": "eveil",
+  "desc": "Toutes les 10 s de combat, une rotation des huit trigrammes vous protège et frappe tout autour (×4).",
+  "effets": [
+   {
+    "drapeau": "rotationAuto"
+   }
+  ],
+  "visuel": {
+   "couche": "yeux",
+   "motif": "yeux_rouges",
+   "couleur": "#f0ecff"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_013",
+  "perso": "CHR_007",
+  "rang": 1,
+  "nom": "Plan à long terme",
+  "type": "eveil",
+  "desc": "Les salles d’héritage proposent trois objets au choix ; chance +1.",
+  "effets": [
+   {
+    "drapeau": "troisChoix"
+   },
+   {
+    "s": "chance",
+    "a": 1
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_014",
+  "perso": "CHR_007",
+  "rang": 2,
+  "nom": "Ombre étrangleuse",
+  "type": "eveil",
+  "desc": "Les ennemis immobilisés subissent 50 % de dégâts en plus ; vos kunai immobilisent plus souvent (+10 %).",
+  "effets": [
+   {
+    "drapeau": "ombreEtrangleuse"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_015",
+  "perso": "CHR_008",
+  "rang": 1,
+  "nom": "Armure de sable",
+  "type": "eveil",
+  "desc": "Le bouclier de sable se reforme 10 s après avoir absorbé un coup.",
+  "effets": [
+   {
+    "drapeau": "sableReforme"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_016",
+  "perso": "CHR_008",
+  "rang": 2,
+  "nom": "Tempête du désert",
+  "type": "eveil",
+  "desc": "Deux orbitaux de sable vous entourent ; dégâts +0,5.",
+  "effets": [
+   {
+    "familier": "FAM_SABLE"
+   },
+   {
+    "familier": "FAM_SABLE"
+   },
+   {
+    "s": "degats",
+    "a": 0.5
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "motif": "sable_flottant"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_017",
+  "perso": "CHR_009",
+  "rang": 1,
+  "nom": "Lames empoisonnées",
+  "type": "eveil",
+  "desc": "Vos lames empoisonnent 45 % du temps (au lieu de 20 %), et plus longtemps.",
+  "effets": [
+   {
+    "drapeau": "poisonFort"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_018",
+  "perso": "CHR_009",
+  "rang": 2,
+  "nom": "Kuroari et Sanshōuo",
+  "type": "eveil",
+  "desc": "Une marionnette d’attaque rejoint Karasu ; vos marionnettes frappent 50 % plus fort.",
+  "effets": [
+   {
+    "familier": "FAM_KARASU_ATT"
+   },
+   {
+    "drapeau": "marionnettesFortes"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_019",
+  "perso": "CHR_010",
+  "rang": 1,
+  "nom": "Gatsūga",
+  "type": "eveil",
+  "desc": "Akamaru frappe deux fois plus fort ; il fouille 25 % des salles nettoyées.",
+  "effets": [
+   {
+    "drapeau": "gatsuga"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_020",
+  "perso": "CHR_010",
+  "rang": 2,
+  "nom": "Crocs sur crocs",
+  "type": "eveil",
+  "desc": "Vitesse +0,4 ; vos griffes font saigner (25 %).",
+  "effets": [
+   {
+    "s": "vitesse",
+    "a": 0.4
+   },
+   {
+    "statut": "saignement",
+    "chance": 0.25,
+    "duree": 3
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_021",
+  "perso": "CHR_011",
+  "rang": 1,
+  "nom": "Cœur de marionnette",
+  "type": "eveil",
+  "desc": "Chaque salle nettoyée sans être touché rend une demi-réserve de chakra.",
+  "effets": [
+   {
+    "quand": "salle_nettoyee",
+    "si": "intacte",
+    "faire": {
+     "type": "protection",
+     "demis": 1
+    }
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_022",
+  "perso": "CHR_011",
+  "rang": 2,
+  "nom": "Marionnettes humaines",
+  "type": "eveil",
+  "desc": "Deux marionnettes d’attaque ; vos senbon empoisonnent une fois sur deux.",
+  "effets": [
+   {
+    "familier": "FAM_KARASU_ATT"
+   },
+   {
+    "familier": "FAM_KARASU_ATT"
+   },
+   {
+    "drapeau": "poisonFort"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_023",
+  "perso": "CHR_012",
+  "rang": 1,
+  "nom": "Cœur volé",
+  "type": "eveil",
+  "desc": "Quatre contenants au plus (au lieu de trois), et un de plus tout de suite ; chaque boss vaincu rapporte 5 Ryō.",
+  "effets": [
+   {
+    "drapeau": "plafondVit",
+    "valeur": 4
+   },
+   {
+    "sante": {
+     "cont": 1
+    }
+   },
+   {
+    "quand": "boss_vaincu",
+    "faire": {
+     "type": "ressource",
+     "res": {
+      "ryo": 5
+     }
+    }
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_024",
+  "perso": "CHR_012",
+  "rang": 2,
+  "nom": "Masques élémentaires",
+  "type": "eveil",
+  "desc": "Un quatrième tir élémentaire ; dégâts +0,5.",
+  "effets": [
+   {
+    "multi": 1
+   },
+   {
+    "s": "degats",
+    "a": 0.5
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_025",
+  "perso": "ALT_001",
+  "rang": 1,
+  "nom": "Clones de relais",
+  "type": "eveil",
+  "desc": "Jusqu’à six clones (au lieu de quatre) ; une salle nettoyée en rend deux.",
+  "effets": [
+   {
+    "drapeau": "clonesNombreux"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_026",
+  "perso": "ALT_001",
+  "rang": 2,
+  "nom": "Rasengan des clones",
+  "type": "eveil",
+  "desc": "Vos clones frappent 80 % plus fort.",
+  "effets": [
+   {
+    "drapeau": "clonesForts"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_027",
+  "perso": "ALT_002",
+  "rang": 1,
+  "nom": "Haine canalisée",
+  "type": "eveil",
+  "desc": "Chaque pacte conclu donne +1 dégâts (au lieu de +0,5).",
+  "effets": [
+   {
+    "drapeau": "haine"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_028",
+  "perso": "ALT_002",
+  "rang": 2,
+  "nom": "Susanoo",
+  "type": "eveil",
+  "desc": "En entrant dans une salle de combat, Susanoo se dresse 4 s autour de vous.",
+  "effets": [
+   {
+    "quand": "entree_salle",
+    "si": "combat",
+    "faire": {
+     "type": "susanoo",
+     "duree": 4
+    }
+   }
+  ],
+  "visuel": {
+   "couche": "yeux",
+   "motif": "yeux_rouges",
+   "couleur": "#ff4a2a"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_029",
+  "perso": "ALT_003",
+  "rang": 1,
+  "nom": "Sceau élargi",
+  "type": "eveil",
+  "desc": "Le sceau contient 18 demis (au lieu de 12) et se remplit d’un demi par salle nettoyée.",
+  "effets": [
+   {
+    "drapeau": "sceauLarge"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_030",
+  "perso": "ALT_003",
+  "rang": 2,
+  "nom": "Création renaissance",
+  "type": "eveil",
+  "desc": "Quand le sceau soigne, une onde frappe tout autour (×3) et vous restez invulnérable 1,5 s.",
+  "effets": [
+   {
+    "drapeau": "renaissance"
+   }
+  ],
+  "visuel": {
+   "couche": "peau",
+   "motif": "point_front",
+   "couleur": "#a050d0"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_031",
+  "perso": "ALT_004",
+  "rang": 1,
+  "nom": "Sable compact",
+  "type": "eveil",
+  "desc": "Les grains suspendus arrêtent les tirs ennemis ; dégâts +0,4.",
+  "effets": [
+   {
+    "drapeau": "sableBouclier"
+   },
+   {
+    "s": "degats",
+    "a": 0.4
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_032",
+  "perso": "ALT_004",
+  "rang": 2,
+  "nom": "Shukaku",
+  "type": "eveil",
+  "desc": "Vos grains explosent légèrement à l’impact.",
+  "effets": [
+   {
+    "impact": "explosion",
+    "r": 0.6,
+    "coef": 0.35
+   },
+   {
+    "drapeau": "immuniteExplosion"
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "motif": "sable_flottant"
+  },
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_033",
+  "perso": "ALT_005",
+  "rang": 1,
+  "nom": "Changement éclair",
+  "type": "eveil",
+  "desc": "Changer de marionnette ne coupe plus le tir ; vos lames empoisonnent (30 %).",
+  "effets": [
+   {
+    "drapeau": "changementEclair"
+   },
+   {
+    "statut": "poison",
+    "chance": 0.3,
+    "duree": 3
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_034",
+  "perso": "ALT_005",
+  "rang": 2,
+  "nom": "Arsenal complet",
+  "type": "eveil",
+  "desc": "Une marionnette d’attaque se joint au combat ; vos marionnettes frappent 50 % plus fort.",
+  "effets": [
+   {
+    "familier": "FAM_KARASU_ATT"
+   },
+   {
+    "drapeau": "marionnettesFortes"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_035",
+  "perso": "ALT_006",
+  "rang": 1,
+  "nom": "Sixième cœur",
+  "type": "eveil",
+  "desc": "Un cœur de réserve de plus et un contenant.",
+  "effets": [
+   {
+    "coeurReserve": 1
+   },
+   {
+    "sante": {
+     "cont": 1
+    }
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ },
+ {
+  "id": "EVE_036",
+  "perso": "ALT_006",
+  "rang": 2,
+  "nom": "Reconstruction choisie",
+  "type": "eveil",
+  "desc": "À chaque étage, l’objet reconstruit gagne une qualité.",
+  "effets": [
+   {
+    "drapeau": "reconstructionPlus"
+   }
+  ],
+  "visuel": null,
+  "statut": "création originale"
+ }
+]

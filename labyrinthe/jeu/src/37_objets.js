@@ -30,7 +30,7 @@ function calculerStats(J) {
     if (k === 'cadence') ma += ((M.plafondCadence || {}).a || 0);
     S[k] = borne(v, mi, ma);
   }
-  if (J.drapeaux.obstination) S.degats += 1;
+  if (J.drapeaux.obstination) S.degats += J.drapeaux.volonte ? 1.5 : 1;
   if (J.drapeaux.serieParfaite) S.degats += 0.15 * Math.min(10, J.compteurs.serie || 0); // salles nettoyées d'affilée sans être touché
   if (J.drapeaux.sangClan && J.sante) S.degats += 0.25 * Math.max(0, rougeMax(J.sante) - rougeTotal(J.sante)) / 2; // +0,25 par contenant vide
   if (J._plein && J.drapeaux.pleineVitalite) S.degats += 0.5;
@@ -176,6 +176,7 @@ function appliquerEffetImmediat(J, e, d) {
   if (e.res) { for (const [k, v] of Object.entries(e.res)) ajouterRessource(J, k, v); }
   if (e.familier) ajouterFamilier(J, e.familier, d.id);
   if (e.consommable) donnerConsommable(J, e.consommable);
+  if (e.coeurReserve) J.coeursReserve = (J.coeursReserve || 0) + e.coeurReserve;
 }
 function soignerJoueur(J, demis) {
   if (J.drapeaux.sansVitalite) return 0;
@@ -211,6 +212,26 @@ function verifierTransformations(J) {
     }
   }
 }
+
+// ── Éveils de personnage : après les boss des étages 3 et 6, la règle propre évolue ──
+// Rangés avec les transformations (mêmes effets déclaratifs, même sauvegarde, même inventaire).
+function eveilsDe(J) { return DON.eveils.filter(v => v.perso === J.def.id).sort((a, b) => a.rang - b.rang); }
+function verifierEveils(J, numero) {
+  const rang = numero >= 6 ? 2 : numero >= 3 ? 1 : 0;
+  for (const v of eveilsDe(J)) if (v.rang <= rang && !J.transformations.includes(v.id)) eveiller(J, v);
+}
+function eveiller(J, v) {
+  J.transformations.push(v.id); recalculer(J);
+  for (const e of v.effets || []) appliquerEffetImmediat(J, e, v);
+  recalculer(J);
+  annoncer({ t: 0, nom: 'Éveil — ' + v.nom, desc: v.desc, transformation: true });
+  G.effets.push({ type: 'onde', x: J.x, y: J.y - 10, r: 120, age: 0, duree: 0.6, couleur: '#ffe8a0' }); Son.jouer('transformation'); secousse(3, null);
+  evenement('eveil', { id: v.id }); Progression.decouvrir(v.id);
+}
+// Plafonds des ressources de règle, relevés par certains éveils
+function plafondForce(J) { return J.drapeaux.forceCentuplee ? 10 : 6; }
+function plafondSceau(J) { return J.drapeaux.sceauLarge ? 18 : 12; }
+function plafondClones(J) { return J.drapeaux.clonesNombreux ? 6 : 4; }
 
 // ── Mutations visuelles cumulatives (couches, priorités, fusion) ──
 const COUCHES = ['aura', 'dos', 'corps', 'bras', 'peau', 'yeux', 'tete', 'orbitaux'];

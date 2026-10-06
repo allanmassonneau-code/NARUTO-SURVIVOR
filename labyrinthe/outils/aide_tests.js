@@ -20,10 +20,13 @@ window.__T = {
     for (let i = 0; i < sec * 60; i++) { const J = G.joueur; if (!J || !G.salle || !G.partie) return 'pas de partie';
       if (o.dieu) { J.invuln = 1; if (J.etat === 'mort') return 'mort malgré dieu'; }
       if (G.enAnimationObjet) { const e = this.pas(1, ['Enter']); if (e) return e; continue; }
-      const s = G.salle; const P = J.profil || {}; const melee = ['lame', 'lame_longue', 'frappe', 'rotation'].includes(P.forme); const charge = ['orbe', 'rayon', 'charge_libre'].includes(P.forme) || P.chargeable;
+      const s = G.salle; const P = J.profil || {}; const melee = ['lame', 'lame_longue', 'frappe', 'rotation'].includes(P.forme) || P.forme === 'controle' /* sphère contrôlée tenue en laisse (60 px) : on s'approche comme au contact */; const charge = ['orbe', 'rayon', 'charge_libre'].includes(P.forme) || P.chargeable;
       const cibles = G.ennemis.filter(x => !x.mort && !x.cache && !x.intangible && !(x.statuts && x.statuts.charme) && !x.allie && !x.miroirInvuln);
       const prio = x => x.boss ? 2 : ['invocateur', 'guerisseur'].includes(x.def.comportement) ? 1 : 0;
-      const e = cibles.sort((p, q) => prio(q) - prio(p) || Math.hypot(p.x - J.x, p.y - J.y) - Math.hypot(q.x - J.x, q.y - J.y))[0];
+      let e = cibles.sort((p, q) => prio(q) - prio(p) || Math.hypot(p.x - J.x, p.y - J.y) - Math.hypot(q.x - J.x, q.y - J.y))[0];
+      // hystérésis : on garde la cible précédente tant qu'elle reste presque aussi proche (pas d'hésitation entre deux cibles équidistantes)
+      if (e && this.cible && this.cible !== e && cibles.includes(this.cible) && prio(this.cible) === prio(e) && Math.hypot(this.cible.x - J.x, this.cible.y - J.y) < Math.hypot(e.x - J.x, e.y - J.y) + 24) e = this.cible;
+      this.cible = e;
       const t = []; a += 0.05; let mx = 0, my = 0;
       if (e) {
         const ex = Math.floor(e.x / 32), ey = Math.floor((e.y - 4) / 32); const bouclier = e.def.params && e.def.params.bouclier === 'frontal'; const portee = melee ? 1 : Math.max(2, Math.min(5, Math.floor((J.stats.portee || 6) * 0.7)));
@@ -36,7 +39,11 @@ window.__T = {
         // origine de la visée : sphère contrôlée, réticule de frappe, sinon le joueur
         let ox = J.x, oy = J.y - 12; const orbe = P.forme === 'controle' && G.orbes.find(x => x.attache === J); const ret = P.forme === 'frappe' && J.tir.reticule && J.tir.reticule.actif && J.tir.reticule;
         if (orbe) { ox = orbe.x; oy = orbe.y; } else if (ret) { ox = ret.x; oy = ret.y; }
-        const dx = e.x - ox, dy = (e.y - 8) - oy; t.push(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'ArrowRight' : 'ArrowLeft') : (dy > 0 ? 'ArrowDown' : 'ArrowUp'));
+        const dx = e.x - ox, dy = (e.y - 8) - oy; let horiz = Math.abs(dx) > Math.abs(dy);
+        // sphère contrôlée coincée contre un obstacle : on la guide sur l'autre axe un moment (contournement)
+        if (orbe) { const H = this.orbeHist = (this.orbeHist || []).concat([Math.hypot(dx, dy)]).slice(-40); // pas de progrès vers la cible en 40 images : autre axe
+          if (this.orbeAutreAxe > 0) { this.orbeAutreAxe--; horiz = !horiz; } else if (H.length >= 40 && H[0] - H[H.length - 1] < 4) { this.orbeAutreAxe = 45; this.orbeHist = []; } }
+        t.push(horiz ? ((horiz && Math.abs(dx) > 2 ? dx : (dx || 1)) > 0 ? 'ArrowRight' : 'ArrowLeft') : ((Math.abs(dy) > 2 ? dy : (dy || 1)) > 0 ? 'ArrowDown' : 'ArrowUp'));
         if (P.forme === 'frappe') { if (ret && Math.hypot(dx, dy) < 18) t.pop(); }
         else if (P.forme === 'controle') { if (Math.hypot(dx, dy) < 6) t.pop(); }
         else if (charge && J.tir && J.tir.charge >= 0.99) t.pop(); else if (o.relacher && i % 50 > 44) t.pop();

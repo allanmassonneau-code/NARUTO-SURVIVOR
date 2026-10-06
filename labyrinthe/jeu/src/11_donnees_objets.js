@@ -214,6 +214,22 @@
   O('PSV_179', 'Rouleau de la double technique', 'hybride', 3, 'L1 H1', 'Utiliser un actif déclenche aussi une salve de vos tirs dans les huit directions.', [{ quand: 'actif_utilise', faire: { type: 'projectiles_cercle', n: 8, coef: 1 } }], { icone: ic('rouleau', '#e8d0a0', '#8a5a2a', '#c83a2a'), tags: ['actif'] });
   O('PSV_180', 'Sang du clan', 'contrepartie', 2, 'H1 P1', 'Dégâts +0,25 par contenant de vitalité vide.', [{ drapeau: 'sangClan' }], { icone: ic('coeur', '#a02030', '#5a1018', '#ff8090'), tags: ['sante_basse'], cumul: 'unique', exclusion: ['sansVitalite'] });
 
+  // ── Marques du pacte de sang et bénédictions des ermites : hors pools, offertes par les variantes de salles d'opportunité ──
+  const MQ = (id, nom, desc, effets, a, b, x = {}) => O(id, nom, 'contrepartie', 2, '', desc, effets, Object.assign({ horsPool: true, marque: true, icone: ic('goutte', a, b, '#ffffff') }, x));
+  MQ('PSV_181', 'Marque de sang : force', 'Dégâts +1,2.', [s('degats', 1.2)], '#c8202a', '#6a0a14');
+  MQ('PSV_182', 'Marque de sang : vivacité', 'Cadence +0,6.', [s('cadence', 0.6)], '#e04a6a', '#7a1a30');
+  MQ('PSV_183', 'Marque de sang : allonge', 'Portée +2,5 ; vitesse des tirs +1.', [s('portee', 2.5), s('vitesseTir', 1)], '#a03a8a', '#4a1040');
+  MQ('PSV_184', 'Marque de sang : fortune', 'Chance +3 ; +12 Ryō.', [s('chance', 3), { res: { ryo: 12 } }], '#d8a030', '#7a4a10');
+  MQ('PSV_185', 'Marque de sang : célérité', 'Vitesse +0,5 ; cadence +0,2.', [s('vitesse', 0.5), s('cadence', 0.2)], '#e07a3a', '#7a3010');
+  MQ('PSV_186', 'Marque de sang : soif', 'Dégâts +0,5 ; chaque élimination a 6 % de chances de soigner une demi-unité.', [s('degats', 0.5), { quand: 'elimination', si: 'ennemiNonBoss', chance: 0.06, faire: { type: 'soin', demis: 1 } }], '#8a0a1a', '#3a0408', { exclusion: ['sansVitalite'] });
+  const BN = (id, nom, desc, effets, a, b, x = {}) => O(id, nom, 'hybride', 3, '', desc, effets, Object.assign({ horsPool: true, benediction: true, icone: ic('soleil', a, b, '#ffffff') }, x));
+  BN('PSV_187', 'Bénédiction du crapaud', 'Un contenant de vitalité et soin complet ; dégâts +0,3.', [{ sante: { cont: 1, soinTotal: true } }, s('degats', 0.3)], '#8ab04a', '#4a6a2a');
+  BN('PSV_188', 'Bénédiction de la limace', 'Une réserve de chakra, puis une de plus toutes les 4 salles nettoyées.', [{ sante: { prot: 2 } }, { quand: 'salle_nettoyee', tousLes: 4, faire: { type: 'protection', demis: 2 } }], '#7ab0e8', '#3a5a9a');
+  BN('PSV_189', 'Bénédiction du serpent blanc', 'Chance +2, cadence +0,4.', [s('chance', 2), s('cadence', 0.4)], '#e8e4d8', '#9a9480');
+  BN('PSV_190', 'Bénédiction de l’ermite', 'Dégâts +0,7, portée +1,5.', [s('degats', 0.7), s('portee', 1.5)], '#f0a040', '#8a5a20');
+  BN('PSV_191', 'Bénédiction du phénix', 'Une fois par étage, un coup mortel vous laisse à une demi-unité, invulnérable 2 s.', [{ drapeau: 'phenix' }], '#ff8a3a', '#a03a10', { cumul: 'unique' });
+  BN('PSV_192', 'Bénédiction du sage', 'Toutes les 2 salles nettoyées, une charge de technique ; vitesse +0,2.', [{ quand: 'salle_nettoyee', tousLes: 2, faire: { type: 'charge_actif', n: 1 } }, s('vitesse', 0.2)], '#c8a0f0', '#6a4a9a');
+
   O('PSV_900', 'Clé des ermites', 'exploration', 0, '', 'Objet-clé : ouvre le rayon de la Lumière même après un pacte.', [], { cle: true, cumul: 'unique', icone: ic('cle', '#fff8e0', '#e8e0c0', '#6a9a3a') });
   O('PSV_901', 'Fragment de la clé des ermites', 'exploration', 0, '', 'Objet-clé : un second fragment formera la clé.', [], { cle: true, cumul: 'conversion', icone: ic('cle', '#c8c0a0', '#8a8060', '#6a9a3a') });
   DON.objets.find(o => o.id === 'PSV_901').conversion = { res: { ryo: 5 } };

@@ -27,7 +27,7 @@ function majTirJoueur(J, dt) {
   const reglAuto = (G.reglages && G.reglages.chargeAuto);
   // Formes chargées : orbe (déclenchement à charge suffisante), charge libre, rayon
   if (forme === 'orbe' || forme === 'rayon' || forme === 'charge_libre' || (P.chargeable && ['projectile', 'boomerang', 'bombe', 'laser', 'lame', 'lame_longue'].includes(forme))) {
-    const base = forme === 'rayon' ? (P.params.rayon.charge || 1.0) : forme === 'orbe' ? (P.params.orbe.charge || 0.6) : forme === 'charge_libre' ? 0.8 : 0.7;
+    const base = forme === 'rayon' ? (P.params.rayon.charge || 1.0) : forme === 'orbe' ? (P.params.orbe.charge || 0.6) : forme === 'charge_libre' ? (P.params.charge_libre.charge || 0.8) : 0.7;
     const tc = tempsCharge(J, base);
     if (tenu && TI.cooldown <= 0) {
       const av = TI.charge; TI.charge = Math.min(1, TI.charge + dt / tc);
@@ -112,14 +112,15 @@ function emettre(J, dir, mult, cycleId, estSalve, budget, o = {}) {
       case 'rayon': tirerRayon(J, g.a, deg, cycleId, budget); break;
       case 'lame': case 'lame_longue': {
         const L = P.params[P.forme] || {}; const base = P.forme === 'lame_longue' ? { portee: 2.6, arc: 140, coef: 3 } : { portee: (J.def.tir.forme === 'lame' ? J.stats.portee : 1.6), arc: 100, coef: J.def.tir.forme === 'lame' ? 1 : 2.5 };
-        const arc = (L.arc || base.arc) + 20 * (P.multi - 1), coef = (L.coef || base.coef) * (1 + 0.15 * (P.multi - 1)) / (P.multi > 1 ? P.coefMulti : 1) * P.coefMulti;
+        let arc = (L.arc || base.arc) + 20 * (P.multi - 1), coef = (L.coef || base.coef) * (1 + 0.15 * (P.multi - 1)) / (P.multi > 1 ? P.coefMulti : 1) * P.coefMulti;
+        if (J.drapeaux.lotus && g === geo[0]) { J.compteurs.frappes = (J.compteurs.frappes || 0) + 1; if (J.compteurs.frappes % 4 === 0) { arc = 360; coef *= 1.6; G.effets.push({ type: 'onde', x: J.x, y: J.y - 10, r: 40, age: 0, duree: 0.25, couleur: '#8af07a' }); } } // Lotus primaire
         if (g === geo[0] || Math.abs(diffAngle(g.a, geo[0].a)) > 1.2) frapperMelee(J, dirDepuisVecteur(Math.cos(g.a), Math.sin(g.a)), S.degats * P.coefDegats * mult * coef, { portee: (L.portee || base.portee) + (P.forme === 'lame' && J.def.tir.forme !== 'lame' ? (S.portee - 6) * 0.1 : 0), arc }, cycleId, budget);
         break;
       }
       default: {
         const p = creerProjectileJoueur(J, ox, oy, g.a, deg, cycleId, budget, o);
         if (P.forme === 'orbe') { const O = P.params.orbe; p.vitesse = (O.vitesse || 8) * TUILE; p.porteePx = (O.portee || 5.5) * TUILE + (S.portee - 6) * TUILE * 0.5; p.degats = deg * (O.mult || 3); p.perce = Math.max(p.perce, (O.perce || 2) - 1); p.taille *= 1.6; p.apparence = 'orbe'; p.dureeVie = p.porteePx / p.vitesse; }
-        if (P.forme === 'charge_libre' && o.charge >= 1) { p.perce = Math.max(p.perce, 2); p.impacts = p.impacts.concat([{ impact: 'chaine', sauts: 2, r: 3, coef: 0.5 }]); p.taille *= 1.3; p.foudre = true; }
+        if (P.forme === 'charge_libre' && o.charge >= 1) { p.perce = Math.max(p.perce, 2); p.impacts = p.impacts.concat([{ impact: 'chaine', sauts: J.drapeaux.foudreTriple ? 3 : 2, r: 3, coef: 0.5 }]); p.taille *= 1.3; p.foudre = true; if (J.drapeaux.flammesNoires) p.statuts = p.statuts.concat([{ statut: 'brulure', chance: 1, duree: 4 }]); }
         if (P.forme === 'boomerang') { p.traj.retour = 1; p.perce = 99; p.apparence = 'fuma'; p.taille *= 1.4; }
         if (p.traj.retour) p.dureeVie *= 1.6; // demi-tour à 45 % de la durée : ×1,6 garde ~72 % de la portée à l'aller, que le retour vienne de la forme ou d'une contribution
         if (P.forme === 'bombe') { p.apparence = 'argile'; p.bombe = { r: 1.3 * TUILE, fixe: 5, coef: 3, blesseJoueur: !J.drapeaux.immuniteExplosion }; p.traj.arc = 1; p.perce = 0; }
@@ -282,9 +283,9 @@ function toucherEnnemi(p, e) {
     const ch = Math.min((st.max || 1) * (D.troisMarques && (st.statut === 'marque' || st.statut === 'saignement' || st.statut === 'peur') ? 2 : 1), ((st.chance || 0) + (st.chanceParChance || 0) * J.stats.chance) * (D.troisMarques && (st.statut === 'marque' || st.statut === 'saignement' || st.statut === 'peur') ? 2 : 1));
     if (Math.random() < ch) appliquerStatut(e, st.statut, st.duree || 2, deg);
   }
-  if (J.def.regleCode === 'stratege' && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) appliquerStatut(e, 'immobilise', 1.2, deg);
-  if (J.def.regleCode === 'corps_marionnette' && Math.random() < 0.35) appliquerStatut(e, 'poison', 3, deg);
-  if (J.def.regleCode === 'marionnettiste' && Math.random() < 0.2) appliquerStatut(e, 'poison', 3, deg);
+  if (J.def.regleCode === 'stratege' && Math.random() < Math.min(0.6, 0.15 + (J.drapeaux.ombreEtrangleuse ? 0.1 : 0) + 0.03 * J.stats.chance)) appliquerStatut(e, 'immobilise', 1.2, deg);
+  if (J.def.regleCode === 'corps_marionnette' && Math.random() < (J.drapeaux.poisonFort ? 0.5 : 0.35)) appliquerStatut(e, 'poison', 3, deg);
+  if (J.def.regleCode === 'marionnettiste' && Math.random() < (J.drapeaux.poisonFort ? 0.45 : 0.2)) appliquerStatut(e, 'poison', J.drapeaux.poisonFort ? 5 : 3, deg);
   evenement('impact', { p, e });
   declencherImpacts(p, e);
 }
