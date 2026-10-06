@@ -209,47 +209,6 @@ function dessinerVisage(g, type, cx, cy) {
 }
 // Cache par objet « sprite » et par échelle : les copies de définition créées en combat
 // (illusions, masques, miroirs) qui gardent le même objet sprite ne le reconstruisent pas.
-// Créatures partageant une même forme : l'accessoire annonce l'attaque
-function accessoireCreature(d, S) {
-  const P = d.params || {}, co = d.comportement;
-  const R = (g, x, y, l, h, c) => { g.fillStyle = c; g.fillRect(x, y, l, h); };
-  const fils = (g, bx, by, bw, xs) => { R(g, bx + 1, 0, bw - 2, 2, '#6a4a2a'); R(g, bx + 1, 0, bw - 2, 1, '#9a7a4a'); for (const x of xs) R(g, bx + x, 2, 1, by + 2 - 2, 'rgba(235,235,250,0.85)'); };
-  switch (S.cle) {
-    case 'marionnette':
-      if (co === 'chargeur') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (let k = 0; k < 6; k++) { R(g, bx + 1 - k, by + 5 + k + i, 1, 1, '#f0f4ff'); R(g, bx + 1 - k, by + 6 + k + i, 1, 1, '#7a8090'); R(g, bx + bw - 2 + k, by + 5 + k + i, 1, 1, '#f0f4ff'); R(g, bx + bw - 2 + k, by + 6 + k + i, 1, 1, '#7a8090'); } };
-      if (co === 'tourelle') return (g, bx, by, bw, bh, i, c) => { if (c === 'dos') { for (const x of [bx + 1, bx + bw - 4]) { R(g, x - 1, by - 5, 5, 8, '#1c1420'); R(g, x, by - 4, 3, 7, '#4a4450'); R(g, x, by - 4, 3, 1, '#9a92a8'); } } else { R(g, bx - 1, by + bh - 4, bw + 2, 5, '#1c1420'); R(g, bx, by + bh - 3, bw, 3, '#4a3e36'); for (let x = bx + 2; x < bx + bw - 1; x += 4) R(g, x, by + bh - 2, 1, 1, '#b0a898'); } };
-      if (co === 'inerte') return (g, bx, by, bw, bh, i, c) => { if (c === 'dos') fils(g, bx, by, bw, [3, Math.floor(bw / 2), bw - 4]); };
-      return null;
-    case 'statue':
-      if (P.bouclier === 'frontal') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + 2, y = by + bh - 10, w = bw - 4; R(g, x - 1, y - 1, w + 2, 11, '#1c1420'); R(g, x, y, w, 9, '#6a5a4a'); R(g, x, y, w, 1, '#b89a6a'); R(g, x, y, 1, 9, '#b89a6a'); R(g, x + Math.floor(w / 2) - 1, y + 2, 2, 5, '#e8c050'); R(g, x + Math.floor(w / 2) - 3, y + 4, 6, 1, '#e8c050'); };
-      if (P.bouclier === 'aura') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (const [x, y] of [[3, 4], [bw - 4, 4], [Math.floor(bw / 2), 6], [4, 8], [bw - 5, 8]]) R(g, bx + x, by + y, 1, 1, '#8ae0ff'); for (let k = -1; k <= 1; k++) R(g, bx + Math.floor(bw / 2) + k * 3, by - 3 - (k ? 0 : 1) - (i && !k ? 1 : 0), 2, 2, '#8ae0ff'); };
-      if (co === 'lourd') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; for (let k = 0; k < 8; k++) R(g, bx + bw - 3 + Math.round(k * 0.5), by + bh - 4 - k, 2, 1, '#6a4a2a'); R(g, bx + bw - 1, by - 5, 7, 7, '#1c1420'); R(g, bx + bw, by - 4, 5, 5, '#5a5058'); R(g, bx + bw, by - 4, 5, 1, '#8a8098'); };
-      return null;
-    case 'crapaud':
-      if (co === 'lanceur_arc') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + Math.floor(bw / 2) - 3, y = by + bh - 6; g.drawImage(ellipse(4, 2 + i, '#1c1420'), x - 1, y - 1 - i); g.drawImage(ellipse(3, 1 + i, '#f0c060'), x, y - i); R(g, x + 2, y + 3, 1, 2, '#3a2a1a'); };
-      return null;
-    case 'momie':
-      if (d.mort === 'division') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + Math.floor(bw / 2) - 1; for (let y = by + 2; y < by + bh - 1; y++) { R(g, x, y, 1, 1, '#5a3a3a'); if (y % 2 === 0) R(g, x - 1, y, 3, 1, '#7a4a4a'); } };
-      if (co === 'lourd') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (const x of [bx - 2, bx + bw - 3]) { R(g, x, by + bh - 7, 5, 5, '#1c1420'); R(g, x + 1, by + bh - 6, 3, 3, '#9a8a6a'); R(g, x + 1, by + bh - 6, 3, 1, '#c8b890'); } };
-      return null;
-    case 'serpent':
-      if (co === 'chargeur') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (let k = 0; k < 3; k++) { R(g, bx + 8 + k * 2, by - 2 - (k % 2), 1, 3 + (k % 2), '#f8f4e0'); } R(g, bx + bw - 3, by + 3, 2, 1, '#ffffff'); };
-      return null;
-    case 'cuve':
-      if (co === 'lanceur_arc') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; const x = bx + Math.floor(bw / 2) - 2; R(g, x - 1, by - 5, 6, 7, '#1c1420'); R(g, x, by - 4, 4, 6, '#4a5058'); R(g, x, by - 4, 4, 1, '#8a929c'); R(g, x + 1, by - 6 - i, 2, 2, '#8af0a0'); };
-      if (co === 'invocateur') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; for (const [dx, dy] of [[3, 0], [Math.floor(bw / 2) - 1, -1 - i], [bw - 6, 0]]) { R(g, bx + dx - 1, by + dy - 3, 5, 4, '#1c1420'); R(g, bx + dx, by + dy - 2, 3, 2, '#e8e4d0'); R(g, bx + dx + 2, by + dy - 2, 1, 1, '#c83a2a'); } };
-      return null;
-    case 'oiseau_argile':
-      if (co === 'kamikaze') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; const x = bx + Math.floor(bw / 2); R(g, x, by - 3, 1, 4, '#3a3040'); R(g, x - 1, by - 5, 3, 2, i ? '#ff7a2a' : '#ffe060'); R(g, x - 1, by + bh - 5, 3, 2, '#c83a2a'); };
-      if (co === 'volant') return (g, bx, by, bw, bh, i, c) => { if (c === 'dos') fils(g, bx, by, bw, [1, bw - 2]); };
-      return null;
-    case 'masque':
-      if (P.proj === 'feu') return (g, bx, by, bw, bh, i, c) => { if (c !== 'face') return; for (let k = 0; k < 5; k++) { const x = bx + 1 + k * Math.floor((bw - 2) / 4), h = 3 + ((k + i) % 2) * 2; R(g, x - 1, by + 1 - h, 3, h + 1, '#1c1420'); R(g, x, by + 1 - h, 1, h, (k + i) % 2 ? '#ffd040' : '#ff7a2a'); } };
-      if (P.motif === 'rotation') return (g, bx, by, bw, bh, i, c) => { if (c !== 'dos') return; for (const x of [bx - 2, bx + bw]) { R(g, x - 1, by + 1, 4, 9, '#1c1420'); R(g, x, by + 2, 2, 7, '#f0ece0'); R(g, x, by + 4 + i, 2, 1, '#c83a2a'); } };
-      return null;
-  }
-  return null;
-}
 const _spEnn = new WeakMap(), SPRITE_DEFAUT = { type: 'carte', cle: 'poupee' };
 function spriteEnnemi(e) {
   const d = e.def; const S = d.sprite || SPRITE_DEFAUT;
@@ -259,18 +218,13 @@ function spriteEnnemi(e) {
   if (cache.has(k)) return cache.get(k);
   let r;
   const agrandir = c => k >= 4 ? agrandir2x(agrandir2x(c)) : k === 2 ? agrandir2x(c) : c;
-  if (S.type === 'carte' && CARTES_CREATURES[S.cle]) {
+  if (S.type === 'carte' && k === 1 && !d.boss && CREATURES[S.cle]) r = spriteCreature(d, S); // créatures peintes (25_creatures.js)
+  else if (S.type === 'carte' && CARTES_CREATURES[S.cle]) {
     const C = CARTES_CREATURES[S.cle]; const col = Object.assign({}, C.c, S.couleurs || {});
     const brut = C.f.map(f => peindre(f.map(l => l.padEnd(Math.max(...f.map(x => x.length)), '.')), col));
     // une créature bien plus petite que sa zone de contact est doublée (Scale2x, comme les boss) : on voit ce qui touche
     const kc = k === 1 ? Math.max(1, Math.min(2, Math.round(2.4 * (d.r || 9) / brut[0].width))) : 1;
     r = { frames: brut.map(b => contourner(avecMarge(kc === 2 ? agrandir2x(b) : agrandir(b)))), miroir: C.miroir, base: 1 };
-    const A = k === 1 && accessoireCreature(d, S);
-    if (A) r.frames = brut.map((b, i) => { // accessoire posé à l'échelle 1, puis l'ensemble agrandi et contouré d'un trait
-      const f = avecMarge(b), M = 6, T = 7, c = toile(f.width + 2 * M, f.height + T), g = ctxDe(c);
-      A(g, M, T, f.width, f.height, i, 'dos'); g.drawImage(kc === 2 ? f : contourner(f), M, T); A(g, M, T, f.width, f.height, i, 'face');
-      return kc === 2 ? contourner(avecMarge(agrandir2x(c))) : c;
-    });
   } else if (S.type === 'shinobi') {
     const B = spriteShinobi(S.perso); r = k > 1 ? Object.assign({}, B, { frames: B.frames.map(agrandir), base: k }) : B;
   } else if (S.type === 'ninja') {

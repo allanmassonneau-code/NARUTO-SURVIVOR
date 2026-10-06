@@ -509,7 +509,7 @@ function rendreJeu(g) {
   rendreSalle(g, Math.round(_secousse.x), Math.round(_secousse.y));
   // préchauffage : hors combat, le fond d'une salle voisine se construit en avance (pas d'à-coup à la porte)
   if (s && !s.combat && G.etage && (++_prechauffe % 6) === 0) for (const p of s.portes) { const v = G.etage.salles[p.vers]; if (v && !v._fond && p.etat !== 'secrete') { fondSalle(v); break; } }
-  if (s && !s.combat && _prechauffe % 6 === 3) prechaufferShinobi(); // et les shinobi ennemis, un par appel
+  if (s && !s.combat && _prechauffe % 6 === 3) prechaufferEnnemis(); // et les ennemis peints, un par appel
 }
 let _prechauffe = 0;
 const HAUTEUR_VOL = 5; // px : les volants flottent au-dessus de leur ombre (leur point d'impact est relevé d'autant)

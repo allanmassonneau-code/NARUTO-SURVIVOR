@@ -117,9 +117,30 @@ Les 31 shinobi hostiles ne partagent plus le petit corps des héros : chacun est
 
 Les boss shinobi gardent le constructeur des héros (mêmes familles de visages), sans équipement ajouté : leurs illusions et clones leur ressemblent trait pour trait.
 
-Les créatures qui partageaient une forme reçoivent un accessoire d'attaque : marionnette à lames (lames dépliées), marionnette lanceuse (tubes et socle), marionnette inerte (fils et croix de manipulation), marionnette volante (fils), oiseau d'argile kamikaze (mèche allumée, marque rouge), statue bouclier (grand pavois), statue d'aura (runes et couronne bleues, lueur), statue géante (massue), crapaud cracheur (goitre d'huile), sujet qui se divise (couture médiane), momie lourde (poings de pierre), serpent chargeur (crête), cuve d'acide (buse), nid de serpenteaux (têtes qui dépassent), masque de feu (couronne de flammes, lueur), tourelle à parchemins (bandes de papier).
+### Créatures peintes (`25_creatures.js`)
 
-**Créatures à la taille de leur zone de contact** : une créature nettement plus petite que son rayon de contact est doublée (Scale2x, comme les boss) — tigre, crapauds, sangsue, araignée tisseuse, marionnettes, scorpion, ver, requin, méduse, statues, tourelles… ; l’accessoire d’attaque est posé avant l’agrandissement. Les petites (rat, chauve-souris, araignée d’argile) restent à l’échelle 1. **Les volants flottent** 5 px au-dessus d’une ombre plus petite, avec un léger balancement ; leur point d’impact est relevé d’autant.
+Les 31 formes de créatures ennemies passent par le **même peintre de volumes** que les shinobi (mêmes lumières, rampes, traits intérieurs, contour) : tout le bestiaire parle la même langue. Chacune est dessinée **à la taille de sa zone de contact** (plus de cartes de 12 pixels doublées) et garde son image d’attaque.
+
+| Forme | Dessin | Variantes et image d’attaque |
+|---|---|---|
+| Poupée d’entraînement | sac de toile cousu sur un pieu, cible peinte, bras de bois | sautille sur son pieu |
+| Rat, moustiques, serpenteaux, araignées mécanique et d’argile | petits, de profil ou vus de dessus | pattes en vague ; mèche allumée (argile) |
+| Chauve-souris, hirondelle, oiseaux, papillon de papier | ailes qui battent (haut/bas) | oiseau d’argile kamikaze : mèche ; marionnette volante : fils |
+| Crapauds | trapus, yeux saillants, ventre clair | s’aplatissent avant de bondir ; le cracheur gonfle un goitre d’huile ; le gardien de Myōboku porte plaque et pans de bandeau |
+| Serpents | corps qui ondule au sol, cou dressé | le chargeur a une crête et ouvre la gueule avant de charger |
+| Sangsue, mille-pattes, ver, requin | annelés, luisants, de profil | se dressent, gueule ronde cerclée de dents, aileron |
+| Tigre, bête invoquée | quadrupèdes de profil, pattes alternées | le tigre se ramasse, gueule ouverte ; la bête porte les tiges noires de son invocateur |
+| Araignée tisseuse | huit pattes articulées, sablier rouge | fil de soie |
+| Jarre hantée | jarre aux yeux mi-clos qui luisent | éveillée : tremble, couvercle soulevé, yeux grands ouverts |
+| Racine griffue, esprit de sable, ombre, méduse, queue de chakra | silhouettes organiques | branches levées et épines ; queue enroulée avant de fouetter |
+| Scorpion | pinces en avant, queue arquée | dard qui se dresse |
+| Momies | bandelettes, un œil rouge | la lourde lève des poings de pierre ; le sujet qui se divise porte une couture |
+| Marionnettes | bois articulé à rotules, masque blanc | lames dépliées (chargeuse), socle et tubes à senbon (lanceuse), saccades (errante), fils et croix (inerte) |
+| Cuves | verre cerclé de métal, créature qui flotte | buse d’acide qui bouillonne ; têtes de serpenteaux (nid) |
+| Masques flottants | grand masque ovale | talismans et rouleaux (archives), couronne de flammes (élémentaire) ; orbites qui s’illuminent |
+| Statues | corps massif taillé | pavois à sceau (frontale), massue levée (géante), runes et couronne bleues (aura) |
+
+Les couleurs propres à chaque ennemi (crapauds, marionnettes, chauve-souris…) passent par les mêmes clés qu’avant. Boss et familiers gardent leurs cartes. Les ennemis peints se construisent une fois (≈ 250 ms pour les 76, 8 ms au plus chacun) et se préchauffent un par un hors combat, ceux du thème de l’étage d’abord. **Les volants flottent** 5 px au-dessus d’une ombre plus petite, avec un léger balancement ; leur point d’impact est relevé d’autant.
 
 **Télégraphes lisibles** (dessinés après l’éclairage, jamais assombris) : ligne de charge rouge qui s’allonge devant le chargeur, ligne de visée pointillée du tireur qui anticipe, éclat qui grossit sur l’arme du tireur, anneau qui se resserre au point de chute du sauteur, poussière du sauteur qui se ramasse.
 

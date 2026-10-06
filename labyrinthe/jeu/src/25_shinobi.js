@@ -932,20 +932,33 @@ SHINOBI.zetsu_soigneur = {
 };
 
 // ── Assemblage : trois images recadrées ensemble, axe du corps au centre (miroir quand l'ennemi va à gauche) ──
-const _shinobi = {};
-function spriteShinobi(nom) {
-  if (_shinobi[nom]) return _shinobi[nom];
-  const F = SHINOBI[nom] || SHINOBI.genin_renegat;
-  const brutes = [0, 1, 2].map(n => { const P = peintreShinobi(F.pal); F.f(P, n === 1 ? 1 : 0, n === 2); return P.toile(); });
+function peindreTrois(pal, dessin) {
+  const brutes = [0, 1, 2].map(n => { const P = peintreShinobi(pal); dessin(P, n === 1 ? 1 : 0, n === 2); return P.toile(); });
   let haut = SH.H, dmax = 4;
   for (const c of brutes) {
     const d = ctxDe(c).getImageData(0, 0, c.width, c.height).data;
     for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 0) { if (y < haut) haut = y; dmax = Math.max(dmax, x < SH.X ? SH.X - x : x + 1 - SH.X); }
   }
   const bas = SH.SOL + 1, l = 2 * dmax, h = bas - haut + 1;
-  const frames = brutes.map(c => { const o = toile(l, h); ctxDe(o).drawImage(c, SH.X - dmax, haut, l, h, 0, 0, l, h); return o; });
-  return (_shinobi[nom] = { frames, miroir: true, base: 1, attaque: true });
+  return brutes.map(c => { const o = toile(l, h); ctxDe(o).drawImage(c, SH.X - dmax, haut, l, h, 0, 0, l, h); return o; });
 }
-// Préchauffage : hors combat, un shinobi se construit en avance à chaque appel (pas d'à-coup à leur apparition)
-let _shAPrechauffer = null;
-function prechaufferShinobi() { if (!_shAPrechauffer) _shAPrechauffer = Object.keys(SHINOBI); const n = _shAPrechauffer.pop(); if (n && !_shinobi[n]) spriteShinobi(n); }
+const _shinobi = {};
+function spriteShinobi(nom) {
+  if (_shinobi[nom]) return _shinobi[nom];
+  const F = SHINOBI[nom] || SHINOBI.genin_renegat;
+  return (_shinobi[nom] = { frames: peindreTrois(F.pal, (P, i, att) => F.f(P, i, att)), miroir: true, base: 1, attaque: true });
+}
+// Préchauffage : hors combat, un ennemi peint (shinobi ou créature) se construit en avance à chaque appel
+// (2 à 10 ms chacun : pas d'à-coup à leur apparition)
+// (ceux du thème de l'étage d'abord)
+let _aPrechauffer = null, _themePrechauffe = null;
+function prechaufferEnnemis() {
+  const th = G.etage && G.etage.cfg ? INDEX[G.etage.cfg.theme] : null;
+  if (!_aPrechauffer || th !== _themePrechauffe) {
+    _themePrechauffe = th;
+    const peint = d => d && d.sprite && (d.sprite.type === 'shinobi' || (d.sprite.type === 'carte' && CREATURES[d.sprite.cle]));
+    const dabord = th && th.roles ? [...new Set(Object.values(th.roles).flat())].map(id => INDEX[id]).filter(peint) : [];
+    _aPrechauffer = dabord.concat(DON.ennemis.filter(d => peint(d) && !dabord.includes(d))).reverse();
+  }
+  while (_aPrechauffer.length) { const d = _aPrechauffer.pop(), c = _spEnn.get(d.sprite); if (c && c.has(1)) continue; spriteEnnemi({ def: d }); break; }
+}
