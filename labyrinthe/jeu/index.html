@@ -4414,6 +4414,45 @@ function equiperNinja(g, d, couche, i) {
     case 'poursuivant': if (couche === 'face') { R(9, 25, 3, 1, '#e8e4dc'); R(20, 25, 3, 1, '#e8e4dc'); R(9, 27, 3, 1, '#e8e4dc'); R(20, 27, 3, 1, '#e8e4dc'); if (!d.sprite.arme) { R(22, 26, 1, 2, '#4a3a2a'); R(22, 28, 1, 4, '#c8ccd8'); R(22, 32, 1, 1, '#ffffff'); } } break;
   }
 }
+// ── Couvre-chefs par comportement : la tête, la partie la plus lisible du chibi, annonce la façon de bouger
+// et d'attaquer, quelle que soit la faction (coiffure et couleurs) : bandeau à longues pointes = fonce au
+// contact ; casque à cornes = charge ; chapeau de paille = tire en ligne ; lunette de visée = anticipe ;
+// turban de porteur = lance en cloche ; lunettes de mineur = pose des pièges ; heaume de fer = lourd ;
+// haut bonnet scellé = invoque ; foulard à croix verte = soigne. (L'embusqué garde sa capuche.)
+function coiffer(c0, d, S, i) {
+  const co = d.comportement; if (!COIFFES.has(co)) return c0;
+  const c = toile(40, 44), g = ctxDe(c), R = (x, y, l, h, col) => { g.fillStyle = col; g.fillRect(x, y, l, h); }, K = '#1c1420';
+  const tissu = (S.corps && S.corps.t) || '#4a4a58', tissuC = nuancer(tissu, 1.3);
+  if (co === 'poursuivant') for (let k = 0; k < 9; k++) { const y = 15 + k + Math.round(Math.sin(k * 0.9 + i * 1.6) * 1.2); R(33 + k, y - 1, 2, 3, K); R(33 + k, y, 1, 1, '#c83a2a'); R(34 + k, y + (k % 2), 1, 1, '#e85a3a'); } // pointes du bandeau qui flottent
+  g.drawImage(c0, 4, 10);
+  switch (co) {
+    case 'poursuivant': R(9, 18, 22, 3, K); R(10, 19, 20, 1, '#c83a2a'); R(18, 18, 4, 3, '#a8acb8'); R(19, 19, 2, 1, '#e8ecf4'); break; // bandeau rouge à plaque
+    case 'chargeur': { // casque à cornes de cerf-volant
+      R(8, 7, 24, 8, K); R(9, 8, 22, 6, '#6a6e7a'); R(9, 8, 22, 1, '#a8aebc'); R(19, 6, 2, 9, K); R(19, 7, 2, 7, '#8a8e9a');
+      for (let k = 0; k < 6; k++) { R(10 - k, 7 - k, 3, 2, K); R(11 - k, 7 - k, 1, 1, '#e8c050'); R(28 + k, 7 - k, 3, 2, K); R(28 + k, 7 - k, 1, 1, '#e8c050'); }
+      break;
+    }
+    case 'tireur': { // chapeau de paille conique (kasa)
+      for (let y = 0; y < 8; y++) { const w = 3 + y * 2.4 | 0; R(20 - w - 1, 5 + y, 2 * w + 2, 1, K); R(20 - w, 5 + y, 2 * w, 1, y % 3 === 2 ? '#8a6a3a' : '#c8a868'); R(20 - w, 5 + y, 1, 1, '#e8d098'); }
+      R(1, 13, 38, 2, K); R(2, 13, 36, 1, '#a8884e'); break;
+    }
+    case 'tireur_predictif': R(30, 3, 3, 13, K); R(31, 4, 1, 11, '#5a5e6a'); R(29, 2, 5, 4, K); R(30, 3, 3, 2, '#ff4a4a'); R(30, 3, 1, 1, '#ffd0c8'); break; // lunette de visée
+    case 'lanceur_arc': R(9, 9, 22, 6, K); R(10, 10, 20, 4, '#e8e0d0'); for (let x = 11; x < 30; x += 3) R(x, 10, 1, 4, '#b8b0a0'); R(29, 13, 4, 5, K); R(30, 14, 2, 3, '#e8e0d0'); break; // turban de porteur
+    case 'poseur': for (const x of [11, 22]) { R(x - 1, 13, 9, 7, K); R(x, 14, 7, 5, '#b08a3a'); R(x + 1, 15, 5, 3, '#8ad0e8'); R(x + 1, 15, 2, 1, '#e8fbff'); } R(8, 15, 3, 2, K); R(29, 15, 3, 2, K); break; // lunettes de mineur
+    case 'lourd': { // heaume de fer riveté, crête, protège-joues
+      R(7, 6, 26, 12, K); R(8, 7, 24, 10, '#4e4450'); R(8, 7, 24, 2, '#8a8098'); R(18, 3, 4, 6, K); R(19, 4, 2, 4, '#8a8098');
+      for (const x of [10, 15, 24, 29]) R(x, 11, 1, 1, '#c8c0d0'); R(7, 16, 4, 8, K); R(8, 17, 2, 6, '#5e5460'); R(29, 16, 4, 8, K); R(30, 17, 2, 6, '#5e5460');
+      break;
+    }
+    case 'invocateur': { // haut bonnet noir et sceau d'invocation
+      for (let y = 0; y < 11; y++) { const w = 4 + Math.round(y * 0.45); R(20 - w - 1, y, 2 * w + 2, 1, K); R(20 - w, y, 2 * w, 1, '#2a2434'); }
+      R(17, 3, 6, 6, K); R(18, 4, 4, 4, '#e8dcb8'); R(19, 5, 2, 2, '#c03ad0'); R(13, 10, 14, 2, '#c080ff'); break;
+    }
+    case 'guerisseur': R(8, 9, 24, 5, K); R(9, 10, 22, 3, '#f4f0e6'); R(18, 9, 4, 5, K); R(19, 9, 2, 5, '#2ab050'); R(17, 11, 6, 1, '#2ab050'); break; // foulard à croix verte
+  }
+  return c;
+}
+const COIFFES = new Set(['poursuivant', 'chargeur', 'tireur', 'tireur_predictif', 'lanceur_arc', 'poseur', 'lourd', 'invocateur', 'guerisseur']);
 // Créatures partageant une même forme : l'accessoire annonce l'attaque
 function accessoireCreature(d, S) {
   const P = d.params || {}, co = d.comportement;
@@ -4466,15 +4505,23 @@ function spriteEnnemi(e) {
   const agrandir = c => k >= 4 ? agrandir2x(agrandir2x(c)) : k === 2 ? agrandir2x(c) : c;
   if (S.type === 'carte' && CARTES_CREATURES[S.cle]) {
     const C = CARTES_CREATURES[S.cle]; const col = Object.assign({}, C.c, S.couleurs || {});
-    r = { frames: C.f.map(f => contourner(avecMarge(agrandir(peindre(f.map(l => l.padEnd(Math.max(...f.map(x => x.length)), '.')), col))))), miroir: C.miroir, base: 1 };
-    const A = k === 1 && accessoireCreature(d, S); if (A) r.frames = r.frames.map((f, i) => { const M = 6, T = 7, c = toile(f.width + 2 * M, f.height + T), g = ctxDe(c); A(g, M, T, f.width, f.height, i, 'dos'); g.drawImage(f, M, T); A(g, M, T, f.width, f.height, i, 'face'); return c; });
+    const brut = C.f.map(f => peindre(f.map(l => l.padEnd(Math.max(...f.map(x => x.length)), '.')), col));
+    // une créature bien plus petite que sa zone de contact est doublée (Scale2x, comme les boss) : on voit ce qui touche
+    const kc = k === 1 ? Math.max(1, Math.min(2, Math.round(2.4 * (d.r || 9) / brut[0].width))) : 1;
+    r = { frames: brut.map(b => contourner(avecMarge(kc === 2 ? agrandir2x(b) : agrandir(b)))), miroir: C.miroir, base: 1 };
+    const A = k === 1 && accessoireCreature(d, S);
+    if (A) r.frames = brut.map((b, i) => { // accessoire posé à l'échelle 1, puis l'ensemble agrandi et contouré d'un trait
+      const f = avecMarge(b), M = 6, T = 7, c = toile(f.width + 2 * M, f.height + T), g = ctxDe(c);
+      A(g, M, T, f.width, f.height, i, 'dos'); g.drawImage(kc === 2 ? f : contourner(f), M, T); A(g, M, T, f.width, f.height, i, 'face');
+      return kc === 2 ? contourner(avecMarge(agrandir2x(c))) : c;
+    });
   } else if (S.type === 'ninja') {
     const M = MASQUES_ENNEMIS[S.masque] || MASQUES_ENNEMIS.bandana;
     const cs = Object.assign({}, M.c, S.cheveux || {}); const peau = S.peau || M.peau; if (peau) { cs.s = peau; cs.d = nuancer(peau, 0.82); cs.l = nuancer(peau, 1.12); }
     const V = { coiffure: S.coiffure || M.coiffure, c: cs, yeux: S.yeux || 'normal', corps: Object.assign({ mode: 'standard', t: '#4a4a58', T: '#34343e', a: '#4a4a58', A: '#34343e', c: '#2a2a34', e: '#2a2a34', p: '#3a3a44', P: '#26262e', f: '#26262e' }, S.corps || {}), nuages: S.nuages, dos: S.dos };
     const cle = 'enn_' + d.id + '_' + d.nom; VISUELS[cle] = V;
     const P = spritesPerso(cle);
-    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); equiperNinja(g, d, 'dos', i); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme && !ARME_PROPRE.has(d.comportement)) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); equiperNinja(g, d, 'face', i); return c; };
+    const frame = (i) => { const c = toile(32, 34); const g = ctxDe(c); equiperNinja(g, d, 'dos', i); dessinerPerso(g, cle, 16, 33, { dirCorps: 'bas', frame: i ? 1 : 3, dirTete: 'bas', etatTete: 'normal' }); if (M.bas === 'bandana') { g.fillStyle = M.c.r || '#8a2a2a'; g.fillRect(9, 15, 14, 4); } if (S.arme && !ARME_PROPRE.has(d.comportement)) { g.fillStyle = '#c8ccd8'; g.fillRect(24, 16, 2, 12); g.fillStyle = '#6a4a2a'; g.fillRect(24, 26, 2, 3); } if (S.visage) dessinerVisage(g, S.visage, 16, 13); equiperNinja(g, d, 'face', i); return coiffer(c, d, S, i); };
     r = { frames: [frame(0), frame(1)].map(agrandir), base: k }; // pieds à 1 px du bas, ×k après agrandissement
   } else r = { frames: [contourner(disque(d.r || 8, '#a04a6a'))], base: 0 };
   cache.set(k, r); return r;
@@ -5137,9 +5184,11 @@ const CADRES_PORTE = {
 // ═══════════════════════════════════════════════════════════════════════════
 
 const _proj = {};
+const FORMES_TIR_ENNEMI = new Set(['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie', 'papier_ennemi', 'kunai_ennemi', 'senbon_ennemi', 'vent', 'epine', 'tesson', 'os', 'terre', 'boue', 'sable_fer', 'acide', 'huile']);
 function spriteProjectile(app, taille) {
   const k = app + '|' + Math.round(taille * 4); if (_proj[k]) return _proj[k];
   const P = (L, col, cont) => cont === false ? peindre(L, col) : contourner(peindre(L, col), cont || '#f8f0e0');
+  const PE = (L, col) => contourner(contourner(peindre(L.map(l => l.padEnd(Math.max(...L.map(x => x.length)), '.')), col), '#1a0810'), 'rgba(26,8,16,0.45)'); // ennemi : double contour sombre
   let s;
   switch (app) {
     case 'kunai': case 'kunai_ombre': case 'lame_poison': {
@@ -5163,7 +5212,21 @@ function spriteProjectile(app, taille) {
     case 'os': s = rotations(P(['w....w', 'wwwwww', 'w....w'], { w: '#ece4d0' }, '#6a5a4a'), 16); break;
     case 'encre': s = [P(['.kk.', 'kkkk', 'kkkk', '.kk.'], { k: '#1a1a2a' }, '#8080a0')]; break;
     case 'lame': s = rotations(P(['.www......', 'wwwwwwwwww', '.www......'], { w: '#d0d8e8' }, '#3a3040'), 16); break;
-    // ── projectiles ennemis : contour sombre épais, cœur pulsant ──
+    // ── projectiles ennemis : forme propre à l'attaque, contour sombre, point rose au cœur (signature ennemie) ──
+    case 'kunai_ennemi': s = rotations(PE(['..........', 'hh.ddsppw.', 'hhddsspppw', 'hh.ddsppw.', '..........'], { h: '#5a1a24', d: '#3a3448', s: '#8a8aa0', p: '#ff6a9a', w: '#ffe0ec' }), 16); break;
+    case 'senbon_ennemi': s = rotations(PE(['hpppppppww', 'hpppppppw.'], { h: '#5a1a24', p: '#ff9ac0', w: '#fff0f6' }), 16); break;
+    case 'vent': s = rotations(PE(['..ww...', '...gww.', '....gg.', '....gpw', '....gg.', '...gww.', '..ww...'], { g: '#7ad8a8', w: '#e8fff4', p: '#ff6a9a' }), 16); break;
+    case 'son': s = rotations(PE(['.l..l..', '..l..l.', '..l..lp', '..l..l.', '.l..l..'], { l: '#c8a8ff', p: '#ff6a9a' }), 16); break;
+    case 'eau': s = rotations(PE(['....bb.', '.bbbwwb', 'bbbpwwb', '.bbbwwb', '....bb.'], { b: '#3a7ad8', w: '#c8e8ff', p: '#ff6a9a' }), 16); break;
+    case 'glace_ennemie': s = rotations(PE(['..c....', 'ccbwww.', 'cbbpwwc', 'ccbwww.', '..c....'], { c: '#5aa8d8', b: '#8ad0f0', w: '#f0fbff', p: '#ff6a9a' }), 16); break;
+    case 'epine': s = rotations(PE(['hh.....', 'hgggggw', 'hgggpw.', 'hh.....'], { h: '#2a3a1a', g: '#5a8a3a', w: '#e8f0c8', p: '#ff6a9a' }), 16); break;
+    case 'tesson': s = rotations(PE(['tt....', 'tlltt.', 'tltppt', '.tttt.'], { t: '#a8582e', l: '#e0905a', p: '#ff6a9a' }), 16); break;
+    case 'os': s = rotations(PE(['w....w', 'wwwpww', 'w....w'], { w: '#ece4d0', p: '#ff6a9a' }), 16); break;
+    case 'feu': s = [PE(['...oo..', '.rooyo.', 'rooyywo', 'royypwo', '.ooyyo.', '..ro...'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff4c0', p: '#ff6a9a' }), PE(['..oo...', '.ooyor.', 'oowyyoo', 'owpyyor', '.oyyoo.', '...or..'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff4c0', p: '#ff6a9a' })]; break;
+    case 'sable_ennemi': case 'terre': case 'boue': case 'sable_fer': case 'acide': case 'huile': {
+      const C = { sable_ennemi: ['#c8903a', '#f0c878', '#8a6020'], terre: ['#7a5a3a', '#a8865a', '#4a3420'], boue: ['#5a5a32', '#8a8a4a', '#34341c'], sable_fer: ['#3a3e52', '#8a90b8', '#1c1e2a'], acide: ['#5ac850', '#c8ff9a', '#2a7a2a'], huile: ['#8a6a1a', '#e8c050', '#4a3608'] }[app];
+      s = [PE(['..aaa..', '.allaa.', 'aalaapa', 'aaaaaad', '.aaadd.', '..ddd..'], { a: C[0], l: C[1], d: C[2], p: '#ff6a9a' })]; break;
+    }
     case 'papier_ennemi': s = rotations(P(['...r...', '..rwr..', '.rwwwr.', 'rwwwwwr', '.rwwwr.', '..rwr..', '...r...'], { w: '#f4f0e8', r: '#d0306a' }, '#1a0810'), 16); break;
     case 'ennemi': default: {
       const r = Math.max(3, Math.round(4 * taille));
@@ -5177,11 +5240,14 @@ function spriteProjectile(app, taille) {
 }
 function dessinerProjectile(g, p, x, y) {
   if (p.proprio === 'ennemi') {
-    const L = spriteProjectile(p.apparence && p.apparence !== 'ennemi' && ['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie', 'papier_ennemi'].includes(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
-    const s = L.length > 1 ? L[((Math.floor(G.temps * 20 + (p.x + p.y) * 0.05) % L.length) + L.length) % L.length] : L[0]; // le papier tournoie
+    const L = spriteProjectile(p.apparence && FORMES_TIR_ENNEMI.has(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
+    // formes orientées (kunai, aiguilles, lames de vent, gouttes, épines) : selon la vitesse ; les autres tournoient
+    const s = L.length === 16 && p.apparence !== 'papier_ennemi' ? L[indexAngle(Math.atan2(p.vy || 0.001, p.vx || 1))] : L.length > 1 ? L[((Math.floor(G.temps * 20 + (p.x + p.y) * 0.05) % L.length) + L.length) % L.length] : L[0];
     const pul = 0.5 + 0.5 * Math.sin((G.temps + (p.x + p.y) * 0.01) * 18);
-    g.drawImage(s, x - s.width / 2, y - s.height / 2);
-    if (pul > 0.6) { g.globalAlpha = 0.55; g.drawImage(anneau(s.width / 2 + 1, 1, '#ffe0f0'), x - s.width / 2 - 2, y - s.height / 2 - 2); g.globalAlpha = 1; }
+    // les formes dessinées gardent leur netteté : agrandies par un facteur entier pour les gros tirs (boss)
+    const kk = FORMES_TIR_ENNEMI.has(p.apparence) && (p.taille || 1) > 1.15 ? Math.round(Math.min(3, p.taille)) : 1, w = s.width * kk, h = s.height * kk;
+    g.drawImage(s, Math.round(x - w / 2), Math.round(y - h / 2), w, h);
+    if (pul > 0.6) { g.globalAlpha = 0.55; g.drawImage(anneau(Math.round(Math.max(w, h) / 2) + 1, 1, '#ffe0f0'), Math.round(x - Math.max(w, h) / 2) - 2, Math.round(y - Math.max(w, h) / 2) - 2); g.globalAlpha = 1; }
     return;
   }
   let app = p.apparence || 'kunai';
@@ -5326,6 +5392,28 @@ function dessinerEnnemi(g, e, x, y) {
   if (e.def.params && e.def.params.bouclier === 'aura') { g.globalAlpha = 0.25; g.drawImage(anneau(2.5 * TUILE, 1, '#a0c0ff'), x - 2.5 * TUILE - 1, y - 2.5 * TUILE - 1); g.globalAlpha = 1; }
   if (e.invulnerable) { g.globalAlpha = 0.6; g.drawImage(anneau(e.r + 6, 2, '#e0e0ff'), x - e.r - 7, y - h / 2 - e.r - 7); g.globalAlpha = 1; }
   if (G.joueur.transformations.includes('TRF_005') && !e.boss && e.pv < e.pvMax) { g.fillStyle = '#1c1420'; g.fillRect(x - 8, y + 2, 16, 2); g.fillStyle = '#e04a4a'; g.fillRect(x - 8, y + 2, Math.round(16 * e.pv / e.pvMax), 2); }
+}
+// Télégraphes lisibles des ennemis ordinaires : ligne de charge qui s'allonge, ligne de visée du tireur qui
+// anticipe, éclat sur l'arme du tireur, point de chute du sauteur. Couleur rose-rouge des dangers ennemis.
+function dessinerTelegraphe(g, e, x, y) { // dessiné après l'éclairage : jamais assombri par la pénombre
+  if (e.boss || e.cache || e.mort) return; const h = 26; const T = e.ia.tele, I = e.ia, co = e.def.comportement, gy = y + Math.round(e.z || 0);
+  if (co === 'sauteur' && I.phase === 'saut' && I.x1 !== undefined) { // point de chute : anneau qui se resserre
+    const k = Math.min(1, I.t / (I.duree || 0.6)), tx = Math.round(x + I.x1 - e.x), ty = Math.round(gy + I.y1 - e.y), r = Math.round(14 - 6 * k);
+    g.globalAlpha = 0.45 + 0.35 * k; g.drawImage(anneau(r, 1, '#ff5a7a'), tx - r - 1, ty - r - 1); g.drawImage(ellipse(Math.round(r * 0.6), Math.max(1, Math.round(r * 0.25)), 'rgba(255,90,122,0.35)'), tx - Math.round(r * 0.6), ty - Math.max(1, Math.round(r * 0.25))); g.globalAlpha = 1;
+  }
+  if (!T) return; const k = Math.max(0, Math.min(1, 1 - T.t / T.duree));
+  if (T.type === 'tremble' && co === 'chargeur' && I.dirCharge) { // trajectoire de la charge
+    const [dx, dy] = DIRS[I.dirCharge], L = 18 + 90 * k;
+    for (let d = 12; d < L; d += 7) { g.fillStyle = 'rgba(255,70,100,' + (0.75 - d / 170).toFixed(2) + ')'; g.fillRect(Math.round(x + dx * d) - 1, Math.round(gy - 6 + dy * d) - 1, 3, 3); }
+  } else if (T.type === 'vise') { // ligne de visée pointillée vers le joueur
+    const J = G.joueur, a = Math.atan2((J.y - 10) - (e.y - 10), J.x - e.x), L = 14 + 40 * k;
+    for (let d = 10; d < L; d += 5) { g.fillStyle = 'rgba(255,90,120,' + (0.8 - d / 90).toFixed(2) + ')'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(gy - 10 + Math.sin(a) * d), 2, 2); }
+  } else if (T.type === 'gonfle' && (co === 'tireur' || co === 'tourelle')) { // éclat qui grossit sur l'arme
+    const r = 1 + Math.round(3 * k), cx = x + (co === 'tireur' ? 9 : 0), cy = y - Math.round(h * (co === 'tireur' ? 0.4 : 0.55));
+    g.fillStyle = '#fff0f6'; g.fillRect(cx - r, cy, 2 * r + 1, 1); g.fillRect(cx, cy - r, 1, 2 * r + 1); g.fillStyle = '#ff6a9a'; g.fillRect(cx - 1, cy - 1, 3, 3);
+  } else if (T.type === 'accroupi') { // le sauteur se ramasse : poussière à ses pieds
+    g.fillStyle = 'rgba(220,200,170,0.6)'; for (const dx of [-7, -4, 4, 7]) g.fillRect(x + dx, gy - 1 - Math.round(k * 2), 2, 1);
+  }
 }
 // Rempart spectral d'Itachi : arc de côtes (±60°) orienté ; il vacille avant de se dissiper
 function dessinerSusanoo(g, e, x, y) {
@@ -6741,7 +6829,7 @@ function creerEnnemi(defId, x, y, o = {}) {
   const d = INDEX[defId]; if (!d) throw new Error('Ennemi inconnu ' + defId);
   const diff = G.partie && G.partie.difficile ? 1.2 : 1;
   const e = {
-    uid: ++_idEnnemi, def: d, id: d.id, x, y, vx: 0, vy: 0, r: d.r || 9, hauteur: d.hauteur || 8,
+    uid: ++_idEnnemi, def: d, id: d.id, x, y, vx: 0, vy: 0, r: d.r || 9, hauteur: d.hauteur || (d.vol && !d.fixe && !d.boss ? 8 + HAUTEUR_VOL : 8),
     pv: d.pv * diff * (o.pvMult || 1), pvMax: d.pv * diff * (o.pvMult || 1), vol: !!d.vol, etat: 'apparition', t: 0, tAtt: 0.8 + Math.random() * 0.8,
     dir: 'bas', frame: 0, tAnim: Math.random(), statuts: {}, flash: 0, mort: false, cache: false, intangible: false, ia: {},
     champion: null, apparition: o.sansApparition ? 0 : DUREE_APPARITION, boss: !!d.boss, parent: o.parent || null, charme: false, allie: false,
@@ -10270,6 +10358,7 @@ function rendreJeu(g) {
   if (s && !s.combat && G.etage && (++_prechauffe % 6) === 0) for (const p of s.portes) { const v = G.etage.salles[p.vers]; if (v && !v._fond && p.etat !== 'secrete') { fondSalle(v); break; } }
 }
 let _prechauffe = 0;
+const HAUTEUR_VOL = 5; // px : les volants flottent au-dessus de leur ombre (leur point d'impact est relevé d'autant)
 function capturerVue() { const c = toile(ECRAN_L, ECRAN_H); const g = ctxDe(c); g.fillStyle = '#07060a'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); rendreSalle(g, 0, 0); return c; }
 
 function rendreSalle(g, ox, oy) {
@@ -10305,7 +10394,7 @@ function rendreSalle(g, ox, oy) {
   if (s.source) L.push({ y: s.source.y + 8, f: () => dessinerSource(g, s.source, X(s.source.x), Y(s.source.y)) });
   for (const x of s.sorties || []) L.push({ y: x.y - 20, f: () => dessinerSortie(g, x, X(x.x), Y(x.y)) });
   for (const b of G.bombes) L.push({ y: b.y, f: () => { ombre(b.x, b.y, 5); dessinerBombe(g, b, X(b.x), Y(b.y)); } });
-  for (const e of G.ennemis) L.push({ y: e.y, f: () => { if (!e.cache && !e.illusion && !(e.alpha < 0.5)) ombre(e.x, e.y, e.r * 0.9); dessinerEnnemi(g, e, X(e.x), Y(e.y - (e.z || 0))); } });
+  for (const e of G.ennemis) L.push({ y: e.y, f: () => { const v = e.def.vol && !e.boss && !e.def.fixe, hv = v ? HAUTEUR_VOL + Math.round(Math.sin(G.temps * 5 + e.uid) * 1.5) : 0; if (!e.cache && !e.illusion && !(e.alpha < 0.5)) ombre(e.x, e.y, e.r * (v ? 0.6 : 0.9)); dessinerEnnemi(g, e, X(e.x), Y(e.y - (e.z || 0) - hv)); } });
   // corps du serpent (chaque anneau blesse au contact : il doit se voir) et chaîne des frères
   for (const e of G.ennemis) if (e.segments && !e.mort && !e.cache) e.segments.forEach((q, i) => L.push({ y: q.y - 0.5, f: () => { const r = Math.round(9 - i * 0.6); ombre(q.x, q.y, r); dessinerAnneauSerpent(g, X(q.x), Y(q.y) - 5, r, i); } }));
   for (const e of G.ennemis) if (e.chaine && !e.mort && !e.chaine.mort) L.push({ y: Math.max(e.y, e.chaine.y), f: () => dessinerChaineFreres(g, e, e.chaine, X, Y) });
@@ -10314,6 +10403,8 @@ function rendreSalle(g, ox, oy) {
   L.sort((a, b) => a.y - b.y); for (const o of L) o.f();
   // lumière : ombre multipliée sur le décor et les personnages, éclats additifs sous les tirs
   eclairerSalle(g, s, X, Y, ox, oy);
+  // télégraphes des ennemis ordinaires (au-dessus de l'ombre, comme tous les dangers)
+  for (const e of G.ennemis) if (e.ia.tele || e.ia.phase === 'saut') dessinerTelegraphe(g, e, X(e.x), Y(e.y - (e.z || 0)));
   // sphères contrôlées
   for (const o of G.orbes) dessinerOrbe(g, o, X, Y);
   // projectiles : ombres puis corps (les tirs ennemis au-dessus des tirs alliés)

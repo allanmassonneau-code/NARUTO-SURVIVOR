@@ -111,6 +111,14 @@ Règle : **un comportement d'attaque = une silhouette**. Les shinobi hostiles pa
 
 Les créatures qui partageaient une forme reçoivent un accessoire d'attaque : marionnette à lames (lames dépliées), marionnette lanceuse (tubes et socle), marionnette inerte (fils et croix de manipulation), marionnette volante (fils), oiseau d'argile kamikaze (mèche allumée, marque rouge), statue bouclier (grand pavois), statue d'aura (runes et couronne bleues, lueur), statue géante (massue), crapaud cracheur (goitre d'huile), sujet qui se divise (couture médiane), momie lourde (poings de pierre), serpent chargeur (crête), cuve d'acide (buse), nid de serpenteaux (têtes qui dépassent), masque de feu (couronne de flammes, lueur), tourelle à parchemins (bandes de papier).
 
+**Couvre-chefs par comportement** (toutes factions) : la tête, la partie la plus lisible du chibi, annonce la façon de bouger et d’attaquer — bandeau rouge à longues pointes flottantes (poursuit au contact), casque à cornes (charge en ligne), chapeau de paille conique (tire en ligne), lunette de visée à lentille rouge (anticipe), turban de porteur (lance en cloche), lunettes de mineur (pose des pièges), heaume de fer riveté à crête (lourd), haut bonnet noir scellé (invoque), foulard à croix verte (soigne) ; l’embusqué garde sa capuche. La faction se lit toujours à la coiffure et aux couleurs.
+
+**Créatures à la taille de leur zone de contact** : une créature nettement plus petite que son rayon de contact est doublée (Scale2x, comme les boss) — tigre, crapauds, sangsue, araignée tisseuse, marionnettes, scorpion, ver, requin, méduse, statues, tourelles… ; l’accessoire d’attaque est posé avant l’agrandissement. Les petites (rat, chauve-souris, araignée d’argile) restent à l’échelle 1. **Les volants flottent** 5 px au-dessus d’une ombre plus petite, avec un léger balancement ; leur point d’impact est relevé d’autant.
+
+**Télégraphes lisibles** (dessinés après l’éclairage, jamais assombris) : ligne de charge rouge qui s’allonge devant le chargeur, ligne de visée pointillée du tireur qui anticipe, éclat qui grossit sur l’arme du tireur, anneau qui se resserre au point de chute du sauteur, poussière du sauteur qui se ramasse.
+
+**Tirs ennemis par attaque** : chacun garde le double contour sombre, l’anneau clair pulsant et un **point rose au cœur** (signature ennemie), mais sa forme dit d’où il vient — kunai, aiguilles (marionnette lanceuse, assassin de la brume), lames de vent (éventail de Suna), ondes sonores, gouttes (ninjas de la pluie, requin), éclats de glace, épines (racine griffue), éclats de jarre (lanceur de jarres, marionnette géante), os, flammes, motte de terre (mille-pattes), sable (ver), sable de fer (marionnette humaine), boue (crapauds), acide (cuve), huile (crapaud cracheur), talismans de papier (tourelle à parchemins, gardien des archives). Les gros tirs de boss sont agrandis par un facteur entier.
+
 ## D5. Animations
 
 | Animation | Règle |

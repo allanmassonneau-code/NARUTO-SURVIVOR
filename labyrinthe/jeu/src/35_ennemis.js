@@ -12,7 +12,7 @@ function creerEnnemi(defId, x, y, o = {}) {
   const d = INDEX[defId]; if (!d) throw new Error('Ennemi inconnu ' + defId);
   const diff = G.partie && G.partie.difficile ? 1.2 : 1;
   const e = {
-    uid: ++_idEnnemi, def: d, id: d.id, x, y, vx: 0, vy: 0, r: d.r || 9, hauteur: d.hauteur || 8,
+    uid: ++_idEnnemi, def: d, id: d.id, x, y, vx: 0, vy: 0, r: d.r || 9, hauteur: d.hauteur || (d.vol && !d.fixe && !d.boss ? 8 + HAUTEUR_VOL : 8),
     pv: d.pv * diff * (o.pvMult || 1), pvMax: d.pv * diff * (o.pvMult || 1), vol: !!d.vol, etat: 'apparition', t: 0, tAtt: 0.8 + Math.random() * 0.8,
     dir: 'bas', frame: 0, tAnim: Math.random(), statuts: {}, flash: 0, mort: false, cache: false, intangible: false, ia: {},
     champion: null, apparition: o.sansApparition ? 0 : DUREE_APPARITION, boss: !!d.boss, parent: o.parent || null, charme: false, allie: false,

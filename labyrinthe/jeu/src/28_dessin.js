@@ -5,9 +5,11 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 const _proj = {};
+const FORMES_TIR_ENNEMI = new Set(['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie', 'papier_ennemi', 'kunai_ennemi', 'senbon_ennemi', 'vent', 'epine', 'tesson', 'os', 'terre', 'boue', 'sable_fer', 'acide', 'huile']);
 function spriteProjectile(app, taille) {
   const k = app + '|' + Math.round(taille * 4); if (_proj[k]) return _proj[k];
   const P = (L, col, cont) => cont === false ? peindre(L, col) : contourner(peindre(L, col), cont || '#f8f0e0');
+  const PE = (L, col) => contourner(contourner(peindre(L.map(l => l.padEnd(Math.max(...L.map(x => x.length)), '.')), col), '#1a0810'), 'rgba(26,8,16,0.45)'); // ennemi : double contour sombre
   let s;
   switch (app) {
     case 'kunai': case 'kunai_ombre': case 'lame_poison': {
@@ -31,7 +33,21 @@ function spriteProjectile(app, taille) {
     case 'os': s = rotations(P(['w....w', 'wwwwww', 'w....w'], { w: '#ece4d0' }, '#6a5a4a'), 16); break;
     case 'encre': s = [P(['.kk.', 'kkkk', 'kkkk', '.kk.'], { k: '#1a1a2a' }, '#8080a0')]; break;
     case 'lame': s = rotations(P(['.www......', 'wwwwwwwwww', '.www......'], { w: '#d0d8e8' }, '#3a3040'), 16); break;
-    // ── projectiles ennemis : contour sombre épais, cœur pulsant ──
+    // ── projectiles ennemis : forme propre à l'attaque, contour sombre, point rose au cœur (signature ennemie) ──
+    case 'kunai_ennemi': s = rotations(PE(['..........', 'hh.ddsppw.', 'hhddsspppw', 'hh.ddsppw.', '..........'], { h: '#5a1a24', d: '#3a3448', s: '#8a8aa0', p: '#ff6a9a', w: '#ffe0ec' }), 16); break;
+    case 'senbon_ennemi': s = rotations(PE(['hpppppppww', 'hpppppppw.'], { h: '#5a1a24', p: '#ff9ac0', w: '#fff0f6' }), 16); break;
+    case 'vent': s = rotations(PE(['..ww...', '...gww.', '....gg.', '....gpw', '....gg.', '...gww.', '..ww...'], { g: '#7ad8a8', w: '#e8fff4', p: '#ff6a9a' }), 16); break;
+    case 'son': s = rotations(PE(['.l..l..', '..l..l.', '..l..lp', '..l..l.', '.l..l..'], { l: '#c8a8ff', p: '#ff6a9a' }), 16); break;
+    case 'eau': s = rotations(PE(['....bb.', '.bbbwwb', 'bbbpwwb', '.bbbwwb', '....bb.'], { b: '#3a7ad8', w: '#c8e8ff', p: '#ff6a9a' }), 16); break;
+    case 'glace_ennemie': s = rotations(PE(['..c....', 'ccbwww.', 'cbbpwwc', 'ccbwww.', '..c....'], { c: '#5aa8d8', b: '#8ad0f0', w: '#f0fbff', p: '#ff6a9a' }), 16); break;
+    case 'epine': s = rotations(PE(['hh.....', 'hgggggw', 'hgggpw.', 'hh.....'], { h: '#2a3a1a', g: '#5a8a3a', w: '#e8f0c8', p: '#ff6a9a' }), 16); break;
+    case 'tesson': s = rotations(PE(['tt....', 'tlltt.', 'tltppt', '.tttt.'], { t: '#a8582e', l: '#e0905a', p: '#ff6a9a' }), 16); break;
+    case 'os': s = rotations(PE(['w....w', 'wwwpww', 'w....w'], { w: '#ece4d0', p: '#ff6a9a' }), 16); break;
+    case 'feu': s = [PE(['...oo..', '.rooyo.', 'rooyywo', 'royypwo', '.ooyyo.', '..ro...'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff4c0', p: '#ff6a9a' }), PE(['..oo...', '.ooyor.', 'oowyyoo', 'owpyyor', '.oyyoo.', '...or..'], { r: '#c83018', o: '#f07820', y: '#ffd040', w: '#fff4c0', p: '#ff6a9a' })]; break;
+    case 'sable_ennemi': case 'terre': case 'boue': case 'sable_fer': case 'acide': case 'huile': {
+      const C = { sable_ennemi: ['#c8903a', '#f0c878', '#8a6020'], terre: ['#7a5a3a', '#a8865a', '#4a3420'], boue: ['#5a5a32', '#8a8a4a', '#34341c'], sable_fer: ['#3a3e52', '#8a90b8', '#1c1e2a'], acide: ['#5ac850', '#c8ff9a', '#2a7a2a'], huile: ['#8a6a1a', '#e8c050', '#4a3608'] }[app];
+      s = [PE(['..aaa..', '.allaa.', 'aalaapa', 'aaaaaad', '.aaadd.', '..ddd..'], { a: C[0], l: C[1], d: C[2], p: '#ff6a9a' })]; break;
+    }
     case 'papier_ennemi': s = rotations(P(['...r...', '..rwr..', '.rwwwr.', 'rwwwwwr', '.rwwwr.', '..rwr..', '...r...'], { w: '#f4f0e8', r: '#d0306a' }, '#1a0810'), 16); break;
     case 'ennemi': default: {
       const r = Math.max(3, Math.round(4 * taille));
@@ -45,11 +61,14 @@ function spriteProjectile(app, taille) {
 }
 function dessinerProjectile(g, p, x, y) {
   if (p.proprio === 'ennemi') {
-    const L = spriteProjectile(p.apparence && p.apparence !== 'ennemi' && ['eau', 'sable_ennemi', 'feu', 'son', 'glace_ennemie', 'papier_ennemi'].includes(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
-    const s = L.length > 1 ? L[((Math.floor(G.temps * 20 + (p.x + p.y) * 0.05) % L.length) + L.length) % L.length] : L[0]; // le papier tournoie
+    const L = spriteProjectile(p.apparence && FORMES_TIR_ENNEMI.has(p.apparence) ? p.apparence : 'ennemi', p.taille || 1);
+    // formes orientées (kunai, aiguilles, lames de vent, gouttes, épines) : selon la vitesse ; les autres tournoient
+    const s = L.length === 16 && p.apparence !== 'papier_ennemi' ? L[indexAngle(Math.atan2(p.vy || 0.001, p.vx || 1))] : L.length > 1 ? L[((Math.floor(G.temps * 20 + (p.x + p.y) * 0.05) % L.length) + L.length) % L.length] : L[0];
     const pul = 0.5 + 0.5 * Math.sin((G.temps + (p.x + p.y) * 0.01) * 18);
-    g.drawImage(s, x - s.width / 2, y - s.height / 2);
-    if (pul > 0.6) { g.globalAlpha = 0.55; g.drawImage(anneau(s.width / 2 + 1, 1, '#ffe0f0'), x - s.width / 2 - 2, y - s.height / 2 - 2); g.globalAlpha = 1; }
+    // les formes dessinées gardent leur netteté : agrandies par un facteur entier pour les gros tirs (boss)
+    const kk = FORMES_TIR_ENNEMI.has(p.apparence) && (p.taille || 1) > 1.15 ? Math.round(Math.min(3, p.taille)) : 1, w = s.width * kk, h = s.height * kk;
+    g.drawImage(s, Math.round(x - w / 2), Math.round(y - h / 2), w, h);
+    if (pul > 0.6) { g.globalAlpha = 0.55; g.drawImage(anneau(Math.round(Math.max(w, h) / 2) + 1, 1, '#ffe0f0'), Math.round(x - Math.max(w, h) / 2) - 2, Math.round(y - Math.max(w, h) / 2) - 2); g.globalAlpha = 1; }
     return;
   }
   let app = p.apparence || 'kunai';
@@ -194,6 +213,28 @@ function dessinerEnnemi(g, e, x, y) {
   if (e.def.params && e.def.params.bouclier === 'aura') { g.globalAlpha = 0.25; g.drawImage(anneau(2.5 * TUILE, 1, '#a0c0ff'), x - 2.5 * TUILE - 1, y - 2.5 * TUILE - 1); g.globalAlpha = 1; }
   if (e.invulnerable) { g.globalAlpha = 0.6; g.drawImage(anneau(e.r + 6, 2, '#e0e0ff'), x - e.r - 7, y - h / 2 - e.r - 7); g.globalAlpha = 1; }
   if (G.joueur.transformations.includes('TRF_005') && !e.boss && e.pv < e.pvMax) { g.fillStyle = '#1c1420'; g.fillRect(x - 8, y + 2, 16, 2); g.fillStyle = '#e04a4a'; g.fillRect(x - 8, y + 2, Math.round(16 * e.pv / e.pvMax), 2); }
+}
+// Télégraphes lisibles des ennemis ordinaires : ligne de charge qui s'allonge, ligne de visée du tireur qui
+// anticipe, éclat sur l'arme du tireur, point de chute du sauteur. Couleur rose-rouge des dangers ennemis.
+function dessinerTelegraphe(g, e, x, y) { // dessiné après l'éclairage : jamais assombri par la pénombre
+  if (e.boss || e.cache || e.mort) return; const h = 26; const T = e.ia.tele, I = e.ia, co = e.def.comportement, gy = y + Math.round(e.z || 0);
+  if (co === 'sauteur' && I.phase === 'saut' && I.x1 !== undefined) { // point de chute : anneau qui se resserre
+    const k = Math.min(1, I.t / (I.duree || 0.6)), tx = Math.round(x + I.x1 - e.x), ty = Math.round(gy + I.y1 - e.y), r = Math.round(14 - 6 * k);
+    g.globalAlpha = 0.45 + 0.35 * k; g.drawImage(anneau(r, 1, '#ff5a7a'), tx - r - 1, ty - r - 1); g.drawImage(ellipse(Math.round(r * 0.6), Math.max(1, Math.round(r * 0.25)), 'rgba(255,90,122,0.35)'), tx - Math.round(r * 0.6), ty - Math.max(1, Math.round(r * 0.25))); g.globalAlpha = 1;
+  }
+  if (!T) return; const k = Math.max(0, Math.min(1, 1 - T.t / T.duree));
+  if (T.type === 'tremble' && co === 'chargeur' && I.dirCharge) { // trajectoire de la charge
+    const [dx, dy] = DIRS[I.dirCharge], L = 18 + 90 * k;
+    for (let d = 12; d < L; d += 7) { g.fillStyle = 'rgba(255,70,100,' + (0.75 - d / 170).toFixed(2) + ')'; g.fillRect(Math.round(x + dx * d) - 1, Math.round(gy - 6 + dy * d) - 1, 3, 3); }
+  } else if (T.type === 'vise') { // ligne de visée pointillée vers le joueur
+    const J = G.joueur, a = Math.atan2((J.y - 10) - (e.y - 10), J.x - e.x), L = 14 + 40 * k;
+    for (let d = 10; d < L; d += 5) { g.fillStyle = 'rgba(255,90,120,' + (0.8 - d / 90).toFixed(2) + ')'; g.fillRect(Math.round(x + Math.cos(a) * d), Math.round(gy - 10 + Math.sin(a) * d), 2, 2); }
+  } else if (T.type === 'gonfle' && (co === 'tireur' || co === 'tourelle')) { // éclat qui grossit sur l'arme
+    const r = 1 + Math.round(3 * k), cx = x + (co === 'tireur' ? 9 : 0), cy = y - Math.round(h * (co === 'tireur' ? 0.4 : 0.55));
+    g.fillStyle = '#fff0f6'; g.fillRect(cx - r, cy, 2 * r + 1, 1); g.fillRect(cx, cy - r, 1, 2 * r + 1); g.fillStyle = '#ff6a9a'; g.fillRect(cx - 1, cy - 1, 3, 3);
+  } else if (T.type === 'accroupi') { // le sauteur se ramasse : poussière à ses pieds
+    g.fillStyle = 'rgba(220,200,170,0.6)'; for (const dx of [-7, -4, 4, 7]) g.fillRect(x + dx, gy - 1 - Math.round(k * 2), 2, 1);
+  }
 }
 // Rempart spectral d'Itachi : arc de côtes (±60°) orienté ; il vacille avant de se dissiper
 function dessinerSusanoo(g, e, x, y) {

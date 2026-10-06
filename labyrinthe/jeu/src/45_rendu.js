@@ -511,6 +511,7 @@ function rendreJeu(g) {
   if (s && !s.combat && G.etage && (++_prechauffe % 6) === 0) for (const p of s.portes) { const v = G.etage.salles[p.vers]; if (v && !v._fond && p.etat !== 'secrete') { fondSalle(v); break; } }
 }
 let _prechauffe = 0;
+const HAUTEUR_VOL = 5; // px : les volants flottent au-dessus de leur ombre (leur point d'impact est relevé d'autant)
 function capturerVue() { const c = toile(ECRAN_L, ECRAN_H); const g = ctxDe(c); g.fillStyle = '#07060a'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); rendreSalle(g, 0, 0); return c; }
 
 function rendreSalle(g, ox, oy) {
@@ -546,7 +547,7 @@ function rendreSalle(g, ox, oy) {
   if (s.source) L.push({ y: s.source.y + 8, f: () => dessinerSource(g, s.source, X(s.source.x), Y(s.source.y)) });
   for (const x of s.sorties || []) L.push({ y: x.y - 20, f: () => dessinerSortie(g, x, X(x.x), Y(x.y)) });
   for (const b of G.bombes) L.push({ y: b.y, f: () => { ombre(b.x, b.y, 5); dessinerBombe(g, b, X(b.x), Y(b.y)); } });
-  for (const e of G.ennemis) L.push({ y: e.y, f: () => { if (!e.cache && !e.illusion && !(e.alpha < 0.5)) ombre(e.x, e.y, e.r * 0.9); dessinerEnnemi(g, e, X(e.x), Y(e.y - (e.z || 0))); } });
+  for (const e of G.ennemis) L.push({ y: e.y, f: () => { const v = e.def.vol && !e.boss && !e.def.fixe, hv = v ? HAUTEUR_VOL + Math.round(Math.sin(G.temps * 5 + e.uid) * 1.5) : 0; if (!e.cache && !e.illusion && !(e.alpha < 0.5)) ombre(e.x, e.y, e.r * (v ? 0.6 : 0.9)); dessinerEnnemi(g, e, X(e.x), Y(e.y - (e.z || 0) - hv)); } });
   // corps du serpent (chaque anneau blesse au contact : il doit se voir) et chaîne des frères
   for (const e of G.ennemis) if (e.segments && !e.mort && !e.cache) e.segments.forEach((q, i) => L.push({ y: q.y - 0.5, f: () => { const r = Math.round(9 - i * 0.6); ombre(q.x, q.y, r); dessinerAnneauSerpent(g, X(q.x), Y(q.y) - 5, r, i); } }));
   for (const e of G.ennemis) if (e.chaine && !e.mort && !e.chaine.mort) L.push({ y: Math.max(e.y, e.chaine.y), f: () => dessinerChaineFreres(g, e, e.chaine, X, Y) });
@@ -555,6 +556,8 @@ function rendreSalle(g, ox, oy) {
   L.sort((a, b) => a.y - b.y); for (const o of L) o.f();
   // lumière : ombre multipliée sur le décor et les personnages, éclats additifs sous les tirs
   eclairerSalle(g, s, X, Y, ox, oy);
+  // télégraphes des ennemis ordinaires (au-dessus de l'ombre, comme tous les dangers)
+  for (const e of G.ennemis) if (e.ia.tele || e.ia.phase === 'saut') dessinerTelegraphe(g, e, X(e.x), Y(e.y - (e.z || 0)));
   // sphères contrôlées
   for (const o of G.orbes) dessinerOrbe(g, o, X, Y);
   // projectiles : ombres puis corps (les tirs ennemis au-dessus des tirs alliés)
