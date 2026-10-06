@@ -173,13 +173,14 @@ CREATURES.tigre = {
 CREATURES.moustique = {
   alias: { b: 'corps', w: 'aile', r: 'dard' },
   pal: palC({ corps: '#4a4a3a', rayure: '#c8b060', aile: '#d8e8f0', dard: '#c83a3a', oeilr: '#ff5a4a' }),
-  f(P, i) {
+  f(P, i, att, d) {
     const y = 50;
     for (const c of [-1, 1]) P.poly(i ? [[26, y - 1], [26 + c * 4, y - 6], [26 + c * 6, y - 4]] : [[26, y - 1], [26 + c * 6, y - 2], [26 + c * 5, y + 1]], 'aile', { niv: 3, trait: false });
     for (const [x0, x1] of [[23, 21], [25, 25], [27, 29]]) P.ligne(x0, y + 2, x1, 55, 'corps', 1);
     P.boule(24, y + 1, 3, 1.7, 'corps'); P.px(23, y + 1, 'rayure', 3); P.px(25, y + 1, 'rayure', 3);
     P.boule(28, y, 1.7, 1.6, 'corps'); P.px(28.5, y - 0.5, 'oeilr', 4);
     P.ligne(29.5, y + 0.5, 32, y + 2, 'dard', 2);
+    if (d && d.id === 'FAM_LUCIOLE') shLueur(P, 23, y + 1, 2 + i, '#f0f060', '#fffff0');
   },
 };
 
@@ -448,13 +449,14 @@ CREATURES.araignee_argile = {
 // Hirondelle des ermites (ENM_092, volante) — queue fourchue, ventre blanc, ailes effilées
 CREATURES.corbeau = {
   alias: { k: 'sombre', b: 'plume', r: 'ventre', y: 'bec' },
-  pal: palC({ plume: '#2a2a3a', sombre: '#1c1c28', ventre: '#e02a2a', bec: '#d0a040' }),
-  f(P, i) {
+  pal: palC({ plume: '#2a2a3a', sombre: '#1c1c28', ventre: '#4a4a5a', bec: '#d0a040', oeilr: '#ff3a3a' }),
+  f(P, i, att, d) {
     const y = 46;
     for (const c of [-1, 1]) P.poly(i ? [[26 + c * 2, y], [26 + c * 9, y + 3], [26 + c * 13, y + 7], [26 + c * 6, y + 3]] : [[26 + c * 2, y], [26 + c * 8, y - 6], [26 + c * 13, y - 8], [26 + c * 8, y - 2], [26 + c * 3, y + 2]], 'plume', { niv: c < 0 ? 3 : 2 });
     P.poly([[24.5, y + 3], [23, y + 9], [26, y + 5], [29, y + 9], [27.5, y + 3]], 'plume', { niv: 1 });
     P.boule(26, y + 1, 3, 3.4, 'plume'); P.boule(26, y + 2, 1.8, 2, 'ventre', { trait: false });
-    P.boule(26, y - 3, 2.4, 2.2, 'plume'); P.poly([[25, y - 2], [26, y + 0.5], [27, y - 2]], 'bec', { niv: 3 }); P.px(25, y - 3.5, 'blanc', 4); P.px(27, y - 3.5, 'blanc', 4);
+    const oe = d && d.id === 'FAM_CORBEAU' ? 'oeilr' : 'blanc';
+    P.boule(26, y - 3, 2.4, 2.2, 'plume'); P.poly([[25, y - 2], [26, y + 0.5], [27, y - 2]], 'bec', { niv: 3 }); P.px(25, y - 3.5, oe, 4); P.px(27, y - 3.5, oe, 4);
   },
 };
 
@@ -567,6 +569,37 @@ CREATURES.serpenteau = {
   },
 };
 
+// ── Familiers seulement ──
+// Chiens ninjas (Pakkun, Akamaru) — petits, oreilles tombantes, plaque frontale pour le chien ninja
+CREATURES.chien = {
+  miroir: true, alias: { g: 'pelage', d: 'sombre', p: 'museau', k: 'trait' },
+  pal: palC({ pelage: '#c8a870', sombre: '#8a6a4a', museau: '#3a2a1a', bandeau: '#2a3a6a', langue: '#e07a8a' }),
+  f(P, i, att, d) {
+    const ninja = d.id === 'FAM_PAKKUN';
+    P.membre(18, 47, 15, 44 - i, 1, 'pelage'); // queue
+    for (const [hx, fx] of i ? [[20, 19], [23, 24], [29, 28], [31, 32]] : [[20, 21], [23, 22], [29, 30], [31, 30]]) P.membre(hx, 49, fx, 54, 1.1, 'pelage', { trait: false });
+    P.boule(25, 48, 7, 3.6, 'pelage'); P.boule(25, 50, 4.5, 1.6, 'sombre', { niv: 3, trait: false });
+    const hx = 31, hy = 44;
+    P.boule(hx, hy, 4, 3.6, 'pelage'); P.boule(hx + 2.5, hy + 1.5, 2, 1.6, ninja ? 'sombre' : 'pelage'); P.px(hx + 4, hy + 1, 'museau', 2);
+    P.boule(hx - 2.6, hy - 1, 1.4, 2.4, 'sombre'); // oreille tombante
+    P.px(hx + 1, hy - 1, 'trait', 2); if (!ninja) P.px(hx + 3, hy + 3, 'langue', 3);
+    if (ninja) P.piece().rect(hx - 2, hy - 3.5, 5, 2, 'bandeau', 2).rect(hx - 0.5, hy - 3.5, 2, 2, 'metal', 3).traitPiece();
+  },
+};
+// Limace (Katsuyu miniature) — blanche à bandes bleues, cornes oculaires
+CREATURES.limace = {
+  miroir: true, alias: { s: 'peau', l: 'clair', d: 'bande' },
+  pal: palC({ peau: '#e8e8f0', bande: '#6a8ae8', bave: '#c8e0f0' }),
+  f(P, i) {
+    P.rect(14, 55, 4, 1, 'bave', 3);
+    P.boule(25, 51.5, 8 + i * 0.5, 3.4 - i * 0.3, 'peau'); P.boule(31, 49, 3.2, 3, 'peau');
+    P.ligne(19, 50, 29, 48.5, 'bande', 2); P.ligne(20, 52, 30, 51, 'bande', 1);
+    for (const [x, d] of [[31, 0], [33, 1]]) { P.ligne(x, 47, x + d, 43, 'peau', 3); P.px(x + d, 42, 'bande', 2); }
+  },
+};
+// Tailles des familiers peints (rayon fictif : les formes qui en dépendent rapetissent)
+const TAILLE_FAMILIER = { crapaud: 6.5, serpent: 6 };
+
 // ── Assemblage ──
 const _creatures = new WeakMap();
 function spriteCreature(d, S) {
@@ -575,4 +608,13 @@ function spriteCreature(d, S) {
   for (const [k, v] of Object.entries(S.couleurs || {})) pal[(F.alias || {})[k] || k] = v;
   r = { frames: peindreTrois(pal, (P, i, att) => F.f(P, i, att, d)), miroir: !!F.miroir, base: 1, attaque: true };
   _creatures.set(S, r); return r;
+}
+// Familiers : les formes peintes, deux images, plus petites quand la forme en dépend
+const _familiersPeints = {};
+function spriteFamilierPeint(d, S) {
+  const cle = d.id; if (_familiersPeints[cle]) return _familiersPeints[cle];
+  const F = CREATURES[S.carte], pal = Object.assign({}, F.pal);
+  for (const [k, v] of Object.entries(S.couleurs || {})) pal[(F.alias || {})[k] || k] = v;
+  const pseudo = { id: d.id, r: TAILLE_FAMILIER[S.carte] || 7, comportement: d.comportement, params: {} };
+  return (_familiersPeints[cle] = { frames: peindreTrois(pal, (P, i, att) => F.f(P, i, att, pseudo)).slice(0, 2), base: 1 });
 }

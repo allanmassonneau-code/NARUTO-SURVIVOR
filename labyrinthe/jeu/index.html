@@ -590,16 +590,16 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   F('FAM_CLONE_RES', 'Clone de réserve', 'clone_res', { coefJoueur: 0.35, cadence: 2.2, apparence: 'kunai' });
   F('FAM_CLONE_SABLE', 'Clone de sable', 'copieur', { coef: 0.6, sprite: { carte: 'esprit_sable' } });
   F('FAM_GAMAKICHI', 'Gamakichi', 'suiveur_tireur', { degats: 3, cadence: 1.3, apparence: 'paume', statut: 'ralenti', chanceStatut: 0.5, vitesseTir: 6, sprite: { carte: 'crapaud', couleurs: { g: '#d86a2a', l: '#f0a060' } } });
-  F('FAM_KATSUYU', 'Katsuyu miniature', 'soutien', { tousLes: 5, donne: 'coeur', sprite: { carte: 'sangsue', couleurs: { s: '#e8e8f0', l: '#ffffff', d: '#6a8ae8' } } });
+  F('FAM_KATSUYU', 'Katsuyu miniature', 'soutien', { tousLes: 5, donne: 'coeur', sprite: { carte: 'limace' } });
   F('FAM_CRAPAUD_CLE', 'Crapaud messager', 'soutien', { tousLes: 6, donne: 'cle', sprite: { carte: 'crapaud' } });
   F('FAM_SERPENT', 'Serpent', 'orbital', { degats: 5, rayon: 1.2, vitesseRot: 3.2, bloque: true, sprite: { carte: 'serpenteau', couleurs: { s: '#7a9a4a' } } });
   F('FAM_SABLE', 'Sable protecteur', 'orbital', { degats: 2, rayon: 1.0, vitesseRot: 2.6, bloque: true, rBloc: 8, sprite: { icone: 'PSV_065' } });
   F('FAM_KUNAI_ORB', 'Kunai tournoyant', 'orbital', { degats: 2, rayon: 0.9, vitesseRot: 6, bloque: false, sprite: { icone: 'PSV_034' } });
-  F('FAM_PAPIER', 'Papillon de papier', 'orbital', { degats: 1.5, rayon: 1.5, vitesseRot: 2.2, bloque: true, sprite: { carte: 'papier' } });
+  F('FAM_PAPIER', 'Papillon de papier', 'orbital', { degats: 1.5, rayon: 1.5, vitesseRot: 2.2, bloque: true, sprite: { carte: 'papillon_papier' } });
   F('FAM_MIROIR', 'Miroir de glace', 'orbital', { degats: 0, rayon: 1.4, vitesseRot: 1.6, bloque: true, reflet: true, rBloc: 9, sprite: { icone: 'PSV_081' } });
   F('FAM_CORBEAU', 'Corbeau', 'aveugleur', { statut: 'confus', degats: 2, recharge: 3, sprite: { carte: 'corbeau' } });
-  F('FAM_PAKKUN', 'Pakkun', 'pakkun', { sprite: { carte: 'rat', couleurs: { g: '#c8a870', d: '#8a6a4a', p: '#3a2a1a' } } });
-  F('FAM_AKAMARU', 'Akamaru', 'contact', { degats: 6, coefJoueur: 0.5, recharge: 1.2, sprite: { carte: 'rat', couleurs: { g: '#f0ece4', d: '#c8c0b0', p: '#e0a0a8' } } });
+  F('FAM_PAKKUN', 'Pakkun', 'pakkun', { sprite: { carte: 'chien' } });
+  F('FAM_AKAMARU', 'Akamaru', 'contact', { degats: 6, coefJoueur: 0.5, recharge: 1.2, sprite: { carte: 'chien', couleurs: { g: '#f0ece4', d: '#c8c0b0', p: '#e07a8a' } } });
   F('FAM_INSECTES', 'Kikaichū', 'collecteur', { degats: 1.5, sprite: { carte: 'moustique' } });
   F('FAM_OISEAU_ARGILE', 'Oiseau d’argile', 'kamikaze', { recharge: 4, sprite: { carte: 'oiseau_argile' } });
   F('FAM_KARASU_ATT', 'Karasu', 'chasseur', { marionnette: true, degats: 4, cadence: 1.6, vitesse: 3.5, statut: 'poison', sprite: { carte: 'marionnette' } });
@@ -4322,13 +4322,14 @@ CREATURES.tigre = {
 CREATURES.moustique = {
   alias: { b: 'corps', w: 'aile', r: 'dard' },
   pal: palC({ corps: '#4a4a3a', rayure: '#c8b060', aile: '#d8e8f0', dard: '#c83a3a', oeilr: '#ff5a4a' }),
-  f(P, i) {
+  f(P, i, att, d) {
     const y = 50;
     for (const c of [-1, 1]) P.poly(i ? [[26, y - 1], [26 + c * 4, y - 6], [26 + c * 6, y - 4]] : [[26, y - 1], [26 + c * 6, y - 2], [26 + c * 5, y + 1]], 'aile', { niv: 3, trait: false });
     for (const [x0, x1] of [[23, 21], [25, 25], [27, 29]]) P.ligne(x0, y + 2, x1, 55, 'corps', 1);
     P.boule(24, y + 1, 3, 1.7, 'corps'); P.px(23, y + 1, 'rayure', 3); P.px(25, y + 1, 'rayure', 3);
     P.boule(28, y, 1.7, 1.6, 'corps'); P.px(28.5, y - 0.5, 'oeilr', 4);
     P.ligne(29.5, y + 0.5, 32, y + 2, 'dard', 2);
+    if (d && d.id === 'FAM_LUCIOLE') shLueur(P, 23, y + 1, 2 + i, '#f0f060', '#fffff0');
   },
 };
 
@@ -4597,13 +4598,14 @@ CREATURES.araignee_argile = {
 // Hirondelle des ermites (ENM_092, volante) — queue fourchue, ventre blanc, ailes effilées
 CREATURES.corbeau = {
   alias: { k: 'sombre', b: 'plume', r: 'ventre', y: 'bec' },
-  pal: palC({ plume: '#2a2a3a', sombre: '#1c1c28', ventre: '#e02a2a', bec: '#d0a040' }),
-  f(P, i) {
+  pal: palC({ plume: '#2a2a3a', sombre: '#1c1c28', ventre: '#4a4a5a', bec: '#d0a040', oeilr: '#ff3a3a' }),
+  f(P, i, att, d) {
     const y = 46;
     for (const c of [-1, 1]) P.poly(i ? [[26 + c * 2, y], [26 + c * 9, y + 3], [26 + c * 13, y + 7], [26 + c * 6, y + 3]] : [[26 + c * 2, y], [26 + c * 8, y - 6], [26 + c * 13, y - 8], [26 + c * 8, y - 2], [26 + c * 3, y + 2]], 'plume', { niv: c < 0 ? 3 : 2 });
     P.poly([[24.5, y + 3], [23, y + 9], [26, y + 5], [29, y + 9], [27.5, y + 3]], 'plume', { niv: 1 });
     P.boule(26, y + 1, 3, 3.4, 'plume'); P.boule(26, y + 2, 1.8, 2, 'ventre', { trait: false });
-    P.boule(26, y - 3, 2.4, 2.2, 'plume'); P.poly([[25, y - 2], [26, y + 0.5], [27, y - 2]], 'bec', { niv: 3 }); P.px(25, y - 3.5, 'blanc', 4); P.px(27, y - 3.5, 'blanc', 4);
+    const oe = d && d.id === 'FAM_CORBEAU' ? 'oeilr' : 'blanc';
+    P.boule(26, y - 3, 2.4, 2.2, 'plume'); P.poly([[25, y - 2], [26, y + 0.5], [27, y - 2]], 'bec', { niv: 3 }); P.px(25, y - 3.5, oe, 4); P.px(27, y - 3.5, oe, 4);
   },
 };
 
@@ -4716,6 +4718,37 @@ CREATURES.serpenteau = {
   },
 };
 
+// ── Familiers seulement ──
+// Chiens ninjas (Pakkun, Akamaru) — petits, oreilles tombantes, plaque frontale pour le chien ninja
+CREATURES.chien = {
+  miroir: true, alias: { g: 'pelage', d: 'sombre', p: 'museau', k: 'trait' },
+  pal: palC({ pelage: '#c8a870', sombre: '#8a6a4a', museau: '#3a2a1a', bandeau: '#2a3a6a', langue: '#e07a8a' }),
+  f(P, i, att, d) {
+    const ninja = d.id === 'FAM_PAKKUN';
+    P.membre(18, 47, 15, 44 - i, 1, 'pelage'); // queue
+    for (const [hx, fx] of i ? [[20, 19], [23, 24], [29, 28], [31, 32]] : [[20, 21], [23, 22], [29, 30], [31, 30]]) P.membre(hx, 49, fx, 54, 1.1, 'pelage', { trait: false });
+    P.boule(25, 48, 7, 3.6, 'pelage'); P.boule(25, 50, 4.5, 1.6, 'sombre', { niv: 3, trait: false });
+    const hx = 31, hy = 44;
+    P.boule(hx, hy, 4, 3.6, 'pelage'); P.boule(hx + 2.5, hy + 1.5, 2, 1.6, ninja ? 'sombre' : 'pelage'); P.px(hx + 4, hy + 1, 'museau', 2);
+    P.boule(hx - 2.6, hy - 1, 1.4, 2.4, 'sombre'); // oreille tombante
+    P.px(hx + 1, hy - 1, 'trait', 2); if (!ninja) P.px(hx + 3, hy + 3, 'langue', 3);
+    if (ninja) P.piece().rect(hx - 2, hy - 3.5, 5, 2, 'bandeau', 2).rect(hx - 0.5, hy - 3.5, 2, 2, 'metal', 3).traitPiece();
+  },
+};
+// Limace (Katsuyu miniature) — blanche à bandes bleues, cornes oculaires
+CREATURES.limace = {
+  miroir: true, alias: { s: 'peau', l: 'clair', d: 'bande' },
+  pal: palC({ peau: '#e8e8f0', bande: '#6a8ae8', bave: '#c8e0f0' }),
+  f(P, i) {
+    P.rect(14, 55, 4, 1, 'bave', 3);
+    P.boule(25, 51.5, 8 + i * 0.5, 3.4 - i * 0.3, 'peau'); P.boule(31, 49, 3.2, 3, 'peau');
+    P.ligne(19, 50, 29, 48.5, 'bande', 2); P.ligne(20, 52, 30, 51, 'bande', 1);
+    for (const [x, d] of [[31, 0], [33, 1]]) { P.ligne(x, 47, x + d, 43, 'peau', 3); P.px(x + d, 42, 'bande', 2); }
+  },
+};
+// Tailles des familiers peints (rayon fictif : les formes qui en dépendent rapetissent)
+const TAILLE_FAMILIER = { crapaud: 6.5, serpent: 6 };
+
 // ── Assemblage ──
 const _creatures = new WeakMap();
 function spriteCreature(d, S) {
@@ -4724,6 +4757,15 @@ function spriteCreature(d, S) {
   for (const [k, v] of Object.entries(S.couleurs || {})) pal[(F.alias || {})[k] || k] = v;
   r = { frames: peindreTrois(pal, (P, i, att) => F.f(P, i, att, d)), miroir: !!F.miroir, base: 1, attaque: true };
   _creatures.set(S, r); return r;
+}
+// Familiers : les formes peintes, deux images, plus petites quand la forme en dépend
+const _familiersPeints = {};
+function spriteFamilierPeint(d, S) {
+  const cle = d.id; if (_familiersPeints[cle]) return _familiersPeints[cle];
+  const F = CREATURES[S.carte], pal = Object.assign({}, F.pal);
+  for (const [k, v] of Object.entries(S.couleurs || {})) pal[(F.alias || {})[k] || k] = v;
+  const pseudo = { id: d.id, r: TAILLE_FAMILIER[S.carte] || 7, comportement: d.comportement, params: {} };
+  return (_familiersPeints[cle] = { frames: peindreTrois(pal, (P, i, att) => F.f(P, i, att, pseudo)).slice(0, 2), base: 1 });
 }
 
 // ─── 25_shinobi.js ───
@@ -5939,7 +5981,8 @@ function spriteFamilier(f) {
   const d = f.def; const cle = d.id + (f.variante || ''); if (_spFam[cle]) return _spFam[cle];
   const S = d.sprite || {};
   let r;
-  if (S.carte && CARTES_CREATURES[S.carte]) { const C = CARTES_CREATURES[S.carte]; const col = Object.assign({}, C.c, S.couleurs || {}); r = { frames: C.f.map(x => contourner(peindre(x.map(l => l.padEnd(Math.max(...x.map(y => y.length)), '.')), col))), base: 1 }; }
+  if (S.carte && CREATURES[S.carte]) r = spriteFamilierPeint(d, S); // même peintre que le bestiaire
+  else if (S.carte && CARTES_CREATURES[S.carte]) { const C = CARTES_CREATURES[S.carte]; const col = Object.assign({}, C.c, S.couleurs || {}); r = { frames: C.f.map(x => contourner(peindre(x.map(l => l.padEnd(Math.max(...x.map(y => y.length)), '.')), col))), base: 1 }; }
   else if (S.icone) { r = { frames: [iconeObjet(S.icone)], base: 2 }; }
   else r = { frames: [contourner(disque(5, S.couleur || '#e0e0f0'))], base: 0 };
   return (_spFam[cle] = r);
@@ -6704,15 +6747,39 @@ function dessinerFaisceau(g, f, X, Y) {
   g.fillStyle = f.couleur; g.fillRect(0, -w / 2, f.l, w);
   g.fillStyle = ennemi ? '#ffd0f0' : '#ffffff'; g.fillRect(0, -Math.max(1, w / 4), f.l, Math.max(1, w / 2));
   if (f.type === 'rayon') { for (let i = 0; i < f.l; i += 12) { g.fillStyle = 'rgba(255,220,180,0.6)'; g.fillRect(i + ((G.temps * 200) % 12), -w / 2 - 1, 3, 1); } }
+  if (!ennemi) { // éclats qui filent le long du rayon, éclair à la source, gerbe au point d'arrêt
+    g.fillStyle = 'rgba(255,255,255,0.85)'; for (let i = 0; i < f.l; i += 23) g.fillRect(Math.round(i + ((G.temps * 340) % 23)), Math.round(-w / 2 + ((i / 23) % 2 ? w - 1 : 0)), 4, 1);
+    if (!G.reglages.sansFlash) { const r0 = Math.round(w / 2 + 2 + Math.sin(G.temps * 40)), r1 = Math.round(w / 2 + 3 + Math.sin(G.temps * 33 + 1) * 1.5); g.globalAlpha = 0.85; g.drawImage(disque(r0, f.couleur), -r0, -r0); g.drawImage(disque(Math.max(1, r0 - 2), '#ffffff'), -r0 + 2, -r0 + 2); g.drawImage(disque(r1, f.couleur), Math.round(f.l) - r1, -r1); g.drawImage(disque(Math.max(1, r1 - 2), '#ffffff'), Math.round(f.l) - r1 + 2, -r1 + 2); g.globalAlpha = 1; }
+    if (!G.reglages.confort && Math.random() < 0.5) { const ex = f.x + Math.cos(f.a) * f.l, ey = f.y + Math.sin(f.a) * f.l, b = f.a + Math.PI + (Math.random() - 0.5) * 2; G.particules.push({ x: ex, y: ey, vx: Math.cos(b) * 60, vy: Math.sin(b) * 60, age: 0, duree: 0.15, couleur: Math.random() < 0.5 ? '#ffffff' : f.couleur, taille: 1 }); }
+  }
   g.restore();
+}
+// Frappe de mêlée : croissant net qui balaie l'arc — tranchant blanc, corps à la couleur de la nature, bord intérieur
+// plus sombre, queue qui s'estompe. Pré-rendu par rayon, arc, couleurs et étape de balayage ; tourné par quarts de tour.
+const _croissants = new Map();
+function croissant(R, arc, c1, c2, prog) {
+  const cle = R + '|' + arc.toFixed(2) + '|' + c1 + '|' + c2 + '|' + prog; let c = _croissants.get(cle); if (c) return c;
+  const n = 2 * R + 4; c = toile(n, n); const g = ctxDe(c), img = g.createImageData(n, n), d = img.data;
+  const A = hexRgb(c1), B = hexRgb(c2), a0 = -arc / 2, a1 = -arc / 2 + arc * prog;
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const dx = x + 0.5 - n / 2, dy = y + 0.5 - n / 2, r = Math.hypot(dx, dy), t = Math.atan2(dy, dx);
+    if (t < a0 || t > a1) continue;
+    const ep = Math.max(1.2, R * 0.21 * Math.sin(Math.PI * (t - a0) / arc)), ri = R - ep; if (r > R || r < ri) continue;
+    const u = (t - a0) / Math.max(0.001, a1 - a0), i = (y * n + x) * 4, bord = R - r < 1.6;
+    const col = bord ? [255, 255, 255] : r - ri < 1.2 ? B : A;
+    d[i] = col[0]; d[i + 1] = col[1]; d[i + 2] = col[2]; d[i + 3] = Math.round(255 * (bord ? 0.45 + 0.55 * u : 0.2 + 0.55 * u));
+  }
+  g.putImageData(img, 0, 0); _croissants.set(cle, c); return c;
 }
 function dessinerMelee(g, m, X, Y) {
   const k = m.age / (m.fin + m.anticipation); if (m.age < m.anticipation) return;
-  const J = m.attache; const cx = X(J.x), cy = Y(J.y - 10);
-  g.save(); g.globalAlpha = 1 - k; g.strokeStyle = '#fff4d0'; g.lineWidth = 3;
-  g.beginPath(); g.arc(cx, cy, m.portee * 0.85, m.a - m.arc / 2, m.a - m.arc / 2 + m.arc * Math.min(1, k * 2.5)); g.stroke();
-  g.strokeStyle = 'rgba(255,200,120,0.6)'; g.lineWidth = 1; g.beginPath(); g.arc(cx, cy, m.portee * 0.6, m.a - m.arc / 2, m.a + m.arc / 2); g.stroke();
-  g.restore();
+  const J = m.attache, cx = X(J.x), cy = Y(J.y - 10), R = Math.round(m.portee * 0.9);
+  const el = J.profil && J.profil.elements && [...J.profil.elements].find(n => NATURES_FX[n]);
+  const c1 = el ? NATURES_FX[el][1] : '#fff4d8', c2 = el ? NATURES_FX[el][0] : '#ffb060';
+  const img = croissant(R, m.arc, c1, c2, Math.min(4, Math.max(1, Math.ceil(k * 10))) / 4);
+  g.save(); g.globalAlpha = k < 0.55 ? 1 : Math.max(0, 1 - (k - 0.55) / 0.45); g.translate(cx, cy); g.rotate(Math.round(m.a / (Math.PI / 2)) * Math.PI / 2);
+  g.drawImage(img, -img.width / 2, -img.height / 2);
+  g.restore(); g.globalAlpha = 1;
 }
 function dessinerOrbe(g, o, X, Y) {
   const r = Math.round(o.r); g.drawImage(disque(r + 2, 'rgba(20,40,80,0.5)'), X(o.x - r - 2), Y(o.y - r - 2));
@@ -6733,7 +6800,13 @@ function dessinerJoueur(g, J, x, y) {
   let etatTete = J.tCligne < 0 ? 'cligne' : 'normal';
   if (J.tir.anim > 0.05 || J.tir.charge > 0) etatTete = 'tir';
   const frame = J.dash ? 1 : J.frame;
-  if (J.etat === 'objet' && G.enAnimationObjet) { dessinerPerso(g, J.cle, x, y, { dirCorps: 'bas', dirTete: 'bas', frame: 0, etatTete: 'normal' }); const ic = iconeObjet(G.enAnimationObjet.d.id); g.drawImage(ic, x - 10, y - 56); g.fillStyle = PEAU.s; g.fillRect(x - 9, y - 38, 3, 4); g.fillRect(x + 6, y - 38, 3, 4); g.globalAlpha = 1; return; }
+  if (J.etat === 'objet' && G.enAnimationObjet) { dessinerPerso(g, J.cle, x, y, { dirCorps: 'bas', dirTete: 'bas', frame: 0, etatTete: 'normal' }); const ic = iconeObjet(G.enAnimationObjet.d.id);
+    if (!G.reglages.sansFlash) { // l'objet brandi rayonne : halo et rayons qui tournent lentement
+      const cx = x, cy = y - 46, t = G.temps * 0.9; g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.55; g.drawImage(halo('#fff0b0', false, 32), cx - 22, cy - 22, 44, 44); g.restore();
+      g.globalAlpha = 0.4; for (let k = 0; k < 8; k++) { const a = t + k * Math.PI / 4, L = k % 2 ? 17 : 24; lignePixel(g, cx + Math.cos(a) * 8, cy + Math.sin(a) * 8, cx + Math.cos(a) * L, cy + Math.sin(a) * L, '#fff4c8', k % 2 ? 1 : 2); } g.globalAlpha = 1;
+      if (Math.random() < 0.3) G.particules.push({ x: J.x + (Math.random() - 0.5) * 30, y: J.y - 46 + (Math.random() - 0.5) * 24, vx: 0, vy: -14, age: 0, duree: 0.45, couleur: Math.random() < 0.5 ? '#fff4c8' : '#ffe080', taille: 1 });
+    }
+    g.drawImage(ic, x - 10, y - 56); g.fillStyle = PEAU.s; g.fillRect(x - 9, y - 38, 3, 4); g.fillRect(x + 6, y - 38, 3, 4); g.globalAlpha = 1; return; }
   if (J.def.teinte) { // variante altérée : liseré de teinte
     const S = spritesPerso(J.cle); const vue = { haut: 'dos', bas: 'face', gauche: 'gauche', droite: 'cote' };
     const t = silhouette(S.tetes[vue[J.dirTete] || 'face'].normal, J.def.teinte); g.globalAlpha *= 0.5; g.drawImage(t, x - 13 - 1, y - 32); g.drawImage(t, x - 13 + 1, y - 32); g.globalAlpha = J.invuln > 0 && Math.floor(J.invuln * 12) % 2 === 0 ? 0.35 : 1;
@@ -6811,6 +6884,7 @@ function dessinerEnnemi(g, e, x, y) {
   // états de boss lisibles : peau durcie (gris pierre), carapace d'Hiruko (bois cerclé)
   if (e.durci > 0 && !(e.flash > 0)) { g.globalAlpha = 0.5 + 0.12 * Math.sin(G.temps * 14); poser(silhouetteMemo(base, '#8a8a92')); }
   if (e.hiruko && !(e.flash > 0)) { g.globalAlpha = 0.42; poser(silhouetteMemo(base, '#6a4a2e')); g.globalAlpha = 1; g.fillStyle = '#c8b070'; for (const k of [-1, 0, 1]) g.fillRect(x + k * 6 - 1, y - Math.round(h * 0.55) + Math.abs(k) * 3, 2, 2); }
+  if (!(e.flash > 0)) effetsStatuts(g, e, base, poser, x, y + dy, h);
   g.globalAlpha = 1;
   if (e.bouclierSable) { const a = (e.grainsSable || 0) * 2.4; for (let i = 0; i < 8; i++) { const b = a + i * Math.PI / 4; g.fillStyle = i % 2 ? '#d8b070' : '#b08848'; g.fillRect(Math.round(x + Math.cos(b) * (e.r + 7)), Math.round(y - h * 0.45 + Math.sin(b) * (e.r * 0.6 + 4)), 2, 2); } }
   if (e.susanoo) dessinerSusanoo(g, e, x, y - Math.round(h * 0.5));
@@ -6867,6 +6941,23 @@ function dessinerIconeChampion(g, ic, x, y, c) {
   g.fillStyle = '#1c1420'; g.fillRect(x - 3, y - 3, 7, 7); g.fillStyle = c;
   const p = { vent: [[-2, -1], [-1, -1], [0, -1], [-1, 1], [0, 1], [1, 1]], bouclier: [[-2, -2], [-1, -2], [0, -2], [1, -2], [2, -2], [-2, -1], [2, -1], [-1, 0], [1, 0], [0, 1]], etoile: [[0, -2], [-1, 0], [0, 0], [1, 0], [0, 2], [-2, 0], [2, 0]], feuille: [[0, -2], [-1, -1], [0, -1], [-1, 0], [0, 0], [1, 0], [0, 1], [1, 1]], spirale: [[-1, -2], [0, -2], [1, -1], [1, 0], [0, 1], [-1, 0], [0, -1]], deux: [[-2, 0], [-1, 0], [1, 0], [2, 0], [-2, -1], [2, -1]], flamme: [[0, -2], [-1, -1], [0, -1], [-1, 0], [0, 0], [1, 0], [-1, 1], [0, 1], [1, 1]] }[ic] || [[0, 0]];
   for (const [dx, dy] of p) g.fillRect(x + dx, y + dy, 1, 1);
+}
+// Statuts lisibles sur le corps (en plus des symboles) : teinte de la nature du statut et signe qui l'accompagne —
+// flammèches (brûlure), bulles (poison), givre et éclats (gel), gouttes (ralenti), anneau d'ombre (immobilisé),
+// cœurs (charme), étoiles qui tournent (confus), volutes sombres (peur).
+const TEINTES_STATUT = { brulure: ['#ff7a2a', 0.22], poison: ['#7ae04a', 0.22], gel: ['#c0f0ff', 0.5], ralenti: ['#5ab0f0', 0.2], charme: ['#ff7ab0', 0.2], immobilise: ['#3a3050', 0.25] };
+function effetsStatuts(g, e, base, poser, x, y, h) {
+  const S = e.statuts; if (!S) return; const R = Math.random, conf = G.reglages.confort, t = G.temps;
+  for (const k in S) { const T = TEINTES_STATUT[k]; if (T) { g.globalAlpha = T[1] * (k === 'gel' ? 1 : 0.75 + 0.25 * Math.sin(t * 10 + e.uid)); poser(silhouetteMemo(base, T[0])); g.globalAlpha = 1; } }
+  const p = (vx, vy, d, c, tl = 1) => G.particules.push({ x: e.x + (R() - 0.5) * e.r * 1.4, y: e.y - R() * h * 0.8, vx, vy, age: 0, duree: d, couleur: c, taille: tl });
+  if (S.brulure && R() < (conf ? 0.15 : 0.4)) p((R() - 0.5) * 8, -30 - R() * 15, 0.35, R() < 0.5 ? '#ffb040' : '#ff5a20', R() < 0.3 ? 2 : 1);
+  if (S.poison && R() < (conf ? 0.08 : 0.2)) p(0, -16, 0.5, R() < 0.5 ? '#9af06a' : '#5ab040', 2);
+  if (S.ralenti && R() < (conf ? 0.05 : 0.12)) p(0, 22, 0.35, '#8ac8ff');
+  if (S.gel) { g.fillStyle = '#ffffff'; for (let k = 0; k < 3; k++) { const a = e.uid * 1.7 + k * 2.1; if (Math.sin(t * 6 + k * 2) > 0.3) { const sx = Math.round(x + Math.cos(a) * e.r * 0.7), sy = Math.round(y - h * 0.5 + Math.sin(a) * h * 0.3); g.fillRect(sx - 1, sy, 3, 1); g.fillRect(sx, sy - 1, 1, 3); } } }
+  if (S.immobilise) { g.globalAlpha = 0.7; g.drawImage(ellipse(e.r + 3, Math.max(2, Math.round((e.r + 3) * 0.4)), 'rgba(40,24,64,0.75)'), x - e.r - 3, y - Math.max(2, Math.round((e.r + 3) * 0.4))); g.globalAlpha = 1; }
+  if (S.charme && R() < (conf ? 0.04 : 0.08)) p(0, -18, 0.6, '#ff7ab0', 2);
+  if (S.confus) for (let k = 0; k < 3; k++) { const a = t * 5 + k * 2.09; g.fillStyle = k % 2 ? '#fff0a0' : '#d0a0ff'; const sx = Math.round(x + Math.cos(a) * 7), sy = Math.round(y - h - 2 + Math.sin(a) * 2); g.fillRect(sx, sy - 1, 1, 3); g.fillRect(sx - 1, sy, 3, 1); }
+  if (S.peur && R() < (conf ? 0.05 : 0.12)) p((R() - 0.5) * 6, -12, 0.5, '#3a3048', 2);
 }
 function dessinerSymboleStatut(g, k, x, y) {
   const c = { brulure: '#ff7a2a', poison: '#7ae04a', ralenti: '#5ab0f0', immobilise: '#3a3050', charme: '#ff7ab0', peur: '#e0e0e0', confus: '#d0a0ff', gel: '#c0f0ff' }[k] || '#fff';
@@ -13156,7 +13247,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, dessinerPerso, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, dessinerPerso, spriteFamilier, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

@@ -118,15 +118,39 @@ function dessinerFaisceau(g, f, X, Y) {
   g.fillStyle = f.couleur; g.fillRect(0, -w / 2, f.l, w);
   g.fillStyle = ennemi ? '#ffd0f0' : '#ffffff'; g.fillRect(0, -Math.max(1, w / 4), f.l, Math.max(1, w / 2));
   if (f.type === 'rayon') { for (let i = 0; i < f.l; i += 12) { g.fillStyle = 'rgba(255,220,180,0.6)'; g.fillRect(i + ((G.temps * 200) % 12), -w / 2 - 1, 3, 1); } }
+  if (!ennemi) { // éclats qui filent le long du rayon, éclair à la source, gerbe au point d'arrêt
+    g.fillStyle = 'rgba(255,255,255,0.85)'; for (let i = 0; i < f.l; i += 23) g.fillRect(Math.round(i + ((G.temps * 340) % 23)), Math.round(-w / 2 + ((i / 23) % 2 ? w - 1 : 0)), 4, 1);
+    if (!G.reglages.sansFlash) { const r0 = Math.round(w / 2 + 2 + Math.sin(G.temps * 40)), r1 = Math.round(w / 2 + 3 + Math.sin(G.temps * 33 + 1) * 1.5); g.globalAlpha = 0.85; g.drawImage(disque(r0, f.couleur), -r0, -r0); g.drawImage(disque(Math.max(1, r0 - 2), '#ffffff'), -r0 + 2, -r0 + 2); g.drawImage(disque(r1, f.couleur), Math.round(f.l) - r1, -r1); g.drawImage(disque(Math.max(1, r1 - 2), '#ffffff'), Math.round(f.l) - r1 + 2, -r1 + 2); g.globalAlpha = 1; }
+    if (!G.reglages.confort && Math.random() < 0.5) { const ex = f.x + Math.cos(f.a) * f.l, ey = f.y + Math.sin(f.a) * f.l, b = f.a + Math.PI + (Math.random() - 0.5) * 2; G.particules.push({ x: ex, y: ey, vx: Math.cos(b) * 60, vy: Math.sin(b) * 60, age: 0, duree: 0.15, couleur: Math.random() < 0.5 ? '#ffffff' : f.couleur, taille: 1 }); }
+  }
   g.restore();
+}
+// Frappe de mêlée : croissant net qui balaie l'arc — tranchant blanc, corps à la couleur de la nature, bord intérieur
+// plus sombre, queue qui s'estompe. Pré-rendu par rayon, arc, couleurs et étape de balayage ; tourné par quarts de tour.
+const _croissants = new Map();
+function croissant(R, arc, c1, c2, prog) {
+  const cle = R + '|' + arc.toFixed(2) + '|' + c1 + '|' + c2 + '|' + prog; let c = _croissants.get(cle); if (c) return c;
+  const n = 2 * R + 4; c = toile(n, n); const g = ctxDe(c), img = g.createImageData(n, n), d = img.data;
+  const A = hexRgb(c1), B = hexRgb(c2), a0 = -arc / 2, a1 = -arc / 2 + arc * prog;
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const dx = x + 0.5 - n / 2, dy = y + 0.5 - n / 2, r = Math.hypot(dx, dy), t = Math.atan2(dy, dx);
+    if (t < a0 || t > a1) continue;
+    const ep = Math.max(1.2, R * 0.21 * Math.sin(Math.PI * (t - a0) / arc)), ri = R - ep; if (r > R || r < ri) continue;
+    const u = (t - a0) / Math.max(0.001, a1 - a0), i = (y * n + x) * 4, bord = R - r < 1.6;
+    const col = bord ? [255, 255, 255] : r - ri < 1.2 ? B : A;
+    d[i] = col[0]; d[i + 1] = col[1]; d[i + 2] = col[2]; d[i + 3] = Math.round(255 * (bord ? 0.45 + 0.55 * u : 0.2 + 0.55 * u));
+  }
+  g.putImageData(img, 0, 0); _croissants.set(cle, c); return c;
 }
 function dessinerMelee(g, m, X, Y) {
   const k = m.age / (m.fin + m.anticipation); if (m.age < m.anticipation) return;
-  const J = m.attache; const cx = X(J.x), cy = Y(J.y - 10);
-  g.save(); g.globalAlpha = 1 - k; g.strokeStyle = '#fff4d0'; g.lineWidth = 3;
-  g.beginPath(); g.arc(cx, cy, m.portee * 0.85, m.a - m.arc / 2, m.a - m.arc / 2 + m.arc * Math.min(1, k * 2.5)); g.stroke();
-  g.strokeStyle = 'rgba(255,200,120,0.6)'; g.lineWidth = 1; g.beginPath(); g.arc(cx, cy, m.portee * 0.6, m.a - m.arc / 2, m.a + m.arc / 2); g.stroke();
-  g.restore();
+  const J = m.attache, cx = X(J.x), cy = Y(J.y - 10), R = Math.round(m.portee * 0.9);
+  const el = J.profil && J.profil.elements && [...J.profil.elements].find(n => NATURES_FX[n]);
+  const c1 = el ? NATURES_FX[el][1] : '#fff4d8', c2 = el ? NATURES_FX[el][0] : '#ffb060';
+  const img = croissant(R, m.arc, c1, c2, Math.min(4, Math.max(1, Math.ceil(k * 10))) / 4);
+  g.save(); g.globalAlpha = k < 0.55 ? 1 : Math.max(0, 1 - (k - 0.55) / 0.45); g.translate(cx, cy); g.rotate(Math.round(m.a / (Math.PI / 2)) * Math.PI / 2);
+  g.drawImage(img, -img.width / 2, -img.height / 2);
+  g.restore(); g.globalAlpha = 1;
 }
 function dessinerOrbe(g, o, X, Y) {
   const r = Math.round(o.r); g.drawImage(disque(r + 2, 'rgba(20,40,80,0.5)'), X(o.x - r - 2), Y(o.y - r - 2));
@@ -147,7 +171,13 @@ function dessinerJoueur(g, J, x, y) {
   let etatTete = J.tCligne < 0 ? 'cligne' : 'normal';
   if (J.tir.anim > 0.05 || J.tir.charge > 0) etatTete = 'tir';
   const frame = J.dash ? 1 : J.frame;
-  if (J.etat === 'objet' && G.enAnimationObjet) { dessinerPerso(g, J.cle, x, y, { dirCorps: 'bas', dirTete: 'bas', frame: 0, etatTete: 'normal' }); const ic = iconeObjet(G.enAnimationObjet.d.id); g.drawImage(ic, x - 10, y - 56); g.fillStyle = PEAU.s; g.fillRect(x - 9, y - 38, 3, 4); g.fillRect(x + 6, y - 38, 3, 4); g.globalAlpha = 1; return; }
+  if (J.etat === 'objet' && G.enAnimationObjet) { dessinerPerso(g, J.cle, x, y, { dirCorps: 'bas', dirTete: 'bas', frame: 0, etatTete: 'normal' }); const ic = iconeObjet(G.enAnimationObjet.d.id);
+    if (!G.reglages.sansFlash) { // l'objet brandi rayonne : halo et rayons qui tournent lentement
+      const cx = x, cy = y - 46, t = G.temps * 0.9; g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.55; g.drawImage(halo('#fff0b0', false, 32), cx - 22, cy - 22, 44, 44); g.restore();
+      g.globalAlpha = 0.4; for (let k = 0; k < 8; k++) { const a = t + k * Math.PI / 4, L = k % 2 ? 17 : 24; lignePixel(g, cx + Math.cos(a) * 8, cy + Math.sin(a) * 8, cx + Math.cos(a) * L, cy + Math.sin(a) * L, '#fff4c8', k % 2 ? 1 : 2); } g.globalAlpha = 1;
+      if (Math.random() < 0.3) G.particules.push({ x: J.x + (Math.random() - 0.5) * 30, y: J.y - 46 + (Math.random() - 0.5) * 24, vx: 0, vy: -14, age: 0, duree: 0.45, couleur: Math.random() < 0.5 ? '#fff4c8' : '#ffe080', taille: 1 });
+    }
+    g.drawImage(ic, x - 10, y - 56); g.fillStyle = PEAU.s; g.fillRect(x - 9, y - 38, 3, 4); g.fillRect(x + 6, y - 38, 3, 4); g.globalAlpha = 1; return; }
   if (J.def.teinte) { // variante altérée : liseré de teinte
     const S = spritesPerso(J.cle); const vue = { haut: 'dos', bas: 'face', gauche: 'gauche', droite: 'cote' };
     const t = silhouette(S.tetes[vue[J.dirTete] || 'face'].normal, J.def.teinte); g.globalAlpha *= 0.5; g.drawImage(t, x - 13 - 1, y - 32); g.drawImage(t, x - 13 + 1, y - 32); g.globalAlpha = J.invuln > 0 && Math.floor(J.invuln * 12) % 2 === 0 ? 0.35 : 1;
@@ -225,6 +255,7 @@ function dessinerEnnemi(g, e, x, y) {
   // états de boss lisibles : peau durcie (gris pierre), carapace d'Hiruko (bois cerclé)
   if (e.durci > 0 && !(e.flash > 0)) { g.globalAlpha = 0.5 + 0.12 * Math.sin(G.temps * 14); poser(silhouetteMemo(base, '#8a8a92')); }
   if (e.hiruko && !(e.flash > 0)) { g.globalAlpha = 0.42; poser(silhouetteMemo(base, '#6a4a2e')); g.globalAlpha = 1; g.fillStyle = '#c8b070'; for (const k of [-1, 0, 1]) g.fillRect(x + k * 6 - 1, y - Math.round(h * 0.55) + Math.abs(k) * 3, 2, 2); }
+  if (!(e.flash > 0)) effetsStatuts(g, e, base, poser, x, y + dy, h);
   g.globalAlpha = 1;
   if (e.bouclierSable) { const a = (e.grainsSable || 0) * 2.4; for (let i = 0; i < 8; i++) { const b = a + i * Math.PI / 4; g.fillStyle = i % 2 ? '#d8b070' : '#b08848'; g.fillRect(Math.round(x + Math.cos(b) * (e.r + 7)), Math.round(y - h * 0.45 + Math.sin(b) * (e.r * 0.6 + 4)), 2, 2); } }
   if (e.susanoo) dessinerSusanoo(g, e, x, y - Math.round(h * 0.5));
@@ -281,6 +312,23 @@ function dessinerIconeChampion(g, ic, x, y, c) {
   g.fillStyle = '#1c1420'; g.fillRect(x - 3, y - 3, 7, 7); g.fillStyle = c;
   const p = { vent: [[-2, -1], [-1, -1], [0, -1], [-1, 1], [0, 1], [1, 1]], bouclier: [[-2, -2], [-1, -2], [0, -2], [1, -2], [2, -2], [-2, -1], [2, -1], [-1, 0], [1, 0], [0, 1]], etoile: [[0, -2], [-1, 0], [0, 0], [1, 0], [0, 2], [-2, 0], [2, 0]], feuille: [[0, -2], [-1, -1], [0, -1], [-1, 0], [0, 0], [1, 0], [0, 1], [1, 1]], spirale: [[-1, -2], [0, -2], [1, -1], [1, 0], [0, 1], [-1, 0], [0, -1]], deux: [[-2, 0], [-1, 0], [1, 0], [2, 0], [-2, -1], [2, -1]], flamme: [[0, -2], [-1, -1], [0, -1], [-1, 0], [0, 0], [1, 0], [-1, 1], [0, 1], [1, 1]] }[ic] || [[0, 0]];
   for (const [dx, dy] of p) g.fillRect(x + dx, y + dy, 1, 1);
+}
+// Statuts lisibles sur le corps (en plus des symboles) : teinte de la nature du statut et signe qui l'accompagne —
+// flammèches (brûlure), bulles (poison), givre et éclats (gel), gouttes (ralenti), anneau d'ombre (immobilisé),
+// cœurs (charme), étoiles qui tournent (confus), volutes sombres (peur).
+const TEINTES_STATUT = { brulure: ['#ff7a2a', 0.22], poison: ['#7ae04a', 0.22], gel: ['#c0f0ff', 0.5], ralenti: ['#5ab0f0', 0.2], charme: ['#ff7ab0', 0.2], immobilise: ['#3a3050', 0.25] };
+function effetsStatuts(g, e, base, poser, x, y, h) {
+  const S = e.statuts; if (!S) return; const R = Math.random, conf = G.reglages.confort, t = G.temps;
+  for (const k in S) { const T = TEINTES_STATUT[k]; if (T) { g.globalAlpha = T[1] * (k === 'gel' ? 1 : 0.75 + 0.25 * Math.sin(t * 10 + e.uid)); poser(silhouetteMemo(base, T[0])); g.globalAlpha = 1; } }
+  const p = (vx, vy, d, c, tl = 1) => G.particules.push({ x: e.x + (R() - 0.5) * e.r * 1.4, y: e.y - R() * h * 0.8, vx, vy, age: 0, duree: d, couleur: c, taille: tl });
+  if (S.brulure && R() < (conf ? 0.15 : 0.4)) p((R() - 0.5) * 8, -30 - R() * 15, 0.35, R() < 0.5 ? '#ffb040' : '#ff5a20', R() < 0.3 ? 2 : 1);
+  if (S.poison && R() < (conf ? 0.08 : 0.2)) p(0, -16, 0.5, R() < 0.5 ? '#9af06a' : '#5ab040', 2);
+  if (S.ralenti && R() < (conf ? 0.05 : 0.12)) p(0, 22, 0.35, '#8ac8ff');
+  if (S.gel) { g.fillStyle = '#ffffff'; for (let k = 0; k < 3; k++) { const a = e.uid * 1.7 + k * 2.1; if (Math.sin(t * 6 + k * 2) > 0.3) { const sx = Math.round(x + Math.cos(a) * e.r * 0.7), sy = Math.round(y - h * 0.5 + Math.sin(a) * h * 0.3); g.fillRect(sx - 1, sy, 3, 1); g.fillRect(sx, sy - 1, 1, 3); } } }
+  if (S.immobilise) { g.globalAlpha = 0.7; g.drawImage(ellipse(e.r + 3, Math.max(2, Math.round((e.r + 3) * 0.4)), 'rgba(40,24,64,0.75)'), x - e.r - 3, y - Math.max(2, Math.round((e.r + 3) * 0.4))); g.globalAlpha = 1; }
+  if (S.charme && R() < (conf ? 0.04 : 0.08)) p(0, -18, 0.6, '#ff7ab0', 2);
+  if (S.confus) for (let k = 0; k < 3; k++) { const a = t * 5 + k * 2.09; g.fillStyle = k % 2 ? '#fff0a0' : '#d0a0ff'; const sx = Math.round(x + Math.cos(a) * 7), sy = Math.round(y - h - 2 + Math.sin(a) * 2); g.fillRect(sx, sy - 1, 1, 3); g.fillRect(sx - 1, sy, 3, 1); }
+  if (S.peur && R() < (conf ? 0.05 : 0.12)) p((R() - 0.5) * 6, -12, 0.5, '#3a3048', 2);
 }
 function dessinerSymboleStatut(g, k, x, y) {
   const c = { brulure: '#ff7a2a', poison: '#7ae04a', ralenti: '#5ab0f0', immobilise: '#3a3050', charme: '#ff7ab0', peur: '#e0e0e0', confus: '#d0a0ff', gel: '#c0f0ff' }[k] || '#fff';

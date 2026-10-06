@@ -202,7 +202,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       T.pas(Math.round((3.4 + 2.7) * 60), []);
       if (!G.banniere || !G.banniere.synergie) out.ko.push('bandeaux : la synergie ne suit pas l’objet (' + (G.banniere && G.banniere.nom) + ')');
     } catch (err) { out.ko.push('bandeaux ' + String(err.stack || err).slice(0, 200)); }
-    return out;
+    G.modeTest.dieu = false; return out;
   });
 
   // 5) Chaque boss : apparition, dangers, dégâts subis, mort possible
@@ -417,7 +417,7 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
 
   // 13) Mécaniques signatures : sable de Gaara, Susanoo d'Itachi, cristaux, zones télégraphiées
   if (veut('mecaniques')) await lancer('mecaniques', () => {
-    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [] };
+    const L = window.LDS, G = L.G, T = window.__T; const out = { ko: [] }; G.modeTest.dieu = false; // indépendant des sections précédentes
     const boss = id => { L.nouvellePartie({ perso: 'CHR_001', code: 'MECA2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5);
       const s = G.etage.salles[G.etage.boss]; s.bossDef = id; s.visitee = true; s.ennemisDef = []; T.allerA(s.id); T.pas(120, ['Enter']); T.pas(10, []);
       const b = G.ennemis.find(x => x.id === id); b.tB = 99; b.etatB = 'choix'; return b; };

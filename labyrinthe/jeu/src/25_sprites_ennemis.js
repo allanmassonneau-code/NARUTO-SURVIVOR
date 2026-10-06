@@ -244,7 +244,8 @@ function spriteFamilier(f) {
   const d = f.def; const cle = d.id + (f.variante || ''); if (_spFam[cle]) return _spFam[cle];
   const S = d.sprite || {};
   let r;
-  if (S.carte && CARTES_CREATURES[S.carte]) { const C = CARTES_CREATURES[S.carte]; const col = Object.assign({}, C.c, S.couleurs || {}); r = { frames: C.f.map(x => contourner(peindre(x.map(l => l.padEnd(Math.max(...x.map(y => y.length)), '.')), col))), base: 1 }; }
+  if (S.carte && CREATURES[S.carte]) r = spriteFamilierPeint(d, S); // même peintre que le bestiaire
+  else if (S.carte && CARTES_CREATURES[S.carte]) { const C = CARTES_CREATURES[S.carte]; const col = Object.assign({}, C.c, S.couleurs || {}); r = { frames: C.f.map(x => contourner(peindre(x.map(l => l.padEnd(Math.max(...x.map(y => y.length)), '.')), col))), base: 1 }; }
   else if (S.icone) { r = { frames: [iconeObjet(S.icone)], base: 2 }; }
   else r = { frames: [contourner(disque(5, S.couleur || '#e0e0f0'))], base: 0 };
   return (_spFam[cle] = r);

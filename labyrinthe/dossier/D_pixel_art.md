@@ -140,7 +140,7 @@ Les 31 formes de créatures ennemies passent par le **même peintre de volumes**
 | Masques flottants | grand masque ovale | talismans et rouleaux (archives), couronne de flammes (élémentaire) ; orbites qui s’illuminent |
 | Statues | corps massif taillé | pavois à sceau (frontale), massue levée (géante), runes et couronne bleues (aura) |
 
-Les couleurs propres à chaque ennemi (crapauds, marionnettes, chauve-souris…) passent par les mêmes clés qu’avant. Boss et familiers gardent leurs cartes. Les ennemis peints se construisent une fois (≈ 250 ms pour les 76, 8 ms au plus chacun) et se préchauffent un par un hors combat, ceux du thème de l’étage d’abord. **Les volants flottent** 5 px au-dessus d’une ombre plus petite, avec un léger balancement ; leur point d’impact est relevé d’autant.
+Les couleurs propres à chaque ennemi (crapauds, marionnettes, chauve-souris…) passent par les mêmes clés qu’avant. Les **familiers** passent par le même peintre (deux images, plus petits quand la forme en dépend ; chiens ninjas pour Pakkun et Akamaru, limace bleue et blanche pour Katsuyu, luciole qui luit) ; les boss gardent leurs cartes. Les ennemis peints se construisent une fois (≈ 250 ms pour les 76, 8 ms au plus chacun) et se préchauffent un par un hors combat, ceux du thème de l’étage d’abord. **Les volants flottent** 5 px au-dessus d’une ombre plus petite, avec un léger balancement ; leur point d’impact est relevé d’autant.
 
 **Télégraphes lisibles** (dessinés après l’éclairage, jamais assombris) : ligne de charge rouge qui s’allonge devant le chargeur, ligne de visée pointillée du tireur qui anticipe, éclat qui grossit sur l’arme du tireur, anneau qui se resserre au point de chute du sauteur, poussière du sauteur qui se ramasse.
 
@@ -192,7 +192,7 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 | # | Effet | Déclencheur | Durée | Couches / forme | Son | Version allégée |
 |---|---|---|---|---|---|---|
 | 1 | Étincelle d’impact | projectile qui touche | 0,1 | 3 × 3 px | `impact` (budget) | inchangée |
-| 2 | Explosion | parchemin, argile | 0,5 | cercle blanc → orange, 10 fragments, décalque brûlé | `explosion` + secousse 6 | sans secousse |
+| 2 | Explosion | parchemin, argile | 0,5 | cercle blanc → orange, cœur clair, onde de choc qui s’élargit, fumée sombre qui monte, 10 fragments, décalque brûlé | `explosion` + secousse 6 | sans secousse |
 | 3 | Petite explosion | mines, éclats | 0,3 | cercle orange | `impact` grave | — |
 | 4 | Fumée | apparition, disparition, mort | 0,4–0,5 | 3 bouffées grises | `fumee` | — |
 | 5 | Anneau d’impact | orbe, rotation | 0,3 | anneau clair qui s’élargit | `impact` | — |
@@ -218,6 +218,12 @@ Durées en secondes, arrondies depuis le code ; « version allégée » = mode c
 | 25 | Battants de porte | fermeture au combat, ouverture | 0,12 / 0,34 | les barreaux retombent d’un coup (poussière) et glissent dans le mur à l’ouverture | `porte_ferme` / `porte_ouvre` | sans poussière |
 | 26 | Fusions de natures | impacts des synergies | 0,6–2,4 | lave (croûte, bulles), vapeur (bouffées), flaque électrisée (étincelles), sable de fer (grains qui convergent), racines (couronne qui jaillit), rayon Jinton (faisceau blanc, cube) | `feu`, `eau`, `eclair`, `laser` | — |
 | 27 | Mur secret ouvert | explosion contre un mur secret, entrée dans une cache | 0,6 | brèche dentelée et gravats dessinés **des deux côtés** du mur, fumée, débris, secousse 4 | `secret` | sans secousse |
+| 28 | Tirs de nature | objets d’élément (Katon, Raiton, Suiton, Fūton, Doton, Hyōton) | durée du tir | lueur additive et teinte de la nature sur le tir ; flammèches (Katon), arcs brisés (Raiton), gouttes (Suiton), tourbillon (Fūton), mottes qui retombent (Doton), givre et cristaux (Hyōton) ; la Grande boule de feu a son propre dessin | — | particules réduites |
+| 29 | Impact de nature | tir élémentaire qui touche | 0,16–0,26 | gerbe propre à la nature : étincelles qui montent, trois arcs, éclaboussure en anneau, spirale, mottes, quatre cristaux | — | — |
+| 30 | Frappe de mêlée | formes lame, mêlée | 0,19 | croissant net qui balaie l’arc en quatre étapes : tranchant blanc, corps translucide à la couleur de la nature, queue qui s’estompe | `impact` | — |
+| 31 | Rayons et faisceaux | formes rayon, laser, faisceau | durée du rayon | éclair à la source, gerbe au point d’arrêt, éclats qui filent le long du rayon | `laser` | sans éclair |
+| 32 | Objet brandi | prise d’un objet | 0,8 | halo et huit rayons qui tournent derrière l’objet, poussière dorée | `objet` | sans halo |
+| 33 | Statuts sur le corps | brûlure, poison, gel, ralenti, immobilisé, charme, confus, peur | durée du statut | teinte de la nature du statut sur la silhouette (le gel la givre franchement), flammèches, bulles, éclats de givre, gouttes, anneau d’ombre aux pieds, cœurs, étoiles qui tournent, volutes sombres — en plus des symboles | — | particules réduites |
 
 **Combinaisons d’effets** (au moins dix) : Rasengan + foudre (sphère spiralée puis arcs vers deux cibles) ; argile + Katon (explosion ronde puis zone de feu allié) ; météore + glace (réticule puis sol gelé) ; boomerang + explosion (une petite explosion par contact, budget 14) ; faisceau + multitir (faisceaux en éventail) ; rayon + percement (rayon plus épais, +20 %) ; sable en orbite + poison (grains verts) ; éventail + Katon (trois flammes) ; chaîne + onde (onde puis arcs, budget partagé) ; mines + lévitation (mines au-dessus du vide) ; réserve instable rompue + bulle rouge (onde noire + huit tirs).
 

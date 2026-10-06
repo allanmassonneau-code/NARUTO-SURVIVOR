@@ -67,12 +67,7 @@
   "tousLes": 5,
   "donne": "coeur",
   "sprite": {
-   "carte": "sangsue",
-   "couleurs": {
-    "s": "#e8e8f0",
-    "l": "#ffffff",
-    "d": "#6a8ae8"
-   }
+   "carte": "limace"
   }
  },
  {
@@ -134,7 +129,7 @@
   "vitesseRot": 2.2,
   "bloque": true,
   "sprite": {
-   "carte": "papier"
+   "carte": "papillon_papier"
   }
  },
  {
@@ -167,12 +162,7 @@
   "nom": "Pakkun",
   "comportement": "pakkun",
   "sprite": {
-   "carte": "rat",
-   "couleurs": {
-    "g": "#c8a870",
-    "d": "#8a6a4a",
-    "p": "#3a2a1a"
-   }
+   "carte": "chien"
   }
  },
  {
@@ -183,11 +173,11 @@
   "coefJoueur": 0.5,
   "recharge": 1.2,
   "sprite": {
-   "carte": "rat",
+   "carte": "chien",
    "couleurs": {
     "g": "#f0ece4",
     "d": "#c8c0b0",
-    "p": "#e0a0a8"
+    "p": "#e07a8a"
    }
   }
  },
