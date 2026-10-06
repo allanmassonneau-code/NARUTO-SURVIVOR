@@ -151,6 +151,7 @@
   ],
   "cumul": "cumul",
   "statut": "adaptation",
+  "ensemble": "espace",
   "icone": {
    "forme": "kunai",
    "a": "#e0c050",
@@ -282,6 +283,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "espace",
   "icone": {
    "forme": "rouleau",
    "a": "#c8d0e8",
@@ -423,6 +425,7 @@
   ],
   "cumul": "unique",
   "statut": "adaptation",
+  "ensemble": "vent",
   "icone": {
    "forme": "fuma",
    "a": "#c8ccd8",
@@ -585,6 +588,7 @@
   ],
   "cumul": "unique",
   "statut": "adaptation",
+  "ensemble": "anbu",
   "icone": {
    "forme": "lame",
    "a": "#d0d8e8",
@@ -1036,7 +1040,7 @@
    "heritage": 2,
    "boutique": 2
   },
-  "desc": "Plus loin, plus vite.",
+  "desc": "Plus loin, plus vite ; 5 % de coup critique (×2,5).",
   "effets": [
    {
     "s": "vitesseTir",
@@ -1049,6 +1053,9 @@
    {
     "s": "degats",
     "a": 0.3
+   },
+   {
+    "critique": 0.05
    }
   ],
   "cumul": "cumul",
@@ -1071,11 +1078,14 @@
    "boutique": 1,
    "coffre": 1
   },
-  "desc": "Des lames plus lourdes.",
+  "desc": "Des lames plus lourdes : dégâts +1, recul accru.",
   "effets": [
    {
     "s": "degats",
     "a": 1
+   },
+   {
+    "recul": 1.3
    }
   ],
   "cumul": "cumul",
@@ -1097,15 +1107,19 @@
    "heritage": 2,
    "boutique": 2
   },
-  "desc": "Vous vous déplacez plus vite.",
+  "desc": "Vous vous déplacez plus vite ; ni toiles ni flaques ne vous ralentissent.",
   "effets": [
    {
     "s": "vitesse",
     "a": 0.6
+   },
+   {
+    "drapeau": "piedLeger"
    }
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "vent",
   "icone": {
    "forme": "sandale",
    "a": "#3a4a6a",
@@ -1235,7 +1249,7 @@
    "boutique": 1,
    "cache": 1
   },
-  "desc": "Dégâts et chance.",
+  "desc": "Dégâts et chance ; 6 % de coup critique (×2,5).",
   "effets": [
    {
     "s": "degats",
@@ -1244,10 +1258,14 @@
    {
     "s": "chance",
     "a": 1
+   },
+   {
+    "critique": 0.06
    }
   ],
   "cumul": "cumul",
   "statut": "adaptation",
+  "ensemble": "anbu",
   "icone": {
    "forme": "masque",
    "a": "#e8e4dc",
@@ -1271,7 +1289,7 @@
    "heritage": 2,
    "boutique": 1
   },
-  "desc": "Dégâts +0,7 ; les frappes de mêlée gagnent en portée.",
+  "desc": "Dégâts +0,7 ; les frappes de mêlée gagnent en portée ; vos coups repoussent plus fort.",
   "effets": [
    {
     "s": "degats",
@@ -1280,6 +1298,9 @@
    {
     "s": "portee",
     "a": 0.5
+   },
+   {
+    "recul": 1.25
    }
   ],
   "cumul": "cumul",
@@ -1906,8 +1927,18 @@
    "heritage": 1,
    "boss": 1
   },
-  "desc": "Vitesse +0,5, cadence +0,3.",
+  "desc": "Vitesse +0,5, cadence +0,3 ; un tir sur cinq enchaîne la foudre sur un ennemi proche.",
   "effets": [
+   {
+    "impact": "chaine",
+    "sauts": 1,
+    "r": 3,
+    "coef": 0.5,
+    "chance": 0.2
+   },
+   {
+    "element": "raiton"
+   },
    {
     "s": "vitesse",
     "a": 0.5
@@ -2073,7 +2104,7 @@
   ],
   "cumul": "cumul",
   "statut": "canon adapté",
-  "ensemble": "meute",
+  "ensemble": "medecin",
   "icone": {
    "forme": "limace",
    "a": "#e8e8f0",
@@ -2160,6 +2191,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "vent",
   "icone": {
    "forme": "kunai",
    "a": "#d8dce8",
@@ -2718,6 +2750,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "medecin",
   "icone": {
    "forme": "pilule",
    "a": "#d83a3a",
@@ -2752,6 +2785,7 @@
   "exclusion": [
    "sansVitalite"
   ],
+  "ensemble": "medecin",
   "icone": {
    "forme": "sceau",
    "a": "#a050d0",
@@ -2786,6 +2820,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "medecin",
   "icone": {
    "forme": "bouclier",
    "a": "#4a8ae8",
@@ -2814,6 +2849,7 @@
   "effets": [],
   "cumul": "cumul",
   "statut": "adaptation",
+  "ensemble": "akatsuki",
   "icone": {
    "forme": "coeur",
    "a": "#6a1a2a",
@@ -2983,6 +3019,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "medecin",
   "icone": {
    "forme": "coffre",
    "a": "#e8e0d0",
@@ -3017,6 +3054,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "medecin",
   "icone": {
    "forme": "coeur",
    "a": "#f0ecdc",
@@ -3970,7 +4008,7 @@
   ],
   "cumul": "cumul",
   "statut": "adaptation",
-  "ensemble": "interdit",
+  "ensemble": "akatsuki",
   "icone": {
    "forme": "bourse",
    "a": "#2a3a2a",
@@ -3998,6 +4036,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "akatsuki",
   "icone": {
    "forme": "bourse",
    "a": "#1e1e28",
@@ -4137,6 +4176,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "anbu",
   "icone": {
    "forme": "masque",
    "a": "#2a2a34",
@@ -4204,6 +4244,7 @@
   ],
   "cumul": "cumul",
   "statut": "adaptation",
+  "ensemble": "akatsuki",
   "icone": {
    "forme": "epee",
    "a": "#4a6a8a",
@@ -4265,6 +4306,7 @@
   ],
   "cumul": "cumul",
   "statut": "création originale",
+  "ensemble": "anbu",
   "icone": {
    "forme": "goutte",
    "a": "#a8b8c8",
@@ -4846,6 +4888,793 @@
    "c": "#6a2a8a"
   },
   "contrepartie": "La seconde explosion blesse aussi (sauf immunité)."
+ },
+ {
+  "id": "PSV_157",
+  "nom": "Frappe à bout portant",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "Dégâts ×2 à bout portant, qui retombent à ×0,4 au bout de la portée.",
+  "effets": [
+   {
+    "distance": "proche"
+   },
+   {
+    "s": "vitesse",
+    "a": 0.2
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "icone": {
+   "forme": "poing",
+   "a": "#e8a060",
+   "b": "#a8603a",
+   "c": "#fff0d0"
+  },
+  "tags": [
+   "distance"
+  ],
+  "contrepartie": "Faible de loin."
+ },
+ {
+  "id": "PSV_158",
+  "nom": "Shuriken du long voyage",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "Plus un tir a voyagé, plus il frappe : ×0,6 au départ, ×2,2 au bout de sa course.",
+  "effets": [
+   {
+    "distance": "loin"
+   },
+   {
+    "s": "portee",
+    "a": 1.5
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "ensemble": "vent",
+  "icone": {
+   "forme": "shuriken",
+   "a": "#c8d8f0",
+   "b": "#6a7a98",
+   "c": "#f0e070"
+  },
+  "tags": [
+   "distance"
+  ],
+  "contrepartie": "Faible au contact."
+ },
+ {
+  "id": "PSV_159",
+  "nom": "Œil du chasseur",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 3,
+  "pools": {
+   "heritage": 2,
+   "boss": 1
+  },
+  "desc": "Chaque tir au but augmente les dégâts de 10 % (jusqu’à +60 %) ; un tir perdu remet tout à zéro.",
+  "effets": [
+   {
+    "concentration": true
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "icone": {
+   "forme": "oeil",
+   "a": "#e8d060",
+   "b": "#8a6a20",
+   "c": "#1c1420"
+  },
+  "ensemble": "yeux",
+  "tags": [
+   "concentration"
+  ]
+ },
+ {
+  "id": "PSV_160",
+  "nom": "Larves de kikaichū",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "bibliotheque": 1
+  },
+  "desc": "25 % des coups libèrent une larve qui chasse un autre ennemi (×0,5).",
+  "effets": [
+   {
+    "parasite": 0.25
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "adaptation",
+  "icone": {
+   "forme": "insecte",
+   "a": "#5a5a3a",
+   "b": "#8a8a5a",
+   "c": "#c8c890"
+  },
+  "ensemble": "essaim",
+  "tags": [
+   "guidage"
+  ]
+ },
+ {
+  "id": "PSV_161",
+  "nom": "Parchemin de l’espace replié",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 3,
+  "pools": {
+   "bibliotheque": 1,
+   "heritage": 1,
+   "boss": 1
+  },
+  "desc": "Un tir qui touche un mur ressort du mur opposé de la salle (une fois par exemplaire).",
+  "effets": [
+   {
+    "continuum": true
+   },
+   {
+    "s": "portee",
+    "a": 1
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "ensemble": "espace",
+  "icone": {
+   "forme": "rouleau",
+   "a": "#8a6ad8",
+   "b": "#4a3a8a",
+   "c": "#e0d8ff"
+  },
+  "tags": [
+   "continuum"
+  ]
+ },
+ {
+  "id": "PSV_162",
+  "nom": "Marque du chasseur",
+  "type": "passif",
+  "famille": "element",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "20 % de marquer (+3 % par chance, 50 % au plus) : la cible subit 40 % de dégâts en plus de toutes les sources pendant 4 s.",
+  "effets": [
+   {
+    "statut": "marque",
+    "chance": 0.2,
+    "chanceParChance": 0.03,
+    "max": 0.5,
+    "duree": 4
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "ensemble": "anbu",
+  "icone": {
+   "forme": "etoile",
+   "a": "#ff4a4a",
+   "b": "#a02020",
+   "c": "#ffe0e0"
+  },
+  "tags": [
+   "marque"
+  ]
+ },
+ {
+  "id": "PSV_163",
+  "nom": "Lame dentelée",
+  "type": "passif",
+  "famille": "element",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "30 % de faire saigner (+5 % par chance) : la cible perd de la vitalité tant qu’elle bouge.",
+  "effets": [
+   {
+    "statut": "saignement",
+    "chance": 0.3,
+    "chanceParChance": 0.05,
+    "max": 0.7,
+    "duree": 4
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "ensemble": "anbu",
+  "icone": {
+   "forme": "lame",
+   "a": "#d0d8e8",
+   "b": "#8a2a2a",
+   "c": "#c82030"
+  },
+  "tags": [
+   "saignement"
+  ]
+ },
+ {
+  "id": "PSV_164",
+  "nom": "Intention meurtrière",
+  "type": "passif",
+  "famille": "element",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "bibliotheque": 1,
+   "pacte": 1
+  },
+  "desc": "15 % d’effrayer (+3 % par chance) : la cible vous fuit 2 s (les boss y sont insensibles).",
+  "effets": [
+   {
+    "statut": "peur",
+    "chance": 0.15,
+    "chanceParChance": 0.03,
+    "max": 0.45,
+    "duree": 2
+   },
+   {
+    "s": "degats",
+    "a": 0.3
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "ensemble": "anbu",
+  "icone": {
+   "forme": "crane",
+   "a": "#e8e0d0",
+   "b": "#5a4a6a",
+   "c": "#c83a3a"
+  },
+  "tags": [
+   "peur"
+  ]
+ },
+ {
+  "id": "PSV_165",
+  "nom": "Shuriken scindé",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 3,
+  "pools": {
+   "heritage": 2,
+   "boss": 1
+  },
+  "desc": "Un tir qui achève un ennemi se scinde en trois éclats qui poursuivent leur course (×0,6).",
+  "effets": [
+   {
+    "scission": 3
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "icone": {
+   "forme": "shuriken",
+   "a": "#e0e4f0",
+   "b": "#7a8098",
+   "c": "#ff9a5a"
+  },
+  "tags": [
+   "eclatement"
+  ]
+ },
+ {
+  "id": "PSV_166",
+  "nom": "Étiquettes posthumes",
+  "type": "passif",
+  "famille": "ressource",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1,
+   "pacte": 1
+  },
+  "desc": "Les ennemis tués explosent une fois sur trois (sans vous blesser).",
+  "effets": [
+   {
+    "quand": "elimination",
+    "si": "ennemiNonBoss",
+    "chance": 0.33,
+    "faire": {
+     "type": "explosion",
+     "r": 1.1,
+     "coef": 1.6,
+     "petite": true
+    }
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "icone": {
+   "forme": "tag",
+   "a": "#f0e8d0",
+   "b": "#c82a2a",
+   "c": "#3a2a1a"
+  },
+  "ensemble": "argile",
+  "tags": [
+   "explosion"
+  ]
+ },
+ {
+  "id": "PSV_167",
+  "nom": "Tourbillon de feuilles",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "bibliotheque": 1
+  },
+  "desc": "Vos tirs partent en spirale qui s’ouvre : ils balaient la salle autour de vous.",
+  "effets": [
+   {
+    "traj": "spirale"
+   },
+   {
+    "s": "degats",
+    "a": 0.3
+   },
+   {
+    "s": "portee",
+    "a": 1.5
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "ensemble": "vent",
+  "icone": {
+   "forme": "feuille",
+   "a": "#7ae07a",
+   "b": "#3a9a4a",
+   "c": "#f0fff0"
+  },
+  "tags": [
+   "spirale"
+  ]
+ },
+ {
+  "id": "PSV_168",
+  "nom": "Sable en suspens",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boss": 1,
+   "bibliotheque": 1
+  },
+  "desc": "Vos tirs s’arrêtent à mi-course et attendent : relâchez la visée pour les lancer tous ensemble.",
+  "effets": [
+   {
+    "differe": true
+   },
+   {
+    "s": "degats",
+    "a": 0.5
+   }
+  ],
+  "cumul": "unique",
+  "statut": "adaptation",
+  "ensemble": "sable",
+  "icone": {
+   "forme": "sable",
+   "a": "#e0c080",
+   "b": "#a8804a",
+   "c": "#fff0c0"
+  },
+  "tags": [
+   "differe"
+  ]
+ },
+ {
+  "id": "PSV_169",
+  "nom": "Kunai pivotant",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "Un tir qui frôle un ennemi sur le côté pivote d’un coup vers lui.",
+  "effets": [
+   {
+    "pivot": true
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "ensemble": "vent",
+  "icone": {
+   "forme": "kunai",
+   "a": "#e0e8f8",
+   "b": "#6a7a98",
+   "c": "#a0e0ff"
+  },
+  "tags": [
+   "guidage"
+  ]
+ },
+ {
+  "id": "PSV_170",
+  "nom": "Sillage ardent",
+  "type": "passif",
+  "famille": "element",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boss": 1,
+   "pacte": 1
+  },
+  "desc": "Vos tirs laissent une traînée de flammes alliées.",
+  "effets": [
+   {
+    "sillage": "feu"
+   },
+   {
+    "element": "katon"
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "icone": {
+   "forme": "flamme",
+   "a": "#ff8a2a",
+   "b": "#c83018",
+   "c": "#ffe070"
+  },
+  "tags": [
+   "katon",
+   "zone"
+  ]
+ },
+ {
+  "id": "PSV_171",
+  "nom": "Points vitaux",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boss": 1
+  },
+  "desc": "10 % de coup critique (+2 % par chance, 50 % au plus) : dégâts ×2,5.",
+  "effets": [
+   {
+    "critique": 0.1
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "icone": {
+   "forme": "etoile",
+   "a": "#ffe070",
+   "b": "#c8a030",
+   "c": "#ffffff"
+  },
+  "ensemble": "yeux",
+  "tags": [
+   "critique"
+  ]
+ },
+ {
+  "id": "PSV_172",
+  "nom": "Concentration du ninja",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "Chaque salle nettoyée sans être touché : dégâts +0,15 (jusqu’à +1,5). Un coup reçu remet la série à zéro.",
+  "effets": [
+   {
+    "drapeau": "serieParfaite"
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "icone": {
+   "forme": "bandeau",
+   "a": "#2a2a3a",
+   "b": "#c8ccd8",
+   "c": "#e8d060"
+  },
+  "tags": [
+   "serie"
+  ]
+ },
+ {
+  "id": "PSV_173",
+  "nom": "Septième lame",
+  "type": "passif",
+  "famille": "projectile",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "Un tir sur sept est une lame lourde : dégâts ×3, plus grosse, elle perce deux ennemis.",
+  "effets": [
+   {
+    "septieme": 7
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "icone": {
+   "forme": "epee",
+   "a": "#c8ccd8",
+   "b": "#5a5e6a",
+   "c": "#e8d060"
+  },
+  "tags": [
+   "septieme"
+  ]
+ },
+ {
+  "id": "PSV_174",
+  "nom": "Pression du chakra",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "sanctuaire": 1
+  },
+  "desc": "Les ennemis à moins de 2 tuiles de vous sont ralentis (×0,6).",
+  "effets": [
+   {
+    "drapeau": "pressionChakra"
+   },
+   {
+    "s": "degats",
+    "a": 0.3
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "icone": {
+   "forme": "soleil",
+   "a": "#8ad0ff",
+   "b": "#3a80c8",
+   "c": "#ffffff"
+  },
+  "visuel": {
+   "couche": "aura",
+   "motif": "lueur_poings",
+   "couleur": "#8ad0ff",
+   "prio": 2
+  },
+  "tags": [
+   "aura"
+  ]
+ },
+ {
+  "id": "PSV_175",
+  "nom": "Instinct du combat",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1
+  },
+  "desc": "Frôler un tir ennemi sans être touché : huit frôlements chargent l’actif d’une charge.",
+  "effets": [
+   {
+    "drapeau": "frolement"
+   },
+   {
+    "s": "vitesse",
+    "a": 0.2
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "ensemble": "vent",
+  "icone": {
+   "forme": "plume",
+   "a": "#e0e8ff",
+   "b": "#8a98c8",
+   "c": "#ffffff"
+  },
+  "tags": [
+   "frolement"
+  ]
+ },
+ {
+  "id": "PSV_176",
+  "nom": "Bénédiction du vieil ermite",
+  "type": "passif",
+  "famille": "sante",
+  "qualite": 2,
+  "pools": {
+   "sanctuaire": 2,
+   "heritage": 1
+  },
+  "desc": "À chaque nouvel étage commencé à pleine vitalité : une réserve de chakra protecteur.",
+  "effets": [
+   {
+    "quand": "etage",
+    "si": "pleineVitalite",
+    "faire": {
+     "type": "protection",
+     "demis": 2
+    }
+   },
+   {
+    "sante": {
+     "cont": 1
+    }
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "icone": {
+   "forme": "crapaud",
+   "a": "#e8c060",
+   "b": "#8a6a3a",
+   "c": "#ffffff"
+  },
+  "ensemble": "ermite",
+  "exclusion": [
+   "sansVitalite"
+  ]
+ },
+ {
+  "id": "PSV_177",
+  "nom": "Œil du Rinnegan (empreinte)",
+  "type": "passif",
+  "famille": "element",
+  "qualite": 4,
+  "pools": {
+   "pacte": 1
+  },
+  "desc": "Vos impacts attirent les ennemis voisins vers eux ; dégâts +0,7.",
+  "effets": [
+   {
+    "impact": "attraction",
+    "r": 2.2,
+    "force": 70,
+    "coef": 0
+   },
+   {
+    "s": "degats",
+    "a": 0.7
+   }
+  ],
+  "cumul": "unique",
+  "statut": "adaptation",
+  "icone": {
+   "forme": "oeil",
+   "a": "#b4a4d8",
+   "b": "#5a4a8a",
+   "c": "#1c1420"
+  },
+  "ensemble": "yeux",
+  "tags": [
+   "attraction"
+  ]
+ },
+ {
+  "id": "PSV_178",
+  "nom": "Étiquette à retardement",
+  "type": "passif",
+  "famille": "ressource",
+  "qualite": 2,
+  "pools": {
+   "heritage": 2,
+   "boutique": 1
+  },
+  "desc": "35 % des coups plantent une étiquette qui explose une seconde plus tard (×2,4).",
+  "effets": [
+   {
+    "impact": "retardement",
+    "chance": 0.35,
+    "coef": 1
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "icone": {
+   "forme": "tag",
+   "a": "#f4ecd8",
+   "b": "#d0302a",
+   "c": "#ffe070"
+  },
+  "ensemble": "argile",
+  "tags": [
+   "explosion"
+  ]
+ },
+ {
+  "id": "PSV_179",
+  "nom": "Rouleau de la double technique",
+  "type": "passif",
+  "famille": "hybride",
+  "qualite": 3,
+  "pools": {
+   "bibliotheque": 1,
+   "heritage": 1
+  },
+  "desc": "Utiliser un actif déclenche aussi une salve de vos tirs dans les huit directions.",
+  "effets": [
+   {
+    "quand": "actif_utilise",
+    "faire": {
+     "type": "projectiles_cercle",
+     "n": 8,
+     "coef": 1
+    }
+   }
+  ],
+  "cumul": "cumul",
+  "statut": "création originale",
+  "icone": {
+   "forme": "rouleau",
+   "a": "#e8d0a0",
+   "b": "#8a5a2a",
+   "c": "#c83a2a"
+  },
+  "tags": [
+   "actif"
+  ]
+ },
+ {
+  "id": "PSV_180",
+  "nom": "Sang du clan",
+  "type": "passif",
+  "famille": "contrepartie",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "pacte": 1
+  },
+  "desc": "Dégâts +0,25 par contenant de vitalité vide.",
+  "effets": [
+   {
+    "drapeau": "sangClan"
+   }
+  ],
+  "cumul": "unique",
+  "statut": "création originale",
+  "icone": {
+   "forme": "coeur",
+   "a": "#a02030",
+   "b": "#5a1018",
+   "c": "#ff8090"
+  },
+  "tags": [
+   "sante_basse"
+  ],
+  "exclusion": [
+   "sansVitalite"
+  ]
  },
  {
   "id": "PSV_900",

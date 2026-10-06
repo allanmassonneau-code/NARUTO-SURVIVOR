@@ -31,7 +31,10 @@ function calculerStats(J) {
     S[k] = borne(v, mi, ma);
   }
   if (J.drapeaux.obstination) S.degats += 1;
+  if (J.drapeaux.serieParfaite) S.degats += 0.15 * Math.min(10, J.compteurs.serie || 0); // salles nettoyées d'affilée sans être touché
+  if (J.drapeaux.sangClan && J.sante) S.degats += 0.25 * Math.max(0, rougeMax(J.sante) - rougeTotal(J.sante)) / 2; // +0,25 par contenant vide
   if (J._plein && J.drapeaux.pleineVitalite) S.degats += 0.5;
+  if (J.drapeaux.nuageEcarlate && G.partie) S.degats += 0.5 * Math.min(4, G.partie.pactesAchetes || 0); // Nuage écarlate
   if (J.sage && J.drapeaux.energieNaturelle) S.degats *= J.drapeaux.sageFort ? 1.6 : 1.5;
   S.degats = Math.round(S.degats * 100) / 100;
   return S;
@@ -75,6 +78,17 @@ function calculerProfil(J) {
     if (e.cadenceTir) P.coefCadence *= e.cadenceTir;
     if (e.element) P.elements.add(e.element);
     if (e.apparence) P.apparence = e.apparence;
+    // mécaniques de la passe gameplay : distance, concentration, larves, tirs repliés, suspendus, pivot, sillage, critique, septième lame, scission
+    if (e.distance) P.distance = e.distance;
+    if (e.concentration) P.concentration = true;
+    if (e.parasite) P.parasite = (P.parasite || 0) + e.parasite;
+    if (e.continuum) P.continuum = (P.continuum || 0) + 1;
+    if (e.differe) P.differe = true;
+    if (e.pivot) P.pivot = true;
+    if (e.sillage) P.sillage = e.sillage;
+    if (e.critique) P.critique = (P.critique || 0) + e.critique;
+    if (e.septieme) P.septieme = Math.min(P.septieme || 99, e.septieme);
+    if (e.scission) P.scission = (P.scission || 0) + e.scission;
   }
   // Forme principale : la plus prioritaire présente. Rock Lee (taijutsu) garde toujours une mêlée :
   // ses objets de tir deviennent des contributions secondaires (table de conversion §R17b).
@@ -165,9 +179,15 @@ function appliquerEffetImmediat(J, e, d) {
 }
 function soignerJoueur(J, demis) {
   if (J.drapeaux.sansVitalite) return 0;
+  if (J.drapeaux.ninjaMedical && demis > 0) demis += 1;
   const exces = soignerRouge(J.sante, demis);
-  if (exces > 0) evenement('soin_excedentaire', { demis: exces });
+  if (exces > 0) { evenement('soin_excedentaire', { demis: exces }); soinDebordant(J, exces); }
   return demis - exces;
+}
+// Ninja médical : le soin qui déborde devient du chakra protecteur (une réserve par soin au plus)
+function soinDebordant(J, exces) {
+  if (!J.drapeaux.ninjaMedical || exces <= 0) return;
+  const n = Math.min(2, exces); if (ajouterProtection(J.sante, n, 'b') < n) { G.effets.push({ type: 'soin', x: J.x, y: J.y - 20, age: 0, duree: 0.6 }); Son.jouer('protection', 0.5); }
 }
 const PLAFONDS_RESSOURCES = { ryo: 99, cles: 99, explosifs: 99 };
 function ajouterRessource(J, k, v) {

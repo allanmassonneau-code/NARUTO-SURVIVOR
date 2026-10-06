@@ -95,3 +95,27 @@ SYN_093;Poing souple;PSV_113 Byakugan (empreinte) + PSV_040 Gants de taijutsu;de
 SYN_094;Gardiens de Katsuyu;PSV_063 Katsuyu miniature + PSV_093 Chakra de la limace;dediee;Katsuyu soigne un demi-cœur toutes les quatre salles (doublé par la limace).;Soin à la 4e salle.
 SYN_095;Sceau maudit, niveau 2;PSV_091 Sceau maudit + PSV_133 Volonté du feu;dediee;À santé basse, un coup reçu déploie les ailes du sceau : lévitation et dégâts +1 pour la salle.;Lévitation à santé basse.
 SYN_096;Onde du démon;PSV_055 Chakra du renard + PSV_098 Chakra du démon scellé;dediee;"Dégâts +1 ; chaque coup reçu libère une onde de chakra rouge autour de vous.";Explosion autour du joueur après un coup.
+SYN_097;Chasseur patient;PSV_159 Œil du chasseur + PSV_171 Points vitaux;dediee;La concentration aiguise l’œil : +3 % de coup critique par cran de concentration.;Critiques plus fréquents en série.
+SYN_098;La marque qui saigne;PSV_162 Marque du chasseur + PSV_163 Lame dentelée;dediee;"Une cible marquée saigne aussi ; le saignement dure deux fois plus.";Marque et saignement ensemble.
+SYN_099;Pression meurtrière;PSV_164 Intention meurtrière + PSV_174 Pression du chakra;dediee;Un ennemi qui entre dans votre aura de pression est saisi de peur (1,5 s, une fois).;Fuite à l’entrée de l’aura.
+SYN_100;Essaim insatiable;PSV_160 Larves de kikaichū + PSV_006 Insectes traqueurs;dediee;Les larves naissent deux fois plus souvent et empoisonnent ce qu’elles mordent.;Larves empoisonnées.
+SYN_101;Espace sans fin;PSV_161 Parchemin de l’espace replié + PSV_007 Fil de chakra;dediee;Les tirs repliés ressortent du mur opposé deux fois de plus.;Trois traversées de la salle.
+SYN_102;Sable dormant;PSV_168 Sable en suspens + PSV_010 Sable en orbite;dediee;Les grains suspendus frappent 25 % plus fort quand ils convergent.;Dégâts ×1,25.
+SYN_103;Tourbillon de braises;PSV_167 Tourbillon de feuilles + PSV_170 Sillage ardent;dediee;La spirale sème un sillage de feu deux fois plus dense et 50 % plus brûlant.;Anneau de flammes autour de vous.
+SYN_104;Shuriken sans fin;PSV_165 Shuriken scindé + PSV_030 Shuriken démultiplié;dediee;Les éclats d’une scission peuvent eux-mêmes se scinder une fois.;Scission en cascade.
+SYN_105;Pivot du dieu du tonnerre;PSV_169 Kunai pivotant + PSV_005 Kunai à marque de téléportation;dediee;Un tir qui pivote frappe 50 % plus fort.;Dégâts ×1,5 après pivot.
+SYN_106;Arsenal lourd;PSV_173 Septième lame + PSV_024 Arsenal de Tenten (empreinte);dediee;Une lame lourde tous les cinq tirs au lieu de sept.;Lame lourde au cinquième tir.
+SYN_107;Art à retardement;PSV_178 Étiquette à retardement + PSV_149 Explosion de chakra;dediee;Les étiquettes plantées explosent 50 % plus fort et plus large.;Explosion différée plus large.
+SYN_108;Feu posthume;PSV_166 Étiquettes posthumes + PSV_043 Grande boule de feu (empreinte);dediee;Un ennemi tué laisse parfois (30 %) une nappe de feu alliée.;Nappe de feu à l’élimination.
+SYN_109;Garde parfaite;PSV_172 Concentration du ninja + PSV_096 Substitution instinctive;dediee;Une substitution réussie prolonge la série au lieu de la briser (+1).;Série prolongée par une bûche.
+SYN_110;Danse sous les tirs;PSV_175 Instinct du combat + PSV_035 Sandales de course;dediee;Chaque frôlement donne 1,5 s de vitesse +0,5 (trois fois au plus).;Vitesse après un frôlement.
+SYN_111;Œil des six chemins;PSV_177 Œil du Rinnegan (empreinte) + PSV_028 Chidori nagashi (empreinte);dediee;L’attraction rassemble : la foudre saute à trois ennemis au lieu de deux.;Chaîne de foudre plus longue.
+SYN_112;Sang pour sang;PSV_180 Sang du clan + PSV_133 Volonté du feu;dediee;À deux demi-unités ou moins, une élimination sur huit soigne une demi-unité.;Soin à santé basse.
+SYN_113;Bout portant sanglant;PSV_157 Frappe à bout portant + PSV_163 Lame dentelée;dediee;Un coup porté dans le premier tiers de la portée fait toujours saigner.;Saignement garanti au contact.
+SYN_114;Tireur d’élite;PSV_158 Shuriken du long voyage + PSV_037 Lunettes de visée;dediee;Au-delà de la moitié de la portée, chaque coup est critique.;Critique garanti de loin.
+SYN_115;Aura du renard;PSV_174 Pression du chakra + PSV_055 Chakra du renard;dediee;Les ennemis dans votre aura de pression brûlent.;Brûlure dans l’aura.
+SYN_116;Double technique de l’ombre;PSV_179 Rouleau de la double technique + PSV_051 Ombre liante;dediee;La salve de l’actif immobilise les ennemis touchés (1 s).;Immobilisation après un actif.
+SYN_117;L’art du ninja silencieux;PSV_159 Œil du chasseur + PSV_171 Points vitaux + PSV_039 Masque de l’ANBU;dediee;"Critiques ×3 au lieu de ×2,5 ; un tir perdu ne fait plus retomber la concentration qu’à moitié.";Critique ×3.
+SYN_118;Tempête de lames;PSV_165 Shuriken scindé + PSV_173 Septième lame + PSV_003 Éventail de kunai;dediee;Chaque lame lourde qui touche se scinde en cinq éclats.;Cinq éclats à chaque lame lourde.
+SYN_119;Les trois marques;PSV_162 Marque du chasseur + PSV_163 Lame dentelée + PSV_164 Intention meurtrière;dediee;"Marque, saignement et peur s’appliquent deux fois plus souvent ; une cible marquée qui fuit subit des dégâts doublés.";Statuts fréquents, dégâts ×2 sur cible marquée en fuite.
+SYN_120;Maître du sable suspendu;PSV_168 Sable en suspens + PSV_065 Sable protecteur + PSV_150 Tempête de sable;dediee;Les grains suspendus arrêtent les tirs ennemis qui les touchent.;Tirs ennemis bloqués par les grains.

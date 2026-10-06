@@ -492,6 +492,7 @@
   "desc": "Repousse tous les ennemis, détruit tous leurs tirs, 3× dégâts.",
   "statut": "adaptation",
   "cumul": "unique",
+  "ensemble": "akatsuki",
   "icone": {
    "forme": "sphere",
    "a": "#e0e0ff",
@@ -517,6 +518,7 @@
   "desc": "Attire les ennemis au centre puis les écrase (5×).",
   "statut": "adaptation",
   "cumul": "unique",
+  "ensemble": "akatsuki",
   "icone": {
    "forme": "sphere",
    "a": "#2a2030",
@@ -542,6 +544,7 @@
   "desc": "3 s intangible : ennemis et tirs vous traversent (pas les murs) ; vous ne pouvez pas tirer.",
   "statut": "adaptation",
   "cumul": "unique",
+  "ensemble": "espace",
   "icone": {
    "forme": "sceau",
    "a": "#e87a2a",
@@ -572,6 +575,7 @@
   "desc": "Pour la salle : cadence +1.",
   "statut": "adaptation",
   "cumul": "unique",
+  "ensemble": "medecin",
   "icone": {
    "forme": "pilule",
    "a": "#f0e8a0",
@@ -595,6 +599,7 @@
   "desc": "Vous téléporte dans une salle déjà visitée.",
   "statut": "création originale",
   "cumul": "unique",
+  "ensemble": "espace",
   "icone": {
    "forme": "rouleau",
    "a": "#8a7ab0",
@@ -843,6 +848,160 @@
    "a": "#6ac8e8",
    "b": "#3a8ab0",
    "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_034",
+  "nom": "Shunshin",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1
+  },
+  "charges": 2,
+  "effet": "shunshin",
+  "params": {
+   "portee": 4.5
+  },
+  "desc": "Téléportation éclair vers la visée (4,5 tuiles, glisse le long des murs) ; au départ, un nuage de fumée désoriente les ennemis proches.",
+  "statut": "création originale",
+  "cumul": "unique",
+  "ensemble": "espace",
+  "icone": {
+   "forme": "plume",
+   "a": "#d8d8e8",
+   "b": "#7a7a98",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_035",
+  "nom": "Chemin Preta",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "pacte": 1,
+   "boss": 1
+  },
+  "charges": 3,
+  "effet": "preta",
+  "params": {},
+  "desc": "Absorbe tous les projectiles ennemis en vol ; huit absorbés ou plus vous rendent une réserve de chakra.",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "akatsuki",
+  "icone": {
+   "forme": "oeil",
+   "a": "#b4a4d8",
+   "b": "#5a4a8a",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_036",
+  "nom": "Clones explosifs",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "heritage": 1,
+   "boss": 1
+  },
+  "charges": 3,
+  "effet": "clones_explosifs",
+  "params": {
+   "n": 3,
+   "coef": 3.5
+  },
+  "desc": "Trois clones foncent sur les ennemis les plus proches et explosent (×3,5 dégâts chacun).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "masque",
+   "a": "#f6cf3e",
+   "b": "#c83a2a",
+   "c": "#ffe070"
+  }
+ },
+ {
+  "id": "ACT_037",
+  "nom": "Marque du dieu du tonnerre",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 3,
+  "pools": {
+   "bibliotheque": 1,
+   "heritage": 1
+  },
+  "charges": 3,
+  "effet": "hiraishin",
+  "params": {
+   "coef": 4
+  },
+  "desc": "Premier usage : pose une marque (gratuit). Second usage : vous y téléporte et tranche tout sur la ligne (×4).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "ensemble": "espace",
+  "icone": {
+   "forme": "kunai",
+   "a": "#e8d060",
+   "b": "#8a6a20",
+   "c": "#ffffff"
+  }
+ },
+ {
+  "id": "ACT_038",
+  "nom": "Pluie de kunai",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 2,
+  "pools": {
+   "heritage": 1,
+   "boutique": 1
+  },
+  "charges": 3,
+  "effet": "pluie_kunai",
+  "params": {
+   "n": 14,
+   "coef": 1.6
+  },
+  "desc": "Quatorze kunai tombent sur les ennemis (cercles annoncés, ×1,6 chacun).",
+  "statut": "création originale",
+  "cumul": "unique",
+  "icone": {
+   "forme": "kunai",
+   "a": "#c8ccd8",
+   "b": "#6a7080",
+   "c": "#c83a2a"
+  }
+ },
+ {
+  "id": "ACT_039",
+  "nom": "Rempart de Susanoo",
+  "type": "actif",
+  "famille": "actif",
+  "qualite": 4,
+  "pools": {
+   "boss": 1,
+   "pacte": 1
+  },
+  "charges": 4,
+  "effet": "susanoo",
+  "params": {
+   "duree": 5,
+   "coef": 6
+  },
+  "desc": "Cinq secondes : un rempart spectral arrête tous les tirs venus de face ; à la fin, un sabre géant balaie devant vous (×6).",
+  "statut": "adaptation",
+  "cumul": "unique",
+  "icone": {
+   "forme": "bouclier",
+   "a": "#e0506a",
+   "b": "#6a1432",
+   "c": "#ff9aaa"
   }
  },
  {

@@ -102,6 +102,15 @@ function dessinerEffet(g, e, X, Y) {
     case 'immunite': Police.ecrire(g, 'immunisé', x, y - k * 6, '#c0c0ff', { a: 'c' }); break;
     case 'frappe_sol': { const r = Math.round(e.r); g.globalAlpha = 0.5 + 0.4 * k; g.drawImage(anneau(r, 1, e.proprio === 'joueur' ? '#ffb060' : '#ff4a4a'), x - r - 1, y - r - 1); g.drawImage(anneau(Math.max(1, Math.round(r * k)), 1, '#ffe0a0'), x - Math.round(r * k) - 1, y - Math.round(r * k) - 1); g.globalAlpha = 1; if (!e.petite) { const h = Math.round((1 - k) * 120); g.fillStyle = '#6a3a2a'; g.fillRect(x - 5, y - h - 10, 10, 10); g.fillStyle = '#ffb040'; g.fillRect(x - 3, y - h - 16, 6, 6); } break; }
     case 'marque_sol': { const r = Math.round(e.r); g.globalAlpha = 0.35 + 0.4 * k; g.drawImage(ellipse(r, Math.round(r * 0.55), e.danger ? 'rgba(255,60,60,0.5)' : 'rgba(0,0,0,0.4)'), x - r, y - Math.round(r * 0.55)); g.globalAlpha = 1; break; }
+    case 'marque_hiraishin': { // kunai à trois branches planté au sol, inscription qui luit
+      const t = G.temps; g.globalAlpha = 0.5 + 0.3 * Math.sin(t * 5); g.drawImage(anneau(9, 1, '#ffe070'), x - 10, y - 10); g.globalAlpha = 1;
+      g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 11, 3, 10); g.fillStyle = '#c8ccd8'; g.fillRect(x, y - 10, 1, 8); g.fillStyle = '#e8d060'; g.fillRect(x - 3, y - 10, 2, 1); g.fillRect(x + 2, y - 10, 2, 1); break;
+    }
+    case 'clone_course': { const k2 = Math.min(1, e.age / e.duree), cx = X(lerp(e.x0, e.x1, k2)), cy = Y(lerp(e.y0, e.y1, k2)); g.globalAlpha = 0.75; dessinerPerso(g, G.joueur.cle, cx, cy, { dirCorps: e.x1 < e.x0 ? 'gauche' : 'droite', dirTete: e.x1 < e.x0 ? 'gauche' : 'droite', frame: Math.floor(e.age * 12) % 4, etatTete: 'normal' }); g.globalAlpha = 1; break; }
+    case 'etiquette_collee': { // étiquette explosive plantée dans la cible : clignote de plus en plus vite
+      const S = e.suit, cx = S ? X(S.x) : x, cy = (S ? Y(S.y) : y) - 14; if (Math.floor(e.age * (6 + 18 * k)) % 2) break;
+      g.fillStyle = '#1c1420'; g.fillRect(cx - 2, cy - 3, 5, 7); g.fillStyle = '#f4ecd8'; g.fillRect(cx - 1, cy - 2, 3, 5); g.fillStyle = '#d0302a'; g.fillRect(cx, cy - 1, 1, 3); break;
+    }
     case 'kaiten': { // tourbillon de Neji : arcs clairs qui tournent vite autour de lui, voile bleuté
       const S = e.suit, cx = S ? X(S.x) : x, cy = (S ? Y(S.y) : y) - 12, R = Math.round(e.r);
       g.globalAlpha = 0.22 * (1 - k * 0.5); g.drawImage(ellipse(R, Math.round(R * 0.8), '#c8e8ff'), cx - R, cy - Math.round(R * 0.8)); g.globalAlpha = 0.9 * (1 - k * 0.4);

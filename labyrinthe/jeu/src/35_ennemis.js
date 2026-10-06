@@ -47,6 +47,11 @@ function multVitesse(e) {
   if (e.champion === 'enrage' && e.pv < e.pvMax * 0.5) m *= 1.6;
   if (e.statuts.ralenti) m *= 0.5;
   if (e.statuts.gel) m *= 0.3;
+  if (G.joueur && G.joueur.drapeaux.pressionChakra && !e.boss && !e.allie && dist(e.x, e.y, G.joueur.x, G.joueur.y) < 2 * TUILE) { // Pression du chakra : aura qui ralentit
+    m *= 0.6; const D = G.joueur.drapeaux;
+    if (D.auraTerreur && !e.ia.terrorise) { e.ia.terrorise = true; appliquerStatut(e, 'peur', 1.5, G.joueur.stats.degats); }
+    if (D.auraFeu && G.temps - (e.ia.auraFeuT || 0) > 1) { e.ia.auraFeuT = G.temps; appliquerStatut(e, 'brulure', 1.5, G.joueur.stats.degats); }
+  }
   if (G.salle && G.variante && G.variante.pluie) m *= 1;
   return m;
 }
@@ -62,6 +67,8 @@ function appliquerStatut(e, type, duree, degSource) {
   switch (type) {
     case 'brulure': e.statuts.brulure = { t: Math.max(cur ? cur.t : 0, 1.5 * (G.joueur.drapeaux.flammesNoires ? 3 : 1)), tick: 0.5, prochain: 0.5, deg: Math.max(cur ? cur.deg : 0, 0.5 * degSource * (G.joueur.drapeaux.flammesNoires ? 1.5 : 1)), noir: G.joueur.drapeaux.flammesNoires }; break;
     case 'poison': e.statuts.poison = { t: Math.max(cur ? cur.t : 0, 3 * (G.joueur.drapeaux.poisonLong ? 2 : 1)), tick: 0.5, prochain: 0.5, deg: Math.max(cur ? cur.deg : 0, 0.25 * degSource) }; break;
+    case 'saignement': e.statuts.saignement = { t: Math.max(cur ? cur.t : 0, D * (G.joueur.drapeaux.marqueSaignante ? 2 : 1)), deg: Math.max(cur ? cur.deg : 0, 0.35 * degSource), acc: 0 }; break; // saigne tant qu'il bouge
+    case 'marque': e.statuts.marque = { t: Math.max(cur ? cur.t : 0, D) }; if (G.joueur.drapeaux.marqueSaignante) appliquerStatut(e, 'saignement', duree, degSource); break;
     default: e.statuts[type] = { t: Math.max(cur ? cur.t : 0, D) };
   }
   if (e.boss && (type === 'immobilise' || type === 'confus' || type === 'gel')) e.immuniteControle = D + 2;
@@ -71,6 +78,7 @@ function majStatuts(e, dt) {
   for (const k of Object.keys(e.statuts)) {
     const s = e.statuts[k]; s.t -= dt;
     if (s.tick) { s.prochain -= dt; if (s.prochain <= 0) { s.prochain += s.tick; infligerDegats(e, s.deg, { proprio: 'joueur', type: k, sansRecul: true, sansFlash: true }); } }
+    if (k === 'saignement' && Math.hypot(e.vx, e.vy) > 12) { s.acc += dt; if (s.acc > 0.4) { s.acc = 0; infligerDegats(e, s.deg, { proprio: 'joueur', type: 'saignement', sansRecul: true, sansFlash: true }); G.particules.push({ x: e.x + (Math.random() - 0.5) * 6, y: e.y - 6, vx: (Math.random() - 0.5) * 20, vy: -20, g: 260, sol: e.y, age: 0, duree: 0.4, couleur: '#c8202a', taille: 2 }); } }
     if (s.t <= 0) delete e.statuts[k];
   }
   if (e.champion === 'regenerant' && !e.mort && G.temps - (e.dernierCoup || 0) > 2) e.pv = Math.min(e.pvMax, e.pv + e.pvMax * 0.05 * dt);
@@ -91,6 +99,7 @@ function infligerDegats(e, deg, src = {}) {
   for (const p of G.ennemis) if (p !== e && !p.mort && p.def.params && p.def.params.bouclier === 'aura' && dist(p.x, p.y, e.x, e.y) < 2.5 * TUILE) { deg *= 0.5; break; }
   if (G.joueur.drapeaux.bonusBoss && e.boss) deg *= 1.1;
   if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if (D.inoShikaCho && e.statuts.immobilise) deg *= 1.5; }
+  if (e.statuts.marque) deg *= e.statuts.peur && G.joueur.drapeaux.troisMarques ? 2 : 1.4; // marqué : +40 % de toutes les sources (×2 s'il fuit, avec les trois marques)
   e.pv -= deg; e.dernierCoup = G.temps;
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
   if (!src.sansFlash) { e.flash = 0.08; e.coupT = G.temps; }

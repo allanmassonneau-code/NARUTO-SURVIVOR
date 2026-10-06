@@ -44,6 +44,7 @@ const FORMES_ICONES = {
   boussole: ['...aaaaaa...', '..awwwwwwa..', '.awwwbbwwwa.', 'awwwwbbwwwwa', 'awwwwccwwwwa', 'awwwwccwwwwa', 'awwwwccwwwwa', '.awwwwwwwwa.', '..awwwwwwa..', '...aaaaaa...'],
   poids: ['aaaa....aaaa', 'awda....awda', 'aadd....aadd', 'aadd....aadd', 'aaddbbbbaadd', 'aaddbbbbaadd', 'aadd....aadd', 'aadd....aadd', 'aaaa....aaaa'],
   sandale: ['............', '.aaaaaaaaa..', 'aawwwwwwwwa.', 'abbbbbbbbbba', 'aaaaaaaaaaaa', '.cc.....cc..'],
+  nuage: ['....wwww....', '.wwwaaaaw...', 'waaaaaaaawww', 'waaaaaaaaaaw', '.waaaaaaaaaw', 'waaaaaaaaaw.', '.wwaawwaaw..', '...ww..ww...'],
   gant: ['.a.a.a......', '.a.a.a.a....', '.aaaaaaa....', '.awaaaaa.aa.', '.aaaaaaaaaa.', '.aaaaaaaaa..', '..bbbbbbb...', '..bbbbbbb...', '..ccccccc...'],
   anneau: ['...aaaa...', '..awwaaa..', '.aw....ad.', '.a......d.', '.a......d.', '.ad....dd.', '..aadddd..', '...dddd...'],
   cloche: ['....cc....', '...aaaa...', '..awwaaa..', '..awaaaa..', '.aaaaaaad.', '.aaaaaaad.', 'aaaaaaaadd', 'dddddddddd', '....bb....'],

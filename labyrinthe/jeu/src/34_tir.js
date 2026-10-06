@@ -143,6 +143,16 @@ function creerProjectileJoueur(J, x, y, a, deg, cycleId, budget, o = {}) {
   };
   if (p.traj.orbite) { p.dureeVie *= 2; p.orbR = 1.6 * TUILE; p.orbA = a; }
   if (P.differe && !J.tir.convergence) { p.differe = true; p.dureeVie = p.dureeVie * 0.5; }
+  if (P.distance) p.distance = P.distance;
+  if (P.concentration) p.concentration = true;
+  if (P.parasite) p.parasite = P.parasite;
+  if (P.continuum) p.continuum = P.continuum;
+  if (P.pivot) p.pivot = true;
+  if (P.sillage) p.sillage = P.sillage;
+  if (P.critique) p.critique = P.critique;
+  if (P.scission) p.scission = P.scission;
+  if (p.traj.spirale) { p.sensSpirale = (cycleId % 2) ? 1 : -1; }
+  if (P.septieme && cycleId % P.septieme === 0 && !o.appoint) { p.degats *= 3; p.taille *= 1.7; p.rTouche *= 1.4; p.perce = Math.max(p.perce, 2); p.lourde = true; } // septième lame
   G.proj.push(p); return p;
 }
 
@@ -176,6 +186,13 @@ function majProjectiles(dt) {
     if (TR.guidageEnnemi && p.proprio === 'ennemi') { const ac = Math.atan2(p.vy, p.vx), at = angleVers(p.x, p.y, J.x, J.y - 8); const d = diffAngle(ac, at); const k = Math.min(Math.abs(d), 2 * TR.guidageEnnemi * dt) * signe(d); const na = ac + k; const v = Math.hypot(p.vx, p.vy); p.vx = Math.cos(na) * v; p.vy = Math.sin(na) * v; }
     if (TR.onde) { const n = Math.hypot(p.vx, p.vy) || 1; const px = -p.vy / n, py = p.vx / n; const w = Math.cos(p.age * 16) * 16 * 16 * dt; p.x += px * w * 0.25; p.y += py * w * 0.25; }
     if (TR.acceleration) { const k = 1 + 1.2 * dt; p.vx *= k; p.vy *= k; }
+    if (TR.spirale && p.proprio === 'joueur') { const w = 5.5 / (1 + p.age * 3) * (p.sensSpirale || 1), a = Math.atan2(p.vy, p.vx) + w * dt, v = Math.hypot(p.vx, p.vy); p.vx = Math.cos(a) * v; p.vy = Math.sin(a) * v; } // spirale qui s'ouvre
+    if (p.pivot && !p.pivote && p.proprio === 'joueur') { // pivote une fois vers un ennemi qu'il frôle sur le côté
+      const c = ennemiLePlusProche(p.x, p.y, 2.6 * TUILE, e => !e.intangible && !e.cache && !p.touches.has(e));
+      if (c) { const ac = Math.atan2(p.vy, p.vx), at = angleVers(p.x, p.y, c.x, c.y - 8), d = Math.abs(diffAngle(ac, at)); if (d > 0.9 && d < 2.2) { const v = Math.hypot(p.vx, p.vy) * 1.15; p.vx = Math.cos(at) * v; p.vy = Math.sin(at) * v; p.pivote = true; if (J.drapeaux.pivotFort) p.degats *= 1.5; p.age = Math.min(p.age, p.dureeVie * 0.4); G.effets.push({ type: 'etincelle', x: p.x, y: p.y - p.z, age: 0, duree: 0.15 }); } }
+    }
+    if (p.sillage && p.proprio === 'joueur') { const dense = J.drapeaux.sillageDense; p.tSillage = (p.tSillage || 0) + dt; if (p.tSillage > (dense ? 0.05 : 0.1)) { p.tSillage = 0; creerZone(p.x, p.y, 'feu_allie', 1.1, { r: 9, dps: p.degats * (dense ? 0.52 : 0.35) }); } }
+    if (p.suspendu && J.drapeaux.sableBouclier) for (const q of G.proj) if (q.proprio === 'ennemi' && !q.mort && dist(q.x, q.y, p.x, p.y) < 9) { q.mort = true; G.effets.push({ type: 'etincelle', x: q.x, y: q.y, age: 0, duree: 0.12 }); }
     if (p.accel) { const k = 1 + p.accel * dt; p.vx *= k; p.vy *= k; }
     if (TR.orbite && p.proprio === 'joueur') { p.orbA += 5.5 * dt; p.orbR = Math.min(p.orbR + 20 * dt, 2.2 * TUILE); p.x = J.x + Math.cos(p.orbA) * p.orbR; p.y = J.y - 10 + Math.sin(p.orbA) * p.orbR; }
     else if (TR.retour && p.age > p.dureeVie * 0.45) {
@@ -192,6 +209,11 @@ function majProjectiles(dt) {
       let bloque = false;
       if (P.mur) bloque = true;
       else if (!(p.arc && p.z > 14) && tirArretePx(s, nx, ny, p.spectral)) bloque = true;
+      if (bloque && P.mur && p.continuum > 0 && p.proprio === 'joueur') { // tirs repliés : ressortent du mur opposé
+        const W = s.W * TUILE, H = s.H * TUILE, hor = Math.abs(p.vx) >= Math.abs(p.vy);
+        const qx = hor ? (p.vx > 0 ? TUILE * 1.05 : W - TUILE * 1.05) : p.x, qy = hor ? p.y : (p.vy > 0 ? TUILE * 1.05 : H - TUILE * 1.05);
+        if (!tirArretePx(s, qx, qy, p.spectral)) { p.continuum--; G.effets.push({ type: 'etincelle', x: p.x, y: p.y - p.z, age: 0, duree: 0.2 }); p.x = qx; p.y = qy; G.effets.push({ type: 'etincelle', x: qx, y: qy - p.z, age: 0, duree: 0.2 }); p.touches.clear(); p.age = Math.min(p.age, p.dureeVie * 0.5); continue; }
+      }
       if (bloque) {
         const tx = Math.floor(nx / TUILE), ty = Math.floor(ny / TUILE);
         if (!P.mur && PROP[t].pvTir && p.proprio === 'joueur') endommagerTuile(s, tx, ty, 1);
@@ -228,6 +250,10 @@ function majProjectiles(dt) {
       for (const f of J.familiers) if (f.bloque && dist(p.x, p.y, f.x, f.y - 8) < p.rTouche + (f.rBloc || 7)) { bloquePar = f; break; }
       if (bloquePar) { if (bloquePar.def.reflet) { const q = creerSousProjectile({ x: p.x, y: p.y, vitesse: 7 * TUILE, degats: J.stats.degats, recul: 30, taille: 1, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 2 }, cycleId: 0, impacts: [] }, Math.atan2(-p.vy, -p.vx), J.stats.degats); q.dureeVie = 1; } detruireProjectile(p, 'bloque'); continue; }
       if (J.profil.deviation && Entrees.visee.dir && dist(p.x, p.y, J.x, J.y - 10) < 30) { detruireProjectile(p, 'devie'); continue; }
+      if (J.drapeaux.frolement && !p.frole && !J.intangible && p.z < 20 && dist(p.x, p.y, J.x, J.y - 9) < p.rTouche + J.rTouche + (J.drapeaux.frolementLarge ? 16 : 10) && dist(p.x, p.y, J.x, J.y - 9) >= p.rTouche + J.rTouche) { // Instinct du combat : frôler un tir charge l'actif
+        p.frole = true; J.compteurs.frolements = (J.compteurs.frolements || 0) + 1; G.effets.push({ type: 'etincelle', x: p.x, y: p.y - p.z, age: 0, duree: 0.12 }); evenement('frolement', {});
+        if (J.compteurs.frolements % 8 === 0) { chargerActif(J, 1, 'frolement'); G.textes.push({ x: J.x, y: J.y - 34, t: 'Frôlé : +1 charge', age: 0, duree: 0.8, couleur: '#a0e0ff' }); }
+      }
       if (!J.intangible && dist(p.x, p.y, J.x, J.y - 9) < p.rTouche + J.rTouche && p.z < 20) { if (blesserJoueur(p.degats, { type: 'projectile', source: p.source, x: p.x - p.vx * 0.05, y: p.y - p.vy * 0.05 }) && p.marqueJashin) { G.marqueJashin = G.temps + 8; G.textes.push({ x: J.x, y: J.y - 34, t: 'Marqué par le rituel !', age: 0, duree: 1.5, couleur: '#ff4a4a' }); } detruireProjectile(p, 'joueur'); }
     }
   }
@@ -237,10 +263,23 @@ function majProjectiles(dt) {
 function toucherEnnemi(p, e) {
   const J = G.joueur;
   let deg = p.degats;
+  const D = J.drapeaux; let tDist = -1;
+  if (p.distance && p.depart) { tDist = Math.min(1, dist(p.depart.x, p.depart.y, p.x, p.y) / Math.max(1, p.porteePx)); deg *= p.distance === 'proche' ? lerp(2, 0.4, tDist) : lerp(0.6, 2.2, tDist); }
+  if (p.concentration) deg *= 1 + 0.1 * Math.min(6, J.tir.concentration || 0);
+  const chCrit = (p.critique || 0) + (p.critique || D.chasseurPatient ? 0.02 * J.stats.chance : 0) + (D.chasseurPatient ? 0.03 * Math.min(6, J.tir.concentration || 0) : 0);
+  let critique = (D.critOmbre && G.appat && !G.appat.fini) || (D.eliteLoin && p.distance === 'loin' && tDist > 0.5) || (chCrit > 0 && Math.random() < Math.min(0.5, chCrit));
+  if (critique) deg *= D.artSilencieux ? 3 : 2.5;
   const touche = infligerDegats(e, deg, { proprio: p.proprio, x: p.x, y: p.y, vx: p.vx, vy: p.vy, recul: p.recul, elements: p.elements, type: 'projectile' });
   if (!touche) { declencherImpacts(p, e); return; } // tir arrêté : l'impact physique a lieu, sans statut ni déclencheur
+  p.aTouche = true;
+  if (p.concentration) J.tir.concentration = Math.min(6, (J.tir.concentration || 0) + 1);
+  if (critique) { G.effets.push({ type: 'etoile_impact', x: e.x, y: e.y - e.hauteur, age: 0, duree: 0.16, r: 9 }); G.textes.push({ x: e.x, y: e.y - e.hauteur - 18, t: 'critique', age: 0, duree: 0.5, couleur: '#ffe070' }); }
+  if (p.parasite && p.gen === 0 && Math.random() < p.parasite) { const q = creerSousProjectile(p, Math.random() * Math.PI * 2, p.degats * 0.5); q.traj = { guidage: 3 }; q.apparence = 'insecte'; q.dureeVie = 1.8; q.touches.add(e); if (D.larvesVenin) q.statuts = [{ statut: 'poison', chance: 1 }]; }
+  if (p.scission && p.gen <= (D.scissionDouble ? 1 : 0) && e.mort) { for (let i = 0; i < p.scission; i++) { const a = p.angle + (i - (p.scission - 1) / 2) * 0.45; const q = creerSousProjectile(p, a, p.degats * 0.6); q.dureeVie = 0.8; q.touches.add(e); if (D.scissionDouble) q.scission = p.scission; } }
+  if (p.lourde && D.tempeteLames && !p.tempete) { p.tempete = true; for (let i = 0; i < 5; i++) { const q = creerSousProjectile(p, p.angle + (i - 2) * 0.35, p.degats * 0.35); q.dureeVie = 0.6; q.touches.add(e); } }
+  if (D.boutPortantSaigne && p.distance === 'proche' && tDist >= 0 && tDist < 0.34) appliquerStatut(e, 'saignement', 4, deg);
   for (const st of p.statuts) {
-    const ch = Math.min(st.max || 1, (st.chance || 0) + (st.chanceParChance || 0) * J.stats.chance);
+    const ch = Math.min((st.max || 1) * (D.troisMarques && (st.statut === 'marque' || st.statut === 'saignement' || st.statut === 'peur') ? 2 : 1), ((st.chance || 0) + (st.chanceParChance || 0) * J.stats.chance) * (D.troisMarques && (st.statut === 'marque' || st.statut === 'saignement' || st.statut === 'peur') ? 2 : 1));
     if (Math.random() < ch) appliquerStatut(e, st.statut, st.duree || 2, deg);
   }
   if (J.def.regleCode === 'stratege' && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) appliquerStatut(e, 'immobilise', 1.2, deg);
@@ -267,6 +306,7 @@ function declencherImpacts(p, cible) {
       case 'vapeur': creerZone(p.x, p.y, 'vapeur_alliee', 1.8, { r: im.r || 20, dps: deg * 1.6 }); break;
       case 'flaque_electrique': creerZone(p.x, p.y, 'eau_electrique', 2.4, { r: im.r || 16, deg }); break;
       case 'attraction': attirer(p.x, p.y, (im.r || 2.5) * TUILE, im.force || 70); break;
+      case 'retardement': if (cible) { const c = cible, fort = G.joueur.drapeaux.etiquettesFortes ? 1.5 : 1; G.effets.push({ type: 'etiquette_collee', suit: c, x: c.x, y: c.y, age: 0, duree: 1 }); setTimeoutJeu(() => { const x = c.x, y = c.y; explosion(x, y, 0.9 * TUILE * fort, deg * 2.4 * fort, { proprio: 'joueur', gen: p.gen + 1, blesseJoueur: false, petite: true, elements: p.elements }); }, 1); } break;
       case 'racines': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.boss && dist(e.x, e.y, p.x, p.y) < (im.r || 1.2) * TUILE + e.r) appliquerStatut(e, 'immobilise', im.duree || 1.2, deg); G.effets.push({ type: 'racines', x: p.x, y: p.y, r: (im.r || 1.2) * TUILE, age: 0, duree: 0.9 }); break;
     }
   }
@@ -282,6 +322,7 @@ function detruireProjectile(p, raison, cible) {
   if (p.mort) return; p.mort = true;
   if (p.bombe) { exploserBombeTiree(p); return; }
   if (p.proprio === 'joueur') {
+    if (p.concentration && !p.aTouche && p.gen === 0 && (raison === 'fin' || raison === 'mur')) G.joueur.tir.concentration = G.joueur.drapeaux.artSilencieux ? Math.floor((G.joueur.tir.concentration || 0) / 2) : 0; // un tir perdu fait retomber la concentration
     if (raison === 'fin' || raison === 'mur') {
       for (const im of p.impacts) if (im.impact === 'explosion' || im.impact === 'eclat' || im.impact === 'onde') { declencherImpacts(p, null); break; }
       if (p.impacts.some(i => i.impact === 'mine') && p.gen < 1 && raison === 'fin') creerMine(p.x, p.y, p.degats * 2);
@@ -364,7 +405,11 @@ function majMelees(dt) {
       const d = dist(ox, oy, e.x, e.y - (e.hauteur || 8)); if (d > m.portee + e.r) continue;
       if (Math.abs(diffAngle(m.a, angleVers(ox, oy, e.x, e.y - 8))) > m.arc / 2 + 0.25 && d > e.r + 6) continue;
       m.touches.add(e);
-      infligerDegats(e, m.deg, { proprio: 'joueur', x: e.x, y: e.y, vx: Math.cos(m.a), vy: Math.sin(m.a), recul: 3.5 * TUILE * J.profil.recul, type: 'melee' });
+      // coups critiques au corps-à-corps : même chance que les tirs (Masque de l'ANBU, Points vitaux…), toujours dans l'ombre (Racine de l'ANBU)
+      const P = J.profil, chC = (P.critique || 0) + (P.critique ? 0.02 * J.stats.chance : 0);
+      const crit = (J.drapeaux.critOmbre && G.appat && !G.appat.fini) || (chC > 0 && Math.random() < Math.min(0.5, chC));
+      infligerDegats(e, crit ? m.deg * (J.drapeaux.artSilencieux ? 3 : 2.5) : m.deg, { proprio: 'joueur', x: e.x, y: e.y, vx: Math.cos(m.a), vy: Math.sin(m.a), recul: 3.5 * TUILE * J.profil.recul, type: 'melee' });
+      if (crit) { G.effets.push({ type: 'etoile_impact', x: e.x, y: e.y - (e.hauteur || 8), age: 0, duree: 0.16, r: 9 }); G.textes.push({ x: e.x, y: e.y - (e.hauteur || 8) - 18, t: 'critique', age: 0, duree: 0.5, couleur: '#ffe070' }); }
       for (const st of J.profil.statuts) if (Math.random() < Math.min(st.max || 1, st.chance + (st.chanceParChance || 0) * J.stats.chance)) appliquerStatut(e, st.statut, st.duree || 2, m.deg);
       const faux = { x: e.x, y: e.y, degats: m.deg, impacts: J.profil.impacts, gen: 0, budget: m.budget || { n: 6 }, angle: m.a, vitesse: 200, apparence: 'coup', elements: J.profil.elements, recul: 20 };
       declencherImpacts(faux, e);

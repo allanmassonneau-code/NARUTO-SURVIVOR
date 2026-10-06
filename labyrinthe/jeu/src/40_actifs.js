@@ -33,6 +33,7 @@ function utiliserActif() {
   const f = EFFETS_ACTIFS[d.effet]; if (!f) return;
   const ok = f(J, d.params || {}, d);
   if (ok === false) { G.textes.push({ x: J.x, y: J.y - 34, t: 'Aucune cible : charge conservée', age: 0, duree: 1, couleur: '#c0c0d0' }); Son.jouer('refus'); return; }
+  if (ok === 'gratuit') { Son.jouer('actif', 0.6); return; } // première étape d'un actif en deux temps : rien n'est dépensé
   if (d.unique) J.actif = null;
   else if (d.recharge) J.actif.temps = 0;
   else { const req = chargesRequises(J); J.actif.charges = Math.max(0, J.actif.charges - req); }
@@ -48,6 +49,40 @@ function echangerActifs() {
 
 // ── Effets des actifs ──
 const EFFETS_ACTIFS = {
+  shunshin(J, P) { // téléportation éclair : glisse le long des murs, nuage qui désoriente au départ
+    const dir = Entrees.visee.dir || J.dirTete || J.dirCorps; const [dx, dy] = DIRS[dir]; const x0 = J.x, y0 = J.y, L = (P.portee || 4.5) * TUILE;
+    for (let d = 0; d < L; d += 6) deplacerCercle(G.salle, J, dx * 6, dy * 6, J.vol ? 'vol' : 'marche');
+    G.effets.push({ type: 'fumee', x: x0, y: y0 - 10, age: 0, duree: 0.6, taille: 2.5 }); G.effets.push({ type: 'fumee', x: J.x, y: J.y - 10, age: 0, duree: 0.3, taille: 1.5 });
+    for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, x0, y0) < 2.2 * TUILE) appliquerStatut(e, 'confus', 2, J.stats.degats);
+    J.invuln = Math.max(J.invuln, 0.4); Son.jouer('fumee'); return true;
+  },
+  preta(J) { // absorbe les projectiles ennemis en vol
+    let n = 0; for (const p of G.proj) if (p.proprio === 'ennemi' && !p.mort) { p.mort = true; n++; G.particules.push({ x: p.x, y: p.y - (p.z || 0), vx: (J.x - p.x) * 3, vy: (J.y - 12 - p.y) * 3, age: 0, duree: 0.3, couleur: '#c8b8f0', taille: 2 }); }
+    if (!n) return false;
+    G.effets.push({ type: 'onde', x: J.x, y: J.y, r: 70, age: 0, duree: 0.35, couleur: '#c8b8f0' }); G.textes.push({ x: J.x, y: J.y - 36, t: 'Absorbé : ' + n, age: 0, duree: 1, couleur: '#c8b8f0' });
+    if (n >= 8) { ajouterProtection(J.sante, 2, 'b'); Son.jouer('protection'); } else Son.jouer('vent'); return true;
+  },
+  clones_explosifs(J, P) { // des clones foncent sur les ennemis et explosent
+    const L = G.ennemis.filter(e => !e.mort && !e.cache && !e.allie && !e.statuts.charme && !e.def.ignoreNettoyage).sort((a, b) => dist(a.x, a.y, J.x, J.y) - dist(b.x, b.y, J.x, J.y)); if (!L.length) return false;
+    for (let i = 0; i < (P.n || 3); i++) { const c = L[i % L.length], x1 = c.x + (i - 1) * 6, y1 = c.y; G.effets.push({ type: 'clone_course', x: J.x, y: J.y, x0: J.x, y0: J.y, x1, y1, age: 0, duree: 0.32 + i * 0.06 });
+      setTimeoutJeu(() => { explosion(x1, y1, 1.3 * TUILE, J.stats.degats * (P.coef || 3.5), { proprio: 'joueur', blesseJoueur: false }); }, 0.32 + i * 0.06); }
+    G.effets.push({ type: 'fumee', x: J.x, y: J.y - 10, age: 0, duree: 0.4, taille: 2 }); Son.jouer('fumee'); return true;
+  },
+  hiraishin(J, P) { // en deux temps : poser la marque, puis s'y téléporter en tranchant la ligne
+    const s = G.salle, M = s.marqueHiraishin;
+    if (!M) { s.marqueHiraishin = { x: J.x, y: J.y, eff: { type: 'marque_hiraishin', x: J.x, y: J.y, age: 0, duree: 9999 } }; G.effets.push(s.marqueHiraishin.eff); G.textes.push({ x: J.x, y: J.y - 34, t: 'Marque posée', age: 0, duree: 0.8, couleur: '#ffe070' }); return 'gratuit'; }
+    const x0 = J.x, y0 = J.y, deg = J.stats.degats * (P.coef || 4);
+    for (const e of G.ennemis) { if (e.mort || e.cache) continue; const L2 = dist2(x0, y0, M.x, M.y) || 1, t = borne(((e.x - x0) * (M.x - x0) + (e.y - y0) * (M.y - y0)) / L2, 0, 1); if (dist(e.x, e.y, lerp(x0, M.x, t), lerp(y0, M.y, t)) < e.r + 14) infligerDegats(e, deg, { proprio: 'joueur', type: 'actif', x: e.x, y: e.y }); }
+    G.effets.push({ type: 'eclair', x0, y0: y0 - 12, x1: M.x, y1: M.y - 12, age: 0, duree: 0.25 }); J.x = M.x; J.y = M.y; J.invuln = Math.max(J.invuln, 0.4);
+    M.eff.age = M.eff.duree; s.marqueHiraishin = null; Son.jouer('eclair'); secousse(4, null); return true;
+  },
+  pluie_kunai(J, P) { // kunai qui tombent sur les ennemis, cercles annoncés
+    const L = G.ennemis.filter(e => !e.mort && !e.cache && !e.allie && !e.statuts.charme); if (!L.length) return false;
+    for (let i = 0; i < (P.n || 14); i++) { const c = L[i % L.length], x = c.x + (Math.random() - 0.5) * 26, y = c.y + (Math.random() - 0.5) * 18, r = 16, deg = J.stats.degats * (P.coef || 1.6);
+      setTimeoutJeu(() => { G.effets.push({ type: 'marque_sol', x, y, r, age: 0, duree: 0.35 }); setTimeoutJeu(() => { for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, x, y) < r + e.r) infligerDegats(e, deg, { proprio: 'joueur', type: 'actif', x, y }); G.effets.push({ type: 'impact_sol', x, y, r: 10, age: 0, duree: 0.25 }); }, 0.35); }, i * 0.07); }
+    Son.jouer('lame'); return true;
+  },
+  susanoo(J, P) { J.susanoo = { t: P.duree || 5, a: Math.atan2(DIRS[J.dirTete || 'bas'][1], DIRS[J.dirTete || 'bas'][0]), coef: P.coef || 6 }; Son.jouer('gong', 0.5); return true; },
   reecriture(J) { return relancerPiedestaux(G.salle) > 0 ? true : false; },
   clones(J, P) { for (let i = 0; i < (P.n || 2); i++) ajouterFamilier(J, 'FAM_CLONE_TEMP', 'ACT_002'); G.effets.push({ type: 'fumee', x: J.x, y: J.y - 10, age: 0, duree: 0.5, taille: 2 }); Son.jouer('fumee'); return true; },
   dash(J, P) {
@@ -209,4 +244,15 @@ function prendrePilule(J, c) {
   annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true, pilule: true });
   Son.jouer('pilule'); Progression.decouvrir(d.id);
   return false;
+}
+
+// Rempart de Susanoo (actif) : arrête les tirs venus de face, puis un sabre géant balaie devant vous
+function majSusanooJoueur(J, dt) {
+  const S = J.susanoo; if (!S) return;
+  const vis = Entrees.visee.dir; if (vis) S.a += borne(diffAngle(S.a, Math.atan2(DIRS[vis][1], DIRS[vis][0])), -4 * dt, 4 * dt);
+  for (const p of G.proj) if (p.proprio === 'ennemi' && !p.mort && dist(p.x, p.y, J.x, J.y - 10) < 34 && Math.abs(diffAngle(S.a, angleVers(J.x, J.y - 10, p.x, p.y))) < Math.PI / 3) { p.mort = true; G.effets.push({ type: 'etincelle', x: p.x, y: p.y, age: 0, duree: 0.15 }); }
+  S.t -= dt;
+  if (S.t <= 0) { J.susanoo = null; const r = 3.2 * TUILE, deg = J.stats.degats * S.coef;
+    for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, J.x, J.y) < r + e.r && Math.abs(diffAngle(S.a, angleVers(J.x, J.y, e.x, e.y))) < 1.3) infligerDegats(e, deg, { proprio: 'joueur', type: 'actif', x: J.x, y: J.y });
+    G.effets.push({ type: 'balayage', x: J.x, y: J.y - 8, a: S.a, arc: 2.6, r, age: 0, duree: 0.3 }); Son.jouer('lame'); secousse(6, S.a); }
 }

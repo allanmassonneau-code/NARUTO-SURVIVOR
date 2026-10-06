@@ -268,20 +268,20 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_002', 'Encre de dédoublement', 'projectile', 2, 'H3 S1', 'Chaque tir se dédouble, un peu moins fort.', [{ multi: 1, coefCadence: 0.9 }], { icone: ic('pinceau', '#2a2a3a', '#6a6a88', '#c8a060'), tags: ['multitir'] });
   O('PSV_003', 'Éventail de kunai', 'projectile', 2, 'H2 S1 K1', 'Trois kunai en éventail.', [{ multi: 2, coefCadence: 0.85 }], { icone: ic('kunai', '#d8dce8', '#8a90a0', '#8a2a2a'), tags: ['multitir'] });
   O('PSV_004', 'Parchemin des mille aiguilles', 'projectile', 3, 'H2 B1', 'Quatre senbon partent à chaque tir.', [{ multi: 3, coefCadence: 0.8 }, { apparence: 'senbon' }], { icone: ic('senbon', '#e8ecf4', '#8a90a0', '#c8a870'), tags: ['multitir'] });
-  O('PSV_005', 'Kunai à marque de téléportation', 'projectile', 2, 'H2 L1', 'Les tirs suivent légèrement leur cible.', [{ traj: 'guidage', force: 1 }], { statut: 'adaptation', icone: ic('kunai', '#e0c050', '#a08020', '#2a2a2a'), tags: ['guidage'] });
+  O('PSV_005', 'Kunai à marque de téléportation', 'projectile', 2, 'H2 L1', 'Les tirs suivent légèrement leur cible.', [{ traj: 'guidage', force: 1 }], { statut: 'adaptation', ensemble: 'espace', icone: ic('kunai', '#e0c050', '#a08020', '#2a2a2a'), tags: ['guidage'] });
   O('PSV_006', 'Insectes traqueurs', 'projectile', 3, 'H2 B1', 'Les tirs deviennent des insectes qui poursuivent les ennemis.', [{ traj: 'guidage', force: 2.5 }, { apparence: 'insecte' }, sp('degats', -10)], { statut: 'adaptation', ensemble: 'essaim', icone: ic('insecte', '#3a3a2a', '#6a6a4a', '#8a8a60'), visuel: { couche: 'aura', motif: 'insectes', prio: 3 }, tags: ['guidage'] });
   O('PSV_007', 'Fil de chakra', 'projectile', 1, 'H2 S1 K1', 'Les tirs ricochent sur les murs et les obstacles.', [{ traj: 'rebond' }], { icone: ic('chaine', '#a8c8f0', '#6a88b0', '#ffffff'), tags: ['ricochet'] });
   O('PSV_008', 'Senbon perforant', 'projectile', 2, 'H2 S1', 'Les tirs traversent les ennemis.', [{ traj: 'percant' }, s('vitesseTir', 1)], { icone: ic('senbon', '#f0f0f8', '#a0a0b0', '#6a2a2a'), tags: ['percement'] });
-  O('PSV_009', 'Parchemin fantôme', 'projectile', 1, 'H2 L1', 'Les tirs passent au-dessus des obstacles.', [{ traj: 'spectral' }], { icone: ic('rouleau', '#c8d0e8', '#8890a8', '#6a6a88'), tags: ['spectral'] });
+  O('PSV_009', 'Parchemin fantôme', 'projectile', 1, 'H2 L1', 'Les tirs passent au-dessus des obstacles.', [{ traj: 'spectral' }], { ensemble: 'espace', icone: ic('rouleau', '#c8d0e8', '#8890a8', '#6a6a88'), tags: ['spectral'] });
   O('PSV_010', 'Sable en orbite', 'projectile', 2, 'H2 L1', 'Les tirs tournent autour de vous avant de se disperser.', [{ traj: 'orbite' }, s('portee', 1)], { statut: 'adaptation', ensemble: 'sable', icone: ic('sable', '#d8b070', '#a8804a', '#f8e0a8'), visuel: { couche: 'aura', motif: 'sable_flottant', prio: 2 }, tags: ['orbite'] });
   O('PSV_011', 'Onde de la vague', 'projectile', 1, 'H2 S1', 'Les tirs ondulent : couverture plus large, précision moindre.', [{ traj: 'onde' }, s('degats', 0.3), { element: 'suiton' }], { icone: ic('goutte', '#4a8ae8', '#2a5aa8', '#c0e0ff'), tags: ['onde', 'suiton'] });
   O('PSV_012', 'Baika (expansion)', 'projectile', 3, 'H2 B1', 'Des tirs énormes et lents, deux fois plus forts.', [{ traj: 'lent' }, sm('degats', 2), { cadenceTir: 0.6 }, s('vitesseTir', -2)], { statut: 'adaptation', icone: ic('poing', '#e8a060', '#b8703a', '#c83a2a'), tags: ['orbe_lent'] });
-  O('PSV_013', 'Fūma shuriken', 'projectile', 3, 'H2 B1', 'Lance un grand shuriken qui revient dans la main.', [{ forme: 'boomerang' }], { statut: 'adaptation', icone: ic('fuma', '#c8ccd8', '#6a7080', '#2a2a34'), tags: ['boomerang'], cumul: 'unique' });
+  O('PSV_013', 'Fūma shuriken', 'projectile', 3, 'H2 B1', 'Lance un grand shuriken qui revient dans la main.', [{ forme: 'boomerang' }], { statut: 'adaptation', ensemble: 'vent', icone: ic('fuma', '#c8ccd8', '#6a7080', '#2a2a34'), tags: ['boomerang'], cumul: 'unique' });
   O('PSV_014', 'Canon de chakra', 'projectile', 4, 'P2 H1', 'Charge un rayon rougeoyant qui traverse tout.', [{ forme: 'rayon', charge: 1.0, duree: 0.33, coefTick: 0.9 }], { icone: ic('tete_renard', '#e05a2a', '#a03a1a', '#ffe060'), ensemble: 'renard', visuel: { couche: 'yeux', motif: 'yeux_rouges', couleur: '#ff4a2a', prio: 5 }, tags: ['rayon', 'charge'], cumul: 'unique' });
   O('PSV_015', 'Trait de chakra', 'projectile', 3, 'H2 B1', 'Chaque tir devient un trait instantané.', [{ forme: 'laser' }], { icone: ic('eclair', '#ff6a5a', '#c83a2a', '#ffe0d0'), tags: ['rayon'], cumul: 'unique' });
   O('PSV_016', 'Souffle continu', 'projectile', 3, 'H1 B1', 'Maintenir la visée émet un faisceau continu.', [{ forme: 'faisceau' }], { icone: ic('tornade', '#6ad0ff', '#3a90c8', '#e0f8ff'), tags: ['faisceau'], cumul: 'unique' });
   O('PSV_017', 'Empreinte du Kubikiribōchō', 'projectile', 3, 'H1 B1 P1', 'Un grand sabre balaie devant vous.', [{ forme: 'lame_longue' }, s('degats', 0.5)], { statut: 'adaptation', icone: ic('epee', '#c8ccd8', '#6a7080', '#5a4a3a'), visuel: { couche: 'dos', motif: 'cape', couleur: '#5a6a7a', prio: 2 }, tags: ['frappe_etendue'], cumul: 'unique' });
-  O('PSV_018', 'Tantō de l’ANBU', 'projectile', 2, 'H2 S1', 'Frappe courte au sabre : puissante mais exposée.', [{ forme: 'lame' }], { statut: 'adaptation', icone: ic('lame', '#d0d8e8', '#7a8090', '#3a3040'), tags: ['frappe_courte'], cumul: 'unique' });
+  O('PSV_018', 'Tantō de l’ANBU', 'projectile', 2, 'H2 S1', 'Frappe courte au sabre : puissante mais exposée.', [{ forme: 'lame' }], { statut: 'adaptation', ensemble: 'anbu', icone: ic('lame', '#d0d8e8', '#7a8090', '#3a3040'), tags: ['frappe_courte'], cumul: 'unique' });
   O('PSV_019', 'Argile explosive C1', 'projectile', 3, 'P1 H1 B1', 'Lance des bombes d’argile ; attention au souffle.', [{ forme: 'bombe' }], { statut: 'adaptation', icone: ic('oiseau', '#f0e8d8', '#b8ac98', '#3a3a4a'), contrepartie: 'Les explosions peuvent vous blesser.', ensemble: 'argile', tags: ['bombe_lancee'], cumul: 'unique' });
   O('PSV_020', 'Chute céleste', 'projectile', 4, 'P2 B1', 'Visez un point : une météorite s’y écrase.', [{ forme: 'frappe', coef: 8 }], { statut: 'création originale d’après une technique célèbre (attribution à vérifier)', icone: ic('rocher', '#8a6a5a', '#5a4038', '#ff8a3a'), tags: ['frappe_differee'], cumul: 'unique' });
   O('PSV_021', 'Sphère téléguidée', 'projectile', 3, 'H1 B1 L1', 'Une seule sphère, guidée par la visée.', [{ forme: 'controle' }], { statut: 'adaptation', icone: ic('sphere', '#2a2a34', '#6a6a78', '#c0c0d0'), tags: ['emission_controlee'], cumul: 'unique' });
@@ -296,14 +296,14 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_030', 'Shuriken démultiplié', 'projectile', 2, 'H2 K1', 'Les tirs éclatent en quatre éclats à l’impact.', [{ impact: 'eclat', n: 4, coef: 0.35 }], { icone: ic('shuriken', '#c8ccd8', '#8a90a0', '#2a2a34'), tags: ['eclatement'] });
   O('PSV_031', 'Kunai du vent', 'projectile', 1, 'H2 S1', 'Les tirs accélèrent en vol.', [{ traj: 'acceleration' }, s('portee', 1)], { icone: ic('kunai', '#d0f0d8', '#7ab090', '#4a6a5a'), tags: ['futon'], ensemble: 'renard' });
   O('PSV_032', 'Poids de plomb', 'projectile', 1, 'H2 S1', 'Des tirs lourds qui repoussent fort.', [{ recul: 2 }, { taille: 1.2 }, s('vitesseTir', -1), s('degats', 0.5)], { icone: ic('poids', '#6a6a78', '#3a3a44', '#8a8a98'), ensemble: 'portes' });
-  O('PSV_033', 'Senbon de précision', 'projectile', 1, 'H2 S2', 'Plus loin, plus vite.', [s('vitesseTir', 2), s('portee', 1.5), s('degats', 0.3)], { statut: 'adaptation', icone: ic('senbon', '#e8f0ff', '#8aa0c0', '#6a8ab0') });
-  O('PSV_034', 'Kunai lestés', 'projectile', 2, 'H3 S1 K1', 'Des lames plus lourdes.', [s('degats', 1)], { icone: ic('kunai', '#a8acb8', '#5a5e6a', '#3a2a1a') });
-  O('PSV_035', 'Sandales de course', 'projectile', 1, 'H2 S2', 'Vous vous déplacez plus vite.', [s('vitesse', 0.6)], { icone: ic('sandale', '#3a4a6a', '#e8e0d0', '#28407c'), visuel: { couche: 'corps', motif: 'bandeau_bras', couleur: '#28407c', prio: 1 } });
+  O('PSV_033', 'Senbon de précision', 'projectile', 1, 'H2 S2', 'Plus loin, plus vite ; 5 % de coup critique (×2,5).', [s('vitesseTir', 2), s('portee', 1.5), s('degats', 0.3), { critique: 0.05 }], { statut: 'adaptation', icone: ic('senbon', '#e8f0ff', '#8aa0c0', '#6a8ab0') });
+  O('PSV_034', 'Kunai lestés', 'projectile', 2, 'H3 S1 K1', 'Des lames plus lourdes : dégâts +1, recul accru.', [s('degats', 1), { recul: 1.3 }], { icone: ic('kunai', '#a8acb8', '#5a5e6a', '#3a2a1a') });
+  O('PSV_035', 'Sandales de course', 'projectile', 1, 'H2 S2', 'Vous vous déplacez plus vite ; ni toiles ni flaques ne vous ralentissent.', [s('vitesse', 0.6), { drapeau: 'piedLeger' }], { ensemble: 'vent', icone: ic('sandale', '#3a4a6a', '#e8e0d0', '#28407c'), visuel: { couche: 'corps', motif: 'bandeau_bras', couleur: '#28407c', prio: 1 } });
   O('PSV_036', 'Pilule du soldat (empreinte)', 'projectile', 2, 'H2 S1 B1', 'Cadence de tir augmentée.', [s('cadence', 0.5)], { statut: 'adaptation', icone: ic('pilule', '#f0e8a0', '#c8b050', '#ffffff') });
   O('PSV_037', 'Lunettes de visée', 'projectile', 1, 'H2 S2', 'Portée et vitesse des tirs accrues.', [s('portee', 2), s('vitesseTir', 1)], { icone: ic('masque', '#3a3a3a', '#1a1a1a', '#8a8a8a'), visuel: { couche: 'yeux', motif: 'masque', couleur: '#2a2a2a', prio: 1 } });
   O('PSV_038', 'Bandeau de Konoha', 'projectile', 2, 'H2 B2', 'Un peu de tout : dégâts, cadence, portée, vitesse, chance.', [s('degats', 0.3), s('cadence', 0.2), s('portee', 0.5), s('vitesse', 0.2), s('chance', 1)], { statut: 'canon adapté', icone: ic('bandeau', '#28407c', '#cfd2de', '#6a7088') });
-  O('PSV_039', 'Masque de l’ANBU', 'projectile', 1, 'H2 S1 C1', 'Dégâts et chance.', [s('degats', 0.5), s('chance', 1)], { statut: 'adaptation', icone: ic('masque', '#e8e4dc', '#c83a2a', '#1c1420'), visuel: { couche: 'tete', motif: 'masque', couleur: '#e8e4dc', prio: 2 } });
-  O('PSV_040', 'Gants de taijutsu', 'projectile', 2, 'H2 S1', 'Dégâts +0,7 ; les frappes de mêlée gagnent en portée.', [s('degats', 0.7), s('portee', 0.5)], { icone: ic('gant', '#3c9a3c', '#f28a22', '#2a782a'), ensemble: 'portes' });
+  O('PSV_039', 'Masque de l’ANBU', 'projectile', 1, 'H2 S1 C1', 'Dégâts et chance ; 6 % de coup critique (×2,5).', [s('degats', 0.5), s('chance', 1), { critique: 0.06 }], { statut: 'adaptation', ensemble: 'anbu', icone: ic('masque', '#e8e4dc', '#c83a2a', '#1c1420'), visuel: { couche: 'tete', motif: 'masque', couleur: '#e8e4dc', prio: 2 } });
+  O('PSV_040', 'Gants de taijutsu', 'projectile', 2, 'H2 S1', 'Dégâts +0,7 ; les frappes de mêlée gagnent en portée ; vos coups repoussent plus fort.', [s('degats', 0.7), s('portee', 0.5), { recul: 1.25 }], { icone: ic('gant', '#3c9a3c', '#f28a22', '#2a782a'), ensemble: 'portes' });
   O('PSV_041', 'Cadence de la fleur de lotus', 'projectile', 2, 'H2 S1', 'Cadence très élevée, portée réduite.', [sm('cadence', 1.5), s('portee', -2)], { icone: ic('feuille', '#6ae07a', '#3a9a4a', '#e0ffe0'), contrepartie: 'Portée −2.', ensemble: 'portes', tags: ['anti-synergie'] });
   O('PSV_042', 'Pointe de précision', 'projectile', 2, 'H1 S1 L1', 'Les tirs grossissent : touchent mieux, plus lents.', [{ taille: 1.5 }, s('degats', 0.5), s('vitesseTir', -1.5)], { icone: ic('etoile', '#e0e0f0', '#a0a0c0', '#6060a0') });
 
@@ -323,17 +323,17 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_055', 'Chakra du renard', 'element', 3, 'H1 B2 P1', 'Dégâts +1, vitesse +0,2 ; une queue de chakra apparaît.', [s('degats', 1), s('vitesse', 0.2)], { statut: 'adaptation', ensemble: 'renard', icone: ic('tete_renard', '#f08a24', '#c8661a', '#ffe060'), visuel: { couche: 'aura', motif: 'queues', n: 1, couleur: '#f0a030', prio: 3 } });
   O('PSV_056', 'Bulle de chakra rouge', 'element', 3, 'H1 B1 P1', 'Blessé, vous libérez huit tirs de chakra.', [{ quand: 'degat_recu', faire: { type: 'projectiles_cercle', n: 8, coef: 1.2 } }, s('degats', 0.5)], { ensemble: 'renard', icone: ic('sphere', '#e04a2a', '#a02a1a', '#ffc080') });
   O('PSV_057', 'Crapaud d’huile', 'element', 2, 'H1 L1 A1', 'Les tirs laissent parfois de l’huile qui s’embrase au feu.', [{ impact: 'flaque', coef: 0 }, s('degats', 0.4)], { ensemble: 'ermite', icone: ic('crapaud', '#8a6a3a', '#d8c890', '#1c1420') });
-  O('PSV_058', 'Armure de foudre', 'element', 3, 'H1 B1', 'Vitesse +0,5, cadence +0,3.', [s('vitesse', 0.5), s('cadence', 0.3)], { statut: 'adaptation', ensemble: 'tonnerre', icone: ic('eclair', '#e0f0ff', '#8ab0e0', '#ffffff'), visuel: { couche: 'aura', couleur: '#a0d0ff', prio: 3 } });
+  O('PSV_058', 'Armure de foudre', 'element', 3, 'H1 B1', 'Vitesse +0,5, cadence +0,3 ; un tir sur cinq enchaîne la foudre sur un ennemi proche.', [{ impact: 'chaine', sauts: 1, r: 3, coef: 0.5, chance: 0.2 }, { element: 'raiton' }, s('vitesse', 0.5), s('cadence', 0.3)], { statut: 'adaptation', ensemble: 'tonnerre', icone: ic('eclair', '#e0f0ff', '#8ab0e0', '#ffffff'), visuel: { couche: 'aura', couleur: '#a0d0ff', prio: 3 } });
   O('PSV_059', 'Racines du bois', 'element', 3, 'H1 B1 A1', 'Les tirs font parfois jaillir des racines qui immobilisent (15 %).', [{ statut: 'immobilise', chance: 0.15, chanceParChance: 0.03, max: 0.5, duree: 1.5 }, s('degats', 0.5)], { statut: 'adaptation (Mokuton)', icone: ic('racine', '#6a4a2a', '#4a3018', '#8ac060') });
   O('PSV_060', 'Os de l’ossature', 'element', 3, 'H1 B1 P1', 'Tirs d’os : perçants, un ricochet.', [{ traj: 'percant' }, { traj: 'rebond' }, { apparence: 'os' }, s('degats', 0.3)], { statut: 'adaptation', ensemble: 'experimental', icone: ic('os', '#ece4d0', '#b8ac98', '#6a5a4a') });
 
   // ── Familiers et orbitaux ──
   O('PSV_061', 'Clone de l’ombre', 'familier', 2, 'H2 S1', 'Un clone vous suit et tire des kunai.', [{ familier: 'FAM_CLONE' }], { statut: 'adaptation', icone: ic('masque', '#f6cf3e', '#c99a26', '#28407c'), ensemble: 'meute' });
   O('PSV_062', 'Gamakichi', 'familier', 2, 'H2 A1', 'Un petit crapaud qui crache des bulles ralentissantes.', [{ familier: 'FAM_GAMAKICHI' }], { statut: 'canon adapté', ensemble: 'meute', icone: ic('crapaud', '#d86a2a', '#f0b070', '#3a1a10') });
-  O('PSV_063', 'Katsuyu miniature', 'familier', 2, 'H2 A2', 'Toutes les 5 salles nettoyées, une limace apporte un cœur.', [{ familier: 'FAM_KATSUYU' }], { statut: 'canon adapté', ensemble: 'meute', icone: ic('limace', '#e8e8f0', '#6a8ae8', '#1c1420') });
+  O('PSV_063', 'Katsuyu miniature', 'familier', 2, 'H2 A2', 'Toutes les 5 salles nettoyées, une limace apporte un cœur.', [{ familier: 'FAM_KATSUYU' }], { statut: 'canon adapté', ensemble: 'medecin', icone: ic('limace', '#e8e8f0', '#6a8ae8', '#1c1420') });
   O('PSV_064', 'Serpent des manches', 'familier', 2, 'H1 P1', 'Un serpent tourne autour de vous et mord.', [{ familier: 'FAM_SERPENT' }], { statut: 'adaptation', ensemble: 'experimental', icone: ic('serpent', '#7a9a4a', '#d8d8a0', '#c83a2a') });
   O('PSV_065', 'Sable protecteur', 'familier', 2, 'H2 B1', 'Deux orbitaux de sable bloquent les tirs ennemis.', [{ familier: 'FAM_SABLE' }, { familier: 'FAM_SABLE' }], { statut: 'adaptation', ensemble: 'sable', icone: ic('sable', '#d8b070', '#a8804a', '#f8e0a8') });
-  O('PSV_066', 'Kunai tournoyants', 'familier', 1, 'H2 S1', 'Trois kunai tournent autour de vous (ne bloquent pas).', [{ familier: 'FAM_KUNAI_ORB' }, { familier: 'FAM_KUNAI_ORB' }, { familier: 'FAM_KUNAI_ORB' }], { icone: ic('kunai', '#d8dce8', '#8a90a0', '#c83a2a') });
+  O('PSV_066', 'Kunai tournoyants', 'familier', 1, 'H2 S1', 'Trois kunai tournent autour de vous (ne bloquent pas).', [{ familier: 'FAM_KUNAI_ORB' }, { familier: 'FAM_KUNAI_ORB' }, { familier: 'FAM_KUNAI_ORB' }], { ensemble: 'vent', icone: ic('kunai', '#d8dce8', '#8a90a0', '#c83a2a') });
   O('PSV_067', 'Corbeau messager', 'familier', 2, 'H1 L1 P1', 'Un corbeau aveugle les ennemis (confusion).', [{ familier: 'FAM_CORBEAU' }], { statut: 'adaptation', ensemble: 'yeux', icone: ic('corbeau', '#1c1420', '#2a2a3a', '#d0a040') });
   O('PSV_068', 'Pakkun', 'familier', 1, 'H2 S1 L1', 'Un chien ninja flaire les murs secrets.', [{ familier: 'FAM_PAKKUN' }], { statut: 'canon adapté', ensemble: 'meute', icone: ic('chien', '#c8a870', '#8a6a4a', '#1c1420') });
   O('PSV_069', 'Petit chien de chasse', 'familier', 2, 'H2 S1', 'Un chien fonce dans la direction de tir.', [{ familier: 'FAM_AKAMARU' }], { ensemble: 'meute', icone: ic('chien', '#f0ece4', '#c8c0b0', '#1c1420') });
@@ -355,16 +355,16 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_083', 'Bol de ramen d’Ichiraku', 'sante', 1, 'H1 B2 S1', 'Un contenant de vitalité et un soin complet.', [{ sante: { cont: 1, soinTotal: true } }], { statut: 'canon adapté', icone: ic('bol', '#c8a060', '#f0d8a0', '#e8e0d0'), cumul: 'cumul' });
   O('PSV_084', 'Onigiri', 'sante', 0, 'H1 S2 B1', 'Un contenant de vitalité.', [{ sante: { cont: 1 } }], { icone: ic('onigiri', '#f0f0f0', '#d0d0d0', '#1c2a1c') });
   O('PSV_085', 'Dango', 'sante', 1, 'H1 S2', 'Un contenant de vitalité et un cœur de soin.', [{ sante: { cont: 1, soin: 2 } }], { icone: ic('dango', '#f0a0b8', '#f0f0e0', '#8ad08a') });
-  O('PSV_086', 'Pilule écarlate', 'sante', 2, 'H1 P1 B1', 'Dégâts +1 et un contenant, mais un peu plus lent.', [s('degats', 1), { sante: { cont: 1 } }, s('vitesse', -0.2)], { statut: 'création originale', icone: ic('pilule', '#d83a3a', '#8a1a1a', '#ffffff'), contrepartie: 'Vitesse −0,2.' });
-  O('PSV_087', 'Sceau de régénération', 'sante', 3, 'A2 B1', 'Toutes les 3 salles nettoyées, soigne une demi-unité.', [{ quand: 'salle_nettoyee', tousLes: 3, faire: { type: 'soin', demis: 1 } }], { exclusion: ['sansVitalite'], statut: 'adaptation (Byakugō, attribution à vérifier)', icone: ic('sceau', '#a050d0', '#e8d060', '#ffffff'), visuel: { couche: 'peau', motif: 'point_front', couleur: '#a050d0', prio: 2 } });
-  O('PSV_088', 'Cape de chakra protecteur', 'sante', 1, 'A2 S1 H1', 'Deux réserves de chakra protecteur.', [{ sante: { prot: 4 } }], { icone: ic('bouclier', '#4a8ae8', '#c0e0ff', '#2a4a9a'), visuel: { couche: 'dos', motif: 'cape', couleur: '#3a6ac8', prio: 1 } });
-  O('PSV_089', 'Cœur volé', 'sante', 3, 'P1 I1 B1', 'À votre mort, vous vous relevez avec un contenant (l’objet est consommé).', [], { statut: 'adaptation', icone: ic('coeur', '#6a1a2a', '#3a0a14', '#c83a4a'), cumul: 'cumul' });
+  O('PSV_086', 'Pilule écarlate', 'sante', 2, 'H1 P1 B1', 'Dégâts +1 et un contenant, mais un peu plus lent.', [s('degats', 1), { sante: { cont: 1 } }, s('vitesse', -0.2)], { statut: 'création originale', ensemble: 'medecin', icone: ic('pilule', '#d83a3a', '#8a1a1a', '#ffffff'), contrepartie: 'Vitesse −0,2.' });
+  O('PSV_087', 'Sceau de régénération', 'sante', 3, 'A2 B1', 'Toutes les 3 salles nettoyées, soigne une demi-unité.', [{ quand: 'salle_nettoyee', tousLes: 3, faire: { type: 'soin', demis: 1 } }], { exclusion: ['sansVitalite'], statut: 'adaptation (Byakugō, attribution à vérifier)', ensemble: 'medecin', icone: ic('sceau', '#a050d0', '#e8d060', '#ffffff'), visuel: { couche: 'peau', motif: 'point_front', couleur: '#a050d0', prio: 2 } });
+  O('PSV_088', 'Cape de chakra protecteur', 'sante', 1, 'A2 S1 H1', 'Deux réserves de chakra protecteur.', [{ sante: { prot: 4 } }], { ensemble: 'medecin', icone: ic('bouclier', '#4a8ae8', '#c0e0ff', '#2a4a9a'), visuel: { couche: 'dos', motif: 'cape', couleur: '#3a6ac8', prio: 1 } });
+  O('PSV_089', 'Cœur volé', 'sante', 3, 'P1 I1 B1', 'À votre mort, vous vous relevez avec un contenant (l’objet est consommé).', [], { statut: 'adaptation', ensemble: 'akatsuki', icone: ic('coeur', '#6a1a2a', '#3a0a14', '#c83a4a'), cumul: 'cumul' });
   O('PSV_090', 'Ossature renforcée', 'sante', 2, 'H1 P1', 'Deux enveloppes osseuses.', [{ sante: { os: 2 } }], { statut: 'adaptation', ensemble: 'experimental', icone: ic('os', '#e8e0cc', '#a89c84', '#6a5a4a') });
   O('PSV_091', 'Sceau maudit', 'contrepartie', 3, 'P3', 'Deux réserves instables, dégâts +0,5 ; les pactes deviennent plus fréquents (+20 %).', [{ sante: { instable: 4 } }, s('degats', 0.5)], { statut: 'adaptation', ensemble: 'interdit', icone: ic('sceau', '#1c1420', '#a01020', '#6a2a8a'), visuel: { couche: 'peau', motif: 'marque', couleur: '#1c1420', prio: 4 } });
   O('PSV_092', 'Porte de la Vie', 'contrepartie', 3, 'P1 B1 D1', 'Dégâts +1,5, cadence +0,4, mais un contenant en moins.', [s('degats', 1.5), s('cadence', 0.4), { sante: { retraitCont: 1 } }], { statut: 'adaptation (Huit Portes)', ensemble: 'portes', icone: ic('poing', '#6ae07a', '#3a9a4a', '#ffffff'), contrepartie: '−1 contenant de vitalité.', visuel: { couche: 'aura', couleur: '#8af07a', prio: 3 } });
   O('PSV_093', 'Chakra de la limace', 'sante', 2, 'A2 H1', 'Les cœurs soignent deux fois plus.', [{ drapeau: 'soinsDoubles' }], { ensemble: 'ermite', icone: ic('limace', '#c0d8f0', '#6a8ae8', '#1c1420') });
-  O('PSV_094', 'Trousse de terrain', 'sante', 1, 'H2 S1', 'Un contenant ; les cœurs lâchés sont parfois doublés.', [{ sante: { cont: 1 } }, { quand: 'salle_nettoyee', chance: 0.12, faire: { type: 'ramassable', ramassable: 'coeur' } }], { icone: ic('coffre', '#e8e0d0', '#c83a2a', '#ffffff') });
-  O('PSV_095', 'Sceau vital de la famille', 'sante', 2, 'A1 H1', 'Un sceau vital partiel, puis un nouveau à chaque étage.', [{ sante: { partiel: 1 } }, { quand: 'etage', faire: { type: 'ramassable', ramassable: 'partiel' } }], { icone: ic('coeur', '#f0ecdc', '#c8a040', '#ffffff') });
+  O('PSV_094', 'Trousse de terrain', 'sante', 1, 'H2 S1', 'Un contenant ; les cœurs lâchés sont parfois doublés.', [{ sante: { cont: 1 } }, { quand: 'salle_nettoyee', chance: 0.12, faire: { type: 'ramassable', ramassable: 'coeur' } }], { ensemble: 'medecin', icone: ic('coffre', '#e8e0d0', '#c83a2a', '#ffffff') });
+  O('PSV_095', 'Sceau vital de la famille', 'sante', 2, 'A1 H1', 'Un sceau vital partiel, puis un nouveau à chaque étage.', [{ sante: { partiel: 1 } }, { quand: 'etage', faire: { type: 'ramassable', ramassable: 'partiel' } }], { ensemble: 'medecin', icone: ic('coeur', '#f0ecdc', '#c8a040', '#ffffff') });
   O('PSV_096', 'Substitution instinctive', 'sante', 3, 'H1 A1', '15 % + 3 % par chance d’esquiver un coup par une bûche (50 % au plus).', [{ drapeau: 'substitution' }], { statut: 'adaptation (Kawarimi)', icone: ic('rouleau', '#8a5a30', '#c89a60', '#3a2a1a') });
   O('PSV_097', 'Armure de sable absolue', 'sante', 4, 'B1 A1', 'Les coups d’un cœur entier ne retirent qu’une demi-unité.', [{ drapeau: 'armureSable' }, s('vitesse', -0.3)], { statut: 'adaptation', ensemble: 'sable', icone: ic('bouclier', '#d8b070', '#a8804a', '#f8e0a8'), contrepartie: 'Vitesse −0,3.', visuel: { couche: 'peau', motif: 'marque', couleur: '#c8a060', prio: 2 } });
   O('PSV_098', 'Chakra du démon scellé', 'contrepartie', 3, 'P2', 'Trois réserves instables, mais un contenant en moins.', [{ sante: { instable: 6, retraitCont: 1 } }], { ensemble: 'interdit', icone: ic('coeur', '#5a2a7a', '#2a1040', '#e060ff'), contrepartie: '−1 contenant.' });
@@ -404,18 +404,18 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_126', 'Livre de l’ermite', 'economie', 3, 'L2 A1', 'Les salles d’héritage proposent un second objet (choix).', [], { icone: ic('livre', '#c83a2a', '#6a9a3a', '#e8e0d0') });
   O('PSV_127', 'Sceau de réécriture', 'economie', 2, 'L1 S1', 'Une relance ne peut plus donner un objet de qualité inférieure.', [], { icone: ic('sceau', '#3a3040', '#e8dcc0', '#c83a2a') });
   O('PSV_128', 'Tampon du marchand', 'economie', 1, 'S1 M1', 'Ramasser des Ryō donne parfois un rouleau (5 %).', [{ quand: 'ryo_ramasse', chance: 0.05, faire: { type: 'ramassable', ramassable: 'rouleau' } }], { icone: ic('tag', '#c83a2a', '#e8dcc0', '#3a2a1a') });
-  O('PSV_129', 'Contrat de Kakuzu', 'economie', 2, 'P1 M1', 'Les pactes se paient en Ryō (20 par contenant) si vous les avez.', [{ drapeau: 'pacteRyoOption' }], { statut: 'adaptation', ensemble: 'interdit', icone: ic('bourse', '#2a3a2a', '#e8c050', '#c83a2a') });
-  O('PSV_130', 'Bourse de l’organisation', 'economie', 1, 'P1 S1', '+15 Ryō.', [{ res: { ryo: 15 } }], { icone: ic('bourse', '#1e1e28', '#c8303a', '#f0ece4') });
+  O('PSV_129', 'Contrat de Kakuzu', 'economie', 2, 'P1 M1', 'Les pactes se paient en Ryō (20 par contenant) si vous les avez.', [{ drapeau: 'pacteRyoOption' }], { statut: 'adaptation', ensemble: 'akatsuki', icone: ic('bourse', '#2a3a2a', '#e8c050', '#c83a2a') });
+  O('PSV_130', 'Bourse de l’organisation', 'economie', 1, 'P1 S1', '+15 Ryō.', [{ res: { ryo: 15 } }], { ensemble: 'akatsuki', icone: ic('bourse', '#1e1e28', '#c8303a', '#f0ece4') });
 
   // ── Contreparties, déclencheurs et résonances ──
   O('PSV_131', 'Sceau de la mort (empreinte)', 'contrepartie', 4, 'P1', 'Dégâts ×2, mais deux contenants en moins.', [sm('degats', 2), { sante: { retraitCont: 2 } }], { statut: 'adaptation (attribution à vérifier)', ensemble: 'interdit', icone: ic('crane', '#e8e4d0', '#1c1420', '#a01020'), contrepartie: '−2 contenants.', visuel: { couche: 'aura', couleur: '#e8e4d0', prio: 4 } });
   O('PSV_132', 'Rage du réceptacle', 'contrepartie', 2, 'H1 P1', 'Chaque blessure : +0,8 dégâts pour la salle (3 fois au plus).', [{ quand: 'degat_recu', faire: { type: 'bonus', bonus: { s: 'degats', a: 0.8 }, duree: 'salle', cumulMax: 3 } }], { ensemble: 'renard', icone: ic('tete_renard', '#c83a2a', '#8a1a1a', '#ffe060') });
   O('PSV_133', 'Volonté du feu', 'contrepartie', 2, 'H1 A1', 'Avec deux demi-unités ou moins, dégâts +2.', [{ quand: 'degat_recu', si: 'santeBasse', faire: { type: 'bonus', bonus: { s: 'degats', a: 2 }, duree: 'salle', cumulMax: 1 } }], { icone: ic('flamme', '#f08a24', '#c83018', '#ffe060') });
-  O('PSV_134', 'Colère de la Racine', 'contrepartie', 2, 'P1 H1', 'Les ennemis tués lâchent parfois un demi-chakra instable (5 %).', [{ quand: 'elimination', si: 'ennemiNonBoss', chance: 0.05, faire: { type: 'protection', demis: 1, instable: true } }], { icone: ic('masque', '#2a2a34', '#e8e4dc', '#1c1420') });
+  O('PSV_134', 'Colère de la Racine', 'contrepartie', 2, 'P1 H1', 'Les ennemis tués lâchent parfois un demi-chakra instable (5 %).', [{ quand: 'elimination', si: 'ennemiNonBoss', chance: 0.05, faire: { type: 'protection', demis: 1, instable: true } }], { ensemble: 'anbu', icone: ic('masque', '#2a2a34', '#e8e4dc', '#1c1420') });
   O('PSV_135', 'Rituel du sang', 'contrepartie', 2, 'P2', 'Chaque tribut volontaire donne +0,25 dégâts permanents.', [{ quand: 'sacrifice', faire: { type: 'bonus_permanent', bonus: { s: 'degats', a: 0.25 } } }], { ensemble: 'interdit', icone: ic('goutte', '#a01020', '#5a0a10', '#ff8a8a') });
-  O('PSV_136', 'Écailles de Samehada', 'contrepartie', 3, 'H1 B1 P1', 'Toutes les 12 éliminations, soigne une demi-unité ; dégâts +0,5.', [{ quand: 'elimination', tousLes: 12, faire: { type: 'soin', demis: 1 } }, s('degats', 0.5)], { statut: 'adaptation', icone: ic('epee', '#4a6a8a', '#e8f0f8', '#34506a') });
+  O('PSV_136', 'Écailles de Samehada', 'contrepartie', 3, 'H1 B1 P1', 'Toutes les 12 éliminations, soigne une demi-unité ; dégâts +0,5.', [{ quand: 'elimination', tousLes: 12, faire: { type: 'soin', demis: 1 } }, s('degats', 0.5)], { statut: 'adaptation', ensemble: 'akatsuki', icone: ic('epee', '#4a6a8a', '#e8f0f8', '#34506a') });
   O('PSV_137', 'Cadence frénétique', 'contrepartie', 2, 'H1 P1', 'Cadence ×1,4, dégâts −10 %.', [sm('cadence', 1.4), sp('degats', -10)], { icone: ic('eclair', '#f0f060', '#e05a2a', '#ffffff'), contrepartie: 'Dégâts −10 %.' });
-  O('PSV_138', 'Silence de la brume', 'contrepartie', 2, 'H1 C1', 'En entrant dans une salle, les ennemis vous perdent de vue 2 s.', [{ quand: 'entree_salle', si: 'combat', faire: { type: 'invisibilite', duree: 2 } }], { icone: ic('goutte', '#a8b8c8', '#6a7a8a', '#ffffff') });
+  O('PSV_138', 'Silence de la brume', 'contrepartie', 2, 'H1 C1', 'En entrant dans une salle, les ennemis vous perdent de vue 2 s.', [{ quand: 'entree_salle', si: 'combat', faire: { type: 'invisibilite', duree: 2 } }], { ensemble: 'anbu', icone: ic('goutte', '#a8b8c8', '#6a7a8a', '#ffffff') });
   O('PSV_139', 'Transfert du pacte', 'contrepartie', 2, 'P1', 'Chaque pacte conclu : +1 dégât permanent.', [{ quand: 'cout_paye', faire: { type: 'bonus_permanent', bonus: { s: 'degats', a: 1 } } }], { ensemble: 'interdit', icone: ic('crane', '#6a2a8a', '#2a1040', '#e060ff') });
   O('PSV_140', 'Réincarnation impure (empreinte)', 'contrepartie', 3, 'P2', '10 % des ennemis tués reviennent comme alliés 10 s.', [{ quand: 'elimination', si: 'ennemiNonBoss', chance: 0.1, faire: { type: 'allie', duree: 10 } }], { statut: 'adaptation (attribution à vérifier)', ensemble: 'experimental', icone: ic('rouleau', '#3a2a3a', '#a08ab0', '#e8e0d0') });
   O('PSV_141', 'Cœur du réceptacle', 'contrepartie', 2, 'B2', 'Chaque boss vaincu donne un contenant de vitalité.', [{ quand: 'boss_vaincu', faire: { type: 'ressource_sante' } }], { icone: ic('coeur', '#f08a24', '#c8661a', '#ffe060') });
@@ -437,6 +437,33 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   O('PSV_156', 'Mer de papiers explosifs', 'ressource', 3, 'P1 B1', 'Vos explosifs éclatent deux fois (la seconde, 0,4 s plus tard, à moitié de puissance) ; deux explosifs.', [{ drapeau: 'explosionDouble' }, { res: { explosifs: 2 } }], { statut: 'adaptation', ensemble: 'papier', icone: ic('papier', '#f4f0e8', '#c82a2a', '#6a2a8a'), contrepartie: 'La seconde explosion blesse aussi (sauf immunité).' });
 
   // ── Objets-clés de route (hors pools : jamais relancés ni retirés) ──
+  // ── Passe gameplay : mécaniques nouvelles (distance, concentration, larves, tirs repliés, suspendus, pivot, sillage,
+  //    critiques, septième lame, scission, marque, saignement, peur, étiquettes, série, frôlement, aura) ──
+  O('PSV_157', 'Frappe à bout portant', 'projectile', 2, 'H2 S1', 'Dégâts ×2 à bout portant, qui retombent à ×0,4 au bout de la portée.', [{ distance: 'proche' }, s('vitesse', 0.2)], { icone: ic('poing', '#e8a060', '#a8603a', '#fff0d0'), tags: ['distance'], cumul: 'unique', contrepartie: 'Faible de loin.' });
+  O('PSV_158', 'Shuriken du long voyage', 'projectile', 2, 'H2 S1', 'Plus un tir a voyagé, plus il frappe : ×0,6 au départ, ×2,2 au bout de sa course.', [{ distance: 'loin' }, s('portee', 1.5)], { ensemble: 'vent', icone: ic('shuriken', '#c8d8f0', '#6a7a98', '#f0e070'), tags: ['distance'], cumul: 'unique', contrepartie: 'Faible au contact.' });
+  O('PSV_159', 'Œil du chasseur', 'projectile', 3, 'H2 B1', 'Chaque tir au but augmente les dégâts de 10 % (jusqu’à +60 %) ; un tir perdu remet tout à zéro.', [{ concentration: true }], { icone: ic('oeil', '#e8d060', '#8a6a20', '#1c1420'), ensemble: 'yeux', tags: ['concentration'], cumul: 'unique' });
+  O('PSV_160', 'Larves de kikaichū', 'projectile', 2, 'H2 L1', '25 % des coups libèrent une larve qui chasse un autre ennemi (×0,5).', [{ parasite: 0.25 }], { statut: 'adaptation', icone: ic('insecte', '#5a5a3a', '#8a8a5a', '#c8c890'), ensemble: 'essaim', tags: ['guidage'] });
+  O('PSV_161', 'Parchemin de l’espace replié', 'projectile', 3, 'L1 H1 B1', 'Un tir qui touche un mur ressort du mur opposé de la salle (une fois par exemplaire).', [{ continuum: true }, s('portee', 1)], { ensemble: 'espace', icone: ic('rouleau', '#8a6ad8', '#4a3a8a', '#e0d8ff'), tags: ['continuum'] });
+  O('PSV_162', 'Marque du chasseur', 'element', 2, 'H2 S1', '20 % de marquer (+3 % par chance, 50 % au plus) : la cible subit 40 % de dégâts en plus de toutes les sources pendant 4 s.', [{ statut: 'marque', chance: 0.2, chanceParChance: 0.03, max: 0.5, duree: 4 }], { ensemble: 'anbu', icone: ic('etoile', '#ff4a4a', '#a02020', '#ffe0e0'), tags: ['marque'] });
+  O('PSV_163', 'Lame dentelée', 'element', 2, 'H2 S1', '30 % de faire saigner (+5 % par chance) : la cible perd de la vitalité tant qu’elle bouge.', [{ statut: 'saignement', chance: 0.3, chanceParChance: 0.05, max: 0.7, duree: 4 }], { ensemble: 'anbu', icone: ic('lame', '#d0d8e8', '#8a2a2a', '#c82030'), tags: ['saignement'] });
+  O('PSV_164', 'Intention meurtrière', 'element', 2, 'H1 L1 P1', '15 % d’effrayer (+3 % par chance) : la cible vous fuit 2 s (les boss y sont insensibles).', [{ statut: 'peur', chance: 0.15, chanceParChance: 0.03, max: 0.45, duree: 2 }, s('degats', 0.3)], { ensemble: 'anbu', icone: ic('crane', '#e8e0d0', '#5a4a6a', '#c83a3a'), tags: ['peur'] });
+  O('PSV_165', 'Shuriken scindé', 'projectile', 3, 'H2 B1', 'Un tir qui achève un ennemi se scinde en trois éclats qui poursuivent leur course (×0,6).', [{ scission: 3 }], { icone: ic('shuriken', '#e0e4f0', '#7a8098', '#ff9a5a'), tags: ['eclatement'] });
+  O('PSV_166', 'Étiquettes posthumes', 'ressource', 2, 'H1 S1 P1', 'Les ennemis tués explosent une fois sur trois (sans vous blesser).', [{ quand: 'elimination', si: 'ennemiNonBoss', chance: 0.33, faire: { type: 'explosion', r: 1.1, coef: 1.6, petite: true } }], { icone: ic('tag', '#f0e8d0', '#c82a2a', '#3a2a1a'), ensemble: 'argile', tags: ['explosion'] });
+  O('PSV_167', 'Tourbillon de feuilles', 'projectile', 2, 'H2 L1', 'Vos tirs partent en spirale qui s’ouvre : ils balaient la salle autour de vous.', [{ traj: 'spirale' }, s('degats', 0.3), s('portee', 1.5)], { ensemble: 'vent', icone: ic('feuille', '#7ae07a', '#3a9a4a', '#f0fff0'), tags: ['spirale'] });
+  O('PSV_168', 'Sable en suspens', 'projectile', 3, 'H1 B1 L1', 'Vos tirs s’arrêtent à mi-course et attendent : relâchez la visée pour les lancer tous ensemble.', [{ differe: true }, s('degats', 0.5)], { statut: 'adaptation', ensemble: 'sable', icone: ic('sable', '#e0c080', '#a8804a', '#fff0c0'), tags: ['differe'], cumul: 'unique' });
+  O('PSV_169', 'Kunai pivotant', 'projectile', 2, 'H2 S1', 'Un tir qui frôle un ennemi sur le côté pivote d’un coup vers lui.', [{ pivot: true }], { ensemble: 'vent', icone: ic('kunai', '#e0e8f8', '#6a7a98', '#a0e0ff'), tags: ['guidage'], cumul: 'unique' });
+  O('PSV_170', 'Sillage ardent', 'element', 3, 'H1 B1 P1', 'Vos tirs laissent une traînée de flammes alliées.', [{ sillage: 'feu' }, { element: 'katon' }], { icone: ic('flamme', '#ff8a2a', '#c83018', '#ffe070'), tags: ['katon', 'zone'], cumul: 'unique' });
+  O('PSV_171', 'Points vitaux', 'projectile', 3, 'H1 B1', '10 % de coup critique (+2 % par chance, 50 % au plus) : dégâts ×2,5.', [{ critique: 0.1 }], { icone: ic('etoile', '#ffe070', '#c8a030', '#ffffff'), ensemble: 'yeux', tags: ['critique'] });
+  O('PSV_172', 'Concentration du ninja', 'hybride', 2, 'H2 S1', 'Chaque salle nettoyée sans être touché : dégâts +0,15 (jusqu’à +1,5). Un coup reçu remet la série à zéro.', [{ drapeau: 'serieParfaite' }], { icone: ic('bandeau', '#2a2a3a', '#c8ccd8', '#e8d060'), tags: ['serie'], cumul: 'unique' });
+  O('PSV_173', 'Septième lame', 'projectile', 2, 'H2 S1', 'Un tir sur sept est une lame lourde : dégâts ×3, plus grosse, elle perce deux ennemis.', [{ septieme: 7 }], { icone: ic('epee', '#c8ccd8', '#5a5e6a', '#e8d060'), tags: ['septieme'], cumul: 'unique' });
+  O('PSV_174', 'Pression du chakra', 'hybride', 3, 'H1 A1', 'Les ennemis à moins de 2 tuiles de vous sont ralentis (×0,6).', [{ drapeau: 'pressionChakra' }, s('degats', 0.3)], { icone: ic('soleil', '#8ad0ff', '#3a80c8', '#ffffff'), visuel: { couche: 'aura', motif: 'lueur_poings', couleur: '#8ad0ff', prio: 2 }, tags: ['aura'], cumul: 'unique' });
+  O('PSV_175', 'Instinct du combat', 'hybride', 2, 'H1 S1', 'Frôler un tir ennemi sans être touché : huit frôlements chargent l’actif d’une charge.', [{ drapeau: 'frolement' }, s('vitesse', 0.2)], { ensemble: 'vent', icone: ic('plume', '#e0e8ff', '#8a98c8', '#ffffff'), tags: ['frolement'], cumul: 'unique' });
+  O('PSV_176', 'Bénédiction du vieil ermite', 'sante', 2, 'A2 H1', 'À chaque nouvel étage commencé à pleine vitalité : une réserve de chakra protecteur.', [{ quand: 'etage', si: 'pleineVitalite', faire: { type: 'protection', demis: 2 } }, { sante: { cont: 1 } }], { icone: ic('crapaud', '#e8c060', '#8a6a3a', '#ffffff'), ensemble: 'ermite', exclusion: ['sansVitalite'] });
+  O('PSV_177', 'Œil du Rinnegan (empreinte)', 'element', 4, 'P1', 'Vos impacts attirent les ennemis voisins vers eux ; dégâts +0,7.', [{ impact: 'attraction', r: 2.2, force: 70, coef: 0 }, s('degats', 0.7)], { statut: 'adaptation', icone: ic('oeil', '#b4a4d8', '#5a4a8a', '#1c1420'), ensemble: 'yeux', tags: ['attraction'], cumul: 'unique' });
+  O('PSV_178', 'Étiquette à retardement', 'ressource', 2, 'H2 S1', '35 % des coups plantent une étiquette qui explose une seconde plus tard (×2,4).', [{ impact: 'retardement', chance: 0.35, coef: 1 }], { icone: ic('tag', '#f4ecd8', '#d0302a', '#ffe070'), ensemble: 'argile', tags: ['explosion'] });
+  O('PSV_179', 'Rouleau de la double technique', 'hybride', 3, 'L1 H1', 'Utiliser un actif déclenche aussi une salve de vos tirs dans les huit directions.', [{ quand: 'actif_utilise', faire: { type: 'projectiles_cercle', n: 8, coef: 1 } }], { icone: ic('rouleau', '#e8d0a0', '#8a5a2a', '#c83a2a'), tags: ['actif'] });
+  O('PSV_180', 'Sang du clan', 'contrepartie', 2, 'H1 P1', 'Dégâts +0,25 par contenant de vitalité vide.', [{ drapeau: 'sangClan' }], { icone: ic('coeur', '#a02030', '#5a1018', '#ff8090'), tags: ['sante_basse'], cumul: 'unique', exclusion: ['sansVitalite'] });
+
   O('PSV_900', 'Clé des ermites', 'exploration', 0, '', 'Objet-clé : ouvre le rayon de la Lumière même après un pacte.', [], { cle: true, cumul: 'unique', icone: ic('cle', '#fff8e0', '#e8e0c0', '#6a9a3a') });
   O('PSV_901', 'Fragment de la clé des ermites', 'exploration', 0, '', 'Objet-clé : un second fragment formera la clé.', [], { cle: true, cumul: 'conversion', icone: ic('cle', '#c8c0a0', '#8a8060', '#6a9a3a') });
   DON.objets.find(o => o.id === 'PSV_901').conversion = { res: { ryo: 5 } };
@@ -470,11 +497,11 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   A('ACT_016', 'Invocation : grand crapaud', 4, 'A1 B1 P1', 6, 'gamabunta', {}, 'Un crapaud géant atterrit : 40 dégâts à tous les ennemis (25 aux boss), obstacles pulvérisés.', { statut: 'adaptation', ensemble: 'ermite', icone: ic('crapaud', '#d86a2a', '#f0b070', '#3a1a10') });
   A('ACT_017', 'Amaterasu (empreinte)', 3, 'P2', 4, 'statut_tous', { statut: 'brulure', duree: 3, coef: 3, visuel: 'flammes_noires', son: 'feu' }, 'Flammes noires sur tous les ennemis de la salle.', { statut: 'adaptation (attribution à vérifier)', ensemble: 'yeux', icone: ic('flamme', '#1a0a1a', '#5a2a6a', '#b060ff') });
   A('ACT_018', 'Tsukuyomi (empreinte)', 4, 'P1 B1', 6, 'tsukuyomi', { duree: 4 }, 'Le temps s’arrête pour vos ennemis et leurs tirs pendant 4 s (boss : 1,5 s).', { statut: 'adaptation (attribution à vérifier)', ensemble: 'yeux', icone: ic('lune', '#c81e28', '#6a0a14', '#1c1420') });
-  A('ACT_019', 'Répulsion divine', 3, 'P1 B1', 3, 'repousser', { coef: 3 }, 'Repousse tous les ennemis, détruit tous leurs tirs, 3× dégâts.', { statut: 'adaptation', icone: ic('sphere', '#e0e0ff', '#a0a0d8', '#ffffff') });
-  A('ACT_020', 'Attraction céleste', 3, 'P1 B1', 4, 'attraction', { coef: 5 }, 'Attire les ennemis au centre puis les écrase (5×).', { statut: 'adaptation', icone: ic('sphere', '#2a2030', '#6a5a80', '#c0b0e0') });
-  A('ACT_021', 'Espace-temps intangible', 3, 'P1 I1', 4, 'kamui', { duree: 3 }, '3 s intangible : ennemis et tirs vous traversent (pas les murs) ; vous ne pouvez pas tirer.', { statut: 'adaptation', icone: ic('sceau', '#e87a2a', '#1c1420', '#a8a8b0') });
-  A('ACT_022', 'Pilule du soldat', 1, 'S2 H1', 1, 'bonus', { duree: 'salle', bonus: { s: 'cadence', a: 1 }, visuel: 'aura_verte' }, 'Pour la salle : cadence +1.', { statut: 'adaptation', icone: ic('pilule', '#f0e8a0', '#c8b050', '#ffffff') });
-  A('ACT_023', 'Parchemin de téléportation', 1, 'S1 H1', 2, 'teleport', {}, 'Vous téléporte dans une salle déjà visitée.', { icone: ic('rouleau', '#8a7ab0', '#e8dcc0', '#3a3040'), sansCible: 'conserve' });
+  A('ACT_019', 'Répulsion divine', 3, 'P1 B1', 3, 'repousser', { coef: 3 }, 'Repousse tous les ennemis, détruit tous leurs tirs, 3× dégâts.', { statut: 'adaptation', ensemble: 'akatsuki', icone: ic('sphere', '#e0e0ff', '#a0a0d8', '#ffffff') });
+  A('ACT_020', 'Attraction céleste', 3, 'P1 B1', 4, 'attraction', { coef: 5 }, 'Attire les ennemis au centre puis les écrase (5×).', { statut: 'adaptation', ensemble: 'akatsuki', icone: ic('sphere', '#2a2030', '#6a5a80', '#c0b0e0') });
+  A('ACT_021', 'Espace-temps intangible', 3, 'P1 I1', 4, 'kamui', { duree: 3 }, '3 s intangible : ennemis et tirs vous traversent (pas les murs) ; vous ne pouvez pas tirer.', { statut: 'adaptation', ensemble: 'espace', icone: ic('sceau', '#e87a2a', '#1c1420', '#a8a8b0') });
+  A('ACT_022', 'Pilule du soldat', 1, 'S2 H1', 1, 'bonus', { duree: 'salle', bonus: { s: 'cadence', a: 1 }, visuel: 'aura_verte' }, 'Pour la salle : cadence +1.', { statut: 'adaptation', ensemble: 'medecin', icone: ic('pilule', '#f0e8a0', '#c8b050', '#ffffff') });
+  A('ACT_023', 'Parchemin de téléportation', 1, 'S1 H1', 2, 'teleport', {}, 'Vous téléporte dans une salle déjà visitée.', { ensemble: 'espace', icone: ic('rouleau', '#8a7ab0', '#e8dcc0', '#3a3040'), sansCible: 'conserve' });
   A('ACT_024', 'Rasenshuriken', 4, 'B1 H1', 4, 'rasenshuriken', {}, 'Un immense shuriken de vent traverse tout et explose (15× autour).', { statut: 'adaptation', ensemble: 'renard', icone: ic('fuma', '#e0f4ff', '#6ab8f8', '#ffffff') });
   A('ACT_025', 'Dragons de feu', 3, 'H1 B1', 3, 'dragons', {}, 'Quatre dragons de feu chercheurs (4×, brûlure).', { icone: ic('flamme', '#c83018', '#f07820', '#ffe060') });
   A('ACT_026', 'Forêt naissante', 3, 'A1 B1', 4, 'racines', {}, 'Des racines jaillissent sous chaque ennemi : immobilisation 2,5 s et dégâts répétés.', { statut: 'adaptation (Mokuton)', icone: ic('racine', '#6a4a2a', '#4a3018', '#8ac060') });
@@ -485,6 +512,13 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   A('ACT_031', 'Rituel de permutation', 3, 'P1 C1', 0, 'permutation', {}, 'Usage unique : chaque passif (hors objets-clés) est remplacé par un autre.', { unique: true, icone: ic('sceau', '#6a2a8a', '#e8dcc0', '#c83a2a') });
   A('ACT_032', 'Genjutsu du temps suspendu', 2, 'L1 S1', 4, 'ralentir_tous', { duree: 6 }, 'Ralentit tous les ennemis de moitié pendant 6 s.', { icone: ic('lune', '#6a80c0', '#3a4a8a', '#e0e8ff') });
   A('ACT_033', 'Sablier du courant', 2, 'H1 L1', 0, 'bonus', { duree: 6, bonus: { s: 'vitesse', a: 1.2 } }, 'Recharge dans le temps (20 s en combat) : 6 s de vitesse +1,2.', { recharge: 20, icone: ic('fiole', '#6ac8e8', '#3a8ab0', '#ffffff') });
+  // ── Passe gameplay : nouvelles techniques ──
+  A('ACT_034', 'Shunshin', 2, 'H1 S1', 2, 'shunshin', { portee: 4.5 }, 'Téléportation éclair vers la visée (4,5 tuiles, glisse le long des murs) ; au départ, un nuage de fumée désoriente les ennemis proches.', { ensemble: 'espace', icone: ic('plume', '#d8d8e8', '#7a7a98', '#ffffff') });
+  A('ACT_035', 'Chemin Preta', 3, 'P1 B1', 3, 'preta', {}, 'Absorbe tous les projectiles ennemis en vol ; huit absorbés ou plus vous rendent une réserve de chakra.', { statut: 'adaptation', ensemble: 'akatsuki', icone: ic('oeil', '#b4a4d8', '#5a4a8a', '#ffffff') });
+  A('ACT_036', 'Clones explosifs', 3, 'H1 B1', 3, 'clones_explosifs', { n: 3, coef: 3.5 }, 'Trois clones foncent sur les ennemis les plus proches et explosent (×3,5 dégâts chacun).', { statut: 'adaptation', icone: ic('masque', '#f6cf3e', '#c83a2a', '#ffe070') });
+  A('ACT_037', 'Marque du dieu du tonnerre', 3, 'L1 H1', 3, 'hiraishin', { coef: 4 }, 'Premier usage : pose une marque (gratuit). Second usage : vous y téléporte et tranche tout sur la ligne (×4).', { statut: 'adaptation', ensemble: 'espace', icone: ic('kunai', '#e8d060', '#8a6a20', '#ffffff') });
+  A('ACT_038', 'Pluie de kunai', 2, 'H1 S1', 3, 'pluie_kunai', { n: 14, coef: 1.6 }, 'Quatorze kunai tombent sur les ennemis (cercles annoncés, ×1,6 chacun).', { icone: ic('kunai', '#c8ccd8', '#6a7080', '#c83a2a') });
+  A('ACT_039', 'Rempart de Susanoo', 4, 'B1 P1', 4, 'susanoo', { duree: 5, coef: 6 }, 'Cinq secondes : un rempart spectral arrête tous les tirs venus de face ; à la fin, un sabre géant balaie devant vous (×6).', { statut: 'adaptation', icone: ic('bouclier', '#e0506a', '#6a1432', '#ff9aaa') });
   A('ACT_050', 'Relais', 0, '', 1, 'relais', {}, 'Sacrifie un clone : explosion de chakra (5× dégâts autour).', { persoExclusif: 'ALT_001', icone: ic('masque', '#6a2a1a', '#f28a22', '#28407c') });
   // un seul objet actif par identifiant ; les actifs comptent dans les transformations dès leur première prise
 })();
@@ -2178,6 +2212,12 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   TR('TRF_011', 'Meute d’invocation', 'meute', 'Deux compagnons supplémentaires ; tous les familiers +25 %.', [{ familier: 'FAM_TIGRE_ENCRE' }, { familier: 'FAM_AKAMARU' }, { drapeau: 'familiersForts' }], { couche: 'corps', motif: 'bandeau_bras', couleur: '#c83a2a' }, { icone: { forme: 'chien', a: '#c8a870' } });
   TR('TRF_012', 'Huit Portes', 'portes', 'Plafond de cadence +1, vitesse +0,5, dégâts +1 ; vapeur verte.', [{ s: 'plafondCadence', a: 1 }, { s: 'vitesse', a: 0.5 }, { s: 'degats', a: 1 }], { couche: 'aura', couleur: '#8af07a' }, { icone: { forme: 'poing', a: '#6ae07a' } });
   TR('TRF_013', 'Artiste explosif', 'argile', 'Vos tirs explosent légèrement ; vos explosions ne vous blessent plus.', [{ impact: 'explosion', r: 0.8, coef: 0.4 }, { drapeau: 'immuniteExplosion' }], { couche: 'bras', motif: 'lueur_poings', couleur: '#f0e8d8' }, { icone: { forme: 'oiseau', a: '#f0e8d8' } });
+  // passe gameplay : cinq ensembles de plus (objets d’assassin, de vent, d’espace-temps, de l’organisation, de soin)
+  TR('TRF_014', 'Racine de l’ANBU', 'anbu', 'Critiques +10 %. Une élimination vous fond dans l’ombre 1,5 s (toutes les 4 s au plus) : les ennemis vous perdent et tous vos coups y sont critiques.', [{ critique: 0.1 }, { quand: 'elimination', cooldown: 4, faire: { type: 'invisibilite', duree: 1.5 } }, { drapeau: 'critOmbre' }], { couche: 'tete', motif: 'masque_anbu', couleur: '#f0ece4' }, { icone: { forme: 'masque', a: '#f0ece4', b: '#c8302a' } });
+  TR('TRF_015', 'Danseur du vent', 'vent', 'Vitesse +0,4, tirs plus rapides. Frôler un tir ennemi (zone élargie) décoche une lame de vent sur l’ennemi le plus proche (×2,5).', [{ s: 'vitesse', a: 0.4 }, { s: 'vitesseTir', a: 1.5 }, { drapeau: 'frolement' }, { drapeau: 'frolementLarge' }, { quand: 'frolement', cooldown: 0.2, faire: { type: 'lame_vent', coef: 2.5 } }], { couche: 'aura', motif: 'feuilles', couleur: '#7ae07a' }, { icone: { forme: 'tornade', a: '#8ae8b8' } });
+  TR('TRF_016', 'Éclair jaune', 'espace', 'Vitesse +0,5. Toutes les 8 s, le premier coup qui vous atteindrait est esquivé : vous vous téléportez et un kunai marqué explose à votre place (×3).', [{ s: 'vitesse', a: 0.5 }, { drapeau: 'eclairJaune' }], { couche: 'aura', motif: 'eclair', couleur: '#ffe070' }, { icone: { forme: 'kunai', a: '#ffe070', b: '#a08020' } });
+  TR('TRF_017', 'Nuage écarlate', 'akatsuki', 'Une réserve instable. Pactes plus fréquents (+20 %) et à un contenant au plus ; chaque pacte conclu dans la partie : dégâts +0,5 (jusqu’à +2).', [{ sante: { instable: 2 } }, { drapeau: 'nuageEcarlate' }], { couche: 'corps', motif: 'manteau_nuages', couleur: '#c8303a' }, { icone: { forme: 'nuage', a: '#c8303a', w: '#f0ece4' } });
+  TR('TRF_018', 'Ninja médical', 'medecin', 'Un contenant. Chaque soin rend une demi-unité de plus ; le soin qui déborde devient du chakra protecteur (une réserve par soin au plus).', [{ sante: { cont: 1 } }, { drapeau: 'ninjaMedical' }], { couche: 'bras', motif: 'paumes', couleur: '#5ae080' }, { icone: { forme: 'gant', a: '#5ae080' } });
 
   // ── Synergies documentées ──
   const SY = (id, nom, composants, type, desc, test, effets) => DON.synergies.push({ id, nom, composants, type, desc, test, effets: effets || [] });
@@ -2282,6 +2322,31 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   SY('SYN_094', 'Gardiens de Katsuyu', ['PSV_063', 'PSV_093'], 'dediee', 'Katsuyu soigne un demi-cœur toutes les quatre salles (doublé par la limace).', 'Soin à la 4e salle.', [{ quand: 'salle_nettoyee', tousLes: 4, faire: { type: 'soin', demis: 1 } }]);
   SY('SYN_095', 'Sceau maudit, niveau 2', ['PSV_091', 'PSV_133'], 'dediee', 'À santé basse, un coup reçu déploie les ailes du sceau : lévitation et dégâts +1 pour la salle.', 'Lévitation à santé basse.', [{ quand: 'degat_recu', si: 'santeBasse', faire: { type: 'bonus', bonus: { s: 'degats', a: 1, vol: true }, duree: 'salle', cumulMax: 1 } }]);
   SY('SYN_096', 'Onde du démon', ['PSV_055', 'PSV_098'], 'dediee', 'Dégâts +1 ; chaque coup reçu libère une onde de chakra rouge autour de vous.', 'Explosion autour du joueur après un coup.', [{ s: 'degats', a: 1 }, { quand: 'degat_recu', faire: { type: 'explosion', r: 1.8, coef: 1.5 } }]);
+  // ── Passe gameplay : synergies des nouvelles mécaniques (paires et trios) ──
+  SY('SYN_097', 'Chasseur patient', ['PSV_159', 'PSV_171'], 'dediee', 'La concentration aiguise l’œil : +3 % de coup critique par cran de concentration.', 'Critiques plus fréquents en série.', [{ drapeau: 'chasseurPatient' }]);
+  SY('SYN_098', 'La marque qui saigne', ['PSV_162', 'PSV_163'], 'dediee', 'Une cible marquée saigne aussi ; le saignement dure deux fois plus.', 'Marque et saignement ensemble.', [{ drapeau: 'marqueSaignante' }]);
+  SY('SYN_099', 'Pression meurtrière', ['PSV_164', 'PSV_174'], 'dediee', 'Un ennemi qui entre dans votre aura de pression est saisi de peur (1,5 s, une fois).', 'Fuite à l’entrée de l’aura.', [{ drapeau: 'auraTerreur' }]);
+  SY('SYN_100', 'Essaim insatiable', ['PSV_160', 'PSV_006'], 'dediee', 'Les larves naissent deux fois plus souvent et empoisonnent ce qu’elles mordent.', 'Larves empoisonnées.', [{ parasite: 0.25 }, { drapeau: 'larvesVenin' }]);
+  SY('SYN_101', 'Espace sans fin', ['PSV_161', 'PSV_007'], 'dediee', 'Les tirs repliés ressortent du mur opposé deux fois de plus.', 'Trois traversées de la salle.', [{ continuum: true }, { continuum: true }]);
+  SY('SYN_102', 'Sable dormant', ['PSV_168', 'PSV_010'], 'dediee', 'Les grains suspendus frappent 25 % plus fort quand ils convergent.', 'Dégâts ×1,25.', [{ coefDegats: 1.25 }]);
+  SY('SYN_103', 'Tourbillon de braises', ['PSV_167', 'PSV_170'], 'dediee', 'La spirale sème un sillage de feu deux fois plus dense et 50 % plus brûlant.', 'Anneau de flammes autour de vous.', [{ drapeau: 'sillageDense' }]);
+  SY('SYN_104', 'Shuriken sans fin', ['PSV_165', 'PSV_030'], 'dediee', 'Les éclats d’une scission peuvent eux-mêmes se scinder une fois.', 'Scission en cascade.', [{ drapeau: 'scissionDouble' }]);
+  SY('SYN_105', 'Pivot du dieu du tonnerre', ['PSV_169', 'PSV_005'], 'dediee', 'Un tir qui pivote frappe 50 % plus fort.', 'Dégâts ×1,5 après pivot.', [{ drapeau: 'pivotFort' }]);
+  SY('SYN_106', 'Arsenal lourd', ['PSV_173', 'PSV_024'], 'dediee', 'Une lame lourde tous les cinq tirs au lieu de sept.', 'Lame lourde au cinquième tir.', [{ septieme: 5 }]);
+  SY('SYN_107', 'Art à retardement', ['PSV_178', 'PSV_149'], 'dediee', 'Les étiquettes plantées explosent 50 % plus fort et plus large.', 'Explosion différée plus large.', [{ drapeau: 'etiquettesFortes' }]);
+  SY('SYN_108', 'Feu posthume', ['PSV_166', 'PSV_043'], 'dediee', 'Un ennemi tué laisse parfois (30 %) une nappe de feu alliée.', 'Nappe de feu à l’élimination.', [{ quand: 'elimination', si: 'ennemiNonBoss', chance: 0.3, faire: { type: 'zone', zone: 'feu_allie', r: 20, duree: 3, coef: 0.8 } }]);
+  SY('SYN_109', 'Garde parfaite', ['PSV_172', 'PSV_096'], 'dediee', 'Une substitution réussie prolonge la série au lieu de la briser (+1).', 'Série prolongée par une bûche.', [{ drapeau: 'serieSubstitution' }]);
+  SY('SYN_110', 'Danse sous les tirs', ['PSV_175', 'PSV_035'], 'dediee', 'Chaque frôlement donne 1,5 s de vitesse +0,5 (trois fois au plus).', 'Vitesse après un frôlement.', [{ quand: 'frolement', faire: { type: 'bonus', bonus: { s: 'vitesse', a: 0.5 }, duree: 1.5, cumulMax: 3 } }]);
+  SY('SYN_111', 'Œil des six chemins', ['PSV_177', 'PSV_028'], 'dediee', 'L’attraction rassemble : la foudre saute à trois ennemis au lieu de deux.', 'Chaîne de foudre plus longue.', [{ impact: 'chaine', sauts: 1, r: 3, coef: 0.45 }]);
+  SY('SYN_112', 'Sang pour sang', ['PSV_180', 'PSV_133'], 'dediee', 'À deux demi-unités ou moins, une élimination sur huit soigne une demi-unité.', 'Soin à santé basse.', [{ quand: 'elimination', si: 'santeBasse', chance: 0.125, faire: { type: 'soin', demis: 1 } }]);
+  SY('SYN_113', 'Bout portant sanglant', ['PSV_157', 'PSV_163'], 'dediee', 'Un coup porté dans le premier tiers de la portée fait toujours saigner.', 'Saignement garanti au contact.', [{ drapeau: 'boutPortantSaigne' }]);
+  SY('SYN_114', 'Tireur d’élite', ['PSV_158', 'PSV_037'], 'dediee', 'Au-delà de la moitié de la portée, chaque coup est critique.', 'Critique garanti de loin.', [{ drapeau: 'eliteLoin' }]);
+  SY('SYN_115', 'Aura du renard', ['PSV_174', 'PSV_055'], 'dediee', 'Les ennemis dans votre aura de pression brûlent.', 'Brûlure dans l’aura.', [{ drapeau: 'auraFeu' }]);
+  SY('SYN_116', 'Double technique de l’ombre', ['PSV_179', 'PSV_051'], 'dediee', 'La salve de l’actif immobilise les ennemis touchés (1 s).', 'Immobilisation après un actif.', [{ quand: 'actif_utilise', faire: { type: 'statut_proches', statut: 'immobilise', r: 3, duree: 1 } }]);
+  SY('SYN_117', 'L’art du ninja silencieux', ['PSV_159', 'PSV_171', 'PSV_039'], 'dediee', 'Critiques ×3 au lieu de ×2,5 ; un tir perdu ne fait plus retomber la concentration qu’à moitié.', 'Critique ×3.', [{ drapeau: 'artSilencieux' }]);
+  SY('SYN_118', 'Tempête de lames', ['PSV_165', 'PSV_173', 'PSV_003'], 'dediee', 'Chaque lame lourde qui touche se scinde en cinq éclats.', 'Cinq éclats à chaque lame lourde.', [{ drapeau: 'tempeteLames' }]);
+  SY('SYN_119', 'Les trois marques', ['PSV_162', 'PSV_163', 'PSV_164'], 'dediee', 'Marque, saignement et peur s’appliquent deux fois plus souvent ; une cible marquée qui fuit subit des dégâts doublés.', 'Statuts fréquents, dégâts ×2 sur cible marquée en fuite.', [{ drapeau: 'troisMarques' }]);
+  SY('SYN_120', 'Maître du sable suspendu', ['PSV_168', 'PSV_065', 'PSV_150'], 'dediee', 'Les grains suspendus arrêtent les tirs ennemis qui les touchent.', 'Tirs ennemis bloqués par les grains.', [{ drapeau: 'sableBouclier' }]);
 
   // ── Objectifs (missions) : conditions → déblocages ──
   const OB = (id, nom, desc, condition, debloque, texte) => DON.objectifs.push({ id, nom, desc, condition, recompense: { debloque: debloque || [], texte } });
@@ -7587,6 +7652,7 @@ const FORMES_ICONES = {
   boussole: ['...aaaaaa...', '..awwwwwwa..', '.awwwbbwwwa.', 'awwwwbbwwwwa', 'awwwwccwwwwa', 'awwwwccwwwwa', 'awwwwccwwwwa', '.awwwwwwwwa.', '..awwwwwwa..', '...aaaaaa...'],
   poids: ['aaaa....aaaa', 'awda....awda', 'aadd....aadd', 'aadd....aadd', 'aaddbbbbaadd', 'aaddbbbbaadd', 'aadd....aadd', 'aadd....aadd', 'aaaa....aaaa'],
   sandale: ['............', '.aaaaaaaaa..', 'aawwwwwwwwa.', 'abbbbbbbbbba', 'aaaaaaaaaaaa', '.cc.....cc..'],
+  nuage: ['....wwww....', '.wwwaaaaw...', 'waaaaaaaawww', 'waaaaaaaaaaw', '.waaaaaaaaaw', 'waaaaaaaaaw.', '.wwaawwaaw..', '...ww..ww...'],
   gant: ['.a.a.a......', '.a.a.a.a....', '.aaaaaaa....', '.awaaaaa.aa.', '.aaaaaaaaaa.', '.aaaaaaaaa..', '..bbbbbbb...', '..bbbbbbb...', '..ccccccc...'],
   anneau: ['...aaaa...', '..awwaaa..', '.aw....ad.', '.a......d.', '.a......d.', '.ad....dd.', '..aadddd..', '...dddd...'],
   cloche: ['....cc....', '...aaaa...', '..awwaaa..', '..awaaaa..', '.aaaaaaad.', '.aaaaaaad.', 'aaaaaaaadd', 'dddddddddd', '....bb....'],
@@ -8343,10 +8409,12 @@ function dessinerOrbe(g, o, X, Y) {
 
 // ── Joueur (mutations cumulatives par couches) ──
 function dessinerJoueur(g, J, x, y) {
-  if (J.invuln > 0 && J.etat !== 'objet' && !G.reglages.sansFlash && Math.floor(J.invuln * 12) % 2 === 0) { g.globalAlpha = 0.35; }
-  if (J.intangible) g.globalAlpha = 0.45;
+  let aBase = 1; // clignotement d'invulnérabilité, intangibilité, ombre (ennemis qui vous ont perdu de vue)
+  if (J.invuln > 0 && J.etat !== 'objet' && !G.reglages.sansFlash && Math.floor(J.invuln * 12) % 2 === 0) aBase = 0.35;
+  if (J.intangible) aBase = 0.45; else if (G.appat && !G.appat.fini) aBase = Math.min(aBase, 0.5);
+  g.globalAlpha = aBase;
   const M = J.mutations;
-  if (M.aura) dessinerAura(g, M.aura, x, y);
+  if (M.aura) dessinerAura(g, M.aura, x, y, false);
   if (J.sage) { // énergie naturelle accumulée : pigment orange autour des yeux et lueur au sol
     g.globalAlpha *= 0.5; g.drawImage(ellipse(12, 5, 'rgba(240,138,36,0.6)'), x - 12, y - 5); g.globalAlpha = J.intangible ? 0.45 : 1;
     if (Math.random() < 0.15) G.particules.push({ x: J.x + (Math.random() - 0.5) * 18, y: J.y - Math.random() * 24, vx: 0, vy: -20, age: 0, duree: 0.4, couleur: '#f0a040', taille: 1 });
@@ -8363,21 +8431,53 @@ function dessinerJoueur(g, J, x, y) {
     g.drawImage(ic, x - 10, y - 56); g.fillStyle = PEAU.s; g.fillRect(x - 9, y - 38, 3, 4); g.fillRect(x + 6, y - 38, 3, 4); g.globalAlpha = 1; return; }
   if (J.def.teinte) { // variante altérée : liseré de teinte
     const S = spritesPerso(J.cle); const vue = { haut: 'dos', bas: 'face', gauche: 'gauche', droite: 'cote' };
-    const t = silhouette(S.tetes[vue[J.dirTete] || 'face'].normal, J.def.teinte); g.globalAlpha *= 0.5; g.drawImage(t, x - 13 - 1, y - 32); g.drawImage(t, x - 13 + 1, y - 32); g.globalAlpha = J.invuln > 0 && Math.floor(J.invuln * 12) % 2 === 0 ? 0.35 : 1;
+    const t = silhouette(S.tetes[vue[J.dirTete] || 'face'].normal, J.def.teinte); g.globalAlpha *= 0.5; g.drawImage(t, x - 13 - 1, y - 32); g.drawImage(t, x - 13 + 1, y - 32); g.globalAlpha = aBase;
   }
   if (M.dos) dessinerCouche(g, M.dos, x, y, J, 'dos');
   dessinerPerso(g, J.cle, x, y, { dirCorps: J.dirCorps, dirTete: J.dirTete, frame, etatTete });
-  for (const c of ['peau', 'yeux', 'tete', 'bras', 'corps']) if (M[c]) dessinerCouche(g, M[c], x, y, J, c);
+  if (J.susanoo) dessinerSusanoo(g, { susanoo: { actif: true, vacille: J.susanoo.t < 0.8, a: J.susanoo.a }, r: 8 }, x, y - 12); // rempart spectral (actif)
+  for (const c of ['corps', 'peau', 'yeux', 'tete', 'bras']) if (M[c]) dessinerCouche(g, M[c], x, y, J, c);
+  if (M.aura) dessinerAura(g, M.aura, x, y, true); // moitié avant des orbites, étincelles
   if (J.kaiten) g.drawImage(anneau(26, 2, 'rgba(200,230,255,0.8)'), x - 27, y - 37);
   if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { const a = G.temps * 3; for (let i = 0; i < 6; i++) { g.fillStyle = '#d8b070'; g.fillRect(Math.round(x + Math.cos(a + i) * 14), Math.round(y - 12 + Math.sin(a + i) * 10), 2, 2); } }
   g.globalAlpha = 1;
 }
-function dessinerAura(g, A, x, y) {
-  const t = G.temps; const c = A.couleur || '#f0a030';
-  g.globalAlpha = 0.35 + 0.1 * Math.sin(t * 6);
+// Aura : lueur ovale (derrière le corps) ; les motifs en orbite passent derrière puis devant
+function dessinerAura(g, A, x, y, devant) {
+  const t = G.temps; const c = A.couleur || '#f0a030'; const a0 = g.globalAlpha;
+  if (ORBITES[A.motif]) { orbiteMutation(g, A, x, y, devant); return; }
+  if (A.motif === 'eclair') { eclairJaune(g, A, x, y, devant); return; }
+  if (devant) { if (A.motif === 'lueur_poings') dessinerCouche(g, A, x, y, G.joueur, 'bras'); return; }
+  g.globalAlpha = a0 * (0.35 + 0.1 * Math.sin(t * 6));
   g.drawImage(ellipse(15, 19, c), x - 15, y - 36);
   if (A.motif === 'queues') for (let i = 0; i < (A.n || 1); i++) { const a = Math.PI / 2 + (i - (A.n - 1) / 2) * 0.5 + Math.sin(t * 3 + i) * 0.2; g.drawImage(disque(3, c), Math.round(x + Math.cos(a) * 14 - 3), Math.round(y - 6 + Math.sin(a) * 8)); g.drawImage(disque(2, c), Math.round(x + Math.cos(a) * 20 - 2), Math.round(y - 4 + Math.sin(a) * 12)); }
-  g.globalAlpha = 1;
+  g.globalAlpha = a0;
+}
+// Mutations en orbite (sable, insectes, papiers, feuilles) : n éléments sur une ellipse, profondeur = sinus de l'angle
+const ORBITES = {
+  sable_flottant: { n: 5, v: 2, R: 16, r: 6, y: -20, w: 2, h: 2, c: () => '#d8b070' },
+  insectes: { n: 6, v: 5, R: 12, r: 8, y: -16, w: 1, h: 1, c: () => '#1a1a1a', ecart: 3 },
+  papier: { n: 3, v: 3, R: 15, r: 9, y: -14, w: 3, h: 2, c: () => '#f0ece0' },
+  feuilles: { n: 5, v: 3.2, R: 17, r: 7, y: -12, w: 3, h: 2, c: (A, i) => i % 2 ? nuancer(A.couleur || '#7ae07a', 0.72) : (A.couleur || '#7ae07a'), monte: 4 },
+};
+function orbiteMutation(g, A, x, y, devant) {
+  const O = ORBITES[A.motif], t = G.temps * O.v;
+  for (let i = 0; i < O.n; i++) {
+    const ang = t * (1 + (i % 2) * 0.15) + i * Math.PI * 2 / O.n, prof = Math.sin(ang);
+    if (devant !== null && (prof > 0) !== devant) continue;
+    const R = O.R + (O.ecart ? (i % 3) * O.ecart : 0);
+    const px = Math.round(x + Math.cos(ang) * R), py = Math.round(y + O.y + prof * O.r - (O.monte ? ((G.temps * 0.8 + i * 0.37) % 1) * O.monte * 2 : 0));
+    g.fillStyle = O.c(A, i); g.fillRect(px, py, O.w, O.h);
+    if (A.motif === 'feuilles') { g.fillStyle = nuancer(A.couleur || '#7ae07a', 1.3); g.fillRect(px + (Math.cos(ang) > 0 ? 0 : 2), py, 1, 1); }
+  }
+}
+// Éclair jaune : lueur dorée ; prête (esquive disponible), elle crépite d'étincelles
+function eclairJaune(g, A, x, y, devant) {
+  const J = G.joueur, pret = !(J.tEclair > 0), a0 = g.globalAlpha;
+  if (!devant) { g.globalAlpha = a0 * (pret ? 0.3 + 0.1 * Math.sin(G.temps * 9) : 0.1); g.drawImage(ellipse(15, 19, A.couleur), x - 15, y - 36); g.globalAlpha = a0; return; }
+  if (!pret || Math.random() > 0.35) return;
+  let px = x + (Math.random() - 0.5) * 22, py = y - 6 - Math.random() * 24; g.fillStyle = Math.random() < 0.5 ? '#fff8c0' : A.couleur;
+  for (let k = 0; k < 3; k++) { const nx = px + (Math.random() - 0.5) * 6, ny = py + 2 + Math.random() * 3; lignePixel(g, px, py, nx, ny, g.fillStyle, 1); px = nx; py = ny; }
 }
 function dessinerCouche(g, v, x, y, J, couche) {
   const col = v.couleur || '#ffffff';
@@ -8388,15 +8488,45 @@ function dessinerCouche(g, v, x, y, J, couche) {
     case 'cape': g.fillStyle = col; g.fillRect(x - 7, y - 11, 14, 9); g.fillStyle = nuancer(col, 0.7); g.fillRect(x - 7, y - 3, 14, 2); break;
     case 'cornes': g.fillStyle = col; g.fillRect(x - 9, y - 33, 2, 4); g.fillRect(x + 8, y - 33, 2, 4); g.fillRect(x - 10, y - 35, 1, 2); g.fillRect(x + 10, y - 35, 1, 2); break;
     case 'masque': if (J.dirTete === 'bas') { g.fillStyle = col; g.fillRect(x - 7, y - 16, 14, 5); g.fillStyle = '#1c1420'; g.fillRect(x - 5, y - 15, 3, 1); g.fillRect(x + 3, y - 15, 3, 1); } break;
-    case 'sable_flottant': { const a = G.temps * 2; for (let i = 0; i < 5; i++) { g.fillStyle = '#d8b070'; g.fillRect(Math.round(x + Math.cos(a * 1.3 + i * 1.2) * 16), Math.round(y - 20 + Math.sin(a + i) * 6), 2, 2); } break; }
-    case 'insectes': { const a = G.temps * 5; for (let i = 0; i < 6; i++) { g.fillStyle = '#1a1a1a'; g.fillRect(Math.round(x + Math.cos(a + i * 1.05) * (12 + i % 3 * 3)), Math.round(y - 16 + Math.sin(a * 1.3 + i) * 8), 1, 1); } break; }
+    case 'sable_flottant': case 'insectes': case 'papier': case 'feuilles': orbiteMutation(g, v, x, y, null); break;
     case 'queue': g.fillStyle = col; g.fillRect(x + 5, y - 6, 3, 2); g.fillRect(x + 7, y - 8, 3, 2); g.fillRect(x + 9, y - 10, 2, 2); break;
     case 'plumes': g.fillStyle = col; g.fillRect(x - 12, y - 16, 4, 2); g.fillRect(x - 14, y - 18, 3, 2); g.fillRect(x + 8, y - 16, 4, 2); g.fillRect(x + 11, y - 18, 3, 2); break;
     case 'oeil_front': if (J.dirTete === 'bas') { g.fillStyle = '#f0f0f0'; g.fillRect(x - 1, y - 26, 3, 2); g.fillStyle = col; g.fillRect(x, y - 26, 1, 2); } break;
     case 'point_front': if (J.dirTete !== 'haut') { g.fillStyle = col; g.fillRect(x - 1, y - 24, 2, 2); } break;
     case 'bras_marionnette': g.fillStyle = '#c8b090'; g.fillRect(x - 11, y - 10, 3, 2); g.fillRect(x + 8, y - 10, 3, 2); g.fillStyle = '#6a5a4a'; g.fillRect(x - 12, y - 11, 1, 1); break;
     case 'lueur_poings': g.fillStyle = col; g.fillRect(x - 8, y - 6, 2, 2); g.fillRect(x + 6, y - 6, 2, 2); break;
-    case 'papier': { const a = G.temps * 3; for (let i = 0; i < 3; i++) { g.fillStyle = '#f0ece0'; g.fillRect(Math.round(x + Math.cos(a + i * 2.1) * 15), Math.round(y - 14 + Math.sin(a + i * 2.1) * 9), 3, 2); } break; }
+    case 'masque_anbu': { // masque d'animal blanc : fentes noires, traits rouges ; de dos, la lanière
+      const d = J.dirTete;
+      if (d === 'haut') { g.fillStyle = '#3a3040'; g.fillRect(x - 7, y - 21, 14, 1); break; }
+      const ombre = nuancer(col, 0.78);
+      if (d === 'bas') { // de face : centré sur x, trous sur les yeux (x−5 et x+4), museau court
+        g.fillStyle = col; g.fillRect(x - 6, y - 23, 13, 10); g.fillRect(x - 4, y - 13, 9, 1);
+        g.fillStyle = ombre; g.fillRect(x + 6, y - 22, 1, 9); g.fillRect(x - 4, y - 13, 9, 1); g.fillRect(x - 1, y - 16, 3, 1);
+        g.fillStyle = '#1c1420'; g.fillRect(x - 5, y - 19, 2, 2); g.fillRect(x + 4, y - 19, 2, 2);
+        g.fillStyle = '#c8302a'; g.fillRect(x, y - 23, 1, 3); g.fillRect(x - 5, y - 21, 2, 1); g.fillRect(x + 4, y - 21, 2, 1); g.fillRect(x - 6, y - 16, 1, 2); g.fillRect(x + 6, y - 16, 1, 2);
+      } else { const s = d === 'gauche' ? -1 : 1; // de profil : le masque couvre l'avant du visage, museau qui dépasse
+        const bx = s > 0 ? x + 3 : x - 9; g.fillStyle = col; g.fillRect(bx, y - 23, 7, 10); g.fillRect(s > 0 ? x + 10 : x - 11, y - 17, 2, 3);
+        g.fillStyle = ombre; g.fillRect(bx, y - 14, 7, 1); g.fillRect(s > 0 ? x + 10 : x - 11, y - 15, 2, 1);
+        g.fillStyle = '#1c1420'; g.fillRect(s > 0 ? x + 7 : x - 8, y - 19, 2, 2);
+        g.fillStyle = '#c8302a'; g.fillRect(s > 0 ? x + 6 : x - 7, y - 21, 3, 1); g.fillRect(s > 0 ? x + 5 : x - 5, y - 16, 1, 2);
+      }
+      break;
+    }
+    case 'manteau_nuages': { // long manteau sombre à col haut, nuages rouges cernés de blanc
+      const dos = J.dirCorps === 'haut', N = (cx, cy) => { g.fillStyle = '#f0ece4'; g.fillRect(cx, cy, 4, 3); g.fillRect(cx + 1, cy - 1, 2, 1); g.fillStyle = col; g.fillRect(cx + 1, cy, 2, 2); };
+      g.fillStyle = '#1e1a24'; g.fillRect(x - 7, y - 12, 14, 10); g.fillRect(x - 6, y - 2, 12, 1); g.fillRect(x - 5, y - 14, 10, 2);
+      g.fillStyle = '#2e2836'; g.fillRect(x - 7, y - 12, 1, 10); g.fillRect(x + 6, y - 12, 1, 10);
+      if (!dos) { g.fillStyle = col; g.fillRect(x - 4, y - 14, 8, 1); g.fillStyle = '#14101a'; g.fillRect(x, y - 12, 1, 10); }
+      N(x - 6, y - 9); N(x + 2, y - 5); if (dos) N(x - 2, y - 12);
+      break;
+    }
+    case 'paumes': { // paumes de soin : lueur verte qui pulse, étincelles qui montent
+      const k = 0.55 + 0.35 * Math.sin(G.temps * 5), a0 = g.globalAlpha; g.globalAlpha = a0 * k;
+      g.drawImage(disque(3, col), x - 11, y - 11); g.drawImage(disque(3, col), x + 4, y - 11); g.globalAlpha = a0;
+      g.fillStyle = '#e0ffe8'; g.fillRect(x - 9, y - 9, 2, 2); g.fillRect(x + 6, y - 9, 2, 2);
+      if (Math.random() < 0.06) G.particules.push({ x: J.x + (Math.random() < 0.5 ? -8 : 7), y: J.y - 9, vx: 0, vy: -16, age: 0, duree: 0.5, couleur: col, taille: 1 });
+      break;
+    }
     case 'maquillage': if (J.dirTete === 'bas') { g.fillStyle = col; g.fillRect(x - 9, y - 18, 3, 1); g.fillRect(x + 7, y - 18, 3, 1); } break;
     default: if (couche === 'tete') { g.fillStyle = col; g.fillRect(x - 2, y - 34, 4, 2); }
   }
@@ -8508,7 +8638,7 @@ function dessinerIconeChampion(g, ic, x, y, c) {
 // Statuts lisibles sur le corps (en plus des symboles) : teinte de la nature du statut et signe qui l'accompagne —
 // flammèches (brûlure), bulles (poison), givre et éclats (gel), gouttes (ralenti), anneau d'ombre (immobilisé),
 // cœurs (charme), étoiles qui tournent (confus), volutes sombres (peur).
-const TEINTES_STATUT = { brulure: ['#ff7a2a', 0.22], poison: ['#7ae04a', 0.22], gel: ['#c0f0ff', 0.5], ralenti: ['#5ab0f0', 0.2], charme: ['#ff7ab0', 0.2], immobilise: ['#3a3050', 0.25] };
+const TEINTES_STATUT = { brulure: ['#ff7a2a', 0.22], poison: ['#7ae04a', 0.22], gel: ['#c0f0ff', 0.5], ralenti: ['#5ab0f0', 0.2], charme: ['#ff7ab0', 0.2], immobilise: ['#3a3050', 0.25], marque: ['#ff3040', 0.12] };
 function effetsStatuts(g, e, base, poser, x, y, h) {
   const S = e.statuts; if (!S) return; const R = Math.random, conf = G.reglages.confort, t = G.temps;
   for (const k in S) { const T = TEINTES_STATUT[k]; if (T) { g.globalAlpha = T[1] * (k === 'gel' ? 1 : 0.75 + 0.25 * Math.sin(t * 10 + e.uid)); poser(silhouetteMemo(base, T[0])); g.globalAlpha = 1; } }
@@ -8523,12 +8653,14 @@ function effetsStatuts(g, e, base, poser, x, y, h) {
   if (S.peur && R() < (conf ? 0.05 : 0.12)) p((R() - 0.5) * 6, -12, 0.5, '#3a3048', 2);
 }
 function dessinerSymboleStatut(g, k, x, y) {
-  const c = { brulure: '#ff7a2a', poison: '#7ae04a', ralenti: '#5ab0f0', immobilise: '#3a3050', charme: '#ff7ab0', peur: '#e0e0e0', confus: '#d0a0ff', gel: '#c0f0ff' }[k] || '#fff';
+  const c = { brulure: '#ff7a2a', poison: '#7ae04a', ralenti: '#5ab0f0', immobilise: '#3a3050', charme: '#ff7ab0', peur: '#e0e0e0', confus: '#d0a0ff', gel: '#c0f0ff', marque: '#ff4040', saignement: '#d02030' }[k] || '#fff';
   g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 1, 6, 6); g.fillStyle = c;
   if (k === 'brulure') { g.fillRect(x + 2, y, 1, 1); g.fillRect(x + 1, y + 1, 3, 2); g.fillRect(x, y + 3, 5, 1); }
   else if (k === 'poison') { g.fillRect(x + 1, y, 3, 1); g.fillRect(x, y + 1, 5, 3); }
   else if (k === 'immobilise') { g.fillStyle = '#9080c0'; g.fillRect(x, y + 2, 5, 1); g.fillRect(x + 2, y, 1, 5); }
   else if (k === 'charme') { g.fillRect(x, y, 2, 2); g.fillRect(x + 3, y, 2, 2); g.fillRect(x + 1, y + 2, 3, 2); }
+  else if (k === 'marque') { g.fillRect(x + 2, y, 1, 5); g.fillRect(x, y + 2, 5, 1); g.fillStyle = '#1c1420'; g.fillRect(x + 2, y + 2, 1, 1); } // réticule
+  else if (k === 'saignement') { g.fillRect(x + 2, y, 1, 1); g.fillRect(x + 1, y + 1, 3, 2); g.fillRect(x + 1, y + 3, 3, 1); g.fillStyle = '#ff8090'; g.fillRect(x + 1, y + 1, 1, 1); } // goutte
   else if (k === 'confus') { g.fillRect(x + 1, y, 3, 1); g.fillRect(x + 3, y + 1, 1, 1); g.fillRect(x + 2, y + 2, 1, 1); g.fillRect(x + 2, y + 4, 1, 1); }
   else g.fillRect(x, y, 5, 5);
 }
@@ -8775,6 +8907,15 @@ function dessinerEffet(g, e, X, Y) {
     case 'immunite': Police.ecrire(g, 'immunisé', x, y - k * 6, '#c0c0ff', { a: 'c' }); break;
     case 'frappe_sol': { const r = Math.round(e.r); g.globalAlpha = 0.5 + 0.4 * k; g.drawImage(anneau(r, 1, e.proprio === 'joueur' ? '#ffb060' : '#ff4a4a'), x - r - 1, y - r - 1); g.drawImage(anneau(Math.max(1, Math.round(r * k)), 1, '#ffe0a0'), x - Math.round(r * k) - 1, y - Math.round(r * k) - 1); g.globalAlpha = 1; if (!e.petite) { const h = Math.round((1 - k) * 120); g.fillStyle = '#6a3a2a'; g.fillRect(x - 5, y - h - 10, 10, 10); g.fillStyle = '#ffb040'; g.fillRect(x - 3, y - h - 16, 6, 6); } break; }
     case 'marque_sol': { const r = Math.round(e.r); g.globalAlpha = 0.35 + 0.4 * k; g.drawImage(ellipse(r, Math.round(r * 0.55), e.danger ? 'rgba(255,60,60,0.5)' : 'rgba(0,0,0,0.4)'), x - r, y - Math.round(r * 0.55)); g.globalAlpha = 1; break; }
+    case 'marque_hiraishin': { // kunai à trois branches planté au sol, inscription qui luit
+      const t = G.temps; g.globalAlpha = 0.5 + 0.3 * Math.sin(t * 5); g.drawImage(anneau(9, 1, '#ffe070'), x - 10, y - 10); g.globalAlpha = 1;
+      g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 11, 3, 10); g.fillStyle = '#c8ccd8'; g.fillRect(x, y - 10, 1, 8); g.fillStyle = '#e8d060'; g.fillRect(x - 3, y - 10, 2, 1); g.fillRect(x + 2, y - 10, 2, 1); break;
+    }
+    case 'clone_course': { const k2 = Math.min(1, e.age / e.duree), cx = X(lerp(e.x0, e.x1, k2)), cy = Y(lerp(e.y0, e.y1, k2)); g.globalAlpha = 0.75; dessinerPerso(g, G.joueur.cle, cx, cy, { dirCorps: e.x1 < e.x0 ? 'gauche' : 'droite', dirTete: e.x1 < e.x0 ? 'gauche' : 'droite', frame: Math.floor(e.age * 12) % 4, etatTete: 'normal' }); g.globalAlpha = 1; break; }
+    case 'etiquette_collee': { // étiquette explosive plantée dans la cible : clignote de plus en plus vite
+      const S = e.suit, cx = S ? X(S.x) : x, cy = (S ? Y(S.y) : y) - 14; if (Math.floor(e.age * (6 + 18 * k)) % 2) break;
+      g.fillStyle = '#1c1420'; g.fillRect(cx - 2, cy - 3, 5, 7); g.fillStyle = '#f4ecd8'; g.fillRect(cx - 1, cy - 2, 3, 5); g.fillStyle = '#d0302a'; g.fillRect(cx, cy - 1, 1, 3); break;
+    }
     case 'kaiten': { // tourbillon de Neji : arcs clairs qui tournent vite autour de lui, voile bleuté
       const S = e.suit, cx = S ? X(S.x) : x, cy = (S ? Y(S.y) : y) - 12, R = Math.round(e.r);
       g.globalAlpha = 0.22 * (1 - k * 0.5); g.drawImage(ellipse(R, Math.round(R * 0.8), '#c8e8ff'), cx - R, cy - Math.round(R * 0.8)); g.globalAlpha = 0.9 * (1 - k * 0.4);
@@ -9580,6 +9721,16 @@ function creerProjectileJoueur(J, x, y, a, deg, cycleId, budget, o = {}) {
   };
   if (p.traj.orbite) { p.dureeVie *= 2; p.orbR = 1.6 * TUILE; p.orbA = a; }
   if (P.differe && !J.tir.convergence) { p.differe = true; p.dureeVie = p.dureeVie * 0.5; }
+  if (P.distance) p.distance = P.distance;
+  if (P.concentration) p.concentration = true;
+  if (P.parasite) p.parasite = P.parasite;
+  if (P.continuum) p.continuum = P.continuum;
+  if (P.pivot) p.pivot = true;
+  if (P.sillage) p.sillage = P.sillage;
+  if (P.critique) p.critique = P.critique;
+  if (P.scission) p.scission = P.scission;
+  if (p.traj.spirale) { p.sensSpirale = (cycleId % 2) ? 1 : -1; }
+  if (P.septieme && cycleId % P.septieme === 0 && !o.appoint) { p.degats *= 3; p.taille *= 1.7; p.rTouche *= 1.4; p.perce = Math.max(p.perce, 2); p.lourde = true; } // septième lame
   G.proj.push(p); return p;
 }
 
@@ -9613,6 +9764,13 @@ function majProjectiles(dt) {
     if (TR.guidageEnnemi && p.proprio === 'ennemi') { const ac = Math.atan2(p.vy, p.vx), at = angleVers(p.x, p.y, J.x, J.y - 8); const d = diffAngle(ac, at); const k = Math.min(Math.abs(d), 2 * TR.guidageEnnemi * dt) * signe(d); const na = ac + k; const v = Math.hypot(p.vx, p.vy); p.vx = Math.cos(na) * v; p.vy = Math.sin(na) * v; }
     if (TR.onde) { const n = Math.hypot(p.vx, p.vy) || 1; const px = -p.vy / n, py = p.vx / n; const w = Math.cos(p.age * 16) * 16 * 16 * dt; p.x += px * w * 0.25; p.y += py * w * 0.25; }
     if (TR.acceleration) { const k = 1 + 1.2 * dt; p.vx *= k; p.vy *= k; }
+    if (TR.spirale && p.proprio === 'joueur') { const w = 5.5 / (1 + p.age * 3) * (p.sensSpirale || 1), a = Math.atan2(p.vy, p.vx) + w * dt, v = Math.hypot(p.vx, p.vy); p.vx = Math.cos(a) * v; p.vy = Math.sin(a) * v; } // spirale qui s'ouvre
+    if (p.pivot && !p.pivote && p.proprio === 'joueur') { // pivote une fois vers un ennemi qu'il frôle sur le côté
+      const c = ennemiLePlusProche(p.x, p.y, 2.6 * TUILE, e => !e.intangible && !e.cache && !p.touches.has(e));
+      if (c) { const ac = Math.atan2(p.vy, p.vx), at = angleVers(p.x, p.y, c.x, c.y - 8), d = Math.abs(diffAngle(ac, at)); if (d > 0.9 && d < 2.2) { const v = Math.hypot(p.vx, p.vy) * 1.15; p.vx = Math.cos(at) * v; p.vy = Math.sin(at) * v; p.pivote = true; if (J.drapeaux.pivotFort) p.degats *= 1.5; p.age = Math.min(p.age, p.dureeVie * 0.4); G.effets.push({ type: 'etincelle', x: p.x, y: p.y - p.z, age: 0, duree: 0.15 }); } }
+    }
+    if (p.sillage && p.proprio === 'joueur') { const dense = J.drapeaux.sillageDense; p.tSillage = (p.tSillage || 0) + dt; if (p.tSillage > (dense ? 0.05 : 0.1)) { p.tSillage = 0; creerZone(p.x, p.y, 'feu_allie', 1.1, { r: 9, dps: p.degats * (dense ? 0.52 : 0.35) }); } }
+    if (p.suspendu && J.drapeaux.sableBouclier) for (const q of G.proj) if (q.proprio === 'ennemi' && !q.mort && dist(q.x, q.y, p.x, p.y) < 9) { q.mort = true; G.effets.push({ type: 'etincelle', x: q.x, y: q.y, age: 0, duree: 0.12 }); }
     if (p.accel) { const k = 1 + p.accel * dt; p.vx *= k; p.vy *= k; }
     if (TR.orbite && p.proprio === 'joueur') { p.orbA += 5.5 * dt; p.orbR = Math.min(p.orbR + 20 * dt, 2.2 * TUILE); p.x = J.x + Math.cos(p.orbA) * p.orbR; p.y = J.y - 10 + Math.sin(p.orbA) * p.orbR; }
     else if (TR.retour && p.age > p.dureeVie * 0.45) {
@@ -9629,6 +9787,11 @@ function majProjectiles(dt) {
       let bloque = false;
       if (P.mur) bloque = true;
       else if (!(p.arc && p.z > 14) && tirArretePx(s, nx, ny, p.spectral)) bloque = true;
+      if (bloque && P.mur && p.continuum > 0 && p.proprio === 'joueur') { // tirs repliés : ressortent du mur opposé
+        const W = s.W * TUILE, H = s.H * TUILE, hor = Math.abs(p.vx) >= Math.abs(p.vy);
+        const qx = hor ? (p.vx > 0 ? TUILE * 1.05 : W - TUILE * 1.05) : p.x, qy = hor ? p.y : (p.vy > 0 ? TUILE * 1.05 : H - TUILE * 1.05);
+        if (!tirArretePx(s, qx, qy, p.spectral)) { p.continuum--; G.effets.push({ type: 'etincelle', x: p.x, y: p.y - p.z, age: 0, duree: 0.2 }); p.x = qx; p.y = qy; G.effets.push({ type: 'etincelle', x: qx, y: qy - p.z, age: 0, duree: 0.2 }); p.touches.clear(); p.age = Math.min(p.age, p.dureeVie * 0.5); continue; }
+      }
       if (bloque) {
         const tx = Math.floor(nx / TUILE), ty = Math.floor(ny / TUILE);
         if (!P.mur && PROP[t].pvTir && p.proprio === 'joueur') endommagerTuile(s, tx, ty, 1);
@@ -9665,6 +9828,10 @@ function majProjectiles(dt) {
       for (const f of J.familiers) if (f.bloque && dist(p.x, p.y, f.x, f.y - 8) < p.rTouche + (f.rBloc || 7)) { bloquePar = f; break; }
       if (bloquePar) { if (bloquePar.def.reflet) { const q = creerSousProjectile({ x: p.x, y: p.y, vitesse: 7 * TUILE, degats: J.stats.degats, recul: 30, taille: 1, apparence: 'glace', elements: new Set(['hyoton']), gen: 0, budget: { n: 2 }, cycleId: 0, impacts: [] }, Math.atan2(-p.vy, -p.vx), J.stats.degats); q.dureeVie = 1; } detruireProjectile(p, 'bloque'); continue; }
       if (J.profil.deviation && Entrees.visee.dir && dist(p.x, p.y, J.x, J.y - 10) < 30) { detruireProjectile(p, 'devie'); continue; }
+      if (J.drapeaux.frolement && !p.frole && !J.intangible && p.z < 20 && dist(p.x, p.y, J.x, J.y - 9) < p.rTouche + J.rTouche + (J.drapeaux.frolementLarge ? 16 : 10) && dist(p.x, p.y, J.x, J.y - 9) >= p.rTouche + J.rTouche) { // Instinct du combat : frôler un tir charge l'actif
+        p.frole = true; J.compteurs.frolements = (J.compteurs.frolements || 0) + 1; G.effets.push({ type: 'etincelle', x: p.x, y: p.y - p.z, age: 0, duree: 0.12 }); evenement('frolement', {});
+        if (J.compteurs.frolements % 8 === 0) { chargerActif(J, 1, 'frolement'); G.textes.push({ x: J.x, y: J.y - 34, t: 'Frôlé : +1 charge', age: 0, duree: 0.8, couleur: '#a0e0ff' }); }
+      }
       if (!J.intangible && dist(p.x, p.y, J.x, J.y - 9) < p.rTouche + J.rTouche && p.z < 20) { if (blesserJoueur(p.degats, { type: 'projectile', source: p.source, x: p.x - p.vx * 0.05, y: p.y - p.vy * 0.05 }) && p.marqueJashin) { G.marqueJashin = G.temps + 8; G.textes.push({ x: J.x, y: J.y - 34, t: 'Marqué par le rituel !', age: 0, duree: 1.5, couleur: '#ff4a4a' }); } detruireProjectile(p, 'joueur'); }
     }
   }
@@ -9674,10 +9841,23 @@ function majProjectiles(dt) {
 function toucherEnnemi(p, e) {
   const J = G.joueur;
   let deg = p.degats;
+  const D = J.drapeaux; let tDist = -1;
+  if (p.distance && p.depart) { tDist = Math.min(1, dist(p.depart.x, p.depart.y, p.x, p.y) / Math.max(1, p.porteePx)); deg *= p.distance === 'proche' ? lerp(2, 0.4, tDist) : lerp(0.6, 2.2, tDist); }
+  if (p.concentration) deg *= 1 + 0.1 * Math.min(6, J.tir.concentration || 0);
+  const chCrit = (p.critique || 0) + (p.critique || D.chasseurPatient ? 0.02 * J.stats.chance : 0) + (D.chasseurPatient ? 0.03 * Math.min(6, J.tir.concentration || 0) : 0);
+  let critique = (D.critOmbre && G.appat && !G.appat.fini) || (D.eliteLoin && p.distance === 'loin' && tDist > 0.5) || (chCrit > 0 && Math.random() < Math.min(0.5, chCrit));
+  if (critique) deg *= D.artSilencieux ? 3 : 2.5;
   const touche = infligerDegats(e, deg, { proprio: p.proprio, x: p.x, y: p.y, vx: p.vx, vy: p.vy, recul: p.recul, elements: p.elements, type: 'projectile' });
   if (!touche) { declencherImpacts(p, e); return; } // tir arrêté : l'impact physique a lieu, sans statut ni déclencheur
+  p.aTouche = true;
+  if (p.concentration) J.tir.concentration = Math.min(6, (J.tir.concentration || 0) + 1);
+  if (critique) { G.effets.push({ type: 'etoile_impact', x: e.x, y: e.y - e.hauteur, age: 0, duree: 0.16, r: 9 }); G.textes.push({ x: e.x, y: e.y - e.hauteur - 18, t: 'critique', age: 0, duree: 0.5, couleur: '#ffe070' }); }
+  if (p.parasite && p.gen === 0 && Math.random() < p.parasite) { const q = creerSousProjectile(p, Math.random() * Math.PI * 2, p.degats * 0.5); q.traj = { guidage: 3 }; q.apparence = 'insecte'; q.dureeVie = 1.8; q.touches.add(e); if (D.larvesVenin) q.statuts = [{ statut: 'poison', chance: 1 }]; }
+  if (p.scission && p.gen <= (D.scissionDouble ? 1 : 0) && e.mort) { for (let i = 0; i < p.scission; i++) { const a = p.angle + (i - (p.scission - 1) / 2) * 0.45; const q = creerSousProjectile(p, a, p.degats * 0.6); q.dureeVie = 0.8; q.touches.add(e); if (D.scissionDouble) q.scission = p.scission; } }
+  if (p.lourde && D.tempeteLames && !p.tempete) { p.tempete = true; for (let i = 0; i < 5; i++) { const q = creerSousProjectile(p, p.angle + (i - 2) * 0.35, p.degats * 0.35); q.dureeVie = 0.6; q.touches.add(e); } }
+  if (D.boutPortantSaigne && p.distance === 'proche' && tDist >= 0 && tDist < 0.34) appliquerStatut(e, 'saignement', 4, deg);
   for (const st of p.statuts) {
-    const ch = Math.min(st.max || 1, (st.chance || 0) + (st.chanceParChance || 0) * J.stats.chance);
+    const ch = Math.min((st.max || 1) * (D.troisMarques && (st.statut === 'marque' || st.statut === 'saignement' || st.statut === 'peur') ? 2 : 1), ((st.chance || 0) + (st.chanceParChance || 0) * J.stats.chance) * (D.troisMarques && (st.statut === 'marque' || st.statut === 'saignement' || st.statut === 'peur') ? 2 : 1));
     if (Math.random() < ch) appliquerStatut(e, st.statut, st.duree || 2, deg);
   }
   if (J.def.regleCode === 'stratege' && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) appliquerStatut(e, 'immobilise', 1.2, deg);
@@ -9704,6 +9884,7 @@ function declencherImpacts(p, cible) {
       case 'vapeur': creerZone(p.x, p.y, 'vapeur_alliee', 1.8, { r: im.r || 20, dps: deg * 1.6 }); break;
       case 'flaque_electrique': creerZone(p.x, p.y, 'eau_electrique', 2.4, { r: im.r || 16, deg }); break;
       case 'attraction': attirer(p.x, p.y, (im.r || 2.5) * TUILE, im.force || 70); break;
+      case 'retardement': if (cible) { const c = cible, fort = G.joueur.drapeaux.etiquettesFortes ? 1.5 : 1; G.effets.push({ type: 'etiquette_collee', suit: c, x: c.x, y: c.y, age: 0, duree: 1 }); setTimeoutJeu(() => { const x = c.x, y = c.y; explosion(x, y, 0.9 * TUILE * fort, deg * 2.4 * fort, { proprio: 'joueur', gen: p.gen + 1, blesseJoueur: false, petite: true, elements: p.elements }); }, 1); } break;
       case 'racines': for (const e of G.ennemis) if (!e.mort && !e.cache && !e.boss && dist(e.x, e.y, p.x, p.y) < (im.r || 1.2) * TUILE + e.r) appliquerStatut(e, 'immobilise', im.duree || 1.2, deg); G.effets.push({ type: 'racines', x: p.x, y: p.y, r: (im.r || 1.2) * TUILE, age: 0, duree: 0.9 }); break;
     }
   }
@@ -9719,6 +9900,7 @@ function detruireProjectile(p, raison, cible) {
   if (p.mort) return; p.mort = true;
   if (p.bombe) { exploserBombeTiree(p); return; }
   if (p.proprio === 'joueur') {
+    if (p.concentration && !p.aTouche && p.gen === 0 && (raison === 'fin' || raison === 'mur')) G.joueur.tir.concentration = G.joueur.drapeaux.artSilencieux ? Math.floor((G.joueur.tir.concentration || 0) / 2) : 0; // un tir perdu fait retomber la concentration
     if (raison === 'fin' || raison === 'mur') {
       for (const im of p.impacts) if (im.impact === 'explosion' || im.impact === 'eclat' || im.impact === 'onde') { declencherImpacts(p, null); break; }
       if (p.impacts.some(i => i.impact === 'mine') && p.gen < 1 && raison === 'fin') creerMine(p.x, p.y, p.degats * 2);
@@ -9801,7 +9983,11 @@ function majMelees(dt) {
       const d = dist(ox, oy, e.x, e.y - (e.hauteur || 8)); if (d > m.portee + e.r) continue;
       if (Math.abs(diffAngle(m.a, angleVers(ox, oy, e.x, e.y - 8))) > m.arc / 2 + 0.25 && d > e.r + 6) continue;
       m.touches.add(e);
-      infligerDegats(e, m.deg, { proprio: 'joueur', x: e.x, y: e.y, vx: Math.cos(m.a), vy: Math.sin(m.a), recul: 3.5 * TUILE * J.profil.recul, type: 'melee' });
+      // coups critiques au corps-à-corps : même chance que les tirs (Masque de l'ANBU, Points vitaux…), toujours dans l'ombre (Racine de l'ANBU)
+      const P = J.profil, chC = (P.critique || 0) + (P.critique ? 0.02 * J.stats.chance : 0);
+      const crit = (J.drapeaux.critOmbre && G.appat && !G.appat.fini) || (chC > 0 && Math.random() < Math.min(0.5, chC));
+      infligerDegats(e, crit ? m.deg * (J.drapeaux.artSilencieux ? 3 : 2.5) : m.deg, { proprio: 'joueur', x: e.x, y: e.y, vx: Math.cos(m.a), vy: Math.sin(m.a), recul: 3.5 * TUILE * J.profil.recul, type: 'melee' });
+      if (crit) { G.effets.push({ type: 'etoile_impact', x: e.x, y: e.y - (e.hauteur || 8), age: 0, duree: 0.16, r: 9 }); G.textes.push({ x: e.x, y: e.y - (e.hauteur || 8) - 18, t: 'critique', age: 0, duree: 0.5, couleur: '#ffe070' }); }
       for (const st of J.profil.statuts) if (Math.random() < Math.min(st.max || 1, st.chance + (st.chanceParChance || 0) * J.stats.chance)) appliquerStatut(e, st.statut, st.duree || 2, m.deg);
       const faux = { x: e.x, y: e.y, degats: m.deg, impacts: J.profil.impacts, gen: 0, budget: m.budget || { n: 6 }, angle: m.a, vitesse: 200, apparence: 'coup', elements: J.profil.elements, recul: 20 };
       declencherImpacts(faux, e);
@@ -9978,6 +10164,11 @@ function multVitesse(e) {
   if (e.champion === 'enrage' && e.pv < e.pvMax * 0.5) m *= 1.6;
   if (e.statuts.ralenti) m *= 0.5;
   if (e.statuts.gel) m *= 0.3;
+  if (G.joueur && G.joueur.drapeaux.pressionChakra && !e.boss && !e.allie && dist(e.x, e.y, G.joueur.x, G.joueur.y) < 2 * TUILE) { // Pression du chakra : aura qui ralentit
+    m *= 0.6; const D = G.joueur.drapeaux;
+    if (D.auraTerreur && !e.ia.terrorise) { e.ia.terrorise = true; appliquerStatut(e, 'peur', 1.5, G.joueur.stats.degats); }
+    if (D.auraFeu && G.temps - (e.ia.auraFeuT || 0) > 1) { e.ia.auraFeuT = G.temps; appliquerStatut(e, 'brulure', 1.5, G.joueur.stats.degats); }
+  }
   if (G.salle && G.variante && G.variante.pluie) m *= 1;
   return m;
 }
@@ -9993,6 +10184,8 @@ function appliquerStatut(e, type, duree, degSource) {
   switch (type) {
     case 'brulure': e.statuts.brulure = { t: Math.max(cur ? cur.t : 0, 1.5 * (G.joueur.drapeaux.flammesNoires ? 3 : 1)), tick: 0.5, prochain: 0.5, deg: Math.max(cur ? cur.deg : 0, 0.5 * degSource * (G.joueur.drapeaux.flammesNoires ? 1.5 : 1)), noir: G.joueur.drapeaux.flammesNoires }; break;
     case 'poison': e.statuts.poison = { t: Math.max(cur ? cur.t : 0, 3 * (G.joueur.drapeaux.poisonLong ? 2 : 1)), tick: 0.5, prochain: 0.5, deg: Math.max(cur ? cur.deg : 0, 0.25 * degSource) }; break;
+    case 'saignement': e.statuts.saignement = { t: Math.max(cur ? cur.t : 0, D * (G.joueur.drapeaux.marqueSaignante ? 2 : 1)), deg: Math.max(cur ? cur.deg : 0, 0.35 * degSource), acc: 0 }; break; // saigne tant qu'il bouge
+    case 'marque': e.statuts.marque = { t: Math.max(cur ? cur.t : 0, D) }; if (G.joueur.drapeaux.marqueSaignante) appliquerStatut(e, 'saignement', duree, degSource); break;
     default: e.statuts[type] = { t: Math.max(cur ? cur.t : 0, D) };
   }
   if (e.boss && (type === 'immobilise' || type === 'confus' || type === 'gel')) e.immuniteControle = D + 2;
@@ -10002,6 +10195,7 @@ function majStatuts(e, dt) {
   for (const k of Object.keys(e.statuts)) {
     const s = e.statuts[k]; s.t -= dt;
     if (s.tick) { s.prochain -= dt; if (s.prochain <= 0) { s.prochain += s.tick; infligerDegats(e, s.deg, { proprio: 'joueur', type: k, sansRecul: true, sansFlash: true }); } }
+    if (k === 'saignement' && Math.hypot(e.vx, e.vy) > 12) { s.acc += dt; if (s.acc > 0.4) { s.acc = 0; infligerDegats(e, s.deg, { proprio: 'joueur', type: 'saignement', sansRecul: true, sansFlash: true }); G.particules.push({ x: e.x + (Math.random() - 0.5) * 6, y: e.y - 6, vx: (Math.random() - 0.5) * 20, vy: -20, g: 260, sol: e.y, age: 0, duree: 0.4, couleur: '#c8202a', taille: 2 }); } }
     if (s.t <= 0) delete e.statuts[k];
   }
   if (e.champion === 'regenerant' && !e.mort && G.temps - (e.dernierCoup || 0) > 2) e.pv = Math.min(e.pvMax, e.pv + e.pvMax * 0.05 * dt);
@@ -10022,6 +10216,7 @@ function infligerDegats(e, deg, src = {}) {
   for (const p of G.ennemis) if (p !== e && !p.mort && p.def.params && p.def.params.bouclier === 'aura' && dist(p.x, p.y, e.x, e.y) < 2.5 * TUILE) { deg *= 0.5; break; }
   if (G.joueur.drapeaux.bonusBoss && e.boss) deg *= 1.1;
   if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if (D.inoShikaCho && e.statuts.immobilise) deg *= 1.5; }
+  if (e.statuts.marque) deg *= e.statuts.peur && G.joueur.drapeaux.troisMarques ? 2 : 1.4; // marqué : +40 % de toutes les sources (×2 s'il fuit, avec les trois marques)
   e.pv -= deg; e.dernierCoup = G.temps;
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
   if (!src.sansFlash) { e.flash = 0.08; e.coupT = G.temps; }
@@ -10408,8 +10603,8 @@ function majDeplacementJoueur(J, dt) {
   if (J.etat === 'objet' || J.etat === 'mort' || J.dash) { mx = 0; my = 0; }
   let v = J.stats.vitesse * TUILE;
   if (J.tir.rotation) v *= 0.6;
-  if (!J.vol) { const t = tuilePx(s, J.x, J.y); if (t === T.TOILE && !J.drapeaux.immuniteSol) v *= 0.55; }
-  for (const z of G.zones) if (!J.vol && (z.type === 'eau' || z.type === 'sable_mouvant' || z.type === 'toile_zone') && dist(z.x, z.y, J.x, J.y) < z.r && !J.drapeaux.immuniteSol) v *= 0.65;
+  if (!J.vol && !J.drapeaux.piedLeger) { const t = tuilePx(s, J.x, J.y); if (t === T.TOILE && !J.drapeaux.immuniteSol) v *= 0.55; }
+  for (const z of G.zones) if (!J.vol && !J.drapeaux.piedLeger && (z.type === 'eau' || z.type === 'sable_mouvant' || z.type === 'toile_zone') && dist(z.x, z.y, J.x, J.y) < z.r && !J.drapeaux.immuniteSol) v *= 0.65;
   if (dansSableArene(J)) v *= SABLE_ARENE.lenteur;
   const cx = mx * v, cy = my * v;
   // accélération 0,08 s ; freinage 0,07 s (sensation Isaac-like, précise)
@@ -10463,9 +10658,10 @@ function blesserJoueur(demis, src = {}) {
   if (G.modeTest && G.modeTest.dieu) return false;
   // protections acquises (dans l'ordre) : bouclier de sable, substitution, talisman, clones
   if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { J.bouclierSable = false; J.invuln = 0.6; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.5 }); Son.jouer('sable'); return false; }
-  if (J.drapeaux.substitution && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) { J.invuln = 1; G.effets.push({ type: 'buche', x: J.x, y: J.y, age: 0, duree: 0.8 }); Son.jouer('fumee'); evenement('substitution', {}); return false; }
+  if (J.drapeaux.substitution && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) { J.invuln = 1; G.effets.push({ type: 'buche', x: J.x, y: J.y, age: 0, duree: 0.8 }); Son.jouer('fumee'); evenement('substitution', {}); if (J.drapeaux.serieSubstitution) { J.compteurs.serie = (J.compteurs.serie || 0) + 1; J.stats = calculerStats(J); } return false; }
   if (aTalisman(J, 'TAL_033') && !G.etage.charmeUtilise) { G.etage.charmeUtilise = true; J.invuln = 1; G.effets.push({ type: 'immunite', x: J.x, y: J.y - 20, age: 0, duree: 0.6 }); return false; }
   if (J.def.regleCode === 'clones_ressource' && J.clones > 0) { J.clones--; majClonesRessource(J); J.invuln = 1.0; G.effets.push({ type: 'fumee', x: J.x + 10, y: J.y - 8, age: 0, duree: 0.4 }); Son.jouer('fumee'); return false; }
+  if (J.drapeaux.eclairJaune && !(J.tEclair > 0)) { esquiveEclair(J, src); return false; }
   if (J.drapeaux.armureSable && demis >= 2) demis = Math.max(1, demis - 1);
   const avant = rougeTotal(J.sante);
   const res = subirDemis(J.sante, demis);
@@ -10478,11 +10674,27 @@ function blesserJoueur(demis, src = {}) {
   Son.jouer('degat_joueur'); Entrees.vibrer('degats'); secousse(4, src.x !== undefined ? angleVers(src.x, src.y, J.x, J.y) : null);
   if (src.x !== undefined) { const [nx, ny] = normaliser(J.x - src.x, J.y - src.y); J.vx += nx * 160; J.vy += ny * 160; }
   G.flashDegat = 0.25;
+  G.salle.joueurTouche = true; if (J.compteurs.serie) { J.compteurs.serie = 0; if (J.drapeaux.serieParfaite) { J.stats = calculerStats(J); G.textes.push({ x: J.x, y: J.y - 40, t: 'Série perdue', age: 0, duree: 0.9, couleur: '#c0b0b8' }); } }
   evenement('degat_recu', { demis, src, res });
   if (res.mort) verifierMort(J, src);
   else if (santeTotale(J.sante) <= 1 && J.def.regleCode === 'obstination' && !J.drapeaux.obstination) { J.drapeaux.obstination = true; recalculer(J); G.textes.push({ x: J.x, y: J.y - 34, t: 'Obstination !', age: 0, duree: 1, couleur: '#ffb040' }); }
   if (J.def.regleCode === 'sceau_centaine' && santeTotale(J.sante) <= 1 && J.sceau > 0) { const k = Math.min(J.sceau, rougeMax(J.sante) - rougeTotal(J.sante)); soignerRouge(J.sante, k); J.sceau -= k; G.effets.push({ type: 'sceau_soin', x: J.x, y: J.y - 16, age: 0, duree: 0.8 }); Son.jouer('coeur'); }
   return true;
+}
+// Éclair jaune : le coup est esquivé, on glisse loin de sa source et un kunai marqué explose à l'ancienne place
+const RECHARGE_ECLAIR = 8;
+function esquiveEclair(J, src) {
+  J.tEclair = RECHARGE_ECLAIR; const x0 = J.x, y0 = J.y;
+  let a = src.x !== undefined ? Math.atan2(J.y - src.y, J.x - src.x) : Math.random() * Math.PI * 2;
+  if (src.x !== undefined && Math.hypot(J.x - src.x, J.y - src.y) < 1) a = Math.random() * Math.PI * 2;
+  const dx = Math.cos(a), dy = Math.sin(a);
+  for (let d = 0; d < 3.2 * TUILE; d += 6) deplacerCercle(G.salle, J, dx * 6, dy * 6, J.vol ? 'vol' : 'marche');
+  J.invuln = Math.max(J.invuln, 0.5);
+  G.effets.push({ type: 'eclair', x0, y0: y0 - 12, x1: J.x, y1: J.y - 12, age: 0, duree: 0.22 });
+  G.effets.push({ type: 'marque_hiraishin', x: x0, y: y0, age: 0, duree: 0.4 });
+  setTimeoutJeu(() => explosion(x0, y0, 1.4 * TUILE, J.stats.degats * 3, { proprio: 'joueur', blesseJoueur: false }), 0.35);
+  G.textes.push({ x: J.x, y: J.y - 34, t: 'Éclair jaune', age: 0, duree: 0.8, couleur: '#ffe070' });
+  Son.jouer('eclair'); evenement('esquive', {});
 }
 // Prix payé en santé (pactes, machines) : ne déclenche pas les passifs de dommage
 function payerSante(demis, raison) {
@@ -10557,7 +10769,10 @@ function calculerStats(J) {
     S[k] = borne(v, mi, ma);
   }
   if (J.drapeaux.obstination) S.degats += 1;
+  if (J.drapeaux.serieParfaite) S.degats += 0.15 * Math.min(10, J.compteurs.serie || 0); // salles nettoyées d'affilée sans être touché
+  if (J.drapeaux.sangClan && J.sante) S.degats += 0.25 * Math.max(0, rougeMax(J.sante) - rougeTotal(J.sante)) / 2; // +0,25 par contenant vide
   if (J._plein && J.drapeaux.pleineVitalite) S.degats += 0.5;
+  if (J.drapeaux.nuageEcarlate && G.partie) S.degats += 0.5 * Math.min(4, G.partie.pactesAchetes || 0); // Nuage écarlate
   if (J.sage && J.drapeaux.energieNaturelle) S.degats *= J.drapeaux.sageFort ? 1.6 : 1.5;
   S.degats = Math.round(S.degats * 100) / 100;
   return S;
@@ -10601,6 +10816,17 @@ function calculerProfil(J) {
     if (e.cadenceTir) P.coefCadence *= e.cadenceTir;
     if (e.element) P.elements.add(e.element);
     if (e.apparence) P.apparence = e.apparence;
+    // mécaniques de la passe gameplay : distance, concentration, larves, tirs repliés, suspendus, pivot, sillage, critique, septième lame, scission
+    if (e.distance) P.distance = e.distance;
+    if (e.concentration) P.concentration = true;
+    if (e.parasite) P.parasite = (P.parasite || 0) + e.parasite;
+    if (e.continuum) P.continuum = (P.continuum || 0) + 1;
+    if (e.differe) P.differe = true;
+    if (e.pivot) P.pivot = true;
+    if (e.sillage) P.sillage = e.sillage;
+    if (e.critique) P.critique = (P.critique || 0) + e.critique;
+    if (e.septieme) P.septieme = Math.min(P.septieme || 99, e.septieme);
+    if (e.scission) P.scission = (P.scission || 0) + e.scission;
   }
   // Forme principale : la plus prioritaire présente. Rock Lee (taijutsu) garde toujours une mêlée :
   // ses objets de tir deviennent des contributions secondaires (table de conversion §R17b).
@@ -10691,9 +10917,15 @@ function appliquerEffetImmediat(J, e, d) {
 }
 function soignerJoueur(J, demis) {
   if (J.drapeaux.sansVitalite) return 0;
+  if (J.drapeaux.ninjaMedical && demis > 0) demis += 1;
   const exces = soignerRouge(J.sante, demis);
-  if (exces > 0) evenement('soin_excedentaire', { demis: exces });
+  if (exces > 0) { evenement('soin_excedentaire', { demis: exces }); soinDebordant(J, exces); }
   return demis - exces;
+}
+// Ninja médical : le soin qui déborde devient du chakra protecteur (une réserve par soin au plus)
+function soinDebordant(J, exces) {
+  if (!J.drapeaux.ninjaMedical || exces <= 0) return;
+  const n = Math.min(2, exces); if (ajouterProtection(J.sante, n, 'b') < n) { G.effets.push({ type: 'soin', x: J.x, y: J.y - 20, age: 0, duree: 0.6 }); Son.jouer('protection', 0.5); }
 }
 const PLAFONDS_RESSOURCES = { ryo: 99, cles: 99, explosifs: 99 };
 function ajouterRessource(J, k, v) {
@@ -10998,6 +11230,7 @@ function verifierNettoyage() {
     }
     chargerActif(J, s.forme === '1x1' ? 1 : 2, 'salle');
     J.compteurs.sallesNettoyees++;
+    if (!s.joueurTouche) { J.compteurs.serie = (J.compteurs.serie || 0) + 1; if (J.drapeaux.serieParfaite) { J.stats = calculerStats(J); if (J.compteurs.serie <= 10) G.textes.push({ x: J.x, y: J.y - 40, t: 'Série ×' + J.compteurs.serie, age: 0, duree: 0.9, couleur: '#ffe070' }); } }
     evenement('salle_nettoyee', { s });
     if (J.def.regleCode === 'clones_ressource' && J.clones < 4) { J.clones++; majClonesRessource(J); }
     if (J.def.regleCode === 'flair' && Math.random() < 0.1) { creerRamassable(tirerRamassable(G.alea.recomp, 5), J.x + 16, J.y, {}); G.textes.push({ x: J.x, y: J.y - 30, t: 'Akamaru a trouvé quelque chose !', age: 0, duree: 1.2, couleur: '#fff' }); }
@@ -11112,8 +11345,8 @@ function collecter(r, J) {
       if (J.drapeaux.sansVitalite) return;
       const manque = rougeMax(S) - rougeTotal(S);
       if (manque <= 0 && J.def.regleCode !== 'controle_chakra' && J.def.regleCode !== 'sceau_centaine') return; // reste au sol
-      let n = R.n * (J.drapeaux.soinsDoubles ? 2 : 1);
-      const ex = soignerRouge(S, n);
+      let n = R.n * (J.drapeaux.soinsDoubles ? 2 : 1) + (J.drapeaux.ninjaMedical ? 1 : 0);
+      const ex = soignerRouge(S, n); soinDebordant(J, ex);
       if (ex > 0 && J.def.regleCode === 'controle_chakra') { J.force = Math.min(6, J.force + ex); G.textes.push({ x: J.x, y: J.y - 32, t: 'Force +' + ex, age: 0, duree: 0.8, couleur: '#ff9ac0' }); }
       if (ex > 0 && J.def.regleCode === 'sceau_centaine') J.sceau = Math.min(12, J.sceau + ex);
       Son.jouer('coeur'); break;
@@ -11322,7 +11555,7 @@ function poserPiedestal(s, x, y, id, o = {}) {
 }
 function prixObjet(id, sorte) {
   const q = (INDEX[id] && INDEX[id].qualite) || 1;
-  if (sorte === 'pacte') return { type: 'pacte', n: q >= 3 ? 2 : 1 };
+  if (sorte === 'pacte') return { type: 'pacte', n: q >= 3 && !(G.joueur && G.joueur.drapeaux.nuageEcarlate) ? 2 : 1 };
   return { type: 'ryo', n: [10, 10, 15, 20, 25][q] || 15 };
 }
 // Prix effectif en Ryō : soldes (moitié, arrondi au-dessus) puis coupon (premier achat de l'étage gratuit)
@@ -11577,6 +11810,7 @@ function chanceOpportunite() {
   if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’organisation', 0.05]); }
   if (possede(J, 'PSV_091')) { c += 0.20; det.push(['Sceau maudit', 0.20]); }
   if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['faveur de l’autel', E.faveurSanctuaire]); }
+  if (J.drapeaux.nuageEcarlate) { c += 0.20; det.push(['Nuage écarlate', 0.20]); }
   c = borne(c, 0, 0.95);
   if (J.drapeaux.serment) return { chance: 1, pacte: 1, sanctuaire: 0, detail: [['Serment de vengeance', 1]] };
   let wP = 0.6, wS = 0.4 + 0.25 * P.pactesRefuses + (aTalisman(J, 'TAL_004') ? 0.15 : 0);
@@ -11789,6 +12023,7 @@ function utiliserActif() {
   const f = EFFETS_ACTIFS[d.effet]; if (!f) return;
   const ok = f(J, d.params || {}, d);
   if (ok === false) { G.textes.push({ x: J.x, y: J.y - 34, t: 'Aucune cible : charge conservée', age: 0, duree: 1, couleur: '#c0c0d0' }); Son.jouer('refus'); return; }
+  if (ok === 'gratuit') { Son.jouer('actif', 0.6); return; } // première étape d'un actif en deux temps : rien n'est dépensé
   if (d.unique) J.actif = null;
   else if (d.recharge) J.actif.temps = 0;
   else { const req = chargesRequises(J); J.actif.charges = Math.max(0, J.actif.charges - req); }
@@ -11804,6 +12039,40 @@ function echangerActifs() {
 
 // ── Effets des actifs ──
 const EFFETS_ACTIFS = {
+  shunshin(J, P) { // téléportation éclair : glisse le long des murs, nuage qui désoriente au départ
+    const dir = Entrees.visee.dir || J.dirTete || J.dirCorps; const [dx, dy] = DIRS[dir]; const x0 = J.x, y0 = J.y, L = (P.portee || 4.5) * TUILE;
+    for (let d = 0; d < L; d += 6) deplacerCercle(G.salle, J, dx * 6, dy * 6, J.vol ? 'vol' : 'marche');
+    G.effets.push({ type: 'fumee', x: x0, y: y0 - 10, age: 0, duree: 0.6, taille: 2.5 }); G.effets.push({ type: 'fumee', x: J.x, y: J.y - 10, age: 0, duree: 0.3, taille: 1.5 });
+    for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, x0, y0) < 2.2 * TUILE) appliquerStatut(e, 'confus', 2, J.stats.degats);
+    J.invuln = Math.max(J.invuln, 0.4); Son.jouer('fumee'); return true;
+  },
+  preta(J) { // absorbe les projectiles ennemis en vol
+    let n = 0; for (const p of G.proj) if (p.proprio === 'ennemi' && !p.mort) { p.mort = true; n++; G.particules.push({ x: p.x, y: p.y - (p.z || 0), vx: (J.x - p.x) * 3, vy: (J.y - 12 - p.y) * 3, age: 0, duree: 0.3, couleur: '#c8b8f0', taille: 2 }); }
+    if (!n) return false;
+    G.effets.push({ type: 'onde', x: J.x, y: J.y, r: 70, age: 0, duree: 0.35, couleur: '#c8b8f0' }); G.textes.push({ x: J.x, y: J.y - 36, t: 'Absorbé : ' + n, age: 0, duree: 1, couleur: '#c8b8f0' });
+    if (n >= 8) { ajouterProtection(J.sante, 2, 'b'); Son.jouer('protection'); } else Son.jouer('vent'); return true;
+  },
+  clones_explosifs(J, P) { // des clones foncent sur les ennemis et explosent
+    const L = G.ennemis.filter(e => !e.mort && !e.cache && !e.allie && !e.statuts.charme && !e.def.ignoreNettoyage).sort((a, b) => dist(a.x, a.y, J.x, J.y) - dist(b.x, b.y, J.x, J.y)); if (!L.length) return false;
+    for (let i = 0; i < (P.n || 3); i++) { const c = L[i % L.length], x1 = c.x + (i - 1) * 6, y1 = c.y; G.effets.push({ type: 'clone_course', x: J.x, y: J.y, x0: J.x, y0: J.y, x1, y1, age: 0, duree: 0.32 + i * 0.06 });
+      setTimeoutJeu(() => { explosion(x1, y1, 1.3 * TUILE, J.stats.degats * (P.coef || 3.5), { proprio: 'joueur', blesseJoueur: false }); }, 0.32 + i * 0.06); }
+    G.effets.push({ type: 'fumee', x: J.x, y: J.y - 10, age: 0, duree: 0.4, taille: 2 }); Son.jouer('fumee'); return true;
+  },
+  hiraishin(J, P) { // en deux temps : poser la marque, puis s'y téléporter en tranchant la ligne
+    const s = G.salle, M = s.marqueHiraishin;
+    if (!M) { s.marqueHiraishin = { x: J.x, y: J.y, eff: { type: 'marque_hiraishin', x: J.x, y: J.y, age: 0, duree: 9999 } }; G.effets.push(s.marqueHiraishin.eff); G.textes.push({ x: J.x, y: J.y - 34, t: 'Marque posée', age: 0, duree: 0.8, couleur: '#ffe070' }); return 'gratuit'; }
+    const x0 = J.x, y0 = J.y, deg = J.stats.degats * (P.coef || 4);
+    for (const e of G.ennemis) { if (e.mort || e.cache) continue; const L2 = dist2(x0, y0, M.x, M.y) || 1, t = borne(((e.x - x0) * (M.x - x0) + (e.y - y0) * (M.y - y0)) / L2, 0, 1); if (dist(e.x, e.y, lerp(x0, M.x, t), lerp(y0, M.y, t)) < e.r + 14) infligerDegats(e, deg, { proprio: 'joueur', type: 'actif', x: e.x, y: e.y }); }
+    G.effets.push({ type: 'eclair', x0, y0: y0 - 12, x1: M.x, y1: M.y - 12, age: 0, duree: 0.25 }); J.x = M.x; J.y = M.y; J.invuln = Math.max(J.invuln, 0.4);
+    M.eff.age = M.eff.duree; s.marqueHiraishin = null; Son.jouer('eclair'); secousse(4, null); return true;
+  },
+  pluie_kunai(J, P) { // kunai qui tombent sur les ennemis, cercles annoncés
+    const L = G.ennemis.filter(e => !e.mort && !e.cache && !e.allie && !e.statuts.charme); if (!L.length) return false;
+    for (let i = 0; i < (P.n || 14); i++) { const c = L[i % L.length], x = c.x + (Math.random() - 0.5) * 26, y = c.y + (Math.random() - 0.5) * 18, r = 16, deg = J.stats.degats * (P.coef || 1.6);
+      setTimeoutJeu(() => { G.effets.push({ type: 'marque_sol', x, y, r, age: 0, duree: 0.35 }); setTimeoutJeu(() => { for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, x, y) < r + e.r) infligerDegats(e, deg, { proprio: 'joueur', type: 'actif', x, y }); G.effets.push({ type: 'impact_sol', x, y, r: 10, age: 0, duree: 0.25 }); }, 0.35); }, i * 0.07); }
+    Son.jouer('lame'); return true;
+  },
+  susanoo(J, P) { J.susanoo = { t: P.duree || 5, a: Math.atan2(DIRS[J.dirTete || 'bas'][1], DIRS[J.dirTete || 'bas'][0]), coef: P.coef || 6 }; Son.jouer('gong', 0.5); return true; },
   reecriture(J) { return relancerPiedestaux(G.salle) > 0 ? true : false; },
   clones(J, P) { for (let i = 0; i < (P.n || 2); i++) ajouterFamilier(J, 'FAM_CLONE_TEMP', 'ACT_002'); G.effets.push({ type: 'fumee', x: J.x, y: J.y - 10, age: 0, duree: 0.5, taille: 2 }); Son.jouer('fumee'); return true; },
   dash(J, P) {
@@ -11965,6 +12234,17 @@ function prendrePilule(J, c) {
   annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true, pilule: true });
   Son.jouer('pilule'); Progression.decouvrir(d.id);
   return false;
+}
+
+// Rempart de Susanoo (actif) : arrête les tirs venus de face, puis un sabre géant balaie devant vous
+function majSusanooJoueur(J, dt) {
+  const S = J.susanoo; if (!S) return;
+  const vis = Entrees.visee.dir; if (vis) S.a += borne(diffAngle(S.a, Math.atan2(DIRS[vis][1], DIRS[vis][0])), -4 * dt, 4 * dt);
+  for (const p of G.proj) if (p.proprio === 'ennemi' && !p.mort && dist(p.x, p.y, J.x, J.y - 10) < 34 && Math.abs(diffAngle(S.a, angleVers(J.x, J.y - 10, p.x, p.y))) < Math.PI / 3) { p.mort = true; G.effets.push({ type: 'etincelle', x: p.x, y: p.y, age: 0, duree: 0.15 }); }
+  S.t -= dt;
+  if (S.t <= 0) { J.susanoo = null; const r = 3.2 * TUILE, deg = J.stats.degats * S.coef;
+    for (const e of G.ennemis) if (!e.mort && !e.cache && dist(e.x, e.y, J.x, J.y) < r + e.r && Math.abs(diffAngle(S.a, angleVers(J.x, J.y, e.x, e.y))) < 1.3) infligerDegats(e, deg, { proprio: 'joueur', type: 'actif', x: J.x, y: J.y });
+    G.effets.push({ type: 'balayage', x: J.x, y: J.y - 8, a: S.a, arc: 2.6, r, age: 0, duree: 0.3 }); Son.jouer('lame'); secousse(6, S.a); }
 }
 
 // ─── 41_familiers.js ───
@@ -12146,6 +12426,7 @@ function conditionDeclencheur(si, J, data) {
     case 'boss': return G.salle.type === 'boss';
     case 'vitaliteTouchee': return data.res && data.res.perduRouge > 0;
     case 'ennemiNonBoss': return data.e && !data.e.boss;
+    case 'pleineVitalite': return rougeTotal(J.sante) >= rougeMax(J.sante) && rougeMax(J.sante) > 0;
     default: return true;
   }
 }
@@ -12163,6 +12444,7 @@ function executerAction(A, J, data, src) {
     case 'degats_tous': for (const e of G.ennemis) if (!e.mort && !e.cache) infligerDegats(e, A.degats || deg * (A.coef || 1), { proprio: 'joueur', type: 'declencheur', sansRecul: true }); G.effets.push({ type: 'onde', x: J.x, y: J.y, r: 400, age: 0, duree: 0.3, couleur: A.couleur || '#c02040' }); break;
     case 'ramassable': { const x = data.e ? data.e.x : J.x + 12, y = data.e ? data.e.y : J.y; creerRamassable(A.ramassable, x, y, {}); break; }
     case 'charge_actif': chargerActif(J, A.n || 1, 'declencheur'); break;
+    case 'zone': { const x = data.e ? data.e.x : J.x, y = data.e ? data.e.y : J.y; creerZone(x, y, A.zone || 'feu_allie', A.duree || 3, { r: A.r || 18, dps: deg * (A.coef || 0.6) }); break; }
     case 'familier': { const f = ajouterFamilier(J, A.familier, src.id); if (A.salle) f.dureeSalle = true; break; }
     case 'statut_proches': { const x = data.e ? data.e.x : J.x, y = data.e ? data.e.y : J.y; for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, x, y) < (A.r || 2) * TUILE) appliquerStatut(e, A.statut, A.duree || 2, deg); G.effets.push({ type: 'onde', x, y: y - 6, r: (A.r || 2) * TUILE, age: 0, duree: 0.4, couleur: COUL_STATUTS[A.statut] || '#e0e0ff' }); break; }
     case 'manteau': { // chakra de la bête : bonus minutés (dégâts, vitesse, brûlure au contact) et aura visible
@@ -12179,6 +12461,11 @@ function executerAction(A, J, data, src) {
     case 'ressource_sante': ajouterConteneur(J.sante, 1, true); Son.jouer('coeur'); break;
     case 'contenant_vide': ajouterConteneur(J.sante, 1, false); break;
     case 'mue': if (J.sante.prot.length === 0 && !G.etage.mueUtilisee) { G.etage.mueUtilisee = true; ajouterProtection(J.sante, 2); G.effets.push({ type: 'mue', x: J.x, y: J.y, age: 0, duree: 0.8 }); Son.jouer('fumee'); } break;
+    case 'lame_vent': { // Danseur du vent : une lame d'air part vers l'ennemi le plus proche
+      const c = G.ennemis.filter(e => !e.mort && !e.cache && !e.allie && !e.statuts.charme).sort((a, b) => dist(a.x, a.y, J.x, J.y) - dist(b.x, b.y, J.x, J.y))[0]; if (!c) break;
+      const p = creerProjectileJoueur(J, J.x, J.y - 12, Math.atan2(c.y - (c.hauteur || 8) - (J.y - 12), c.x - J.x), deg * (A.coef || 2), ++_cycle, { n: 2 }, { appoint: true });
+      p.apparence = 'vent'; p.perce = Math.max(p.perce, 1); p.gen = 1; Son.jouer('vent', 0.5); break;
+    }
     case 'tir_bonus': { const d = Entrees.visee.dir || J.tir.dir; const a = Math.atan2(DIRS[d][1], DIRS[d][0]) + (Math.random() - 0.5) * 0.3; creerProjectileJoueur(J, J.x, J.y - 12, a, J.stats.degats, ++_cycle, { n: 2 }); break; }
     case 'pluie_armes': for (let i = 0; i < (A.n || 8); i++) setTimeoutJeu(() => { const c = G.ennemis.filter(e => !e.mort && !e.cache); const cible = c[Math.floor(Math.random() * c.length)]; const x = cible ? cible.x + (Math.random() - 0.5) * 20 : J.x + (Math.random() - 0.5) * 200, y = cible ? cible.y : J.y + (Math.random() - 0.5) * 120; G.effets.push({ type: 'frappe_sol', x, y, age: 0, duree: 0.45, deg: deg * (A.coef || 1.5), r: 14, proprio: 'joueur', petite: true, arme: true }); }, i * 0.08); break;
   }
@@ -14754,6 +15041,12 @@ const Progression = {
 // ordre de mise à jour, scènes de jeu / pause / inventaire / défaite / victoire,
 // démarrage. Horloges de gameplay suspendues pendant pause et menus.
 // ═══════════════════════════════════════════════════════════════════════════
+// Noms lisibles des mutations visibles (inventaire de pause)
+const NOMS_MOTIFS = { queues: 'queues de chakra', maquillage: 'pigments de l’ermite', insectes: 'nuée d’insectes', bras_marionnette: 'bras articulés', yeux_rouges: 'yeux rougeoyants',
+  sable_flottant: 'sable en suspension', cornes: 'cornes', marque: 'marques sur la peau', plumes: 'ailes de papier', bandeau_bras: 'bandeau au bras', lueur_poings: 'poings lumineux',
+  masque_anbu: 'masque d’animal', feuilles: 'tourbillon de feuilles', eclair: 'aura crépitante', manteau_nuages: 'manteau à nuages rouges', paumes: 'paumes de soin', cape: 'cape',
+  masque: 'masque', oeil_front: 'œil frontal', point_front: 'losange frontal', queue: 'queue', papier: 'papillons de papier' };
+function nomMutation(v) { return v.nom || NOMS_MOTIFS[v.motif] || (v.couche === 'aura' ? 'aura de chakra' : v.motif || v.couche); }
 
 const G = {
   partie: null, joueur: null, etage: null, salle: null, reglages: null, temps: 0,
@@ -14783,7 +15076,7 @@ function majJeu(dt) {
   P.temps += dt; G.temps += dt;
   // pouls à santé basse (un cœur ou moins quand on en a eu davantage), seulement en combat
   if (santeTotale(J.sante) <= 2 && J.sante.cont.length * 2 + J.sante.prot.length > 3 && G.salle.combat && J.etat !== 'mort') { G.pouls = (G.pouls || 0) - dt; if (G.pouls <= 0) { G.pouls = 1.15; Son.jouer('battement', 0.9); } } else G.pouls = 0;
-  if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (J.delaiActif > 0) J.delaiActif -= dt; // délai d'actif : hors animation de prise if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
+  if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (J.delaiActif > 0) J.delaiActif -= dt; if (J.tEclair > 0) J.tEclair -= dt; // délai d'actif : hors animation de prise if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
   if (Entrees.vientEnfonce('explosif')) poserExplosif();
   if (Entrees.vientEnfonce('actif')) utiliserActif();
   if (Entrees.vientEnfonce('poche')) utiliserPoche();
@@ -14791,7 +15084,7 @@ function majJeu(dt) {
   if ((Entrees.maintien.deposer || 0) >= DUREE_DEPOT) { deposer(J); Entrees.maintien.deposer = -99; }
   // Gaara altéré : relâcher la visée fait converger les grains suspendus
   if (J.profil.differe) { if (!Entrees.visee.dir && J.tir.avaitVisee) { J.tir.convergence = true; J.tir.angleConv = Math.atan2(DIRS[J.tir.dir][1], DIRS[J.tir.dir][0]); } else J.tir.convergence = false; J.tir.avaitVisee = !!Entrees.visee.dir; }
-  majBonus(J, dt); majActifTemporel(J, dt);
+  majBonus(J, dt); majActifTemporel(J, dt); majSusanooJoueur(J, dt);
   if (J.dash) majDash(J, dt); else majDeplacementJoueur(J, dt);
   if (J.kaiten) majKaiten(J, dt);
   majTirJoueur(J, dt);
@@ -14864,7 +15157,7 @@ const SceneInventaire = {
     Police.ecrire(g, 'Objets, transformations et mutations', 320, 10, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
     const L = this.liste(); const c = 12;
     L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : id.startsWith('SYN_') ? iconeSynergie() : iconeObjet(id), x, y); });
-    const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + (d.visuel.nom || d.visuel.motif || d.visuel.couche), 420, y + 30, 200, '#8a9aa8'); }
+    const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + nomMutation(d.visuel), 420, y + 30, 200, '#8a9aa8'); }
     if (!L.length) Police.ecrire(g, 'Aucun objet pour l’instant.', 320, 160, '#8a8098', { a: 'c' });
     aideBoutons(g, [['retour', 'Retour']]);
   },
@@ -14948,7 +15241,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, dessinerPerso, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, dessinerPerso, dessinerJoueur, verifierTransformations, chargerActif, prixObjet, esquiveEclair, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

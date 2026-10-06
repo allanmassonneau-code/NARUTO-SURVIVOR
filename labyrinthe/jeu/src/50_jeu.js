@@ -4,6 +4,13 @@
 // démarrage. Horloges de gameplay suspendues pendant pause et menus.
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Noms lisibles des mutations visibles (inventaire de pause)
+const NOMS_MOTIFS = { queues: 'queues de chakra', maquillage: 'pigments de l’ermite', insectes: 'nuée d’insectes', bras_marionnette: 'bras articulés', yeux_rouges: 'yeux rougeoyants',
+  sable_flottant: 'sable en suspension', cornes: 'cornes', marque: 'marques sur la peau', plumes: 'ailes de papier', bandeau_bras: 'bandeau au bras', lueur_poings: 'poings lumineux',
+  masque_anbu: 'masque d’animal', feuilles: 'tourbillon de feuilles', eclair: 'aura crépitante', manteau_nuages: 'manteau à nuages rouges', paumes: 'paumes de soin', cape: 'cape',
+  masque: 'masque', oeil_front: 'œil frontal', point_front: 'losange frontal', queue: 'queue', papier: 'papillons de papier' };
+function nomMutation(v) { return v.nom || NOMS_MOTIFS[v.motif] || (v.couche === 'aura' ? 'aura de chakra' : v.motif || v.couche); }
+
 const G = {
   partie: null, joueur: null, etage: null, salle: null, reglages: null, temps: 0,
   proj: [], faisceaux: [], melees: [], effets: [], particules: [], zones: [], bombes: [], arcs: [], orbes: [], minuteries: [], ennemis: [], textes: [],
@@ -32,7 +39,7 @@ function majJeu(dt) {
   P.temps += dt; G.temps += dt;
   // pouls à santé basse (un cœur ou moins quand on en a eu davantage), seulement en combat
   if (santeTotale(J.sante) <= 2 && J.sante.cont.length * 2 + J.sante.prot.length > 3 && G.salle.combat && J.etat !== 'mort') { G.pouls = (G.pouls || 0) - dt; if (G.pouls <= 0) { G.pouls = 1.15; Son.jouer('battement', 0.9); } } else G.pouls = 0;
-  if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (J.delaiActif > 0) J.delaiActif -= dt; // délai d'actif : hors animation de prise if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
+  if (J.invuln > 0) J.invuln -= dt; if (J.bloqueTir > 0) J.bloqueTir -= dt; if (J.delaiActif > 0) J.delaiActif -= dt; if (J.tEclair > 0) J.tEclair -= dt; // délai d'actif : hors animation de prise if (G.flashDegat > 0) G.flashDegat -= dt; if (G.gelGlobal > 0) G.gelGlobal -= dt;
   if (Entrees.vientEnfonce('explosif')) poserExplosif();
   if (Entrees.vientEnfonce('actif')) utiliserActif();
   if (Entrees.vientEnfonce('poche')) utiliserPoche();
@@ -40,7 +47,7 @@ function majJeu(dt) {
   if ((Entrees.maintien.deposer || 0) >= DUREE_DEPOT) { deposer(J); Entrees.maintien.deposer = -99; }
   // Gaara altéré : relâcher la visée fait converger les grains suspendus
   if (J.profil.differe) { if (!Entrees.visee.dir && J.tir.avaitVisee) { J.tir.convergence = true; J.tir.angleConv = Math.atan2(DIRS[J.tir.dir][1], DIRS[J.tir.dir][0]); } else J.tir.convergence = false; J.tir.avaitVisee = !!Entrees.visee.dir; }
-  majBonus(J, dt); majActifTemporel(J, dt);
+  majBonus(J, dt); majActifTemporel(J, dt); majSusanooJoueur(J, dt);
   if (J.dash) majDash(J, dt); else majDeplacementJoueur(J, dt);
   if (J.kaiten) majKaiten(J, dt);
   majTirJoueur(J, dt);
@@ -113,7 +120,7 @@ const SceneInventaire = {
     Police.ecrire(g, 'Objets, transformations et mutations', 320, 10, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
     const L = this.liste(); const c = 12;
     L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(d.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : d.type === 'transformation' ? iconeObjet(d.icone ? id : 'PSV_055') : id.startsWith('SYN_') ? iconeSynergie() : iconeObjet(id), x, y); });
-    const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + (d.visuel.nom || d.visuel.motif || d.visuel.couche), 420, y + 30, 200, '#8a9aa8'); }
+    const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + nomMutation(d.visuel), 420, y + 30, 200, '#8a9aa8'); }
     if (!L.length) Police.ecrire(g, 'Aucun objet pour l’instant.', 320, 160, '#8a8098', { a: 'c' });
     aideBoutons(g, [['retour', 'Retour']]);
   },
@@ -197,5 +204,5 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, dessinerPerso, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, dessinerPerso, dessinerJoueur, verifierTransformations, chargerActif, prixObjet, esquiveEclair, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }

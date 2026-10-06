@@ -38,6 +38,7 @@ function conditionDeclencheur(si, J, data) {
     case 'boss': return G.salle.type === 'boss';
     case 'vitaliteTouchee': return data.res && data.res.perduRouge > 0;
     case 'ennemiNonBoss': return data.e && !data.e.boss;
+    case 'pleineVitalite': return rougeTotal(J.sante) >= rougeMax(J.sante) && rougeMax(J.sante) > 0;
     default: return true;
   }
 }
@@ -55,6 +56,7 @@ function executerAction(A, J, data, src) {
     case 'degats_tous': for (const e of G.ennemis) if (!e.mort && !e.cache) infligerDegats(e, A.degats || deg * (A.coef || 1), { proprio: 'joueur', type: 'declencheur', sansRecul: true }); G.effets.push({ type: 'onde', x: J.x, y: J.y, r: 400, age: 0, duree: 0.3, couleur: A.couleur || '#c02040' }); break;
     case 'ramassable': { const x = data.e ? data.e.x : J.x + 12, y = data.e ? data.e.y : J.y; creerRamassable(A.ramassable, x, y, {}); break; }
     case 'charge_actif': chargerActif(J, A.n || 1, 'declencheur'); break;
+    case 'zone': { const x = data.e ? data.e.x : J.x, y = data.e ? data.e.y : J.y; creerZone(x, y, A.zone || 'feu_allie', A.duree || 3, { r: A.r || 18, dps: deg * (A.coef || 0.6) }); break; }
     case 'familier': { const f = ajouterFamilier(J, A.familier, src.id); if (A.salle) f.dureeSalle = true; break; }
     case 'statut_proches': { const x = data.e ? data.e.x : J.x, y = data.e ? data.e.y : J.y; for (const e of G.ennemis) if (!e.mort && dist(e.x, e.y, x, y) < (A.r || 2) * TUILE) appliquerStatut(e, A.statut, A.duree || 2, deg); G.effets.push({ type: 'onde', x, y: y - 6, r: (A.r || 2) * TUILE, age: 0, duree: 0.4, couleur: COUL_STATUTS[A.statut] || '#e0e0ff' }); break; }
     case 'manteau': { // chakra de la bête : bonus minutés (dégâts, vitesse, brûlure au contact) et aura visible
@@ -71,6 +73,11 @@ function executerAction(A, J, data, src) {
     case 'ressource_sante': ajouterConteneur(J.sante, 1, true); Son.jouer('coeur'); break;
     case 'contenant_vide': ajouterConteneur(J.sante, 1, false); break;
     case 'mue': if (J.sante.prot.length === 0 && !G.etage.mueUtilisee) { G.etage.mueUtilisee = true; ajouterProtection(J.sante, 2); G.effets.push({ type: 'mue', x: J.x, y: J.y, age: 0, duree: 0.8 }); Son.jouer('fumee'); } break;
+    case 'lame_vent': { // Danseur du vent : une lame d'air part vers l'ennemi le plus proche
+      const c = G.ennemis.filter(e => !e.mort && !e.cache && !e.allie && !e.statuts.charme).sort((a, b) => dist(a.x, a.y, J.x, J.y) - dist(b.x, b.y, J.x, J.y))[0]; if (!c) break;
+      const p = creerProjectileJoueur(J, J.x, J.y - 12, Math.atan2(c.y - (c.hauteur || 8) - (J.y - 12), c.x - J.x), deg * (A.coef || 2), ++_cycle, { n: 2 }, { appoint: true });
+      p.apparence = 'vent'; p.perce = Math.max(p.perce, 1); p.gen = 1; Son.jouer('vent', 0.5); break;
+    }
     case 'tir_bonus': { const d = Entrees.visee.dir || J.tir.dir; const a = Math.atan2(DIRS[d][1], DIRS[d][0]) + (Math.random() - 0.5) * 0.3; creerProjectileJoueur(J, J.x, J.y - 12, a, J.stats.degats, ++_cycle, { n: 2 }); break; }
     case 'pluie_armes': for (let i = 0; i < (A.n || 8); i++) setTimeoutJeu(() => { const c = G.ennemis.filter(e => !e.mort && !e.cache); const cible = c[Math.floor(Math.random() * c.length)]; const x = cible ? cible.x + (Math.random() - 0.5) * 20 : J.x + (Math.random() - 0.5) * 200, y = cible ? cible.y : J.y + (Math.random() - 0.5) * 120; G.effets.push({ type: 'frappe_sol', x, y, age: 0, duree: 0.45, deg: deg * (A.coef || 1.5), r: 14, proprio: 'joueur', petite: true, arme: true }); }, i * 0.08); break;
   }

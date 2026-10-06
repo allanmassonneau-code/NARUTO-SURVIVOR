@@ -44,8 +44,8 @@ function majDeplacementJoueur(J, dt) {
   if (J.etat === 'objet' || J.etat === 'mort' || J.dash) { mx = 0; my = 0; }
   let v = J.stats.vitesse * TUILE;
   if (J.tir.rotation) v *= 0.6;
-  if (!J.vol) { const t = tuilePx(s, J.x, J.y); if (t === T.TOILE && !J.drapeaux.immuniteSol) v *= 0.55; }
-  for (const z of G.zones) if (!J.vol && (z.type === 'eau' || z.type === 'sable_mouvant' || z.type === 'toile_zone') && dist(z.x, z.y, J.x, J.y) < z.r && !J.drapeaux.immuniteSol) v *= 0.65;
+  if (!J.vol && !J.drapeaux.piedLeger) { const t = tuilePx(s, J.x, J.y); if (t === T.TOILE && !J.drapeaux.immuniteSol) v *= 0.55; }
+  for (const z of G.zones) if (!J.vol && !J.drapeaux.piedLeger && (z.type === 'eau' || z.type === 'sable_mouvant' || z.type === 'toile_zone') && dist(z.x, z.y, J.x, J.y) < z.r && !J.drapeaux.immuniteSol) v *= 0.65;
   if (dansSableArene(J)) v *= SABLE_ARENE.lenteur;
   const cx = mx * v, cy = my * v;
   // accélération 0,08 s ; freinage 0,07 s (sensation Isaac-like, précise)
@@ -99,9 +99,10 @@ function blesserJoueur(demis, src = {}) {
   if (G.modeTest && G.modeTest.dieu) return false;
   // protections acquises (dans l'ordre) : bouclier de sable, substitution, talisman, clones
   if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { J.bouclierSable = false; J.invuln = 0.6; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.5 }); Son.jouer('sable'); return false; }
-  if (J.drapeaux.substitution && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) { J.invuln = 1; G.effets.push({ type: 'buche', x: J.x, y: J.y, age: 0, duree: 0.8 }); Son.jouer('fumee'); evenement('substitution', {}); return false; }
+  if (J.drapeaux.substitution && Math.random() < Math.min(0.5, 0.15 + 0.03 * J.stats.chance)) { J.invuln = 1; G.effets.push({ type: 'buche', x: J.x, y: J.y, age: 0, duree: 0.8 }); Son.jouer('fumee'); evenement('substitution', {}); if (J.drapeaux.serieSubstitution) { J.compteurs.serie = (J.compteurs.serie || 0) + 1; J.stats = calculerStats(J); } return false; }
   if (aTalisman(J, 'TAL_033') && !G.etage.charmeUtilise) { G.etage.charmeUtilise = true; J.invuln = 1; G.effets.push({ type: 'immunite', x: J.x, y: J.y - 20, age: 0, duree: 0.6 }); return false; }
   if (J.def.regleCode === 'clones_ressource' && J.clones > 0) { J.clones--; majClonesRessource(J); J.invuln = 1.0; G.effets.push({ type: 'fumee', x: J.x + 10, y: J.y - 8, age: 0, duree: 0.4 }); Son.jouer('fumee'); return false; }
+  if (J.drapeaux.eclairJaune && !(J.tEclair > 0)) { esquiveEclair(J, src); return false; }
   if (J.drapeaux.armureSable && demis >= 2) demis = Math.max(1, demis - 1);
   const avant = rougeTotal(J.sante);
   const res = subirDemis(J.sante, demis);
@@ -114,11 +115,27 @@ function blesserJoueur(demis, src = {}) {
   Son.jouer('degat_joueur'); Entrees.vibrer('degats'); secousse(4, src.x !== undefined ? angleVers(src.x, src.y, J.x, J.y) : null);
   if (src.x !== undefined) { const [nx, ny] = normaliser(J.x - src.x, J.y - src.y); J.vx += nx * 160; J.vy += ny * 160; }
   G.flashDegat = 0.25;
+  G.salle.joueurTouche = true; if (J.compteurs.serie) { J.compteurs.serie = 0; if (J.drapeaux.serieParfaite) { J.stats = calculerStats(J); G.textes.push({ x: J.x, y: J.y - 40, t: 'Série perdue', age: 0, duree: 0.9, couleur: '#c0b0b8' }); } }
   evenement('degat_recu', { demis, src, res });
   if (res.mort) verifierMort(J, src);
   else if (santeTotale(J.sante) <= 1 && J.def.regleCode === 'obstination' && !J.drapeaux.obstination) { J.drapeaux.obstination = true; recalculer(J); G.textes.push({ x: J.x, y: J.y - 34, t: 'Obstination !', age: 0, duree: 1, couleur: '#ffb040' }); }
   if (J.def.regleCode === 'sceau_centaine' && santeTotale(J.sante) <= 1 && J.sceau > 0) { const k = Math.min(J.sceau, rougeMax(J.sante) - rougeTotal(J.sante)); soignerRouge(J.sante, k); J.sceau -= k; G.effets.push({ type: 'sceau_soin', x: J.x, y: J.y - 16, age: 0, duree: 0.8 }); Son.jouer('coeur'); }
   return true;
+}
+// Éclair jaune : le coup est esquivé, on glisse loin de sa source et un kunai marqué explose à l'ancienne place
+const RECHARGE_ECLAIR = 8;
+function esquiveEclair(J, src) {
+  J.tEclair = RECHARGE_ECLAIR; const x0 = J.x, y0 = J.y;
+  let a = src.x !== undefined ? Math.atan2(J.y - src.y, J.x - src.x) : Math.random() * Math.PI * 2;
+  if (src.x !== undefined && Math.hypot(J.x - src.x, J.y - src.y) < 1) a = Math.random() * Math.PI * 2;
+  const dx = Math.cos(a), dy = Math.sin(a);
+  for (let d = 0; d < 3.2 * TUILE; d += 6) deplacerCercle(G.salle, J, dx * 6, dy * 6, J.vol ? 'vol' : 'marche');
+  J.invuln = Math.max(J.invuln, 0.5);
+  G.effets.push({ type: 'eclair', x0, y0: y0 - 12, x1: J.x, y1: J.y - 12, age: 0, duree: 0.22 });
+  G.effets.push({ type: 'marque_hiraishin', x: x0, y: y0, age: 0, duree: 0.4 });
+  setTimeoutJeu(() => explosion(x0, y0, 1.4 * TUILE, J.stats.degats * 3, { proprio: 'joueur', blesseJoueur: false }), 0.35);
+  G.textes.push({ x: J.x, y: J.y - 34, t: 'Éclair jaune', age: 0, duree: 0.8, couleur: '#ffe070' });
+  Son.jouer('eclair'); evenement('esquive', {});
 }
 // Prix payé en santé (pactes, machines) : ne déclenche pas les passifs de dommage
 function payerSante(demis, raison) {

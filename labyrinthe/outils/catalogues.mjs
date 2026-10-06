@@ -27,6 +27,15 @@ const effetsActifs = new Set([...texte('40_actifs.js').matchAll(/^\s{2}(\w+)\(J(
 const speciauxBoss = new Set([...texte('43_boss_speciaux.js').matchAll(/^\s{2}(\w+)\((?:e|e, a, m(?:, dt)?)\)\s*\{/gm)].map(m => m[1]));
 const actionsDeclencheurs = new Set([...texte('42_evenements.js').matchAll(/case '(\w+)':/g)].map(m => m[1]));
 const evenementsEmis = new Set([...fichiersCode().join('\n').matchAll(/evenement\('(\w+)'/g)].map(m => m[1]));
+// motifs de mutation réellement dessinés (couches du joueur, orbites, auras particulières)
+const dessin = texte('28_dessin.js');
+const motifsDessines = new Set([...dessin.matchAll(/case '(\w+)':/g), ...dessin.matchAll(/motif === '(\w+)'/g), ...dessin.matchAll(/^\s{2}(\w+): \{ n: /gm)].map(m => m[1]));
+const COUCHES_MUTATION = ['aura', 'dos', 'corps', 'bras', 'peau', 'yeux', 'tete', 'orbitaux'];
+function verifierVisuel(d) {
+  const v = d.visuel; if (!v || typeof v !== 'object') return;
+  if (v.couche && !COUCHES_MUTATION.includes(v.couche)) err(`${d.id} : couche de mutation inconnue ${v.couche}`);
+  if (v.motif && !motifsDessines.has(v.motif)) err(`${d.id} : motif de mutation « ${v.motif} » jamais dessiné`);
+}
 function fichiersCode() { return readdirSync(src).filter(f => /^[2-9]\d_.*\.js$/.test(f)).map(texte); }
 
 // ── Validation ──
@@ -44,7 +53,7 @@ const nombreFini = (v, m) => { if (typeof v !== 'number' || !Number.isFinite(v))
 const POOLS_VALIDES = ['heritage', 'boss', 'boutique', 'pacte', 'sanctuaire', 'cache', 'isolee', 'bibliotheque', 'defi', 'coffre', 'machine'];
 const STATS = ['degats', 'cadence', 'portee', 'vitesseTir', 'vitesse', 'chance', 'plafondCadence'];
 const NATURES = ['katon', 'futon', 'suiton', 'raiton', 'doton', 'hyoton'];
-const IMPACTS = ['explosion', 'chaine', 'eclat', 'onde', 'mine', 'flamme', 'flaque', 'lave', 'vapeur', 'flaque_electrique', 'attraction', 'racines'];
+const IMPACTS = ['explosion', 'chaine', 'eclat', 'onde', 'mine', 'flamme', 'flaque', 'lave', 'vapeur', 'flaque_electrique', 'attraction', 'racines', 'retardement'];
 function verifierEffets(d) {
   for (const e of d.effets || []) {
     if (e.s && !STATS.includes(e.s)) err(`${d.id} : statistique inconnue ${e.s}`);
@@ -78,10 +87,10 @@ for (const o of DON.objets) {
     if (!o.unique && !o.recharge && !(o.charges >= 1 && o.charges <= 12)) err(`${o.id} : charges hors 1-12`);
     if (!effetsActifs.has(o.effet)) err(`${o.id} : effet d’actif « ${o.effet} » non implémenté`);
   }
-  verifierEffets(o);
+  verifierEffets(o); verifierVisuel(o);
 }
 for (const t of DON.talismans) verifierEffets(t);
-for (const t of DON.transformations) { verifierEffets(t); const membres = DON.objets.filter(o => o.ensemble === t.ensemble); if (membres.length < t.seuil) err(`${t.id} : ensemble « ${t.ensemble} » trop petit (${membres.length} < ${t.seuil})`); }
+for (const t of DON.transformations) { verifierEffets(t); verifierVisuel(t); const membres = DON.objets.filter(o => o.ensemble === t.ensemble); if (membres.length < t.seuil) err(`${t.id} : ensemble « ${t.ensemble} » trop petit (${membres.length} < ${t.seuil})`); }
 for (const s of DON.synergies) { verifierEffets(s); if (!s.composants.length && !(s.elements || []).length) err(`${s.id} : ni composant ni nature`); for (const n of s.elements || []) if (!NATURES.includes(n)) err(`${s.id} : nature inconnue ${n}`); if (s.elements && !NATURES.filter(n => s.elements.includes(n)).every(n => DON.objets.some(o => (o.effets || []).some(e => e.element === n)))) err(`${s.id} : nature portée par aucun objet`); for (const c of s.composants) if (!existe(c)) err(`${s.id} : composant inconnu ${c}`); if (new Set(s.composants).size !== s.composants.length) err(`${s.id} : composant répété`); }
 for (const c of DON.consommables) if (!effetsActifs.has(c.effet) && !texte('40_actifs.js').includes('  ' + c.effet + '(J')) err(`${c.id} : effet « ${c.effet} » non implémenté`);
 for (const p of DON.pilules) if (p.contraire && !existe(p.contraire)) err(`${p.id} : contraire inconnu`);

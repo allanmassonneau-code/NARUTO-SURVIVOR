@@ -1600,5 +1600,432 @@
     }
    }
   ]
+ },
+ {
+  "id": "SYN_097",
+  "nom": "Chasseur patient",
+  "composants": [
+   "PSV_159",
+   "PSV_171"
+  ],
+  "type": "dediee",
+  "desc": "La concentration aiguise l’œil : +3 % de coup critique par cran de concentration.",
+  "test": "Critiques plus fréquents en série.",
+  "effets": [
+   {
+    "drapeau": "chasseurPatient"
+   }
+  ]
+ },
+ {
+  "id": "SYN_098",
+  "nom": "La marque qui saigne",
+  "composants": [
+   "PSV_162",
+   "PSV_163"
+  ],
+  "type": "dediee",
+  "desc": "Une cible marquée saigne aussi ; le saignement dure deux fois plus.",
+  "test": "Marque et saignement ensemble.",
+  "effets": [
+   {
+    "drapeau": "marqueSaignante"
+   }
+  ]
+ },
+ {
+  "id": "SYN_099",
+  "nom": "Pression meurtrière",
+  "composants": [
+   "PSV_164",
+   "PSV_174"
+  ],
+  "type": "dediee",
+  "desc": "Un ennemi qui entre dans votre aura de pression est saisi de peur (1,5 s, une fois).",
+  "test": "Fuite à l’entrée de l’aura.",
+  "effets": [
+   {
+    "drapeau": "auraTerreur"
+   }
+  ]
+ },
+ {
+  "id": "SYN_100",
+  "nom": "Essaim insatiable",
+  "composants": [
+   "PSV_160",
+   "PSV_006"
+  ],
+  "type": "dediee",
+  "desc": "Les larves naissent deux fois plus souvent et empoisonnent ce qu’elles mordent.",
+  "test": "Larves empoisonnées.",
+  "effets": [
+   {
+    "parasite": 0.25
+   },
+   {
+    "drapeau": "larvesVenin"
+   }
+  ]
+ },
+ {
+  "id": "SYN_101",
+  "nom": "Espace sans fin",
+  "composants": [
+   "PSV_161",
+   "PSV_007"
+  ],
+  "type": "dediee",
+  "desc": "Les tirs repliés ressortent du mur opposé deux fois de plus.",
+  "test": "Trois traversées de la salle.",
+  "effets": [
+   {
+    "continuum": true
+   },
+   {
+    "continuum": true
+   }
+  ]
+ },
+ {
+  "id": "SYN_102",
+  "nom": "Sable dormant",
+  "composants": [
+   "PSV_168",
+   "PSV_010"
+  ],
+  "type": "dediee",
+  "desc": "Les grains suspendus frappent 25 % plus fort quand ils convergent.",
+  "test": "Dégâts ×1,25.",
+  "effets": [
+   {
+    "coefDegats": 1.25
+   }
+  ]
+ },
+ {
+  "id": "SYN_103",
+  "nom": "Tourbillon de braises",
+  "composants": [
+   "PSV_167",
+   "PSV_170"
+  ],
+  "type": "dediee",
+  "desc": "La spirale sème un sillage de feu deux fois plus dense et 50 % plus brûlant.",
+  "test": "Anneau de flammes autour de vous.",
+  "effets": [
+   {
+    "drapeau": "sillageDense"
+   }
+  ]
+ },
+ {
+  "id": "SYN_104",
+  "nom": "Shuriken sans fin",
+  "composants": [
+   "PSV_165",
+   "PSV_030"
+  ],
+  "type": "dediee",
+  "desc": "Les éclats d’une scission peuvent eux-mêmes se scinder une fois.",
+  "test": "Scission en cascade.",
+  "effets": [
+   {
+    "drapeau": "scissionDouble"
+   }
+  ]
+ },
+ {
+  "id": "SYN_105",
+  "nom": "Pivot du dieu du tonnerre",
+  "composants": [
+   "PSV_169",
+   "PSV_005"
+  ],
+  "type": "dediee",
+  "desc": "Un tir qui pivote frappe 50 % plus fort.",
+  "test": "Dégâts ×1,5 après pivot.",
+  "effets": [
+   {
+    "drapeau": "pivotFort"
+   }
+  ]
+ },
+ {
+  "id": "SYN_106",
+  "nom": "Arsenal lourd",
+  "composants": [
+   "PSV_173",
+   "PSV_024"
+  ],
+  "type": "dediee",
+  "desc": "Une lame lourde tous les cinq tirs au lieu de sept.",
+  "test": "Lame lourde au cinquième tir.",
+  "effets": [
+   {
+    "septieme": 5
+   }
+  ]
+ },
+ {
+  "id": "SYN_107",
+  "nom": "Art à retardement",
+  "composants": [
+   "PSV_178",
+   "PSV_149"
+  ],
+  "type": "dediee",
+  "desc": "Les étiquettes plantées explosent 50 % plus fort et plus large.",
+  "test": "Explosion différée plus large.",
+  "effets": [
+   {
+    "drapeau": "etiquettesFortes"
+   }
+  ]
+ },
+ {
+  "id": "SYN_108",
+  "nom": "Feu posthume",
+  "composants": [
+   "PSV_166",
+   "PSV_043"
+  ],
+  "type": "dediee",
+  "desc": "Un ennemi tué laisse parfois (30 %) une nappe de feu alliée.",
+  "test": "Nappe de feu à l’élimination.",
+  "effets": [
+   {
+    "quand": "elimination",
+    "si": "ennemiNonBoss",
+    "chance": 0.3,
+    "faire": {
+     "type": "zone",
+     "zone": "feu_allie",
+     "r": 20,
+     "duree": 3,
+     "coef": 0.8
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_109",
+  "nom": "Garde parfaite",
+  "composants": [
+   "PSV_172",
+   "PSV_096"
+  ],
+  "type": "dediee",
+  "desc": "Une substitution réussie prolonge la série au lieu de la briser (+1).",
+  "test": "Série prolongée par une bûche.",
+  "effets": [
+   {
+    "drapeau": "serieSubstitution"
+   }
+  ]
+ },
+ {
+  "id": "SYN_110",
+  "nom": "Danse sous les tirs",
+  "composants": [
+   "PSV_175",
+   "PSV_035"
+  ],
+  "type": "dediee",
+  "desc": "Chaque frôlement donne 1,5 s de vitesse +0,5 (trois fois au plus).",
+  "test": "Vitesse après un frôlement.",
+  "effets": [
+   {
+    "quand": "frolement",
+    "faire": {
+     "type": "bonus",
+     "bonus": {
+      "s": "vitesse",
+      "a": 0.5
+     },
+     "duree": 1.5,
+     "cumulMax": 3
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_111",
+  "nom": "Œil des six chemins",
+  "composants": [
+   "PSV_177",
+   "PSV_028"
+  ],
+  "type": "dediee",
+  "desc": "L’attraction rassemble : la foudre saute à trois ennemis au lieu de deux.",
+  "test": "Chaîne de foudre plus longue.",
+  "effets": [
+   {
+    "impact": "chaine",
+    "sauts": 1,
+    "r": 3,
+    "coef": 0.45
+   }
+  ]
+ },
+ {
+  "id": "SYN_112",
+  "nom": "Sang pour sang",
+  "composants": [
+   "PSV_180",
+   "PSV_133"
+  ],
+  "type": "dediee",
+  "desc": "À deux demi-unités ou moins, une élimination sur huit soigne une demi-unité.",
+  "test": "Soin à santé basse.",
+  "effets": [
+   {
+    "quand": "elimination",
+    "si": "santeBasse",
+    "chance": 0.125,
+    "faire": {
+     "type": "soin",
+     "demis": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_113",
+  "nom": "Bout portant sanglant",
+  "composants": [
+   "PSV_157",
+   "PSV_163"
+  ],
+  "type": "dediee",
+  "desc": "Un coup porté dans le premier tiers de la portée fait toujours saigner.",
+  "test": "Saignement garanti au contact.",
+  "effets": [
+   {
+    "drapeau": "boutPortantSaigne"
+   }
+  ]
+ },
+ {
+  "id": "SYN_114",
+  "nom": "Tireur d’élite",
+  "composants": [
+   "PSV_158",
+   "PSV_037"
+  ],
+  "type": "dediee",
+  "desc": "Au-delà de la moitié de la portée, chaque coup est critique.",
+  "test": "Critique garanti de loin.",
+  "effets": [
+   {
+    "drapeau": "eliteLoin"
+   }
+  ]
+ },
+ {
+  "id": "SYN_115",
+  "nom": "Aura du renard",
+  "composants": [
+   "PSV_174",
+   "PSV_055"
+  ],
+  "type": "dediee",
+  "desc": "Les ennemis dans votre aura de pression brûlent.",
+  "test": "Brûlure dans l’aura.",
+  "effets": [
+   {
+    "drapeau": "auraFeu"
+   }
+  ]
+ },
+ {
+  "id": "SYN_116",
+  "nom": "Double technique de l’ombre",
+  "composants": [
+   "PSV_179",
+   "PSV_051"
+  ],
+  "type": "dediee",
+  "desc": "La salve de l’actif immobilise les ennemis touchés (1 s).",
+  "test": "Immobilisation après un actif.",
+  "effets": [
+   {
+    "quand": "actif_utilise",
+    "faire": {
+     "type": "statut_proches",
+     "statut": "immobilise",
+     "r": 3,
+     "duree": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "SYN_117",
+  "nom": "L’art du ninja silencieux",
+  "composants": [
+   "PSV_159",
+   "PSV_171",
+   "PSV_039"
+  ],
+  "type": "dediee",
+  "desc": "Critiques ×3 au lieu de ×2,5 ; un tir perdu ne fait plus retomber la concentration qu’à moitié.",
+  "test": "Critique ×3.",
+  "effets": [
+   {
+    "drapeau": "artSilencieux"
+   }
+  ]
+ },
+ {
+  "id": "SYN_118",
+  "nom": "Tempête de lames",
+  "composants": [
+   "PSV_165",
+   "PSV_173",
+   "PSV_003"
+  ],
+  "type": "dediee",
+  "desc": "Chaque lame lourde qui touche se scinde en cinq éclats.",
+  "test": "Cinq éclats à chaque lame lourde.",
+  "effets": [
+   {
+    "drapeau": "tempeteLames"
+   }
+  ]
+ },
+ {
+  "id": "SYN_119",
+  "nom": "Les trois marques",
+  "composants": [
+   "PSV_162",
+   "PSV_163",
+   "PSV_164"
+  ],
+  "type": "dediee",
+  "desc": "Marque, saignement et peur s’appliquent deux fois plus souvent ; une cible marquée qui fuit subit des dégâts doublés.",
+  "test": "Statuts fréquents, dégâts ×2 sur cible marquée en fuite.",
+  "effets": [
+   {
+    "drapeau": "troisMarques"
+   }
+  ]
+ },
+ {
+  "id": "SYN_120",
+  "nom": "Maître du sable suspendu",
+  "composants": [
+   "PSV_168",
+   "PSV_065",
+   "PSV_150"
+  ],
+  "type": "dediee",
+  "desc": "Les grains suspendus arrêtent les tirs ennemis qui les touchent.",
+  "test": "Tirs ennemis bloqués par les grains.",
+  "effets": [
+   {
+    "drapeau": "sableBouclier"
+   }
+  ]
  }
 ]

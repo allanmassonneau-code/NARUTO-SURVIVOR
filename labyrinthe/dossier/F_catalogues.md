@@ -10,14 +10,14 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 |---|---|---|---|
 | Personnages de base | 12 | 12 | 40 |
 | Variantes altérées | 6 | 6 | 40 |
-| Objets passifs | 158 | 150 | 480 |
-| Objets actifs | 33 | 30 | 120 |
+| Objets passifs | 182 | 150 | 480 |
+| Objets actifs | 39 | 30 | 120 |
 | Talismans | 35 | 35 | 100 |
 | Consommables (rouleaux, sceaux) | 30 | 30 | 80 |
 | Pilules (effets) | 15 | — | — |
 | Familiers (comportements distincts) | 16 | — | — |
-| Synergies documentées | 96 | 60 | 300 |
-| Transformations d’ensemble | 13 | 12 | 40 |
+| Synergies documentées | 120 | 60 | 300 |
+| Transformations d’ensemble | 18 | 12 | 40 |
 | Thèmes d’étage | 10 | 6 | 12 |
 | Variantes d’étage | 18 | 12 | 24 |
 | Boss (dont mini-boss) | 37 | 25 | 70 |
@@ -28,7 +28,7 @@ Validation : **0 erreur(s)**, 3 avertissement(s) (identifiants, références, po
 | Secrets documentés | 15 | — | 60 |
 | Routes et fins | 6 | — | — |
 
-Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68, pacte 44, sanctuaire 27, cache 9, isolee 3, bibliotheque 39, defi 3, coffre 8, machine 6.
+Taille des pools (objets de poids non nul) : heritage 172, boss 64, boutique 80, pacte 51, sanctuaire 29, cache 9, isolee 3, bibliotheque 46, defi 3, coffre 8, machine 6.
 
 ## Personnages et variantes — 18
 
@@ -53,7 +53,7 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | ALT_005 | Kankurō — Trois marionnettes | CHR_009 | 3 | 3.4 | 2.4 | 6.5 | 4.3 | projectile / lame_poison | Kuroari : piège | Marionnettes échangeables (bouton supérieur gauche) : Karasu (éventail de lames), Kuroari (orbe lent qui immobilise), Sanshōuo (bouclier frontal, tir faible). | OBJ_044 |
 | ALT_006 | Kakuzu — Cinq cœurs | CHR_012 | 1 | 3.4 | 2.2 | 6 | 4.3 | projectile / element | Fils de Jiongu | Inventaire reconstruit : à chaque nouvel étage, un passif au hasard est remplacé par un autre de même qualité. Quatre cœurs de réserve : à la mort, il se relève avec un contenant et en perd un. | OBJ_045 |
 
-## Objets passifs (PSV) — 158
+## Objets passifs (PSV) — 182
 
 | ID | Nom | Famille | Q | Pools (poids) | Effet | Cumul | Ensemble | Statut | Déblocage |
 |---|---|---|---|---|---|---|---|---|---|
@@ -61,20 +61,20 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | PSV_002 | Encre de dédoublement | projectile | 2 | heritage 3, boutique 1 | Chaque tir se dédouble, un peu moins fort. | cumul |  | création originale | — |
 | PSV_003 | Éventail de kunai | projectile | 2 | heritage 2, boutique 1, coffre 1 | Trois kunai en éventail. | cumul |  | création originale | — |
 | PSV_004 | Parchemin des mille aiguilles | projectile | 3 | heritage 2, boss 1 | Quatre senbon partent à chaque tir. | cumul |  | création originale | — |
-| PSV_005 | Kunai à marque de téléportation | projectile | 2 | heritage 2, bibliotheque 1 | Les tirs suivent légèrement leur cible. | cumul |  | adaptation | — |
+| PSV_005 | Kunai à marque de téléportation | projectile | 2 | heritage 2, bibliotheque 1 | Les tirs suivent légèrement leur cible. | cumul | espace | adaptation | — |
 | PSV_006 | Insectes traqueurs | projectile | 3 | heritage 2, boss 1 | Les tirs deviennent des insectes qui poursuivent les ennemis. | cumul | essaim | adaptation | — |
 | PSV_007 | Fil de chakra | projectile | 1 | heritage 2, boutique 1, coffre 1 | Les tirs ricochent sur les murs et les obstacles. | cumul |  | création originale | OBJ_006 |
 | PSV_008 | Senbon perforant | projectile | 2 | heritage 2, boutique 1 | Les tirs traversent les ennemis. | cumul |  | création originale | — |
-| PSV_009 | Parchemin fantôme | projectile | 1 | heritage 2, bibliotheque 1 | Les tirs passent au-dessus des obstacles. | cumul |  | création originale | — |
+| PSV_009 | Parchemin fantôme | projectile | 1 | heritage 2, bibliotheque 1 | Les tirs passent au-dessus des obstacles. | cumul | espace | création originale | — |
 | PSV_010 | Sable en orbite | projectile | 2 | heritage 2, bibliotheque 1 | Les tirs tournent autour de vous avant de se disperser. | cumul | sable | adaptation | — |
 | PSV_011 | Onde de la vague | projectile | 1 | heritage 2, boutique 1 | Les tirs ondulent : couverture plus large, précision moindre. | cumul |  | création originale | — |
 | PSV_012 | Baika (expansion) | projectile | 3 | heritage 2, boss 1 | Des tirs énormes et lents, deux fois plus forts. | cumul |  | adaptation | — |
-| PSV_013 | Fūma shuriken | projectile | 3 | heritage 2, boss 1 | Lance un grand shuriken qui revient dans la main. | unique |  | adaptation | OBJ_002 |
+| PSV_013 | Fūma shuriken | projectile | 3 | heritage 2, boss 1 | Lance un grand shuriken qui revient dans la main. | unique | vent | adaptation | OBJ_002 |
 | PSV_014 | Canon de chakra | projectile | 4 | pacte 2, heritage 1 | Charge un rayon rougeoyant qui traverse tout. | unique | renard | création originale | OBJ_029 |
 | PSV_015 | Trait de chakra | projectile | 3 | heritage 2, boss 1 | Chaque tir devient un trait instantané. | unique |  | création originale | — |
 | PSV_016 | Souffle continu | projectile | 3 | heritage 1, boss 1 | Maintenir la visée émet un faisceau continu. | unique |  | création originale | — |
 | PSV_017 | Empreinte du Kubikiribōchō | projectile | 3 | heritage 1, boss 1, pacte 1 | Un grand sabre balaie devant vous. | unique |  | adaptation | OBJ_004 |
-| PSV_018 | Tantō de l’ANBU | projectile | 2 | heritage 2, boutique 1 | Frappe courte au sabre : puissante mais exposée. | unique |  | adaptation | — |
+| PSV_018 | Tantō de l’ANBU | projectile | 2 | heritage 2, boutique 1 | Frappe courte au sabre : puissante mais exposée. | unique | anbu | adaptation | — |
 | PSV_019 | Argile explosive C1 | projectile | 3 | pacte 1, heritage 1, boss 1 | Lance des bombes d’argile ; attention au souffle. Contrepartie : Les explosions peuvent vous blesser. | unique | argile | adaptation | OBJ_019 |
 | PSV_020 | Chute céleste | projectile | 4 | pacte 2, boss 1 | Visez un point : une météorite s’y écrase. | unique |  | création originale d’après une technique célèbre (attribution à vérifier) | OBJ_028 ou OBJ_049 |
 | PSV_021 | Sphère téléguidée | projectile | 3 | heritage 1, boss 1, bibliotheque 1 | Une seule sphère, guidée par la visée. | unique |  | adaptation | — |
@@ -89,14 +89,14 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | PSV_030 | Shuriken démultiplié | projectile | 2 | heritage 2, coffre 1 | Les tirs éclatent en quatre éclats à l’impact. | cumul |  | création originale | — |
 | PSV_031 | Kunai du vent | projectile | 1 | heritage 2, boutique 1 | Les tirs accélèrent en vol. | cumul | renard | création originale | — |
 | PSV_032 | Poids de plomb | projectile | 1 | heritage 2, boutique 1 | Des tirs lourds qui repoussent fort. | cumul | portes | création originale | — |
-| PSV_033 | Senbon de précision | projectile | 1 | heritage 2, boutique 2 | Plus loin, plus vite. | cumul |  | adaptation | — |
-| PSV_034 | Kunai lestés | projectile | 2 | heritage 3, boutique 1, coffre 1 | Des lames plus lourdes. | cumul |  | création originale | — |
-| PSV_035 | Sandales de course | projectile | 1 | heritage 2, boutique 2 | Vous vous déplacez plus vite. | cumul |  | création originale | — |
+| PSV_033 | Senbon de précision | projectile | 1 | heritage 2, boutique 2 | Plus loin, plus vite ; 5 % de coup critique (×2,5). | cumul |  | adaptation | — |
+| PSV_034 | Kunai lestés | projectile | 2 | heritage 3, boutique 1, coffre 1 | Des lames plus lourdes : dégâts +1, recul accru. | cumul |  | création originale | — |
+| PSV_035 | Sandales de course | projectile | 1 | heritage 2, boutique 2 | Vous vous déplacez plus vite ; ni toiles ni flaques ne vous ralentissent. | cumul | vent | création originale | — |
 | PSV_036 | Pilule du soldat (empreinte) | projectile | 2 | heritage 2, boutique 1, boss 1 | Cadence de tir augmentée. | cumul |  | adaptation | — |
 | PSV_037 | Lunettes de visée | projectile | 1 | heritage 2, boutique 2 | Portée et vitesse des tirs accrues. | cumul |  | création originale | — |
 | PSV_038 | Bandeau de Konoha | projectile | 2 | heritage 2, boss 2 | Un peu de tout : dégâts, cadence, portée, vitesse, chance. | cumul |  | canon adapté | — |
-| PSV_039 | Masque de l’ANBU | projectile | 1 | heritage 2, boutique 1, cache 1 | Dégâts et chance. | cumul |  | adaptation | — |
-| PSV_040 | Gants de taijutsu | projectile | 2 | heritage 2, boutique 1 | Dégâts +0,7 ; les frappes de mêlée gagnent en portée. | cumul | portes | création originale | OBJ_051 |
+| PSV_039 | Masque de l’ANBU | projectile | 1 | heritage 2, boutique 1, cache 1 | Dégâts et chance ; 6 % de coup critique (×2,5). | cumul | anbu | adaptation | — |
+| PSV_040 | Gants de taijutsu | projectile | 2 | heritage 2, boutique 1 | Dégâts +0,7 ; les frappes de mêlée gagnent en portée ; vos coups repoussent plus fort. | cumul | portes | création originale | OBJ_051 |
 | PSV_041 | Cadence de la fleur de lotus | projectile | 2 | heritage 2, boutique 1 | Cadence très élevée, portée réduite. Contrepartie : Portée −2. | cumul | portes | création originale | — |
 | PSV_042 | Pointe de précision | projectile | 2 | heritage 1, boutique 1, bibliotheque 1 | Les tirs grossissent : touchent mieux, plus lents. | cumul |  | création originale | — |
 | PSV_043 | Grande boule de feu (empreinte) | element | 2 | heritage 2, boutique 1, boss 1 | Tirs de feu : 25 % de brûlure (+5 % par chance, 70 % au plus). | cumul |  | adaptation | — |
@@ -114,15 +114,15 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | PSV_055 | Chakra du renard | element | 3 | heritage 1, boss 2, pacte 1 | Dégâts +1, vitesse +0,2 ; une queue de chakra apparaît. | cumul | renard | adaptation | — |
 | PSV_056 | Bulle de chakra rouge | element | 3 | heritage 1, boss 1, pacte 1 | Blessé, vous libérez huit tirs de chakra. | cumul | renard | création originale | — |
 | PSV_057 | Crapaud d’huile | element | 2 | heritage 1, bibliotheque 1, sanctuaire 1 | Les tirs laissent parfois de l’huile qui s’embrase au feu. | cumul | ermite | création originale | — |
-| PSV_058 | Armure de foudre | element | 3 | heritage 1, boss 1 | Vitesse +0,5, cadence +0,3. | cumul | tonnerre | adaptation | — |
+| PSV_058 | Armure de foudre | element | 3 | heritage 1, boss 1 | Vitesse +0,5, cadence +0,3 ; un tir sur cinq enchaîne la foudre sur un ennemi proche. | cumul | tonnerre | adaptation | — |
 | PSV_059 | Racines du bois | element | 3 | heritage 1, boss 1, sanctuaire 1 | Les tirs font parfois jaillir des racines qui immobilisent (15 %). | cumul |  | adaptation (Mokuton) | — |
 | PSV_060 | Os de l’ossature | element | 3 | heritage 1, boss 1, pacte 1 | Tirs d’os : perçants, un ricochet. | cumul | experimental | adaptation | OBJ_010 |
 | PSV_061 | Clone de l’ombre | familier | 2 | heritage 2, boutique 1 | Un clone vous suit et tire des kunai. | cumul | meute | adaptation | — |
 | PSV_062 | Gamakichi | familier | 2 | heritage 2, sanctuaire 1 | Un petit crapaud qui crache des bulles ralentissantes. | cumul | meute | canon adapté | — |
-| PSV_063 | Katsuyu miniature | familier | 2 | heritage 2, sanctuaire 2 | Toutes les 5 salles nettoyées, une limace apporte un cœur. | cumul | meute | canon adapté | — |
+| PSV_063 | Katsuyu miniature | familier | 2 | heritage 2, sanctuaire 2 | Toutes les 5 salles nettoyées, une limace apporte un cœur. | cumul | medecin | canon adapté | — |
 | PSV_064 | Serpent des manches | familier | 2 | heritage 1, pacte 1 | Un serpent tourne autour de vous et mord. | cumul | experimental | adaptation | OBJ_003 |
 | PSV_065 | Sable protecteur | familier | 2 | heritage 2, boss 1 | Deux orbitaux de sable bloquent les tirs ennemis. | cumul | sable | adaptation | — |
-| PSV_066 | Kunai tournoyants | familier | 1 | heritage 2, boutique 1 | Trois kunai tournent autour de vous (ne bloquent pas). | cumul |  | création originale | — |
+| PSV_066 | Kunai tournoyants | familier | 1 | heritage 2, boutique 1 | Trois kunai tournent autour de vous (ne bloquent pas). | cumul | vent | création originale | — |
 | PSV_067 | Corbeau messager | familier | 2 | heritage 1, bibliotheque 1, pacte 1 | Un corbeau aveugle les ennemis (confusion). | cumul | yeux | adaptation | — |
 | PSV_068 | Pakkun | familier | 1 | heritage 2, boutique 1, bibliotheque 1 | Un chien ninja flaire les murs secrets. | cumul | meute | canon adapté | — |
 | PSV_069 | Petit chien de chasse | familier | 2 | heritage 2, boutique 1 | Un chien fonce dans la direction de tir. | cumul | meute | création originale | — |
@@ -142,16 +142,16 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | PSV_083 | Bol de ramen d’Ichiraku | sante | 1 | heritage 1, boss 2, boutique 1 | Un contenant de vitalité et un soin complet. | cumul |  | canon adapté | — |
 | PSV_084 | Onigiri | sante | 0 | heritage 1, boutique 2, boss 1 | Un contenant de vitalité. | cumul |  | création originale | — |
 | PSV_085 | Dango | sante | 1 | heritage 1, boutique 2 | Un contenant de vitalité et un cœur de soin. | cumul |  | création originale | — |
-| PSV_086 | Pilule écarlate | sante | 2 | heritage 1, pacte 1, boss 1 | Dégâts +1 et un contenant, mais un peu plus lent. Contrepartie : Vitesse −0,2. | cumul |  | création originale | — |
-| PSV_087 | Sceau de régénération | sante | 3 | sanctuaire 2, boss 1 | Toutes les 3 salles nettoyées, soigne une demi-unité. | cumul |  | adaptation (Byakugō, attribution à vérifier) | OBJ_013 |
-| PSV_088 | Cape de chakra protecteur | sante | 1 | sanctuaire 2, boutique 1, heritage 1 | Deux réserves de chakra protecteur. | cumul |  | création originale | — |
-| PSV_089 | Cœur volé | sante | 3 | pacte 1, isolee 1, boss 1 | À votre mort, vous vous relevez avec un contenant (l’objet est consommé). | cumul |  | adaptation | OBJ_022 |
+| PSV_086 | Pilule écarlate | sante | 2 | heritage 1, pacte 1, boss 1 | Dégâts +1 et un contenant, mais un peu plus lent. Contrepartie : Vitesse −0,2. | cumul | medecin | création originale | — |
+| PSV_087 | Sceau de régénération | sante | 3 | sanctuaire 2, boss 1 | Toutes les 3 salles nettoyées, soigne une demi-unité. | cumul | medecin | adaptation (Byakugō, attribution à vérifier) | OBJ_013 |
+| PSV_088 | Cape de chakra protecteur | sante | 1 | sanctuaire 2, boutique 1, heritage 1 | Deux réserves de chakra protecteur. | cumul | medecin | création originale | — |
+| PSV_089 | Cœur volé | sante | 3 | pacte 1, isolee 1, boss 1 | À votre mort, vous vous relevez avec un contenant (l’objet est consommé). | cumul | akatsuki | adaptation | OBJ_022 |
 | PSV_090 | Ossature renforcée | sante | 2 | heritage 1, pacte 1 | Deux enveloppes osseuses. | cumul | experimental | adaptation | OBJ_010 |
 | PSV_091 | Sceau maudit | contrepartie | 3 | pacte 3 | Deux réserves instables, dégâts +0,5 ; les pactes deviennent plus fréquents (+20 %). | cumul | interdit | adaptation | OBJ_032 |
 | PSV_092 | Porte de la Vie | contrepartie | 3 | pacte 1, boss 1, defi 1 | Dégâts +1,5, cadence +0,4, mais un contenant en moins. Contrepartie : −1 contenant de vitalité. | cumul | portes | adaptation (Huit Portes) | OBJ_051 |
 | PSV_093 | Chakra de la limace | sante | 2 | sanctuaire 2, heritage 1 | Les cœurs soignent deux fois plus. | cumul | ermite | création originale | — |
-| PSV_094 | Trousse de terrain | sante | 1 | heritage 2, boutique 1 | Un contenant ; les cœurs lâchés sont parfois doublés. | cumul |  | création originale | — |
-| PSV_095 | Sceau vital de la famille | sante | 2 | sanctuaire 1, heritage 1 | Un sceau vital partiel, puis un nouveau à chaque étage. | cumul |  | création originale | — |
+| PSV_094 | Trousse de terrain | sante | 1 | heritage 2, boutique 1 | Un contenant ; les cœurs lâchés sont parfois doublés. | cumul | medecin | création originale | — |
+| PSV_095 | Sceau vital de la famille | sante | 2 | sanctuaire 1, heritage 1 | Un sceau vital partiel, puis un nouveau à chaque étage. | cumul | medecin | création originale | — |
 | PSV_096 | Substitution instinctive | sante | 3 | heritage 1, sanctuaire 1 | 15 % + 3 % par chance d’esquiver un coup par une bûche (50 % au plus). | cumul |  | adaptation (Kawarimi) | OBJ_054 |
 | PSV_097 | Armure de sable absolue | sante | 4 | boss 1, sanctuaire 1 | Les coups d’un cœur entier ne retirent qu’une demi-unité. Contrepartie : Vitesse −0,3. | cumul | sable | adaptation | OBJ_009 |
 | PSV_098 | Chakra du démon scellé | contrepartie | 3 | pacte 2 | Trois réserves instables, mais un contenant en moins. Contrepartie : −1 contenant. | cumul | interdit | création originale | OBJ_058 |
@@ -185,16 +185,16 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | PSV_126 | Livre de l’ermite | economie | 3 | bibliotheque 2, sanctuaire 1 | Les salles d’héritage proposent un second objet (choix). | cumul |  | création originale | OBJ_031 |
 | PSV_127 | Sceau de réécriture | economie | 2 | bibliotheque 1, boutique 1 | Une relance ne peut plus donner un objet de qualité inférieure. | cumul |  | création originale | — |
 | PSV_128 | Tampon du marchand | economie | 1 | boutique 1, machine 1 | Ramasser des Ryō donne parfois un rouleau (5 %). | cumul |  | création originale | — |
-| PSV_129 | Contrat de Kakuzu | economie | 2 | pacte 1, machine 1 | Les pactes se paient en Ryō (20 par contenant) si vous les avez. | cumul | interdit | adaptation | OBJ_022 |
-| PSV_130 | Bourse de l’organisation | economie | 1 | pacte 1, boutique 1 | +15 Ryō. | cumul |  | création originale | — |
+| PSV_129 | Contrat de Kakuzu | economie | 2 | pacte 1, machine 1 | Les pactes se paient en Ryō (20 par contenant) si vous les avez. | cumul | akatsuki | adaptation | OBJ_022 |
+| PSV_130 | Bourse de l’organisation | economie | 1 | pacte 1, boutique 1 | +15 Ryō. | cumul | akatsuki | création originale | — |
 | PSV_131 | Sceau de la mort (empreinte) | contrepartie | 4 | pacte 1 | Dégâts ×2, mais deux contenants en moins. Contrepartie : −2 contenants. | cumul | interdit | adaptation (attribution à vérifier) | OBJ_039 |
 | PSV_132 | Rage du réceptacle | contrepartie | 2 | heritage 1, pacte 1 | Chaque blessure : +0,8 dégâts pour la salle (3 fois au plus). | cumul | renard | création originale | — |
 | PSV_133 | Volonté du feu | contrepartie | 2 | heritage 1, sanctuaire 1 | Avec deux demi-unités ou moins, dégâts +2. | cumul |  | création originale | — |
-| PSV_134 | Colère de la Racine | contrepartie | 2 | pacte 1, heritage 1 | Les ennemis tués lâchent parfois un demi-chakra instable (5 %). | cumul |  | création originale | — |
+| PSV_134 | Colère de la Racine | contrepartie | 2 | pacte 1, heritage 1 | Les ennemis tués lâchent parfois un demi-chakra instable (5 %). | cumul | anbu | création originale | — |
 | PSV_135 | Rituel du sang | contrepartie | 2 | pacte 2 | Chaque tribut volontaire donne +0,25 dégâts permanents. | cumul | interdit | création originale | OBJ_016 |
-| PSV_136 | Écailles de Samehada | contrepartie | 3 | heritage 1, boss 1, pacte 1 | Toutes les 12 éliminations, soigne une demi-unité ; dégâts +0,5. | cumul |  | adaptation | OBJ_014 |
+| PSV_136 | Écailles de Samehada | contrepartie | 3 | heritage 1, boss 1, pacte 1 | Toutes les 12 éliminations, soigne une demi-unité ; dégâts +0,5. | cumul | akatsuki | adaptation | OBJ_014 |
 | PSV_137 | Cadence frénétique | contrepartie | 2 | heritage 1, pacte 1 | Cadence ×1,4, dégâts −10 %. Contrepartie : Dégâts −10 %. | cumul |  | création originale | — |
-| PSV_138 | Silence de la brume | contrepartie | 2 | heritage 1, cache 1 | En entrant dans une salle, les ennemis vous perdent de vue 2 s. | cumul |  | création originale | — |
+| PSV_138 | Silence de la brume | contrepartie | 2 | heritage 1, cache 1 | En entrant dans une salle, les ennemis vous perdent de vue 2 s. | cumul | anbu | création originale | — |
 | PSV_139 | Transfert du pacte | contrepartie | 2 | pacte 1 | Chaque pacte conclu : +1 dégât permanent. | cumul | interdit | création originale | OBJ_032 |
 | PSV_140 | Réincarnation impure (empreinte) | contrepartie | 3 | pacte 2 | 10 % des ennemis tués reviennent comme alliés 10 s. | cumul | experimental | adaptation (attribution à vérifier) | OBJ_047 |
 | PSV_141 | Cœur du réceptacle | contrepartie | 2 | boss 2 | Chaque boss vaincu donne un contenant de vitalité. | cumul |  | création originale | — |
@@ -213,10 +213,34 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | PSV_154 | Voile d’insectes | sante | 2 | heritage 1, sanctuaire 1 | Blessé, un nuage d’insectes ralentit les ennemis dans un rayon de 3 tuiles pendant 2 s. | cumul | essaim | adaptation (clan Aburame) | — |
 | PSV_155 | Shuriken de papier | projectile | 2 | heritage 2, boutique 1 | Tirs de papier tranchant : dégâts +0,3, portée +1. | cumul | papier | adaptation | — |
 | PSV_156 | Mer de papiers explosifs | ressource | 3 | pacte 1, boss 1 | Vos explosifs éclatent deux fois (la seconde, 0,4 s plus tard, à moitié de puissance) ; deux explosifs. Contrepartie : La seconde explosion blesse aussi (sauf immunité). | cumul | papier | adaptation | — |
+| PSV_157 | Frappe à bout portant | projectile | 2 | heritage 2, boutique 1 | Dégâts ×2 à bout portant, qui retombent à ×0,4 au bout de la portée. Contrepartie : Faible de loin. | unique |  | création originale | — |
+| PSV_158 | Shuriken du long voyage | projectile | 2 | heritage 2, boutique 1 | Plus un tir a voyagé, plus il frappe : ×0,6 au départ, ×2,2 au bout de sa course. Contrepartie : Faible au contact. | unique | vent | création originale | — |
+| PSV_159 | Œil du chasseur | projectile | 3 | heritage 2, boss 1 | Chaque tir au but augmente les dégâts de 10 % (jusqu’à +60 %) ; un tir perdu remet tout à zéro. | unique | yeux | création originale | — |
+| PSV_160 | Larves de kikaichū | projectile | 2 | heritage 2, bibliotheque 1 | 25 % des coups libèrent une larve qui chasse un autre ennemi (×0,5). | cumul | essaim | adaptation | — |
+| PSV_161 | Parchemin de l’espace replié | projectile | 3 | bibliotheque 1, heritage 1, boss 1 | Un tir qui touche un mur ressort du mur opposé de la salle (une fois par exemplaire). | cumul | espace | création originale | — |
+| PSV_162 | Marque du chasseur | element | 2 | heritage 2, boutique 1 | 20 % de marquer (+3 % par chance, 50 % au plus) : la cible subit 40 % de dégâts en plus de toutes les sources pendant 4 s. | cumul | anbu | création originale | — |
+| PSV_163 | Lame dentelée | element | 2 | heritage 2, boutique 1 | 30 % de faire saigner (+5 % par chance) : la cible perd de la vitalité tant qu’elle bouge. | cumul | anbu | création originale | — |
+| PSV_164 | Intention meurtrière | element | 2 | heritage 1, bibliotheque 1, pacte 1 | 15 % d’effrayer (+3 % par chance) : la cible vous fuit 2 s (les boss y sont insensibles). | cumul | anbu | création originale | — |
+| PSV_165 | Shuriken scindé | projectile | 3 | heritage 2, boss 1 | Un tir qui achève un ennemi se scinde en trois éclats qui poursuivent leur course (×0,6). | cumul |  | création originale | — |
+| PSV_166 | Étiquettes posthumes | ressource | 2 | heritage 1, boutique 1, pacte 1 | Les ennemis tués explosent une fois sur trois (sans vous blesser). | cumul | argile | création originale | — |
+| PSV_167 | Tourbillon de feuilles | projectile | 2 | heritage 2, bibliotheque 1 | Vos tirs partent en spirale qui s’ouvre : ils balaient la salle autour de vous. | cumul | vent | création originale | — |
+| PSV_168 | Sable en suspens | projectile | 3 | heritage 1, boss 1, bibliotheque 1 | Vos tirs s’arrêtent à mi-course et attendent : relâchez la visée pour les lancer tous ensemble. | unique | sable | adaptation | — |
+| PSV_169 | Kunai pivotant | projectile | 2 | heritage 2, boutique 1 | Un tir qui frôle un ennemi sur le côté pivote d’un coup vers lui. | unique | vent | création originale | — |
+| PSV_170 | Sillage ardent | element | 3 | heritage 1, boss 1, pacte 1 | Vos tirs laissent une traînée de flammes alliées. | unique |  | création originale | — |
+| PSV_171 | Points vitaux | projectile | 3 | heritage 1, boss 1 | 10 % de coup critique (+2 % par chance, 50 % au plus) : dégâts ×2,5. | cumul | yeux | création originale | — |
+| PSV_172 | Concentration du ninja | hybride | 2 | heritage 2, boutique 1 | Chaque salle nettoyée sans être touché : dégâts +0,15 (jusqu’à +1,5). Un coup reçu remet la série à zéro. | unique |  | création originale | — |
+| PSV_173 | Septième lame | projectile | 2 | heritage 2, boutique 1 | Un tir sur sept est une lame lourde : dégâts ×3, plus grosse, elle perce deux ennemis. | unique |  | création originale | — |
+| PSV_174 | Pression du chakra | hybride | 3 | heritage 1, sanctuaire 1 | Les ennemis à moins de 2 tuiles de vous sont ralentis (×0,6). | unique |  | création originale | — |
+| PSV_175 | Instinct du combat | hybride | 2 | heritage 1, boutique 1 | Frôler un tir ennemi sans être touché : huit frôlements chargent l’actif d’une charge. | unique | vent | création originale | — |
+| PSV_176 | Bénédiction du vieil ermite | sante | 2 | sanctuaire 2, heritage 1 | À chaque nouvel étage commencé à pleine vitalité : une réserve de chakra protecteur. | cumul | ermite | création originale | — |
+| PSV_177 | Œil du Rinnegan (empreinte) | element | 4 | pacte 1 | Vos impacts attirent les ennemis voisins vers eux ; dégâts +0,7. | unique | yeux | adaptation | — |
+| PSV_178 | Étiquette à retardement | ressource | 2 | heritage 2, boutique 1 | 35 % des coups plantent une étiquette qui explose une seconde plus tard (×2,4). | cumul | argile | création originale | — |
+| PSV_179 | Rouleau de la double technique | hybride | 3 | bibliotheque 1, heritage 1 | Utiliser un actif déclenche aussi une salve de vos tirs dans les huit directions. | cumul |  | création originale | — |
+| PSV_180 | Sang du clan | contrepartie | 2 | heritage 1, pacte 1 | Dégâts +0,25 par contenant de vitalité vide. | unique |  | création originale | — |
 | PSV_900 | Clé des ermites | exploration | 0 |  | Objet-clé : ouvre le rayon de la Lumière même après un pacte. | unique |  | création originale | — |
 | PSV_901 | Fragment de la clé des ermites | exploration | 0 |  | Objet-clé : un second fragment formera la clé. | conversion |  | création originale | — |
 
-## Objets actifs — techniques scellées (ACT) — 33
+## Objets actifs — techniques scellées (ACT) — 39
 
 | ID | Nom | Q | Pools (poids) | Recharge | Effet | Statut | Déblocage |
 |---|---|---|---|---|---|---|---|
@@ -252,6 +276,12 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | ACT_031 | Rituel de permutation | 3 | pacte 1, cache 1 | usage unique | Usage unique : chaque passif (hors objets-clés) est remplacé par un autre. | création originale | OBJ_017 |
 | ACT_032 | Genjutsu du temps suspendu | 2 | bibliotheque 1, boutique 1 | 4 charge(s) | Ralentit tous les ennemis de moitié pendant 6 s. | création originale | — |
 | ACT_033 | Sablier du courant | 2 | heritage 1, bibliotheque 1 | recharge 20 s en combat | Recharge dans le temps (20 s en combat) : 6 s de vitesse +1,2. | création originale | — |
+| ACT_034 | Shunshin | 2 | heritage 1, boutique 1 | 2 charge(s) | Téléportation éclair vers la visée (4,5 tuiles, glisse le long des murs) ; au départ, un nuage de fumée désoriente les ennemis proches. | création originale | — |
+| ACT_035 | Chemin Preta | 3 | pacte 1, boss 1 | 3 charge(s) | Absorbe tous les projectiles ennemis en vol ; huit absorbés ou plus vous rendent une réserve de chakra. | adaptation | — |
+| ACT_036 | Clones explosifs | 3 | heritage 1, boss 1 | 3 charge(s) | Trois clones foncent sur les ennemis les plus proches et explosent (×3,5 dégâts chacun). | adaptation | — |
+| ACT_037 | Marque du dieu du tonnerre | 3 | bibliotheque 1, heritage 1 | 3 charge(s) | Premier usage : pose une marque (gratuit). Second usage : vous y téléporte et tranche tout sur la ligne (×4). | adaptation | — |
+| ACT_038 | Pluie de kunai | 2 | heritage 1, boutique 1 | 3 charge(s) | Quatorze kunai tombent sur les ennemis (cercles annoncés, ×1,6 chacun). | création originale | — |
+| ACT_039 | Rempart de Susanoo | 4 | boss 1, pacte 1 | 4 charge(s) | Cinq secondes : un rempart spectral arrête tous les tirs venus de face ; à la fin, un sabre géant balaie devant vous (×6). | adaptation | — |
 | ACT_050 | Relais | 0 |  | 1 charge(s) | Sacrifie un clone : explosion de chakra (5× dégâts autour). | création originale | — |
 
 ## Talismans (TAL) — 35
@@ -530,25 +560,30 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | RTE_05 | Conseil des épreuves (Boss Rush) | étage 6 | boss de l’étage 6 vaincu en moins de 20:00 (chronomètre de partie) | vagues de boss | Défis « Course de l’examen » (DEF_010) et « Collectionneur pressé » (DEF_011) (OBJ_048) | Parchemin d’or |
 | RTE_06 | Brèche instable | étage 8 | salle du boss de l’étage 8 atteinte en moins de 30:00 | Empreinte des Dix Queues | Chute céleste (PSV_020) ajoutée aux pools (OBJ_049) | Dix queues |
 
-## Transformations d’ensemble (TRF) — 13
+## Transformations d’ensemble (TRF) — 18
 
 | ID | Nom | Ensemble | Seuil | Effet | Objets de l’ensemble |
 |---|---|---|---|---|---|
 | TRF_001 | Manteau du renard | renard | 3 distincts | Aura de chakra : les ennemis à votre contact brûlent ; dégâts +1. | PSV_001, PSV_014, PSV_031, PSV_046, PSV_055, PSV_056, PSV_132, PSV_146, ACT_024 |
-| TRF_002 | Sage imparfait | ermite | 3 distincts | Immobile 0,6 s : dégâts ×1,6 jusqu’au prochain pas ; portée +2. | PSV_057, PSV_079, PSV_082, PSV_093, PSV_144, ACT_016 |
-| TRF_003 | Essaim Aburame | essaim | 3 distincts | Vos tirs deviennent des insectes chercheurs ; un essaim vous accompagne. | PSV_006, PSV_070, PSV_153, PSV_154 |
+| TRF_002 | Sage imparfait | ermite | 3 distincts | Immobile 0,6 s : dégâts ×1,6 jusqu’au prochain pas ; portée +2. | PSV_057, PSV_079, PSV_082, PSV_093, PSV_144, PSV_176, ACT_016 |
+| TRF_003 | Essaim Aburame | essaim | 3 distincts | Vos tirs deviennent des insectes chercheurs ; un essaim vous accompagne. | PSV_006, PSV_070, PSV_153, PSV_154, PSV_160 |
 | TRF_004 | Arsenal du marionnettiste | marionnette | 3 distincts | Une marionnette d’attaque supplémentaire ; vos marionnettes frappent 50 % plus fort. | PSV_048, PSV_072, PSV_073, PSV_074, PSV_142, ACT_011, ACT_013 |
-| TRF_005 | Résonance des yeux | yeux | 3 distincts | Barres de vie ennemies visibles, fissures des murs secrets révélées, chance +2, léger guidage. | PSV_022, PSV_025, PSV_049, PSV_053, PSV_067, PSV_113, ACT_008, ACT_017, ACT_018 |
-| TRF_006 | Armure de sable | sable | 3 distincts | Trois orbitaux de sable ; les coups d’un cœur entier ne retirent qu’une demi-unité. | PSV_010, PSV_065, PSV_077, PSV_097, PSV_150, ACT_010 |
-| TRF_007 | Reliques interdites | interdit | 3 distincts | Lévitation, deux réserves instables, dégâts +1. | PSV_054, PSV_091, PSV_098, PSV_129, PSV_131, PSV_135, PSV_139 |
+| TRF_005 | Résonance des yeux | yeux | 3 distincts | Barres de vie ennemies visibles, fissures des murs secrets révélées, chance +2, léger guidage. | PSV_022, PSV_025, PSV_049, PSV_053, PSV_067, PSV_113, PSV_159, PSV_171, PSV_177, ACT_008, ACT_017, ACT_018 |
+| TRF_006 | Armure de sable | sable | 3 distincts | Trois orbitaux de sable ; les coups d’un cœur entier ne retirent qu’une demi-unité. | PSV_010, PSV_065, PSV_077, PSV_097, PSV_150, PSV_168, ACT_010 |
+| TRF_007 | Reliques interdites | interdit | 3 distincts | Lévitation, deux réserves instables, dégâts +1. | PSV_054, PSV_091, PSV_098, PSV_131, PSV_135, PSV_139 |
 | TRF_008 | Outils du tonnerre | tonnerre | 3 distincts | Chaque tir enchaîne la foudre sur un ennemi proche ; cadence +0,3. | PSV_028, PSV_045, PSV_058, PSV_147, ACT_003 |
 | TRF_009 | Corps expérimental | experimental | 3 distincts | Un contenant de plus ; blessé, deux serpents vous défendent pour la salle. | PSV_060, PSV_064, PSV_078, PSV_090, PSV_140, PSV_143 |
 | TRF_010 | Messager de papier | papier | 3 distincts | Lévitation, quatre papillons protecteurs, tirs de papier. | PSV_075, PSV_116, PSV_155, PSV_156 |
-| TRF_011 | Meute d’invocation | meute | 3 distincts | Deux compagnons supplémentaires ; tous les familiers +25 %. | PSV_061, PSV_062, PSV_063, PSV_068, PSV_069, PSV_076, PSV_151, ACT_006, ACT_012 |
+| TRF_011 | Meute d’invocation | meute | 3 distincts | Deux compagnons supplémentaires ; tous les familiers +25 %. | PSV_061, PSV_062, PSV_068, PSV_069, PSV_076, PSV_151, ACT_006, ACT_012 |
 | TRF_012 | Huit Portes | portes | 3 distincts | Plafond de cadence +1, vitesse +0,5, dégâts +1 ; vapeur verte. | PSV_032, PSV_040, PSV_041, PSV_092, ACT_007, ACT_030 |
-| TRF_013 | Artiste explosif | argile | 3 distincts | Vos tirs explosent légèrement ; vos explosions ne vous blessent plus. | PSV_019, PSV_071, PSV_110, PSV_149 |
+| TRF_013 | Artiste explosif | argile | 3 distincts | Vos tirs explosent légèrement ; vos explosions ne vous blessent plus. | PSV_019, PSV_071, PSV_110, PSV_149, PSV_166, PSV_178 |
+| TRF_014 | Racine de l’ANBU | anbu | 3 distincts | Critiques +10 %. Une élimination vous fond dans l’ombre 1,5 s (toutes les 4 s au plus) : les ennemis vous perdent et tous vos coups y sont critiques. | PSV_018, PSV_039, PSV_134, PSV_138, PSV_162, PSV_163, PSV_164 |
+| TRF_015 | Danseur du vent | vent | 3 distincts | Vitesse +0,4, tirs plus rapides. Frôler un tir ennemi (zone élargie) décoche une lame de vent sur l’ennemi le plus proche (×2,5). | PSV_013, PSV_035, PSV_066, PSV_158, PSV_167, PSV_169, PSV_175 |
+| TRF_016 | Éclair jaune | espace | 3 distincts | Vitesse +0,5. Toutes les 8 s, le premier coup qui vous atteindrait est esquivé : vous vous téléportez et un kunai marqué explose à votre place (×3). | PSV_005, PSV_009, PSV_161, ACT_021, ACT_023, ACT_034, ACT_037 |
+| TRF_017 | Nuage écarlate | akatsuki | 3 distincts | Une réserve instable. Pactes plus fréquents (+20 %) et à un contenant au plus ; chaque pacte conclu dans la partie : dégâts +0,5 (jusqu’à +2). | PSV_089, PSV_129, PSV_130, PSV_136, ACT_019, ACT_020, ACT_035 |
+| TRF_018 | Ninja médical | medecin | 3 distincts | Un contenant. Chaque soin rend une demi-unité de plus ; le soin qui déborde devient du chakra protecteur (une réserve par soin au plus). | PSV_063, PSV_086, PSV_087, PSV_088, PSV_094, PSV_095, ACT_022 |
 
-## Synergies documentées (SYN) — 96
+## Synergies documentées (SYN) — 120
 
 | ID | Nom | Composants | Type | Effet | Test d’acceptation |
 |---|---|---|---|---|---|
@@ -648,6 +683,30 @@ Taille des pools (objets de poids non nul) : heritage 145, boss 55, boutique 68,
 | SYN_094 | Gardiens de Katsuyu | PSV_063 Katsuyu miniature + PSV_093 Chakra de la limace | dediee | Katsuyu soigne un demi-cœur toutes les quatre salles (doublé par la limace). | Soin à la 4e salle. |
 | SYN_095 | Sceau maudit, niveau 2 | PSV_091 Sceau maudit + PSV_133 Volonté du feu | dediee | À santé basse, un coup reçu déploie les ailes du sceau : lévitation et dégâts +1 pour la salle. | Lévitation à santé basse. |
 | SYN_096 | Onde du démon | PSV_055 Chakra du renard + PSV_098 Chakra du démon scellé | dediee | Dégâts +1 ; chaque coup reçu libère une onde de chakra rouge autour de vous. | Explosion autour du joueur après un coup. |
+| SYN_097 | Chasseur patient | PSV_159 Œil du chasseur + PSV_171 Points vitaux | dediee | La concentration aiguise l’œil : +3 % de coup critique par cran de concentration. | Critiques plus fréquents en série. |
+| SYN_098 | La marque qui saigne | PSV_162 Marque du chasseur + PSV_163 Lame dentelée | dediee | Une cible marquée saigne aussi ; le saignement dure deux fois plus. | Marque et saignement ensemble. |
+| SYN_099 | Pression meurtrière | PSV_164 Intention meurtrière + PSV_174 Pression du chakra | dediee | Un ennemi qui entre dans votre aura de pression est saisi de peur (1,5 s, une fois). | Fuite à l’entrée de l’aura. |
+| SYN_100 | Essaim insatiable | PSV_160 Larves de kikaichū + PSV_006 Insectes traqueurs | dediee | Les larves naissent deux fois plus souvent et empoisonnent ce qu’elles mordent. | Larves empoisonnées. |
+| SYN_101 | Espace sans fin | PSV_161 Parchemin de l’espace replié + PSV_007 Fil de chakra | dediee | Les tirs repliés ressortent du mur opposé deux fois de plus. | Trois traversées de la salle. |
+| SYN_102 | Sable dormant | PSV_168 Sable en suspens + PSV_010 Sable en orbite | dediee | Les grains suspendus frappent 25 % plus fort quand ils convergent. | Dégâts ×1,25. |
+| SYN_103 | Tourbillon de braises | PSV_167 Tourbillon de feuilles + PSV_170 Sillage ardent | dediee | La spirale sème un sillage de feu deux fois plus dense et 50 % plus brûlant. | Anneau de flammes autour de vous. |
+| SYN_104 | Shuriken sans fin | PSV_165 Shuriken scindé + PSV_030 Shuriken démultiplié | dediee | Les éclats d’une scission peuvent eux-mêmes se scinder une fois. | Scission en cascade. |
+| SYN_105 | Pivot du dieu du tonnerre | PSV_169 Kunai pivotant + PSV_005 Kunai à marque de téléportation | dediee | Un tir qui pivote frappe 50 % plus fort. | Dégâts ×1,5 après pivot. |
+| SYN_106 | Arsenal lourd | PSV_173 Septième lame + PSV_024 Arsenal de Tenten (empreinte) | dediee | Une lame lourde tous les cinq tirs au lieu de sept. | Lame lourde au cinquième tir. |
+| SYN_107 | Art à retardement | PSV_178 Étiquette à retardement + PSV_149 Explosion de chakra | dediee | Les étiquettes plantées explosent 50 % plus fort et plus large. | Explosion différée plus large. |
+| SYN_108 | Feu posthume | PSV_166 Étiquettes posthumes + PSV_043 Grande boule de feu (empreinte) | dediee | Un ennemi tué laisse parfois (30 %) une nappe de feu alliée. | Nappe de feu à l’élimination. |
+| SYN_109 | Garde parfaite | PSV_172 Concentration du ninja + PSV_096 Substitution instinctive | dediee | Une substitution réussie prolonge la série au lieu de la briser (+1). | Série prolongée par une bûche. |
+| SYN_110 | Danse sous les tirs | PSV_175 Instinct du combat + PSV_035 Sandales de course | dediee | Chaque frôlement donne 1,5 s de vitesse +0,5 (trois fois au plus). | Vitesse après un frôlement. |
+| SYN_111 | Œil des six chemins | PSV_177 Œil du Rinnegan (empreinte) + PSV_028 Chidori nagashi (empreinte) | dediee | L’attraction rassemble : la foudre saute à trois ennemis au lieu de deux. | Chaîne de foudre plus longue. |
+| SYN_112 | Sang pour sang | PSV_180 Sang du clan + PSV_133 Volonté du feu | dediee | À deux demi-unités ou moins, une élimination sur huit soigne une demi-unité. | Soin à santé basse. |
+| SYN_113 | Bout portant sanglant | PSV_157 Frappe à bout portant + PSV_163 Lame dentelée | dediee | Un coup porté dans le premier tiers de la portée fait toujours saigner. | Saignement garanti au contact. |
+| SYN_114 | Tireur d’élite | PSV_158 Shuriken du long voyage + PSV_037 Lunettes de visée | dediee | Au-delà de la moitié de la portée, chaque coup est critique. | Critique garanti de loin. |
+| SYN_115 | Aura du renard | PSV_174 Pression du chakra + PSV_055 Chakra du renard | dediee | Les ennemis dans votre aura de pression brûlent. | Brûlure dans l’aura. |
+| SYN_116 | Double technique de l’ombre | PSV_179 Rouleau de la double technique + PSV_051 Ombre liante | dediee | La salve de l’actif immobilise les ennemis touchés (1 s). | Immobilisation après un actif. |
+| SYN_117 | L’art du ninja silencieux | PSV_159 Œil du chasseur + PSV_171 Points vitaux + PSV_039 Masque de l’ANBU | dediee | Critiques ×3 au lieu de ×2,5 ; un tir perdu ne fait plus retomber la concentration qu’à moitié. | Critique ×3. |
+| SYN_118 | Tempête de lames | PSV_165 Shuriken scindé + PSV_173 Septième lame + PSV_003 Éventail de kunai | dediee | Chaque lame lourde qui touche se scinde en cinq éclats. | Cinq éclats à chaque lame lourde. |
+| SYN_119 | Les trois marques | PSV_162 Marque du chasseur + PSV_163 Lame dentelée + PSV_164 Intention meurtrière | dediee | Marque, saignement et peur s’appliquent deux fois plus souvent ; une cible marquée qui fuit subit des dégâts doublés. | Statuts fréquents, dégâts ×2 sur cible marquée en fuite. |
+| SYN_120 | Maître du sable suspendu | PSV_168 Sable en suspens + PSV_065 Sable protecteur + PSV_150 Tempête de sable | dediee | Les grains suspendus arrêtent les tirs ennemis qui les touchent. | Tirs ennemis bloqués par les grains. |
 
 ## Objectifs de déblocage (OBJ) — 80
 

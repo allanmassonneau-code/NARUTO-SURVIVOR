@@ -14,7 +14,7 @@ function poserPiedestal(s, x, y, id, o = {}) {
 }
 function prixObjet(id, sorte) {
   const q = (INDEX[id] && INDEX[id].qualite) || 1;
-  if (sorte === 'pacte') return { type: 'pacte', n: q >= 3 ? 2 : 1 };
+  if (sorte === 'pacte') return { type: 'pacte', n: q >= 3 && !(G.joueur && G.joueur.drapeaux.nuageEcarlate) ? 2 : 1 };
   return { type: 'ryo', n: [10, 10, 15, 20, 25][q] || 15 };
 }
 // Prix effectif en Ryō : soldes (moitié, arrondi au-dessus) puis coupon (premier achat de l'étage gratuit)
@@ -269,6 +269,7 @@ function chanceOpportunite() {
   if (aTalisman(J, 'TAL_015')) { c += 0.05; det.push(['Bague de l’organisation', 0.05]); }
   if (possede(J, 'PSV_091')) { c += 0.20; det.push(['Sceau maudit', 0.20]); }
   if (E.faveurSanctuaire) { c += E.faveurSanctuaire; det.push(['faveur de l’autel', E.faveurSanctuaire]); }
+  if (J.drapeaux.nuageEcarlate) { c += 0.20; det.push(['Nuage écarlate', 0.20]); }
   c = borne(c, 0, 0.95);
   if (J.drapeaux.serment) return { chance: 1, pacte: 1, sanctuaire: 0, detail: [['Serment de vengeance', 1]] };
   let wP = 0.6, wS = 0.4 + 0.25 * P.pactesRefuses + (aTalisman(J, 'TAL_004') ? 0.15 : 0);

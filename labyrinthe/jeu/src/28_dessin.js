@@ -162,10 +162,12 @@ function dessinerOrbe(g, o, X, Y) {
 
 // ── Joueur (mutations cumulatives par couches) ──
 function dessinerJoueur(g, J, x, y) {
-  if (J.invuln > 0 && J.etat !== 'objet' && !G.reglages.sansFlash && Math.floor(J.invuln * 12) % 2 === 0) { g.globalAlpha = 0.35; }
-  if (J.intangible) g.globalAlpha = 0.45;
+  let aBase = 1; // clignotement d'invulnérabilité, intangibilité, ombre (ennemis qui vous ont perdu de vue)
+  if (J.invuln > 0 && J.etat !== 'objet' && !G.reglages.sansFlash && Math.floor(J.invuln * 12) % 2 === 0) aBase = 0.35;
+  if (J.intangible) aBase = 0.45; else if (G.appat && !G.appat.fini) aBase = Math.min(aBase, 0.5);
+  g.globalAlpha = aBase;
   const M = J.mutations;
-  if (M.aura) dessinerAura(g, M.aura, x, y);
+  if (M.aura) dessinerAura(g, M.aura, x, y, false);
   if (J.sage) { // énergie naturelle accumulée : pigment orange autour des yeux et lueur au sol
     g.globalAlpha *= 0.5; g.drawImage(ellipse(12, 5, 'rgba(240,138,36,0.6)'), x - 12, y - 5); g.globalAlpha = J.intangible ? 0.45 : 1;
     if (Math.random() < 0.15) G.particules.push({ x: J.x + (Math.random() - 0.5) * 18, y: J.y - Math.random() * 24, vx: 0, vy: -20, age: 0, duree: 0.4, couleur: '#f0a040', taille: 1 });
@@ -182,21 +184,53 @@ function dessinerJoueur(g, J, x, y) {
     g.drawImage(ic, x - 10, y - 56); g.fillStyle = PEAU.s; g.fillRect(x - 9, y - 38, 3, 4); g.fillRect(x + 6, y - 38, 3, 4); g.globalAlpha = 1; return; }
   if (J.def.teinte) { // variante altérée : liseré de teinte
     const S = spritesPerso(J.cle); const vue = { haut: 'dos', bas: 'face', gauche: 'gauche', droite: 'cote' };
-    const t = silhouette(S.tetes[vue[J.dirTete] || 'face'].normal, J.def.teinte); g.globalAlpha *= 0.5; g.drawImage(t, x - 13 - 1, y - 32); g.drawImage(t, x - 13 + 1, y - 32); g.globalAlpha = J.invuln > 0 && Math.floor(J.invuln * 12) % 2 === 0 ? 0.35 : 1;
+    const t = silhouette(S.tetes[vue[J.dirTete] || 'face'].normal, J.def.teinte); g.globalAlpha *= 0.5; g.drawImage(t, x - 13 - 1, y - 32); g.drawImage(t, x - 13 + 1, y - 32); g.globalAlpha = aBase;
   }
   if (M.dos) dessinerCouche(g, M.dos, x, y, J, 'dos');
   dessinerPerso(g, J.cle, x, y, { dirCorps: J.dirCorps, dirTete: J.dirTete, frame, etatTete });
-  for (const c of ['peau', 'yeux', 'tete', 'bras', 'corps']) if (M[c]) dessinerCouche(g, M[c], x, y, J, c);
+  if (J.susanoo) dessinerSusanoo(g, { susanoo: { actif: true, vacille: J.susanoo.t < 0.8, a: J.susanoo.a }, r: 8 }, x, y - 12); // rempart spectral (actif)
+  for (const c of ['corps', 'peau', 'yeux', 'tete', 'bras']) if (M[c]) dessinerCouche(g, M[c], x, y, J, c);
+  if (M.aura) dessinerAura(g, M.aura, x, y, true); // moitié avant des orbites, étincelles
   if (J.kaiten) g.drawImage(anneau(26, 2, 'rgba(200,230,255,0.8)'), x - 27, y - 37);
   if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { const a = G.temps * 3; for (let i = 0; i < 6; i++) { g.fillStyle = '#d8b070'; g.fillRect(Math.round(x + Math.cos(a + i) * 14), Math.round(y - 12 + Math.sin(a + i) * 10), 2, 2); } }
   g.globalAlpha = 1;
 }
-function dessinerAura(g, A, x, y) {
-  const t = G.temps; const c = A.couleur || '#f0a030';
-  g.globalAlpha = 0.35 + 0.1 * Math.sin(t * 6);
+// Aura : lueur ovale (derrière le corps) ; les motifs en orbite passent derrière puis devant
+function dessinerAura(g, A, x, y, devant) {
+  const t = G.temps; const c = A.couleur || '#f0a030'; const a0 = g.globalAlpha;
+  if (ORBITES[A.motif]) { orbiteMutation(g, A, x, y, devant); return; }
+  if (A.motif === 'eclair') { eclairJaune(g, A, x, y, devant); return; }
+  if (devant) { if (A.motif === 'lueur_poings') dessinerCouche(g, A, x, y, G.joueur, 'bras'); return; }
+  g.globalAlpha = a0 * (0.35 + 0.1 * Math.sin(t * 6));
   g.drawImage(ellipse(15, 19, c), x - 15, y - 36);
   if (A.motif === 'queues') for (let i = 0; i < (A.n || 1); i++) { const a = Math.PI / 2 + (i - (A.n - 1) / 2) * 0.5 + Math.sin(t * 3 + i) * 0.2; g.drawImage(disque(3, c), Math.round(x + Math.cos(a) * 14 - 3), Math.round(y - 6 + Math.sin(a) * 8)); g.drawImage(disque(2, c), Math.round(x + Math.cos(a) * 20 - 2), Math.round(y - 4 + Math.sin(a) * 12)); }
-  g.globalAlpha = 1;
+  g.globalAlpha = a0;
+}
+// Mutations en orbite (sable, insectes, papiers, feuilles) : n éléments sur une ellipse, profondeur = sinus de l'angle
+const ORBITES = {
+  sable_flottant: { n: 5, v: 2, R: 16, r: 6, y: -20, w: 2, h: 2, c: () => '#d8b070' },
+  insectes: { n: 6, v: 5, R: 12, r: 8, y: -16, w: 1, h: 1, c: () => '#1a1a1a', ecart: 3 },
+  papier: { n: 3, v: 3, R: 15, r: 9, y: -14, w: 3, h: 2, c: () => '#f0ece0' },
+  feuilles: { n: 5, v: 3.2, R: 17, r: 7, y: -12, w: 3, h: 2, c: (A, i) => i % 2 ? nuancer(A.couleur || '#7ae07a', 0.72) : (A.couleur || '#7ae07a'), monte: 4 },
+};
+function orbiteMutation(g, A, x, y, devant) {
+  const O = ORBITES[A.motif], t = G.temps * O.v;
+  for (let i = 0; i < O.n; i++) {
+    const ang = t * (1 + (i % 2) * 0.15) + i * Math.PI * 2 / O.n, prof = Math.sin(ang);
+    if (devant !== null && (prof > 0) !== devant) continue;
+    const R = O.R + (O.ecart ? (i % 3) * O.ecart : 0);
+    const px = Math.round(x + Math.cos(ang) * R), py = Math.round(y + O.y + prof * O.r - (O.monte ? ((G.temps * 0.8 + i * 0.37) % 1) * O.monte * 2 : 0));
+    g.fillStyle = O.c(A, i); g.fillRect(px, py, O.w, O.h);
+    if (A.motif === 'feuilles') { g.fillStyle = nuancer(A.couleur || '#7ae07a', 1.3); g.fillRect(px + (Math.cos(ang) > 0 ? 0 : 2), py, 1, 1); }
+  }
+}
+// Éclair jaune : lueur dorée ; prête (esquive disponible), elle crépite d'étincelles
+function eclairJaune(g, A, x, y, devant) {
+  const J = G.joueur, pret = !(J.tEclair > 0), a0 = g.globalAlpha;
+  if (!devant) { g.globalAlpha = a0 * (pret ? 0.3 + 0.1 * Math.sin(G.temps * 9) : 0.1); g.drawImage(ellipse(15, 19, A.couleur), x - 15, y - 36); g.globalAlpha = a0; return; }
+  if (!pret || Math.random() > 0.35) return;
+  let px = x + (Math.random() - 0.5) * 22, py = y - 6 - Math.random() * 24; g.fillStyle = Math.random() < 0.5 ? '#fff8c0' : A.couleur;
+  for (let k = 0; k < 3; k++) { const nx = px + (Math.random() - 0.5) * 6, ny = py + 2 + Math.random() * 3; lignePixel(g, px, py, nx, ny, g.fillStyle, 1); px = nx; py = ny; }
 }
 function dessinerCouche(g, v, x, y, J, couche) {
   const col = v.couleur || '#ffffff';
@@ -207,15 +241,45 @@ function dessinerCouche(g, v, x, y, J, couche) {
     case 'cape': g.fillStyle = col; g.fillRect(x - 7, y - 11, 14, 9); g.fillStyle = nuancer(col, 0.7); g.fillRect(x - 7, y - 3, 14, 2); break;
     case 'cornes': g.fillStyle = col; g.fillRect(x - 9, y - 33, 2, 4); g.fillRect(x + 8, y - 33, 2, 4); g.fillRect(x - 10, y - 35, 1, 2); g.fillRect(x + 10, y - 35, 1, 2); break;
     case 'masque': if (J.dirTete === 'bas') { g.fillStyle = col; g.fillRect(x - 7, y - 16, 14, 5); g.fillStyle = '#1c1420'; g.fillRect(x - 5, y - 15, 3, 1); g.fillRect(x + 3, y - 15, 3, 1); } break;
-    case 'sable_flottant': { const a = G.temps * 2; for (let i = 0; i < 5; i++) { g.fillStyle = '#d8b070'; g.fillRect(Math.round(x + Math.cos(a * 1.3 + i * 1.2) * 16), Math.round(y - 20 + Math.sin(a + i) * 6), 2, 2); } break; }
-    case 'insectes': { const a = G.temps * 5; for (let i = 0; i < 6; i++) { g.fillStyle = '#1a1a1a'; g.fillRect(Math.round(x + Math.cos(a + i * 1.05) * (12 + i % 3 * 3)), Math.round(y - 16 + Math.sin(a * 1.3 + i) * 8), 1, 1); } break; }
+    case 'sable_flottant': case 'insectes': case 'papier': case 'feuilles': orbiteMutation(g, v, x, y, null); break;
     case 'queue': g.fillStyle = col; g.fillRect(x + 5, y - 6, 3, 2); g.fillRect(x + 7, y - 8, 3, 2); g.fillRect(x + 9, y - 10, 2, 2); break;
     case 'plumes': g.fillStyle = col; g.fillRect(x - 12, y - 16, 4, 2); g.fillRect(x - 14, y - 18, 3, 2); g.fillRect(x + 8, y - 16, 4, 2); g.fillRect(x + 11, y - 18, 3, 2); break;
     case 'oeil_front': if (J.dirTete === 'bas') { g.fillStyle = '#f0f0f0'; g.fillRect(x - 1, y - 26, 3, 2); g.fillStyle = col; g.fillRect(x, y - 26, 1, 2); } break;
     case 'point_front': if (J.dirTete !== 'haut') { g.fillStyle = col; g.fillRect(x - 1, y - 24, 2, 2); } break;
     case 'bras_marionnette': g.fillStyle = '#c8b090'; g.fillRect(x - 11, y - 10, 3, 2); g.fillRect(x + 8, y - 10, 3, 2); g.fillStyle = '#6a5a4a'; g.fillRect(x - 12, y - 11, 1, 1); break;
     case 'lueur_poings': g.fillStyle = col; g.fillRect(x - 8, y - 6, 2, 2); g.fillRect(x + 6, y - 6, 2, 2); break;
-    case 'papier': { const a = G.temps * 3; for (let i = 0; i < 3; i++) { g.fillStyle = '#f0ece0'; g.fillRect(Math.round(x + Math.cos(a + i * 2.1) * 15), Math.round(y - 14 + Math.sin(a + i * 2.1) * 9), 3, 2); } break; }
+    case 'masque_anbu': { // masque d'animal blanc : fentes noires, traits rouges ; de dos, la lanière
+      const d = J.dirTete;
+      if (d === 'haut') { g.fillStyle = '#3a3040'; g.fillRect(x - 7, y - 21, 14, 1); break; }
+      const ombre = nuancer(col, 0.78);
+      if (d === 'bas') { // de face : centré sur x, trous sur les yeux (x−5 et x+4), museau court
+        g.fillStyle = col; g.fillRect(x - 6, y - 23, 13, 10); g.fillRect(x - 4, y - 13, 9, 1);
+        g.fillStyle = ombre; g.fillRect(x + 6, y - 22, 1, 9); g.fillRect(x - 4, y - 13, 9, 1); g.fillRect(x - 1, y - 16, 3, 1);
+        g.fillStyle = '#1c1420'; g.fillRect(x - 5, y - 19, 2, 2); g.fillRect(x + 4, y - 19, 2, 2);
+        g.fillStyle = '#c8302a'; g.fillRect(x, y - 23, 1, 3); g.fillRect(x - 5, y - 21, 2, 1); g.fillRect(x + 4, y - 21, 2, 1); g.fillRect(x - 6, y - 16, 1, 2); g.fillRect(x + 6, y - 16, 1, 2);
+      } else { const s = d === 'gauche' ? -1 : 1; // de profil : le masque couvre l'avant du visage, museau qui dépasse
+        const bx = s > 0 ? x + 3 : x - 9; g.fillStyle = col; g.fillRect(bx, y - 23, 7, 10); g.fillRect(s > 0 ? x + 10 : x - 11, y - 17, 2, 3);
+        g.fillStyle = ombre; g.fillRect(bx, y - 14, 7, 1); g.fillRect(s > 0 ? x + 10 : x - 11, y - 15, 2, 1);
+        g.fillStyle = '#1c1420'; g.fillRect(s > 0 ? x + 7 : x - 8, y - 19, 2, 2);
+        g.fillStyle = '#c8302a'; g.fillRect(s > 0 ? x + 6 : x - 7, y - 21, 3, 1); g.fillRect(s > 0 ? x + 5 : x - 5, y - 16, 1, 2);
+      }
+      break;
+    }
+    case 'manteau_nuages': { // long manteau sombre à col haut, nuages rouges cernés de blanc
+      const dos = J.dirCorps === 'haut', N = (cx, cy) => { g.fillStyle = '#f0ece4'; g.fillRect(cx, cy, 4, 3); g.fillRect(cx + 1, cy - 1, 2, 1); g.fillStyle = col; g.fillRect(cx + 1, cy, 2, 2); };
+      g.fillStyle = '#1e1a24'; g.fillRect(x - 7, y - 12, 14, 10); g.fillRect(x - 6, y - 2, 12, 1); g.fillRect(x - 5, y - 14, 10, 2);
+      g.fillStyle = '#2e2836'; g.fillRect(x - 7, y - 12, 1, 10); g.fillRect(x + 6, y - 12, 1, 10);
+      if (!dos) { g.fillStyle = col; g.fillRect(x - 4, y - 14, 8, 1); g.fillStyle = '#14101a'; g.fillRect(x, y - 12, 1, 10); }
+      N(x - 6, y - 9); N(x + 2, y - 5); if (dos) N(x - 2, y - 12);
+      break;
+    }
+    case 'paumes': { // paumes de soin : lueur verte qui pulse, étincelles qui montent
+      const k = 0.55 + 0.35 * Math.sin(G.temps * 5), a0 = g.globalAlpha; g.globalAlpha = a0 * k;
+      g.drawImage(disque(3, col), x - 11, y - 11); g.drawImage(disque(3, col), x + 4, y - 11); g.globalAlpha = a0;
+      g.fillStyle = '#e0ffe8'; g.fillRect(x - 9, y - 9, 2, 2); g.fillRect(x + 6, y - 9, 2, 2);
+      if (Math.random() < 0.06) G.particules.push({ x: J.x + (Math.random() < 0.5 ? -8 : 7), y: J.y - 9, vx: 0, vy: -16, age: 0, duree: 0.5, couleur: col, taille: 1 });
+      break;
+    }
     case 'maquillage': if (J.dirTete === 'bas') { g.fillStyle = col; g.fillRect(x - 9, y - 18, 3, 1); g.fillRect(x + 7, y - 18, 3, 1); } break;
     default: if (couche === 'tete') { g.fillStyle = col; g.fillRect(x - 2, y - 34, 4, 2); }
   }
@@ -327,7 +391,7 @@ function dessinerIconeChampion(g, ic, x, y, c) {
 // Statuts lisibles sur le corps (en plus des symboles) : teinte de la nature du statut et signe qui l'accompagne —
 // flammèches (brûlure), bulles (poison), givre et éclats (gel), gouttes (ralenti), anneau d'ombre (immobilisé),
 // cœurs (charme), étoiles qui tournent (confus), volutes sombres (peur).
-const TEINTES_STATUT = { brulure: ['#ff7a2a', 0.22], poison: ['#7ae04a', 0.22], gel: ['#c0f0ff', 0.5], ralenti: ['#5ab0f0', 0.2], charme: ['#ff7ab0', 0.2], immobilise: ['#3a3050', 0.25] };
+const TEINTES_STATUT = { brulure: ['#ff7a2a', 0.22], poison: ['#7ae04a', 0.22], gel: ['#c0f0ff', 0.5], ralenti: ['#5ab0f0', 0.2], charme: ['#ff7ab0', 0.2], immobilise: ['#3a3050', 0.25], marque: ['#ff3040', 0.12] };
 function effetsStatuts(g, e, base, poser, x, y, h) {
   const S = e.statuts; if (!S) return; const R = Math.random, conf = G.reglages.confort, t = G.temps;
   for (const k in S) { const T = TEINTES_STATUT[k]; if (T) { g.globalAlpha = T[1] * (k === 'gel' ? 1 : 0.75 + 0.25 * Math.sin(t * 10 + e.uid)); poser(silhouetteMemo(base, T[0])); g.globalAlpha = 1; } }
@@ -342,12 +406,14 @@ function effetsStatuts(g, e, base, poser, x, y, h) {
   if (S.peur && R() < (conf ? 0.05 : 0.12)) p((R() - 0.5) * 6, -12, 0.5, '#3a3048', 2);
 }
 function dessinerSymboleStatut(g, k, x, y) {
-  const c = { brulure: '#ff7a2a', poison: '#7ae04a', ralenti: '#5ab0f0', immobilise: '#3a3050', charme: '#ff7ab0', peur: '#e0e0e0', confus: '#d0a0ff', gel: '#c0f0ff' }[k] || '#fff';
+  const c = { brulure: '#ff7a2a', poison: '#7ae04a', ralenti: '#5ab0f0', immobilise: '#3a3050', charme: '#ff7ab0', peur: '#e0e0e0', confus: '#d0a0ff', gel: '#c0f0ff', marque: '#ff4040', saignement: '#d02030' }[k] || '#fff';
   g.fillStyle = '#1c1420'; g.fillRect(x - 1, y - 1, 6, 6); g.fillStyle = c;
   if (k === 'brulure') { g.fillRect(x + 2, y, 1, 1); g.fillRect(x + 1, y + 1, 3, 2); g.fillRect(x, y + 3, 5, 1); }
   else if (k === 'poison') { g.fillRect(x + 1, y, 3, 1); g.fillRect(x, y + 1, 5, 3); }
   else if (k === 'immobilise') { g.fillStyle = '#9080c0'; g.fillRect(x, y + 2, 5, 1); g.fillRect(x + 2, y, 1, 5); }
   else if (k === 'charme') { g.fillRect(x, y, 2, 2); g.fillRect(x + 3, y, 2, 2); g.fillRect(x + 1, y + 2, 3, 2); }
+  else if (k === 'marque') { g.fillRect(x + 2, y, 1, 5); g.fillRect(x, y + 2, 5, 1); g.fillStyle = '#1c1420'; g.fillRect(x + 2, y + 2, 1, 1); } // réticule
+  else if (k === 'saignement') { g.fillRect(x + 2, y, 1, 1); g.fillRect(x + 1, y + 1, 3, 2); g.fillRect(x + 1, y + 3, 3, 1); g.fillStyle = '#ff8090'; g.fillRect(x + 1, y + 1, 1, 1); } // goutte
   else if (k === 'confus') { g.fillRect(x + 1, y, 3, 1); g.fillRect(x + 3, y + 1, 1, 1); g.fillRect(x + 2, y + 2, 1, 1); g.fillRect(x + 2, y + 4, 1, 1); }
   else g.fillRect(x, y, 5, 5);
 }

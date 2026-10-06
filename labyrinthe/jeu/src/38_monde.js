@@ -229,6 +229,7 @@ function verifierNettoyage() {
     }
     chargerActif(J, s.forme === '1x1' ? 1 : 2, 'salle');
     J.compteurs.sallesNettoyees++;
+    if (!s.joueurTouche) { J.compteurs.serie = (J.compteurs.serie || 0) + 1; if (J.drapeaux.serieParfaite) { J.stats = calculerStats(J); if (J.compteurs.serie <= 10) G.textes.push({ x: J.x, y: J.y - 40, t: 'Série ×' + J.compteurs.serie, age: 0, duree: 0.9, couleur: '#ffe070' }); } }
     evenement('salle_nettoyee', { s });
     if (J.def.regleCode === 'clones_ressource' && J.clones < 4) { J.clones++; majClonesRessource(J); }
     if (J.def.regleCode === 'flair' && Math.random() < 0.1) { creerRamassable(tirerRamassable(G.alea.recomp, 5), J.x + 16, J.y, {}); G.textes.push({ x: J.x, y: J.y - 30, t: 'Akamaru a trouvé quelque chose !', age: 0, duree: 1.2, couleur: '#fff' }); }
@@ -343,8 +344,8 @@ function collecter(r, J) {
       if (J.drapeaux.sansVitalite) return;
       const manque = rougeMax(S) - rougeTotal(S);
       if (manque <= 0 && J.def.regleCode !== 'controle_chakra' && J.def.regleCode !== 'sceau_centaine') return; // reste au sol
-      let n = R.n * (J.drapeaux.soinsDoubles ? 2 : 1);
-      const ex = soignerRouge(S, n);
+      let n = R.n * (J.drapeaux.soinsDoubles ? 2 : 1) + (J.drapeaux.ninjaMedical ? 1 : 0);
+      const ex = soignerRouge(S, n); soinDebordant(J, ex);
       if (ex > 0 && J.def.regleCode === 'controle_chakra') { J.force = Math.min(6, J.force + ex); G.textes.push({ x: J.x, y: J.y - 32, t: 'Force +' + ex, age: 0, duree: 0.8, couleur: '#ff9ac0' }); }
       if (ex > 0 && J.def.regleCode === 'sceau_centaine') J.sceau = Math.min(12, J.sceau + ex);
       Son.jouer('coeur'); break;

@@ -395,5 +395,167 @@
    "forme": "oiseau",
    "a": "#f0e8d8"
   }
+ },
+ {
+  "id": "TRF_014",
+  "nom": "Racine de l’ANBU",
+  "type": "transformation",
+  "ensemble": "anbu",
+  "seuil": 3,
+  "desc": "Critiques +10 %. Une élimination vous fond dans l’ombre 1,5 s (toutes les 4 s au plus) : les ennemis vous perdent et tous vos coups y sont critiques.",
+  "effets": [
+   {
+    "critique": 0.1
+   },
+   {
+    "quand": "elimination",
+    "cooldown": 4,
+    "faire": {
+     "type": "invisibilite",
+     "duree": 1.5
+    }
+   },
+   {
+    "drapeau": "critOmbre"
+   }
+  ],
+  "visuel": {
+   "couche": "tete",
+   "motif": "masque_anbu",
+   "couleur": "#f0ece4"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "masque",
+   "a": "#f0ece4",
+   "b": "#c8302a"
+  }
+ },
+ {
+  "id": "TRF_015",
+  "nom": "Danseur du vent",
+  "type": "transformation",
+  "ensemble": "vent",
+  "seuil": 3,
+  "desc": "Vitesse +0,4, tirs plus rapides. Frôler un tir ennemi (zone élargie) décoche une lame de vent sur l’ennemi le plus proche (×2,5).",
+  "effets": [
+   {
+    "s": "vitesse",
+    "a": 0.4
+   },
+   {
+    "s": "vitesseTir",
+    "a": 1.5
+   },
+   {
+    "drapeau": "frolement"
+   },
+   {
+    "drapeau": "frolementLarge"
+   },
+   {
+    "quand": "frolement",
+    "cooldown": 0.2,
+    "faire": {
+     "type": "lame_vent",
+     "coef": 2.5
+    }
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "motif": "feuilles",
+   "couleur": "#7ae07a"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "tornade",
+   "a": "#8ae8b8"
+  }
+ },
+ {
+  "id": "TRF_016",
+  "nom": "Éclair jaune",
+  "type": "transformation",
+  "ensemble": "espace",
+  "seuil": 3,
+  "desc": "Vitesse +0,5. Toutes les 8 s, le premier coup qui vous atteindrait est esquivé : vous vous téléportez et un kunai marqué explose à votre place (×3).",
+  "effets": [
+   {
+    "s": "vitesse",
+    "a": 0.5
+   },
+   {
+    "drapeau": "eclairJaune"
+   }
+  ],
+  "visuel": {
+   "couche": "aura",
+   "motif": "eclair",
+   "couleur": "#ffe070"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "kunai",
+   "a": "#ffe070",
+   "b": "#a08020"
+  }
+ },
+ {
+  "id": "TRF_017",
+  "nom": "Nuage écarlate",
+  "type": "transformation",
+  "ensemble": "akatsuki",
+  "seuil": 3,
+  "desc": "Une réserve instable. Pactes plus fréquents (+20 %) et à un contenant au plus ; chaque pacte conclu dans la partie : dégâts +0,5 (jusqu’à +2).",
+  "effets": [
+   {
+    "sante": {
+     "instable": 2
+    }
+   },
+   {
+    "drapeau": "nuageEcarlate"
+   }
+  ],
+  "visuel": {
+   "couche": "corps",
+   "motif": "manteau_nuages",
+   "couleur": "#c8303a"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "nuage",
+   "a": "#c8303a",
+   "w": "#f0ece4"
+  }
+ },
+ {
+  "id": "TRF_018",
+  "nom": "Ninja médical",
+  "type": "transformation",
+  "ensemble": "medecin",
+  "seuil": 3,
+  "desc": "Un contenant. Chaque soin rend une demi-unité de plus ; le soin qui déborde devient du chakra protecteur (une réserve par soin au plus).",
+  "effets": [
+   {
+    "sante": {
+     "cont": 1
+    }
+   },
+   {
+    "drapeau": "ninjaMedical"
+   }
+  ],
+  "visuel": {
+   "couche": "bras",
+   "motif": "paumes",
+   "couleur": "#5ae080"
+  },
+  "statut": "création originale",
+  "icone": {
+   "forme": "gant",
+   "a": "#5ae080"
+  }
  }
 ]

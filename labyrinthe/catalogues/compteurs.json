@@ -17,13 +17,13 @@
   },
   {
    "ensemble": "Objets passifs",
-   "produit": 158,
+   "produit": 182,
    "cible_v1": 150,
    "cible_bibliotheque": 480
   },
   {
    "ensemble": "Objets actifs",
-   "produit": 33,
+   "produit": 39,
    "cible_v1": 30,
    "cible_bibliotheque": 120
   },
@@ -53,13 +53,13 @@
   },
   {
    "ensemble": "Synergies documentées",
-   "produit": 96,
+   "produit": 120,
    "cible_v1": 60,
    "cible_bibliotheque": 300
   },
   {
    "ensemble": "Transformations d’ensemble",
-   "produit": 13,
+   "produit": 18,
    "cible_v1": 12,
    "cible_bibliotheque": 40
   },
@@ -119,14 +119,14 @@
   }
  ],
  "pools": {
-  "heritage": 145,
-  "boss": 55,
-  "boutique": 68,
-  "pacte": 44,
-  "sanctuaire": 27,
+  "heritage": 172,
+  "boss": 64,
+  "boutique": 80,
+  "pacte": 51,
+  "sanctuaire": 29,
   "cache": 9,
   "isolee": 3,
-  "bibliotheque": 39,
+  "bibliotheque": 46,
   "defi": 3,
   "coffre": 8,
   "machine": 6
