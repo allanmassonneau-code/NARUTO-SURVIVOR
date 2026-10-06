@@ -6,9 +6,12 @@
 // et visibles ; aucune réduction de dégâts adaptative cachée.
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Résistance des boss selon l'étage où on les affronte (banc d'équilibrage : 25 à 35 s par combat à puissance attendue)
+const FACTEUR_PV_BOSS = [1, 0.85, 0.95, 1.15, 1.35, 1.55, 1.75, 2.2, 2.6, 1.9];
+function facteurPvBoss() { const n = G.etage ? G.etage.numero : 1; return FACTEUR_PV_BOSS[Math.min(FACTEUR_PV_BOSS.length - 1, Math.max(1, n))]; }
 function creerBoss(id, x, y, o = {}) {
   const d = INDEX[id];
-  const e = creerEnnemi(id, x, y, Object.assign({ pvMult: o.pvMult || 1 }, o));
+  const e = creerEnnemi(id, x, y, Object.assign({}, o, { pvMult: (o.pvMult || 1) * facteurPvBoss() }));
   e.boss = true; e.apparition = o.sansIntro ? 0.3 : 1.2; e.phase = 0; e.etatB = 'choix'; e.tB = 1.0; e.derniere = null; e.lies = []; e.contact = d.contact ?? G.degatsContact;
   if (d.init && INIT_BOSS[d.init]) INIT_BOSS[d.init](e);
   G.bossActifs = G.ennemis.filter(x => x.boss);
@@ -66,6 +69,7 @@ function mortBoss(e) {
       poserPiedestal(s, tx, cy - 40, tirerObjet(G.partie, 'boss', G.alea.butin), { pool: 'boss' });
       const soin = G.alea.recomp.chance(0.5) ? 'coeur' : 'protection'; creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : soin, cx - 30, cy + 20, {}); // soin mesuré, utile à tous
       if (G.joueur.def.regleCode === 'avarice') creerRamassable('ryo5', cx + 30, cy + 20, {});
+      for (let k = 0, n = G.alea.recomp.entierEntre(2, 4); k < n; k++) creerRamassable('ryo', cx - 10 + k * 8, cy + 34, {}); // quelques pièces
       poserSortiesBoss(s);
       verifierEveils(G.joueur, G.etage.numero);
       const opp = tirerOpportunite(); if (opp) ouvrirOpportunite(opp);

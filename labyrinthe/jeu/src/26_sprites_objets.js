@@ -94,6 +94,7 @@ function spriteRamassable(type, extra) {
     case 'explosif': case 'explosif2': c = P(['.pppppp.', '.prrrrp.', '.pprrpp.', '.prrrrp.', '.pprrpp.', '.prrrrp.', '.pppppp.', '...kk...', '..k..k..'], { p: '#e8dcc0', r: '#c82a2a', k: '#6a5a4a' }); if (type === 'explosif2') { const d = toile(14, 12); const g = ctxDe(d); g.drawImage(c, 0, 0); g.drawImage(c, 5, 1); c = d; } break;
     case 'coeur': c = P(['.rr..rr.', 'rlrrrrrr', 'rlrrrrrd', 'rrrrrrrd', '.rrrrrd.', '..rrrd..', '...rd...'], { r: '#d8303a', l: '#ffa0a0', d: '#8a1820' }); break;
     case 'coeur_demi': c = P(['.rr.', 'rlrr', 'rlrr', 'rrrr', '.rrr', '..rr', '...r'], { r: '#d8303a', l: '#ffa0a0' }); break;
+    case 'ryo2': { const h = spriteRamassable('ryo'); c = toile(h.width + 5, h.height + 3); const g = ctxDe(c); g.drawImage(h, 5, 0); g.drawImage(h, 0, 3); break; }
     case 'coeur_double': { const h = spriteRamassable('coeur'); c = toile(16, 12); const g = ctxDe(c); g.drawImage(h, 0, 0); g.drawImage(h, 6, 3); break; }
     case 'protection': case 'protection_demi': c = P(['.bb..bb.', 'blbbbbbb', 'blbwbbbd', 'bbwwwbbd', '.bbwbbd.', '..bbbd..', '...bd...'], { b: '#4a8ae8', l: '#c0e0ff', w: '#e0f4ff', d: '#2a4a9a' }); break;
     case 'instable': c = P(['.vv..vv.', 'vlvvvvvv', 'vvkvkvvd', 'vvvkvvvd', '.vvkvvd.', '..vvvd..', '...vd...'], { v: '#5a2a7a', l: '#b080e0', k: '#e060ff', d: '#2a1040' }); break;

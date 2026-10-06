@@ -33,7 +33,9 @@ Les sons du jeu sont synthétisés. Pour les remplacer par vos propres fichiers,
 
 - **18 personnages jouables** : 12 personnages et 6 variantes altérées, chacun avec une règle propre (Naruto, Sasuke, Sakura, Kakashi, Rock Lee, Hinata, Shikamaru, Gaara, Kankurō, Kiba, et les experts Sasori et Kakuzu).
 - **9 étages, 10 thèmes, 18 variantes** qui changent une règle de terrain (flaques, toiles, cristaux, brume, pénombre…), générés à partir d'un code de mission reproductible ; **120 modèles de salles**, dont deux salles propres à chaque thème et des grandes salles dessinées pour chaque forme.
-- **158 objets passifs, 33 techniques actives, 35 talismans, 30 consommables, 15 pilules**, 96 synergies (dont 9 fusions de natures et 3 trios) et 13 transformations d'ensemble.
+- **194 objets passifs, 39 techniques actives, 35 talismans, 30 consommables, 15 pilules**, 120 synergies (dont 9 fusions de natures et 7 trios), 18 transformations d'ensemble visibles sur le personnage et **36 éveils** (deux par personnage, après les boss des étages 3 et 6).
+- **Pactes et sanctuaires variés** : pacte interdit, pacte de sang, troc du serpent, pari voilé ; sanctuaire, bénédictions, source sacrée, tronc des offrandes.
+- **Équilibrage mesuré** : PV des boss et des ennemis selon l'étage, réglés au banc d'équilibrage (`outils/equilibrage.mjs`).
 - **37 boss**, trois à cinq possibles par étage (Mizuki, Zabuza, Neji, Temari, Gaara, Kidōmaru, Suigetsu, Orochimaru, Jūgo, Itachi, Danzō, Pain, Konan, Kinkaku et Ginkaku, Madara…), tous peints à double résolution, et **77 ennemis**, avec champions.
 - **Pactes et sanctuaires**, échoppes, informateurs, machines, autel de tribut, chambres maudites, épreuves.
 - **Ressenti** : éclairage dynamique, éclats et débris à la mort des ennemis, écrasement au coup reçu, onde et carillon quand une salle est nettoyée, portes animées, mort de boss au ralenti, compteurs du HUD qui réagissent, commandes peintes au sol de la première salle.
@@ -48,7 +50,8 @@ Le dossier complet (sections A à I du brief) est dans [`dossier/`](dossier/READ
 ```bash
 node labyrinthe/outils/construire.mjs              # assemble jeu/src/*.js en jeu/index.html
 node labyrinthe/outils/catalogues.mjs              # valide les données, écrit catalogues/ et dossier/F_*.md, E_fiches.md
-node labyrinthe/outils/tests_jeu.mjs [sections…]   # banc de tests Playwright (Chromium) : 18 sections
+node labyrinthe/outils/tests_jeu.mjs [sections…]   # banc de tests Playwright (Chromium) : 20 sections
+node labyrinthe/outils/equilibrage.mjs [persos] [graine]   # parties simulées : durées des boss, salles, coups, Ryō par étage
 node labyrinthe/outils/journal_partie.mjs CHR_001 PARC2345 6   # journal reproductible d'une mission à code
 ```
 

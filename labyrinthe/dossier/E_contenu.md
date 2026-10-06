@@ -35,6 +35,33 @@ Le brief vise 40 personnages et 40 variantes ; la version jouable en contient **
 | CHR_011 | Sasori (expert) | 6 demis de protection, aucune vitalité | Contenants convertis en réserve ; senbon empoisonnés | ★★★ | Sasori sans dégât (OBJ_027) |
 | CHR_012 | Kakuzu (expert) | 2 contenants, 10 Ryō | Trois tirs en éventail ; blessé, les Ryō soignent ; pactes en Ryō | ★★★ | 50 Ryō à la fois (OBJ_030) |
 
+### Éveils : la règle propre évolue deux fois
+
+Après le boss de l'étage 3 (I) puis celui de l'étage 6 (II), chaque personnage s'éveille [eveils] :
+
+| Personnage | Éveil I | Éveil II |
+|---|---|---|
+| Naruto | Volonté du feu : obstination dès le dernier cœur, +1,5 dégât ; un contenant | Mode ermite : immobile 0,6 s, dégâts ×1,5 ; portée +1 |
+| Sasuke | Sharingan : charge 25 % plus rapide, chance +1, foudre sur trois cibles | Mangekyō : pleine charge = flammes noires ; dégâts +0,5 |
+| Sakura | Force centuplée : Force jusqu'à 10, +1 par salle intacte | Sceau Byakugō : à un cœur, la Force devient soin (une fois par salle) |
+| Kakashi | Copie parfaite : une technique utilisée charge l'autre ; chance +1 | Raikiri : 15 % de foudre en chaîne ; dégâts +0,5 |
+| Rock Lee | Lotus primaire : une frappe sur quatre en cercle complet, ×1,6 | Sixième porte : cadence +0,5 et plafond +0,8, vitesse +0,3 |
+| Hinata | Points de chakra : 30 % de ralentir ; dégâts +0,4 | Soixante-quatre paumes : rotation automatique toutes les 10 s de combat |
+| Shikamaru | Plan à long terme : trois objets en salle d'héritage ; chance +1 | Ombre étrangleuse : immobilisés ×1,5 ; +10 % d'immobilisation |
+| Gaara | Armure de sable : le bouclier se reforme 10 s après un coup | Tempête du désert : deux orbitaux de sable ; dégâts +0,5 |
+| Kankurō | Lames empoisonnées : poison 45 %, plus long | Kuroari et Sanshōuo : une marionnette d'attaque ; marionnettes +50 % |
+| Kiba | Gatsūga : Akamaru ×2, fouille 25 % | Crocs sur crocs : vitesse +0,4, saignement 25 % |
+| Sasori | Cœur de marionnette : salle intacte = demi-réserve | Marionnettes humaines : deux marionnettes d'attaque, poison 50 % |
+| Kakuzu | Cœur volé : quatre contenants au plus, un de plus, +5 Ryō par boss | Masques élémentaires : quatrième tir ; dégâts +0,5 |
+| Naruto fissuré | Clones de relais : six clones, deux rendus par salle | Rasengan des clones : clones +80 % |
+| Sasuke (serment) | Haine canalisée : +1 dégât par pacte | Susanoo : se dresse 4 s à l'entrée d'une salle de combat |
+| Sakura (centaine) | Sceau élargi : 18 demis, +1 par salle | Création renaissance : le sceau qui soigne frappe autour (×3) |
+| Gaara (Shukaku) | Sable compact : les grains suspendus arrêtent les tirs ; dégâts +0,4 | Shukaku : les grains explosent à l'impact |
+| Kankurō (trois) | Changement éclair : échange sans coupure ; poison 30 % | Arsenal complet : une marionnette d'attaque ; marionnettes +50 % |
+| Kakuzu (cinq cœurs) | Sixième cœur : une résurrection de plus ; un contenant | Reconstruction choisie : l'objet reconstruit gagne une qualité |
+
+Statistiques retouchées par le banc d'équilibrage (B4.4) : Rock Lee 4,6 dégâts ; Shikamaru 3,5 dégâts et 2,4 de cadence ; Gaara 2,2 de cadence.
+
 ### Variantes : une règle nouvelle, pas un multiplicateur
 
 | Variante | Ce qui change réellement | Pourquoi ce n'est pas « plus fort » |
@@ -220,6 +247,26 @@ Deux logiques concurrentes : la puissance immédiate payée en santé (pacte), e
 **3. Tirage** : un seul tirage par étage, graine `code | opportunite | étage` : recharger, quitter ou revenir ne change pas le résultat [pactes].
 
 **4. Contenu** : pacte, 1 à 3 objets du pool *pacte*, 1 contenant (qualité ≤ 2) ou 2 (qualité ≥ 3) ; sans aucun contenant, 4 demis de protection par contenant dû (Kakuzu : 15 Ryō par contenant ; Serment : 3 demis de chakra instable) ; le résultat exact s'affiche avant confirmation, et un paiement mortel demande une seconde confirmation. Sanctuaire, 1 objet gratuit (ou 2 au choix exclusif, 40 %), statue du crapaud qu'un explosif réveille (mini-boss, fragment de clé).
+
+### Variantes de salle (vérifiées par [opportunites])
+
+Chaque opportunité tire une variante à son ouverture (graine `code | variante | type | étage`, figée), annoncée par un bandeau et teintée dans le décor :
+
+| Pacte | Poids | Contenu | Prix |
+|---|---|---|---|
+| Pacte interdit | 40 % | 1 à 3 objets du pool *pacte* | 1 contenant (qualité ≤ 2) ou 2 |
+| Pacte de sang | 22 % | trois **marques** distinctes (PSV_181–186 : force, vivacité, allonge, fortune, célérité, soif), cumulables | 1 contenant chacune |
+| Troc du serpent | 20 % | 2 ou 3 objets du pool *pacte* | un de vos passifs, **annoncé sous le piédestal** (jamais un objet-clé ni un objet de départ) ; aucune santé |
+| Pari du serpent | 18 % | trois offres **voilées** de qualité 2 ou plus (la fiche ne trahit pas l'objet) | 1 contenant chacune |
+
+| Sanctuaire | Poids | Contenu |
+|---|---|---|
+| Sanctuaire des ermites | 40 % | 1 objet, ou 2 liés (40 %) |
+| Salle des bénédictions | 25 % | trois **bénédictions** au choix (PSV_187–192 : crapaud, limace, serpent blanc, ermite, phénix, sage), une seule accordée |
+| Source sacrée | 18 % | une baignade gratuite : soin complet, cicatrices effacées, un contenant (deux réserves sans vitalité) ; plus un présent |
+| Tronc des offrandes | 17 % | deux présents liés ; 15 Ryō au tronc les délient et l'on garde les deux |
+
+Tout achat dans une salle de pacte (y compris le troc) compte comme un pacte conclu (fermeture des sanctuaires et de la Lumière, Nuage écarlate, Serment de vengeance). Les marques et bénédictions restent dans leur famille quand on relance les piédestaux.
 
 ### Événements et effet sur l'évaluation (vérifiés par [pactes])
 

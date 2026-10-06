@@ -12,8 +12,8 @@ Les quatre piliers et leur traduction mécanique :
 |---|---|
 | Précision du déplacement et du tir | Accélération 0,08 s et freinage 0,07 s ; tir cardinal avec hystérésis ; collision du joueur limitée aux pieds (cercle de 7 px) ; télégraphes de 0,2 à 0,9 s sur les attaques ennemies (0,35 à 0,7 s pour les ennemis ordinaires) ; pas de simulation fixe à 60 Hz. |
 | Décisions de ressources | Trois ressources visibles (Ryō, clés, explosifs) à usages multiples ; salles verrouillées dès l’étage 2 ; pactes payés en contenants ; soins non automatiques ; charges d’actif par salle. |
-| Surprise des objets et interactions | 158 passifs composables (formes, trajectoires, impacts, statuts, familiers), 13 formes de tir qui se combinent par priorité et contributions secondaires, 96 synergies documentées (dont 9 fusions de natures façon kekkei genkai et 3 trios), 13 transformations. |
-| Apprentissage | 120 modèles de salles (dont deux salles propres à chaque thème et des grandes salles dessinées pour chaque forme), 76 ennemis à silhouette fonctionnelle, 25 boss aux motifs lisibles, routes et secrets à indices consultables (registre des missions). |
+| Surprise des objets et interactions | 194 passifs composables (formes, trajectoires, impacts, statuts, distance, critiques, familiers), 13 formes de tir qui se combinent par priorité et contributions secondaires, 120 synergies documentées (dont 9 fusions de natures façon kekkei genkai et 7 trios), 18 transformations visibles, 36 éveils de personnage, huit variantes de pactes et de sanctuaires. |
+| Apprentissage | 120 modèles de salles (dont deux salles propres à chaque thème et des grandes salles dessinées pour chaque forme), 77 ennemis à silhouette fonctionnelle, 37 boss aux motifs lisibles, routes et secrets à indices consultables (registre des missions). |
 
 Le joueur comprend les commandes en quelques secondes (bouger, viser, tirer, poser un explosif, utiliser l’actif) ; la profondeur vient des objets. La première victoire (fin RTE_01, étage 6) n’ouvre que la suite : deux chapitres, puis deux branches, puis deux défis chronométrés.
 
@@ -67,7 +67,7 @@ Colonnes : fonction de gameplay conservée · équivalent dans le jeu (identifia
 | Système de référence | Équivalent du labyrinthe | Coût / risque | Interactions | Pourquoi le garder | État |
 |---|---|---|---|---|---|
 | Tir principal | Kunai, shuriken, senbon, poings, sable, lames empoisonnées, griffes selon le personnage (CHR_001–012) | Aucun coût ; la cadence est la limite | Tous les passifs de projectile | Action répétable qui porte le buildcraft | Jouable |
-| Objets passifs | Empreintes, reliques, équipements (PSV, 158) | Contreparties sur 1 objet sur 6 environ | Profil d’attaque, familiers, santé, économie | Accumulation qui transforme la partie | Jouable |
+| Objets passifs | Empreintes, reliques, équipements (PSV, 194) | Contreparties sur 1 objet sur 6 environ | Profil d’attaque, familiers, santé, économie | Accumulation qui transforme la partie | Jouable |
 | Objets actifs | Techniques scellées (ACT, 33) | Charges 1–12 salles, recharge en combat ou usage unique | Condensateurs, Pile de chakra, surcharge | Pouvoir ponctuel à placer au bon moment | Jouable |
 | Trinkets | Talismans ninja (TAL, 35) | Emplacement unique, échange = dépôt au sol | Effets de bombes, drops, protection conditionnelle | Petit effet échangeable | Jouable |
 | Cartes et runes | Rouleaux tactiques (22) et sceaux (8) (CON) | Usage unique ; une poche | Téléportation, relance, révélation | Effet à garder pour le bon moment | Jouable |

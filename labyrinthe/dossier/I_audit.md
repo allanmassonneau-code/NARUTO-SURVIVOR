@@ -8,14 +8,16 @@
 |---|---:|---:|---:|
 | Personnages de base | 12 | 12 | 40 |
 | Variantes altérées | 6 | 6 | 40 |
-| Objets passifs | 158 | 150 | 480 |
-| Objets actifs | 33 | 30 | 120 |
+| Objets passifs | 194 (dont 12 réservés aux pactes de sang et aux bénédictions) | 150 | 480 |
+| Objets actifs | 39 | 30 | 120 |
 | Talismans | 35 | 35 | 100 |
 | Consommables (rouleaux, sceaux) | 30 | 30 | 80 |
 | Pilules (effets) | 15 | — | — |
 | Familiers (comportements distincts) | 16 | — | — |
-| Synergies documentées | 96 | 60 | 300 |
-| Transformations d'ensemble | 13 | 12 | 40 |
+| Synergies documentées | 120 | 60 | 300 |
+| Transformations d'ensemble | 18 | 12 | 40 |
+| Éveils de personnage | 36 (deux par entrée jouable) | — | — |
+| Variantes de salle d'opportunité | 8 (quatre pactes, quatre sanctuaires) | — | — |
 | Thèmes d'étage | 10 | 6 | 12 |
 | Variantes d'étage | 18 | 12 | 24 |
 | Boss (dont mini-boss) | 37 | 25 | 70 |
@@ -92,6 +94,12 @@ Le dossier a été relu contre le code, et le code contre le dossier. Chaque éc
 | Tuer un boss d'un duo ou du trio tuait aussi les autres (la mort d'un boss emportait tout ce qui lui était lié) | seules les invocations et marionnettes tombent avec lui ; la salle finit quand tous les boss liés sont vaincus [boss] |
 | Zabuza : après la brume, l'arc du coup de sabre s'affichait mais le coup ne partait jamais (la récupération écrasait l'attaque enchaînée) | une attaque qui en enchaîne une autre garde son annonce et son exécution |
 | « Première fin » liée à Orochimaru alors que l'étage 6 a désormais quatre boss | la fin s'obtient contre n'importe quel boss de l'étage 6 (et de l'étage 8 pour la deuxième) ; son texte d'ouverture dépend du boss vaincu ; OBJ_017 devient « Les mues du serpent » |
+| Difficulté décroissante en fin de partie : boss de 36 s à l'étage 1 mais de 11 s à l'étage 8, salles trois fois plus courtes (banc d'équilibrage) | PV des boss et des ennemis selon l'étage, quinze boss corrigés un par un, trois personnages recalés (B §4.4) [boss], outil `equilibrage.mjs` |
+| Rock Lee avec le grand sabre : ×3 sur une frappe déjà native, boss de fin tués en deux secondes ; Pluie d'armes : +240 % de dégâts à elle seule | lame longue ×1,4 pour Lee (×2,2 pour un tireur), lame ×2,2 ; six armes tous les sept cycles |
+| Coups au corps-à-corps jamais critiques alors que le Masque de l'ANBU promettait 6 % de critique | même règle de critique au tir et au corps-à-corps |
+| Auras à motif (insectes, sable) réduites à une lueur orange : le motif n'était jamais dessiné | orbites dessinées en deux moitiés autour du corps ; le validateur signale tout motif de mutation jamais dessiné |
+| Contacts des familiers (Akamaru, chiens) : seule la part proportionnelle aux dégâts profitait des bonus de familiers | bonus appliqué à toute la frappe |
+| Pilote du banc coincé : sphère contrôlée bloquée par un pilier, hésitation entre deux cibles équidistantes | contournement et cible gardée ; parcours de Sasuke de nouveau complet [parcours] |
 
 **Défauts du banc de test** : huit codes de mission invalides tombaient sur une graine aléatoire (tests instables) ; le test manette dépendait de l'ordre d'exécution ; le test de secours ne mesurait que l'écart horizontal ; le pilote employait le *Parchemin de téléportation* au milieu d'un combat de boss (comportement voulu du jeu, mais le parcours ne finissait plus l'étage). Tous corrigés ; la section [synergies] laissait le mode invincible actif, et [mecaniques] lancée juste après concluait à tort que le sable et le feu ne blessaient pas (mode remis à zéro aux deux bouts).
 
@@ -100,7 +108,7 @@ Les écarts plus anciens (pics devant des portes, familiers accumulés, faisceau
 ## I3. Hypothèses (valeurs de projet, non mesurées)
 
 - **Tous les nombres de jeu** — dégâts, cadences, PV, prix, probabilités d'opportunité, paliers de l'autel, chances de champion, durées de télégraphe — sont des décisions de conception. Aucun n'est présenté comme une constante de *The Binding of Isaac* ni comme une donnée officielle de *Naruto*.
-- **Équilibrage** réglé avec un pilote automatique invulnérable : il montre que chaque combat se termine (boss de 8 à 98 s avec un tir renforcé), pas qu'il est juste pour un humain. Les boss les plus longs (Dix Queues, Madara, Kabuto) sont les premiers à vérifier en recette.
+- **Équilibrage** réglé avec un pilote automatique invulnérable : il montre que chaque combat se termine et donne des durées comparables entre étages (B §4.4 : médianes de 17 à 34 s par étage sur douze parties), pas qu'il est juste pour un humain. Les coups « encaissés » sont comptés sans être subis : ils mesurent la pression relative entre boss, le pilote n'esquivant jamais. Les boss les plus longs (Dix Queues, Madara, Kabuto) sont les premiers à vérifier en recette.
 - **Esquivabilité** garantie par construction (une attaque active par boss, préavis ≥ 0,2 s, brèches d'au moins trois projectiles), pas prouvée par un test.
 - **Manette** : disposition « standard » de l'API Gamepad ; les zones mortes et l'hystérésis sont des valeurs de départ réglables, non calibrées sur matériel.
 - **Chances « sans coup » d'opportunité** : les parties commentées (pilote invulnérable) les montrent toujours acquises ; en jeu réel elles le seront moins souvent.

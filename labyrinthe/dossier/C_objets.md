@@ -183,10 +183,10 @@ Les familiers ne bloquent pas les portes, ne poussent pas le joueur, se replacen
 
 ## C11. Synergies (brief §21)
 
-Quatre-vingt-seize synergies, toutes testées (catalogue F) :
+Cent vingt synergies, toutes testées (catalogue F) :
 
 - **Émergentes** (40) : découlent des règles générales (C1–C5) ; elles sont documentées pour fixer le résultat attendu et le test.
-- **Dédiées** (47, dont 3 trios) : ajoutent un effet déclaré (liste `effets`), actif **dès que tous les composants sont possédés**, quel que soit l’ordre. Un actif compte comme composant tant qu’il est tenu.
+- **Dédiées** (71, dont 7 trios) : ajoutent un effet déclaré (liste `effets`), actif **dès que tous les composants sont possédés**, quel que soit l’ordre. Un actif compte comme composant tant qu’il est tenu.
 - **Fusions de natures** (9) : ne citent aucun objet mais des natures (`elements`). Les objets élémentaires portent leur nature (Katon, Fūton, Suiton, Raiton, Doton, Hyōton) ; dès que vos objets, transformations ou talismans réunissent les natures d’une fusion, elle s’active, quel que soit l’objet qui les apporte. Une synergie n’ajoute jamais de nature (pas de fusion en cascade).
 - Chaque synergie a un test d’acceptation (catalogue F). Les combinaisons à trois ou quatre objets sont déterministes car le profil se recalcule toujours depuis la liste complète.
 - **Annonce** : une synergie réunie pour la première fois s’annonce par un bandeau turquoise et un son de sceau, après le bandeau de l’objet qui la complète (jamais écrasée, jamais par-dessus le titre d’étage) ; elle s’inscrit dans l’onglet *Synergies* du registre (composants ou natures en indice) et apparaît dans l’inventaire avec l’icône des deux anneaux.
@@ -209,6 +209,37 @@ Quatre-vingt-seize synergies, toutes testées (catalogue F) :
 
 Ils récompensent des duos lisibles de la fiction sans en reprendre de texte : *Éclair jaune de Konoha*, *Manteau à une queue* (chakra de la bête 5 s après un coup reçu : dégâts, vitesse, brûlure au contact), *Gamayu Endan*, *Danse du camélia*, *Amaterasu et Tsukuyomi* (dégâts ×1,25 sur cible confuse), *Corbeaux d’illusion*, *Ange de papier*, *Mer de papiers*, *Culte de Jashin*, *Les cinq cœurs*, *Maîtresse des armes*, *Kirin* (foudre céleste toutes les huit émissions), *Armure du Raikage*, *Rasenshuriken parfait*, *Réceptacle éveillé*, *Venin de Sasori* (le poison se propage à la mort), *Ruche d’Aburame*, *Défense absolue du sable*, *Lame du vent*, *Lotus de la porte*, *Poing souple*, *Gardiens de Katsuyu*, *Sceau maudit niveau 2*, *Onde du démon* ; et trois trios : *Les trois Sannin*, *Équipe 7*, *Ino-Shika-Chō* (dégâts ×1,5 sur cible immobilisée). Les nombres sont des valeurs de conception à régler en jeu, pas des mesures.
 - Les déclencheurs (`quand`) utilisent le vocabulaire d’événements (H3), avec chance (éventuellement modulée par la chance, bornée), cooldown, « toutes les N occurrences », condition (santé basse, combat, boss…). Les événements cosmétiques ne déclenchent rien.
+
+### Paires et trios de la passe gameplay (SYN_097 à SYN_120)
+
+Ils lient les nouvelles mécaniques entre elles (C14) plutôt que d'ajouter des statistiques :
+
+| Synergie | Composants | Effet |
+|---|---|---|
+| Chasseur patient (SYN_097) | Œil du chasseur + Points vitaux | +3 % de critique par cran de concentration |
+| La marque qui saigne (SYN_098) | Marque du chasseur + Lame dentelée | une cible marquée saigne ; saignement deux fois plus long |
+| Pression meurtrière (SYN_099) | Intention meurtrière + Pression du chakra | entrer dans l'aura de pression fait fuir 1,5 s (une fois) |
+| Essaim insatiable (SYN_100) | Larves de kikaichū + Insectes traqueurs | larves deux fois plus fréquentes, empoisonnées |
+| Espace sans fin (SYN_101) | Parchemin de l'espace replié + Fil de chakra | deux replis de plus par tir |
+| Sable dormant (SYN_102) | Sable en suspens + Sable en orbite | grains convergents +25 % |
+| Tourbillon de braises (SYN_103) | Tourbillon de feuilles + Sillage ardent | sillage deux fois plus dense, +50 % de brûlure |
+| Shuriken sans fin (SYN_104) | Shuriken scindé + Shuriken démultiplié | les éclats se scindent une fois de plus |
+| Pivot du dieu du tonnerre (SYN_105) | Kunai pivotant + Kunai à marque | un tir qui pivote frappe +50 % |
+| Arsenal lourd (SYN_106) | Septième lame + Arsenal de Tenten | lame lourde tous les cinq tirs |
+| Art à retardement (SYN_107) | Étiquette à retardement + Explosion de chakra | étiquettes +50 % et plus larges |
+| Feu posthume (SYN_108) | Étiquettes posthumes + Grande boule de feu | 30 % des ennemis tués laissent une nappe de feu |
+| Garde parfaite (SYN_109) | Concentration du ninja + Substitution instinctive | une substitution prolonge la série |
+| Danse sous les tirs (SYN_110) | Instinct du combat + Sandales de course | chaque frôlement : vitesse +0,5 pendant 1,5 s (trois fois) |
+| Œil des six chemins (SYN_111) | Œil du Rinnegan + Chidori nagashi | la foudre saute à trois ennemis |
+| Sang pour sang (SYN_112) | Sang du clan + Volonté du feu | à deux demis ou moins, une élimination sur huit soigne |
+| Bout portant sanglant (SYN_113) | Frappe à bout portant + Lame dentelée | coup dans le premier tiers de la portée : saignement garanti |
+| Tireur d'élite (SYN_114) | Shuriken du long voyage + Lunettes de visée | au-delà de la moitié de la portée, critique garanti |
+| Aura du renard (SYN_115) | Pression du chakra + Chakra du renard | l'aura de pression brûle |
+| Double technique de l'ombre (SYN_116) | Rouleau de la double technique + Ombre liante | la salve de l'actif immobilise 1 s |
+| L'art du ninja silencieux (SYN_117, trio) | Œil du chasseur + Points vitaux + Masque de l'ANBU | critiques ×3 ; concentration moins fragile |
+| Tempête de lames (SYN_118, trio) | Shuriken scindé + Septième lame + Éventail de kunai | chaque lame lourde se scinde en cinq |
+| Les trois marques (SYN_119, trio) | Marque + Lame dentelée + Intention meurtrière | marque, saignement et peur deux fois plus fréquents ; marqué en fuite : dégâts ×2 |
+| Maître du sable suspendu (SYN_120, trio) | Sable en suspens + Sable protecteur + Tempête de sable | les grains suspendus arrêtent les tirs ennemis |
 
 ### Vingt anti-synergies et compromis intentionnels
 
@@ -238,7 +269,23 @@ Ils récompensent des duos lisibles de la fiction sans en reprendre de texte : *
 
 ## C12. Transformations d’ensemble (brief §22)
 
-**Ce qui compte** : le nombre d’**identifiants distincts acquis pendant la partie** (liste `acquis`) appartenant à l’ensemble, qu’ils soient encore possédés ou non (un objet relancé ou perdu reste acquis). Un actif compte à sa première prise ; le reprendre sur un piédestal ne compte pas une seconde fois ; un talisman ne compte jamais. Seuil : **3** pour les 13 ensembles. Une transformation obtenue est définitive pour la partie.
+**Ce qui compte** : le nombre d’**identifiants distincts acquis pendant la partie** (liste `acquis`) appartenant à l’ensemble, qu’ils soient encore possédés ou non (un objet relancé ou perdu reste acquis). Un actif compte à sa première prise ; le reprendre sur un piédestal ne compte pas une seconde fois ; un talisman ne compte jamais. Seuil : **3** pour les 18 ensembles. Une transformation obtenue est définitive pour la partie.
+
+Cinq ensembles s'ajoutent avec la passe gameplay ; chacun a une règle propre et une mutation dessinée (vérifiée par le validateur : un motif jamais dessiné est une erreur) :
+
+| Transformation | Ensemble (7 objets chacun) | Règle | Mutation visible |
+|---|---|---|---|
+| TRF_014 Racine de l'ANBU | Tantō, Masque de l'ANBU, Colère de la Racine, Silence de la brume, Marque du chasseur, Lame dentelée, Intention meurtrière | critiques +10 % ; une élimination vous fond dans l'ombre 1,5 s (toutes les 4 s au plus) : les ennemis vous perdent et **tous vos coups sont critiques** | masque d'animal blanc à traits rouges ; le corps devient translucide dans l'ombre |
+| TRF_015 Danseur du vent | Fūma shuriken, Sandales de course, Kunai tournoyants, Shuriken du long voyage, Tourbillon de feuilles, Kunai pivotant, Instinct du combat | vitesse +0,4, vitesse des tirs +1,5 ; frôler un tir (zone élargie) décoche une lame de vent sur l'ennemi le plus proche (×2,5) | feuilles en orbite, une moitié derrière, une devant le corps |
+| TRF_016 Éclair jaune | Kunai à marque, Parchemin fantôme, Parchemin de l'espace replié, Espace-temps intangible, Parchemin de téléportation, Shunshin, Marque du dieu du tonnerre | vitesse +0,5 ; toutes les 8 s, le premier coup est esquivé : téléportation loin de la source et kunai marqué qui explose (×3) | aura dorée qui crépite quand l'esquive est prête, terne pendant la recharge |
+| TRF_017 Nuage écarlate | Cœur volé, Contrat de Kakuzu, Bourse de l'organisation, Écailles de Samehada, Répulsion divine, Attraction céleste, Chemin Preta | une réserve instable ; opportunités +20 % ; pactes à un contenant au plus ; +0,5 dégât par pacte conclu (jusqu'à +2) | long manteau sombre à nuages rouges |
+| TRF_018 Ninja médical | Katsuyu miniature, Pilule écarlate, Sceau de régénération, Cape de chakra protecteur, Trousse de terrain, Sceau vital, Pilule du soldat | un contenant ; chaque soin rend une demi-unité de plus ; le soin qui déborde devient du chakra protecteur | paumes vertes qui pulsent |
+
+Les auras à motif (insectes d'Aburame, sable de Gaara) sont désormais réellement dessinées (elles n'affichaient qu'une lueur), avec la même logique d'orbite en deux moitiés.
+
+### Éveils de personnage
+
+Deux éveils par personnage (36), accordés **après le boss de l'étage 3 puis celui de l'étage 6** : ils font évoluer la règle propre au lieu d'ajouter un bonus générique. Ils sont annoncés à la sélection du personnage et par un bandeau « Éveil — … » en jeu, rangés avec les transformations (mêmes effets déclaratifs, même sauvegarde), et certains changent l'apparence (yeux du Sharingan, maquillage de l'ermite, losange du Byakugō, vapeur verte, sable). Liste complète : catalogue F (EVE) et E1.
 
 Chaque transformation apporte une règle perceptible (tableau F), une **couche de costume** (aura de queues, maquillage, bras de marionnette, cornes, ailes de papier…), un son dédié et une annonce **brève** (bannière de 2,6 s, sans figer le combat).
 
@@ -259,3 +306,23 @@ PSV_001 + PSV_002 : deux sphères partagent une charge ; 3,5 × 3 × 0,70 = 7,35
 ### ACT_001 — Réécriture d’empreinte (création originale, 6 charges)
 
 Relance chaque objet sur piédestal de la salle depuis son propre pool ; pas les ressources, ni les objets-clés, ni les objets acquis. Aucune cible : activation non consommée. Choix liés conservés. Prix de l’échoppe recalculés (règle système). La salle revisitée ne rend aucune charge. Testé automatiquement (actifs, sauvegarde/reprise).
+
+## C14. Mécaniques de la passe gameplay (objets PSV_157 à PSV_192)
+
+Vingt-quatre passifs à mécanique propre et la refonte des objets qui n'étaient que des statistiques (valeurs du code ; tests [objets], [mecaniques]) :
+
+| Mécanique | Objet(s) | Règle |
+|---|---|---|
+| Distance | Frappe à bout portant, Shuriken du long voyage | dégâts ×2 → ×0,4 (proche) ou ×0,6 → ×2,2 (loin) selon la course parcourue |
+| Concentration | Œil du chasseur, Concentration du ninja | +10 % par coup consécutif (6 crans) ; un tir perdu la fait retomber |
+| Critique | Masque de l'ANBU, Points vitaux, Racine de l'ANBU | ×2,5 (×3 avec l'art silencieux), au tir comme au corps-à-corps ; plafond 50 % |
+| Larves | Larves de kikaichū | un coup peut libérer une larve chercheuse (×0,5) |
+| Tirs repliés | Parchemin de l'espace replié | un tir qui touche un mur ressort du mur opposé |
+| Statuts | Marque du chasseur (+40 % de dégâts subis), Lame dentelée (saignement en mouvement), Intention meurtrière (peur 2 s, boss insensibles) | chance de base + chance par point de chance, plafonnée |
+| Septième lame | Septième lame | une émission sur sept : ×3, plus grosse, perce deux fois |
+| Scission | Shuriken scindé | un ennemi tué libère des éclats (×0,6) |
+| Frôlement | Instinct du combat, Danseur du vent | frôler un tir sans être touché : huit frôlements = une charge d'actif |
+| Série | Concentration du ninja (série parfaite) | +0,15 dégât par salle nettoyée sans être touché (10 au plus) |
+| Sang du clan | Sang du clan | +0,25 dégât par contenant vide |
+| Retardement | Étiquette à retardement, Étiquettes posthumes | étiquettes plantées qui explosent après coup |
+| Marques et bénédictions | PSV_181–192 | hors pools : offertes par le pacte de sang et la salle des bénédictions (E6) |

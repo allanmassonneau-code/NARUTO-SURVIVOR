@@ -83,7 +83,7 @@ Unités : santé en demis (1 contenant = 2 demis) ; distances en tuiles de 32 px
 | Santé initiale | 3 contenant(s) de vitalité |
 | Ressources | 0 Ryō, 0 clé(s), 1 explosif(s) |
 | Tir principal | coup, forme lame |
-| Statistiques | Dég. 5 · Cad. 2,4 tirs/s · Portée 1,7 t · Vit. tir 9 t/s · Vit. 5,2 t/s · Chance 0 |
+| Statistiques | Dég. 4,6 · Cad. 2,4 tirs/s · Portée 1,7 t · Vit. tir 9 t/s · Vit. 5,2 t/s · Chance 0 |
 | Actif de départ | ACT_007 Porte de l’Ouverture |
 | Règle exclusive | Taijutsu pur : frappe au corps-à-corps (arc de 100°). Les coups détruisent les projectiles ennemis ordinaires. Les objets de tir sont convertis (table de conversion). |
 | Faiblesse | Exposition au contact ; pas de tir à distance sans objet. |
@@ -117,7 +117,7 @@ Unités : santé en demis (1 contenant = 2 demis) ; distances en tuiles de 32 px
 | Santé initiale | 2 contenant(s) de vitalité, 2 demis de protection |
 | Ressources | 0 Ryō, 0 clé(s), 1 explosif(s) |
 | Tir principal | kunai_ombre, projectile simple |
-| Statistiques | Dég. 3,2 · Cad. 2,3 tirs/s · Portée 6 t · Vit. tir 8,5 t/s · Vit. 4,3 t/s · Chance 1 |
+| Statistiques | Dég. 3,5 · Cad. 2,4 tirs/s · Portée 6 t · Vit. tir 8,5 t/s · Vit. 4,3 t/s · Chance 1 |
 | Actif de départ | ACT_009 Manipulation des ombres |
 | Règle exclusive | Stratège : chaque salle d’héritage propose deux objets au choix ; ses kunai immobilisent parfois (15 % + 3 % par point de chance, 50 % au plus). |
 | Faiblesse | Peu de vitalité, dégâts modestes. |
@@ -134,7 +134,7 @@ Unités : santé en demis (1 contenant = 2 demis) ; distances en tuiles de 32 px
 | Santé initiale | 2 contenant(s) de vitalité, 4 demis de protection |
 | Ressources | 0 Ryō, 0 clé(s), 1 explosif(s) |
 | Tir principal | sable, projectile simple |
-| Statistiques | Dég. 3,8 · Cad. 2 tirs/s · Portée 6 t · Vit. tir 7,5 t/s · Vit. 3,7 t/s · Chance 0 |
+| Statistiques | Dég. 3,8 · Cad. 2,2 tirs/s · Portée 6 t · Vit. tir 7,5 t/s · Vit. 3,7 t/s · Chance 0 |
 | Actif de départ | ACT_010 Cercueil de sable |
 | Règle exclusive | Bouclier de sable : absorbe le premier coup reçu dans chaque salle de combat non nettoyée ; vitesse de base réduite. |
 | Faiblesse | Lent : difficile d’esquiver les charges. |
@@ -338,7 +338,7 @@ Phases :
 
 ### BOS_002 — Serpent géant, « Gardien de la Forêt de la Mort »
 
-Étage 1 · 200 PV · déplacement errance (1,4 t/s) · contact coup d’étage · création originale.
+Étage 1 · 180 PV · déplacement errance (1,4 t/s) · contact coup d’étage · création originale.
 
 Charges, plongée sous terre et crachats en éventail.
 
@@ -365,7 +365,7 @@ Mise en place : deux frères liés par une chaîne : grise au repos, orange au-d
 
 ### BOS_004 — Zabuza, « Le démon du brouillard »
 
-Étage 2 · 300 PV · déplacement errance (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 2 · 240 PV · déplacement errance (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Disparaît dans la brume (yeux visibles) et réapparaît sabre levé.
 
@@ -384,7 +384,7 @@ Phases :
 
 ### BOS_005 — Haku, « Les miroirs de glace »
 
-Étage 2 · 260 PV · déplacement aucun (2,2 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 2 · 190 PV · déplacement aucun (2,2 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Passe de miroir en miroir ; les miroirs se brisent sous les coups.
 
@@ -402,7 +402,7 @@ Phases :
 
 ### BOS_006 — Kankurō et Karasu, « Le marionnettiste »
 
-Étage 3 · 140 PV · déplacement fuite (1,4 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 3 · 160 PV · déplacement fuite (1,4 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Frappez le marionnettiste caché : sa marionnette tombera.
 
@@ -463,7 +463,7 @@ Phases :
 
 ### BOS_010 — Sasori, « Le maître des marionnettes »
 
-Étage 4 · 360 PV · déplacement errance (1 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 4 · 290 PV · déplacement errance (1 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Carapace blindée puis sable de fer.
 
@@ -495,7 +495,7 @@ Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; trois fois a
 
 ### BOS_012 — Kisame, « Le requin de la brume »
 
-Étage 5 · 440 PV · déplacement poursuite (1,7 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 5 · 400 PV · déplacement poursuite (1,7 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Inonde l’arène (l’eau vous ralentit, pas lui) ; requins d’eau chercheurs.
 
@@ -522,7 +522,7 @@ Mise en place : cercle rituel au centre de l’arène.
 
 ### BOS_014 — Orochimaru, « Les mues du serpent »
 
-Étage 6 · 520 PV · déplacement errance (1,7 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 6 · 440 PV · déplacement errance (1,7 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs.
 
@@ -540,7 +540,7 @@ Phases :
 
 ### BOS_015 — Deidara, « L’art est une explosion »
 
-Étage 7 · 460 PV · déplacement errance (2 t/s) · volant · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 7 · 430 PV · déplacement errance (2 t/s) · volant · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Argile explosive sous toutes ses formes ; C3 : mettez-vous à l’abri derrière un bloc.
 
@@ -557,7 +557,7 @@ Phases :
 
 ### BOS_016 — Itachi, « Les illusions du corbeau »
 
-Étage 7 · 480 PV · déplacement errance (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 7 · 440 PV · déplacement errance (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Seul le vrai Itachi projette une ombre ; ses clones éclatent en corbeaux.
 
@@ -590,7 +590,7 @@ Mise en place : 3 masques élémentaires (feu en anneau, vent en éventail, foud
 
 ### BOS_018 — Pain, « Les forces d’attraction »
 
-Étage 8 · 560 PV · déplacement errance (1,2 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 8 · 510 PV · déplacement errance (1,2 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction.
 
@@ -608,7 +608,7 @@ Phases :
 
 ### BOS_023 — Konan, « L’ange de papier »
 
-Étage 8 · 520 PV · déplacement errance (1,7 t/s) · volant · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 8 · 470 PV · déplacement errance (1,7 t/s) · volant · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Éventails de shuriken de papier, papillons qui explosent au contact, pluie d’étiquettes explosives ; à 40 % la mer de papiers et des charges ailées.
 
@@ -627,7 +627,7 @@ Phases :
 
 ### BOS_019 — Obito, « Les changements de présence »
 
-Étage 8 · 460 PV · déplacement errance (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 8 · 470 PV · déplacement errance (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Intangible sauf quand il se matérialise pour attaquer (annonce, attaque, récupération).
 
@@ -711,7 +711,7 @@ Phases :
 
 ### BOS_026 — Mille-pattes géant, « La chose sous la forêt »
 
-Étage 2 · 280 PV · déplacement poursuite (1,6 t/s) · contact coup d’étage · création originale.
+Étage 2 · 190 PV · déplacement poursuite (1,6 t/s) · contact coup d’étage · création originale.
 
 Plonge sous terre et ressurgit sous vos pieds ; ses ruées laissent une traînée de venin ; son long corps blesse au contact.
 
@@ -729,7 +729,7 @@ Phases :
 
 ### BOS_024 — Temari, « La tempête de l’éventail »
 
-Étage 3 · 320 PV · déplacement errance (1,8 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 3 · 280 PV · déplacement errance (1,8 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Lames de vent en éventail, bourrasque en cône (annoncée) qui repousse et efface vos tirs, tornade, et la belette à la faux qui traverse la salle sur une ligne annoncée.
 
@@ -763,7 +763,7 @@ Phases :
 
 ### BOS_028 — Tayuya, « La flûte des démons »
 
-Étage 4 · 330 PV · déplacement fuite (1,6 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 4 · 290 PV · déplacement fuite (1,4 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Garde ses distances en jouant de la flûte : démons géants aux yeux bandés (ils tombent avec elle), ondes sonores à brèche, spirales de notes, esprits chercheurs.
 
@@ -773,14 +773,14 @@ Phases :
 
 | Attaque | Zone | Prépa. | Active | Récup. | Dégâts | Réponse attendue |
 |---|---|---|---|---|---|---|
-| demons — recharge 9 s | appelle 1 × Démon de la flûte (2 au plus) | 0,7 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
-| melodie | 2 onde(s) en expansion à brèche (3 t/s) | 0,6 s | 0,5 s | 0,6 s | coup d’étage | traverser par la brèche |
+| demons — recharge 12 s | appelle 1 × Démon de la flûte (2 au plus) | 0,7 s | 0,5 s | 0,4 s | — | éliminer ou contourner les invocations |
+| melodie | 2 onde(s) en expansion à brèche (3 t/s) | 0,6 s | 0,5 s | 0,8 s | coup d’étage | traverser par la brèche |
 | notes | spirale à 2 bras, un tir toutes les 0,12 s | 0,6 s | 2 s | 0,6 s | coup d’étage | tourner dans le sens de la spirale à distance |
 | esprits | 3 esprits sonores chercheurs (guidage 1,3 rad/s, 3,4 s), 0,22 s d’écart | 0,5 s | 1,2 s | 0,6 s | coup d’étage | tourner autour, les faire percuter les obstacles |
 
 ### BOS_029 — Suigetsu, « L’homme-eau »
 
-Étage 5 · 410 PV · déplacement poursuite (1,9 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 5 · 380 PV · déplacement poursuite (1,9 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Se liquéfie en flaque intangible pour surgir près de vous, couperet levé ; pistolet à eau, flots ralentissants. La foudre lui inflige 50 % de plus et l’empêche de se liquéfier pendant 4 s.
 
@@ -797,7 +797,7 @@ Phases :
 
 ### BOS_030 — Jūgo, « La marque de la rage »
 
-Étage 6 · 500 PV · déplacement poursuite (1,5 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 6 · 450 PV · déplacement poursuite (1,5 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Calme, il appelle les oiseaux, frappe le sol et cogne. À 60 %, la marque le recouvre (forme enragée, plus rapide) : massue de chair, ruées explosives, canon de chakra, pluie de rochers.
 
@@ -833,7 +833,7 @@ Phases :
 
 ### BOS_033 — Chimère des cuves, « L’expérience évadée »
 
-Étage 6 · 540 PV · déplacement poursuite (1,2 t/s) · contact coup d’étage · création originale.
+Étage 6 · 480 PV · déplacement poursuite (1,2 t/s) · contact coup d’étage · création originale.
 
 Une expérience évadée des cuves. À chaque tiers de vitalité perdu, elle mute (nouvelle silhouette, nouvelles attaques) : ruées acides, pince, mares, tentacules et sujets réanimés.
 
@@ -853,7 +853,7 @@ Phases :
 
 ### BOS_034 — Zetsu, « Celui qui pousse sous le champ de bataille »
 
-Étage 7 · 440 PV · déplacement aucun (1,2 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
+Étage 7 · 400 PV · déplacement aucun (1,2 t/s) · contact coup d’étage · personnage canonique — motifs de combat originaux.
 
 Plonge dans le sol et ressurgit sous vous, spores chercheuses, clones blancs, racines qui percent le sol en lignes. À 50 %, la moitié blanche se détache et combat à part.
 

@@ -4508,15 +4508,15 @@
    "bibliotheque": 1,
    "boss": 1
   },
-  "desc": "Tous les 5 cycles de tir, huit armes tombent du ciel sur les ennemis.",
+  "desc": "Tous les 7 cycles de tir, six armes tombent du ciel sur les ennemis.",
   "effets": [
    {
     "quand": "emission_primaire",
-    "tousLes": 5,
+    "tousLes": 7,
     "faire": {
      "type": "pluie_armes",
-     "n": 8,
-     "coef": 1.5
+     "n": 6,
+     "coef": 1.25
     }
    }
   ],

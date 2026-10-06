@@ -13,7 +13,7 @@
       { id: 'fuma', type: 'special', nom: 'fuma_boss', tele: 0.6, duree: 1.6, recup: 0.6 },
       { id: 'charge', type: 'charge', vCharge: 8.5, tele: 0.55, duree: 1.2, recup: 0.9 },
     ], phases: [{ seuil: 0.5, message: 'Mizuki perd son sang-froid !', action: 'accelerer' }], desc: 'Kunai en éventail, grand shuriken revenant, charges.' });
-  B('BOS_002', 'Serpent géant', 'Gardien de la Forêt de la Mort', 1, 200, { sprite: BP('serpent'), r: 16, init: 'serpent', statut: 'création originale',
+  B('BOS_002', 'Serpent géant', 'Gardien de la Forêt de la Mort', 1, 180, { sprite: BP('serpent'), r: 16, init: 'serpent', statut: 'création originale',
     attaques: [
       { id: 'charge', type: 'charge', vCharge: 9, tele: 0.6, duree: 1.3, recup: 1.0, impact: 'anneau' },
       { id: 'terrier', type: 'special', nom: 'terrier', tele: 0.3, duree: 1.6, recup: 0.8 },
@@ -25,21 +25,21 @@
       { id: 'griffe', type: 'lame', portee: 1.8, arc: 120, tele: 0.45, recup: 0.5 },
     ], desc: 'Deux adversaires reliés par une chaîne dangereuse quand elle se tend.' });
   // ── Étage 2 ──
-  B('BOS_004', 'Zabuza', 'Le démon du brouillard', 2, 300, { sprite: BP('zabuza'), init: 'brume', vitesse: 1.6,
+  B('BOS_004', 'Zabuza', 'Le démon du brouillard', 2, 240, { sprite: BP('zabuza'), init: 'brume', vitesse: 1.6,
     attaques: [
       { id: 'sabre', type: 'lame', portee: 2.8, arc: 150, tele: 0.55, recup: 0.7, vague: true },
       { id: 'brume', type: 'special', nom: 'disparition_brume', tele: 0.4, duree: 1.8, recup: 0.3 },
       { id: 'dragon', type: 'salve', n: 3, v: 4.2, ecart: 0.18, rafales: 3, intervalle: 0.35, tele: 0.6, recup: 0.6, proj: 'eau' },
       { id: 'clones', type: 'invocation', ennemi: 'ENM_062', n: 2, max: 2, tele: 0.6, recup: 0.4 },
     ], phases: [{ seuil: 0.45, message: 'Le brouillard s’épaissit…', action: 'accelerer' }], desc: 'Disparaît dans la brume (yeux visibles) et réapparaît sabre levé.' });
-  B('BOS_005', 'Haku', 'Les miroirs de glace', 2, 260, { sprite: BP('haku'), init: 'miroirs', vitesse: 2.2, deplacement: 'aucun',
+  B('BOS_005', 'Haku', 'Les miroirs de glace', 2, 190, { sprite: BP('haku'), init: 'miroirs', vitesse: 2.2, deplacement: 'aucun',
     attaques: [
       { id: 'saut', type: 'special', nom: 'saut_miroir', tele: 0.3, duree: 0.4, recup: 0.3 },
       { id: 'senbon', type: 'special', nom: 'senbon_miroirs', tele: 0.5, duree: 1.2, recup: 0.6 },
       { id: 'salve', type: 'salve', n: 5, v: 6, ecart: 0.12, tele: 0.5, recup: 0.5, proj: 'glace_ennemie' },
     ], phases: [{ seuil: 0.5, message: 'Le cercle de miroirs se resserre !', action: 'accelerer' }], desc: 'Passe de miroir en miroir ; les miroirs se brisent sous les coups.' });
   // ── Étage 3 ──
-  B('BOS_006', 'Kankurō et Karasu', 'Le marionnettiste', 3, 140, { sprite: BP('kankuro'), init: 'kankuro', deplacement: 'fuite',
+  B('BOS_006', 'Kankurō et Karasu', 'Le marionnettiste', 3, 160, { sprite: BP('kankuro'), init: 'kankuro', deplacement: 'fuite',
     attaques: [{ id: 'gaz', type: 'zone', zone: 'acide', n: 2, r: 1.2, dureeZone: 5, tele: 0.6, recup: 1.2, son: 'vent' }, { id: 'salve', type: 'salve', n: 3, v: 5, ecart: 0.25, tele: 0.5, recup: 0.8 }], desc: 'Frappez le marionnettiste caché : sa marionnette tombera.' });
   B('BOS_007', 'Le trio du Son', 'Trois épreuves en une', 3, 95, { sprite: BP('trio'), init: 'trio', vitesse: 1.6,
     attaques: [{ id: 'onde', type: 'onde', n: 1, vOnde: 3.4, tele: 0.6, recup: 0.8 }, { id: 'salve', type: 'salve', n: 3, v: 5.5, ecart: 0.2, tele: 0.4, recup: 0.6, proj: 'son' }], desc: 'Trois adversaires aux rôles distincts : ondes, souffle, clochettes.' });
@@ -57,7 +57,7 @@
       { id: 'vague', type: 'special', nom: 'vague_sable', tele: 0.7, duree: 2.2, recup: 0.6 },
       { id: 'pluie', type: 'pluie', n: 10, delai: 0.8, r: 0.8, intervalle: 0.1, tele: 0.5, recup: 0.6 },
     ], phases: [{ seuil: 0.5, message: 'Le sable se referme sur l’arène !', action: 'murs_sable' }], desc: 'Le sable enferme l’arène : cercueils au sol, vagues avec une brèche, pluie de sable.' });
-  B('BOS_010', 'Sasori', 'Le maître des marionnettes', 4, 360, { sprite: BP('sasori'), init: 'hiruko', vitesse: 1.0, ia: 'generique',
+  B('BOS_010', 'Sasori', 'Le maître des marionnettes', 4, 290, { sprite: BP('sasori'), init: 'hiruko', vitesse: 1.0, ia: 'generique',
     attaques: [
       { id: 'queue', type: 'charge', vCharge: 7, tele: 0.6, duree: 1, recup: 0.8 },
       { id: 'aiguilles', type: 'salve', n: 7, v: 5, ecart: 0.14, tele: 0.55, recup: 0.6, proj: 'kunai_ennemi' },
@@ -72,7 +72,7 @@
       { id: 'soin', type: 'special', nom: 'soin_kabuto', tele: 0.2, duree: 2, recup: 0.5, seuil: 20, soin: 0.1, recharge: 10, maxUsages: 3 },
       { id: 'salve', type: 'salve', n: 3, v: 6, ecart: 0.2, rafales: 2, tele: 0.4, recup: 0.5 },
     ], desc: 'Se soigne de 10 % en canalisant 2 s (20 dégâts l’interrompent ; trois fois au plus, espacées de 10 s) ; réanime des sujets.' });
-  B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 440, { sprite: BP('kisame'), vitesse: 1.7, deplacement: 'poursuite',
+  B('BOS_012', 'Kisame', 'Le requin de la brume', 5, 400, { sprite: BP('kisame'), vitesse: 1.7, deplacement: 'poursuite',
     attaques: [
       { id: 'requins', type: 'special', nom: 'requins', tele: 0.5, duree: 1.5, recup: 0.6 },
       { id: 'inondation', type: 'zone', zone: 'eau', n: 3, r: 1.6, dureeZone: 8, tele: 0.6, recup: 0.4, son: 'eau' },
@@ -86,7 +86,7 @@
       { id: 'charge', type: 'charge', vCharge: 8.5, tele: 0.5, duree: 1, recup: 0.8 },
     ], desc: 'Si sa faux vous touche, il vous marque ; dans son cercle, il se blesse… et vous aussi. Interrompez le rituel (25 dégâts pendant sa canalisation).' });
   // ── Étage 6 (première fin) ──
-  B('BOS_014', 'Orochimaru', 'Les mues du serpent', 6, 520, { sprite: BP('orochimaru'), vitesse: 1.7, deplacement: 'errance',
+  B('BOS_014', 'Orochimaru', 'Les mues du serpent', 6, 440, { sprite: BP('orochimaru'), vitesse: 1.7, deplacement: 'errance',
     attaques: [
       { id: 'serpents', type: 'salve', n: 5, v: 5, ecart: 0.18, rafales: 2, tele: 0.5, recup: 0.6, proj: 'acide' },
       { id: 'epee', type: 'special', nom: 'epee_extensible', tele: 0.7, duree: 0.5, recup: 0.7 },
@@ -94,14 +94,14 @@
       { id: 'huit', type: 'special', nom: 'huit_tetes', tele: 0.8, duree: 2.4, recup: 0.8, phase: 2 },
     ], phases: [{ seuil: 0.66, message: 'Orochimaru mue !', action: 'mue' }, { seuil: 0.33, message: 'Il mue encore… huit têtes se dressent !', action: 'mue' }], desc: 'À chaque mue, la peau abandonnée devient hostile et il réapparaît ailleurs.' });
   // ── Étage 7 ──
-  B('BOS_015', 'Deidara', 'L’art est une explosion', 7, 460, { sprite: BP('deidara'), vol: true, vitesse: 2.0, deplacement: 'errance',
+  B('BOS_015', 'Deidara', 'L’art est une explosion', 7, 430, { sprite: BP('deidara'), vol: true, vitesse: 2.0, deplacement: 'errance',
     attaques: [
       { id: 'araignees', type: 'invocation', ennemi: 'ENM_072', n: 3, max: 5, tele: 0.5, recup: 0.4 },
       { id: 'oiseaux', type: 'invocation', ennemi: 'ENM_071', n: 2, max: 4, tele: 0.5, recup: 0.4 },
       { id: 'bombes', type: 'pluie', n: 8, delai: 1, r: 1.1, intervalle: 0.15, tele: 0.5, recup: 0.6, son: 'explosion' },
       { id: 'c3', type: 'special', nom: 'c3', tele: 0.4, duree: 3.0, recup: 1.0, phase: 1 },
     ], phases: [{ seuil: 0.35, message: 'Deidara prépare sa grande œuvre (C3) !', action: 'c3' }], desc: 'Argile explosive sous toutes ses formes ; C3 : mettez-vous à l’abri derrière un bloc.' });
-  B('BOS_016', 'Itachi', 'Les illusions du corbeau', 7, 480, { sprite: BP('itachi'), vitesse: 1.6, init: 'itachi',
+  B('BOS_016', 'Itachi', 'Les illusions du corbeau', 7, 440, { sprite: BP('itachi'), vitesse: 1.6, init: 'itachi',
     attaques: [
       { id: 'clones', type: 'special', nom: 'clones_corbeaux', tele: 0.5, duree: 2.0, recup: 0.5 },
       { id: 'boule', type: 'salve', n: 1, v: 3.5, taille: 3, tele: 0.6, recup: 0.6, proj: 'feu' },
@@ -115,7 +115,7 @@
       { id: 'fils', type: 'salve', n: 6, v: 4.6, ecart: 0.25, tele: 0.5, recup: 0.6 },
     ], desc: 'Trois masques élémentaires l’accompagnent ; sa peau durcie (grise) réduit les dégâts de 70 % pendant 1,8 s, visiblement.' });
   // ── Étage 8 ──
-  B('BOS_018', 'Pain', 'Les forces d’attraction', 8, 560, { sprite: BP('pain'), vitesse: 1.2,
+  B('BOS_018', 'Pain', 'Les forces d’attraction', 8, 510, { sprite: BP('pain'), vitesse: 1.2,
     attaques: [
       { id: 'repulsion', type: 'repulsion', tele: 0.8, duree: 0.3, recup: 0.8 },
       { id: 'attraction', type: 'attraction', force: 2.3, tele: 0.6, duree: 2.0, recup: 0.6 },
@@ -123,7 +123,7 @@
       { id: 'betes', type: 'invocation', ennemi: 'ENM_074', n: 1, max: 2, tele: 0.6, recup: 0.4, phase: 1 },
       { id: 'sphere', type: 'special', nom: 'chibaku', tele: 0.8, duree: 3.2, recup: 1, phase: 1 },
     ], phases: [{ seuil: 0.5, message: 'Une sphère attire les rochers vers le ciel !', action: 'accelerer' }], desc: 'Repousse (et détruit vos tirs), attire en tirant en anneau, puis crée une sphère d’attraction.' });
-  B('BOS_023', 'Konan', 'L’ange de papier', 8, 520, { sprite: BP('konan'), vol: true, vitesse: 1.7, deplacement: 'errance',
+  B('BOS_023', 'Konan', 'L’ange de papier', 8, 470, { sprite: BP('konan'), vol: true, vitesse: 1.7, deplacement: 'errance',
     attaques: [
       { id: 'shuriken', type: 'salve', n: 5, v: 5.5, ecart: 0.2, rafales: 2, intervalle: 0.3, tele: 0.45, recup: 0.5, proj: 'papier_ennemi' },
       { id: 'papillons', type: 'invocation', ennemi: 'ENM_096', n: 3, max: 6, tele: 0.5, recup: 0.4 },
@@ -133,7 +133,7 @@
       { id: 'mer', type: 'pluie', n: 20, delai: 1.1, r: 1.1, intervalle: 0.07, tele: 0.7, recup: 1.0, son: 'explosion', visuel: 'explosion_petite', phase: 1 },
     ], phases: [{ seuil: 0.4, message: 'Une mer de papiers explosifs recouvre la salle !', action: 'accelerer' }],
     desc: 'Éventails de shuriken de papier, papillons qui explosent au contact, pluie d’étiquettes explosives ; à 40 % la mer de papiers et des charges ailées.' });
-  B('BOS_019', 'Obito', 'Les changements de présence', 8, 460, { sprite: BP('obito'), init: 'obito', vitesse: 1.6,
+  B('BOS_019', 'Obito', 'Les changements de présence', 8, 470, { sprite: BP('obito'), init: 'obito', vitesse: 1.6,
     attaques: [
       { id: 'saisie', type: 'special', nom: 'saisie_obito', tele: 0.2, duree: 1.3, recup: 0.9 },
       { id: 'boule', type: 'salve', n: 3, v: 4, ecart: 0.3, taille: 2, tele: 0.6, recup: 0.6, proj: 'feu' },
@@ -171,14 +171,14 @@
       { id: 'elan', type: 'charge', vCharge: 10, tele: 0.45, duree: 0.6, recup: 0.6 },
     ], phases: [{ seuil: 0.5, message: 'Les soixante-quatre points s’enchaînent plus vite !', action: 'accelerer' }],
     desc: 'Tourbillon défensif annoncé : il efface vos tirs proches et repousse au contact ; les soixante-quatre paumes frappent tout son cercle (sortez-en) ; paumes d’air à distance.' });
-  B('BOS_026', 'Mille-pattes géant', 'La chose sous la forêt', 2, 280, { sprite: BP('mille_pattes'), r: 14, init: 'mille_pattes', anneaux: { cle: 'mille_pattes', pattes: true }, vitesse: 1.6, deplacement: 'poursuite', statut: 'création originale',
+  B('BOS_026', 'Mille-pattes géant', 'La chose sous la forêt', 2, 190, { sprite: BP('mille_pattes'), r: 14, init: 'mille_pattes', anneaux: { cle: 'mille_pattes', pattes: true }, vitesse: 1.6, deplacement: 'poursuite', statut: 'création originale',
     attaques: [
       { id: 'terrier', type: 'special', nom: 'terrier', tele: 0.3, duree: 1.4, recup: 0.7 },
       { id: 'ruee', type: 'charge', vCharge: 10, tele: 0.55, duree: 1.2, recup: 0.9, impact: 'anneau', trainee: 'acide' },
       { id: 'venin', type: 'salve', n: 3, v: 5, ecart: 0.3, rafales: 2, intervalle: 0.35, tele: 0.5, recup: 0.6, proj: 'acide' },
     ], phases: [{ seuil: 0.5, message: 'Ses anneaux suintent de venin !', action: 'accelerer' }],
     desc: 'Plonge sous terre et ressurgit sous vos pieds ; ses ruées laissent une traînée de venin ; son long corps blesse au contact.' });
-  B('BOS_024', 'Temari', 'La tempête de l’éventail', 3, 320, { sprite: BP('temari'), vitesse: 1.8, deplacement: 'errance',
+  B('BOS_024', 'Temari', 'La tempête de l’éventail', 3, 280, { sprite: BP('temari'), vitesse: 1.8, deplacement: 'errance',
     attaques: [
       { id: 'lames', type: 'salve', n: 5, v: 6, ecart: 0.2, tele: 0.45, recup: 0.5, proj: 'vent' },
       { id: 'bourrasque', type: 'special', nom: 'bourrasque', cone: { arc: 70, portee: 6.5 }, force: 2.6, tele: 0.6, duree: 1.1, recup: 0.6 },
@@ -194,15 +194,15 @@
       { id: 'fleche', type: 'special', nom: 'fleche_doree', tele: 0.2, duree: 1.5, recup: 0.8, phase: 1 },
     ], phases: [{ seuil: 0.5, message: 'Kidōmaru bande son arc d’or…', action: 'accelerer' }],
     desc: 'Tisse des toiles collantes au sol, lance six kunai à la fois, appelle des araignées tisseuses ; à mi-vie, la flèche d’or : la ligne de visée vous suit, se fige, puis la flèche traverse tout.' });
-  B('BOS_028', 'Tayuya', 'La flûte des démons', 4, 330, { sprite: BP('tayuya'), vitesse: 1.6, deplacement: 'fuite',
+  B('BOS_028', 'Tayuya', 'La flûte des démons', 4, 290, { sprite: BP('tayuya'), vitesse: 1.4, deplacement: 'fuite',
     attaques: [
-      { id: 'demons', type: 'invocation', ennemi: 'ENM_097', n: 1, max: 2, tele: 0.7, recup: 0.4, recharge: 9 },
-      { id: 'melodie', type: 'onde', n: 2, vOnde: 3, tele: 0.6, recup: 0.6 },
+      { id: 'demons', type: 'invocation', ennemi: 'ENM_097', n: 1, max: 2, tele: 0.7, recup: 0.4, recharge: 12 },
+      { id: 'melodie', type: 'onde', n: 2, vOnde: 3, tele: 0.6, recup: 0.8 },
       { id: 'notes', type: 'spirale', duree: 2, bras: 2, v: 3.6, intervalle: 0.12, pas: 0.32, tele: 0.6, recup: 0.6, proj: 'son' },
       { id: 'esprits', type: 'special', nom: 'esprits_flute', tele: 0.5, duree: 1.2, recup: 0.6 },
     ], phases: [{ seuil: 0.5, message: 'La mélodie s’accélère !', action: 'accelerer' }],
     desc: 'Garde ses distances en jouant de la flûte : démons géants aux yeux bandés (ils tombent avec elle), ondes sonores à brèche, spirales de notes, esprits chercheurs.' });
-  B('BOS_029', 'Suigetsu', 'L’homme-eau', 5, 410, { sprite: BP('suigetsu'), vitesse: 1.9, deplacement: 'poursuite', faibleRaiton: true,
+  B('BOS_029', 'Suigetsu', 'L’homme-eau', 5, 380, { sprite: BP('suigetsu'), vitesse: 1.9, deplacement: 'poursuite', faibleRaiton: true,
     attaques: [
       { id: 'liquefaction', type: 'special', nom: 'liquefaction', tele: 0.3, duree: 1.4, recup: 0.3 },
       { id: 'couperet', type: 'lame', portee: 2.8, arc: 150, tele: 0.55, recup: 0.65, vague: true },
@@ -210,7 +210,7 @@
       { id: 'flot', type: 'zone', zone: 'eau', n: 3, r: 1.5, dureeZone: 7, tele: 0.6, recup: 0.4, son: 'eau' },
     ], phases: [{ seuil: 0.45, message: 'Suigetsu gonfle son bras d’eau !', action: 'accelerer' }],
     desc: 'Se liquéfie en flaque intangible pour surgir près de vous, couperet levé ; pistolet à eau, flots ralentissants. La foudre lui inflige 50 % de plus et l’empêche de se liquéfier pendant 4 s.' });
-  B('BOS_030', 'Jūgo', 'La marque de la rage', 6, 500, { sprite: BP('jugo'), vitesse: 1.5, deplacement: 'poursuite',
+  B('BOS_030', 'Jūgo', 'La marque de la rage', 6, 450, { sprite: BP('jugo'), vitesse: 1.5, deplacement: 'poursuite',
     attaques: [
       { id: 'poing', type: 'charge', vCharge: 9, tele: 0.55, duree: 0.9, recup: 0.8, maxPhase: 1 },
       { id: 'oiseaux', type: 'invocation', ennemi: 'ENM_092', n: 2, max: 3, tele: 0.6, recup: 0.4, recharge: 8, maxPhase: 1 },
@@ -228,7 +228,7 @@
       { id: 'salve', type: 'salve', n: 4, v: 5.5, ecart: 0.2, rafales: 2, intervalle: 0.3, tele: 0.45, recup: 0.6, proj: 'kunai_ennemi' },
     ], phases: [{ seuil: 0.55, message: 'Ukon se détache du corps de Sakon !', action: 'separer' }],
     desc: 'Enchaînements à deux têtes (deux arcs successifs). À 55 %, Ukon se détache : deux adversaires liés ; Ukon plonge dans le sol et surgit à côté de vous.' });
-  B('BOS_033', 'Chimère des cuves', 'L’expérience évadée', 6, 540, { sprite: BP('chimere'), r: 18, vitesse: 1.2, deplacement: 'poursuite', statut: 'création originale',
+  B('BOS_033', 'Chimère des cuves', 'L’expérience évadée', 6, 480, { sprite: BP('chimere'), r: 18, vitesse: 1.2, deplacement: 'poursuite', statut: 'création originale',
     attaques: [
       { id: 'ruee', type: 'charge', vCharge: 8.5, tele: 0.6, duree: 1.1, recup: 0.9, trainee: 'acide' },
       { id: 'crachat', type: 'salve', n: 5, v: 4.5, ecart: 0.28, tele: 0.5, recup: 0.6, proj: 'acide' },
@@ -238,7 +238,7 @@
       { id: 'sujets', type: 'invocation', ennemi: 'ENM_050', n: 2, max: 3, tele: 0.6, recup: 0.4, recharge: 9, phase: 2 },
     ], phases: [{ seuil: 0.66, message: 'La chimère mute : une pince lui pousse !', action: 'muter' }, { seuil: 0.33, message: 'Nouvelle mutation : des tentacules jaillissent !', action: 'muter' }],
     desc: 'Une expérience évadée des cuves. À chaque tiers de vitalité perdu, elle mute (nouvelle silhouette, nouvelles attaques) : ruées acides, pince, mares, tentacules et sujets réanimés.' });
-  B('BOS_034', 'Zetsu', 'Celui qui pousse sous le champ de bataille', 7, 440, { sprite: BP('zetsu'), vitesse: 1.2, deplacement: 'aucun',
+  B('BOS_034', 'Zetsu', 'Celui qui pousse sous le champ de bataille', 7, 400, { sprite: BP('zetsu'), vitesse: 1.2, deplacement: 'aucun',
     attaques: [
       { id: 'surgir', type: 'special', nom: 'terrier', tele: 0.3, duree: 1.4, recup: 0.7 },
       { id: 'spores', type: 'special', nom: 'spores', tele: 0.5, duree: 1.2, recup: 0.6 },

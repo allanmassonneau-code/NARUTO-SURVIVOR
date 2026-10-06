@@ -111,7 +111,8 @@ function emettre(J, dir, mult, cycleId, estSalve, budget, o = {}) {
       case 'laser': tirerLaser(J, { x: ox, y: oy }, g.a, deg, cycleId, budget); break;
       case 'rayon': tirerRayon(J, g.a, deg, cycleId, budget); break;
       case 'lame': case 'lame_longue': {
-        const L = P.params[P.forme] || {}; const base = P.forme === 'lame_longue' ? { portee: 2.6, arc: 140, coef: 3 } : { portee: (J.def.tir.forme === 'lame' ? J.stats.portee : 1.6), arc: 100, coef: J.def.tir.forme === 'lame' ? 1 : 2.5 };
+        const L = P.params[P.forme] || {}; const nativ = J.def.tir.forme === 'lame'; // Rock Lee frappe déjà au contact : une arme de mêlée l'allonge sans tripler ses coups
+        const base = P.forme === 'lame_longue' ? { portee: 2.6, arc: 140, coef: nativ ? 1.4 : 2.2 } : { portee: (nativ ? J.stats.portee : 1.6), arc: 100, coef: nativ ? 1 : 2.2 };
         let arc = (L.arc || base.arc) + 20 * (P.multi - 1), coef = (L.coef || base.coef) * (1 + 0.15 * (P.multi - 1)) / (P.multi > 1 ? P.coefMulti : 1) * P.coefMulti;
         if (J.drapeaux.lotus && g === geo[0]) { J.compteurs.frappes = (J.compteurs.frappes || 0) + 1; if (J.compteurs.frappes % 4 === 0) { arc = 360; coef *= 1.6; G.effets.push({ type: 'onde', x: J.x, y: J.y - 10, r: 40, age: 0, duree: 0.25, couleur: '#8af07a' }); } } // Lotus primaire
         if (g === geo[0] || Math.abs(diffAngle(g.a, geo[0].a)) > 1.2) frapperMelee(J, dirDepuisVecteur(Math.cos(g.a), Math.sin(g.a)), S.degats * P.coefDegats * mult * coef, { portee: (L.portee || base.portee) + (P.forme === 'lame' && J.def.tir.forme !== 'lame' ? (S.portee - 6) * 0.1 : 0), arc }, cycleId, budget);

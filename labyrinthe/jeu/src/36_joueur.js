@@ -96,7 +96,7 @@ function aideAlignementPorte(J, mx, my, dt) {
 function blesserJoueur(demis, src = {}) {
   const J = G.joueur;
   if (J.invuln > 0 || J.intangible || J.etat === 'mort' || G.transition || J.etat === 'objet') return false;
-  if (G.modeTest && G.modeTest.dieu) return false;
+  if (G.modeTest && G.modeTest.dieu) { G.modeTest.coups = (G.modeTest.coups || 0) + 1; J.invuln = J.dureeInvuln || 1.0; return false; } // banc d'essai : le coup est compté, pas subi
   // protections acquises (dans l'ordre) : bouclier de sable, substitution, talisman, clones
   if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { J.bouclierSable = false; J.invuln = 0.6; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.5 }); Son.jouer('sable');
     if (J.drapeaux.sableReforme) { const s = G.salle; setTimeoutJeu(() => { if (G.salle === s && s.combat && !J.bouclierSable) { J.bouclierSable = true; Son.jouer('sable', 0.5); G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.4 }); } }, 10); } // Armure de sable

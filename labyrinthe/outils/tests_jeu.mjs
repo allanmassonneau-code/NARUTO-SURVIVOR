@@ -1,6 +1,7 @@
 // Tests automatisés du jeu dans Chromium (Playwright).
 // Usage : node labyrinthe/outils/tests_jeu.mjs [section…]
-// Sections : generation, parcours, objets, actifs, boss, ennemis, personnages, sauvegarde, manette, economie
+// Sections : generation, parcours, objets, actifs, synergies, boss, ennemis, personnages, sauvegarde, manette, economie,
+// secours, visibilite, mecaniques, pactes, opportunites, eveils, defis
 // Ne remplace pas une recette manuelle à la manette : il vérifie l'absence d'erreurs
 // et des invariants (portes reliées, boss atteignable, récompenses uniques…).
 import { createRequire } from 'node:module';

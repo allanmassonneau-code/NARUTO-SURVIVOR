@@ -143,7 +143,7 @@ PSV_141;Cœur du réceptacle;contrepartie;2;boss 2;Chaque boss vaincu donne un c
 PSV_142;Main du scorpion;contrepartie;1;heritage 1, pacte 1;"Le poison dure deux fois plus ; 10 % d’empoisonner.";cumul;marionnette;création originale;OBJ_011
 PSV_143;Mue du serpent;contrepartie;3;pacte 1, boss 1;Une fois par étage, quand votre dernière réserve de chakra se brise, vous gagnez une réserve.;cumul;experimental;création originale;OBJ_017
 PSV_144;Nature du sage;hybride;3;sanctuaire 1, bibliotheque 1;Immobile une seconde, vous accumulez l’énergie naturelle : dégâts ×1,5 jusqu’au prochain pas.;cumul;ermite;création originale;OBJ_046
-PSV_145;Pluie d’armes;hybride;3;heritage 1, bibliotheque 1, boss 1;Tous les 5 cycles de tir, huit armes tombent du ciel sur les ennemis.;cumul;;adaptation;OBJ_038
+PSV_145;Pluie d’armes;hybride;3;heritage 1, bibliotheque 1, boss 1;Tous les 7 cycles de tir, six armes tombent du ciel sur les ennemis.;cumul;;adaptation;OBJ_038
 PSV_146;Rasenshuriken (empreinte);hybride;4;boss 1, heritage 1;Vos orbes et charges explosent en tourbillon de vent.;cumul;renard;adaptation;OBJ_034 ou OBJ_060
 PSV_147;Lance de foudre;hybride;3;heritage 1, boss 1;Un trait de foudre accompagne chaque tir (×0,5).;cumul;tonnerre;adaptation;—
 PSV_148;Double dragon;hybride;3;heritage 1, bibliotheque 1;Tir multiple et guidage léger réunis.;cumul;;création originale;—

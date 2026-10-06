@@ -195,10 +195,10 @@ function genererContenuSalle(s) {
 // Récompense de fin de salle (table §R10 ; la chance déplace la masse « rien »)
 function tirerRamassable(al, chance, difficile) {
   const c = Math.max(0, Math.min(10, chance || 0));
-  const table = [['rien', 36 - c * 3 + (difficile ? 12 : 0)], ['ryo', 22], ['coeur', 11], ['cle', 8], ['explosif', 8], ['coffre', 5 + c * 0.6], ['consommable', 5 + c * 0.6], ['condensateur', 2], ['talisman', 1.5 + c * 0.3], ['protection', 3]];
+  const table = [['rien', 36 - c * 3 + (difficile ? 12 : 0)], ['ryo', 28], ['coeur', 11], ['cle', 8], ['explosif', 8], ['coffre', 5 + c * 0.6], ['consommable', 5 + c * 0.6], ['condensateur', 2], ['talisman', 1.5 + c * 0.3], ['protection', 3]];
   const r = al.pondere(table, x => x[1]); const t = r ? r[0] : 'rien';
   switch (t) {
-    case 'ryo': return al.chance(0.12) ? 'ryo5' : al.chance(0.03) ? 'ryo10' : 'ryo';
+    case 'ryo': return al.chance(0.12) ? 'ryo5' : al.chance(0.03) ? 'ryo10' : al.chance(0.3) ? 'ryo2' : 'ryo';
     case 'coeur': return al.chance(0.25) ? 'coeur_demi' : al.chance(0.08) ? 'coeur_double' : 'coeur';
     case 'cle': return al.chance(0.1) ? 'cle2' : 'cle';
     case 'explosif': return al.chance(0.1) ? 'explosif2' : 'explosif';
@@ -296,7 +296,7 @@ function secoursEnnemisInaccessibles(dt) {
 
 // ── Ramassables ──
 const RAMASSABLES = {
-  ryo: { cat: 'ryo', n: 1 }, ryo5: { cat: 'ryo', n: 5 }, ryo10: { cat: 'ryo', n: 10 },
+  ryo: { cat: 'ryo', n: 1 }, ryo2: { cat: 'ryo', n: 2 }, ryo5: { cat: 'ryo', n: 5 }, ryo10: { cat: 'ryo', n: 10 },
   cle: { cat: 'cle', n: 1 }, cle2: { cat: 'cle', n: 2 }, explosif: { cat: 'explosif', n: 1 }, explosif2: { cat: 'explosif', n: 2 },
   coeur: { cat: 'coeur', n: 2 }, coeur_demi: { cat: 'coeur', n: 1 }, coeur_double: { cat: 'coeur', n: 4 },
   protection: { cat: 'protection', n: 2 }, protection_demi: { cat: 'protection', n: 1 }, instable: { cat: 'instable', n: 2 }, partiel: { cat: 'partiel' }, os: { cat: 'os' },

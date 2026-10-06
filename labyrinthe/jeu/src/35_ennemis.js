@@ -10,7 +10,7 @@ const DUREE_APPARITION = 0.55;
 
 function creerEnnemi(defId, x, y, o = {}) {
   const d = INDEX[defId]; if (!d) throw new Error('Ennemi inconnu ' + defId);
-  const diff = G.partie && G.partie.difficile ? 1.2 : 1;
+  const diff = (G.partie && G.partie.difficile ? 1.2 : 1) * (String(defId).startsWith('BOS_') ? 1 : facteurPvEnnemi()); // les boss ont leur propre facteur d'étage
   const e = {
     uid: ++_idEnnemi, def: d, id: d.id, x, y, vx: 0, vy: 0, r: d.r || 9, hauteur: d.hauteur || (d.vol && !d.fixe && !d.boss ? 8 + HAUTEUR_VOL : 8),
     pv: d.pv * diff * (o.pvMult || 1), pvMax: d.pv * diff * (o.pvMult || 1), vol: !!d.vol, etat: 'apparition', t: 0, tAtt: 0.8 + Math.random() * 0.8,
@@ -86,6 +86,8 @@ function majStatuts(e, dt) {
 const controleBloque = e => !!(e.statuts.immobilise || e.statuts.gel && e.statuts.gel.t > 0 && false);
 
 // ── Dégâts infligés aux ennemis ──
+// Résistance des ennemis ordinaires : +10 % par étage (salles nettoyées 3 fois plus vite en fin de partie sans cela)
+function facteurPvEnnemi() { const n = G.etage ? G.etage.numero : 1; return 1 + 0.1 * (Math.max(1, n) - 1); }
 function infligerDegats(e, deg, src = {}) {
   if (e.mort || e.apparition > 0) return false;
   if (e.invulnerable) { if (!src.sansFlash) G.effets.push({ type: 'immunite', x: e.x, y: e.y - e.hauteur - 8, age: 0, duree: 0.3 }); return false; }
@@ -101,6 +103,7 @@ function infligerDegats(e, deg, src = {}) {
   if (src.proprio === 'joueur') { const D = G.joueur.drapeaux; if (D.incandescence && e.statuts.brulure) deg *= 1.4; if (D.mangekyo && e.statuts.confus) deg *= 1.25; if ((D.inoShikaCho || D.ombreEtrangleuse) && e.statuts.immobilise) deg *= 1.5; }
   if (e.statuts.marque) deg *= e.statuts.peur && G.joueur.drapeaux.troisMarques ? 2 : 1.4; // marqué : +40 % de toutes les sources (×2 s'il fuit, avec les trois marques)
   e.pv -= deg; e.dernierCoup = G.temps;
+  if (G.modeTest && G.modeTest.journalDegats) { const k = (src.proprio || '?') + '/' + (src.type || '?'); G.modeTest.journalDegats[k] = (G.modeTest.journalDegats[k] || 0) + deg; } // banc d'essai : dégâts par source
   if (G.modeTest) { const D = G.modeTest.degatsPar || (G.modeTest.degatsPar = {}); const k = (src.type || '?') + (src.source ? ':' + src.source : ''); D[k] = (D[k] || 0) + deg; }
   if (!src.sansFlash) { e.flash = 0.08; e.coupT = G.temps; }
   G.stats.degats += deg;

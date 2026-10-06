@@ -101,7 +101,7 @@ Les gâchettes analogiques s’activent au-delà de 0,35. Le type de manette est
 
 ### B3.2 Corps-à-corps
 
-Rock Lee (CHR_005) et les objets *lame* (PSV_018) et *lame longue* (PSV_017) : arc de 100° (140° pour la lame longue), portée égale à la statistique de portée pour Lee (1,7 tuile) ou 1,6 / 2,6 tuiles pour les objets. Anticipation 0,03 s, phase active 0,1 s, fin à 0,16 s ; aucun déplacement imposé, aucune invulnérabilité. Tous les coups détruisent les projectiles ennemis ordinaires présents dans l’arc (pas les projectiles lourds, les rayons ni les ondes) et déclenchent les effets d’impact du profil (budget de 6 par coup). Le joueur reste exposé au contact : les dégâts de contact s’appliquent normalement.
+Rock Lee (CHR_005) et les objets *lame* (PSV_018) et *lame longue* (PSV_017) : arc de 100° (140° pour la lame longue), portée égale à la statistique de portée pour Lee (1,7 tuile) ou 1,6 / 2,6 tuiles pour les objets. Coefficient par coup : ×2,2 pour un tireur qui prend une lame ou la lame longue ; pour Lee, dont la frappe est l'attaque native, ×1 et ×1,4 avec la lame longue (mesuré : ×3 lui faisait finir les boss de fin en deux secondes). Les coups au corps-à-corps peuvent être critiques comme les tirs. Anticipation 0,03 s, phase active 0,1 s, fin à 0,16 s ; aucun déplacement imposé, aucune invulnérabilité. Tous les coups détruisent les projectiles ennemis ordinaires présents dans l’arc (pas les projectiles lourds, les rayons ni les ondes) et déclenchent les effets d’impact du profil (budget de 6 par coup). Le joueur reste exposé au contact : les dégâts de contact s’appliquent normalement.
 
 ### B3.3 Capacités défensives acquises (jamais universelles)
 
@@ -110,6 +110,8 @@ Rock Lee (CHR_005) et les objets *lame* (PSV_018) et *lame longue* (PSV_017) : a
 | Dash foudroyant | ACT_003 Chidori | ennemis (les blesse), projectiles | murs, obstacles, fosses (sauf vol) |
 | Intangibilité | ACT_021 Espace-temps intangible (3 s, sans tir), ACT_015 Parchemin de substitution (3 s, bûche-appât) | ennemis et projectiles | murs, obstacles |
 | Substitution passive | PSV_096 (15 % + 3 %/chance, 50 % max) | le coup évité | — |
+| Esquive éclair | TRF_016 Éclair jaune (une toutes les 8 s) | le coup évité ; téléportation de 3,2 tuiles loin de la source | murs, obstacles |
+| Phénix | PSV_191 Bénédiction du phénix (une fois par étage) | un coup mortel : reste une demi-unité, 2 s d'invulnérabilité | un prix (pacte) ou un sacrifice mortel |
 | Rotation défensive | ACT_008, PSV_022 | détruit les projectiles proches | — |
 | Lévitation | PSV_115, PSV_116, TRF_007, TRF_010, CON_013 | fosses, pics, flaques, toiles, prix de sortie de la chambre maudite | murs, obstacles, projectiles, ennemis |
 | Téléportation | CON_001/005/010/018/019, ACT_023 | tout (changement de salle) | — ; la salle quittée garde ses ennemis |
@@ -163,6 +165,28 @@ Les dégâts d’une émission : `dégâts × coefficient du profil × coefficie
 - Impact : 3,5 × 3 = 10,5 par cible (deux cibles au plus), chaîne 2 × 5,25 sur des ennemis proches (génération 1, relançable une fois : génération maximale 2, budget de 14 déclenchements par cycle).
 - Monocible : 10,5 / 0,74 = **14,2** (×1,62). Trois ennemis groupés : 10,5 + 2 × 5,25 = 21 par cycle, **28,4** par seconde répartis.
 - Le cas du brief SYN_001 (Rasengan jumeau, PSV_001 + PSV_002) est implémenté tel quel : deux sphères à 3,5 × 3 × 0,70 = 7,35, cycle 0,6 / 0,9 = 0,667 s + récupération.
+
+### B4.4 Résistance selon l'étage et banc d'équilibrage
+
+La puissance du joueur (dégâts × cadence × multitir) passe d'environ 9 à l'étage 1 à 25–40 à l'étage 8 ; les PV adverses suivent donc l'étage :
+
+- **Ennemis ordinaires** : PV × (1 + 0,10 × (étage − 1)), soit ×1,7 à l'étage 8 (`facteurPvEnnemi`).
+- **Boss** : PV × facteur de l'étage où on les affronte (`FACTEUR_PV_BOSS`) — 0,85 / 0,95 / 1,15 / 1,35 / 1,55 / 1,75 / 2,2 / 2,6 pour les étages 1 à 8, 1,9 pour les boss terminaux (déjà 800 à 1 000 PV de base). Les vagues de boss des épreuves et les gardiens de statue suivent le même facteur.
+
+Ces facteurs viennent du **banc d'équilibrage** (`outils/equilibrage.mjs`) : douze parties simulées (une par personnage), huit étages, joueur invulnérable mais chaque coup qui l'aurait touché est compté. Avant / après le réglage (médianes et moyennes sur 12 à 24 parties) :
+
+| Étage | Durée médiane d'un boss avant | après | Secondes par salle avant | après |
+|---|---|---|---|---|
+| 1 | 36 s | 24 s | 7,7 | 6,8 |
+| 2 | 34 s | 34 s | 15,3 | 8,8 |
+| 3 | 23 s | 17 s | 12,5 | 10,7 |
+| 4 | 19 s | 28 s | 11,1 | 10,0 |
+| 5 | 17 s | 18 s | 9,3 | 11,8 |
+| 6 | 16 s | 27 s | 9,3 | 8,1 |
+| 7 | 14 s | 28 s | 6,7 | 7,2 |
+| 8 | 11 s | 27 s | 5,3 | 7,4 |
+
+La difficulté ne décroît plus en fin de partie. Le pilote n'esquive pas : les coups comptés mesurent une pression relative entre boss, pas la difficulté ressentie. Les PV de quinze boss ont été corrigés un par un d'après leurs durées (Mille-pattes, Haku, Zabuza, Sasori, Orochimaru, Temari, Kisame, Jūgo, Zetsu, Konan, Pain plus bas ; Kankurō, Obito plus hauts…) ; Tayuya fuit moins vite et invoque ses démons moins souvent. Personnages : Rock Lee 5 → 4,6 dégâts, Shikamaru 3,2 → 3,5 et cadence 2,3 → 2,4, Gaara cadence 2,0 → 2,2. Objets : la lame longue passe de ×3 à ×2,2 (×1,4 pour Lee), la lame de ×2,5 à ×2,2, la Pluie d'armes de huit armes tous les cinq cycles à six tous les sept (elle triplait à elle seule les dégâts).
 
 ## B5. Santé (brief §09) — `33_sante.js`
 
@@ -226,16 +250,18 @@ Tirée une seule fois par salle (flux reproductible propre à la salle) ; poids 
 
 | Issue | Poids | À chance 0 | À chance 10 |
 |---|---|---|---|
-| Rien | 36 − 3c (+12 en Difficile) | 35,5 % | 6,9 % |
-| Ryō (12 % bourse, 3 % lingot) | 22 | 21,7 % | 25,4 % |
-| Cœur (25 % demi, 8 % double) | 11 | 10,8 % | 12,7 % |
-| Clé (10 % double) | 8 | 7,9 % | 9,2 % |
-| Explosif (10 % double) | 8 | 7,9 % | 9,2 % |
-| Coffre (25 % verrouillé, 12 % piégé) | 5 + 0,6c | 4,9 % | 12,7 % |
-| Consommable (45 % pilule) | 5 + 0,6c | 4,9 % | 12,7 % |
-| Condensateur | 2 | 2,0 % | 2,3 % |
-| Talisman | 1,5 + 0,3c | 1,5 % | 5,2 % |
-| Réserve de chakra (20 % instable) | 3 | 3,0 % | 3,5 % |
+| Rien | 36 − 3c (+12 en Difficile) | 33,5 % | 6,5 % |
+| Ryō (12 % bourse, 3 % lingot, 26 % paire de pièces) | 28 | 26,0 % | 30,3 % |
+| Cœur (25 % demi, 8 % double) | 11 | 10,2 % | 11,9 % |
+| Clé (10 % double) | 8 | 7,4 % | 8,6 % |
+| Explosif (10 % double) | 8 | 7,4 % | 8,6 % |
+| Coffre (25 % verrouillé, 12 % piégé) | 5 + 0,6c | 4,7 % | 11,9 % |
+| Consommable (45 % pilule) | 5 + 0,6c | 4,7 % | 11,9 % |
+| Condensateur | 2 | 1,9 % | 2,2 % |
+| Talisman | 1,5 + 0,3c | 1,4 % | 4,9 % |
+| Réserve de chakra (20 % instable) | 3 | 2,8 % | 3,2 % |
+
+Chaque boss vaincu lâche en plus 2 à 4 pièces. Espérance par étage, tout ramassé : environ 6,5 Ryō de fin de salle, 1 à 2 des jarres et 3 du boss, soit une dizaine (un objet de qualité 2 tous les un étage et demi). Le banc d'équilibrage (B4.4) mesurait 5 Ryō par étage avant ce réglage.
 
 La génération garantit que la **route obligatoire vers le boss ne demande aucune clé** (test « generation » sur 400 étages). Les routes facultatives (héritage, échoppe dès l’étage 2) peuvent être refusées faute de clé.
 
@@ -248,7 +274,7 @@ La génération garantit que la **route obligatoire vers le boss ne demande aucu
 | 3 | Garder un explosif pour une cache | Une cache demande 1 explosif (mur voisin d’au moins deux salles) ; un rocher à sceau en demande 1 aussi pour une réserve, une clé, deux explosifs, une bourse ou un rouleau. |
 | 4 | Payer un informateur | Voyageur : 1 Ryō par paiement, 12 % d’objet (il part), 20 % d’un petit présent. Espérance ≈ 8 paiements pour un objet. |
 | 5 | Accès alternatif | L’épreuve chūnin n’ouvre qu’à vitalité pleine : dépenser un cœur maintenant ou garder la porte ouverte. |
-| 6 | Préserver la santé pour un pacte | Pacte de qualité ≤ 2 : 1 contenant ; qualité 3–4 : 2 contenants. Un pacte acheté ferme la branche Lumière et le sanctuaire des étages suivants. |
+| 6 | Préserver la santé pour un pacte | Pacte de qualité ≤ 2 : 1 contenant ; qualité 3–4 : 2 contenants (1 avec le Nuage écarlate) ; pacte de sang et pari : 1 contenant ; troc : un de vos objets, sans santé. Un pacte acheté ferme la branche Lumière et le sanctuaire des étages suivants. |
 | 7 | Relancer un objet | *Réécriture d’empreinte* : 6 salles de charge ; la relance peut donner mieux ou pire (même pool). |
 | 8 | Abandonner l’exploration pour une route chronométrée | Conseil des épreuves : boss de l’étage 6 vaincu avant 20:00 ; Brèche : salle du boss 8 atteinte avant 30:00. Une salle vidée coûte 15 à 40 s. |
 

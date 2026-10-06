@@ -177,7 +177,7 @@
   },
   "actif": "ACT_007",
   "stats": {
-   "degats": 5,
+   "degats": 4.6,
    "cadence": 2.4,
    "portee": 1.7,
    "vitesseTir": 9,
@@ -258,8 +258,8 @@
   },
   "actif": "ACT_009",
   "stats": {
-   "degats": 3.2,
-   "cadence": 2.3,
+   "degats": 3.5,
+   "cadence": 2.4,
    "portee": 6,
    "vitesseTir": 8.5,
    "vitesse": 4.3,
@@ -300,7 +300,7 @@
   "actif": "ACT_010",
   "stats": {
    "degats": 3.8,
-   "cadence": 2,
+   "cadence": 2.2,
    "portee": 6,
    "vitesseTir": 7.5,
    "vitesse": 3.7,

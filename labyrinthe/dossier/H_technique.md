@@ -178,10 +178,10 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 |---|---|---|
 | generation | 400 étages : boss présent, salles reliées, route du boss sans clé, portes secrètes réciproques, devants de porte libres | 0 erreur, 1,2 essai en moyenne, 0 plan de secours |
 | parcours ×3 | Naruto, Rock Lee, Sasuke jouent 9 étages : chaque salle nettoyée, objets pris, boss vaincus, sortie empruntée | 0 erreur |
-| objets | chacun des 157 passifs : acquisition, 6 s de combat, dégâts infligés | 157 ; seul PSV_014 (rayon à charger) sans dégât dans la fenêtre |
-| actifs | 33 actifs utilisés en salle ; échange sur piédestal sans va-et-vient | 33 |
+| objets | chacun des 193 passifs : acquisition, 6 s de combat, dégâts infligés | 193 ; seul PSV_014 (rayon à charger) sans dégât dans la fenêtre |
+| actifs | 39 actifs utilisés en salle ; échange sur piédestal sans va-et-vient | 39 |
 | synergies | chacune des 56 synergies à effet réunie, annoncée et vérifiée en combat (dégâts de lave, vapeur, foudre, rayon Jinton…) ; ordre des bandeaux objet → synergie, retenus sous le titre d'étage | 56, dont 9 fusions |
-| boss | 25 boss vaincus par le pilote renforcé en moins de 150 s | 25, de 8 à 98 s |
+| boss | 37 boss vaincus par le pilote renforcé en moins de 150 s | 37 |
 | ennemis | 76 archétypes, 12 s de combat | 0 erreur ; 4 à 6 embusqués ou invocateurs parfois non vaincus dans la fenêtre |
 | personnages | 18 entrées jouables ; conversion de Rock Lee ; sphère d'appoint | 18 |
 | sauvegarde | reprise d'une partie suspendue, taille, effacement sans résurrection | ≈ 14 Kio |
@@ -191,11 +191,13 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | visibilite | chacun des 101 ennemis et boss dessine des pixels | 101 |
 | mecaniques | bande de sable de Gaara, Susanoo, cristaux, zones télégraphiées | 0 erreur |
 | pactes | 8 scénarios chiffrés (E §6), événements comptés, refus, tirage figé | 0 erreur |
+| opportunites | tirage des huit variantes (parts proches des poids sur 400 étages), bandeau, pacte de sang (deux marques = deux contenants), troc (objet annoncé, santé intacte, refus sans objet), pari (voile, qualité, fiche muette, relance), bénédictions (une seule), source sacrée, tronc des offrandes, phénix | 37 vérifications |
+| eveils | 18 entrées : deux éveils aux étages 3 et 6, jamais avant, jamais en double, chaque effet appliqué ; obstination, Sharingan, Force et Byakugō, copie parfaite, rotation automatique, trois choix d'héritage, sable qui se reforme, Susanoo vérifiés en jeu | 192 vérifications |
 | defis | règles et conditions de réussite des contrats (fin imposée, chronomètre, aucun pacte, ressources), objectifs du registre des synergies | 21 vérifications |
 
 **Validation des données** : `node labyrinthe/outils/catalogues.mjs --verifier` (identifiants, références, pools, effets implémentés, fiches de boss complètes, navigabilité des 120 gabarits) : 0 erreur, 3 avertissements (objets-clés et actif de variante hors pools, attendu).
 
-**Ce que les tests ne prouvent pas.** Le pilote est invulnérable : il prouve qu'un combat se termine, pas qu'un humain esquive tout. La manette est simulée par l'API Gamepad du navigateur, pas testée sur matériel. L'équilibrage n'a été réglé qu'avec le pilote. Recette manuelle à faire : H §8, jalon « recette ».
+**Ce que les tests ne prouvent pas.** Le pilote est invulnérable : il prouve qu'un combat se termine, pas qu'un humain esquive tout. La manette est simulée par l'API Gamepad du navigateur, pas testée sur matériel. L'équilibrage n'a été réglé qu'avec le pilote : `node labyrinthe/outils/equilibrage.mjs [personnages] [graine]` joue une partie de huit étages par personnage (invulnérable, coups comptés) et écrit `catalogues/equilibrage.json` (puissance, secondes par salle, durée et coups par boss, Ryō par étage ; B §4.4). Recette manuelle à faire : H §8, jalon « recette ».
 
 ## H6. Performances
 
@@ -204,7 +206,7 @@ La génération d'étage (graphe de salles sur grille 13×13, grandes salles, sp
 | Simulation d'un pas | ≈ 0,06 ms | combat contre les Dix Queues, 12 objets de tir multiple, 5 familiers, 900 pas |
 | Rendu d'une image | ≈ 2,5 ms en moyenne avec l'éclairage dynamique (≈ 0,85 ms sans) ; 95e centile ≈ 4,5 ms ; pics isolés de 30 à 60 ms répartis au hasard (bruit de la machine de mesure, moins nombreux qu'avant le cache de textes) | même scène, écran interne 640×360, rendu **logiciel** de Chromium sans écran (un navigateur accéléré par la carte graphique fait mieux). Sur la même machine, la version précédente prenait ≈ 4,9 ms (≈ 3,5 ms sans éclairage) : le texte dessiné glyphe par glyphe en coûtait près des trois quarts |
 | Génération d'un étage | ≈ 0,75 ms | 400 étages en 0,3 s |
-| Fichier du jeu | ≈ 853 Kio | un seul HTML, sans ressource externe |
+| Fichier du jeu | ≈ 1 290 Kio | un seul HTML, sans ressource externe (50 modules) |
 | Partie suspendue | ≈ 14 Kio | étage et joueur sérialisés |
 
 **Garde-fous** : chaque texte (chaîne, couleur, échelle, ombre ou contour) composé une fois dans une petite toile puis posé d'un seul `drawImage` (900 textes en cache, les plus anciens remplacés d'abord) ; particules plafonnées (260, 120 en mode confort) ; couleurs des éclats de mort relevées une fois par image de sprite ; budget de 14 réactivations par cycle de tir et générations d'impact bornées (`GEN_MAX`) ; multitir plafonné à 8 ; caches de sprites (par objet sprite et échelle), de silhouettes, de disques, ellipses et anneaux ; fond de salle mis en cache et redessiné seulement quand sa version change ; pas de simulation borné à 5 par image. Éclairage : part fixe de la carte de lumière (pénombre, cellules, sources immobiles) en cache par salle, carte à demi-résolution, multiplication limitée à la salle visible et agrandie au plus proche voisin, halos pré-dimensionnés par paliers (réduire un grand halo avec lissage coûte cher en rendu logiciel), décor des menus pré-rendu une fois ; l'option *Éclairage dynamique* le coupe entièrement. Les pics du 99e centile viennent surtout de la création paresseuse des sprites au premier affichage.
@@ -219,7 +221,7 @@ Trois stockages indépendants (`localStorage`) : **réglages** (`lds_reglages`),
 |---|---|---|
 | Prototype | déplacement, tir cardinal, une salle, un boss, manette | fait |
 | Tranche verticale | 6 étages, 3 personnages, pools, boutique, pacte, sanctuaire, sauvegarde | fait |
-| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables, 158 passifs, 33 actifs, 25 boss, 76 ennemis, 10 thèmes, 120 salles, défis, secrets, registre, dossier A à I | fait (cibles chiffrées atteintes, I §1) |
+| Version 1.0 de travail | 9 étages et 6 routes, 18 entrées jouables (36 éveils), 194 passifs, 39 actifs, 37 boss, 77 ennemis, 10 thèmes, 120 salles, défis, secrets, registre, dossier A à I | fait (cibles chiffrées atteintes, I §1) |
 | Recette | 20 heures de jeu humain à la manette sur 3 manettes (Xbox, DualSense, générique), réglage des boss les plus longs, vérification des télégraphes à vitesse minimale, lecture daltonisme et mode confort | à faire |
 | Extension | 22 personnages et 34 variantes de plus, bibliothèque complète (600 collectibles, 500 salles, 70 boss…), remontée secrète, Marché des mercenaires | à faire (I) |
 | Diffusion | vérification des droits d'exploitation de la licence | **préalable non levé** |

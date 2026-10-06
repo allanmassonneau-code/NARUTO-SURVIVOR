@@ -32,7 +32,7 @@
     identite: 'Cheveux argentés inclinés, masque, bandeau sur l’œil, gilet vert.',
     builds: ['Double actif (Réécriture d’empreinte + actif offensif)', 'Foudre (Raikiri)', 'Chasse aux secrets'] });
   P({ id: 'CHR_005', nom: 'Rock Lee', cle: 'lee', sante: { vitalite: 3 }, tir: { apparence: 'coup', forme: 'lame' }, actif: 'ACT_007',
-    stats: { degats: 5, cadence: 2.4, portee: 1.7, vitesse: 5.2 },
+    stats: { degats: 4.6, cadence: 2.4, portee: 1.7, vitesse: 5.2 },
     regle: 'Taijutsu pur : frappe au corps-à-corps (arc de 100°). Les coups détruisent les projectiles ennemis ordinaires. Les objets de tir sont convertis (table de conversion).', regleCode: 'taijutsu',
     faiblesse: 'Exposition au contact ; pas de tir à distance sans objet.', difficulte: 2, deblocage: { objectif: 'OBJ_009' },
     identite: 'Coupe au bol, sourcils épais, combinaison verte, jambières orange.',
@@ -44,13 +44,13 @@
     identite: 'Longs cheveux indigo, yeux pâles sans pupille, veste lavande.',
     builds: ['Percement multiple', 'Défense rotative (actif + orbitaux)', 'Exploration totale'] });
   P({ id: 'CHR_007', nom: 'Shikamaru', cle: 'shikamaru', sante: { vitalite: 2, protection: 1 }, tir: { apparence: 'kunai_ombre' }, actif: 'ACT_009',
-    stats: { degats: 3.2, cadence: 2.3, portee: 6, vitesseTir: 8.5, vitesse: 4.3, chance: 1 },
+    stats: { degats: 3.5, cadence: 2.4, portee: 6, vitesseTir: 8.5, vitesse: 4.3, chance: 1 },
     regle: 'Stratège : chaque salle d’héritage propose deux objets au choix ; ses kunai immobilisent parfois (15 % + 3 % par point de chance, 50 % au plus).', regleCode: 'stratege',
     faiblesse: 'Peu de vitalité, dégâts modestes.', difficulte: 2, deblocage: { objectif: 'OBJ_015' },
     identite: 'Queue de cheval en ananas, gilet vert, regard las.',
     builds: ['Contrôle (immobilisation + dégâts de zone)', 'Choix multiples (pools riches)', 'Pièges et mines'] });
   P({ id: 'CHR_008', nom: 'Gaara', cle: 'gaara', sante: { vitalite: 2, protection: 2 }, tir: { apparence: 'sable' }, actif: 'ACT_010',
-    stats: { degats: 3.8, cadence: 2, portee: 6, vitesseTir: 7.5, vitesse: 3.7 },
+    stats: { degats: 3.8, cadence: 2.2, portee: 6, vitesseTir: 7.5, vitesse: 3.7 },
     regle: 'Bouclier de sable : absorbe le premier coup reçu dans chaque salle de combat non nettoyée ; vitesse de base réduite.', regleCode: 'bouclier_sable',
     faiblesse: 'Lent : difficile d’esquiver les charges.', difficulte: 2, deblocage: { objectif: 'OBJ_018' },
     identite: 'Cheveux rouges, cernes sombres, marque au front, gourde dans le dos.',
