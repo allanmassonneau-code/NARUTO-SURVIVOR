@@ -1,7 +1,7 @@
 // Tests automatisés du jeu dans Chromium (Playwright).
 // Usage : node labyrinthe/outils/tests_jeu.mjs [section…]
 // Sections : generation, parcours, objets, actifs, synergies, boss, ennemis, personnages, sauvegarde, manette, economie,
-// secours, visibilite, mecaniques, pactes, opportunites, eveils, defis, reserves
+// secours, visibilite, mecaniques, pactes, opportunites, eveils, defis, reserves, icones
 // Ne remplace pas une recette manuelle à la manette : il vérifie l'absence d'erreurs
 // et des invariants (portes reliées, boss atteignable, récompenses uniques…).
 import { createRequire } from 'node:module';
@@ -274,6 +274,43 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       if (ram.filter(t => t === 'ryo').length < 5 || ram.filter(t => t === 'coeur' || t === 'protection').length < 2) out.ko.push('récompense du champion absente : ' + ram.join(','));
       out.champion = parChampion.champion + ' ' + d.id + ' ' + (corps[0] && corps[0].pvMax) + ' PV ; butin ' + ram.length;
     }
+    return out;
+  });
+
+  // 5 ter) Icônes : une peinture propre à chaque objet, talisman, consommable, transformation et éveil
+  if (veut('icones')) await lancer('icones', () => {
+    const L = window.LDS, D = L.DON; const out = { ko: [], n: 0, plusProches: [] };
+    const ids = [...D.objets, ...D.talismans, ...D.consommables, ...D.transformations, ...D.eveils].map(d => d.id);
+    const px = [], vus = {};
+    for (const id of ids) {
+      if (!L.RECETTES_ICONES[id]) { out.ko.push(id + ' : aucune recette d’icône'); continue; }
+      let c; try { c = L.iconeItem(id); } catch (e) { out.ko.push(id + ' : ' + String(e).slice(0, 120)); continue; }
+      if (!c || c.width !== 20 || c.height !== 20) { out.ko.push(id + ' : case de 20×20 attendue'); continue; }
+      const d = c.getContext('2d').getImageData(0, 0, 20, 20).data; let opaques = 0, h = 0;
+      for (let k = 0; k < d.length; k++) h = (h * 31 + d[k]) >>> 0; for (let k = 3; k < d.length; k += 4) if (d[k] > 40) opaques++;
+      if (opaques < 60) out.ko.push(id + ' : icône presque vide (' + opaques + ' px)');
+      if (vus[h]) out.ko.push(id + ' : identique au pixel près à ' + vus[h]); vus[h] = id;
+      if (L.iconeObjet(id) !== c) out.ko.push(id + ' : iconeObjet ne rend pas l’icône peinte');
+      px.push([id, d]); out.n++;
+    }
+    // écart minimal entre deux icônes (proportion de pixels qui diffèrent, couleur comprise)
+    const ecarts = [];
+    for (let i = 0; i < px.length; i++) for (let j = i + 1; j < px.length; j++) {
+      const A = px[i][1], B = px[j][1]; let e = 0;
+      for (let k = 0; k < A.length; k += 4) { const a = A[k + 3] > 40, b = B[k + 3] > 40; if (a !== b) e++; else if (a) e += (Math.abs(A[k] - B[k]) + Math.abs(A[k + 1] - B[k + 1]) + Math.abs(A[k + 2] - B[k + 2])) / 765; }
+      ecarts.push([e / 400, px[i][0], px[j][0]]);
+    }
+    ecarts.sort((a, b) => a[0] - b[0]); out.plusProches = ecarts.slice(0, 3).map(([e, a, b]) => a + '~' + b + ' ' + e.toFixed(3));
+    for (const [e, a, b] of ecarts) { if (e >= 0.03) break; out.ko.push(a + ' et ' + b + ' se ressemblent trop (' + e.toFixed(3) + ')'); }
+    // chaque synergie : une icône propre (ses composants coupés en diagonale)
+    const vusSyn = {};
+    for (const sy of D.synergies) {
+      const c = L.iconeSynergie(sy.id), d = c.getContext('2d').getImageData(0, 0, 20, 20).data; let h = 0; for (let k = 0; k < d.length; k++) h = (h * 31 + d[k]) >>> 0;
+      if (vusSyn[h]) out.ko.push(sy.id + ' : même icône que ' + vusSyn[h]); vusSyn[h] = sy.id;
+    }
+    out.synergies = D.synergies.length;
+    // les familiers qui empruntent la forme d'un objet gardent la forme simple (sans décor ni badge)
+    for (const f of D.familiers) if (f.sprite && f.sprite.icone && L.iconeObjet(f.sprite.icone) === L.spriteEnnemi({ def: f, frame: 0 }).frames[0]) out.ko.push(f.id + ' : le familier reprend l’icône décorée');
     return out;
   });
 

@@ -427,7 +427,7 @@ function dessinerRamassable(g, r, x, y) {
   let s;
   if (r.type === 'pilule') s = spriteRamassable('pilule', r.apparence);
   else if (r.type === 'rouleau') s = spriteRamassable(INDEX[r.id] && INDEX[r.id].famille === 'sceau' ? 'sceau_poche' : 'rouleau', INDEX[r.id] && INDEX[r.id].couleur);
-  else if (r.type === 'talisman') s = spriteRamassable('talisman', INDEX[r.id] && INDEX[r.id].couleur);
+  else if (r.type === 'talisman') s = INDEX[r.id] ? iconeObjet(r.id) : spriteRamassable('talisman'); // le talisman lui-même
   else s = spriteRamassable(r.type);
   const flotte = ['coeur', 'protection', 'instable', 'condensateur'].includes(RAMASSABLES[r.type].cat) ? Math.round(Math.sin(G.temps * 3 + r.x) * 1) : 0;
   g.drawImage(s, x - Math.round(s.width / 2), y - s.height + 2 + flotte);

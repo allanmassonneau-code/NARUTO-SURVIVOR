@@ -280,13 +280,13 @@ const SceneRegistre = {
       ['Fin 1', 'Fin 2', 'Lumière', 'Ombre', 'Conseil', 'Brèche'].forEach((t, i) => Police.ecrire(g, t, 297 + i * 46, 29, '#a898b8', { a: 'c' }));
     } else if (this.onglet === 1) {
       const L = DON.objets.concat(DON.talismans); const cols = 14; const deb = Math.floor(Math.min(this.i, L.length - 1) / cols) * cols; const vis = L.slice(Math.max(0, deb - cols * 3), Math.max(0, deb - cols * 3) + cols * 12);
-      vis.forEach((o, k) => { const x = 40 + (k % cols) * 40, y = 34 + Math.floor(k / cols) * 24; const conn = P.decouverts.includes(o.id); const vu = P.vus.includes(o.id); if (conn) g.drawImage(o.type === 'talisman' ? spriteRamassable('talisman', o.couleur) : iconeObjet(o.id), x, y); else { g.fillStyle = vu ? '#3a3048' : '#1a1622'; g.fillRect(x + 2, y + 2, 16, 16); Police.ecrire(g, '?', x + 10, y + 6, '#5a5268', { a: 'c' }); } });
+      vis.forEach((o, k) => { const x = 40 + (k % cols) * 40, y = 34 + Math.floor(k / cols) * 24; const conn = P.decouverts.includes(o.id); const vu = P.vus.includes(o.id); if (conn) g.drawImage(iconeObjet(o.id), x, y); else { g.fillStyle = vu ? '#3a3048' : '#1a1622'; g.fillRect(x + 2, y + 2, 16, 16); Police.ecrire(g, '?', x + 10, y + 6, '#5a5268', { a: 'c' }); } });
       Police.ecrire(g, 'Découverts : ' + P.decouverts.filter(id => INDEX[id] && (INDEX[id].type === 'passif' || INDEX[id].type === 'actif' || INDEX[id].type === 'talisman')).length + ' / ' + L.length, 320, 326, '#a8a0b8', { a: 'c' });
     } else if (this.onglet === 4) { // synergies : réunies au moins une fois ; indices pour les autres
       const L = DON.synergies; this.i = Math.min(this.i, L.length - 1); const deb = Math.max(0, Math.min(this.i - 7, L.length - 16)); const connue = s => P.decouverts.includes(s.id);
       L.slice(deb, deb + 16).forEach((sy, k) => { const j = deb + k, ok = connue(sy), y = 36 + k * 18; if (j === this.i) { g.fillStyle = 'rgba(240,200,112,0.18)'; g.fillRect(24, y - 3, 250, 16); } Police.ecrire(g, (ok ? '✓ ' : '· ') + (ok ? sy.nom : sy.type === 'fusion' ? 'Fusion inconnue' : 'Synergie inconnue'), 30, y, ok ? (sy.type === 'fusion' ? '#8af0e0' : '#a0e0a0') : '#8a8098'); });
       const sy = L[this.i], ok = connue(sy); g.fillStyle = 'rgba(20,14,28,0.95)'; g.fillRect(290, 32, 330, 200);
-      g.drawImage(iconeSynergie(), 300, 36); Police.ecrire(g, ok ? sy.nom : '???', 324, 42, '#fff0d0');
+      g.drawImage(ok ? iconeSynergie(sy.id) : anneauxSynergie(), 300, 36); Police.ecrire(g, ok ? sy.nom : '???', 324, 42, '#fff0d0');
       let y = 62; const hint = [];
       if (sy.elements) hint.push('Natures : ' + sy.elements.map(n => NOMS_NATURES[n] || n).join(' + '));
       if (sy.composants.length) hint.push('Composants : ' + sy.composants.map(c => P.decouverts.includes(c) || ok ? INDEX[c].nom : '?').join(' + '));

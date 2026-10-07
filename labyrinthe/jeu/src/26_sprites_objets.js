@@ -68,8 +68,12 @@ const FORMES_ICONES = {
 };
 function hexKey(col) { return col; }
 const _icones = {};
-function iconeObjet(id) {
-  if (_icones[id]) return _icones[id];
+// Icône d'un objet : la peinture propre à l'objet (26_icones), sinon la forme générique recolorée
+function iconeObjet(id) { return _icones[id] || (_icones[id] = iconeItem(id) || iconeForme(id)); }
+// Forme générique (ancien système) : sert encore de corps aux familiers qui empruntent l'icône d'un objet
+const _formes = {};
+function iconeForme(id) {
+  if (_formes[id]) return _formes[id];
   const d = INDEX[id] || (id === '?voile' ? { icone: { forme: 'sac_voile', a: '#5a3a7a', w: '#f0e8ff', c: '#c83a2a' } } : {}); const I = d.icone || { forme: 'etoile', a: '#c8c8d0' };
   const map = FORMES_ICONES[I.forme] || FORMES_ICONES.etoile;
   const a = I.a || '#c8c8d0', b = I.b || nuancer(a, 0.7), c = I.c || '#8a6a4a';
@@ -77,7 +81,7 @@ function iconeObjet(id) {
   const L = map.map(r => r.padEnd(Math.max(...map.map(x => x.length)), '.'));
   const img = contourner(peindre(L, col));
   const cadre = toile(20, 20); const g = ctxDe(cadre); g.drawImage(img, Math.floor((20 - img.width) / 2), Math.floor((20 - img.height) / 2));
-  return (_icones[id] = cadre);
+  return (_formes[id] = cadre);
 }
 
 // ── Ramassables ──

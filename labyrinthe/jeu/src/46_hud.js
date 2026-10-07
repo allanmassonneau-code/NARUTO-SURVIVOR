@@ -36,9 +36,27 @@ function annoncer(b) {
 function texteEcran(o) { G.textes = G.textes.filter(x => !(x.ecran && x.t === o.t)); o.ecran = true; G.textes.push(o); }
 function bannieresRetenues() { const E = G.banniereEtage; return !!(E && E.t < 3.2 || G.introBoss); }
 function banniereVisible() { const B = G.banniere; return !!(B && B.t < dureeBanniere(B) || bannieresRetenues()); }
-// Icône des synergies : deux anneaux enlacés (turquoise et or)
+// Icône d'une synergie : ses deux premiers composants (ou ses deux natures), coupés en diagonale par une couture
+// d'or — chaque synergie a la sienne ; un trio ajoute un point de couleur du troisième. Repli : deux anneaux enlacés.
+const ICONE_NATURE = { katon: 'PSV_043', futon: 'PSV_046', suiton: 'PSV_044', raiton: 'PSV_045', doton: 'PSV_047', hyoton: 'PSV_050' };
+const _iconesSyn = {};
+function iconeSynergie(id) {
+  const s = id && INDEX[id]; if (!s) return anneauxSynergie(); if (_iconesSyn[id]) return _iconesSyn[id];
+  const src = (s.composants && s.composants.length ? s.composants : (s.elements || []).map(n => ICONE_NATURE[n])).filter(x => x && INDEX[x]);
+  if (src.length < 2) return (_iconesSyn[id] = anneauxSynergie());
+  const A = ctxDe(iconeObjet(src[0])).getImageData(0, 0, 20, 20).data, B = ctxDe(iconeObjet(src[1])).getImageData(0, 0, 20, 20).data;
+  const c = toile(20, 20), g = ctxDe(c), img = g.createImageData(20, 20), d = img.data, or = s.type === 'fusion' ? [90, 224, 208] : [240, 200, 80];
+  for (let y = 0; y < 20; y++) for (let x = 0; x < 20; x++) {
+    const i = (y * 20 + x) * 4, k = x + y;
+    if (k === 19 || k === 20) { if (A[i + 3] > 40 || B[i + 3] > 40) { d[i] = or[0]; d[i + 1] = or[1]; d[i + 2] = or[2]; d[i + 3] = 255; } continue; }
+    const S = k < 19 ? A : B; d[i] = S[i]; d[i + 1] = S[i + 1]; d[i + 2] = S[i + 2]; d[i + 3] = S[i + 3];
+  }
+  g.putImageData(img, 0, 0);
+  if (src[2]) { const t = INDEX[src[2]]; g.fillStyle = CONTOUR; g.fillRect(15, 0, 5, 5); g.fillStyle = (t.icone && t.icone.a) || '#f0c040'; g.fillRect(16, 1, 3, 3); }
+  return (_iconesSyn[id] = c);
+}
 let _iconeSyn = null;
-function iconeSynergie() {
+function anneauxSynergie() {
   if (_iconeSyn) return _iconeSyn; const c = toile(20, 20), g = ctxDe(c);
   g.drawImage(anneau(6, 2, '#1c1420'), 1, 3); g.drawImage(anneau(6, 2, '#1c1420'), 7, 3); g.drawImage(anneau(5, 2, '#5ae0d0'), 3, 5); g.drawImage(anneau(5, 2, '#e8c050'), 8, 5);
   g.fillStyle = '#5ae0d0'; g.fillRect(9, 7, 2, 2); return (_iconeSyn = c);
@@ -111,9 +129,9 @@ function dessinerHUD(g) {
   for (const [t, c] of lignes) { Police.ecrire(g, t, 6, yx, c); yx += 11; }
   if (stats) { g.fillStyle = '#3a3048'; g.fillRect(6, yx - 2, 52, 1); dessinerStats(g, J, 6, yx + 2); }
   // talisman / poche
-  if (J.talisman) { plaqueHUD(g, 2, 330, J.talisman2 ? 30 : 18, 26, '#5a4a3a'); g.drawImage(spriteRamassable('talisman', INDEX[J.talisman].couleur), 6, 336); if (J.talisman2) g.drawImage(spriteRamassable('talisman', INDEX[J.talisman2].couleur), 18, 336); }
+  if (J.talisman) { plaqueHUD(g, 2, 328, J.talisman2 ? 48 : 26, 28, '#5a4a3a'); g.drawImage(iconeObjet(J.talisman), 5, 332); if (J.talisman2) g.drawImage(iconeObjet(J.talisman2), 27, 332); }
   if (J.poches.length) {
-    const c = J.poches[0]; const s = c.type === 'pilule' ? spriteRamassable('pilule', G.partie.pilules.indexOf(c.id)) : spriteRamassable(INDEX[c.id].famille === 'sceau' ? 'sceau_poche' : 'rouleau', INDEX[c.id].couleur);
+    const c = J.poches[0]; const s = c.type === 'pilule' ? spriteRamassable('pilule', G.partie.pilules.indexOf(c.id)) : iconeObjet(c.id);
     const nom = c.type === 'pilule' ? nomPilule(c) : INDEX[c.id].nom; const w = Police.largeur(nom) + 34;
     plaqueHUD(g, 638 - w, 332, w, 24, '#5a4a3a');
     g.drawImage(s, 622 - s.width / 2, 338); Police.ecrire(g, nom, 612, 340, '#d8d0e0', { a: 'd' });
@@ -245,7 +263,7 @@ function ficheObjet(c) {
     const id = c.p ? c.p.id : c.r.id; d = INDEX[id]; if (!d) return null;
     const pilule = !!(c.r && c.r.type === 'pilule'), connue = !pilule || G.partie.pilulesIdentifiees.includes(id) || aTalisman(J, 'TAL_014');
     F.nom = pilule ? nomPilule({ id }) : d.nom;
-    F.icone = c.p ? iconeObjet(id) : pilule ? spriteRamassable('pilule', c.r.apparence) : c.r.type === 'talisman' ? spriteRamassable('talisman', d.couleur) : spriteRamassable(d.famille === 'sceau' ? 'sceau_poche' : 'rouleau', d.couleur);
+    F.icone = pilule ? spriteRamassable('pilule', c.r.apparence) : iconeObjet(id);
     F.type = { passif: 'Objet passif', actif: 'Technique (actif)', talisman: 'Talisman', consommable: d.famille === 'sceau' ? 'Sceau de poche' : 'Rouleau de poche', pilule: 'Pilule de poche' }[d.type] || '';
     F.lisere = { passif: '#c8a870', actif: '#5aa0e0', talisman: '#c070a0', consommable: '#6ac080', pilule: '#6ac080' }[d.type] || F.lisere;
     F.etoiles = d.type === 'passif' || d.type === 'actif' ? (d.qualite || 0) : 0;

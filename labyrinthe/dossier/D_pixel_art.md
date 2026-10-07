@@ -47,10 +47,21 @@ Aucun élément de HUD ne recouvre une porte ; la barre de boss (bas, centre) ne
 | Ennemis humanoïdes | même gabarit (32 × 34 avec armes) | recolorés par tenue, **plus coiffure et masque propres** |
 | Créatures | 6 à 30 px | silhouette qui annonce la fonction (C3 ennemis) |
 | Boss | agrandis par **Scale2x** (×2) ou deux passes (×4 pour les géants) | pas de pixels « gonflés » : Scale2x adoucit les diagonales sans flou ; sprites dédiés plus grands pour le Serpent géant et les Dix Queues |
-| Objets (icônes) | 16 × 16 | forme + 3 couleurs (a, b, c) ; contour clair sur fond sombre |
+| Objets (icônes) | 16 × 16 + contour, dans une case de 20 × 20 | **une peinture par objet** (352 : passifs, actifs, talismans, consommables, transformations, éveils) qui montre ce que fait l'objet ; voir « Icônes » ci-dessous |
 | Projectiles | 5 à 12 px | contour clair (joueur) ou sombre pulsant (ennemi) |
 
 **Contour** : 1 px, couleur commune `#1c1420`, calculé automatiquement autour des pixels opaques (pas de diagonales). **Ombres** : ellipse sombre au sol sous chaque entité. **Lumière** : venant du haut-gauche (reflets `l` clairs en haut à gauche des volumes, ombres `d` en bas à droite). **Densité** : 3 à 4 teintes par matériau ; les sols ont 4 variantes de tuile peu contrastées.
+
+### Icônes (`26_icones.js`, `26_icones_recettes.js`)
+
+Chaque objet a sa propre **recette** : un petit programme de dessin sur une grille de 16 × 16 qui montre ce que fait l'objet (le fil de chakra rebondit entre deux murs, le senbon perforant traverse sa cible, le Kubikiribōchō a son trou et son encoche, la carte de membre porte une pièce barrée…). Aucune icône n'est partagée : le test `icones` vérifie qu'il n'y a ni doublon au pixel près ni paire trop proche (moins de 3 % d'écart), ni icône presque vide.
+
+- **Peintre** : primitives à plat (disques, ellipses, anneaux, polygones, traits épais, arcs, étoiles), tournables (un kunai se dessine dans n'importe quelle direction), motifs pixel par pixel pour les formes délicates (poing, tête de ninja, sandale), objets de base réutilisés (kunai, shuriken, fūma, rouleau, étiquette, flamme, goutte, œil — normal, Sharingan, Mangekyō, Byakugan, Rinnegan, œil de sage, œil de renard —, crâne, os, orbe, crapaud, serpent, insecte, chien, oiseau, marionnette, clé, bourse, cloche, bouclier, masque, bandeau, gourde…).
+- **Ombrage automatique** : lumière en haut à gauche ; un pixel au bord éclairé (haut ou gauche à découvert) s'éclaircit, un pixel au bord ombré s'assombrit : chaque forme prend du volume sans retouche. Puis contour `#1c1420`.
+- **Badges** : un glyphe de 5 × 5 cerné de sombre dans le coin (chiffre, flèche, goutte, cible, horloge…) distingue les variantes d'une famille : Porte de l'Ouverture « 1 », Porte de la Vie « 3 », Sixième porte « 6 », Huit Portes « 8 ».
+- **Pictogrammes incrustés** : sur les rouleaux, les sceaux de poche et les marques de sang, le pictogramme est dessiné à part puis posé cerné d'encre, lisible sur le papier.
+- **Familles** : rouleaux de poche (papier et bâtons à la couleur du rouleau, pictogramme de l'effet), sceaux de poche (pierre cerclée de la couleur du sceau), marques de sang (tache et symbole de la statistique), bénédictions (halo d'or au-dessus de la créature), éveils (ce qui s'éveille : Sharingan, sceau Byakugō, pièce de shōgi, tête de Shukaku…), talismans (l'objet lui-même : épingle, perles du moine, masque d'oni, gourde de saké, jeton de tripot…).
+- **Où** : HUD (actif, talismans, poche), piédestaux et étals, fiche de l'objet proche, objet brandi, inventaire, registre, écran de mort, carte de sélection ; les talismans au sol montrent leur icône. Les familiers qui empruntent la silhouette d'un objet gardent la forme simple d'origine (`iconeForme`), sans décor ni badge.
 
 ## D4. Palettes des thèmes et budget de visibilité
 
