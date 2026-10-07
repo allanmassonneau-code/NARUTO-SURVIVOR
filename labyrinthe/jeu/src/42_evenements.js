@@ -115,7 +115,7 @@ function annoncerSynergies(J) {
     J.synergiesVues.push(s.id);
     if (Progression.profil && !Progression.profil.decouverts.includes(s.id)) { Progression.decouvrir(s.id); Progression.compteur('synergies', 1); }
     if (s.type === 'fusion') Progression.verifier({ type: 'etat', nom: 'fusion' });
-    if (G.partie && G.joueur === J) { annoncer({ t: 0, nom: 'Synergie : ' + s.nom, desc: s.desc, synergie: true, mineur: !(s.effets && s.effets.length) }); Son.jouer('sceau'); }
+    if (G.partie && G.joueur === J) { annoncer({ t: 0, nom: 'Synergie : ' + s.nom, desc: s.desc, synergie: true, mineur: !(s.effets && s.effets.length), id: s.id }); Son.jouer('sceau'); }
   }
 }
 // Attraction magnétique (Jiton) : tire les ennemis proches vers un point
@@ -143,7 +143,7 @@ function rayonJinton(J, a, deg) {
 }
 const COUL_STATUTS = { confus: '#c8a0ff', immobilise: '#ffe080', ralenti: '#80c8ff', poison: '#8ae05a', brulure: '#ff8a3a', gel: '#bfe8ff', charme: '#ff8ac8', peur: '#b0b0b8' };
 function annoncerTransformation(t) {
-  annoncer({ t: 0, nom: t.nom, desc: t.desc, transformation: true });
+  annoncer({ t: 0, nom: t.nom, desc: t.desc, transformation: true, id: t.id });
   G.effets.push({ type: 'transformation', x: G.joueur.x, y: G.joueur.y - 12, age: 0, duree: 1.0 });
   Son.jouer('transformation'); secousse(5, null);
 }

@@ -291,7 +291,7 @@ Tout achat dans une salle de pacte (y compris le troc) compte comme un pacte con
 | visite d'un pacte **sans achat** puis départ de l'étage | +1 refus (+0,25 au poids du sanctuaire), secret SEC_012 |
 | achat d'un pacte | poids du sanctuaire à 0 pour la partie ; ferme la Lumière (sauf clé des ermites) |
 
-Les chances à jour s'affichent dans l'écran de pause : total, part du pacte et du sanctuaire, détail des apports.
+Les chances à jour s'affichent **en permanence dans les statistiques du HUD** (comme les chances de pacte et d'ange du *Found HUD* d'Isaac) : œil de serpent rouge pour le pacte, halo d'or pour le sanctuaire, 0 % aux étages sans opportunité. L'écran de pause donne en plus le total et le détail des apports.
 
 ### Scénarios chiffrés
 

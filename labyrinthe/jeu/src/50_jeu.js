@@ -78,8 +78,9 @@ const SceneJeu = {
   entrer() { },
   maj(dt) { majJeu(dt); },
   rendre(g) {
-    rendreJeu(g); dessinerHUD(g);
-    if (G.notifications.length && !banniereVisible() && !Entrees.enfonce('carte')) { const n = G.notifications[0]; plaqueHUD(g, 420, 76, 210, 34, '#c8a040'); Police.ecrire(g, n.titre, 428, 81, '#f0c040'); Police.ecrire(g, n.nom, 428, 93, '#fff0d0'); }
+    const bilan = Scenes.pile.includes(SceneMort) || Scenes.pile.includes(ScenePause); // la pause et la mort ont leur propre bilan
+    rendreJeu(g); if (!bilan) dessinerHUD(g);
+    if (!bilan && G.notifications.length && !banniereVisible() && !Entrees.enfonce('carte')) dessinerNotification(g, G.notifications[0]);
   },
 };
 Entrees.contexteJeu = () => Scenes.courante() === SceneJeu; // liaisons « en jeu » (tir aux boutons de face)
@@ -94,35 +95,105 @@ const ScenePause = {
   sortir() { if (G.salle && G.salle.combat) Musique.etatCombat(true); },
   maj() { this.menu.maj(); if (Entrees.menuRetour() || Entrees.vientEnfonce('pause')) { Son.jouer('annuler'); Scenes.depiler(); } },
   rendre(g, actif) {
-    g.fillStyle = 'rgba(6,4,10,0.72)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
-    cadreMenu(g, 40, 40, 220, 150, 'Pause'); this.menu.rendre(g, 56, 74, 188, actif);
-    // carte et statistiques consultables en pause
-    cadreMenu(g, 280, 40, 320, 280); cadreMenu(g, 40, 198, 220, 122); dessinerMinicarte(g, 440, 186, true);
-    const J = G.joueur, P = G.partie; Police.ecrire(g, G.etage.cfg.nom, 440, 46, '#e8dcc0', { a: 'c' });
-    dessinerStats(g, J, 50, 206); Police.ecrire(g, 'Temps ' + formatTemps(P.temps), 130, 206, '#a8a0b8'); Police.ecrire(g, 'Code ' + codeAffiche(P.code), 130, 218, '#a8a0b8'); Police.ecrire(g, (P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' — ' + INDEX[P.defi].nom : ''), 130, 230, '#a8a0b8');
-    Police.ecrire(g, 'Objets : ' + J.passifs.length, 130, 242, '#a8a0b8');
-    // opportunité après le boss (E §6) : recalculée à chaque affichage, donc à jour après chaque événement
+    g.fillStyle = 'rgba(6,4,10,0.8)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    const J = G.joueur, P = G.partie;
+    // menu
+    cadreMenu(g, 14, 22, 212, 120, 'Pause'); this.menu.rendre(g, 30, 52, 180, actif);
+    // le shinobi : portrait, partie, statistiques nommées et chances d'opportunité
+    cadreMenu(g, 14, 148, 212, 182);
+    g.fillStyle = 'rgba(255,240,220,0.05)'; g.fillRect(22, 156, 60, 72); g.drawImage(portraitPerso(J.cle), 0, 0, 36, 44, 16, 140, 72, 88);
+    Police.ecrire(g, J.def.nom.split(' — ')[0], 90, 158, '#f8e0a8', { contour: '#1c1420' });
+    const infos = [['Étage ' + G.etage.numero, '#e8dcc0'], [formatTemps(P.temps), '#c8c0d8'], [codeAffiche(P.code), '#a8a0b8'], [(P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' · contrat' : ''), P.difficile ? '#f0c060' : '#a8a0b8'], [J.passifs.length + ' objet' + (J.passifs.length > 1 ? 's' : ''), '#a8a0b8']];
+    infos.forEach(([t, c], k) => Police.ecrire(g, t, 90, 172 + k * 11, c));
+    g.fillStyle = '#3a2c46'; g.fillRect(24, 232, 192, 1);
+    dessinerStats(g, J, 26, 238, { noms: true, largeur: 186, pas: 10 });
+    // carte de l'étage et légende
+    cadreMenu(g, 234, 22, 392, 222); Police.ecrire(g, G.etage.cfg.nom, 430, 30, '#e8dcc0', { a: 'c', contour: '#1c1420' }); dessinerMinicarte(g, 430, 132, true);
+    const leg = [['Boss', 'boss'], ['Héritage', 'heritage'], ['Échoppe', 'boutique'], ['Secret', 'cache'], ['Épreuve', 'defi'], ['Maudite', 'malediction']]; let lx = 250;
+    for (const [t, k] of leg) { pictoSalle(g, k, lx, 230, ICONE_SALLE[k], true); Police.ecrire(g, t, lx + 7, 227, '#a898b8'); lx += Police.largeur(t) + 20; }
+    // opportunité après le boss (E §6) : détail des bonus
     const O = chanceOpportunite(), pc = v => Math.round(v * 100) + ' %';
-    if (O.chance <= 0) Police.ecrire(g, 'Pas d’opportunité à cet étage', 50, 274, '#8a8098');
+    cadreMenu(g, 234, 250, 392, 80);
+    if (O.chance <= 0) Police.ecrire(g, 'Pas d’opportunité après le boss de cet étage', 246, 258, '#8a8098');
     else {
-      Police.ecrire(g, 'Après le boss : ' + pc(O.chance), 50, 274, '#e8dcc0');
-      Police.ecrire(g, 'pacte ' + pc(O.pacte) + ' · sanctuaire ' + pc(O.sanctuaire), 50, 286, '#c8a0b0');
-      Police.paragraphe(g, O.detail.map(([n, v]) => n + ' ' + (v >= 1 ? '' : '+' + pc(v))).join(' · ') + (P.pactesAchetes ? ' · pacte conclu : plus de sanctuaire' : P.pactesRefuses ? ' · pactes refusés : ' + P.pactesRefuses : ''), 50, 298, 222, '#8a8098');
+      g.drawImage(pictoHUD('pacte'), 245, 257); Police.ecrire(g, 'Pacte ' + pc(O.pacte), 256, 258, '#ff9a9a'); g.drawImage(pictoHUD('sanctuaire'), 325, 257); Police.ecrire(g, 'Sanctuaire ' + pc(O.sanctuaire), 336, 258, '#ffe08a');
+      Police.ecrire(g, 'Après le boss : ' + pc(O.chance), 614, 258, '#e8dcc0', { a: 'd' });
+      Police.paragraphe(g, O.detail.map(([n, v]) => n + (v >= 1 ? '' : ' +' + pc(v))).join(' · ') + (P.pactesAchetes ? ' · pacte conclu : plus de sanctuaire' : P.pactesRefuses ? ' · pactes refusés : ' + P.pactesRefuses : ''), 246, 272, 370, '#a098b0');
     }
     if (actif) aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Reprendre']]); // sous un autre menu : ses propres consignes
   },
 };
+// Inventaire : sections (techniques, talismans, poche, objets, transformations, éveils, synergies), cases colorées
+// par type, fiche détaillée à droite (grande icône, type et qualité, description, valeurs, ensemble, mutation)
+const COULEURS_TYPES = { actif: '#5aa0e0', talisman: '#c070a0', consommable: '#6ac080', pilule: '#6ac080', passif: '#c8a870', transformation: '#f0b040', eveil: '#c49aff', synergie: '#5ae0d0' };
 const SceneInventaire = {
-  entrer() { this.i = 0; },
-  liste() { const J = G.joueur; const L = []; if (J.actif) L.push(J.actif.id); if (J.actif2) L.push(J.actif2.id); if (J.talisman) L.push(J.talisman); for (const id of J.passifs) L.push(id); for (const t of J.transformations) L.push(t); for (const s of synergiesReunies(J)) L.push(s.id); return L; },
-  maj() { const L = this.liste(); const c = 12; if (Entrees.nav.dx) this.i = borne(this.i + Entrees.nav.dx, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dy) this.i = borne(this.i + Entrees.nav.dy * c, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dx || Entrees.nav.dy) Son.jouer('menu'); if (Entrees.menuRetour()) Scenes.depiler(); },
+  entrer() { this.i = 0; this.defil = 0; },
+  sections() {
+    const J = G.joueur, S = [];
+    const tech = [J.actif && J.actif.id, J.actif2 && J.actif2.id].filter(Boolean); if (tech.length) S.push(['Techniques', tech]);
+    const tal = [J.talisman, J.talisman2].filter(Boolean); if (tal.length) S.push(['Talismans', tal]);
+    if (J.poches.length) S.push(['Poche', J.poches.map(c => c.type === 'pilule' ? { pilule: c } : c.id)]);
+    if (J.passifs.length) S.push(['Objets (' + J.passifs.length + ')', J.passifs.slice()]);
+    const trf = J.transformations.filter(t => INDEX[t] && INDEX[t].type !== 'eveil'), ev = J.transformations.filter(t => INDEX[t] && INDEX[t].type === 'eveil');
+    if (trf.length) S.push(['Transformations', trf]); if (ev.length) S.push(['Éveils', ev]);
+    const syn = synergiesReunies(J).map(s => s.id); if (syn.length) S.push(['Synergies (' + syn.length + ')', syn]);
+    return S;
+  },
+  disposition() {
+    const C = []; let y = 0; const cols = 13, pas = 27;
+    for (const [titre, ids] of this.sections()) { C.push({ titre, y }); y += 13; ids.forEach((id, k) => C.push({ id, x: (k % cols) * pas, y: y + Math.floor(k / cols) * pas })); y += Math.ceil(ids.length / cols) * pas + 5; }
+    return { C, h: y };
+  },
+  maj() {
+    const { C } = this.disposition(), K = C.filter(c => c.id); const n = K.length;
+    if (n) {
+      this.i = borne(this.i, 0, n - 1);
+      if (Entrees.nav.dx) this.i = borne(this.i + Entrees.nav.dx, 0, n - 1);
+      if (Entrees.nav.dy) { const c = K[this.i], cand = K.filter(d => Entrees.nav.dy > 0 ? d.y > c.y : d.y < c.y); if (cand.length) { const yy = Entrees.nav.dy > 0 ? Math.min(...cand.map(d => d.y)) : Math.max(...cand.map(d => d.y)); this.i = K.indexOf(cand.filter(d => d.y === yy).reduce((a, b) => Math.abs(b.x - c.x) < Math.abs(a.x - c.x) ? b : a)); } }
+      if (Entrees.nav.dx || Entrees.nav.dy) Son.jouer('menu');
+    }
+    if (Entrees.menuRetour()) Scenes.depiler();
+  },
   rendre(g) {
-    fondMenu(g); cadreMenu(g, 26, 32, 376, 304); cadreMenu(g, 408, 32, 226, 304);
-    Police.ecrire(g, 'Objets, transformations et mutations', 320, 10, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
-    const L = this.liste(); const c = 12;
-    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(id.startsWith('SYN_') ? iconeSynergie(id) : iconeObjet(id), x, y); });
-    const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + nomMutation(d.visuel), 420, y + 30, 200, '#8a9aa8'); }
-    if (!L.length) Police.ecrire(g, 'Aucun objet pour l’instant.', 320, 160, '#8a8098', { a: 'c' });
+    fondMenu(g); cadreMenu(g, 14, 30, 380, 304); cadreMenu(g, 400, 30, 226, 304);
+    titreOrne(g, 'Objets et mutations', 320, 8, '#f0d8a0');
+    const { C, h } = this.disposition(), K = C.filter(c => c.id), sel = K[this.i];
+    if (!K.length) { Police.ecrire(g, 'Aucun objet pour l’instant.', 204, 170, '#8a8098', { a: 'c' }); aideBoutons(g, [['retour', 'Retour']]); return; }
+    // défilement : la case choisie reste visible
+    const haut = 40, bas = 324; if (sel.y - this.defil < 14) this.defil = Math.max(0, sel.y - 14); if (sel.y - this.defil + 26 > bas - haut) this.defil = sel.y + 26 - (bas - haut);
+    g.save(); g.beginPath(); g.rect(16, haut - 2, 376, bas - haut + 4); g.clip();
+    for (const c of C) {
+      const y = haut + c.y - this.defil; if (y < haut - 30 || y > bas) continue;
+      if (c.titre) { Police.ecrire(g, c.titre, 28, y, '#c8b890'); g.fillStyle = '#3a2c46'; g.fillRect(28 + Police.largeur(c.titre) + 6, y + 4, 352 - Police.largeur(c.titre) - 6, 1); continue; }
+      const x = 28 + c.x, choisi = c === sel, pil = c.id.pilule, d = pil ? null : INDEX[c.id], coul = COULEURS_TYPES[pil ? 'pilule' : c.id.startsWith('SYN_') ? 'synergie' : d.type] || '#8a8098';
+      g.fillStyle = choisi ? coul : '#0c0810'; g.fillRect(x - 2, y - 2, 24, 24); g.fillStyle = choisi ? '#2e2238' : '#1c1424'; g.fillRect(x - 1, y - 1, 22, 22);
+      g.fillStyle = nuancer(coul, 0.55); g.fillRect(x - 1, y + 20, 22, 1);
+      const ic = pil ? spriteRamassable('pilule', G.partie.pilules.indexOf(pil.id)) : c.id.startsWith('SYN_') ? iconeSynergie(c.id) : iconeObjet(c.id);
+      g.drawImage(ic, x + Math.floor((20 - ic.width) / 2), y + Math.floor((20 - ic.height) / 2));
+      if (choisi && !G.reglages.sansFlash && Math.floor(G.temps * 3) % 2) { g.fillStyle = '#fff4d0'; g.fillRect(x - 2, y - 2, 2, 2); g.fillRect(x + 20, y + 20, 2, 2); }
+    }
+    g.restore();
+    if (this.defil > 0) losange(g, 204, haut - 4, '#c8a060'); if (h - this.defil > bas - haut + 4) losange(g, 204, bas + 6, '#c8a060');
+    // fiche
+    const pil = sel.id.pilule, id = pil ? pil.id : sel.id, d = INDEX[id] || {}, coul = COULEURS_TYPES[pil ? 'pilule' : String(id).startsWith('SYN_') ? 'synergie' : d.type] || '#8a8098';
+    const ic = pil ? spriteRamassable('pilule', G.partie.pilules.indexOf(pil.id)) : String(id).startsWith('SYN_') ? iconeSynergie(id) : iconeObjet(id);
+    g.fillStyle = '#0c0810'; g.fillRect(410, 40, 46, 46); g.fillStyle = '#241a2c'; g.fillRect(411, 41, 44, 44); g.fillStyle = coul; g.fillRect(411, 41, 44, 1); g.fillRect(411, 84, 44, 1);
+    g.drawImage(ic, 0, 0, ic.width, ic.height, 413 + Math.floor((40 - ic.width * 2) / 2), 43 + Math.floor((40 - ic.height * 2) / 2), ic.width * 2, ic.height * 2);
+    const nom = pil ? nomPilule(pil) : d.nom || id; const lignesNom = Police.couper(nom, 160);
+    lignesNom.slice(0, 3).forEach((t, k) => Police.ecrire(g, t, 462, 42 + k * 11, '#fff0d0'));
+    const type = pil ? 'Pilule de poche' : { passif: 'Objet passif', actif: 'Technique', talisman: 'Talisman', consommable: d.famille === 'sceau' ? 'Sceau de poche' : 'Rouleau de poche', transformation: 'Transformation', eveil: 'Éveil ' + (d.rang === 2 ? 'II' : 'I'), synergie: 'Synergie' }[String(id).startsWith('SYN_') ? 'synergie' : d.type] || '';
+    let ty = 42 + Math.min(3, lignesNom.length) * 11; Police.ecrire(g, type, 462, ty, coul); let ex = 462 + Police.largeur(type) + 5;
+    for (let k = 0; k < ((d.type === 'passif' || d.type === 'actif') ? (d.qualite || 0) : 0); k++) { Police.ecrire(g, '★', ex, ty, '#f0c040'); ex += 7; }
+    let y = 94; const connue = !pil || G.partie.pilulesIdentifiees.includes(pil.id) || aTalisman(G.joueur, 'TAL_014');
+    g.fillStyle = '#3a2c46'; g.fillRect(410, 90, 206, 1);
+    if (!connue) y += Police.paragraphe(g, 'Effet inconnu : avalez-la pour l’identifier.', 410, y, 206, '#e8e0f0') + 4;
+    else {
+      y += Police.paragraphe(g, d.desc || '', 410, y, 206, '#e8e0f0') + 5;
+      for (const l of detailsObjet(d)) { if (y > 300) break; g.fillStyle = coul; g.fillRect(411, y + 3, 2, 2); y += Police.paragraphe(g, l, 418, y, 198, '#b8b0c8') + 1; }
+      if (d.ensemble) { const T = DON.transformations.find(t => t.ensemble === d.ensemble); if (T && y < 300) { const nE = G.joueur.acquis.filter(x => INDEX[x] && INDEX[x].ensemble === d.ensemble).length; y += 4; losange(g, 413, y + 3, '#f0c040'); y += Police.paragraphe(g, T.nom + ' : ' + (G.joueur.transformations.includes(T.id) ? 'éveillé' : Math.min(nE, T.seuil || 3) + '/' + (T.seuil || 3)), 420, y, 196, '#e0c060'); } }
+      if (d.visuel && y < 310) Police.paragraphe(g, 'Mutation : ' + nomMutation(d.visuel), 410, y + 6, 206, '#8a9aa8');
+    }
+    if (d.statut) Police.ecrire(g, '[' + d.statut + ']', 410, 322, '#6a6078');
     aideBoutons(g, [['retour', 'Retour']]);
   },
 };
@@ -130,16 +201,21 @@ const SceneMort = {
   entrer() { this.menu = menuListe([{ label: 'Rejouer avec ce shinobi', action: () => { const P = G.partie; nouvellePartie({ perso: P.perso, difficile: P.difficile, defi: P.defi }); Scenes.aller(SceneJeu); } }, { label: 'Menu principal', action: () => Scenes.aller(SceneTitre) }]); this.t = 0; },
   maj(dt) { this.t += dt; if (this.t > 0.6) this.menu.maj(); },
   rendre(g) {
-    g.fillStyle = 'rgba(20,4,8,0.82)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    g.fillStyle = 'rgba(20,4,8,0.86)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
     const v = g.createRadialGradient(320, 150, 80, 320, 170, 420); v.addColorStop(0, 'rgba(60,0,10,0)'); v.addColorStop(1, 'rgba(60,0,10,0.7)'); g.fillStyle = v; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
-    bandeau(g, 60, 28, 520, 70, '#a02838', 'rgba(14,4,8,0.7)');
+    bandeau(g, 60, 18, 520, 62, '#a02838', 'rgba(14,4,8,0.7)');
     const P = G.partie, J = G.joueur; const c = G.causeMort || {};
-    Police.ecrire(g, 'Vous êtes tombé', 320, 40, '#e05a5a', { a: 'c', e: 3, contour: '#1c1420' });
+    Police.ecrire(g, 'Vous êtes tombé', 320, 28, '#e05a5a', { a: 'c', e: 3, contour: '#1c1420' });
     const cause = c.type === 'prix' ? 'Un prix payé de trop' : c.type === 'sacrifice' ? 'Un tribut de trop' : c.source && INDEX[c.source] ? INDEX[c.source].nom : c.type === 'explosion' ? 'Une explosion' : 'Le labyrinthe';
-    Police.ecrire(g, 'Cause : ' + cause + '   ·   Étage ' + P.etage + '   ·   ' + formatTemps(P.temps), 320, 80, '#e8d0d0', { a: 'c' });
-    J.passifs.slice(0, 36).forEach((id, k) => g.drawImage(iconeObjet(id), 140 + (k % 18) * 20, 100 + Math.floor(k / 18) * 22));
-    Police.ecrire(g, 'Code de mission : ' + codeAffiche(P.code) + '   Éliminations : ' + G.stats.eliminations + '   Objets : ' + J.passifs.length, 320, 152, '#a8a0b8', { a: 'c' });
-    cadreMenu(g, 220, 180, 200, 50); this.menu.rendre(g, 236, 192, 170);
+    Police.ecrire(g, 'Cause : ' + cause, 320, 62, '#f0d0d0', { a: 'c' });
+    // bilan : portrait, chiffres de la partie, objets emportés
+    cadreMenu(g, 110, 90, 420, 150);
+    g.fillStyle = 'rgba(255,220,220,0.05)'; g.fillRect(122, 100, 60, 76); g.drawImage(portraitPerso(J.cle), 0, 0, 36, 44, 116, 92, 72, 88);
+    Police.ecrire(g, J.def.nom.split(' — ')[0], 194, 102, '#f8e0a8', { contour: '#1c1420' });
+    [['Étage atteint', String(P.etage)], ['Temps', formatTemps(P.temps)], ['Éliminations', String(G.stats.eliminations)], ['Objets', String(J.passifs.length)], ['Code de mission', codeAffiche(P.code)]].forEach(([k, val], i) => { Police.ecrire(g, k, 194, 118 + i * 11, '#a898b8'); Police.ecrire(g, val, 516, 118 + i * 11, '#f0e8f8', { a: 'd' }); });
+    const L = J.passifs.slice(0, 34); L.forEach((id, k) => g.drawImage(iconeObjet(id), 122 + (k % 17) * 23, 182 + Math.floor(k / 17) * 24));
+    if (!L.length) Police.ecrire(g, 'Aucun objet emporté.', 320, 196, '#7a7088', { a: 'c' });
+    cadreMenu(g, 220, 252, 200, 50); this.menu.rendre(g, 236, 264, 170);
     aideBoutons(g, [['interagir', 'Choisir']]);
   },
 };

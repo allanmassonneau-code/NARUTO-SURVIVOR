@@ -224,7 +224,7 @@ function eveiller(J, v) {
   J.transformations.push(v.id); recalculer(J);
   for (const e of v.effets || []) appliquerEffetImmediat(J, e, v);
   recalculer(J);
-  annoncer({ t: 0, nom: 'Éveil — ' + v.nom, desc: v.desc, transformation: true });
+  annoncer({ t: 0, nom: 'Éveil — ' + v.nom, desc: v.desc, transformation: true, id: v.id });
   G.effets.push({ type: 'onde', x: J.x, y: J.y - 10, r: 120, age: 0, duree: 0.6, couleur: '#ffe8a0' }); Son.jouer('transformation'); secousse(3, null);
   evenement('eveil', { id: v.id }); Progression.decouvrir(v.id);
 }

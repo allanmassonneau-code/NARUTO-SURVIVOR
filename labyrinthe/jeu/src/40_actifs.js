@@ -197,7 +197,7 @@ function utiliserPoche() {
   const c = J.poches[0]; const d = INDEX[c.id]; if (!d) { J.poches.shift(); return; }
   let garder = false;
   if (c.type === 'pilule') { garder = !!prendrePilule(J, c); }
-  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true }); }
+  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true, id: d.id }); }
   if (aTalisman(J, 'TAL_031') && Math.random() < 0.15) garder = true;
   if (!garder) J.poches.shift();
   evenement('consommable_utilise', { id: c.id });

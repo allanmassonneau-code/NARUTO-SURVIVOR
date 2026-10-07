@@ -222,7 +222,7 @@ Chaque brief donne la composition, la navigation à la manette, les ressources n
 | 4 | Bandeau d'étage | chapitre, **nom du lieu**, variante, règle de la variante ; 3,2 s | aucune | police ×2 | ![](images/ecran_04_bandeau_etage.png) |
 | 5 | Intro de boss | bande horizontale, titre et nom, 1,6 s (1,0 s en mode confort) | A accélère | sprite du boss ×2, jingle | ![](images/ecran_05_intro_boss.png) |
 | 6 | Combat de boss | barre de vie ornée en bas (traîne claire des dégâts récents), télégraphes au sol, mécanique de phase visible (ici la bande de sable de Gaara) | combat | effets et télégraphes | ![](images/ecran_06_combat_boss.png) |
-| 7 | Pause | menu, carte de l'étage, statistiques, temps, code, **chances d'opportunité** à jour | haut/bas, A, B pour reprendre | minicarte | ![](images/ecran_07_pause.png) |
+| 7 | Pause | menu, portrait et partie (étage, temps, code, mode, objets), statistiques nommées, carte et légende, **chances d'opportunité** et leur détail | haut/bas, A, B pour reprendre | minicarte | ![](images/ecran_07_pause.png) |
 | 8 | Objets et mutations | grille d'icônes (actif, talismans, passifs, transformations), fiche détaillée à droite | croix / stick, B | icônes d'objets | ![](images/ecran_08_inventaire.png) |
 | 9 | Échoppe | tapis, étals avec prix, tanuki (offrandes), panneau d'achat au contact | A (interagir) pour acheter ou faire l'offrande | icônes, prix, statue | ![](images/ecran_09_boutique.png) |
 | 10 | Pacte | pénombre violette, sceau serpentin, bougies noires, prix en contenants, confirmation si mortel | contact + A (paiement affiché, seconde confirmation si mortel) | décor, statue du serpent | ![](images/ecran_10_pacte.png) |

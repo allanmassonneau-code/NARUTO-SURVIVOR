@@ -72,6 +72,8 @@ function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
   losange(g, x + w / 2, y, accent); losange(g, x + w / 2, y + h - 1, accent);
 }
 let _traceBoss = null;
+let _crane = null;
+function pictoCrane() { return _crane || (_crane = contourner(avecMarge(peindre(['.wwwww.', 'wwwwwww', 'wkkwkkw', 'wkkwkkw', 'wwwkwww', '.wwwww.', '.w.w.w.'], { w: '#efe6d2', k: '#3a1420' }), 1), '#140e18')); }
 // Compteurs qui « sautent » quand ils changent : { b: 0 → 1 → 0 en 0,3 s, s: +1 gain, −1 perte }
 let _hudPartie = null; const _hud = {};
 function bosseHUD(cle, v) {
@@ -80,78 +82,158 @@ function bosseHUD(cle, v) {
   if (v !== h.v) { h.s = v > h.v ? 1 : -1; h.v = v; h.t = G.temps; }
   const k = (G.temps - h.t) / 0.3; return k >= 0 && k < 1 ? { b: Math.sin(k * Math.PI), s: h.s } : null;
 }
+// Portrait du personnage (pause, inventaire, mort) : dessiné de face dans une petite toile, affiché ×2
+const _portraits = {};
+function portraitPerso(cle) {
+  if (_portraits[cle]) return _portraits[cle];
+  const c = toile(36, 44), g = ctxDe(c); dessinerPerso(g, cle, 18, 41, { dirCorps: 'bas', dirTete: 'bas', frame: 0, etatTete: 'normal' });
+  return (_portraits[cle] = c);
+}
+// ── Éléments du HUD ──
+// Texte cerné de sombre : lisible sur n'importe quel sol, sans plaque
+function texteHUD(g, t, x, y, c, o = {}) { Police.ecrire(g, t, x, y, c, Object.assign({ contour: '#140e18' }, o)); }
+// Écrin laqué (technique, talisman, poche) : bord sombre, liseré d'or chaud, fond dégradé, coins sertis
+function ecrinHUD(g, x, y, t, accent) {
+  g.fillStyle = 'rgba(0,0,0,0.45)'; g.fillRect(x + 1, y + 2, t, t);
+  g.fillStyle = '#0c0810'; g.fillRect(x, y, t, t);
+  const gr = g.createLinearGradient(0, y, 0, y + t); gr.addColorStop(0, '#3a2834'); gr.addColorStop(1, '#170f17'); g.fillStyle = gr; g.fillRect(x + 1, y + 1, t - 2, t - 2);
+  g.fillStyle = accent || '#7a5a34'; g.fillRect(x + 1, y + 1, t - 2, 1); g.fillRect(x + 1, y + 1, 1, t - 2);
+  g.fillStyle = accent ? nuancer(accent, 0.6) : '#2a1a22'; g.fillRect(x + 1, y + t - 2, t - 2, 1); g.fillRect(x + t - 2, y + 2, 1, t - 3);
+  g.fillStyle = accent || '#e0b860'; for (const [cx, cy, dx, dy] of [[x, y, 1, 1], [x + t - 1, y, -1, 1], [x, y + t - 1, 1, -1], [x + t - 1, y + t - 1, -1, -1]]) { g.fillRect(cx, cy, 1, 1); g.fillRect(cx + dx, cy, 1, 1); g.fillRect(cx, cy + dy, 1, 1); }
+}
+// Jauge de la technique : segments de charge, ou temps de recharge ; or quand elle est prête, orange au-delà
+function jaugeActif(g, x, y, l, h, J, pret) {
+  const d = INDEX[J.actif.id];
+  g.fillStyle = '#0c0810'; g.fillRect(x, y, l, h); g.fillStyle = '#1e1622'; g.fillRect(x + 1, y + 1, l - 2, h - 2);
+  const H = h - 2, X = x + 1, L = l - 2, Y = y + 1, plein = pret ? '#f0c848' : '#4a9ae8', clair = pret ? '#fff4b0' : '#a8d8ff', sombre = pret ? '#a07818' : '#2a5aa8';
+  const barre = (yb, hb, c1, c2, c3) => { g.fillStyle = c1; g.fillRect(X, yb, L, hb); g.fillStyle = c2; g.fillRect(X, yb, 1, hb); g.fillStyle = c3; g.fillRect(X + L - 1, yb, 1, hb); };
+  if (d.recharge) { const k = Math.min(1, (J.actif.temps || 0) / d.recharge), hb = Math.round(H * k); if (hb > 0) barre(Y + H - hb, hb, plein, clair, sombre); }
+  else if (d.unique) barre(Y, H, '#f0c848', '#fff4b0', '#a07818');
+  else {
+    const max = chargesMax(d), n = Math.min(max, J.actif.charges), hs = H / max;
+    for (let k = 0; k < max; k++) { const yb = Math.round(Y + H - (k + 1) * hs), hb = Math.max(1, Math.round(hs) - 1); if (k < n) barre(yb + 1, hb, plein, clair, sombre); else { g.fillStyle = '#2c2434'; g.fillRect(X, yb + 1, L, hb); } }
+    if (J.actif.charges > max) { const hb = Math.round(H * Math.min(1, (J.actif.charges - max) / max)); barre(Y + H - hb, hb, '#ff9a3a', '#ffd0a0', '#b0581a'); }
+  }
+}
+// Pictogrammes 7 × 7 des statistiques et des chances d'opportunité
+const PICTOS_HUD = {
+  degats: [['.....ll', '....lal', '...lal.', '..lal..', '.bal...', 'bbb....', '.b.....'], { l: '#f4f8ff', a: '#a8b4c4', b: '#c8343a' }],
+  cadence: [['yy..yy.', '.yy..yy', '..yy..y', '.yy..yy', 'yy..yy.'], { y: '#f8d040' }],
+  portee: [['....c..', '....cc.', 'c.c.ccc', '....cc.', '....c..'], { c: '#6ad8f0' }],
+  vitesseTir: [['...oo..', 'll.oooo', '...oooo', 'll.oooo', '...oo..'], { o: '#f8963a', l: '#ffd0a0' }],
+  vitesse: [['...bb..', '...bb..', '...bbb.', '...bbbb', '.bbbbbb', 'bbbbbbb', 'l.l.l..'], { b: '#6ad86a', l: '#c8ffc0' }],
+  chance: [['.gg.gg.', 'ggg.ggg', '.ggggg.', '...g...', '.ggggg.', 'ggg.ggg', '.gg.gg.'], { g: '#5ac85a' }],
+  pacte: [['..rrr..', '.rrkrr.', 'rrrkrrr', 'rrrkrrr', 'rrrkrrr', '.rrkrr.', '..rrr..'], { r: '#e03a3a', k: '#1c0810' }],
+  sanctuaire: [['.ooooo.', 'o.....o', '.ooooo.', '...w...', '..www..', '.wwwww.', '..www..'], { o: '#f8d050', w: '#f4f0ff' }],
+};
+const _pictos = {};
+function pictoHUD(nom) { return _pictos[nom] || (_pictos[nom] = contourner(avecMarge(peindre(...PICTOS_HUD[nom]), 1), '#140e18')); }
+// Statistiques (façon « Found HUD ») : pictogramme, valeur, variation récente en vert ou rouge
+let _statsPartie = null; const _statsMem = {};
+function valeursStats(J) { const S = J.stats; return [['degats', S.degats], ['cadence', S.cadence * J.profil.coefCadence], ['portee', S.portee], ['vitesseTir', S.vitesseTir], ['vitesse', S.vitesse], ['chance', S.chance]]; }
+const NOMS_STATS = { degats: 'Dégâts', cadence: 'Cadence', portee: 'Portée', vitesseTir: 'Vitesse des tirs', vitesse: 'Vitesse', chance: 'Chance', pacte: 'Pacte', sanctuaire: 'Sanctuaire' };
+function dessinerStats(g, J, x, y, o = {}) {
+  if (_statsPartie !== G.partie) { _statsPartie = G.partie; for (const k in _statsMem) delete _statsMem[k]; }
+  const pas = o.pas || 11, f = v => formatNombre(arrondi(v, 2)); let yy = y;
+  for (const [k, v] of valeursStats(J)) {
+    const M = _statsMem[k] || (_statsMem[k] = { v, t: -9, d: 0 }); if (Math.abs(v - M.v) > 1e-6) { M.d = v - M.v; M.v = v; M.t = G.temps; }
+    g.drawImage(pictoHUD(k), x - 1, yy - 1);
+    if (o.noms) texteHUD(g, NOMS_STATS[k], x + 11, yy, '#b8b0c8');
+    const vx = o.noms ? x + (o.largeur || 120) : x + 11; texteHUD(g, f(v), vx, yy, '#f4ecd8', o.noms ? { a: 'd' } : {});
+    const age = G.temps - M.t; if (age < 2.5 && !o.noms) { g.globalAlpha = Math.min(1, (2.5 - age) / 0.6); texteHUD(g, (M.d > 0 ? '+' : '−') + f(Math.abs(M.d)), vx + Police.largeur(f(v)) + 3, yy, M.d > 0 ? '#7af07a' : '#ff7a6a'); g.globalAlpha = 1; }
+    yy += pas;
+  }
+  // chances d'opportunité après le boss de l'étage (E §6), recalculées à chaque image
+  const O = chanceOpportunite(), pc = v => Math.round(v * 100) + ' %';
+  yy += 2; g.fillStyle = 'rgba(255,240,220,0.14)'; g.fillRect(x, yy - 3, o.noms ? (o.largeur || 120) : 46, 1);
+  for (const [k, v, c] of [['pacte', O.pacte, '#ff8a8a'], ['sanctuaire', O.sanctuaire, '#ffe08a']]) {
+    g.drawImage(pictoHUD(k), x - 1, yy - 1);
+    if (o.noms) texteHUD(g, NOMS_STATS[k], x + 11, yy, '#b8b0c8');
+    texteHUD(g, pc(O.chance > 0 ? v : 0), o.noms ? x + (o.largeur || 120) : x + 11, yy, O.chance > 0 ? c : '#8a8098', o.noms ? { a: 'd' } : {});
+    yy += pas;
+  }
+  return yy;
+}
+// Voile très doux derrière la colonne gauche et la minicarte (grandes salles : sol clair sous le HUD)
+let _voileHUD = null;
+function voileHUD(g) {
+  if (!_voileHUD) { const c = toile(ECRAN_L, ECRAN_H), v = ctxDe(c); const gl = v.createLinearGradient(0, 0, 90, 0); gl.addColorStop(0, 'rgba(8,5,12,0.42)'); gl.addColorStop(1, 'rgba(8,5,12,0)'); v.fillStyle = gl; v.fillRect(0, 0, 90, ECRAN_H); const gh = v.createLinearGradient(0, 0, 0, 44); gh.addColorStop(0, 'rgba(8,5,12,0.4)'); gh.addColorStop(1, 'rgba(8,5,12,0)'); v.fillStyle = gh; v.fillRect(0, 0, ECRAN_L, 44); _voileHUD = c; }
+  g.drawImage(_voileHUD, 0, 0);
+}
+// Pastille de touche (« RT », « Q »…) à côté d'une commande
+function pastilleTouche(g, t, x, y) { const w = Police.largeur(t) + 6; g.fillStyle = '#0c0810'; g.fillRect(x, y, w, 11); g.fillStyle = '#3a2c44'; g.fillRect(x + 1, y + 1, w - 2, 9); g.fillStyle = '#5a4a68'; g.fillRect(x + 1, y + 1, w - 2, 1); Police.ecrire(g, t, x + 3, y + 2, '#f0d8a0'); return w; }
 function dessinerHUD(g) {
   const J = G.joueur; if (!J) return;
   const S = J.sante, calme = G.reglages.sansFlash;
-  // santé et actif : plaque haute
-  const nCases = S.cont.length + Math.ceil(S.prot.length / 2) + S.cicatrices, rangs = Math.max(1, Math.ceil(nCases / 6));
-  plaqueHUD(g, 1, 1, 98, Math.max(34, 8 + rangs * 9));
-  if (santeTotale(S) <= 2 && !calme && J.etat !== 'mort') { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.25 + 0.2 * Math.sin(G.temps * 5); g.drawImage(halo('#ff2030', false, 50), 26, -14, 50, 40); g.restore(); }
-  // cœurs : tremblent à la perte, s'illuminent au gain
+  voileHUD(g);
+  // ── technique : écrin laqué, jauge à segments ; lueur et étincelles quand elle est prête ──
+  const pret = actifPret(J);
+  if (J.actif && pret && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.3 + 0.12 * Math.sin(G.temps * 4); g.drawImage(halo('#ffc850', false, 40), -5, -5, 44, 44); g.restore(); }
+  ecrinHUD(g, 3, 3, 30, pret ? '#e8c050' : null);
+  if (J.actif) {
+    g.drawImage(iconeObjet(J.actif.id), 8, 8); jaugeActif(g, 34, 3, 6, 30, J, pret);
+    if (pret && !calme) { const k = Math.floor(G.temps * 6) % 4, P = [[3, 3], [32, 3], [32, 32], [3, 32]][k]; g.fillStyle = '#fffbe0'; g.fillRect(P[0] - 1, P[1], 3, 1); g.fillRect(P[0], P[1] - 1, 1, 3); }
+  }
+  let yRes = 42;
+  if (J.actif2) { ecrinHUD(g, 3, 37, 22, null); g.drawImage(iconeObjet(J.actif2.id), 4, 38); yRes = 64; }
+  // ── santé : cœurs de 9 × 8, six par rangée ; tremblent à la perte, s'illuminent au gain ──
+  if (santeTotale(S) <= 2 && !calme && J.etat !== 'mort') { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.25 + 0.2 * Math.sin(G.temps * 5); g.drawImage(halo('#ff2030', false, 50), 34, -14, 54, 40); g.restore(); }
   const bs = bosseHUD('sante', santeTotale(S) + S.cont.length * 0.01), sx = bs && bs.s < 0 && !calme ? Math.round(Math.sin(G.temps * 70) * 2 * bs.b) : 0;
-  let i = 0; const pos = k => [38 + sx + (k % 6) * 9, 5 + Math.floor(k / 6) * 9];
+  let i = 0; const pos = k => [44 + sx + (k % 6) * 10, 4 + Math.floor(k / 6) * 10];
   for (const c of S.cont) { const [x, y] = pos(i++); const set = c.t === 'os' ? ICONES.os : ICONES.vit; g.drawImage(set[c.p], x, y); }
   for (let k = 0; k < S.prot.length; k += 2) { const [x, y] = pos(i++); const t = S.prot[k] === 'n' ? ICONES.noir : ICONES.bleu; g.drawImage(t[k + 1 < S.prot.length ? 2 : 1], x, y); }
   for (let k = 0; k < S.cicatrices; k++) { const [x, y] = pos(i++); g.drawImage(ICONES.cicatrice, x, y); }
   if (S.partiel) { const [x, y] = pos(0); g.drawImage(ICONES.partiel, x + 1, y); }
-  if (bs && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = (bs.s > 0 ? 0.45 : 0.35) * bs.b; g.drawImage(halo(bs.s > 0 ? '#ffe8a0' : '#ff3040', false, 64), 28, -16, 76, 50); g.restore(); }
-  if (G.degatsEnnemis >= 2) Police.ecrire(g, '×2', 38 + 6 * 9 + 4, 24, '#ff8a6a'); // rappel : coups d'un cœur entier
-  // actif : écrin biseauté, lueur quand il est prêt
-  g.fillStyle = '#0a0710'; g.fillRect(3, 3, 28, 28); g.fillStyle = '#241c30'; g.fillRect(4, 4, 26, 26); g.fillStyle = '#3a3048'; g.fillRect(4, 4, 26, 1); g.fillRect(4, 4, 1, 26); g.fillStyle = '#16101e'; g.fillRect(4, 29, 26, 1); g.fillRect(29, 4, 1, 26);
-  if (J.actif) {
-    const d = INDEX[J.actif.id]; const pret = actifPret(J);
-    if (pret && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.3 + 0.12 * Math.sin(G.temps * 4); g.drawImage(halo('#ffc850', false, 40), -3, -3, 40, 40); g.restore(); }
-    g.drawImage(iconeObjet(d.id), 7, 7);
-    // jauge : segments de charge (pas des cœurs), ou temps
-    g.fillStyle = '#0a0710'; g.fillRect(32, 3, 6, 28); g.fillStyle = '#1e1828'; g.fillRect(33, 4, 4, 26);
-    if (d.recharge) { const k = (J.actif.temps || 0) / d.recharge; const h = Math.round(26 * k); g.fillStyle = pret ? '#f0d060' : '#5aa0e0'; g.fillRect(33, 30 - h, 4, h); g.fillStyle = pret ? '#fff4b0' : '#9ad0ff'; g.fillRect(33, 30 - h, 1, h); }
-    else if (d.unique) { g.fillStyle = '#f0d060'; g.fillRect(33, 4, 4, 26); g.fillStyle = '#fff4b0'; g.fillRect(33, 4, 1, 26); }
-    else { const max = chargesMax(d); const h = 26 / max; for (let k = 0; k < max; k++) { const plein = k < J.actif.charges; const y = Math.round(30 - (k + 1) * h) + 1, hh = Math.max(1, Math.round(h) - 1); g.fillStyle = plein ? (pret ? '#f0d060' : '#5aa0e0') : '#2a2436'; g.fillRect(33, y, 4, hh); if (plein) { g.fillStyle = pret ? '#fff4b0' : '#9ad0ff'; g.fillRect(33, y, 1, hh); } } if (J.actif.charges > max) { g.fillStyle = '#ff9a4a'; g.fillRect(33, 4, 4, Math.round(26 * (J.actif.charges - max) / max)); } }
-    if (pret) { g.fillStyle = '#f0d060'; g.fillRect(3, 3, 28, 1); g.fillRect(3, 30, 28, 1); g.fillRect(3, 3, 1, 28); g.fillRect(30, 3, 1, 28); if (!calme && Math.floor(G.temps * 3) % 2 === 0) { g.fillStyle = '#fffbe0'; g.fillRect(3, 3, 2, 2); g.fillRect(29, 29, 2, 2); } }
-  }
-  if (J.actif2) { g.fillStyle = '#0a0710'; g.fillRect(40, 23, 14, 14); g.fillStyle = '#241c30'; g.fillRect(41, 24, 12, 12); g.drawImage(iconeObjet(J.actif2.id), 37, 20, 20, 20); }
-  // ressources, compteurs de règle et statistiques : colonne gauche
+  if (bs && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = (bs.s > 0 ? 0.45 : 0.35) * bs.b; g.drawImage(halo(bs.s > 0 ? '#ffe8a0' : '#ff3040', false, 64), 34, -16, 80, 50); g.restore(); }
+  if (G.degatsEnnemis >= 2) texteHUD(g, '×2', 44 + Math.min(6, i) * 10 + 2, 6, '#ff8a6a'); // rappel : coups d'un cœur entier
+  // ── ressources : icône et compteur cernés, sans plaque ──
+  const res = [[ICONES.ryo, J.ryo], [ICONES.explosif, J.explosifsDores ? 99 : J.explosifs], [ICONES.cle, J.clesDorees ? 99 : J.cles]];
+  res.forEach(([ic, n], k) => {
+    const b = bosseHUD('res' + k, n), dy = b ? -Math.round(3 * b.b) : 0, y = yRes + k * 13;
+    g.drawImage(ic, 5 + Math.floor((11 - ic.width) / 2), y + Math.floor((9 - ic.height) / 2) + dy);
+    texteHUD(g, String(n).padStart(2, '0'), 19, y + dy, b && b.b > 0.15 ? (b.s > 0 ? '#ffd040' : '#ff6a5a') : n > 0 ? '#f4ecd8' : '#9a90a8');
+  });
+  // ── compteurs de règle du personnage ──
   const lignes = [];
   if (J.def.regleCode === 'controle_chakra') lignes.push(['Force ' + J.force + '/' + plafondForce(J), '#ff9ac0']);
   if (J.def.regleCode === 'sceau_centaine') lignes.push(['Sceau ' + J.sceau + '/' + plafondSceau(J), '#ff9ac0']);
   if (J.def.regleCode === 'clones_ressource') lignes.push(['Clones ' + J.clones + '/' + plafondClones(J), '#ffc060']);
   if (J.coeursReserve > 0) lignes.push(['Cœurs ' + J.coeursReserve, '#6ad060']);
   if (J.def.regleCode === 'trois_marionnettes') lignes.push([{ karasu: 'Karasu', kuroari: 'Kuroari', sanshouo: 'Sanshōuo' }[J.marionnette || 'karasu'], '#c0a0ff']);
-  const stats = G.reglages.afficherStats; const hCol = 40 + lignes.length * 11 + (stats ? 70 : 0);
-  plaqueHUD(g, 1, 37, 62, hCol);
-  const res = [[ICONES.ryo, J.ryo], [ICONES.explosif, J.explosifsDores ? 99 : J.explosifs], [ICONES.cle, J.clesDorees ? 99 : J.cles]];
-  res.forEach(([ic, n], k) => {
-    const b = bosseHUD('res' + k, n), dy = b ? -Math.round(3 * b.b) : 0;
-    g.drawImage(ic, 6, 42 + k * 12 - (ic.height > 10 ? 2 : 0) + dy);
-    Police.ecrire(g, String(n).padStart(2, '0'), 19, 43 + k * 12 + dy, b && b.b > 0.15 ? (b.s > 0 ? '#ffd040' : '#ff6a5a') : n > 0 ? '#f4ecd8' : '#8a8098');
-  });
-  let yx = 79;
-  for (const [t, c] of lignes) { Police.ecrire(g, t, 6, yx, c); yx += 11; }
-  if (stats) { g.fillStyle = '#3a3048'; g.fillRect(6, yx - 2, 52, 1); dessinerStats(g, J, 6, yx + 2); }
-  // talisman / poche
-  if (J.talisman) { plaqueHUD(g, 2, 328, J.talisman2 ? 48 : 26, 28, '#5a4a3a'); g.drawImage(iconeObjet(J.talisman), 5, 332); if (J.talisman2) g.drawImage(iconeObjet(J.talisman2), 27, 332); }
+  let yx = yRes + 42;
+  for (const [t, c] of lignes) { texteHUD(g, t, 5, yx, c); yx += 11; }
+  // ── statistiques et chances de pacte / sanctuaire ──
+  if (G.reglages.afficherStats) dessinerStats(g, J, 6, yx + 4);
+  // ── talismans (bas gauche) et poche (bas droite) ──
+  if (J.talisman) { ecrinHUD(g, 3, 332, 24, '#a07a4a'); g.drawImage(iconeObjet(J.talisman), 5, 334); if (J.talisman2) { ecrinHUD(g, 29, 332, 24, '#a07a4a'); g.drawImage(iconeObjet(J.talisman2), 31, 334); } }
   if (J.poches.length) {
     const c = J.poches[0]; const s = c.type === 'pilule' ? spriteRamassable('pilule', G.partie.pilules.indexOf(c.id)) : iconeObjet(c.id);
-    const nom = c.type === 'pilule' ? nomPilule(c) : INDEX[c.id].nom; const w = Police.largeur(nom) + 34;
-    plaqueHUD(g, 638 - w, 332, w, 24, '#5a4a3a');
-    g.drawImage(s, 622 - s.width / 2, 338); Police.ecrire(g, nom, 612, 340, '#d8d0e0', { a: 'd' });
-    if (J.poches.length > 1) Police.ecrire(g, '+' + (J.poches.length - 1), 634, 322, '#a0a0b0', { a: 'd' });
+    const nom = c.type === 'pilule' ? nomPilule(c) : INDEX[c.id].nom;
+    ecrinHUD(g, 613, 332, 24, '#6aa07a'); g.drawImage(s, 625 - Math.round(s.width / 2), 344 - Math.round(s.height / 2));
+    texteHUD(g, nom, 608, 341, '#f0e8f8', { a: 'd' });
+    const tch = Entrees.libelle('poche'); if (tch) pastilleTouche(g, tch, 608 - Police.largeur(nom) - Police.largeur(tch) - 12, 339);
+    if (J.poches.length > 1) texteHUD(g, '+' + (J.poches.length - 1), 636, 322, '#c8c0d8', { a: 'd' });
   }
   dessinerMinicarte(g, 568, 6, false);
-  // boss : barre ornée, traîne claire des dégâts récents
+  // ── boss : cadre orné, crâne, crans aux seuils de phase, traîne claire des dégâts récents ──
   const boss = G.ennemis.filter(e => e.boss && !e.mort);
   if (boss.length) {
-    const tot = boss.reduce((a, e) => a + e.pv, 0), max = boss.reduce((a, e) => a + e.pvMax, 0); const w = 280, x0 = 320 - w / 2, y0 = 342;
+    const tot = boss.reduce((a, e) => a + e.pv, 0), max = boss.reduce((a, e) => a + e.pvMax, 0); const w = 272, x0 = 320 - w / 2 + 6, y0 = 343;
     if (!_traceBoss || _traceBoss.max !== max) _traceBoss = { max, v: tot };
     _traceBoss.v = tot < _traceBoss.v ? Math.max(tot, _traceBoss.v - max * 0.003 - (_traceBoss.v - tot) * 0.035) : tot;
-    plaqueHUD(g, x0 - 6, y0 - 4, w + 12, 13, '#7a2a36');
-    g.fillStyle = '#2a0c14'; g.fillRect(x0, y0, w, 5);
-    g.fillStyle = '#f4dcc0'; g.fillRect(x0, y0, Math.round(w * _traceBoss.v / max), 5);
-    const pw = Math.round(w * tot / max); g.fillStyle = '#c8283a'; g.fillRect(x0, y0, pw, 5); g.fillStyle = '#ff7a64'; g.fillRect(x0, y0, pw, 1); g.fillStyle = '#7a1024'; g.fillRect(x0, y0 + 4, pw, 1);
-    for (let k = 1; k < 4; k++) { g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x0 + Math.round(w * k / 4), y0, 1, 5); }
-    losange(g, x0 - 9, y0 + 2, '#e0b870'); losange(g, x0 + w + 8, y0 + 2, '#e0b870');
-    const C = boss[0].championBoss && CHAMPIONS_BOSS[boss[0].championBoss], nomB = boss[0].def.nom + (C ? ' · champion ' + C.nom : '');
-    Police.ecrire(g, nomB, 320, 329, C ? nuancer(C.couleur, 1.3) : '#f8e0d4', { a: 'c', contour: '#1c1420' });
+    const C = boss[0].championBoss && CHAMPIONS_BOSS[boss[0].championBoss], acc = C ? C.couleur : '#c8a060';
+    g.fillStyle = 'rgba(0,0,0,0.5)'; g.fillRect(x0 - 17, y0 - 3, w + 22, 12);
+    g.fillStyle = '#0c0810'; g.fillRect(x0 - 1, y0 - 1, w + 2, 8); g.fillStyle = '#2a0c14'; g.fillRect(x0, y0, w, 6);
+    g.fillStyle = '#f4dcc0'; g.fillRect(x0, y0, Math.round(w * _traceBoss.v / max), 6);
+    const pw = Math.round(w * tot / max), gb = g.createLinearGradient(0, y0, 0, y0 + 6); gb.addColorStop(0, '#ff6a5a'); gb.addColorStop(0.35, '#d8283a'); gb.addColorStop(1, '#7a1024'); g.fillStyle = gb; g.fillRect(x0, y0, pw, 6);
+    g.fillStyle = 'rgba(255,220,200,0.5)'; g.fillRect(x0, y0, pw, 1);
+    const ph = boss.length === 1 && boss[0].def.phases ? boss[0].def.phases.map(p => p.seuil).filter(v => v > 0 && v < 1) : [0.25, 0.5, 0.75];
+    for (const v of ph) { const xx = x0 + Math.round(w * v); g.fillStyle = 'rgba(0,0,0,0.55)'; g.fillRect(xx, y0, 1, 6); g.fillStyle = acc; g.fillRect(xx, y0 - 2, 1, 2); }
+    g.fillStyle = acc; g.fillRect(x0 - 1, y0 - 2, w + 2, 1); g.fillRect(x0 - 1, y0 + 7, w + 2, 1);
+    // crâne à gauche, losange à droite
+    g.drawImage(pictoCrane(), x0 - 16, y0 - 3); losange(g, x0 + w + 5, y0 + 3, acc);
+    const nomB = boss[0].def.nom + (C ? ' · champion ' + C.nom : '');
+    texteHUD(g, nomB, 320, y0 - 13, C ? nuancer(C.couleur, 1.3) : '#f8e0d4', { a: 'c' });
   } else _traceBoss = null;
   // bannières et panneaux
   if (G.banniere && !bannieresRetenues()) dessinerBanniere(g);
@@ -168,17 +250,24 @@ function dessinerHUD(g) {
   if (Son.suspendu()) inviteSon(g, 320, 4);
   if (Entrees.maintien.deposer > 0.15 && (J.talisman || J.poches.length)) { const k = Math.min(1, Entrees.maintien.deposer / DUREE_DEPOT); plaqueHUD(g, 282, 244, 76, 28); Police.ecrire(g, 'Déposer…', 320, 250, '#f0e0c0', { a: 'c' }); g.fillStyle = '#14101c'; g.fillRect(290, 262, 60, 4); g.fillStyle = '#f0e0c0'; g.fillRect(290, 262, Math.round(60 * k), 4); }
 }
-function dessinerStats(g, J, x, y) {
-  const S = J.stats; const L = [['Dég', formatNombre(arrondi(S.degats, 2))], ['Cad', formatNombre(arrondi(S.cadence * J.profil.coefCadence, 2))], ['Por', formatNombre(arrondi(S.portee, 1))], ['VTi', formatNombre(arrondi(S.vitesseTir, 1))], ['Vit', formatNombre(arrondi(S.vitesse, 2))], ['Cha', formatNombre(S.chance)]];
-  L.forEach(([k, v], i) => { Police.ecrire(g, k, x, y + i * 10, '#8a8098'); Police.ecrire(g, v, x + 24, y + i * 10, '#e8e0f0'); });
+// Notification (mission accomplie, secret découvert) : glisse depuis la droite sous la minicarte
+function dessinerNotification(g, n) {
+  const k = Math.min(1, n.t / 0.25), sortie = n.t > 2.7 ? (n.t - 2.7) / 0.3 : 0, w = Math.max(150, Police.largeur(n.nom) + 40, Police.largeur(n.titre) + 40), x = Math.round(636 - w + (1 - k) * (w + 10) + sortie * (w + 10)), y = 100;
+  const secret = /secret/i.test(n.titre), acc = secret ? '#8ac8ff' : '#e8c050';
+  g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(x + 1, y + 2, w, 30); g.fillStyle = 'rgba(14,10,20,0.92)'; g.fillRect(x, y, w, 30);
+  g.fillStyle = acc; g.fillRect(x, y, 2, 30); g.fillStyle = nuancer(acc, 0.5); g.fillRect(x + 2, y, w - 2, 1); g.fillRect(x + 2, y + 29, w - 2, 1);
+  if (secret) { g.drawImage(pictoHUD('chance'), x + 8, y + 11); } else { g.fillStyle = acc; for (let i = 0; i < 5; i++) { const a = (i * 72 - 90) * Math.PI / 180; g.fillRect(Math.round(x + 13 + Math.cos(a) * 4), Math.round(y + 15 + Math.sin(a) * 4), 2, 2); } g.fillRect(x + 12, y + 14, 3, 3); }
+  Police.ecrire(g, n.titre, x + 24, y + 5, acc); Police.ecrire(g, n.nom, x + 24, y + 17, '#fff0d8');
 }
 function dessinerBanniere(g) {
   const B = G.banniere; const d = dureeBanniere(B); if (B.t > d) return;
   const a = B.t < 0.15 ? B.t / 0.15 : B.t > d - 0.4 ? (d - B.t) / 0.4 : 1;
   g.globalAlpha = a;
-  const y = B.transformation ? 130 : 84; const w = Math.max(Police.largeur(B.nom) * 2, Police.largeur(B.desc || '')) + 24;
+  const y = B.transformation ? 130 : 84; const e = Police.largeur(B.nom) * 2 > 420 ? 1 : 2, ic = B.id ? (String(B.id).startsWith('SYN_') ? iconeSynergie(B.id) : B.pilule ? null : iconeObjet(B.id)) : null;
+  const wNom = Police.largeur(B.nom) * e + (ic ? 26 : 0), w = Math.max(wNom, Police.largeur(B.desc || '')) + 24, cx = 320 + (ic ? 13 : 0);
   bandeau(g, 320 - w / 2 - 30, y - 7, w + 60, B.desc ? 38 : 26, B.transformation ? '#f0c040' : B.synergie ? '#5ae0d0' : B.pilule ? '#a0e0a0' : '#d8c8a0');
-  Police.ecrire(g, B.nom, 320, y, B.transformation ? '#ffe080' : B.synergie ? '#b8fff4' : '#fff4e0', { a: 'c', e: Police.largeur(B.nom) * 2 > 420 ? 1 : 2, contour: '#1c1420' });
+  if (ic) { const ix = Math.round(320 - wNom / 2) - 2, iy = y - 4 + (e === 2 ? 0 : -3); g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(ix, iy + 1, 21, 20); g.drawImage(ic, ix, iy); }
+  Police.ecrire(g, B.nom, cx, y, B.transformation ? '#ffe080' : B.synergie ? '#b8fff4' : '#fff4e0', { a: 'c', e, contour: '#1c1420' });
   if (B.desc) Police.ecrire(g, B.desc, 320, y + 20, '#c8c0d8', { a: 'c' });
   g.globalAlpha = 1;
 }
@@ -325,7 +414,7 @@ function dessinerFicheProche(g) {
   let x = 67, y = 40;
   if (couvre(x, y)) { x = 560 - w; if (couvre(x, y)) { x = 67; y = 326 - h; } }
   plaqueHUD(g, x, y, w, h, F.lisere);
-  g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x + 4, y + 4, 20, 20);
+  ecrinHUD(g, x + 3, y + 3, 22, F.lisere);
   if (F.icone) g.drawImage(F.icone, x + 4 + Math.floor((20 - F.icone.width) / 2), y + 4 + Math.floor((20 - F.icone.height) / 2));
   noms.forEach((t, k) => Police.ecrire(g, t, x + 28, y + 4 + k * 10, '#fff0d0'));
   const ty = y + 4 + noms.length * 10; Police.ecrire(g, F.type, x + 28, ty, '#9a90b0');
@@ -377,7 +466,13 @@ function dessinerMinicarte(g, x0, y0, etendue) {
   const cx = s0.cx >= 0 ? s0.cx : 6, cy = s0.cy >= 0 ? s0.cy : 6;
   const ox = etendue ? Math.round((x0 || 320) - 6.5 * cw) : x0, oy = etendue ? Math.round((y0 || 180) - 6.5 * ch) : y0; // étendue : (x0, y0) = centre
   const dx0 = etendue ? 0 : cx - 3, dy0 = etendue ? 0 : cy - 3;
-  if (!etendue) { plaqueHUD(g, ox - 5, oy - 5, n * cw + 10, n * ch + 22); if (G.etage.cfg) Police.ecrire(g, 'Étage ' + G.etage.numero, ox + n * cw / 2, oy + n * ch + 4, '#a898b8', { a: 'c' }); }
+  if (!etendue) {
+    const X = ox - 5, Y = oy - 5, W = n * cw + 10, H = n * ch + 10;
+    g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(X + 1, Y + 2, W, H); g.fillStyle = 'rgba(12,8,18,0.72)'; g.fillRect(X, Y, W, H);
+    g.fillStyle = '#5a4630'; g.fillRect(X + 2, Y, W - 4, 1); g.fillRect(X + 2, Y + H - 1, W - 4, 1); g.fillRect(X, Y + 2, 1, H - 4); g.fillRect(X + W - 1, Y + 2, 1, H - 4);
+    for (const [cx, cy] of [[X + 1, Y + 1], [X + W - 2, Y + 1], [X + 1, Y + H - 2], [X + W - 2, Y + H - 2]]) { g.fillStyle = '#c8a060'; g.fillRect(cx, cy, 1, 1); }
+    if (G.etage.cfg) texteHUD(g, 'Étage ' + G.etage.numero, ox + n * cw / 2, oy + n * ch + 8, '#c8bcd8', { a: 'c' });
+  }
   if (perdu) { Police.ecrire(g, '?', ox + n * cw / 2, oy + n * ch / 2 - 4, '#8a8098', { a: 'c' }); return; }
   for (const s of Object.values(E.salles)) {
     if (s.id === 'opp' || !(s.visitee || s.apercue)) continue;
@@ -385,12 +480,14 @@ function dessinerMinicarte(g, x0, y0, etendue) {
     for (const [i, j] of F.cel) {
       const gx = s.cx + i - dx0, gy = s.cy + j - dy0; if (gx < 0 || gy < 0 || gx >= n || gy >= n) continue;
       const x = ox + gx * cw, y = oy + gy * ch;
-      g.fillStyle = s === s0 ? '#f4ecfa' : s.visitee ? '#7a7090' : '#3a3448'; g.fillRect(x, y, cw - 1, ch - 1);
-      if (s !== s0 && s.visitee) { g.fillStyle = '#9a90b0'; g.fillRect(x, y, cw - 1, 1); }
+      g.fillStyle = s === s0 ? '#f6f0fc' : s.visitee ? '#7a7092' : '#3a3448'; g.fillRect(x, y, cw - 1, ch - 1);
+      if (s !== s0 && s.visitee) { g.fillStyle = '#a49ac0'; g.fillRect(x, y, cw - 1, 1); g.fillStyle = '#5a5272'; g.fillRect(x, y + ch - 2, cw - 1, 1); }
+      if (s !== s0 && !s.visitee) { g.fillStyle = '#4a4460'; g.fillRect(x, y, cw - 1, 1); }
       // fusion visuelle des cellules d'une grande salle
       if (F.cel.some(([a, b]) => a === i + 1 && b === j)) g.fillRect(x + cw - 1, y, 1, ch - 1);
       if (F.cel.some(([a, b]) => a === i && b === j + 1)) g.fillRect(x, y + ch - 1, cw - 1, 1);
     }
+    if (s === s0 && !etendue && !G.reglages.sansFlash) { const gx = s.cx - dx0, gy = s.cy - dy0; if (gx >= 0 && gy >= 0 && gx < n && gy < n) { g.globalAlpha = 0.35 + 0.25 * Math.sin(G.temps * 4); g.strokeStyle = '#fff8e0'; g.lineWidth = 1; g.strokeRect(ox + gx * cw - 1.5, oy + gy * ch - 1.5, cw + 2, ch + 2); g.globalAlpha = 1; } }
     const ic = ICONE_SALLE[s.type];
     if (ic && (s.visitee || s.apercue)) { const gx = s.cx - dx0, gy = s.cy - dy0; if (gx >= 0 && gy >= 0 && gx < n && gy < n) pictoSalle(g, s.type, ox + gx * cw + Math.floor(cw / 2), oy + gy * ch + Math.floor(ch / 2), ic, etendue); }
   }

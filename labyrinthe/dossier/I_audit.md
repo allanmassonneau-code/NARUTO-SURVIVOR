@@ -48,7 +48,7 @@ Le dossier a été relu contre le code, et le code contre le dossier. Chaque éc
 | Table de conversion de Rock Lee promise (A, fiche) mais absente | la mêlée reste principale, les formes de tir deviennent des contributions | [personnages] |
 | Contribution « sphère contrôlée d'appoint » documentée (C) mais jamais créée | sphère orbitale ×0,5 | [personnages] |
 | Indices de secrets non consultables en jeu | onglet « Secrets » du Registre, secrets inscrits à leur découverte | — |
-| Chances d'opportunité non affichées | écran de pause, recalculées à chaque affichage | — |
+| Chances d'opportunité non affichées | statistiques du HUD (pacte et sanctuaire, à chaque image) et écran de pause (total et détail) | — |
 
 **Défauts de jeu** :
 

@@ -15,7 +15,7 @@ const Scenes = {
 
 // ── Liste de menu générique ──
 function menuListe(items, o = {}) {
-  return { items, focus: 0, o,
+  return { items, focus: Math.max(0, items.findIndex(i => !i.cache && !i.inactif)), o,
     maj() {
       const it = this.items.filter(i => !i.cache); if (!it.length) return;
       if (Entrees.nav.dy) { let k = this.focus; do { k = (k + Entrees.nav.dy + this.items.length) % this.items.length; } while (this.items[k].cache || this.items[k].inactif); this.focus = k; Son.jouer('menu'); }
@@ -35,6 +35,7 @@ function menuListe(items, o = {}) {
       }
       L.forEach(i => {
         const it = this.items[i];
+        if (it.entete) { yy += 3; Police.ecrire(g, it.label, x, yy, '#d8b070'); const w = Police.largeur(it.label); g.fillStyle = '#4a3a2c'; g.fillRect(x + w + 6, yy + 4, largeur - w - 6, 1); losange(g, x + largeur, yy + 4, '#8a6a40', 1); yy += 13; return; }
         const f = i === this.focus && actif; const h = it.hauteur || 14;
         if (f) { const gr = g.createLinearGradient(x - 6, 0, x + largeur + 6, 0); gr.addColorStop(0, 'rgba(240,190,100,0.3)'); gr.addColorStop(1, 'rgba(240,190,100,0.03)'); g.fillStyle = gr; g.fillRect(x - 6, yy - 3, largeur + 12, h); g.fillStyle = '#f0c870'; g.fillRect(x - 6, yy - 3, 2, h); losange(g, x - 11, yy + 3, '#ffe0a0', 2); }
         const col = it.inactif ? '#5a5268' : f ? '#fff4d8' : '#c8c0d8';
@@ -138,17 +139,22 @@ const SceneSelection = {
       const liste = Progression.verrous[p.id] || []; const o = DON.objectifs.find(x => liste.includes(x.id));
       Police.paragraphe(g, 'Verrouillé. Mission : ' + (o ? o.nom + ' — ' + o.desc : '?'), x0, y0 + 28, 520, '#c09080');
     } else {
-      const S = p.stats; const L = [['Vitalité', (p.sante.vitalite || 0) + (p.sante.protection ? ' + ' + p.sante.protection + ' chakra' : '') + (p.sante.instable ? ' + ' + p.sante.instable + ' instable' : '')], ['Dégâts', formatNombre(S.degats)], ['Cadence', formatNombre(S.cadence) + ' /s'], ['Portée', formatNombre(S.portee)], ['Vitesse', formatNombre(S.vitesse)], ['Chance', formatNombre(S.chance)]];
-      L.forEach(([k, v], i) => { Police.ecrire(g, k, x0, y0 + 26 + i * 11, '#8a8098'); Police.ecrire(g, v, x0 + 60, y0 + 26 + i * 11, '#e8e0f0'); });
-      if (p.actif) { g.drawImage(iconeObjet(p.actif), x0, y0 + 96); Police.ecrire(g, INDEX[p.actif] ? INDEX[p.actif].nom : p.actif, x0 + 24, y0 + 102, '#e0d0a0'); }
-      Police.paragraphe(g, p.regle, x0 + 190, y0 + 26, 340, '#d8d0e8');
-      Police.paragraphe(g, 'Faiblesse : ' + p.faiblesse, x0 + 190, y0 + 84, 340, '#b8a0a0');
-      Police.ecrire(g, 'Difficulté ' + '★'.repeat(0) + ['', 'accessible', 'intermédiaire', 'expert'][p.difficulte || 1], x0 + 190, y0 + 110, '#a8a0b8');
-      const M = Progression.profil.marques[p.id] || {}; let mx = x0 + 190;
-      for (const r of ['RTE_01', 'RTE_02', 'RTE_03', 'RTE_04', 'RTE_05', 'RTE_06']) { g.fillStyle = M[r] ? (M[r] === 'difficile' ? '#f0c040' : '#c8c0d8') : '#2a2436'; g.fillRect(mx, y0 + 126, 10, 10); mx += 14; }
-      Police.ecrire(g, 'Marques', mx + 4, y0 + 127, '#8a8098');
+      const S = p.stats; let hx = x0; // santé de départ en cœurs
+      for (let k = 0; k < (p.sante.vitalite || 0); k++) { g.drawImage(ICONES.vit[2], hx, y0 + 22); hx += 10; }
+      for (let k = 0; k < (p.sante.protection || 0); k++) { g.drawImage(ICONES.bleu[2], hx, y0 + 22); hx += 10; }
+      for (let k = 0; k < Math.ceil((p.sante.instable || 0) / 2); k++) { g.drawImage(ICONES.noir[2], hx, y0 + 22); hx += 10; }
+      if (!(p.sante.vitalite || p.sante.protection || p.sante.instable)) Police.ecrire(g, 'Aucune vitalité', x0, y0 + 24, '#c09080');
+      [['degats', S.degats], ['cadence', S.cadence], ['portee', S.portee], ['vitesseTir', S.vitesseTir ?? 9], ['vitesse', S.vitesse], ['chance', S.chance]].forEach(([k, v], i) => { const cx = x0 + (i % 2) * 92, cy = y0 + 38 + Math.floor(i / 2) * 12; g.drawImage(pictoHUD(k), cx - 1, cy - 1); Police.ecrire(g, { degats: 'Dégâts', cadence: 'Cadence', portee: 'Portée', vitesseTir: 'Tirs', vitesse: 'Vitesse', chance: 'Chance' }[k], cx + 11, cy, '#8a8098'); Police.ecrire(g, formatNombre(arrondi(v, 2)), cx + 86, cy, '#f0e8f8', { a: 'd' }); });
+      if (p.actif && INDEX[p.actif]) { ecrinHUD(g, x0, y0 + 78, 24, null); g.drawImage(iconeObjet(p.actif), x0 + 2, y0 + 80); Police.ecrire(g, INDEX[p.actif].nom, x0 + 30, y0 + 80, '#f0dca0'); Police.ecrire(g, 'Technique de départ', x0 + 30, y0 + 91, '#7a90b8'); }
+      const xd = x0 + 196, wd = 330;
+      const hr = Police.paragraphe(g, p.regle, xd, y0 + 24, wd, '#d8d0e8');
+      Police.paragraphe(g, 'Faiblesse : ' + p.faiblesse, xd, y0 + 28 + hr, wd, '#c0a0a0');
+      Police.ecrire(g, 'Difficulté ' + ['', 'accessible', 'intermédiaire', 'expert'][p.difficulte || 1], xd, y0 + 84, '#a8a0b8');
+      const M = Progression.profil.marques[p.id] || {}; let mx = xd + 130;
+      for (const r of ['RTE_01', 'RTE_02', 'RTE_03', 'RTE_04', 'RTE_05', 'RTE_06']) { g.fillStyle = '#0c0810'; g.fillRect(mx - 1, y0 + 83, 10, 10); g.fillStyle = M[r] ? (M[r] === 'difficile' ? '#f0c040' : '#c8c0d8') : '#2a2436'; g.fillRect(mx, y0 + 84, 8, 8); mx += 12; }
+      Police.ecrire(g, 'Marques', mx + 3, y0 + 84, '#8a8098');
       const V = DON.eveils.filter(v => v.perso === p.id).sort((a, b) => a.rang - b.rang); // éveils : ce que la règle deviendra
-      if (V.length) Police.ecrire(g, 'Éveils : ' + V.map(v => (v.rang === 1 ? 'I ' : 'II ') + v.nom + (v.rang === 1 ? ' (après l’étage 3)' : ' (après l’étage 6)')).join('  ·  '), x0, y0 + 144, '#e0c070');
+      V.forEach((v, k) => { const ey = y0 + 100 + k * 26; ecrinHUD(g, xd, ey, 22, '#9a7ac8'); g.drawImage(iconeObjet(v.id), xd + 1, ey + 1); Police.ecrire(g, 'Éveil ' + (v.rang === 1 ? 'I' : 'II') + ' · ' + v.nom, xd + 28, ey + 2, '#e0c070'); Police.ecrire(g, v.rang === 1 ? 'après le boss de l’étage 3' : 'après le boss de l’étage 6', xd + 28, ey + 13, '#8a8098'); });
     }
     Police.ecrire(g, 'Mode : ' + (this.difficile ? 'Difficile' : 'Standard') + (this.o.code ? '   Code : ' + codeAffiche(this.o.code) + ' (sans déblocages)' : ''), 320, 326, this.difficile ? '#ff9a7a' : '#a8a0b8', { a: 'c' });
     aideBoutons(g, [['description', 'Difficulté'], ['interagir', 'Commencer'], ['retour', 'Retour']]);
@@ -197,29 +203,34 @@ const SceneOptions = {
   entrer(o) {
     const R = G.reglages; const maj = () => { Son.appliquerVolumes(); Rendu.ajuster(); sauverReglages(); };
     this.menu = menuListe([
+      { label: 'Son', entete: true, inactif: true },
       curseur('Volume général', () => R.volGeneral ?? 0.8, v => { R.volGeneral = v; maj(); }, 0, 1, 0.1),
       curseur('Musique', () => R.volMusique, v => { R.volMusique = v; maj(); }, 0, 1, 0.1),
       curseur('Effets sonores', () => R.volEffets, v => { R.volEffets = v; maj(); }, 0, 1, 0.1),
+      { label: 'Ressenti et image', entete: true, inactif: true },
       curseur('Vibrations', () => R.vibrations, v => { R.vibrations = v; maj(); }, 0, 1, 0.1),
       curseur('Secousses d’écran', () => R.secousses, v => { R.secousses = v; maj(); }, 0, 1, 0.1),
       bascule('Sans flash', () => R.sansFlash, v => { R.sansFlash = v; maj(); }, 'Supprime flashs blancs et clignotements ; les télégraphes restent visibles.'),
       bascule('Mode confort', () => R.confort, v => { R.confort = v; maj(); }, 'Animations plus courtes, moins de particules, sans ralenti décoratif.'),
       bascule('Éclairage dynamique', () => R.eclairage !== false, v => { R.eclairage = v; maj(); }, 'Lumières, halos et poussières d’ambiance (décoratifs). À couper sur une machine modeste.'),
+      { label: 'Manette', entete: true, inactif: true },
       curseur('Zone morte stick gauche', () => R.zoneMorteG, v => { R.zoneMorteG = v; maj(); }, 0.05, 0.4, 0.01, v => formatNombre(v)),
       curseur('Zone morte stick droit', () => R.zoneMorteD, v => { R.zoneMorteD = v; maj(); }, 0.05, 0.4, 0.01, v => formatNombre(v)),
       curseur('Courbe du déplacement', () => R.courbeG, v => { R.courbeG = v; maj(); }, 0.6, 2, 0.1, v => formatNombre(v)),
       curseur('Seuil de visée', () => R.seuilVisee, v => { R.seuilVisee = v; if (R.seuilRepos > v - 0.05) R.seuilRepos = arrondi(v - 0.1, 2); maj(); }, 0.25, 0.9, 0.05, v => formatNombre(v)),
       curseur('Hystérésis diagonale', () => R.hysteresisAngle, v => { R.hysteresisAngle = v; maj(); }, 0, 25, 1, v => v + '°'),
       choix('Profil de tir', [['stick+boutons', 'Stick + boutons (Isaac)'], ['stick+croix', 'Stick droit + croix'], ['stick', 'Stick droit'], ['croix', 'Croix directionnelle']], () => R.profilTir, v => { R.profilTir = v; maj(); }, 'Boutons : en jeu, les quatre boutons de face tirent comme dans Isaac ; interagir, description et déposer passent sur la croix. Les menus ne changent pas.'),
+      { label: 'Jeu et affichage', entete: true, inactif: true },
       bascule('Descriptions automatiques', () => R.descriptionsAuto !== false, v => { R.descriptionsAuto = v; maj(); }, 'Comme le mod « External Item Descriptions » d’Isaac : la fiche d’un objet proche s’affiche d’elle-même. Sinon, maintenir le bouton Description.'),
       bascule('Tir chargé automatique', () => R.chargeAuto, v => { R.chargeAuto = v; maj(); }, 'À pleine charge, l’attaque part seule tant que la visée est maintenue (même cycle minimal).'),
       bascule('Statistiques à l’écran', () => R.afficherStats, v => { R.afficherStats = v; maj(); }),
       bascule('Chiffres de dégâts', () => R.chiffresDegats, v => { R.chiffresDegats = v; maj(); }),
       choix('Mise à l’échelle', [['entiere', 'Entière (nette)'], ['ajustee', 'Ajustée à l’écran']], () => R.echelle, v => { R.echelle = v; maj(); }),
+      { label: 'Autres réglages', entete: true, inactif: true },
       { label: 'Commandes…', action: () => Scenes.empiler(SceneCommandes) },
       { label: 'Plein écran', action: () => { try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch (e) { /* refusé */ } } },
       { label: 'Profil…', action: () => Scenes.empiler(SceneProfil) },
-    ], { visibles: 18 });
+    ], { visibles: 17 });
   },
   maj() { this.menu.maj(); if (Entrees.menuRetour()) { Son.jouer('annuler'); Scenes.depiler(); } },
   rendre(g, actif) { if (Scenes.pile[0] === SceneJeu) { g.fillStyle = 'rgba(6,4,10,0.6)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); } else fondMenu(g); cadreMenu(g, 110, 6, 420, 334, 'Options'); this.menu.rendre(g, 130, 34, 380, actif); aideBoutons(g, [['interagir', 'Modifier'], ['retour', 'Retour']]); },

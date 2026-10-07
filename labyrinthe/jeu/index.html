@@ -9022,14 +9022,25 @@ function spriteRamassable(type, extra) {
 const ICONES = {};
 function preparerIcones() {
   const P = (L, col) => contourner(peindre(L, col));
-  const forme = ['.xx.xx.', 'xxxxxxx', 'xxxxxxx', 'xxxxxxx', '.xxxxx.', '..xxx..', '...x...'];
-  const coeur = (plein, demi, col, fond) => { const L = forme.map((r, y) => r.split('').map((ch, x) => ch !== 'x' ? '.' : (plein || (demi && x < 4)) ? (x === 1 && y <= 2 ? 'l' : 'a') : 'f').join('')); return P(L, { a: col, l: nuancer(col, 1.5), f: fond || '#2a1c24' }); };
-  ICONES.vit = [coeur(false, false, '#d8303a'), coeur(false, true, '#d8303a'), coeur(true, false, '#d8303a')];
-  ICONES.os = [coeur(false, false, '#e8e0cc', '#8a8070'), coeur(false, true, '#d8303a', '#e8e0cc'), coeur(true, false, '#d8303a', '#e8e0cc')];
-  ICONES.bleu = [null, coeur(false, true, '#4a8ae8', 'rgba(0,0,0,0)'), coeur(true, false, '#4a8ae8')];
-  ICONES.noir = [null, coeur(false, true, '#6a2a8a', 'rgba(0,0,0,0)'), coeur(true, false, '#6a2a8a')];
-  ICONES.cicatrice = P(['.xx.xx.', 'xkxxxkx', 'xxkxkxx', 'xxxkxxx', '.xkxkx.', '..kxk..', '...x...'].map(r => r.replace(/x/g, 'g')), { g: '#5a4a50', k: '#1c1420' });
-  ICONES.partiel = P(['.ww....', 'wwww...', 'wwkw...', 'wwkw...', '.wkw...', '..ww...', '...w...'], { w: '#f0ecdc', k: '#c8a040' });
+  // cœurs de 9 × 8 modelés : reflet en haut à gauche, ombre en bas à droite ; contenant vide sombre
+  const forme = ['.xx...xx.', 'xxxx.xxxx', 'xxxxxxxxx', 'xxxxxxxxx', '.xxxxxxx.', '..xxxxx..', '...xxx...', '....x....'];
+  const vide = (x, y) => y < 0 || y >= forme.length || x < 0 || x >= 9 || forme[y][x] !== 'x';
+  const coeur = (plein, demi, col, fond, bord) => {
+    const L = forme.map((r, y) => r.split('').map((ch, x) => {
+      if (ch !== 'x') return '.';
+      if (bord && (vide(x - 1, y) || vide(x + 1, y) || vide(x, y - 1) || vide(x, y + 1))) return 'o';
+      if (!(plein || (demi && x < 4.5))) return fond ? (y <= 1 || (y === 2 && (x === 1 || x === 7)) ? 'g' : 'f') : '.';
+      if ((x === 1 || x === 2) && y === 1 || x === 1 && y === 2) return 'l';
+      return vide(x + 1, y) || vide(x, y + 1) ? 'd' : 'a';
+    }).join(''));
+    return P(L, { a: col, l: nuancer(col, 1.55), d: nuancer(col, 0.68), f: fond || '#2a1c24', g: nuancer(fond || '#2a1c24', 1.25), o: bord });
+  };
+  ICONES.vit = [coeur(false, false, '#e0303c', '#2c1a22'), coeur(false, true, '#e0303c', '#2c1a22'), coeur(true, false, '#e0303c')];
+  ICONES.os = [coeur(false, false, '#e0303c', '#8a7e6e', '#efe6d2'), coeur(false, true, '#e0303c', '#8a7e6e', '#efe6d2'), coeur(true, false, '#e0303c', null, '#efe6d2')];
+  ICONES.bleu = [null, coeur(false, true, '#4a8ae8'), coeur(true, false, '#4a8ae8')];
+  ICONES.noir = [null, coeur(false, true, '#7a3a9a'), coeur(true, false, '#7a3a9a')];
+  ICONES.cicatrice = P(forme.map((r, y) => r.split('').map((ch, x) => ch !== 'x' ? '.' : (x === y + 1 || x === 7 - y) && y > 0 && y < 7 ? 'k' : 'g').join('')), { g: '#5a4a52', k: '#1c1420' });
+  ICONES.partiel = P(['.ww......', 'wwww.....', 'wwkw.....', 'wwkw.....', '.wkw.....', '..ww.....', '...w.....'], { w: '#f0ecdc', k: '#c8a040' });
   ICONES.ryo = spriteRamassable('ryo'); ICONES.cle = spriteRamassable('cle'); ICONES.explosif = spriteRamassable('explosif');
   ICONES.cadenas = P(['.kkk.', 'k...k', 'k...k', 'yyyyy', 'yykyy', 'yykyy', 'yyyyy'], { k: '#c8c8d0', y: '#e8c050' });
   ICONES.coeurBarre = P(['.rr.rr.', 'rrrrrrk', 'rrrrkrr', 'rrrkrrr', '.rkrrr.', '..rrr..', '...r...'], { r: '#d8303a', k: '#f0f0f0' });
@@ -12297,7 +12308,7 @@ function eveiller(J, v) {
   J.transformations.push(v.id); recalculer(J);
   for (const e of v.effets || []) appliquerEffetImmediat(J, e, v);
   recalculer(J);
-  annoncer({ t: 0, nom: 'Éveil — ' + v.nom, desc: v.desc, transformation: true });
+  annoncer({ t: 0, nom: 'Éveil — ' + v.nom, desc: v.desc, transformation: true, id: v.id });
   G.effets.push({ type: 'onde', x: J.x, y: J.y - 10, r: 120, age: 0, duree: 0.6, couleur: '#ffe8a0' }); Son.jouer('transformation'); secousse(3, null);
   evenement('eveil', { id: v.id }); Progression.decouvrir(v.id);
 }
@@ -12762,7 +12773,7 @@ function prendreTalisman(J, id) {
   if (J.talisman && J.maxTalismans > 1 && !J.talisman2) J.talisman2 = J.talisman;
   else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; }
   J.talisman = id; recalculer(J); Son.jouer('objet_mineur');
-  annoncer({ t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true });
+  annoncer({ t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true, id });
   Progression.decouvrir(id);
 }
 
@@ -13083,7 +13094,7 @@ function retirerPiedestalVide() { /* les piédestaux vides restent visibles (lec
 function animationObjet(d) {
   G.enAnimationObjet = { d, t: 0, duree: G.reglages.confort ? 0.55 : 0.8 };
   G.joueur.etat = 'objet';
-  annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: false });
+  annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: false, id: d.id });
   Son.jouer('objet'); Entrees.vibrer('objet');
 }
 function majAnimationObjet(dt) {
@@ -13641,7 +13652,7 @@ function utiliserPoche() {
   const c = J.poches[0]; const d = INDEX[c.id]; if (!d) { J.poches.shift(); return; }
   let garder = false;
   if (c.type === 'pilule') { garder = !!prendrePilule(J, c); }
-  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true }); }
+  else { const f = EFFETS_CONSOMMABLES[d.effet]; if (f) { const r = f(J, d.params || {}); if (r === false) { Son.jouer('refus'); return; } } Son.jouer('sceau'); annoncer({ t: 0, nom: d.nom, desc: d.desc, mineur: true, id: d.id }); }
   if (aTalisman(J, 'TAL_031') && Math.random() < 0.15) garder = true;
   if (!garder) J.poches.shift();
   evenement('consommable_utilise', { id: c.id });
@@ -13960,7 +13971,7 @@ function annoncerSynergies(J) {
     J.synergiesVues.push(s.id);
     if (Progression.profil && !Progression.profil.decouverts.includes(s.id)) { Progression.decouvrir(s.id); Progression.compteur('synergies', 1); }
     if (s.type === 'fusion') Progression.verifier({ type: 'etat', nom: 'fusion' });
-    if (G.partie && G.joueur === J) { annoncer({ t: 0, nom: 'Synergie : ' + s.nom, desc: s.desc, synergie: true, mineur: !(s.effets && s.effets.length) }); Son.jouer('sceau'); }
+    if (G.partie && G.joueur === J) { annoncer({ t: 0, nom: 'Synergie : ' + s.nom, desc: s.desc, synergie: true, mineur: !(s.effets && s.effets.length), id: s.id }); Son.jouer('sceau'); }
   }
 }
 // Attraction magnétique (Jiton) : tire les ennemis proches vers un point
@@ -13988,7 +13999,7 @@ function rayonJinton(J, a, deg) {
 }
 const COUL_STATUTS = { confus: '#c8a0ff', immobilise: '#ffe080', ralenti: '#80c8ff', poison: '#8ae05a', brulure: '#ff8a3a', gel: '#bfe8ff', charme: '#ff8ac8', peur: '#b0b0b8' };
 function annoncerTransformation(t) {
-  annoncer({ t: 0, nom: t.nom, desc: t.desc, transformation: true });
+  annoncer({ t: 0, nom: t.nom, desc: t.desc, transformation: true, id: t.id });
   G.effets.push({ type: 'transformation', x: G.joueur.x, y: G.joueur.y - 12, age: 0, duree: 1.0 });
   Son.jouer('transformation'); secousse(5, null);
 }
@@ -15587,6 +15598,8 @@ function bandeau(g, x, y, w, h, accent, fond = 'rgba(8,6,12,0.86)') {
   losange(g, x + w / 2, y, accent); losange(g, x + w / 2, y + h - 1, accent);
 }
 let _traceBoss = null;
+let _crane = null;
+function pictoCrane() { return _crane || (_crane = contourner(avecMarge(peindre(['.wwwww.', 'wwwwwww', 'wkkwkkw', 'wkkwkkw', 'wwwkwww', '.wwwww.', '.w.w.w.'], { w: '#efe6d2', k: '#3a1420' }), 1), '#140e18')); }
 // Compteurs qui « sautent » quand ils changent : { b: 0 → 1 → 0 en 0,3 s, s: +1 gain, −1 perte }
 let _hudPartie = null; const _hud = {};
 function bosseHUD(cle, v) {
@@ -15595,78 +15608,158 @@ function bosseHUD(cle, v) {
   if (v !== h.v) { h.s = v > h.v ? 1 : -1; h.v = v; h.t = G.temps; }
   const k = (G.temps - h.t) / 0.3; return k >= 0 && k < 1 ? { b: Math.sin(k * Math.PI), s: h.s } : null;
 }
+// Portrait du personnage (pause, inventaire, mort) : dessiné de face dans une petite toile, affiché ×2
+const _portraits = {};
+function portraitPerso(cle) {
+  if (_portraits[cle]) return _portraits[cle];
+  const c = toile(36, 44), g = ctxDe(c); dessinerPerso(g, cle, 18, 41, { dirCorps: 'bas', dirTete: 'bas', frame: 0, etatTete: 'normal' });
+  return (_portraits[cle] = c);
+}
+// ── Éléments du HUD ──
+// Texte cerné de sombre : lisible sur n'importe quel sol, sans plaque
+function texteHUD(g, t, x, y, c, o = {}) { Police.ecrire(g, t, x, y, c, Object.assign({ contour: '#140e18' }, o)); }
+// Écrin laqué (technique, talisman, poche) : bord sombre, liseré d'or chaud, fond dégradé, coins sertis
+function ecrinHUD(g, x, y, t, accent) {
+  g.fillStyle = 'rgba(0,0,0,0.45)'; g.fillRect(x + 1, y + 2, t, t);
+  g.fillStyle = '#0c0810'; g.fillRect(x, y, t, t);
+  const gr = g.createLinearGradient(0, y, 0, y + t); gr.addColorStop(0, '#3a2834'); gr.addColorStop(1, '#170f17'); g.fillStyle = gr; g.fillRect(x + 1, y + 1, t - 2, t - 2);
+  g.fillStyle = accent || '#7a5a34'; g.fillRect(x + 1, y + 1, t - 2, 1); g.fillRect(x + 1, y + 1, 1, t - 2);
+  g.fillStyle = accent ? nuancer(accent, 0.6) : '#2a1a22'; g.fillRect(x + 1, y + t - 2, t - 2, 1); g.fillRect(x + t - 2, y + 2, 1, t - 3);
+  g.fillStyle = accent || '#e0b860'; for (const [cx, cy, dx, dy] of [[x, y, 1, 1], [x + t - 1, y, -1, 1], [x, y + t - 1, 1, -1], [x + t - 1, y + t - 1, -1, -1]]) { g.fillRect(cx, cy, 1, 1); g.fillRect(cx + dx, cy, 1, 1); g.fillRect(cx, cy + dy, 1, 1); }
+}
+// Jauge de la technique : segments de charge, ou temps de recharge ; or quand elle est prête, orange au-delà
+function jaugeActif(g, x, y, l, h, J, pret) {
+  const d = INDEX[J.actif.id];
+  g.fillStyle = '#0c0810'; g.fillRect(x, y, l, h); g.fillStyle = '#1e1622'; g.fillRect(x + 1, y + 1, l - 2, h - 2);
+  const H = h - 2, X = x + 1, L = l - 2, Y = y + 1, plein = pret ? '#f0c848' : '#4a9ae8', clair = pret ? '#fff4b0' : '#a8d8ff', sombre = pret ? '#a07818' : '#2a5aa8';
+  const barre = (yb, hb, c1, c2, c3) => { g.fillStyle = c1; g.fillRect(X, yb, L, hb); g.fillStyle = c2; g.fillRect(X, yb, 1, hb); g.fillStyle = c3; g.fillRect(X + L - 1, yb, 1, hb); };
+  if (d.recharge) { const k = Math.min(1, (J.actif.temps || 0) / d.recharge), hb = Math.round(H * k); if (hb > 0) barre(Y + H - hb, hb, plein, clair, sombre); }
+  else if (d.unique) barre(Y, H, '#f0c848', '#fff4b0', '#a07818');
+  else {
+    const max = chargesMax(d), n = Math.min(max, J.actif.charges), hs = H / max;
+    for (let k = 0; k < max; k++) { const yb = Math.round(Y + H - (k + 1) * hs), hb = Math.max(1, Math.round(hs) - 1); if (k < n) barre(yb + 1, hb, plein, clair, sombre); else { g.fillStyle = '#2c2434'; g.fillRect(X, yb + 1, L, hb); } }
+    if (J.actif.charges > max) { const hb = Math.round(H * Math.min(1, (J.actif.charges - max) / max)); barre(Y + H - hb, hb, '#ff9a3a', '#ffd0a0', '#b0581a'); }
+  }
+}
+// Pictogrammes 7 × 7 des statistiques et des chances d'opportunité
+const PICTOS_HUD = {
+  degats: [['.....ll', '....lal', '...lal.', '..lal..', '.bal...', 'bbb....', '.b.....'], { l: '#f4f8ff', a: '#a8b4c4', b: '#c8343a' }],
+  cadence: [['yy..yy.', '.yy..yy', '..yy..y', '.yy..yy', 'yy..yy.'], { y: '#f8d040' }],
+  portee: [['....c..', '....cc.', 'c.c.ccc', '....cc.', '....c..'], { c: '#6ad8f0' }],
+  vitesseTir: [['...oo..', 'll.oooo', '...oooo', 'll.oooo', '...oo..'], { o: '#f8963a', l: '#ffd0a0' }],
+  vitesse: [['...bb..', '...bb..', '...bbb.', '...bbbb', '.bbbbbb', 'bbbbbbb', 'l.l.l..'], { b: '#6ad86a', l: '#c8ffc0' }],
+  chance: [['.gg.gg.', 'ggg.ggg', '.ggggg.', '...g...', '.ggggg.', 'ggg.ggg', '.gg.gg.'], { g: '#5ac85a' }],
+  pacte: [['..rrr..', '.rrkrr.', 'rrrkrrr', 'rrrkrrr', 'rrrkrrr', '.rrkrr.', '..rrr..'], { r: '#e03a3a', k: '#1c0810' }],
+  sanctuaire: [['.ooooo.', 'o.....o', '.ooooo.', '...w...', '..www..', '.wwwww.', '..www..'], { o: '#f8d050', w: '#f4f0ff' }],
+};
+const _pictos = {};
+function pictoHUD(nom) { return _pictos[nom] || (_pictos[nom] = contourner(avecMarge(peindre(...PICTOS_HUD[nom]), 1), '#140e18')); }
+// Statistiques (façon « Found HUD ») : pictogramme, valeur, variation récente en vert ou rouge
+let _statsPartie = null; const _statsMem = {};
+function valeursStats(J) { const S = J.stats; return [['degats', S.degats], ['cadence', S.cadence * J.profil.coefCadence], ['portee', S.portee], ['vitesseTir', S.vitesseTir], ['vitesse', S.vitesse], ['chance', S.chance]]; }
+const NOMS_STATS = { degats: 'Dégâts', cadence: 'Cadence', portee: 'Portée', vitesseTir: 'Vitesse des tirs', vitesse: 'Vitesse', chance: 'Chance', pacte: 'Pacte', sanctuaire: 'Sanctuaire' };
+function dessinerStats(g, J, x, y, o = {}) {
+  if (_statsPartie !== G.partie) { _statsPartie = G.partie; for (const k in _statsMem) delete _statsMem[k]; }
+  const pas = o.pas || 11, f = v => formatNombre(arrondi(v, 2)); let yy = y;
+  for (const [k, v] of valeursStats(J)) {
+    const M = _statsMem[k] || (_statsMem[k] = { v, t: -9, d: 0 }); if (Math.abs(v - M.v) > 1e-6) { M.d = v - M.v; M.v = v; M.t = G.temps; }
+    g.drawImage(pictoHUD(k), x - 1, yy - 1);
+    if (o.noms) texteHUD(g, NOMS_STATS[k], x + 11, yy, '#b8b0c8');
+    const vx = o.noms ? x + (o.largeur || 120) : x + 11; texteHUD(g, f(v), vx, yy, '#f4ecd8', o.noms ? { a: 'd' } : {});
+    const age = G.temps - M.t; if (age < 2.5 && !o.noms) { g.globalAlpha = Math.min(1, (2.5 - age) / 0.6); texteHUD(g, (M.d > 0 ? '+' : '−') + f(Math.abs(M.d)), vx + Police.largeur(f(v)) + 3, yy, M.d > 0 ? '#7af07a' : '#ff7a6a'); g.globalAlpha = 1; }
+    yy += pas;
+  }
+  // chances d'opportunité après le boss de l'étage (E §6), recalculées à chaque image
+  const O = chanceOpportunite(), pc = v => Math.round(v * 100) + ' %';
+  yy += 2; g.fillStyle = 'rgba(255,240,220,0.14)'; g.fillRect(x, yy - 3, o.noms ? (o.largeur || 120) : 46, 1);
+  for (const [k, v, c] of [['pacte', O.pacte, '#ff8a8a'], ['sanctuaire', O.sanctuaire, '#ffe08a']]) {
+    g.drawImage(pictoHUD(k), x - 1, yy - 1);
+    if (o.noms) texteHUD(g, NOMS_STATS[k], x + 11, yy, '#b8b0c8');
+    texteHUD(g, pc(O.chance > 0 ? v : 0), o.noms ? x + (o.largeur || 120) : x + 11, yy, O.chance > 0 ? c : '#8a8098', o.noms ? { a: 'd' } : {});
+    yy += pas;
+  }
+  return yy;
+}
+// Voile très doux derrière la colonne gauche et la minicarte (grandes salles : sol clair sous le HUD)
+let _voileHUD = null;
+function voileHUD(g) {
+  if (!_voileHUD) { const c = toile(ECRAN_L, ECRAN_H), v = ctxDe(c); const gl = v.createLinearGradient(0, 0, 90, 0); gl.addColorStop(0, 'rgba(8,5,12,0.42)'); gl.addColorStop(1, 'rgba(8,5,12,0)'); v.fillStyle = gl; v.fillRect(0, 0, 90, ECRAN_H); const gh = v.createLinearGradient(0, 0, 0, 44); gh.addColorStop(0, 'rgba(8,5,12,0.4)'); gh.addColorStop(1, 'rgba(8,5,12,0)'); v.fillStyle = gh; v.fillRect(0, 0, ECRAN_L, 44); _voileHUD = c; }
+  g.drawImage(_voileHUD, 0, 0);
+}
+// Pastille de touche (« RT », « Q »…) à côté d'une commande
+function pastilleTouche(g, t, x, y) { const w = Police.largeur(t) + 6; g.fillStyle = '#0c0810'; g.fillRect(x, y, w, 11); g.fillStyle = '#3a2c44'; g.fillRect(x + 1, y + 1, w - 2, 9); g.fillStyle = '#5a4a68'; g.fillRect(x + 1, y + 1, w - 2, 1); Police.ecrire(g, t, x + 3, y + 2, '#f0d8a0'); return w; }
 function dessinerHUD(g) {
   const J = G.joueur; if (!J) return;
   const S = J.sante, calme = G.reglages.sansFlash;
-  // santé et actif : plaque haute
-  const nCases = S.cont.length + Math.ceil(S.prot.length / 2) + S.cicatrices, rangs = Math.max(1, Math.ceil(nCases / 6));
-  plaqueHUD(g, 1, 1, 98, Math.max(34, 8 + rangs * 9));
-  if (santeTotale(S) <= 2 && !calme && J.etat !== 'mort') { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.25 + 0.2 * Math.sin(G.temps * 5); g.drawImage(halo('#ff2030', false, 50), 26, -14, 50, 40); g.restore(); }
-  // cœurs : tremblent à la perte, s'illuminent au gain
+  voileHUD(g);
+  // ── technique : écrin laqué, jauge à segments ; lueur et étincelles quand elle est prête ──
+  const pret = actifPret(J);
+  if (J.actif && pret && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.3 + 0.12 * Math.sin(G.temps * 4); g.drawImage(halo('#ffc850', false, 40), -5, -5, 44, 44); g.restore(); }
+  ecrinHUD(g, 3, 3, 30, pret ? '#e8c050' : null);
+  if (J.actif) {
+    g.drawImage(iconeObjet(J.actif.id), 8, 8); jaugeActif(g, 34, 3, 6, 30, J, pret);
+    if (pret && !calme) { const k = Math.floor(G.temps * 6) % 4, P = [[3, 3], [32, 3], [32, 32], [3, 32]][k]; g.fillStyle = '#fffbe0'; g.fillRect(P[0] - 1, P[1], 3, 1); g.fillRect(P[0], P[1] - 1, 1, 3); }
+  }
+  let yRes = 42;
+  if (J.actif2) { ecrinHUD(g, 3, 37, 22, null); g.drawImage(iconeObjet(J.actif2.id), 4, 38); yRes = 64; }
+  // ── santé : cœurs de 9 × 8, six par rangée ; tremblent à la perte, s'illuminent au gain ──
+  if (santeTotale(S) <= 2 && !calme && J.etat !== 'mort') { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.25 + 0.2 * Math.sin(G.temps * 5); g.drawImage(halo('#ff2030', false, 50), 34, -14, 54, 40); g.restore(); }
   const bs = bosseHUD('sante', santeTotale(S) + S.cont.length * 0.01), sx = bs && bs.s < 0 && !calme ? Math.round(Math.sin(G.temps * 70) * 2 * bs.b) : 0;
-  let i = 0; const pos = k => [38 + sx + (k % 6) * 9, 5 + Math.floor(k / 6) * 9];
+  let i = 0; const pos = k => [44 + sx + (k % 6) * 10, 4 + Math.floor(k / 6) * 10];
   for (const c of S.cont) { const [x, y] = pos(i++); const set = c.t === 'os' ? ICONES.os : ICONES.vit; g.drawImage(set[c.p], x, y); }
   for (let k = 0; k < S.prot.length; k += 2) { const [x, y] = pos(i++); const t = S.prot[k] === 'n' ? ICONES.noir : ICONES.bleu; g.drawImage(t[k + 1 < S.prot.length ? 2 : 1], x, y); }
   for (let k = 0; k < S.cicatrices; k++) { const [x, y] = pos(i++); g.drawImage(ICONES.cicatrice, x, y); }
   if (S.partiel) { const [x, y] = pos(0); g.drawImage(ICONES.partiel, x + 1, y); }
-  if (bs && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = (bs.s > 0 ? 0.45 : 0.35) * bs.b; g.drawImage(halo(bs.s > 0 ? '#ffe8a0' : '#ff3040', false, 64), 28, -16, 76, 50); g.restore(); }
-  if (G.degatsEnnemis >= 2) Police.ecrire(g, '×2', 38 + 6 * 9 + 4, 24, '#ff8a6a'); // rappel : coups d'un cœur entier
-  // actif : écrin biseauté, lueur quand il est prêt
-  g.fillStyle = '#0a0710'; g.fillRect(3, 3, 28, 28); g.fillStyle = '#241c30'; g.fillRect(4, 4, 26, 26); g.fillStyle = '#3a3048'; g.fillRect(4, 4, 26, 1); g.fillRect(4, 4, 1, 26); g.fillStyle = '#16101e'; g.fillRect(4, 29, 26, 1); g.fillRect(29, 4, 1, 26);
-  if (J.actif) {
-    const d = INDEX[J.actif.id]; const pret = actifPret(J);
-    if (pret && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = 0.3 + 0.12 * Math.sin(G.temps * 4); g.drawImage(halo('#ffc850', false, 40), -3, -3, 40, 40); g.restore(); }
-    g.drawImage(iconeObjet(d.id), 7, 7);
-    // jauge : segments de charge (pas des cœurs), ou temps
-    g.fillStyle = '#0a0710'; g.fillRect(32, 3, 6, 28); g.fillStyle = '#1e1828'; g.fillRect(33, 4, 4, 26);
-    if (d.recharge) { const k = (J.actif.temps || 0) / d.recharge; const h = Math.round(26 * k); g.fillStyle = pret ? '#f0d060' : '#5aa0e0'; g.fillRect(33, 30 - h, 4, h); g.fillStyle = pret ? '#fff4b0' : '#9ad0ff'; g.fillRect(33, 30 - h, 1, h); }
-    else if (d.unique) { g.fillStyle = '#f0d060'; g.fillRect(33, 4, 4, 26); g.fillStyle = '#fff4b0'; g.fillRect(33, 4, 1, 26); }
-    else { const max = chargesMax(d); const h = 26 / max; for (let k = 0; k < max; k++) { const plein = k < J.actif.charges; const y = Math.round(30 - (k + 1) * h) + 1, hh = Math.max(1, Math.round(h) - 1); g.fillStyle = plein ? (pret ? '#f0d060' : '#5aa0e0') : '#2a2436'; g.fillRect(33, y, 4, hh); if (plein) { g.fillStyle = pret ? '#fff4b0' : '#9ad0ff'; g.fillRect(33, y, 1, hh); } } if (J.actif.charges > max) { g.fillStyle = '#ff9a4a'; g.fillRect(33, 4, 4, Math.round(26 * (J.actif.charges - max) / max)); } }
-    if (pret) { g.fillStyle = '#f0d060'; g.fillRect(3, 3, 28, 1); g.fillRect(3, 30, 28, 1); g.fillRect(3, 3, 1, 28); g.fillRect(30, 3, 1, 28); if (!calme && Math.floor(G.temps * 3) % 2 === 0) { g.fillStyle = '#fffbe0'; g.fillRect(3, 3, 2, 2); g.fillRect(29, 29, 2, 2); } }
-  }
-  if (J.actif2) { g.fillStyle = '#0a0710'; g.fillRect(40, 23, 14, 14); g.fillStyle = '#241c30'; g.fillRect(41, 24, 12, 12); g.drawImage(iconeObjet(J.actif2.id), 37, 20, 20, 20); }
-  // ressources, compteurs de règle et statistiques : colonne gauche
+  if (bs && !calme) { g.save(); g.globalCompositeOperation = 'lighter'; g.imageSmoothingEnabled = true; g.globalAlpha = (bs.s > 0 ? 0.45 : 0.35) * bs.b; g.drawImage(halo(bs.s > 0 ? '#ffe8a0' : '#ff3040', false, 64), 34, -16, 80, 50); g.restore(); }
+  if (G.degatsEnnemis >= 2) texteHUD(g, '×2', 44 + Math.min(6, i) * 10 + 2, 6, '#ff8a6a'); // rappel : coups d'un cœur entier
+  // ── ressources : icône et compteur cernés, sans plaque ──
+  const res = [[ICONES.ryo, J.ryo], [ICONES.explosif, J.explosifsDores ? 99 : J.explosifs], [ICONES.cle, J.clesDorees ? 99 : J.cles]];
+  res.forEach(([ic, n], k) => {
+    const b = bosseHUD('res' + k, n), dy = b ? -Math.round(3 * b.b) : 0, y = yRes + k * 13;
+    g.drawImage(ic, 5 + Math.floor((11 - ic.width) / 2), y + Math.floor((9 - ic.height) / 2) + dy);
+    texteHUD(g, String(n).padStart(2, '0'), 19, y + dy, b && b.b > 0.15 ? (b.s > 0 ? '#ffd040' : '#ff6a5a') : n > 0 ? '#f4ecd8' : '#9a90a8');
+  });
+  // ── compteurs de règle du personnage ──
   const lignes = [];
   if (J.def.regleCode === 'controle_chakra') lignes.push(['Force ' + J.force + '/' + plafondForce(J), '#ff9ac0']);
   if (J.def.regleCode === 'sceau_centaine') lignes.push(['Sceau ' + J.sceau + '/' + plafondSceau(J), '#ff9ac0']);
   if (J.def.regleCode === 'clones_ressource') lignes.push(['Clones ' + J.clones + '/' + plafondClones(J), '#ffc060']);
   if (J.coeursReserve > 0) lignes.push(['Cœurs ' + J.coeursReserve, '#6ad060']);
   if (J.def.regleCode === 'trois_marionnettes') lignes.push([{ karasu: 'Karasu', kuroari: 'Kuroari', sanshouo: 'Sanshōuo' }[J.marionnette || 'karasu'], '#c0a0ff']);
-  const stats = G.reglages.afficherStats; const hCol = 40 + lignes.length * 11 + (stats ? 70 : 0);
-  plaqueHUD(g, 1, 37, 62, hCol);
-  const res = [[ICONES.ryo, J.ryo], [ICONES.explosif, J.explosifsDores ? 99 : J.explosifs], [ICONES.cle, J.clesDorees ? 99 : J.cles]];
-  res.forEach(([ic, n], k) => {
-    const b = bosseHUD('res' + k, n), dy = b ? -Math.round(3 * b.b) : 0;
-    g.drawImage(ic, 6, 42 + k * 12 - (ic.height > 10 ? 2 : 0) + dy);
-    Police.ecrire(g, String(n).padStart(2, '0'), 19, 43 + k * 12 + dy, b && b.b > 0.15 ? (b.s > 0 ? '#ffd040' : '#ff6a5a') : n > 0 ? '#f4ecd8' : '#8a8098');
-  });
-  let yx = 79;
-  for (const [t, c] of lignes) { Police.ecrire(g, t, 6, yx, c); yx += 11; }
-  if (stats) { g.fillStyle = '#3a3048'; g.fillRect(6, yx - 2, 52, 1); dessinerStats(g, J, 6, yx + 2); }
-  // talisman / poche
-  if (J.talisman) { plaqueHUD(g, 2, 328, J.talisman2 ? 48 : 26, 28, '#5a4a3a'); g.drawImage(iconeObjet(J.talisman), 5, 332); if (J.talisman2) g.drawImage(iconeObjet(J.talisman2), 27, 332); }
+  let yx = yRes + 42;
+  for (const [t, c] of lignes) { texteHUD(g, t, 5, yx, c); yx += 11; }
+  // ── statistiques et chances de pacte / sanctuaire ──
+  if (G.reglages.afficherStats) dessinerStats(g, J, 6, yx + 4);
+  // ── talismans (bas gauche) et poche (bas droite) ──
+  if (J.talisman) { ecrinHUD(g, 3, 332, 24, '#a07a4a'); g.drawImage(iconeObjet(J.talisman), 5, 334); if (J.talisman2) { ecrinHUD(g, 29, 332, 24, '#a07a4a'); g.drawImage(iconeObjet(J.talisman2), 31, 334); } }
   if (J.poches.length) {
     const c = J.poches[0]; const s = c.type === 'pilule' ? spriteRamassable('pilule', G.partie.pilules.indexOf(c.id)) : iconeObjet(c.id);
-    const nom = c.type === 'pilule' ? nomPilule(c) : INDEX[c.id].nom; const w = Police.largeur(nom) + 34;
-    plaqueHUD(g, 638 - w, 332, w, 24, '#5a4a3a');
-    g.drawImage(s, 622 - s.width / 2, 338); Police.ecrire(g, nom, 612, 340, '#d8d0e0', { a: 'd' });
-    if (J.poches.length > 1) Police.ecrire(g, '+' + (J.poches.length - 1), 634, 322, '#a0a0b0', { a: 'd' });
+    const nom = c.type === 'pilule' ? nomPilule(c) : INDEX[c.id].nom;
+    ecrinHUD(g, 613, 332, 24, '#6aa07a'); g.drawImage(s, 625 - Math.round(s.width / 2), 344 - Math.round(s.height / 2));
+    texteHUD(g, nom, 608, 341, '#f0e8f8', { a: 'd' });
+    const tch = Entrees.libelle('poche'); if (tch) pastilleTouche(g, tch, 608 - Police.largeur(nom) - Police.largeur(tch) - 12, 339);
+    if (J.poches.length > 1) texteHUD(g, '+' + (J.poches.length - 1), 636, 322, '#c8c0d8', { a: 'd' });
   }
   dessinerMinicarte(g, 568, 6, false);
-  // boss : barre ornée, traîne claire des dégâts récents
+  // ── boss : cadre orné, crâne, crans aux seuils de phase, traîne claire des dégâts récents ──
   const boss = G.ennemis.filter(e => e.boss && !e.mort);
   if (boss.length) {
-    const tot = boss.reduce((a, e) => a + e.pv, 0), max = boss.reduce((a, e) => a + e.pvMax, 0); const w = 280, x0 = 320 - w / 2, y0 = 342;
+    const tot = boss.reduce((a, e) => a + e.pv, 0), max = boss.reduce((a, e) => a + e.pvMax, 0); const w = 272, x0 = 320 - w / 2 + 6, y0 = 343;
     if (!_traceBoss || _traceBoss.max !== max) _traceBoss = { max, v: tot };
     _traceBoss.v = tot < _traceBoss.v ? Math.max(tot, _traceBoss.v - max * 0.003 - (_traceBoss.v - tot) * 0.035) : tot;
-    plaqueHUD(g, x0 - 6, y0 - 4, w + 12, 13, '#7a2a36');
-    g.fillStyle = '#2a0c14'; g.fillRect(x0, y0, w, 5);
-    g.fillStyle = '#f4dcc0'; g.fillRect(x0, y0, Math.round(w * _traceBoss.v / max), 5);
-    const pw = Math.round(w * tot / max); g.fillStyle = '#c8283a'; g.fillRect(x0, y0, pw, 5); g.fillStyle = '#ff7a64'; g.fillRect(x0, y0, pw, 1); g.fillStyle = '#7a1024'; g.fillRect(x0, y0 + 4, pw, 1);
-    for (let k = 1; k < 4; k++) { g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x0 + Math.round(w * k / 4), y0, 1, 5); }
-    losange(g, x0 - 9, y0 + 2, '#e0b870'); losange(g, x0 + w + 8, y0 + 2, '#e0b870');
-    const C = boss[0].championBoss && CHAMPIONS_BOSS[boss[0].championBoss], nomB = boss[0].def.nom + (C ? ' · champion ' + C.nom : '');
-    Police.ecrire(g, nomB, 320, 329, C ? nuancer(C.couleur, 1.3) : '#f8e0d4', { a: 'c', contour: '#1c1420' });
+    const C = boss[0].championBoss && CHAMPIONS_BOSS[boss[0].championBoss], acc = C ? C.couleur : '#c8a060';
+    g.fillStyle = 'rgba(0,0,0,0.5)'; g.fillRect(x0 - 17, y0 - 3, w + 22, 12);
+    g.fillStyle = '#0c0810'; g.fillRect(x0 - 1, y0 - 1, w + 2, 8); g.fillStyle = '#2a0c14'; g.fillRect(x0, y0, w, 6);
+    g.fillStyle = '#f4dcc0'; g.fillRect(x0, y0, Math.round(w * _traceBoss.v / max), 6);
+    const pw = Math.round(w * tot / max), gb = g.createLinearGradient(0, y0, 0, y0 + 6); gb.addColorStop(0, '#ff6a5a'); gb.addColorStop(0.35, '#d8283a'); gb.addColorStop(1, '#7a1024'); g.fillStyle = gb; g.fillRect(x0, y0, pw, 6);
+    g.fillStyle = 'rgba(255,220,200,0.5)'; g.fillRect(x0, y0, pw, 1);
+    const ph = boss.length === 1 && boss[0].def.phases ? boss[0].def.phases.map(p => p.seuil).filter(v => v > 0 && v < 1) : [0.25, 0.5, 0.75];
+    for (const v of ph) { const xx = x0 + Math.round(w * v); g.fillStyle = 'rgba(0,0,0,0.55)'; g.fillRect(xx, y0, 1, 6); g.fillStyle = acc; g.fillRect(xx, y0 - 2, 1, 2); }
+    g.fillStyle = acc; g.fillRect(x0 - 1, y0 - 2, w + 2, 1); g.fillRect(x0 - 1, y0 + 7, w + 2, 1);
+    // crâne à gauche, losange à droite
+    g.drawImage(pictoCrane(), x0 - 16, y0 - 3); losange(g, x0 + w + 5, y0 + 3, acc);
+    const nomB = boss[0].def.nom + (C ? ' · champion ' + C.nom : '');
+    texteHUD(g, nomB, 320, y0 - 13, C ? nuancer(C.couleur, 1.3) : '#f8e0d4', { a: 'c' });
   } else _traceBoss = null;
   // bannières et panneaux
   if (G.banniere && !bannieresRetenues()) dessinerBanniere(g);
@@ -15683,17 +15776,24 @@ function dessinerHUD(g) {
   if (Son.suspendu()) inviteSon(g, 320, 4);
   if (Entrees.maintien.deposer > 0.15 && (J.talisman || J.poches.length)) { const k = Math.min(1, Entrees.maintien.deposer / DUREE_DEPOT); plaqueHUD(g, 282, 244, 76, 28); Police.ecrire(g, 'Déposer…', 320, 250, '#f0e0c0', { a: 'c' }); g.fillStyle = '#14101c'; g.fillRect(290, 262, 60, 4); g.fillStyle = '#f0e0c0'; g.fillRect(290, 262, Math.round(60 * k), 4); }
 }
-function dessinerStats(g, J, x, y) {
-  const S = J.stats; const L = [['Dég', formatNombre(arrondi(S.degats, 2))], ['Cad', formatNombre(arrondi(S.cadence * J.profil.coefCadence, 2))], ['Por', formatNombre(arrondi(S.portee, 1))], ['VTi', formatNombre(arrondi(S.vitesseTir, 1))], ['Vit', formatNombre(arrondi(S.vitesse, 2))], ['Cha', formatNombre(S.chance)]];
-  L.forEach(([k, v], i) => { Police.ecrire(g, k, x, y + i * 10, '#8a8098'); Police.ecrire(g, v, x + 24, y + i * 10, '#e8e0f0'); });
+// Notification (mission accomplie, secret découvert) : glisse depuis la droite sous la minicarte
+function dessinerNotification(g, n) {
+  const k = Math.min(1, n.t / 0.25), sortie = n.t > 2.7 ? (n.t - 2.7) / 0.3 : 0, w = Math.max(150, Police.largeur(n.nom) + 40, Police.largeur(n.titre) + 40), x = Math.round(636 - w + (1 - k) * (w + 10) + sortie * (w + 10)), y = 100;
+  const secret = /secret/i.test(n.titre), acc = secret ? '#8ac8ff' : '#e8c050';
+  g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(x + 1, y + 2, w, 30); g.fillStyle = 'rgba(14,10,20,0.92)'; g.fillRect(x, y, w, 30);
+  g.fillStyle = acc; g.fillRect(x, y, 2, 30); g.fillStyle = nuancer(acc, 0.5); g.fillRect(x + 2, y, w - 2, 1); g.fillRect(x + 2, y + 29, w - 2, 1);
+  if (secret) { g.drawImage(pictoHUD('chance'), x + 8, y + 11); } else { g.fillStyle = acc; for (let i = 0; i < 5; i++) { const a = (i * 72 - 90) * Math.PI / 180; g.fillRect(Math.round(x + 13 + Math.cos(a) * 4), Math.round(y + 15 + Math.sin(a) * 4), 2, 2); } g.fillRect(x + 12, y + 14, 3, 3); }
+  Police.ecrire(g, n.titre, x + 24, y + 5, acc); Police.ecrire(g, n.nom, x + 24, y + 17, '#fff0d8');
 }
 function dessinerBanniere(g) {
   const B = G.banniere; const d = dureeBanniere(B); if (B.t > d) return;
   const a = B.t < 0.15 ? B.t / 0.15 : B.t > d - 0.4 ? (d - B.t) / 0.4 : 1;
   g.globalAlpha = a;
-  const y = B.transformation ? 130 : 84; const w = Math.max(Police.largeur(B.nom) * 2, Police.largeur(B.desc || '')) + 24;
+  const y = B.transformation ? 130 : 84; const e = Police.largeur(B.nom) * 2 > 420 ? 1 : 2, ic = B.id ? (String(B.id).startsWith('SYN_') ? iconeSynergie(B.id) : B.pilule ? null : iconeObjet(B.id)) : null;
+  const wNom = Police.largeur(B.nom) * e + (ic ? 26 : 0), w = Math.max(wNom, Police.largeur(B.desc || '')) + 24, cx = 320 + (ic ? 13 : 0);
   bandeau(g, 320 - w / 2 - 30, y - 7, w + 60, B.desc ? 38 : 26, B.transformation ? '#f0c040' : B.synergie ? '#5ae0d0' : B.pilule ? '#a0e0a0' : '#d8c8a0');
-  Police.ecrire(g, B.nom, 320, y, B.transformation ? '#ffe080' : B.synergie ? '#b8fff4' : '#fff4e0', { a: 'c', e: Police.largeur(B.nom) * 2 > 420 ? 1 : 2, contour: '#1c1420' });
+  if (ic) { const ix = Math.round(320 - wNom / 2) - 2, iy = y - 4 + (e === 2 ? 0 : -3); g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(ix, iy + 1, 21, 20); g.drawImage(ic, ix, iy); }
+  Police.ecrire(g, B.nom, cx, y, B.transformation ? '#ffe080' : B.synergie ? '#b8fff4' : '#fff4e0', { a: 'c', e, contour: '#1c1420' });
   if (B.desc) Police.ecrire(g, B.desc, 320, y + 20, '#c8c0d8', { a: 'c' });
   g.globalAlpha = 1;
 }
@@ -15840,7 +15940,7 @@ function dessinerFicheProche(g) {
   let x = 67, y = 40;
   if (couvre(x, y)) { x = 560 - w; if (couvre(x, y)) { x = 67; y = 326 - h; } }
   plaqueHUD(g, x, y, w, h, F.lisere);
-  g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x + 4, y + 4, 20, 20);
+  ecrinHUD(g, x + 3, y + 3, 22, F.lisere);
   if (F.icone) g.drawImage(F.icone, x + 4 + Math.floor((20 - F.icone.width) / 2), y + 4 + Math.floor((20 - F.icone.height) / 2));
   noms.forEach((t, k) => Police.ecrire(g, t, x + 28, y + 4 + k * 10, '#fff0d0'));
   const ty = y + 4 + noms.length * 10; Police.ecrire(g, F.type, x + 28, ty, '#9a90b0');
@@ -15892,7 +15992,13 @@ function dessinerMinicarte(g, x0, y0, etendue) {
   const cx = s0.cx >= 0 ? s0.cx : 6, cy = s0.cy >= 0 ? s0.cy : 6;
   const ox = etendue ? Math.round((x0 || 320) - 6.5 * cw) : x0, oy = etendue ? Math.round((y0 || 180) - 6.5 * ch) : y0; // étendue : (x0, y0) = centre
   const dx0 = etendue ? 0 : cx - 3, dy0 = etendue ? 0 : cy - 3;
-  if (!etendue) { plaqueHUD(g, ox - 5, oy - 5, n * cw + 10, n * ch + 22); if (G.etage.cfg) Police.ecrire(g, 'Étage ' + G.etage.numero, ox + n * cw / 2, oy + n * ch + 4, '#a898b8', { a: 'c' }); }
+  if (!etendue) {
+    const X = ox - 5, Y = oy - 5, W = n * cw + 10, H = n * ch + 10;
+    g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(X + 1, Y + 2, W, H); g.fillStyle = 'rgba(12,8,18,0.72)'; g.fillRect(X, Y, W, H);
+    g.fillStyle = '#5a4630'; g.fillRect(X + 2, Y, W - 4, 1); g.fillRect(X + 2, Y + H - 1, W - 4, 1); g.fillRect(X, Y + 2, 1, H - 4); g.fillRect(X + W - 1, Y + 2, 1, H - 4);
+    for (const [cx, cy] of [[X + 1, Y + 1], [X + W - 2, Y + 1], [X + 1, Y + H - 2], [X + W - 2, Y + H - 2]]) { g.fillStyle = '#c8a060'; g.fillRect(cx, cy, 1, 1); }
+    if (G.etage.cfg) texteHUD(g, 'Étage ' + G.etage.numero, ox + n * cw / 2, oy + n * ch + 8, '#c8bcd8', { a: 'c' });
+  }
   if (perdu) { Police.ecrire(g, '?', ox + n * cw / 2, oy + n * ch / 2 - 4, '#8a8098', { a: 'c' }); return; }
   for (const s of Object.values(E.salles)) {
     if (s.id === 'opp' || !(s.visitee || s.apercue)) continue;
@@ -15900,12 +16006,14 @@ function dessinerMinicarte(g, x0, y0, etendue) {
     for (const [i, j] of F.cel) {
       const gx = s.cx + i - dx0, gy = s.cy + j - dy0; if (gx < 0 || gy < 0 || gx >= n || gy >= n) continue;
       const x = ox + gx * cw, y = oy + gy * ch;
-      g.fillStyle = s === s0 ? '#f4ecfa' : s.visitee ? '#7a7090' : '#3a3448'; g.fillRect(x, y, cw - 1, ch - 1);
-      if (s !== s0 && s.visitee) { g.fillStyle = '#9a90b0'; g.fillRect(x, y, cw - 1, 1); }
+      g.fillStyle = s === s0 ? '#f6f0fc' : s.visitee ? '#7a7092' : '#3a3448'; g.fillRect(x, y, cw - 1, ch - 1);
+      if (s !== s0 && s.visitee) { g.fillStyle = '#a49ac0'; g.fillRect(x, y, cw - 1, 1); g.fillStyle = '#5a5272'; g.fillRect(x, y + ch - 2, cw - 1, 1); }
+      if (s !== s0 && !s.visitee) { g.fillStyle = '#4a4460'; g.fillRect(x, y, cw - 1, 1); }
       // fusion visuelle des cellules d'une grande salle
       if (F.cel.some(([a, b]) => a === i + 1 && b === j)) g.fillRect(x + cw - 1, y, 1, ch - 1);
       if (F.cel.some(([a, b]) => a === i && b === j + 1)) g.fillRect(x, y + ch - 1, cw - 1, 1);
     }
+    if (s === s0 && !etendue && !G.reglages.sansFlash) { const gx = s.cx - dx0, gy = s.cy - dy0; if (gx >= 0 && gy >= 0 && gx < n && gy < n) { g.globalAlpha = 0.35 + 0.25 * Math.sin(G.temps * 4); g.strokeStyle = '#fff8e0'; g.lineWidth = 1; g.strokeRect(ox + gx * cw - 1.5, oy + gy * ch - 1.5, cw + 2, ch + 2); g.globalAlpha = 1; } }
     const ic = ICONE_SALLE[s.type];
     if (ic && (s.visitee || s.apercue)) { const gx = s.cx - dx0, gy = s.cy - dy0; if (gx >= 0 && gy >= 0 && gx < n && gy < n) pictoSalle(g, s.type, ox + gx * cw + Math.floor(cw / 2), oy + gy * ch + Math.floor(ch / 2), ic, etendue); }
   }
@@ -16048,7 +16156,7 @@ const Scenes = {
 
 // ── Liste de menu générique ──
 function menuListe(items, o = {}) {
-  return { items, focus: 0, o,
+  return { items, focus: Math.max(0, items.findIndex(i => !i.cache && !i.inactif)), o,
     maj() {
       const it = this.items.filter(i => !i.cache); if (!it.length) return;
       if (Entrees.nav.dy) { let k = this.focus; do { k = (k + Entrees.nav.dy + this.items.length) % this.items.length; } while (this.items[k].cache || this.items[k].inactif); this.focus = k; Son.jouer('menu'); }
@@ -16068,6 +16176,7 @@ function menuListe(items, o = {}) {
       }
       L.forEach(i => {
         const it = this.items[i];
+        if (it.entete) { yy += 3; Police.ecrire(g, it.label, x, yy, '#d8b070'); const w = Police.largeur(it.label); g.fillStyle = '#4a3a2c'; g.fillRect(x + w + 6, yy + 4, largeur - w - 6, 1); losange(g, x + largeur, yy + 4, '#8a6a40', 1); yy += 13; return; }
         const f = i === this.focus && actif; const h = it.hauteur || 14;
         if (f) { const gr = g.createLinearGradient(x - 6, 0, x + largeur + 6, 0); gr.addColorStop(0, 'rgba(240,190,100,0.3)'); gr.addColorStop(1, 'rgba(240,190,100,0.03)'); g.fillStyle = gr; g.fillRect(x - 6, yy - 3, largeur + 12, h); g.fillStyle = '#f0c870'; g.fillRect(x - 6, yy - 3, 2, h); losange(g, x - 11, yy + 3, '#ffe0a0', 2); }
         const col = it.inactif ? '#5a5268' : f ? '#fff4d8' : '#c8c0d8';
@@ -16171,17 +16280,22 @@ const SceneSelection = {
       const liste = Progression.verrous[p.id] || []; const o = DON.objectifs.find(x => liste.includes(x.id));
       Police.paragraphe(g, 'Verrouillé. Mission : ' + (o ? o.nom + ' — ' + o.desc : '?'), x0, y0 + 28, 520, '#c09080');
     } else {
-      const S = p.stats; const L = [['Vitalité', (p.sante.vitalite || 0) + (p.sante.protection ? ' + ' + p.sante.protection + ' chakra' : '') + (p.sante.instable ? ' + ' + p.sante.instable + ' instable' : '')], ['Dégâts', formatNombre(S.degats)], ['Cadence', formatNombre(S.cadence) + ' /s'], ['Portée', formatNombre(S.portee)], ['Vitesse', formatNombre(S.vitesse)], ['Chance', formatNombre(S.chance)]];
-      L.forEach(([k, v], i) => { Police.ecrire(g, k, x0, y0 + 26 + i * 11, '#8a8098'); Police.ecrire(g, v, x0 + 60, y0 + 26 + i * 11, '#e8e0f0'); });
-      if (p.actif) { g.drawImage(iconeObjet(p.actif), x0, y0 + 96); Police.ecrire(g, INDEX[p.actif] ? INDEX[p.actif].nom : p.actif, x0 + 24, y0 + 102, '#e0d0a0'); }
-      Police.paragraphe(g, p.regle, x0 + 190, y0 + 26, 340, '#d8d0e8');
-      Police.paragraphe(g, 'Faiblesse : ' + p.faiblesse, x0 + 190, y0 + 84, 340, '#b8a0a0');
-      Police.ecrire(g, 'Difficulté ' + '★'.repeat(0) + ['', 'accessible', 'intermédiaire', 'expert'][p.difficulte || 1], x0 + 190, y0 + 110, '#a8a0b8');
-      const M = Progression.profil.marques[p.id] || {}; let mx = x0 + 190;
-      for (const r of ['RTE_01', 'RTE_02', 'RTE_03', 'RTE_04', 'RTE_05', 'RTE_06']) { g.fillStyle = M[r] ? (M[r] === 'difficile' ? '#f0c040' : '#c8c0d8') : '#2a2436'; g.fillRect(mx, y0 + 126, 10, 10); mx += 14; }
-      Police.ecrire(g, 'Marques', mx + 4, y0 + 127, '#8a8098');
+      const S = p.stats; let hx = x0; // santé de départ en cœurs
+      for (let k = 0; k < (p.sante.vitalite || 0); k++) { g.drawImage(ICONES.vit[2], hx, y0 + 22); hx += 10; }
+      for (let k = 0; k < (p.sante.protection || 0); k++) { g.drawImage(ICONES.bleu[2], hx, y0 + 22); hx += 10; }
+      for (let k = 0; k < Math.ceil((p.sante.instable || 0) / 2); k++) { g.drawImage(ICONES.noir[2], hx, y0 + 22); hx += 10; }
+      if (!(p.sante.vitalite || p.sante.protection || p.sante.instable)) Police.ecrire(g, 'Aucune vitalité', x0, y0 + 24, '#c09080');
+      [['degats', S.degats], ['cadence', S.cadence], ['portee', S.portee], ['vitesseTir', S.vitesseTir ?? 9], ['vitesse', S.vitesse], ['chance', S.chance]].forEach(([k, v], i) => { const cx = x0 + (i % 2) * 92, cy = y0 + 38 + Math.floor(i / 2) * 12; g.drawImage(pictoHUD(k), cx - 1, cy - 1); Police.ecrire(g, { degats: 'Dégâts', cadence: 'Cadence', portee: 'Portée', vitesseTir: 'Tirs', vitesse: 'Vitesse', chance: 'Chance' }[k], cx + 11, cy, '#8a8098'); Police.ecrire(g, formatNombre(arrondi(v, 2)), cx + 86, cy, '#f0e8f8', { a: 'd' }); });
+      if (p.actif && INDEX[p.actif]) { ecrinHUD(g, x0, y0 + 78, 24, null); g.drawImage(iconeObjet(p.actif), x0 + 2, y0 + 80); Police.ecrire(g, INDEX[p.actif].nom, x0 + 30, y0 + 80, '#f0dca0'); Police.ecrire(g, 'Technique de départ', x0 + 30, y0 + 91, '#7a90b8'); }
+      const xd = x0 + 196, wd = 330;
+      const hr = Police.paragraphe(g, p.regle, xd, y0 + 24, wd, '#d8d0e8');
+      Police.paragraphe(g, 'Faiblesse : ' + p.faiblesse, xd, y0 + 28 + hr, wd, '#c0a0a0');
+      Police.ecrire(g, 'Difficulté ' + ['', 'accessible', 'intermédiaire', 'expert'][p.difficulte || 1], xd, y0 + 84, '#a8a0b8');
+      const M = Progression.profil.marques[p.id] || {}; let mx = xd + 130;
+      for (const r of ['RTE_01', 'RTE_02', 'RTE_03', 'RTE_04', 'RTE_05', 'RTE_06']) { g.fillStyle = '#0c0810'; g.fillRect(mx - 1, y0 + 83, 10, 10); g.fillStyle = M[r] ? (M[r] === 'difficile' ? '#f0c040' : '#c8c0d8') : '#2a2436'; g.fillRect(mx, y0 + 84, 8, 8); mx += 12; }
+      Police.ecrire(g, 'Marques', mx + 3, y0 + 84, '#8a8098');
       const V = DON.eveils.filter(v => v.perso === p.id).sort((a, b) => a.rang - b.rang); // éveils : ce que la règle deviendra
-      if (V.length) Police.ecrire(g, 'Éveils : ' + V.map(v => (v.rang === 1 ? 'I ' : 'II ') + v.nom + (v.rang === 1 ? ' (après l’étage 3)' : ' (après l’étage 6)')).join('  ·  '), x0, y0 + 144, '#e0c070');
+      V.forEach((v, k) => { const ey = y0 + 100 + k * 26; ecrinHUD(g, xd, ey, 22, '#9a7ac8'); g.drawImage(iconeObjet(v.id), xd + 1, ey + 1); Police.ecrire(g, 'Éveil ' + (v.rang === 1 ? 'I' : 'II') + ' · ' + v.nom, xd + 28, ey + 2, '#e0c070'); Police.ecrire(g, v.rang === 1 ? 'après le boss de l’étage 3' : 'après le boss de l’étage 6', xd + 28, ey + 13, '#8a8098'); });
     }
     Police.ecrire(g, 'Mode : ' + (this.difficile ? 'Difficile' : 'Standard') + (this.o.code ? '   Code : ' + codeAffiche(this.o.code) + ' (sans déblocages)' : ''), 320, 326, this.difficile ? '#ff9a7a' : '#a8a0b8', { a: 'c' });
     aideBoutons(g, [['description', 'Difficulté'], ['interagir', 'Commencer'], ['retour', 'Retour']]);
@@ -16230,29 +16344,34 @@ const SceneOptions = {
   entrer(o) {
     const R = G.reglages; const maj = () => { Son.appliquerVolumes(); Rendu.ajuster(); sauverReglages(); };
     this.menu = menuListe([
+      { label: 'Son', entete: true, inactif: true },
       curseur('Volume général', () => R.volGeneral ?? 0.8, v => { R.volGeneral = v; maj(); }, 0, 1, 0.1),
       curseur('Musique', () => R.volMusique, v => { R.volMusique = v; maj(); }, 0, 1, 0.1),
       curseur('Effets sonores', () => R.volEffets, v => { R.volEffets = v; maj(); }, 0, 1, 0.1),
+      { label: 'Ressenti et image', entete: true, inactif: true },
       curseur('Vibrations', () => R.vibrations, v => { R.vibrations = v; maj(); }, 0, 1, 0.1),
       curseur('Secousses d’écran', () => R.secousses, v => { R.secousses = v; maj(); }, 0, 1, 0.1),
       bascule('Sans flash', () => R.sansFlash, v => { R.sansFlash = v; maj(); }, 'Supprime flashs blancs et clignotements ; les télégraphes restent visibles.'),
       bascule('Mode confort', () => R.confort, v => { R.confort = v; maj(); }, 'Animations plus courtes, moins de particules, sans ralenti décoratif.'),
       bascule('Éclairage dynamique', () => R.eclairage !== false, v => { R.eclairage = v; maj(); }, 'Lumières, halos et poussières d’ambiance (décoratifs). À couper sur une machine modeste.'),
+      { label: 'Manette', entete: true, inactif: true },
       curseur('Zone morte stick gauche', () => R.zoneMorteG, v => { R.zoneMorteG = v; maj(); }, 0.05, 0.4, 0.01, v => formatNombre(v)),
       curseur('Zone morte stick droit', () => R.zoneMorteD, v => { R.zoneMorteD = v; maj(); }, 0.05, 0.4, 0.01, v => formatNombre(v)),
       curseur('Courbe du déplacement', () => R.courbeG, v => { R.courbeG = v; maj(); }, 0.6, 2, 0.1, v => formatNombre(v)),
       curseur('Seuil de visée', () => R.seuilVisee, v => { R.seuilVisee = v; if (R.seuilRepos > v - 0.05) R.seuilRepos = arrondi(v - 0.1, 2); maj(); }, 0.25, 0.9, 0.05, v => formatNombre(v)),
       curseur('Hystérésis diagonale', () => R.hysteresisAngle, v => { R.hysteresisAngle = v; maj(); }, 0, 25, 1, v => v + '°'),
       choix('Profil de tir', [['stick+boutons', 'Stick + boutons (Isaac)'], ['stick+croix', 'Stick droit + croix'], ['stick', 'Stick droit'], ['croix', 'Croix directionnelle']], () => R.profilTir, v => { R.profilTir = v; maj(); }, 'Boutons : en jeu, les quatre boutons de face tirent comme dans Isaac ; interagir, description et déposer passent sur la croix. Les menus ne changent pas.'),
+      { label: 'Jeu et affichage', entete: true, inactif: true },
       bascule('Descriptions automatiques', () => R.descriptionsAuto !== false, v => { R.descriptionsAuto = v; maj(); }, 'Comme le mod « External Item Descriptions » d’Isaac : la fiche d’un objet proche s’affiche d’elle-même. Sinon, maintenir le bouton Description.'),
       bascule('Tir chargé automatique', () => R.chargeAuto, v => { R.chargeAuto = v; maj(); }, 'À pleine charge, l’attaque part seule tant que la visée est maintenue (même cycle minimal).'),
       bascule('Statistiques à l’écran', () => R.afficherStats, v => { R.afficherStats = v; maj(); }),
       bascule('Chiffres de dégâts', () => R.chiffresDegats, v => { R.chiffresDegats = v; maj(); }),
       choix('Mise à l’échelle', [['entiere', 'Entière (nette)'], ['ajustee', 'Ajustée à l’écran']], () => R.echelle, v => { R.echelle = v; maj(); }),
+      { label: 'Autres réglages', entete: true, inactif: true },
       { label: 'Commandes…', action: () => Scenes.empiler(SceneCommandes) },
       { label: 'Plein écran', action: () => { try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch (e) { /* refusé */ } } },
       { label: 'Profil…', action: () => Scenes.empiler(SceneProfil) },
-    ], { visibles: 18 });
+    ], { visibles: 17 });
   },
   maj() { this.menu.maj(); if (Entrees.menuRetour()) { Son.jouer('annuler'); Scenes.depiler(); } },
   rendre(g, actif) { if (Scenes.pile[0] === SceneJeu) { g.fillStyle = 'rgba(6,4,10,0.6)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H); } else fondMenu(g); cadreMenu(g, 110, 6, 420, 334, 'Options'); this.menu.rendre(g, 130, 34, 380, actif); aideBoutons(g, [['interagir', 'Modifier'], ['retour', 'Retour']]); },
@@ -16632,8 +16751,9 @@ const SceneJeu = {
   entrer() { },
   maj(dt) { majJeu(dt); },
   rendre(g) {
-    rendreJeu(g); dessinerHUD(g);
-    if (G.notifications.length && !banniereVisible() && !Entrees.enfonce('carte')) { const n = G.notifications[0]; plaqueHUD(g, 420, 76, 210, 34, '#c8a040'); Police.ecrire(g, n.titre, 428, 81, '#f0c040'); Police.ecrire(g, n.nom, 428, 93, '#fff0d0'); }
+    const bilan = Scenes.pile.includes(SceneMort) || Scenes.pile.includes(ScenePause); // la pause et la mort ont leur propre bilan
+    rendreJeu(g); if (!bilan) dessinerHUD(g);
+    if (!bilan && G.notifications.length && !banniereVisible() && !Entrees.enfonce('carte')) dessinerNotification(g, G.notifications[0]);
   },
 };
 Entrees.contexteJeu = () => Scenes.courante() === SceneJeu; // liaisons « en jeu » (tir aux boutons de face)
@@ -16648,35 +16768,105 @@ const ScenePause = {
   sortir() { if (G.salle && G.salle.combat) Musique.etatCombat(true); },
   maj() { this.menu.maj(); if (Entrees.menuRetour() || Entrees.vientEnfonce('pause')) { Son.jouer('annuler'); Scenes.depiler(); } },
   rendre(g, actif) {
-    g.fillStyle = 'rgba(6,4,10,0.72)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
-    cadreMenu(g, 40, 40, 220, 150, 'Pause'); this.menu.rendre(g, 56, 74, 188, actif);
-    // carte et statistiques consultables en pause
-    cadreMenu(g, 280, 40, 320, 280); cadreMenu(g, 40, 198, 220, 122); dessinerMinicarte(g, 440, 186, true);
-    const J = G.joueur, P = G.partie; Police.ecrire(g, G.etage.cfg.nom, 440, 46, '#e8dcc0', { a: 'c' });
-    dessinerStats(g, J, 50, 206); Police.ecrire(g, 'Temps ' + formatTemps(P.temps), 130, 206, '#a8a0b8'); Police.ecrire(g, 'Code ' + codeAffiche(P.code), 130, 218, '#a8a0b8'); Police.ecrire(g, (P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' — ' + INDEX[P.defi].nom : ''), 130, 230, '#a8a0b8');
-    Police.ecrire(g, 'Objets : ' + J.passifs.length, 130, 242, '#a8a0b8');
-    // opportunité après le boss (E §6) : recalculée à chaque affichage, donc à jour après chaque événement
+    g.fillStyle = 'rgba(6,4,10,0.8)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    const J = G.joueur, P = G.partie;
+    // menu
+    cadreMenu(g, 14, 22, 212, 120, 'Pause'); this.menu.rendre(g, 30, 52, 180, actif);
+    // le shinobi : portrait, partie, statistiques nommées et chances d'opportunité
+    cadreMenu(g, 14, 148, 212, 182);
+    g.fillStyle = 'rgba(255,240,220,0.05)'; g.fillRect(22, 156, 60, 72); g.drawImage(portraitPerso(J.cle), 0, 0, 36, 44, 16, 140, 72, 88);
+    Police.ecrire(g, J.def.nom.split(' — ')[0], 90, 158, '#f8e0a8', { contour: '#1c1420' });
+    const infos = [['Étage ' + G.etage.numero, '#e8dcc0'], [formatTemps(P.temps), '#c8c0d8'], [codeAffiche(P.code), '#a8a0b8'], [(P.difficile ? 'Difficile' : 'Standard') + (P.defi ? ' · contrat' : ''), P.difficile ? '#f0c060' : '#a8a0b8'], [J.passifs.length + ' objet' + (J.passifs.length > 1 ? 's' : ''), '#a8a0b8']];
+    infos.forEach(([t, c], k) => Police.ecrire(g, t, 90, 172 + k * 11, c));
+    g.fillStyle = '#3a2c46'; g.fillRect(24, 232, 192, 1);
+    dessinerStats(g, J, 26, 238, { noms: true, largeur: 186, pas: 10 });
+    // carte de l'étage et légende
+    cadreMenu(g, 234, 22, 392, 222); Police.ecrire(g, G.etage.cfg.nom, 430, 30, '#e8dcc0', { a: 'c', contour: '#1c1420' }); dessinerMinicarte(g, 430, 132, true);
+    const leg = [['Boss', 'boss'], ['Héritage', 'heritage'], ['Échoppe', 'boutique'], ['Secret', 'cache'], ['Épreuve', 'defi'], ['Maudite', 'malediction']]; let lx = 250;
+    for (const [t, k] of leg) { pictoSalle(g, k, lx, 230, ICONE_SALLE[k], true); Police.ecrire(g, t, lx + 7, 227, '#a898b8'); lx += Police.largeur(t) + 20; }
+    // opportunité après le boss (E §6) : détail des bonus
     const O = chanceOpportunite(), pc = v => Math.round(v * 100) + ' %';
-    if (O.chance <= 0) Police.ecrire(g, 'Pas d’opportunité à cet étage', 50, 274, '#8a8098');
+    cadreMenu(g, 234, 250, 392, 80);
+    if (O.chance <= 0) Police.ecrire(g, 'Pas d’opportunité après le boss de cet étage', 246, 258, '#8a8098');
     else {
-      Police.ecrire(g, 'Après le boss : ' + pc(O.chance), 50, 274, '#e8dcc0');
-      Police.ecrire(g, 'pacte ' + pc(O.pacte) + ' · sanctuaire ' + pc(O.sanctuaire), 50, 286, '#c8a0b0');
-      Police.paragraphe(g, O.detail.map(([n, v]) => n + ' ' + (v >= 1 ? '' : '+' + pc(v))).join(' · ') + (P.pactesAchetes ? ' · pacte conclu : plus de sanctuaire' : P.pactesRefuses ? ' · pactes refusés : ' + P.pactesRefuses : ''), 50, 298, 222, '#8a8098');
+      g.drawImage(pictoHUD('pacte'), 245, 257); Police.ecrire(g, 'Pacte ' + pc(O.pacte), 256, 258, '#ff9a9a'); g.drawImage(pictoHUD('sanctuaire'), 325, 257); Police.ecrire(g, 'Sanctuaire ' + pc(O.sanctuaire), 336, 258, '#ffe08a');
+      Police.ecrire(g, 'Après le boss : ' + pc(O.chance), 614, 258, '#e8dcc0', { a: 'd' });
+      Police.paragraphe(g, O.detail.map(([n, v]) => n + (v >= 1 ? '' : ' +' + pc(v))).join(' · ') + (P.pactesAchetes ? ' · pacte conclu : plus de sanctuaire' : P.pactesRefuses ? ' · pactes refusés : ' + P.pactesRefuses : ''), 246, 272, 370, '#a098b0');
     }
     if (actif) aideBoutons(g, [['interagir', 'Choisir'], ['retour', 'Reprendre']]); // sous un autre menu : ses propres consignes
   },
 };
+// Inventaire : sections (techniques, talismans, poche, objets, transformations, éveils, synergies), cases colorées
+// par type, fiche détaillée à droite (grande icône, type et qualité, description, valeurs, ensemble, mutation)
+const COULEURS_TYPES = { actif: '#5aa0e0', talisman: '#c070a0', consommable: '#6ac080', pilule: '#6ac080', passif: '#c8a870', transformation: '#f0b040', eveil: '#c49aff', synergie: '#5ae0d0' };
 const SceneInventaire = {
-  entrer() { this.i = 0; },
-  liste() { const J = G.joueur; const L = []; if (J.actif) L.push(J.actif.id); if (J.actif2) L.push(J.actif2.id); if (J.talisman) L.push(J.talisman); for (const id of J.passifs) L.push(id); for (const t of J.transformations) L.push(t); for (const s of synergiesReunies(J)) L.push(s.id); return L; },
-  maj() { const L = this.liste(); const c = 12; if (Entrees.nav.dx) this.i = borne(this.i + Entrees.nav.dx, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dy) this.i = borne(this.i + Entrees.nav.dy * c, 0, Math.max(0, L.length - 1)); if (Entrees.nav.dx || Entrees.nav.dy) Son.jouer('menu'); if (Entrees.menuRetour()) Scenes.depiler(); },
+  entrer() { this.i = 0; this.defil = 0; },
+  sections() {
+    const J = G.joueur, S = [];
+    const tech = [J.actif && J.actif.id, J.actif2 && J.actif2.id].filter(Boolean); if (tech.length) S.push(['Techniques', tech]);
+    const tal = [J.talisman, J.talisman2].filter(Boolean); if (tal.length) S.push(['Talismans', tal]);
+    if (J.poches.length) S.push(['Poche', J.poches.map(c => c.type === 'pilule' ? { pilule: c } : c.id)]);
+    if (J.passifs.length) S.push(['Objets (' + J.passifs.length + ')', J.passifs.slice()]);
+    const trf = J.transformations.filter(t => INDEX[t] && INDEX[t].type !== 'eveil'), ev = J.transformations.filter(t => INDEX[t] && INDEX[t].type === 'eveil');
+    if (trf.length) S.push(['Transformations', trf]); if (ev.length) S.push(['Éveils', ev]);
+    const syn = synergiesReunies(J).map(s => s.id); if (syn.length) S.push(['Synergies (' + syn.length + ')', syn]);
+    return S;
+  },
+  disposition() {
+    const C = []; let y = 0; const cols = 13, pas = 27;
+    for (const [titre, ids] of this.sections()) { C.push({ titre, y }); y += 13; ids.forEach((id, k) => C.push({ id, x: (k % cols) * pas, y: y + Math.floor(k / cols) * pas })); y += Math.ceil(ids.length / cols) * pas + 5; }
+    return { C, h: y };
+  },
+  maj() {
+    const { C } = this.disposition(), K = C.filter(c => c.id); const n = K.length;
+    if (n) {
+      this.i = borne(this.i, 0, n - 1);
+      if (Entrees.nav.dx) this.i = borne(this.i + Entrees.nav.dx, 0, n - 1);
+      if (Entrees.nav.dy) { const c = K[this.i], cand = K.filter(d => Entrees.nav.dy > 0 ? d.y > c.y : d.y < c.y); if (cand.length) { const yy = Entrees.nav.dy > 0 ? Math.min(...cand.map(d => d.y)) : Math.max(...cand.map(d => d.y)); this.i = K.indexOf(cand.filter(d => d.y === yy).reduce((a, b) => Math.abs(b.x - c.x) < Math.abs(a.x - c.x) ? b : a)); } }
+      if (Entrees.nav.dx || Entrees.nav.dy) Son.jouer('menu');
+    }
+    if (Entrees.menuRetour()) Scenes.depiler();
+  },
   rendre(g) {
-    fondMenu(g); cadreMenu(g, 26, 32, 376, 304); cadreMenu(g, 408, 32, 226, 304);
-    Police.ecrire(g, 'Objets, transformations et mutations', 320, 10, '#f0d8a0', { a: 'c', e: 2, contour: '#1c1420' });
-    const L = this.liste(); const c = 12;
-    L.forEach((id, k) => { const x = 40 + (k % c) * 30, y = 40 + Math.floor(k / c) * 26; g.fillStyle = k === this.i ? '#f0c870' : 'rgba(255,240,220,0.06)'; g.fillRect(x - 2, y - 2, 24, 24); if (k === this.i) { g.fillStyle = '#2a2034'; g.fillRect(x - 1, y - 1, 22, 22); } const d = INDEX[id]; g.drawImage(id.startsWith('SYN_') ? iconeSynergie(id) : iconeObjet(id), x, y); });
-    const id = L[this.i]; if (id) { const d = INDEX[id]; Police.ecrire(g, d.nom, 420, 44, '#fff0d0'); let y = 58; y += Police.paragraphe(g, d.desc || '', 420, y, 200, '#c8c0d8') + 6; for (const l of detailsObjet(d)) y += Police.paragraphe(g, '· ' + l, 420, y, 200, '#a8a0b8'); if (d.statut) Police.paragraphe(g, '[' + d.statut + ']', 420, y + 6, 200, '#7a7088'); if (d.visuel) Police.paragraphe(g, 'Mutation : ' + nomMutation(d.visuel), 420, y + 30, 200, '#8a9aa8'); }
-    if (!L.length) Police.ecrire(g, 'Aucun objet pour l’instant.', 320, 160, '#8a8098', { a: 'c' });
+    fondMenu(g); cadreMenu(g, 14, 30, 380, 304); cadreMenu(g, 400, 30, 226, 304);
+    titreOrne(g, 'Objets et mutations', 320, 8, '#f0d8a0');
+    const { C, h } = this.disposition(), K = C.filter(c => c.id), sel = K[this.i];
+    if (!K.length) { Police.ecrire(g, 'Aucun objet pour l’instant.', 204, 170, '#8a8098', { a: 'c' }); aideBoutons(g, [['retour', 'Retour']]); return; }
+    // défilement : la case choisie reste visible
+    const haut = 40, bas = 324; if (sel.y - this.defil < 14) this.defil = Math.max(0, sel.y - 14); if (sel.y - this.defil + 26 > bas - haut) this.defil = sel.y + 26 - (bas - haut);
+    g.save(); g.beginPath(); g.rect(16, haut - 2, 376, bas - haut + 4); g.clip();
+    for (const c of C) {
+      const y = haut + c.y - this.defil; if (y < haut - 30 || y > bas) continue;
+      if (c.titre) { Police.ecrire(g, c.titre, 28, y, '#c8b890'); g.fillStyle = '#3a2c46'; g.fillRect(28 + Police.largeur(c.titre) + 6, y + 4, 352 - Police.largeur(c.titre) - 6, 1); continue; }
+      const x = 28 + c.x, choisi = c === sel, pil = c.id.pilule, d = pil ? null : INDEX[c.id], coul = COULEURS_TYPES[pil ? 'pilule' : c.id.startsWith('SYN_') ? 'synergie' : d.type] || '#8a8098';
+      g.fillStyle = choisi ? coul : '#0c0810'; g.fillRect(x - 2, y - 2, 24, 24); g.fillStyle = choisi ? '#2e2238' : '#1c1424'; g.fillRect(x - 1, y - 1, 22, 22);
+      g.fillStyle = nuancer(coul, 0.55); g.fillRect(x - 1, y + 20, 22, 1);
+      const ic = pil ? spriteRamassable('pilule', G.partie.pilules.indexOf(pil.id)) : c.id.startsWith('SYN_') ? iconeSynergie(c.id) : iconeObjet(c.id);
+      g.drawImage(ic, x + Math.floor((20 - ic.width) / 2), y + Math.floor((20 - ic.height) / 2));
+      if (choisi && !G.reglages.sansFlash && Math.floor(G.temps * 3) % 2) { g.fillStyle = '#fff4d0'; g.fillRect(x - 2, y - 2, 2, 2); g.fillRect(x + 20, y + 20, 2, 2); }
+    }
+    g.restore();
+    if (this.defil > 0) losange(g, 204, haut - 4, '#c8a060'); if (h - this.defil > bas - haut + 4) losange(g, 204, bas + 6, '#c8a060');
+    // fiche
+    const pil = sel.id.pilule, id = pil ? pil.id : sel.id, d = INDEX[id] || {}, coul = COULEURS_TYPES[pil ? 'pilule' : String(id).startsWith('SYN_') ? 'synergie' : d.type] || '#8a8098';
+    const ic = pil ? spriteRamassable('pilule', G.partie.pilules.indexOf(pil.id)) : String(id).startsWith('SYN_') ? iconeSynergie(id) : iconeObjet(id);
+    g.fillStyle = '#0c0810'; g.fillRect(410, 40, 46, 46); g.fillStyle = '#241a2c'; g.fillRect(411, 41, 44, 44); g.fillStyle = coul; g.fillRect(411, 41, 44, 1); g.fillRect(411, 84, 44, 1);
+    g.drawImage(ic, 0, 0, ic.width, ic.height, 413 + Math.floor((40 - ic.width * 2) / 2), 43 + Math.floor((40 - ic.height * 2) / 2), ic.width * 2, ic.height * 2);
+    const nom = pil ? nomPilule(pil) : d.nom || id; const lignesNom = Police.couper(nom, 160);
+    lignesNom.slice(0, 3).forEach((t, k) => Police.ecrire(g, t, 462, 42 + k * 11, '#fff0d0'));
+    const type = pil ? 'Pilule de poche' : { passif: 'Objet passif', actif: 'Technique', talisman: 'Talisman', consommable: d.famille === 'sceau' ? 'Sceau de poche' : 'Rouleau de poche', transformation: 'Transformation', eveil: 'Éveil ' + (d.rang === 2 ? 'II' : 'I'), synergie: 'Synergie' }[String(id).startsWith('SYN_') ? 'synergie' : d.type] || '';
+    let ty = 42 + Math.min(3, lignesNom.length) * 11; Police.ecrire(g, type, 462, ty, coul); let ex = 462 + Police.largeur(type) + 5;
+    for (let k = 0; k < ((d.type === 'passif' || d.type === 'actif') ? (d.qualite || 0) : 0); k++) { Police.ecrire(g, '★', ex, ty, '#f0c040'); ex += 7; }
+    let y = 94; const connue = !pil || G.partie.pilulesIdentifiees.includes(pil.id) || aTalisman(G.joueur, 'TAL_014');
+    g.fillStyle = '#3a2c46'; g.fillRect(410, 90, 206, 1);
+    if (!connue) y += Police.paragraphe(g, 'Effet inconnu : avalez-la pour l’identifier.', 410, y, 206, '#e8e0f0') + 4;
+    else {
+      y += Police.paragraphe(g, d.desc || '', 410, y, 206, '#e8e0f0') + 5;
+      for (const l of detailsObjet(d)) { if (y > 300) break; g.fillStyle = coul; g.fillRect(411, y + 3, 2, 2); y += Police.paragraphe(g, l, 418, y, 198, '#b8b0c8') + 1; }
+      if (d.ensemble) { const T = DON.transformations.find(t => t.ensemble === d.ensemble); if (T && y < 300) { const nE = G.joueur.acquis.filter(x => INDEX[x] && INDEX[x].ensemble === d.ensemble).length; y += 4; losange(g, 413, y + 3, '#f0c040'); y += Police.paragraphe(g, T.nom + ' : ' + (G.joueur.transformations.includes(T.id) ? 'éveillé' : Math.min(nE, T.seuil || 3) + '/' + (T.seuil || 3)), 420, y, 196, '#e0c060'); } }
+      if (d.visuel && y < 310) Police.paragraphe(g, 'Mutation : ' + nomMutation(d.visuel), 410, y + 6, 206, '#8a9aa8');
+    }
+    if (d.statut) Police.ecrire(g, '[' + d.statut + ']', 410, 322, '#6a6078');
     aideBoutons(g, [['retour', 'Retour']]);
   },
 };
@@ -16684,16 +16874,21 @@ const SceneMort = {
   entrer() { this.menu = menuListe([{ label: 'Rejouer avec ce shinobi', action: () => { const P = G.partie; nouvellePartie({ perso: P.perso, difficile: P.difficile, defi: P.defi }); Scenes.aller(SceneJeu); } }, { label: 'Menu principal', action: () => Scenes.aller(SceneTitre) }]); this.t = 0; },
   maj(dt) { this.t += dt; if (this.t > 0.6) this.menu.maj(); },
   rendre(g) {
-    g.fillStyle = 'rgba(20,4,8,0.82)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
+    g.fillStyle = 'rgba(20,4,8,0.86)'; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
     const v = g.createRadialGradient(320, 150, 80, 320, 170, 420); v.addColorStop(0, 'rgba(60,0,10,0)'); v.addColorStop(1, 'rgba(60,0,10,0.7)'); g.fillStyle = v; g.fillRect(0, 0, ECRAN_L, ECRAN_H);
-    bandeau(g, 60, 28, 520, 70, '#a02838', 'rgba(14,4,8,0.7)');
+    bandeau(g, 60, 18, 520, 62, '#a02838', 'rgba(14,4,8,0.7)');
     const P = G.partie, J = G.joueur; const c = G.causeMort || {};
-    Police.ecrire(g, 'Vous êtes tombé', 320, 40, '#e05a5a', { a: 'c', e: 3, contour: '#1c1420' });
+    Police.ecrire(g, 'Vous êtes tombé', 320, 28, '#e05a5a', { a: 'c', e: 3, contour: '#1c1420' });
     const cause = c.type === 'prix' ? 'Un prix payé de trop' : c.type === 'sacrifice' ? 'Un tribut de trop' : c.source && INDEX[c.source] ? INDEX[c.source].nom : c.type === 'explosion' ? 'Une explosion' : 'Le labyrinthe';
-    Police.ecrire(g, 'Cause : ' + cause + '   ·   Étage ' + P.etage + '   ·   ' + formatTemps(P.temps), 320, 80, '#e8d0d0', { a: 'c' });
-    J.passifs.slice(0, 36).forEach((id, k) => g.drawImage(iconeObjet(id), 140 + (k % 18) * 20, 100 + Math.floor(k / 18) * 22));
-    Police.ecrire(g, 'Code de mission : ' + codeAffiche(P.code) + '   Éliminations : ' + G.stats.eliminations + '   Objets : ' + J.passifs.length, 320, 152, '#a8a0b8', { a: 'c' });
-    cadreMenu(g, 220, 180, 200, 50); this.menu.rendre(g, 236, 192, 170);
+    Police.ecrire(g, 'Cause : ' + cause, 320, 62, '#f0d0d0', { a: 'c' });
+    // bilan : portrait, chiffres de la partie, objets emportés
+    cadreMenu(g, 110, 90, 420, 150);
+    g.fillStyle = 'rgba(255,220,220,0.05)'; g.fillRect(122, 100, 60, 76); g.drawImage(portraitPerso(J.cle), 0, 0, 36, 44, 116, 92, 72, 88);
+    Police.ecrire(g, J.def.nom.split(' — ')[0], 194, 102, '#f8e0a8', { contour: '#1c1420' });
+    [['Étage atteint', String(P.etage)], ['Temps', formatTemps(P.temps)], ['Éliminations', String(G.stats.eliminations)], ['Objets', String(J.passifs.length)], ['Code de mission', codeAffiche(P.code)]].forEach(([k, val], i) => { Police.ecrire(g, k, 194, 118 + i * 11, '#a898b8'); Police.ecrire(g, val, 516, 118 + i * 11, '#f0e8f8', { a: 'd' }); });
+    const L = J.passifs.slice(0, 34); L.forEach((id, k) => g.drawImage(iconeObjet(id), 122 + (k % 17) * 23, 182 + Math.floor(k / 17) * 24));
+    if (!L.length) Police.ecrire(g, 'Aucun objet emporté.', 320, 196, '#7a7088', { a: 'c' });
+    cadreMenu(g, 220, 252, 200, 50); this.menu.rendre(g, 236, 264, 170);
     aideBoutons(g, [['interagir', 'Choisir']]);
   },
 };

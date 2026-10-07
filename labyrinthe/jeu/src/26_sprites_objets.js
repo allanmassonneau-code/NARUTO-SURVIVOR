@@ -122,14 +122,25 @@ function spriteRamassable(type, extra) {
 const ICONES = {};
 function preparerIcones() {
   const P = (L, col) => contourner(peindre(L, col));
-  const forme = ['.xx.xx.', 'xxxxxxx', 'xxxxxxx', 'xxxxxxx', '.xxxxx.', '..xxx..', '...x...'];
-  const coeur = (plein, demi, col, fond) => { const L = forme.map((r, y) => r.split('').map((ch, x) => ch !== 'x' ? '.' : (plein || (demi && x < 4)) ? (x === 1 && y <= 2 ? 'l' : 'a') : 'f').join('')); return P(L, { a: col, l: nuancer(col, 1.5), f: fond || '#2a1c24' }); };
-  ICONES.vit = [coeur(false, false, '#d8303a'), coeur(false, true, '#d8303a'), coeur(true, false, '#d8303a')];
-  ICONES.os = [coeur(false, false, '#e8e0cc', '#8a8070'), coeur(false, true, '#d8303a', '#e8e0cc'), coeur(true, false, '#d8303a', '#e8e0cc')];
-  ICONES.bleu = [null, coeur(false, true, '#4a8ae8', 'rgba(0,0,0,0)'), coeur(true, false, '#4a8ae8')];
-  ICONES.noir = [null, coeur(false, true, '#6a2a8a', 'rgba(0,0,0,0)'), coeur(true, false, '#6a2a8a')];
-  ICONES.cicatrice = P(['.xx.xx.', 'xkxxxkx', 'xxkxkxx', 'xxxkxxx', '.xkxkx.', '..kxk..', '...x...'].map(r => r.replace(/x/g, 'g')), { g: '#5a4a50', k: '#1c1420' });
-  ICONES.partiel = P(['.ww....', 'wwww...', 'wwkw...', 'wwkw...', '.wkw...', '..ww...', '...w...'], { w: '#f0ecdc', k: '#c8a040' });
+  // cœurs de 9 × 8 modelés : reflet en haut à gauche, ombre en bas à droite ; contenant vide sombre
+  const forme = ['.xx...xx.', 'xxxx.xxxx', 'xxxxxxxxx', 'xxxxxxxxx', '.xxxxxxx.', '..xxxxx..', '...xxx...', '....x....'];
+  const vide = (x, y) => y < 0 || y >= forme.length || x < 0 || x >= 9 || forme[y][x] !== 'x';
+  const coeur = (plein, demi, col, fond, bord) => {
+    const L = forme.map((r, y) => r.split('').map((ch, x) => {
+      if (ch !== 'x') return '.';
+      if (bord && (vide(x - 1, y) || vide(x + 1, y) || vide(x, y - 1) || vide(x, y + 1))) return 'o';
+      if (!(plein || (demi && x < 4.5))) return fond ? (y <= 1 || (y === 2 && (x === 1 || x === 7)) ? 'g' : 'f') : '.';
+      if ((x === 1 || x === 2) && y === 1 || x === 1 && y === 2) return 'l';
+      return vide(x + 1, y) || vide(x, y + 1) ? 'd' : 'a';
+    }).join(''));
+    return P(L, { a: col, l: nuancer(col, 1.55), d: nuancer(col, 0.68), f: fond || '#2a1c24', g: nuancer(fond || '#2a1c24', 1.25), o: bord });
+  };
+  ICONES.vit = [coeur(false, false, '#e0303c', '#2c1a22'), coeur(false, true, '#e0303c', '#2c1a22'), coeur(true, false, '#e0303c')];
+  ICONES.os = [coeur(false, false, '#e0303c', '#8a7e6e', '#efe6d2'), coeur(false, true, '#e0303c', '#8a7e6e', '#efe6d2'), coeur(true, false, '#e0303c', null, '#efe6d2')];
+  ICONES.bleu = [null, coeur(false, true, '#4a8ae8'), coeur(true, false, '#4a8ae8')];
+  ICONES.noir = [null, coeur(false, true, '#7a3a9a'), coeur(true, false, '#7a3a9a')];
+  ICONES.cicatrice = P(forme.map((r, y) => r.split('').map((ch, x) => ch !== 'x' ? '.' : (x === y + 1 || x === 7 - y) && y > 0 && y < 7 ? 'k' : 'g').join('')), { g: '#5a4a52', k: '#1c1420' });
+  ICONES.partiel = P(['.ww......', 'wwww.....', 'wwkw.....', 'wwkw.....', '.wkw.....', '..ww.....', '...w.....'], { w: '#f0ecdc', k: '#c8a040' });
   ICONES.ryo = spriteRamassable('ryo'); ICONES.cle = spriteRamassable('cle'); ICONES.explosif = spriteRamassable('explosif');
   ICONES.cadenas = P(['.kkk.', 'k...k', 'k...k', 'yyyyy', 'yykyy', 'yykyy', 'yyyyy'], { k: '#c8c8d0', y: '#e8c050' });
   ICONES.coeurBarre = P(['.rr.rr.', 'rrrrrrk', 'rrrrkrr', 'rrrkrrr', '.rkrrr.', '..rrr..', '...r...'], { r: '#d8303a', k: '#f0f0f0' });

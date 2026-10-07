@@ -405,7 +405,7 @@ function prendreTalisman(J, id) {
   if (J.talisman && J.maxTalismans > 1 && !J.talisman2) J.talisman2 = J.talisman;
   else if (J.talisman) { const r = creerRamassable('talisman', J.x + 16, J.y + 6, { id: J.talisman }); r.age = 0; r.attendSortie = true; }
   J.talisman = id; recalculer(J); Son.jouer('objet_mineur');
-  annoncer({ t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true });
+  annoncer({ t: 0, nom: INDEX[id].nom, desc: INDEX[id].desc, mineur: true, id });
   Progression.decouvrir(id);
 }
 
