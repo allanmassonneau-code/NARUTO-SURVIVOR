@@ -198,11 +198,15 @@ function majProjectiles(dt) {
     if (p.accel) { const k = 1 + p.accel * dt; p.vx *= k; p.vy *= k; }
     if (TR.orbite && p.proprio === 'joueur') { p.orbA += 5.5 * dt; p.orbR = Math.min(p.orbR + 20 * dt, 2.2 * TUILE); p.x = J.x + Math.cos(p.orbA) * p.orbR; p.y = J.y - 10 + Math.sin(p.orbA) * p.orbR; }
     else if (TR.retour && p.age > p.dureeVie * 0.45) {
-      const a = angleVers(p.x, p.y, J.x, J.y - 10); const v = Math.max(Math.hypot(p.vx, p.vy), 6 * TUILE); p.vx = lerp(p.vx, Math.cos(a) * v, 0.18); p.vy = lerp(p.vy, Math.sin(a) * v, 0.18);
+      // retour vers le lanceur : le joueur pour son boomerang ; pour un ennemi (shuriken de Mizuki, faux de Hidan),
+      // vers celui qui l'a lancé — jamais vers le joueur, sinon le projectile le poursuivrait sans fin
+      const ennemi = p.proprio === 'ennemi', L = ennemi ? (p.retourVers && !p.retourVers.mort ? p.retourVers : null) : J;
+      p.tRetour = (p.tRetour || 0) + dt;
+      if (L) { const a = angleVers(p.x, p.y, L.x, L.y - 10); const v = Math.max(Math.hypot(p.vx, p.vy), 6 * TUILE); const k = ennemi ? 0.07 : 0.18; p.vx = lerp(p.vx, Math.cos(a) * v, k); p.vy = lerp(p.vy, Math.sin(a) * v, k); }
       if (!p.retourne) { p.retourne = true; p.touches.clear(); }
-      if (dist(p.x, p.y, J.x, J.y - 10) < 10) { p.mort = true; continue; }
-      p.age = Math.min(p.age, p.dureeVie * 0.9);
-      if (p.proprio === 'ennemi') { p.x += p.vx * dt; p.y += p.vy * dt; }
+      if (L && dist(p.x, p.y, L.x, L.y - 10) < (ennemi ? 16 : 10)) { p.mort = true; continue; } // rattrapé par son lanceur
+      if (L && !(ennemi && p.tRetour > 2.5)) p.age = Math.min(p.age, p.dureeVie * 0.9); // un retour ennemi ne dure jamais plus de 2,5 s
+      if (ennemi) { p.x += p.vx * dt; p.y += p.vy * dt; }
     } else {
       const nx = p.x + p.vx * dt, ny = p.y + p.vy * dt;
       // Collision avec le décor

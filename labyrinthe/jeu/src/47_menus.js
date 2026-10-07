@@ -197,6 +197,7 @@ const SceneOptions = {
   entrer(o) {
     const R = G.reglages; const maj = () => { Son.appliquerVolumes(); Rendu.ajuster(); sauverReglages(); };
     this.menu = menuListe([
+      curseur('Volume général', () => R.volGeneral ?? 0.8, v => { R.volGeneral = v; maj(); }, 0, 1, 0.1),
       curseur('Musique', () => R.volMusique, v => { R.volMusique = v; maj(); }, 0, 1, 0.1),
       curseur('Effets sonores', () => R.volEffets, v => { R.volEffets = v; maj(); }, 0, 1, 0.1),
       curseur('Vibrations', () => R.vibrations, v => { R.vibrations = v; maj(); }, 0, 1, 0.1),

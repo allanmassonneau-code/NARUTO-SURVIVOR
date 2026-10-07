@@ -3095,23 +3095,28 @@ const Son = {
     const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
     try { this.ctx = new AC({ latencyHint: 'interactive' }); } catch (e) { return; }
     const c = this.ctx;
-    // bus → gain maître → compresseur de cohésion → limiteur → sortie ; réverbération partagée
-    this.maitre = c.createGain(); this.maitre.gain.value = 3.4;
-    const cohesion = c.createDynamicsCompressor(); cohesion.threshold.value = -20; cohesion.knee.value = 10; cohesion.ratio.value = 3; cohesion.attack.value = 0.004; cohesion.release.value = 0.2;
-    const limiteur = c.createDynamicsCompressor(); limiteur.threshold.value = -4; limiteur.knee.value = 0; limiteur.ratio.value = 20; limiteur.attack.value = 0.001; limiteur.release.value = 0.12;
+    // bus → gain maître → compression légère → limiteur de sécurité → sortie ; réverbération partagée.
+    // Mixage mesuré hors ligne (OfflineAudioContext) : combat ≈ −24 dBFS en moyenne, crêtes sous −8 dBFS ;
+    // l'ancien gain ×3,4 écrasé par le compresseur faisait sonner un clic de menu aussi fort qu'un impact.
+    this.maitre = c.createGain(); this.maitre.gain.value = 0.8;
+    const cohesion = c.createDynamicsCompressor(); cohesion.threshold.value = -16; cohesion.knee.value = 12; cohesion.ratio.value = 2; cohesion.attack.value = 0.01; cohesion.release.value = 0.25;
+    const limiteur = c.createDynamicsCompressor(); limiteur.threshold.value = -3; limiteur.knee.value = 0; limiteur.ratio.value = 20; limiteur.attack.value = 0.001; limiteur.release.value = 0.12;
     this.maitre.connect(cohesion); cohesion.connect(limiteur); limiteur.connect(c.destination);
-    this.reverb = c.createConvolver(); this.reverb.buffer = this.reponseSalle(2.6, 3); this.reverb.connect(this.maitre);
-    this.busEffets = c.createGain(); this.busEffets.connect(this.maitre);
+    this.reverb = c.createConvolver(); this.reverb.buffer = this.reponseSalle(2.2, 3.2); this.reverb.connect(this.maitre);
+    // les effets passent par une douceur : aigus atténués au-dessus de 4 kHz, rien au-dessus de 9 kHz (souffles et cliquetis moins agressifs)
+    this.busEffets = c.createGain(); const doux = c.createBiquadFilter(), voile = c.createBiquadFilter();
+    doux.type = 'highshelf'; doux.frequency.value = 4000; doux.gain.value = -6; voile.type = 'lowpass'; voile.frequency.value = 9000; voile.Q.value = 0.5;
+    this.busEffets.connect(doux); doux.connect(voile); voile.connect(this.maitre);
     this.busMusique = c.createGain(); this.busMusique.connect(this.maitre);
-    for (const [bus, k] of [[this.busEffets, 0.14], [this.busMusique, 0.42]]) { const e = c.createGain(); e.gain.value = k; bus.connect(e); e.connect(this.reverb); }
+    for (const [bus, k] of [[this.busEffets, 0.1], [this.busMusique, 0.3]]) { const e = c.createGain(); e.gain.value = k; bus.connect(e); e.connect(this.reverb); }
     if (c.state === 'suspended') c.resume().catch(() => {});
     this.appliquerVolumes();
     const n = this.ctx.sampleRate * 1.5, b = this.ctx.createBuffer(1, n, this.ctx.sampleRate), d = b.getChannelData(0);
     let s = 12345; for (let i = 0; i < n; i++) { s = (s * 1103515245 + 12345) & 0x7fffffff; d[i] = (s / 0x3fffffff) - 1; }
     this.bruit = b; this.brun = this.bruitBrun(); this.actif = true;
     // saturation douce (tanh) pour le corps des chocs : du mordant sans écrêter
-    this.busSat = c.createWaveShaper(); const k = new Float32Array(1024); for (let i = 0; i < 1024; i++) { const x = i / 511.5 - 1; k[i] = Math.tanh(2.6 * x) / Math.tanh(2.6); } this.busSat.curve = k; this.busSat.oversample = '2x';
-    const gs = c.createGain(); gs.gain.value = 0.7; this.busSat.connect(gs); gs.connect(this.busEffets);
+    this.busSat = c.createWaveShaper(); const k = new Float32Array(1024); for (let i = 0; i < 1024; i++) { const x = i / 511.5 - 1; k[i] = Math.tanh(1.5 * x) / Math.tanh(1.5); } this.busSat.curve = k; this.busSat.oversample = '2x';
+    const gs = c.createGain(); gs.gain.value = 0.55; this.busSat.connect(gs); gs.connect(this.busEffets);
     this.chargerPack();
     Musique.init(this);
   },
@@ -3123,15 +3128,23 @@ const Son = {
     for (const [nom, v] of Object.entries(P)) {
       if (nom[0] === '_') continue; const L = this.pack[nom] = [];
       for (const src of (Array.isArray(v) ? v : [v])) {
-        try { const bin = atob(String(src).slice(String(src).indexOf(',') + 1)), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); this.ctx.decodeAudioData(u.buffer).then(b => L.push(b)).catch(() => {}); } catch (e) { /* entrée illisible : son synthétisé */ }
+        try { const bin = atob(String(src).slice(String(src).indexOf(',') + 1)), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); this.ctx.decodeAudioData(u.buffer).then(b => { b._norm = this.normePack(b); L.push(b); }).catch(() => {}); } catch (e) { /* entrée illisible : son synthétisé */ }
       }
     }
+  },
+  // Normalisation d'un son du pack : niveau ramené vers −18 dBFS efficaces sur sa partie audible, crête sous −1 dBFS
+  // (les fichiers personnels sont souvent mixés au maximum : sans cela ils écrasaient tout le reste)
+  normePack(b) {
+    const d = b.getChannelData(0); let pic = 0; for (let i = 0; i < d.length; i++) pic = Math.max(pic, Math.abs(d[i])); if (!pic) return 1;
+    let s = 0, n = 0; for (let i = 0; i < d.length; i++) if (Math.abs(d[i]) > pic * 0.05) { s += d[i] * d[i]; n++; }
+    const rms = Math.sqrt(s / Math.max(1, n)); return Math.min(0.89 / pic, Math.pow(10, -18 / 20) / Math.max(1e-4, rms));
   },
   suspendu() { return !this.ctx || this.ctx.state !== 'running'; },
   appliquerVolumes() {
     if (!this.ctx || !this.reglages) return;
-    this.busEffets.gain.value = (this.reglages.volEffets ?? 0.8) * 1.1;
-    this.busMusique.gain.value = (this.reglages.volMusique ?? 0.6) * 1.0;
+    this.maitre.gain.value = 0.8 * (this.reglages.volGeneral ?? 0.8) / 0.8;
+    this.busEffets.gain.value = this.reglages.volEffets ?? 0.6;
+    this.busMusique.gain.value = (this.reglages.volMusique ?? 0.45) * 1.35;
   },
   // Réponse impulsionnelle synthétique (bruit stéréo à décroissance) : une salle de pierre
   reponseSalle(duree, pente) {
@@ -3213,21 +3226,38 @@ const Son = {
   // ── effets nommés ──
   // limites : [intervalle minimal (s), voix simultanées max, priorité]
   LIMITES: {
-    tir: [0.045, 3, 1], impact: [0.03, 4, 1], impact_mur: [0.05, 2, 0], ennemi_mort: [0.03, 4, 2], degat_joueur: [0.2, 1, 5],
+    tir: [0.06, 2, 1], impact: [0.05, 3, 1], impact_mur: [0.08, 1, 0], ennemi_mort: [0.03, 4, 2], degat_joueur: [0.2, 1, 5],
     explosion: [0.06, 3, 4], ryo: [0.05, 2, 2], cle: [0.08, 1, 2], coeur: [0.08, 1, 2], protection: [0.08, 1, 2], objet: [0.3, 1, 5],
     objet_mineur: [0.1, 1, 3], porte_ferme: [0.2, 1, 3], porte_ouvre: [0.2, 1, 3], secret: [0.5, 1, 5], achat: [0.1, 1, 4], refus: [0.15, 1, 3],
     charge_pleine: [0.2, 1, 2], actif: [0.2, 1, 4], pilule: [0.2, 1, 3], boss_intro: [1, 1, 6], boss_mort: [1, 1, 6], rocher: [0.05, 2, 1],
     jarre: [0.05, 2, 1], coffre: [0.15, 1, 3], menu: [0.03, 2, 2], valider: [0.05, 1, 3], annuler: [0.05, 1, 3], transformation: [1, 1, 6],
-    telegraphe: [0.12, 2, 5], laser: [0.08, 2, 2], eclair: [0.05, 2, 2], eau: [0.06, 2, 1], feu: [0.06, 2, 1], vent: [0.08, 2, 1],
-    sable: [0.06, 2, 1], fumee: [0.08, 2, 1], invocation: [0.2, 1, 3], meche: [0.15, 2, 1], pics: [0.2, 1, 3], tir_ennemi: [0.06, 3, 1],
+    telegraphe: [0.25, 1, 5], laser: [0.12, 2, 2], eclair: [0.08, 2, 2], eau: [0.06, 2, 1], feu: [0.06, 2, 1], vent: [0.08, 2, 1],
+    sable: [0.08, 2, 1], fumee: [0.08, 2, 1], invocation: [0.2, 1, 3], meche: [0.2, 1, 1], pics: [0.25, 1, 3], tir_ennemi: [0.08, 2, 1],
     charge: [0.3, 1, 2], lame: [0.05, 2, 1], pas_lourd: [0.12, 1, 1], rire: [0.5, 1, 3], gong: [0.8, 1, 5], sceau: [0.3, 1, 4],
     nettoyee: [0.5, 1, 4], battement: [0.6, 1, 1], pacte: [0.8, 1, 5],
   },
+  // Hiérarchie : les sons fréquents restent discrets, les grands moments ressortent (défaut 0,7)
+  NIVEAUX: {
+    tir: 2.3, lame: 2.38, tir_ennemi: 2.61, impact: 0.77, impact_mur: 1.49, ennemi_mort: 1.36, pics: 1.8, meche: 1.51, sable: 1.79, laser: 1.56,
+    vent: 1.36, eau: 1.19, feu: 0.73, eclair: 1.12, fumee: 1.13, charge: 0.46, jarre: 1.42, rocher: 0.67, ryo: 0.87, menu: 1.3, telegraphe: 1.08,
+    coeur: 0.93, cle: 1.86, protection: 1.3, objet_mineur: 1.19, achat: 1.26, valider: 1.09, annuler: 0.94, refus: 1.11, pilule: 1.32, sceau: 1.26,
+    charge_pleine: 1.51, coffre: 0.88, porte_ouvre: 1.25, porte_ferme: 0.57, battement: 0.34, rire: 1.67, actif: 0.89, invocation: 0.65,
+    degat_joueur: 1.17, pas_lourd: 0.7, explosion: 0.59, boss_intro: 0.75, boss_mort: 0.88, objet: 0.81, transformation: 1.04, secret: 1.03,
+    nettoyee: 1.04, gong: 0.89, pacte: 0.99,
+  },
+  rafale: {},
   jouer(nom, vol = 1, hauteur = 1) {
     if (!this.actif || !this.ctx || this.ctx.state !== 'running') return;
+    this.jouerA(nom, this.ctx.currentTime, vol, hauteur);
+  },
+  // Joue un effet à l'instant t de l'horloge audio : limites, budget de voix, niveau et rafales
+  // (séparé de jouer() pour que la mesure hors ligne entende exactement ce que le jeu joue)
+  jouerA(nom, t, vol = 1, hauteur = 1) {
     const L = this.LIMITES[nom] || [0.03, 3, 1];
-    const t = this.ctx.currentTime;
-    if (t - (this.dernier[nom] || -1) < L[0]) return;
+    if (t - (this.dernier[nom] ?? -9) < L[0]) return;
+    // un même son répété en rafale s'atténue (tir continu, impacts en chaîne) : ×0,74 à 2,5 par seconde, ×0,63 à 4
+    const R0 = this.rafale[nom] || { v: 0, t }; R0.v = R0.v * Math.exp(-(t - R0.t) / 0.5) + 1; R0.t = t; this.rafale[nom] = R0;
+    vol *= (this.NIVEAUX[nom] ?? 0.7) / Math.sqrt(R0.v);
     this.voix = this.voix.filter(v => v.fin > t);
     if (this.voix.filter(v => v.nom === nom).length >= L[1]) return;
     if (this.voix.length >= 22) { // budget global : on n'écrase jamais une voix plus prioritaire
@@ -3239,7 +3269,7 @@ const Son = {
     const Pk = this.pack && this.pack[nom];
     if (Pk && Pk.length) { // son du pack personnel
       const b = Pk[(Math.random() * Pk.length) | 0], s = this.ctx.createBufferSource(), g = this.ctx.createGain();
-      s.buffer = b; s.playbackRate.value = h; g.gain.value = 0.22 * vol * (this.packVol[nom] ?? 1); s.connect(g); g.connect(d); s.start(t);
+      s.buffer = b; s.playbackRate.value = h; g.gain.value = 0.22 * vol * (b._norm ?? 1) * (this.packVol[nom] ?? 1); s.connect(g); g.connect(d); s.start(t);
       this.voix.push({ nom, fin: t + b.duration / h, prio: L[2] }); return;
     }
     const duree = this.synth(nom, t, vol, h, d);
@@ -3250,46 +3280,41 @@ const Son = {
     const S = this.busSat || d, R = Math.random;
     switch (nom) {
       // ── combat ──
-      case 'tir': // kunai lancé : souffle bref qui monte, éclat de métal
-        this.bruitF(t, 0.09, 0.55 * v, d, { type: 'bandpass', f0: 1700 * h, f1: 5200 * h, q: 2, a: 0.006 });
-        this.fm(t, 2900 * h, 1.47, 2.2, 0.07, 0.07 * v, d); return 0.1;
-      case 'lame': // tranchant : sifflement aigu qui balaie, lame qui chante
-        this.bruitF(t, 0.13, 0.55 * v, d, { type: 'bandpass', f0: 2400 * h, f1: 7000 * h, q: 2.6, a: 0.005 });
-        this.fm(t + 0.015, 3600 * h, 1.51, 1.2, 0.16, 0.06 * v, d); return 0.16;
-      case 'tir_ennemi': // projectile ennemi : « fwip » plus sourd
-        this.bruitF(t, 0.1, 0.34 * v, d, { type: 'bandpass', f0: 800 * h, f1: 2300 * h, q: 1.8, a: 0.005 });
-        this.ton('triangle', 460 * h, 250 * h, t, 0.09, 0.1 * v, d); return 0.1;
-      case 'impact': // coup qui porte : bosse grave saturée, craquement, clic
-        this.ton('sine', 190 * h, 52, t, 0.13, 0.4 * v, S, { glisse: 0.09 });
-        this.bruitF(t, 0.06, 0.24 * v, d, { type: 'lowpass', f0: 3800, f1: 700, q: 0.9, a: 0.001 });
-        this.bruitF(t, 0.05, 0.15 * v, d, { type: 'bandpass', f0: 450 * h, q: 1.2, a: 0.001 });
-        this.clic(t, 0.16 * v, d, 2400 * h); return 0.13;
-      case 'impact_mur': // « toc » sur la pierre
-        this.bruitF(t, 0.045, 0.26 * v, d, { type: 'bandpass', f0: 1300 * h, q: 2.8, a: 0.001 });
-        this.ton('sine', 560 * h, 290, t, 0.04, 0.1 * v, d); return 0.05;
-      case 'ennemi_mort': // « pouf » de fumée, petite détonation qui retombe
-        this.bruitF(t, 0.34, 0.38 * v, d, { type: 'lowpass', f0: 4200 * h, f1: 320, q: 0.7, a: 0.004 });
-        this.ton('sine', 620 * h, 170, t, 0.1, 0.22 * v, S, { glisse: 0.08 });
-        this.bruitF(t + 0.02, 0.2, 0.1 * v, d, { type: 'bandpass', f0: 1100, f1: 500, q: 1 }); return 0.35;
-      case 'degat_joueur': // le héros encaisse : choc sourd saturé, souffle coupé, petit sifflement
-        this.ton('sine', 230, 62, t, 0.2, 0.62 * v, S, { glisse: 0.14 });
-        this.ton('triangle', 150, 95, t, 0.18, 0.12 * v, d, { filtre: ['lowpass', 900] });
-        this.bruitF(t, 0.14, 0.26 * v, d, { type: 'lowpass', f0: 2600, f1: 380, q: 0.8, a: 0.001 });
-        this.ton('sine', 2350, 2300, t + 0.03, 0.32, 0.018 * v, d, { a: 0.02 }); return 0.36;
+      case 'tir': // kunai lancé : souffle feutré et bref, sans éclat métallique (le son le plus répété du jeu)
+        this.bruitF(t, 0.07, 0.42 * v, d, { type: 'bandpass', f0: 1100 * h, f1: 2300 * h, q: 1.1, a: 0.008 });
+        this.ton('sine', 520 * h, 430 * h, t, 0.05, 0.08 * v, d, { a: 0.004 }); return 0.08;
+      case 'lame': // tranchant : souffle qui balaie, sans sifflement aigu
+        this.bruitF(t, 0.11, 0.45 * v, d, { type: 'bandpass', f0: 1300 * h, f1: 3200 * h, q: 1.4, a: 0.008 }); return 0.12;
+      case 'tir_ennemi': // projectile ennemi : « fwip » sourd
+        this.bruitF(t, 0.09, 0.3 * v, d, { type: 'bandpass', f0: 650 * h, f1: 1500 * h, q: 1.2, a: 0.008 });
+        this.ton('triangle', 380 * h, 240 * h, t, 0.08, 0.08 * v, d, { filtre: ['lowpass', 900] }); return 0.1;
+      case 'impact': // coup qui porte : bosse grave et souffle court, sans clic
+        this.ton('sine', 170 * h, 62, t, 0.1, 0.4 * v, S, { glisse: 0.07 });
+        this.bruitF(t, 0.05, 0.18 * v, d, { type: 'lowpass', f0: 1800, f1: 500, q: 0.8, a: 0.002 }); return 0.11;
+      case 'impact_mur': // « toc » mat sur la pierre
+        this.bruitF(t, 0.04, 0.45 * v, d, { type: 'bandpass', f0: 800 * h, q: 1.4, a: 0.002 });
+        this.ton('sine', 380 * h, 260, t, 0.035, 0.16 * v, d); return 0.05;
+      case 'ennemi_mort': // « pouf » de fumée qui retombe
+        this.bruitF(t, 0.28, 0.32 * v, d, { type: 'lowpass', f0: 2200 * h, f1: 280, q: 0.7, a: 0.006 });
+        this.ton('sine', 420 * h, 150, t, 0.1, 0.2 * v, S, { glisse: 0.08 }); return 0.3;
+      case 'degat_joueur': // le héros encaisse : choc sourd, souffle coupé (sans sifflement)
+        this.ton('sine', 220, 62, t, 0.2, 0.55 * v, S, { glisse: 0.14 });
+        this.ton('triangle', 150, 95, t, 0.18, 0.1 * v, d, { filtre: ['lowpass', 800] });
+        this.bruitF(t, 0.12, 0.2 * v, d, { type: 'lowpass', f0: 1800, f1: 350, q: 0.8, a: 0.002 }); return 0.3;
       case 'explosion': // détonation : grave qui s'effondre, souffle large saturé, débris qui crépitent
         this.ton('sine', 115 * h, 30, t, 0.75, 0.64 * v, S, { glisse: 0.5 });
         this.bruitF(t, 0.95, 0.55 * v, S, { type: 'lowpass', f0: 5200, f1: 150, q: 0.6, a: 0.003 });
         this.bruitF(t, 1.1, 0.42 * v, d, { type: 'lowpass', f0: 900, f1: 120, q: 0.7, a: 0.01, brun: true });
         this.bruitF(t, 0.22, 0.2 * v, d, { type: 'bandpass', f0: 950, q: 0.8, a: 0.001 });
         this.crepiter(t + 0.08, 0.65, 14, 0.07 * v, d, 2400); return 1.1;
-      case 'meche': // mèche qui grésille
-        this.bruitF(t, 0.36, 0.07 * v, d, { type: 'highpass', f0: 4200, q: 0.8, a: 0.01 });
-        this.crepiter(t, 0.34, 9, 0.05 * v, d, 6000); return 0.36;
-      case 'telegraphe': // alerte : double tintement métallique net
-        this.fm(t, 1760, 2, 1.4, 0.08, 0.16 * v, d); this.fm(t + 0.095, 1760, 2, 1.4, 0.09, 0.16 * v, d); return 0.2;
-      case 'pics': // pics qui jaillissent : raclement métallique
-        this.fm(t, 1700 * h, 2.41, 3.5, 0.14, 0.07 * v, d);
-        this.bruitF(t, 0.07, 0.12 * v, d, { type: 'highpass', f0: 3800, q: 0.8, a: 0.001 }); return 0.14;
+      case 'meche': // mèche qui grésille, sans sifflement
+        this.bruitF(t, 0.3, 0.14 * v, d, { type: 'bandpass', f0: 2600, q: 0.9, a: 0.02 });
+        this.crepiter(t, 0.28, 6, 0.09 * v, d, 3200); return 0.3;
+      case 'telegraphe': // alerte : deux coups de bois clairs et ronds (lisibles sans être perçants)
+        for (const u of [0, 0.11]) { this.ton('sine', 740, 690, t + u, 0.09, 0.22 * v, d, { a: 0.002 }); this.ton('sine', 1480, 1400, t + u, 0.05, 0.05 * v, d, { a: 0.002 }); } return 0.22;
+      case 'pics': // pics qui jaillissent : raclement court et mat
+        this.fm(t, 900 * h, 2.41, 1.6, 0.1, 0.12 * v, d);
+        this.bruitF(t, 0.06, 0.25 * v, d, { type: 'bandpass', f0: 2200, q: 1, a: 0.002 }); return 0.12;
       case 'pas_lourd': // pas de géant, choc au sol
         this.ton('sine', 105, 38, t, 0.24, 0.55 * v, S, { glisse: 0.15 });
         this.bruitF(t, 0.1, 0.26 * v, d, { type: 'bandpass', f0: 260, q: 1, a: 0.001 });
@@ -3310,20 +3335,18 @@ const Son = {
       case 'eau': // gerbe d'eau et bulles
         this.bruitF(t, 0.22, 0.42 * v, d, { type: 'bandpass', f0: 1500 * h, f1: 520, q: 1.3, a: 0.003 });
         for (let i = 0; i < 3; i++) { const u = 0.04 + R() * 0.14; this.ton('sine', (520 + R() * 300) * h, (1000 + R() * 400) * h, t + u, 0.04, 0.09 * v, d, { a: 0.002 }); } return 0.24;
-      case 'vent': // rafale : deux bandes de souffle qui balaient
-        this.bruitF(t, 0.38, 0.6 * v, d, { type: 'bandpass', f0: 600 * h, f1: 2600 * h, q: 3.5, a: 0.06 });
-        this.bruitF(t + 0.03, 0.32, 0.26 * v, d, { type: 'bandpass', f0: 1300 * h, f1: 3800 * h, q: 6, a: 0.05 }); return 0.4;
-      case 'sable': // sable qui file : chuintement granuleux
-        this.bruitF(t, 0.3, 0.17 * v, d, { type: 'highpass', f0: 3200, f1: 1500, q: 0.7, a: 0.03 });
-        this.crepiter(t, 0.28, 12, 0.03 * v, d, 7000); return 0.3;
-      case 'eclair': // foudre : claquements secs en rafale, roulement grave
-        for (const u of [0, 0.028, 0.065]) this.bruitF(t + u, 0.05, 0.32 * v, d, { type: 'highpass', f0: 1800 + R() * 1400, q: 0.7, a: 0.0008 });
-        this.fm(t, 900 * h, 3.3, 6, 0.08, 0.05 * v, d);
-        this.bruitF(t + 0.02, 0.65, 0.22 * v, S, { type: 'lowpass', f0: 380, f1: 90, q: 0.7, a: 0.02, brun: true }); return 0.65;
-      case 'laser': // rayon : bourdon qui vibre, souffle aigu
-        this.ton('sawtooth', 1150 * h, 720 * h, t, 0.32, 0.08 * v, d, { vib: [28, 45], filtre: ['lowpass', 3200] });
-        this.ton('square', 220 * h, 200 * h, t, 0.3, 0.03 * v, d, { filtre: ['lowpass', 800] });
-        this.bruitF(t, 0.26, 0.05 * v, d, { type: 'highpass', f0: 4200, q: 0.7, a: 0.01 }); return 0.33;
+      case 'vent': // rafale : souffle qui balaie, sans sifflement
+        this.bruitF(t, 0.36, 0.45 * v, d, { type: 'bandpass', f0: 500 * h, f1: 1700 * h, q: 1.6, a: 0.07 });
+        this.bruitF(t + 0.03, 0.3, 0.14 * v, d, { type: 'bandpass', f0: 900 * h, f1: 2400 * h, q: 2.2, a: 0.06 }); return 0.38;
+      case 'sable': // sable qui file : chuintement doux
+        this.bruitF(t, 0.28, 0.14 * v, d, { type: 'bandpass', f0: 2200, f1: 1200, q: 0.8, a: 0.04 });
+        this.crepiter(t, 0.26, 7, 0.025 * v, d, 3600); return 0.3;
+      case 'eclair': // foudre : claquements courts, roulement grave (moins secs)
+        for (const u of [0, 0.03, 0.07]) this.bruitF(t + u, 0.045, 0.22 * v, d, { type: 'bandpass', f0: 1500 + R() * 800, q: 0.8, a: 0.0015 });
+        this.bruitF(t + 0.02, 0.55, 0.22 * v, S, { type: 'lowpass', f0: 380, f1: 90, q: 0.7, a: 0.02, brun: true }); return 0.55;
+      case 'laser': // rayon : bourdon rond qui vibre
+        this.ton('triangle', 880 * h, 620 * h, t, 0.3, 0.08 * v, d, { vib: [24, 30], filtre: ['lowpass', 1800] });
+        this.ton('sine', 220 * h, 200 * h, t, 0.28, 0.05 * v, d); return 0.31;
       case 'fumee': // nuage de fumée
         this.bruitF(t, 0.36, 0.32 * v, d, { type: 'lowpass', f0: 3200 * h, f1: 260, q: 0.7, a: 0.006 }); return 0.36;
       case 'invocation': // invocation : « boum » grave, nuage, tintement
@@ -3334,9 +3357,9 @@ const Son = {
         this.bruitF(t, 0.36, 0.26 * v, d, { type: 'bandpass', f0: 320 * h, f1: 2800 * h, q: 1.5, a: 0.025 });
         this.ton('sine', 170 * h, 440 * h, t, 0.32, 0.18 * v, d, { a: 0.02 });
         this.ton('sine', 92, 48, t, 0.22, 0.35 * v, S); return 0.4;
-      case 'charge': // le chakra se concentre : ton qui monte en vibrant, souffle qui s'ouvre
-        this.ton('sine', 220, 880, t, 0.55, 0.12 * v, d, { a: 0.15, vib: [9, 12] });
-        this.bruitF(t, 0.55, 0.12 * v, d, { type: 'bandpass', f0: 400, f1: 2600, q: 3, a: 0.3 }); return 0.55;
+      case 'charge': // le chakra se concentre : ton qui monte doucement, souffle qui s'ouvre
+        this.ton('sine', 220, 660, t, 0.5, 0.1 * v, d, { a: 0.18, vib: [7, 8] });
+        this.bruitF(t, 0.5, 0.08 * v, d, { type: 'bandpass', f0: 400, f1: 1600, q: 1.6, a: 0.3 }); return 0.5;
       case 'charge_pleine': // charge prête : tintement clair
         this.cloche(t, 1568, 0.35, 0.11 * v, d); this.cloche(t + 0.04, 2349, 0.3, 0.06 * v, d);
         this.bruitF(t, 0.15, 0.03 * v, d, { type: 'highpass', f0: 6500, q: 0.7 }); return 0.36;
@@ -3389,11 +3412,10 @@ const Son = {
       case 'nettoyee': // salle nettoyée : trois cordes qui s'élèvent, tintement
         [659, 880, 1319].forEach((f, i) => this.pincer(t + i * 0.08, f, 0.8, 0.22 * v, d, 0.6));
         this.cloche(t + 0.25, 1976, 0.7, 0.04 * v, d); return 0.9;
-      case 'battement': // vie basse : « boum-boum »
-        this.ton('sine', 92, 54, t, 0.14, 0.5 * v, d, { a: 0.006, filtre: ['lowpass', 260] }); this.ton('sine', 82, 50, t + 0.19, 0.13, 0.36 * v, d, { a: 0.006, filtre: ['lowpass', 260] });
-        this.bruitF(t, 0.05, 0.12 * v, d, { type: 'lowpass', f0: 420, q: 0.8, a: 0.002 }); this.bruitF(t + 0.19, 0.05, 0.09 * v, d, { type: 'lowpass', f0: 420, q: 0.8, a: 0.002 }); return 0.34;
+      case 'battement': // vie basse : « boum-boum » sourd, sans clic
+        this.ton('sine', 88, 54, t, 0.14, 0.5 * v, d, { a: 0.01, filtre: ['lowpass', 220] }); this.ton('sine', 80, 50, t + 0.19, 0.13, 0.34 * v, d, { a: 0.01, filtre: ['lowpass', 220] }); return 0.34;
       // ── interface ──
-      case 'menu': this.ton('sine', 1500 * h, 1150 * h, t, 0.035, 0.08 * v, d); this.clic(t, 0.03 * v, d, 4000); return 0.04;
+      case 'menu': this.ton('sine', 1100 * h, 960 * h, t, 0.04, 0.28 * v, d, { a: 0.003 }); return 0.04;
       case 'valider': this.pincer(t, 880, 0.3, 0.2 * v, d, 0.65); this.pincer(t + 0.05, 1319, 0.35, 0.18 * v, d, 0.65); return 0.3;
       case 'annuler': this.pincer(t, 784, 0.3, 0.2 * v, d, 0.55); this.pincer(t + 0.05, 587, 0.35, 0.18 * v, d, 0.55); return 0.3;
       // ── grands moments ──
@@ -3402,13 +3424,13 @@ const Son = {
         [392, 440, 523, 587, 659, 784, 880].forEach((f, i) => this.pincer(t + i * 0.06, f, 0.9, 0.2 * v, d, 0.65));
         this.cloche(t + 0.45, 1046, 1.4, 0.08 * v, d); this.cloche(t + 0.45, 1319, 1.3, 0.06 * v, d); this.gong(t + 0.45, 0.32 * v, d); return 1.8;
       case 'boss_intro': // trois taiko, gong et bourdon grave
-        this.taiko(t, 1.0 * v, d); this.taiko(t + 0.25, 0.8 * v, d); this.taiko(t + 0.5, 1.1 * v, d); this.gong(t + 0.5, 0.5 * v, d);
-        this.ton('sawtooth', 55, 52, t + 0.5, 1.8, 0.07 * v, d, { a: 0.3, filtre: ['lowpass', 380] }); return 2.2;
+        this.taiko(t, 0.7 * v, d); this.taiko(t + 0.25, 0.55 * v, d); this.taiko(t + 0.5, 0.8 * v, d); this.gong(t + 0.5, 0.4 * v, d);
+        this.ton('triangle', 55, 52, t + 0.5, 1.6, 0.08 * v, d, { a: 0.3, filtre: ['lowpass', 300] }); return 2.2;
       case 'gong': this.gong(t, 0.5 * v, d); return 2.2;
       case 'boss_mort': // la masse s'effondre : détonation, gong, glissando qui retombe
-        this.synth('explosion', t, v * 1.1, 0.8, d); this.gong(t + 0.2, 0.42 * v, d);
+        this.synth('explosion', t, v * 0.75, 0.8, d); this.gong(t + 0.2, 0.36 * v, d);
         this.ton('sine', 420, 60, t + 0.1, 1.3, 0.12 * v, d, { a: 0.05 }); return 1.8;
-      case 'rire': for (let i = 0; i < 4; i++) this.syllabe(t + i * 0.13, (195 - i * 13) * h, 0.11, 0.5 * v, d); return 0.6; // rire du boss : « ha ha ha ha »
+      case 'rire': for (let i = 0; i < 4; i++) this.syllabe(t + i * 0.13, (195 - i * 13) * h, 0.11, 0.35 * v, d); return 0.6; // rire du boss : « ha ha ha ha »
       case 'pacte': // pacte scellé : accord sombre, gong voilé, souffle
         for (const f of [110, 131, 155]) this.ton('sawtooth', f, f * 0.99, t, 1.4, 0.05 * v, d, { a: 0.25, filtre: ['lowpass', 600] });
         this.gong(t + 0.1, 0.3 * v, d); this.bruitF(t, 1.2, 0.08 * v, d, { type: 'lowpass', f0: 500, f1: 150, q: 0.8, a: 0.3, brun: true }); return 1.5;
@@ -3486,17 +3508,17 @@ const Musique = {
       for (const n of p.basse) if (n.pas === s) this.basse(n.deg, t, n.dur * spb);
       if (s % (p.pasParMesure * 2) === 0) this.nappe(t, p.pasParMesure * 2 * spb);
       const dans = s % p.pasParMesure;
-      if (p.perc.includes(dans)) A.taiko(t, (dans === 0 ? 0.55 : 0.32) * (p.boss ? 1.2 : 1), this.gPerc);
-      if (dans % 2 === 1 && p.boss) A.souffle(t, 0.03, 0.05, 'highpass', 6000, 0, 1, this.gPerc);
-      if (dans === 4 || dans === 12) A.souffle(t, 0.04, 0.06, 'highpass', 5000, 0, 1, this.gPerc);
+      if (p.perc.includes(dans)) A.taiko(t, (dans === 0 ? 0.42 : 0.24) * (p.boss ? 1.15 : 1), this.gPerc);
+      if (dans % 2 === 1 && p.boss) A.souffle(t, 0.03, 0.02, 'bandpass', 3800, 0, 1, this.gPerc);
+      if (dans === 4 || dans === 12) A.souffle(t, 0.04, 0.026, 'bandpass', 3400, 0, 1, this.gPerc);
       this.pas++; this.prochain += spb;
     }
   },
   note(deg, t, dur, timbre) {
     const A = this.A, f = this.freq(deg);
-    if (timbre === 'koto') { A.pincer(t, f, Math.min(1.3, dur + 0.6), 0.2, this.gAmb, 0.55); A.osc('sine', f, f * 0.998, t, Math.min(1.1, dur + 0.4), 0.03, this.gAmb, 0.01); }
+    if (timbre === 'koto') { A.pincer(t, f, Math.min(1.3, dur + 0.6), 0.17, this.gAmb, 0.5); A.osc('sine', f, f * 0.998, t, Math.min(1.1, dur + 0.4), 0.03, this.gAmb, 0.01); }
     else if (timbre === 'flute') { A.ton('sine', f * 0.99, f, t, dur + 0.15, 0.07, this.gAmb, { a: 0.07, glisse: 0.06, vib: [5.2, f * 0.008] }); A.souffle(t, dur * 0.8, 0.012, 'bandpass', f * 2, 0, 6, this.gAmb); }
-    else { A.osc('square', f, f, t, dur * 0.9, 0.035, this.gAmb, 0.01); }
+    else { A.ton('triangle', f, f, t, dur * 0.9, 0.05, this.gAmb, { a: 0.01, filtre: ['lowpass', 1600] }); }
   },
   basse(deg, t, dur) { const f = this.freq(deg - 10); this.A.osc('triangle', f, f, t, dur, 0.09, this.gAmb, 0.05); },
   // nappe tenue (fondamentale et quinte, attaque lente) : remplit l'espace sous la mélodie
@@ -9849,11 +9871,15 @@ function majProjectiles(dt) {
     if (p.accel) { const k = 1 + p.accel * dt; p.vx *= k; p.vy *= k; }
     if (TR.orbite && p.proprio === 'joueur') { p.orbA += 5.5 * dt; p.orbR = Math.min(p.orbR + 20 * dt, 2.2 * TUILE); p.x = J.x + Math.cos(p.orbA) * p.orbR; p.y = J.y - 10 + Math.sin(p.orbA) * p.orbR; }
     else if (TR.retour && p.age > p.dureeVie * 0.45) {
-      const a = angleVers(p.x, p.y, J.x, J.y - 10); const v = Math.max(Math.hypot(p.vx, p.vy), 6 * TUILE); p.vx = lerp(p.vx, Math.cos(a) * v, 0.18); p.vy = lerp(p.vy, Math.sin(a) * v, 0.18);
+      // retour vers le lanceur : le joueur pour son boomerang ; pour un ennemi (shuriken de Mizuki, faux de Hidan),
+      // vers celui qui l'a lancé — jamais vers le joueur, sinon le projectile le poursuivrait sans fin
+      const ennemi = p.proprio === 'ennemi', L = ennemi ? (p.retourVers && !p.retourVers.mort ? p.retourVers : null) : J;
+      p.tRetour = (p.tRetour || 0) + dt;
+      if (L) { const a = angleVers(p.x, p.y, L.x, L.y - 10); const v = Math.max(Math.hypot(p.vx, p.vy), 6 * TUILE); const k = ennemi ? 0.07 : 0.18; p.vx = lerp(p.vx, Math.cos(a) * v, k); p.vy = lerp(p.vy, Math.sin(a) * v, k); }
       if (!p.retourne) { p.retourne = true; p.touches.clear(); }
-      if (dist(p.x, p.y, J.x, J.y - 10) < 10) { p.mort = true; continue; }
-      p.age = Math.min(p.age, p.dureeVie * 0.9);
-      if (p.proprio === 'ennemi') { p.x += p.vx * dt; p.y += p.vy * dt; }
+      if (L && dist(p.x, p.y, L.x, L.y - 10) < (ennemi ? 16 : 10)) { p.mort = true; continue; } // rattrapé par son lanceur
+      if (L && !(ennemi && p.tRetour > 2.5)) p.age = Math.min(p.age, p.dureeVie * 0.9); // un retour ennemi ne dure jamais plus de 2,5 s
+      if (ennemi) { p.x += p.vx * dt; p.y += p.vy * dt; }
     } else {
       const nx = p.x + p.vx * dt, ny = p.y + p.vy * dt;
       // Collision avec le décor
@@ -10733,7 +10759,7 @@ function aideAlignementPorte(J, mx, my, dt) {
 function blesserJoueur(demis, src = {}) {
   const J = G.joueur;
   if (J.invuln > 0 || J.intangible || J.etat === 'mort' || G.transition || J.etat === 'objet') return false;
-  if (G.modeTest && G.modeTest.dieu) { G.modeTest.coups = (G.modeTest.coups || 0) + 1; J.invuln = J.dureeInvuln || 1.0; return false; } // banc d'essai : le coup est compté, pas subi
+  if (G.modeTest && G.modeTest.dieu) { G.modeTest.coups = (G.modeTest.coups || 0) + 1; if (G.modeTest.journalCoups) G.modeTest.journalCoups.push((src.type || '?') + ':' + (src.source || '') + '@' + Math.round(J.x) + ',' + Math.round(J.y)); J.invuln = J.dureeInvuln || 1.0; return false; } // banc d'essai : le coup est compté, pas subi
   // protections acquises (dans l'ordre) : bouclier de sable, substitution, talisman, clones
   if (J.def.regleCode === 'bouclier_sable' && J.bouclierSable) { J.bouclierSable = false; J.invuln = 0.6; G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.5 }); Son.jouer('sable');
     if (J.drapeaux.sableReforme) { const s = G.salle; setTimeoutJeu(() => { if (G.salle === s && s.combat && !J.bouclierSable) { J.bouclierSable = true; Son.jouer('sable', 0.5); G.effets.push({ type: 'bouclier_sable', x: J.x, y: J.y - 12, age: 0, duree: 0.4 }); } }, 10); } // Armure de sable
@@ -12872,7 +12898,7 @@ function lancerTelegraphe(e, a) {
     case 'special': if (a.cone) { e.aCone = ciblerJoueur(e); G.effets.push({ type: 'arc_danger', x: e.x, y: e.y - 6, a: e.aCone, arc: (a.cone.arc || 90) * Math.PI / 180, r: (a.cone.portee || 3) * TUILE, age: 0, duree: a.tele || 0.5 }); break; } // sinon : aura
     default: G.effets.push({ type: 'aura_tele', x: e.x, y: e.y - e.hauteur, age: 0, duree: a.tele || 0.5, r: e.r + 6 });
   }
-  if ((a.tele || 0.5) >= 0.45) Son.jouer('telegraphe', 0.6);
+  if ((a.tele || 0.5) >= 0.45) Son.jouer('telegraphe'); // alerte douce (deux coups de bois) : jouée à plein niveau
 }
 // Bibliothèque d'attaques (données → comportement)
 function executerAttaqueBoss(e, a, moment, dt) {
@@ -14920,6 +14946,7 @@ const SceneOptions = {
   entrer(o) {
     const R = G.reglages; const maj = () => { Son.appliquerVolumes(); Rendu.ajuster(); sauverReglages(); };
     this.menu = menuListe([
+      curseur('Volume général', () => R.volGeneral ?? 0.8, v => { R.volGeneral = v; maj(); }, 0, 1, 0.1),
       curseur('Musique', () => R.volMusique, v => { R.volMusique = v; maj(); }, 0, 1, 0.1),
       curseur('Effets sonores', () => R.volEffets, v => { R.volEffets = v; maj(); }, 0, 1, 0.1),
       curseur('Vibrations', () => R.vibrations, v => { R.vibrations = v; maj(); }, 0, 1, 0.1),
@@ -15044,10 +15071,10 @@ const SceneRegistre = {
 
 const CLES = { reglages: 'lds_reglages', profil: 'lds_profil', partie: 'lds_partie' };
 const REGLAGES_DEFAUT = {
-  volMusique: 0.6, volEffets: 0.8, vibrations: 0.7, secousses: 0.7, sansFlash: false, confort: false,
+  volGeneral: 0.8, volMusique: 0.45, volEffets: 0.6, vibrations: 0.7, secousses: 0.7, sansFlash: false, confort: false,
   zoneMorteG: 0.18, zoneMorteD: 0.12, courbeG: 1.0, seuilVisee: 0.5, seuilRepos: 0.35, hysteresisAngle: 12,
   profilTir: 'stick+boutons', chargeAuto: false, afficherStats: true, chiffresDegats: false, echelle: 'entiere', eclairage: true,
-  liaisons: { manette: {}, clavier: {} }, viseeLibreControle: false, descriptionsAuto: true, version: 2,
+  liaisons: { manette: {}, clavier: {} }, viseeLibreControle: false, descriptionsAuto: true, version: 2, versionSon: 2,
 };
 const Stockage = {
   lire(cle) {
@@ -15074,6 +15101,8 @@ function chargerReglages() {
   const R = Object.assign({}, REGLAGES_DEFAUT, r); R.liaisons = Object.assign({ manette: {}, clavier: {} }, r.liaisons || {});
   // version 2 : tir aux boutons de face par défaut (comme Isaac) ; l'ancien défaut « stick + croix » bascule
   if ((r.version || 1) < 2) { if (R.profilTir === 'stick+croix') R.profilTir = 'stick+boutons'; R.version = 2; }
+  // nouveau mixage (beaucoup moins fort) : les anciens volumes enregistrés redescendent une fois aux nouveaux défauts
+  if ((r.versionSon || 1) < 2) { R.volEffets = Math.min(R.volEffets ?? 0.6, 0.6); R.volMusique = Math.min(R.volMusique ?? 0.45, 0.45); R.versionSon = 2; }
   return R;
 }
 function sauverReglages() { Stockage.ecrire(CLES.reglages, G.reglages); }
@@ -15446,7 +15475,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, dessinerPerso, dessinerJoueur, verifierTransformations, chargerActif, prixObjet, esquiveEclair, ouvrirOpportunite, VARIANTES_OPP, objetTroc, tirerVariante, verifierEveils, eveilsDe, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, Musique, dessinerPerso, dessinerJoueur, verifierTransformations, chargerActif, prixObjet, esquiveEclair, ouvrirOpportunite, VARIANTES_OPP, objetTroc, tirerVariante, verifierEveils, eveilsDe, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

@@ -147,7 +147,7 @@ function lancerTelegraphe(e, a) {
     case 'special': if (a.cone) { e.aCone = ciblerJoueur(e); G.effets.push({ type: 'arc_danger', x: e.x, y: e.y - 6, a: e.aCone, arc: (a.cone.arc || 90) * Math.PI / 180, r: (a.cone.portee || 3) * TUILE, age: 0, duree: a.tele || 0.5 }); break; } // sinon : aura
     default: G.effets.push({ type: 'aura_tele', x: e.x, y: e.y - e.hauteur, age: 0, duree: a.tele || 0.5, r: e.r + 6 });
   }
-  if ((a.tele || 0.5) >= 0.45) Son.jouer('telegraphe', 0.6);
+  if ((a.tele || 0.5) >= 0.45) Son.jouer('telegraphe'); // alerte douce (deux coups de bois) : jouée à plein niveau
 }
 // Bibliothèque d'attaques (données → comportement)
 function executerAttaqueBoss(e, a, moment, dt) {

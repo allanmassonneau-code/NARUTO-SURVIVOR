@@ -8,10 +8,10 @@
 
 const CLES = { reglages: 'lds_reglages', profil: 'lds_profil', partie: 'lds_partie' };
 const REGLAGES_DEFAUT = {
-  volMusique: 0.6, volEffets: 0.8, vibrations: 0.7, secousses: 0.7, sansFlash: false, confort: false,
+  volGeneral: 0.8, volMusique: 0.45, volEffets: 0.6, vibrations: 0.7, secousses: 0.7, sansFlash: false, confort: false,
   zoneMorteG: 0.18, zoneMorteD: 0.12, courbeG: 1.0, seuilVisee: 0.5, seuilRepos: 0.35, hysteresisAngle: 12,
   profilTir: 'stick+boutons', chargeAuto: false, afficherStats: true, chiffresDegats: false, echelle: 'entiere', eclairage: true,
-  liaisons: { manette: {}, clavier: {} }, viseeLibreControle: false, descriptionsAuto: true, version: 2,
+  liaisons: { manette: {}, clavier: {} }, viseeLibreControle: false, descriptionsAuto: true, version: 2, versionSon: 2,
 };
 const Stockage = {
   lire(cle) {
@@ -38,6 +38,8 @@ function chargerReglages() {
   const R = Object.assign({}, REGLAGES_DEFAUT, r); R.liaisons = Object.assign({ manette: {}, clavier: {} }, r.liaisons || {});
   // version 2 : tir aux boutons de face par défaut (comme Isaac) ; l'ancien défaut « stick + croix » bascule
   if ((r.version || 1) < 2) { if (R.profilTir === 'stick+croix') R.profilTir = 'stick+boutons'; R.version = 2; }
+  // nouveau mixage (beaucoup moins fort) : les anciens volumes enregistrés redescendent une fois aux nouveaux défauts
+  if ((r.versionSon || 1) < 2) { R.volEffets = Math.min(R.volEffets ?? 0.6, 0.6); R.volMusique = Math.min(R.volMusique ?? 0.45, 0.45); R.versionSon = 2; }
   return R;
 }
 function sauverReglages() { Stockage.ecrire(CLES.reglages, G.reglages); }

@@ -513,6 +513,18 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
       const r = L.creerRamassable('pilule', J.x + 20, J.y, { immobile: true }); r.age = 1; T.pas(1, []);
       const F3 = L.ficheObjet(L.cibleFiche()); if (!F3 || !/Pilule inconnue/.test(F3.nom) || F3.lignes.some(l => l.t === L.INDEX[r.id].desc)) out.ko.push('fiche : une pilule inconnue révèle son effet');
       G.reglages.descriptionsAuto = true; L.Scenes.rendre(L.Rendu.gi); }
+    // projectiles qui reviennent (grand shuriken de Mizuki, faux de Hidan) : retour vers le lanceur, esquivables d'un pas de côté
+    for (const [boss, att] of [['BOS_001', 'fuma'], ['BOS_013', 'faux']]) {
+      L.nouvellePartie({ perso: 'CHR_001', code: 'FUMA2345' }); L.Scenes.aller(L.SceneJeu); T.pas(5); const dieu = G.modeTest.dieu; G.modeTest.dieu = true; G.modeTest.coups = 0;
+      const s = G.etage.salles[G.etage.boss]; s.bossDef = boss; s.visitee = true; s.ennemisDef = []; T.allerA(s.id); T.pas(150, ['Enter']);
+      const e = G.ennemis.find(x => x.boss), J = G.joueur; e.etatB = 'recup'; e.tB = 99; e.def = Object.assign({}, e.def, { vitesse: 0 }); const [cx, cy] = [e.x, e.y];
+      J.x = cx; J.y = Math.min(cy + 120, (s.H - 2) * 32); T.pas(2, []); L.executerAttaqueBoss(e, e.def.attaques.find(x => x.id === att), 'debut', 0);
+      const p = G.proj.find(q => q.proprio === 'ennemi' && q.traj && q.traj.retour); if (!p) { out.ko.push(boss + ' : pas de projectile qui revient'); continue; }
+      for (let k = 0; k < 300 && !p.mort; k++) { T.pas(1, k < 30 ? ['KeyD'] : []); e.etatB = 'recup'; e.tB = 99; e.x = cx; e.y = cy; }
+      if (G.modeTest.coups) out.ko.push(boss + ' : projectile qui revient non esquivable (' + G.modeTest.coups + ' coup)');
+      if (!p.mort) out.ko.push(boss + ' : le projectile ne revient jamais');
+      G.modeTest.dieu = dieu;
+    }
     return out;
   });
 
@@ -576,7 +588,8 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
     verif(Tr.length >= 2 && Tr.every(p => p.prix.type === 'troc'), 'troc : prix');
     verif(cible === 'PSV_034', 'troc : objet annoncé ' + cible);
     const cont0 = J.sante.cont.length, pris = Tr[0].id; L.acheter(Tr[0]); finir();
-    verif(!J.passifs.includes('PSV_034') && (J.passifs.includes(pris) || (J.actif && J.actif.id === pris)) && J.sante.cont.length >= cont0, 'troc : échange raté ' + J.passifs.join(',') + ' / ' + cont0 + ' → ' + J.sante.cont.length);
+    const propre = (L.INDEX[pris].effets || []).reduce((s, e) => s - ((e.sante && e.sante.retraitCont) || 0), 0); // l'objet obtenu peut retirer lui-même un contenant (contrepartie)
+    verif(!J.passifs.includes('PSV_034') && (J.passifs.includes(pris) || (J.actif && J.actif.id === pris)) && J.sante.cont.length >= cont0 + propre, 'troc : échange raté ' + J.passifs.join(',') + ' / ' + cont0 + ' → ' + J.sante.cont.length);
     verif(L.objetTroc(Tr[1]) === pris || L.objetTroc(Tr[1]) === null || J.passifs.includes(L.objetTroc(Tr[1])), 'troc : nouvel objet annoncé invalide');
     // sans objet à céder : achat refusé
     [s, J] = salle('pacte', 'troc'); const T0 = s.piedestaux.find(p => p.id); verif(!L.peutPayer(T0).ok, 'troc : achat possible sans rien à céder');
