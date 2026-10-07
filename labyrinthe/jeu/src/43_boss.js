@@ -17,11 +17,24 @@ function creerBoss(id, x, y, o = {}) {
   G.bossActifs = G.ennemis.filter(x => x.boss);
   return e;
 }
+// Médiane des PV de base (tous corps compris) des boss propres à chaque étage : un boss tiré à l'autre étage
+// de son chapitre (réserves partagées) est ramené au niveau de cet étage, pour une durée de combat comparable.
+const PV_REF_ETAGE = [0, 180, 215, 300, 330, 390, 445, 430, 490];
+function ajustementPvEtage(d) {
+  const n = G.etage ? G.etage.numero : 0; if (!d || !PV_REF_ETAGE[n] || !PV_REF_ETAGE[d.etage] || d.etage === n) return 1;
+  return PV_REF_ETAGE[n] / PV_REF_ETAGE[d.etage];
+}
 function lancerBoss(s) {
   const [cx, cy] = centreSalle(s); const id = s.bossDef; const d = INDEX[id];
-  const e = creerBoss(id, cx, cy - 40);
+  const avant = new Set(G.ennemis), e = creerBoss(id, cx, cy - 40), nouveaux = G.ennemis.filter(x => !avant.has(x));
+  const k = ajustementPvEtage(d), C = s.type === 'boss' && G.etage.cfg && id === G.etage.cfg.boss && CHAMPIONS_BOSS[G.etage.cfg.championBoss]; // la brèche n'est jamais champion
+  if (C) s.championBoss = G.etage.cfg.championBoss;
+  for (const x of nouveaux) { // corps multiples (frères, trio), marionnettes et miroirs compris
+    const m = k * (C && x.boss ? C.pv : 1); if (m !== 1) { x.pvMax = Math.max(1, Math.round(x.pvMax * m)); x.pv = x.pvMax; }
+    if (C && x.boss) { x.championBoss = G.etage.cfg.championBoss; if (C.acceleration) x.acceleration = (x.acceleration || 1) * C.acceleration; if (C.echelle) { x.echelle = (x.echelle || 1) * C.echelle; x.r = Math.round(x.r * C.echelle); } if (C.echo) x.tEcho = C.echo; }
+  }
   if (s.bossPvRestant) { e.pv = e.pvMax * s.bossPvRestant[0]; } // pas d'effacement gratuit d'une phase
-  G.introBoss = { t: 0, duree: G.reglages.confort ? 1.0 : 1.6, d };
+  G.introBoss = { t: 0, duree: G.reglages.confort ? 1.0 : 1.6, d, champion: C ? G.etage.cfg.championBoss : null };
   const th = INDEX[G.theme]; Musique.jouerPiste('boss_' + id, Object.assign({}, th.musique, { tempo: (th.musique.tempo || 90) + 22, boss: true, intensite: 1.3, gamme: 'sombre' }));
   Musique.etatCombat(true);
   if (G.etage.numero === 8) G.partie.tempsEntreeBoss = G.partie.temps;
@@ -31,6 +44,8 @@ function majBoss(e, dt) {
   if (G.introBoss) { e.vx = 0; e.vy = 0; return; }
   if (e.statuts.immobilise || G.gelGlobal > 0) { e.vx *= 0.5; e.vy *= 0.5; return; }
   e.tB -= dt;
+  // champion spectral : un anneau d'ombre lent, troué pour passer, toutes les 5 s
+  if (e.tEcho !== undefined && !e.cache && !e.intangible) { e.tEcho -= dt; if (e.tEcho <= 0) { e.tEcho = CHAMPIONS_BOSS.spectral.echo; anneauBoss(e, 10, 2.6, { trou: Math.floor(Math.random() * 10), largeurTrou: 1.6 }); G.effets.push({ type: 'onde', x: e.x, y: e.y - e.hauteur, r: 40, age: 0, duree: 0.35, couleur: '#9a6aff' }); } }
   const IAB = IA_BOSS[d.ia] || IA_BOSS.generique;
   IAB(e, dt, d);
 }
@@ -70,6 +85,9 @@ function mortBoss(e) {
       const soin = G.alea.recomp.chance(0.5) ? 'coeur' : 'protection'; creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : soin, cx - 30, cy + 20, {}); // soin mesuré, utile à tous
       if (G.joueur.def.regleCode === 'avarice') creerRamassable('ryo5', cx + 30, cy + 20, {});
       for (let k = 0, n = G.alea.recomp.entierEntre(2, 4); k < n; k++) creerRamassable('ryo', cx - 10 + k * 8, cy + 34, {}); // quelques pièces
+      if (s.championBoss) { // champion : un soin et trois pièces de plus
+        creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : 'coeur', cx + 30, cy + 20, {}); for (let k = 0; k < 3; k++) creerRamassable('ryo', cx - 10 + k * 8, cy + 46, {});
+        G.partie.championsVaincus = (G.partie.championsVaincus || 0) + 1; }
       poserSortiesBoss(s);
       verifierEveils(G.joueur, G.etage.numero);
       const opp = tirerOpportunite(); if (opp) ouvrirOpportunite(opp);

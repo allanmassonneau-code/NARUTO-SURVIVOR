@@ -105,18 +105,28 @@ Probabilité par ennemi ordinaire : **5 %** (10 % en Difficile), **+2 %** à par
 
 37 boss produits (cible bibliothèque 70) : 32 d'étage (1 à 8), 2 de branche (étage 9), 1 de route chronométrée, 2 mini-boss de statues. Fiches complètes, attaque par attaque (zone, préparation, active, récupération, dégâts, réponse attendue), dans E_fiches §2. Chaque boss est peint à double résolution (D §4).
 
-**Pour ne pas revoir toujours les mêmes**, chaque étage tire son boss parmi trois à cinq (tirage fixé par le code de mission) :
+**Pour ne pas revoir toujours les mêmes**, les boss se tirent comme dans Isaac : **les deux étages d'un chapitre partagent une même réserve**, et un boss ne revient jamais deux fois dans la partie. Les étages 6 et 8 gardent leurs gardiens de fin de route (la fin s'écrit contre eux) ; l'étage qui les précède pioche aussi parmi ceux qui n'y ont pas été tirés. Tirage fixé par le code de mission (`bossChapitre`, 38_monde).
 
-| Étage | Boss possibles |
-|---|---|
-| 1 | Mizuki · Serpent géant · Frères démons |
-| 2 | Zabuza · Haku · **Neji** · **Mille-pattes géant** |
-| 3 | Kankurō et Karasu · Trio du Son · Kimimaro · **Temari** |
-| 4 | Gaara · Sasori · **Kidōmaru** · **Tayuya** |
-| 5 | Kabuto · Kisame · Hidan · **Suigetsu** |
-| 6 (première fin) | Orochimaru · **Jūgo** · **Sakon et Ukon** · **Chimère des cuves** |
-| 7 | Deidara · Itachi · Kakuzu · **Zetsu** · **Danzō** |
-| 8 (deuxième fin) | Pain · Obito · Konan · **Kinkaku et Ginkaku** |
+| Chapitre | Étage | Réserve | Boss possibles à l'étage |
+|---|---|---|---|
+| I | 1 et 2 | Mizuki · Serpent géant · Frères démons · Zabuza · Haku · **Neji** · **Mille-pattes géant** | 7, puis 6 (sans celui de l'étage 1) |
+| II | 3 et 4 | Kankurō et Karasu · Trio du Son · Kimimaro · **Temari** · Gaara · Sasori · **Kidōmaru** · **Tayuya** | 8, puis 7 |
+| III | 5 | Kabuto · Kisame · Hidan · **Suigetsu**, et les gardiens de l'étage 6 qui n'y sont pas tirés | 7 |
+| III | 6 (première fin) | Orochimaru · **Jūgo** · **Sakon et Ukon** · **Chimère des cuves** | 4 |
+| IV | 7 | Deidara · Itachi · Kakuzu · **Zetsu** · **Danzō**, et les gardiens de l'étage 8 qui n'y sont pas tirés | 8 |
+| IV | 8 (deuxième fin) | Pain · Obito · Konan · **Kinkaku et Ginkaku** | 4 |
+
+Sur 600 codes : 7 boss différents à l'étage 1 (au lieu de 3), 8 aux étages 3 à 5 et 7, aucune répétition dans une partie (test `reserves`). Un boss affronté à l'autre étage de son chapitre est ramené au niveau de cet étage : PV × médiane des PV de base de l'étage / médiane de son étage d'origine (`PV_REF_ETAGE` : 180, 215, 300, 330, 390, 445, 430, 490), pour une durée de combat comparable.
+
+**Boss champions** (comme les champions d'Isaac) : 15 % des boss aux étages 1 et 2, 20 % ensuite (jamais l'étage 9 ni la brèche) arrivent en champion, annoncé à l'intro et sur la barre de vie, teinté de sa couleur (modelé conservé, `teinteMemo`) :
+
+| Champion | Teinte | Effet | PV |
+|---|---|---|---|
+| Furieux | écarlate | tout plus rapide (déplacements, préparations, récupérations, projectiles ×1,2) | ×0,9 |
+| Colosse | or | plus grand (×1,12) et un peu plus lent (×0,92) | ×1,45 |
+| Spectral | violet | toutes les 5 s, un anneau d'ombre lent, troué pour passer | ×1,1 |
+
+Un champion vaincu laisse un soin et trois Ryō de plus.
 
 **Les douze nouveaux, chacun avec une mécanique qu'on ne voit qu'avec lui :**
 

@@ -314,7 +314,7 @@ function dessinerEnnemi(g, e, x, y) {
   g.globalAlpha = Math.max(0.15, alpha);
   const tele = e.ia.tele; let dx = 0, dy = 0, sc = 1;
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
-  const base = imageCourante(e, sp);
+  const base0 = imageCourante(e, sp), base = e.championBoss ? teinteMemo(base0, CHAMPIONS_BOSS[e.championBoss].couleur) : base0; // champion : teinte propre
   const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
   const ech = (e.echelle || 1) * sc, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
   // écrasement bref au coup reçu (plus discret sur les boss et en mode confort)

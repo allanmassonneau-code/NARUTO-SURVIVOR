@@ -2212,7 +2212,8 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
   FL({ id: 'FLR_MYO_1', theme: 'THM_MYO', nom: 'Sentiers des crapauds', mod: { huile: 0.25 }, desc: 'Flaques d’huile des crapauds : le Katon les embrase.' });
   FL({ id: 'FLR_BIJ_1', theme: 'THM_BIJ', nom: 'Chambre des chaînes', mod: { chaines: 0.3 }, desc: 'Chaînes de sceau : murs temporaires qui s’ouvrent quand la salle est nettoyée.' });
 
-  // Positions d'étage : fourchette de salles, spéciales, boss possibles
+  // Positions d'étage : fourchette de salles, spéciales, boss possibles. Les deux étages d'un chapitre partagent
+  // leur réserve de boss (voir bossEtage) ; finRoute : gardiens de fin de route, propres à l'étage 6 ou 8.
   DON.positions = [
     null,
     { pos: 1, chapitre: 1, themes: ['THM_ACA', 'THM_FOR'], salles: [8, 10], speciales: { heritage: 1, boutique: 1 }, boss: ['BOS_001', 'BOS_002', 'BOS_003'], objetsAttendus: '2 à 3', degats: 1 },
@@ -2220,9 +2221,9 @@ function def(id) { const d = INDEX[id]; if (!d) throw new Error('Identifiant inc
     { pos: 3, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [11, 13], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.1, repos: 0.15 }, boss: ['BOS_006', 'BOS_007', 'BOS_008', 'BOS_024'], objetsAttendus: '2 à 4', degats: 1 },
     { pos: 4, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [12, 14], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.15 }, boss: ['BOS_009', 'BOS_010', 'BOS_027', 'BOS_028'], objetsAttendus: '2 à 4', degats: 1 },
     { pos: 5, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [13, 15], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_011', 'BOS_012', 'BOS_013', 'BOS_029'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 6, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [14, 16], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_014', 'BOS_030', 'BOS_031', 'BOS_033'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 6, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [14, 16], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_014', 'BOS_030', 'BOS_031', 'BOS_033'], finRoute: true, objetsAttendus: '2 à 4', degats: 2 },
     { pos: 7, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [15, 17], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.15, coffres: 0.12, repos: 0.2 }, boss: ['BOS_015', 'BOS_016', 'BOS_017', 'BOS_034', 'BOS_032'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019', 'BOS_023', 'BOS_035'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019', 'BOS_023', 'BOS_035'], finRoute: true, objetsAttendus: '2 à 4', degats: 2 },
   ];
   DON.branches = {
     lumiere: { pos: 9, chapitre: 5, themes: ['THM_MYO'], salles: [16, 18], speciales: { heritage: 1, boutique: 0.6 }, boss: ['BOS_020'], degats: 2 },
@@ -3607,6 +3608,20 @@ const _silhouettes = new WeakMap();
 function silhouetteMemo(c, couleur) {
   let m = _silhouettes.get(c); if (!m) { m = new Map(); _silhouettes.set(c, m); }
   let s = m.get(couleur); if (!s) { s = silhouette(c, couleur); m.set(couleur, s); } return s;
+}
+// Teinte qui garde le modelé (luminance → dégradé noir, couleur, blanc), mêlée à l'original : boss champions.
+const _teintes = new WeakMap();
+function teinteMemo(c, couleur, force = 0.62) {
+  let m = _teintes.get(c); if (!m) { m = new Map(); _teintes.set(c, m); }
+  const cle = couleur + '|' + force; let t = m.get(cle); if (t) return t;
+  t = toile(c.width, c.height); const g = ctxDe(t); g.drawImage(c, 0, 0);
+  const img = g.getImageData(0, 0, t.width, t.height), d = img.data, [R, V, B] = hexRgb(couleur);
+  for (let i = 0; i < d.length; i += 4) {
+    if (!d[i + 3]) continue; const l = (0.3 * d[i] + 0.59 * d[i + 1] + 0.11 * d[i + 2]) / 255;
+    const f = (x) => l < 0.5 ? x * l * 2 : x + (255 - x) * (l - 0.5) * 2;
+    d[i] = d[i] + (f(R) - d[i]) * force; d[i + 1] = d[i + 1] + (f(V) - d[i + 1]) * force; d[i + 2] = d[i + 2] + (f(B) - d[i + 2]) * force;
+  }
+  g.putImageData(img, 0, 0); m.set(cle, t); return t;
 }
 // Rotation au plus proche voisin (pas de flou) dans une toile carrée.
 function tourner(c, angle) {
@@ -8640,7 +8655,7 @@ function dessinerEnnemi(g, e, x, y) {
   g.globalAlpha = Math.max(0.15, alpha);
   const tele = e.ia.tele; let dx = 0, dy = 0, sc = 1;
   if (tele) { if (tele.type === 'tremble') dx = Math.round((Math.random() - 0.5) * 3); if (tele.type === 'gonfle' || tele.type === 'vise' || tele.type === 'frappe') sc = 1 + 0.12 * (1 - tele.t / tele.duree); if (tele.type === 'accroupi') dy = 2; }
-  const base = imageCourante(e, sp);
+  const base0 = imageCourante(e, sp), base = e.championBoss ? teinteMemo(base0, CHAMPIONS_BOSS[e.championBoss].couleur) : base0; // champion : teinte propre
   const img = e.flash > 0 ? silhouetteMemo(base, '#ffffff') : base;
   const ech = (e.echelle || 1) * sc, f = ech > 1.05 ? Math.round(ech * 4) / 4 : 1;
   // écrasement bref au coup reçu (plus discret sur les boss et en mode confort)
@@ -11166,6 +11181,31 @@ function nouvellePartie(o) {
 }
 
 // Composition de l'étage n : position, thème (graine), variante, boss
+// Réserves de boss par chapitre, comme dans Isaac : les deux étages d'un chapitre piochent dans la même réserve
+// (7 boss au chapitre I, 8 au II), sans jamais le même boss deux fois dans la partie. Les étages 6 et 8 gardent
+// leurs gardiens de fin de route ; l'étage qui les précède pioche aussi parmi ceux qui n'y ont pas été tirés.
+// Tirage figé par le code de mission (la même graine redonne les mêmes boss).
+function ouvertsBoss(L) { const D = L.filter(b => Progression.estDebloque(b)); return D.length ? D : L; }
+function bossChapitre(code, ch) {
+  const etages = []; for (let k = 1; k < DON.positions.length; k++) if (DON.positions[k] && DON.positions[k].chapitre === ch) etages.push(k);
+  const [a, b] = etages, A = DON.positions[a], B = DON.positions[b], al = new Alea(code + '|' + VERSION_DONNEES + '|boss|' + ch), T = {};
+  if (!B) { T[a] = al.choix(ouvertsBoss(A.boss)); return T; }
+  if (B.finRoute) { T[b] = al.choix(ouvertsBoss(B.boss)); T[a] = al.choix(ouvertsBoss([...A.boss, ...B.boss.filter(x => x !== T[b])])); }
+  else { const L = al.melanger(ouvertsBoss([...A.boss, ...B.boss]).slice()); T[a] = L[0]; T[b] = L[1] || L[0]; }
+  return T;
+}
+function bossEtage(code, n) { return bossChapitre(code, DON.positions[n].chapitre)[n]; }
+// Boss champion (comme les champions d'Isaac) : teinte et comportement propres, récompense en plus.
+// 15 % aux étages 1 et 2, 20 % ensuite ; jamais pour les gardiens ultimes (étage 9, brèche).
+const CHAMPIONS_BOSS = {
+  furieux: { nom: 'furieux', couleur: '#ff4a3a', desc: 'plus rapide en tout', pv: 0.9, acceleration: 1.2 },
+  colosse: { nom: 'colosse', couleur: '#e8b040', desc: 'plus grand et bien plus résistant', pv: 1.45, acceleration: 0.92, echelle: 1.12 },
+  spectral: { nom: 'spectral', couleur: '#9a6aff', desc: 'lâche un anneau d’ombre toutes les 5 s', pv: 1.1, echo: 5 },
+};
+function championEtage(code, n, boss) {
+  const d = INDEX[boss]; if (n > 8 || !d || d.terminal || d.mini) return null;
+  const al = fluxEtage(code, n, 'champion'); return al.chance(n <= 2 ? 0.15 : 0.2) ? al.choix(Object.keys(CHAMPIONS_BOSS)) : null;
+}
 function configEtage(n) {
   const P = G.partie; const al = fluxEtage(P.code, n, 'theme');
   let pos = DON.positions[n];
@@ -11174,11 +11214,12 @@ function configEtage(n) {
   const theme = al.choix(themes);
   const variantes = DON.etages.filter(f => f.theme === theme);
   const variante = al.choix(variantes);
-  let boss = al.choix(pos.boss.filter(b => Progression.estDebloque(b)).length ? pos.boss.filter(b => Progression.estDebloque(b)) : pos.boss);
+  const boss = n === 9 ? al.choix(ouvertsBoss(pos.boss)) : bossEtage(P.code, n);
+  const championBoss = championEtage(P.code, n, boss);
   const nomsChap = ['', 'I', 'II', 'III', 'IV', 'V'];
   const cfg = {
     numero: n, theme, variante: variante.id, mod: variante.mod || {}, nom: INDEX[theme].nom + ' — ' + variante.nom, chapitre: pos.chapitre,
-    salles: pos.salles.slice(), speciales: Object.assign({}, pos.speciales), boss, degats: pos.degats, distBossMin: n <= 1 ? 3 : 4,
+    salles: pos.salles.slice(), speciales: Object.assign({}, pos.speciales), boss, championBoss, degats: pos.degats, distBossMin: n <= 1 ? 3 : 4,
     grandes: n <= 1 ? 0.1 : 0.2, verrouDes: 2, titre: 'Chapitre ' + nomsChap[pos.chapitre] + ' · Étage ' + n,
   };
   if (P.difficile) { cfg.salles[0]++; cfg.salles[1]++; }
@@ -12768,11 +12809,24 @@ function creerBoss(id, x, y, o = {}) {
   G.bossActifs = G.ennemis.filter(x => x.boss);
   return e;
 }
+// Médiane des PV de base (tous corps compris) des boss propres à chaque étage : un boss tiré à l'autre étage
+// de son chapitre (réserves partagées) est ramené au niveau de cet étage, pour une durée de combat comparable.
+const PV_REF_ETAGE = [0, 180, 215, 300, 330, 390, 445, 430, 490];
+function ajustementPvEtage(d) {
+  const n = G.etage ? G.etage.numero : 0; if (!d || !PV_REF_ETAGE[n] || !PV_REF_ETAGE[d.etage] || d.etage === n) return 1;
+  return PV_REF_ETAGE[n] / PV_REF_ETAGE[d.etage];
+}
 function lancerBoss(s) {
   const [cx, cy] = centreSalle(s); const id = s.bossDef; const d = INDEX[id];
-  const e = creerBoss(id, cx, cy - 40);
+  const avant = new Set(G.ennemis), e = creerBoss(id, cx, cy - 40), nouveaux = G.ennemis.filter(x => !avant.has(x));
+  const k = ajustementPvEtage(d), C = s.type === 'boss' && G.etage.cfg && id === G.etage.cfg.boss && CHAMPIONS_BOSS[G.etage.cfg.championBoss]; // la brèche n'est jamais champion
+  if (C) s.championBoss = G.etage.cfg.championBoss;
+  for (const x of nouveaux) { // corps multiples (frères, trio), marionnettes et miroirs compris
+    const m = k * (C && x.boss ? C.pv : 1); if (m !== 1) { x.pvMax = Math.max(1, Math.round(x.pvMax * m)); x.pv = x.pvMax; }
+    if (C && x.boss) { x.championBoss = G.etage.cfg.championBoss; if (C.acceleration) x.acceleration = (x.acceleration || 1) * C.acceleration; if (C.echelle) { x.echelle = (x.echelle || 1) * C.echelle; x.r = Math.round(x.r * C.echelle); } if (C.echo) x.tEcho = C.echo; }
+  }
   if (s.bossPvRestant) { e.pv = e.pvMax * s.bossPvRestant[0]; } // pas d'effacement gratuit d'une phase
-  G.introBoss = { t: 0, duree: G.reglages.confort ? 1.0 : 1.6, d };
+  G.introBoss = { t: 0, duree: G.reglages.confort ? 1.0 : 1.6, d, champion: C ? G.etage.cfg.championBoss : null };
   const th = INDEX[G.theme]; Musique.jouerPiste('boss_' + id, Object.assign({}, th.musique, { tempo: (th.musique.tempo || 90) + 22, boss: true, intensite: 1.3, gamme: 'sombre' }));
   Musique.etatCombat(true);
   if (G.etage.numero === 8) G.partie.tempsEntreeBoss = G.partie.temps;
@@ -12782,6 +12836,8 @@ function majBoss(e, dt) {
   if (G.introBoss) { e.vx = 0; e.vy = 0; return; }
   if (e.statuts.immobilise || G.gelGlobal > 0) { e.vx *= 0.5; e.vy *= 0.5; return; }
   e.tB -= dt;
+  // champion spectral : un anneau d'ombre lent, troué pour passer, toutes les 5 s
+  if (e.tEcho !== undefined && !e.cache && !e.intangible) { e.tEcho -= dt; if (e.tEcho <= 0) { e.tEcho = CHAMPIONS_BOSS.spectral.echo; anneauBoss(e, 10, 2.6, { trou: Math.floor(Math.random() * 10), largeurTrou: 1.6 }); G.effets.push({ type: 'onde', x: e.x, y: e.y - e.hauteur, r: 40, age: 0, duree: 0.35, couleur: '#9a6aff' }); } }
   const IAB = IA_BOSS[d.ia] || IA_BOSS.generique;
   IAB(e, dt, d);
 }
@@ -12821,6 +12877,9 @@ function mortBoss(e) {
       const soin = G.alea.recomp.chance(0.5) ? 'coeur' : 'protection'; creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : soin, cx - 30, cy + 20, {}); // soin mesuré, utile à tous
       if (G.joueur.def.regleCode === 'avarice') creerRamassable('ryo5', cx + 30, cy + 20, {});
       for (let k = 0, n = G.alea.recomp.entierEntre(2, 4); k < n; k++) creerRamassable('ryo', cx - 10 + k * 8, cy + 34, {}); // quelques pièces
+      if (s.championBoss) { // champion : un soin et trois pièces de plus
+        creerRamassable(G.joueur.drapeaux.sansVitalite ? 'protection' : 'coeur', cx + 30, cy + 20, {}); for (let k = 0; k < 3; k++) creerRamassable('ryo', cx - 10 + k * 8, cy + 46, {});
+        G.partie.championsVaincus = (G.partie.championsVaincus || 0) + 1; }
       poserSortiesBoss(s);
       verifierEveils(G.joueur, G.etage.numero);
       const opp = tirerOpportunite(); if (opp) ouvrirOpportunite(opp);
@@ -14384,7 +14443,8 @@ function dessinerHUD(g) {
     const pw = Math.round(w * tot / max); g.fillStyle = '#c8283a'; g.fillRect(x0, y0, pw, 5); g.fillStyle = '#ff7a64'; g.fillRect(x0, y0, pw, 1); g.fillStyle = '#7a1024'; g.fillRect(x0, y0 + 4, pw, 1);
     for (let k = 1; k < 4; k++) { g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x0 + Math.round(w * k / 4), y0, 1, 5); }
     losange(g, x0 - 9, y0 + 2, '#e0b870'); losange(g, x0 + w + 8, y0 + 2, '#e0b870');
-    Police.ecrire(g, boss[0].def.nom, 320, 329, '#f8e0d4', { a: 'c', contour: '#1c1420' });
+    const C = boss[0].championBoss && CHAMPIONS_BOSS[boss[0].championBoss], nomB = boss[0].def.nom + (C ? ' · champion ' + C.nom : '');
+    Police.ecrire(g, nomB, 320, 329, C ? nuancer(C.couleur, 1.3) : '#f8e0d4', { a: 'c', contour: '#1c1420' });
   } else _traceBoss = null;
   // bannières et panneaux
   if (G.banniere && !bannieresRetenues()) dessinerBanniere(g);
@@ -14435,10 +14495,12 @@ function dessinerIntroBoss(g) {
   g.fillStyle = '#6a1020'; g.fillRect(0, 131, ECRAN_L, 1); g.fillRect(0, 208, ECRAN_L, 1);
   const x = lerp(-200, 320, Math.min(1, k * 4));
   // portrait : le boss peint entre par la droite, arme levée, découpé par le bandeau
-  const sp = spriteEnnemi({ def: I.d, frame: 0 }), im = sp.frames[sp.attaque ? 2 : 0];
+  const sp = spriteEnnemi({ def: I.d, frame: 0 }), im0 = sp.frames[sp.attaque ? 2 : 0], im = im0 && I.champion ? teinteMemo(im0, CHAMPIONS_BOSS[I.champion].couleur) : im0;
   if (im) { const px = Math.round(lerp(ECRAN_L + 40, ECRAN_L - 120, Math.min(1, k * 3.2))); g.save(); g.beginPath(); g.rect(0, 132, ECRAN_L, 76); g.clip(); g.drawImage(im, px - Math.round(im.width / 2), 207 - im.height + (sp.base || 0)); g.restore(); }
   Police.ecrire(g, I.d.titre || '', x, 146, '#d8a0a0', { a: 'c' });
   Police.ecrire(g, I.d.nom, x, 162, '#fff0e0', { a: 'c', e: 3, contour: '#1c1420' });
+  const C = I.champion && CHAMPIONS_BOSS[I.champion];
+  if (C) { const t = 'Champion ' + C.nom + ' : ' + C.desc, w = Police.largeur(t); losange(g, x - w / 2 - 8, 194, C.couleur); losange(g, x + w / 2 + 7, 194, C.couleur); Police.ecrire(g, t, x, 190, C.couleur, { a: 'c', contour: '#1c1420' }); }
   g.globalAlpha = 1;
 }
 function dessinerPanneauAchat(g, p) {
@@ -15475,7 +15537,7 @@ function demarrer() {
   Scenes.aller(SceneTitre);
   requestAnimationFrame(boucle);
   // Interface de test (Playwright) : pas de dépendance du jeu envers elle
-  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, Musique, dessinerPerso, dessinerJoueur, verifierTransformations, chargerActif, prixObjet, esquiveEclair, ouvrirOpportunite, VARIANTES_OPP, objetTroc, tirerVariante, verifierEveils, eveilsDe, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
+  window.LDS = { G, DON, INDEX, Scenes, Entrees, Son, Musique, iconeObjet, spriteRamassable, dessinerPerso, dessinerJoueur, verifierTransformations, chargerActif, prixObjet, esquiveEclair, ouvrirOpportunite, VARIANTES_OPP, objetTroc, tirerVariante, verifierEveils, eveilsDe, spriteFamilier, spriteBossPeint, BOSS_PEINTS, lancerTelegraphe, executerAttaqueBoss, cibleFiche, ficheObjet, synergiesActives, synergiesReunies, naturesJoueur, evenement, infligerDegats, dansSableArene, dessinerEnnemi, tirEnnemi, creerZone, tirerOpportunite, SceneRegistre, SceneSelection, SceneVictoire, nouvellePartie, entrerSalle, entrerEtage, genererEtage, configEtage, acquerirPassif, creerEnnemi, creerBoss, majJeu, SceneJeu, SceneTitre, Progression, recalculer, calculerStats, calculerProfil, relancerPiedestaux, planEtage, serialiserPartie, reprendrePartie, chanceOpportunite, tirerObjet, Stockage, CLES, utiliserActif, donnerConsommable, utiliserPoche, verifierNettoyage, demarrerTransition, PROP, T, tuileA, TUILE, appliquerGabarit, Rendu, spriteEnnemi, prixRyo, peutPayer, acheter, poserPiedestal, creerRamassable, collecter, explosion, blesserJoueur, payerSante, sacrifier, soignerJoueur, santeInit, subirDemis, rougeTotal, santeTotale, utiliserMachine };
 }
 
 // ─── 99_demarrage.js ───

@@ -1,7 +1,7 @@
 // Tests automatisés du jeu dans Chromium (Playwright).
 // Usage : node labyrinthe/outils/tests_jeu.mjs [section…]
 // Sections : generation, parcours, objets, actifs, synergies, boss, ennemis, personnages, sauvegarde, manette, economie,
-// secours, visibilite, mecaniques, pactes, opportunites, eveils, defis
+// secours, visibilite, mecaniques, pactes, opportunites, eveils, defis, reserves
 // Ne remplace pas une recette manuelle à la manette : il vérifie l'absence d'erreurs
 // et des invariants (portes reliées, boss atteignable, récompenses uniques…).
 import { createRequire } from 'node:module';
@@ -222,6 +222,57 @@ const AIDE = readFileSync(join(racine, 'outils', 'aide_tests.js'), 'utf8');
         if (G.ennemis.some(x => x.boss && !x.mort)) out.intouchable.push(d.id + ' ' + G.ennemis.filter(x => x.boss).map(x => Math.round(x.pv) + '/' + Math.round(x.pvMax)).join(','));
         else out.ok++;
       } catch (err) { out.ko.push(d.id + ' ' + String(err.stack || err).slice(0, 300)); }
+    }
+    return out;
+  });
+
+  // 5 bis) Réserves de boss par chapitre (façon Isaac), sans répétition dans une partie ; boss champions
+  if (veut('reserves')) await lancer('reserves', () => {
+    const L = window.LDS, G = L.G, T = window.__T, D = L.DON; const out = { ko: [], couverture: {}, champions: 0, tirages: 0 };
+    L.nouvellePartie({ perso: 'CHR_001', code: 'RSRV2345' });
+    const A = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ', vusEtage = {}; let alea = 7;
+    const code = () => { let c = ''; for (let k = 0; k < 8; k++) { alea = (alea * 1103515245 + 12345) % 2147483648; c += A[Math.floor(alea / 65536) % 32]; } return c; };
+    const reserve = n => { const P = D.positions, p = P[n], ch = P.filter(q => q && q.chapitre === p.chapitre), b = ch[1]; if (p.finRoute) return p.boss; return b ? [...ch[0].boss, ...b.boss] : p.boss; };
+    let parChampion = null, parEmprunt = null;
+    for (let i = 0; i < 300; i++) {
+      const c = code(); G.partie.code = c; const vus = new Set();
+      for (let n = 1; n <= 8; n++) {
+        const cfg = L.configEtage(n); out.tirages++;
+        if (!reserve(n).includes(cfg.boss)) out.ko.push(c + ' étage ' + n + ' : ' + cfg.boss + ' hors de la réserve du chapitre');
+        if (vus.has(cfg.boss)) out.ko.push(c + ' : ' + cfg.boss + ' deux fois dans la partie'); vus.add(cfg.boss);
+        (vusEtage[n] = vusEtage[n] || new Set()).add(cfg.boss);
+        if (cfg.championBoss) { out.champions++; if (n === 1 && !parChampion) parChampion = { code: c, boss: cfg.boss, champion: cfg.championBoss }; }
+        if (n === 1 && !cfg.championBoss && L.INDEX[cfg.boss].etage === 2 && !parEmprunt) parEmprunt = { code: c, boss: cfg.boss };
+        if (L.configEtage(n).boss !== cfg.boss) out.ko.push(c + ' étage ' + n + ' : tirage non reproductible');
+      }
+    }
+    for (const n in vusEtage) out.couverture[n] = vusEtage[n].size;
+    if (out.couverture[1] < 7 || out.couverture[3] < 8) out.ko.push('réserves de chapitre incomplètes : ' + JSON.stringify(out.couverture));
+    const taux = out.champions / out.tirages; if (taux < 0.12 || taux > 0.28) out.ko.push('taux de champions anormal : ' + taux.toFixed(3));
+    // un boss de l'étage 2 tiré à l'étage 1 : PV ramenés au niveau de l'étage 1
+    if (!parEmprunt) out.ko.push('aucun boss d’étage 2 tiré à l’étage 1');
+    else {
+      L.nouvellePartie({ perso: 'CHR_001', code: parEmprunt.code }); L.Scenes.aller(L.SceneJeu); T.pas(5); T.allerA(G.etage.boss); T.pas(120, ['Enter']);
+      const b = G.ennemis.find(x => x.id === parEmprunt.boss), d = L.INDEX[parEmprunt.boss];
+      const attendu = Math.round(d.pv * 0.85 * 180 / 215 * (parEmprunt.boss === 'BOS_003' ? 1 : 1));
+      if (!b) out.ko.push('boss emprunté absent'); else if (Math.abs(b.pvMax - attendu) > 2) out.ko.push(d.id + ' à l’étage 1 : ' + b.pvMax + ' PV au lieu de ' + attendu);
+      out.emprunt = d.id + ' ' + (b && b.pvMax) + ' PV';
+    }
+    // un boss champion : teinte, PV, annonce, récompense en plus
+    if (!parChampion) out.ko.push('aucun champion à l’étage 1 sur 300 codes');
+    else {
+      L.nouvellePartie({ perso: 'CHR_001', code: parChampion.code }); L.Scenes.aller(L.SceneJeu); T.pas(5); T.allerA(G.etage.boss);
+      if (!G.introBoss || G.introBoss.champion !== parChampion.champion) out.ko.push('annonce sans le champion');
+      T.pas(120, ['Enter']);
+      const corps = G.ennemis.filter(x => x.boss); if (!corps.length || corps.some(x => x.championBoss !== parChampion.champion)) out.ko.push('corps du boss sans le champion ' + parChampion.champion);
+      const d = L.INDEX[parChampion.boss], C = { furieux: 0.9, colosse: 1.45, spectral: 1.1 }[parChampion.champion];
+      const k = d.etage === 1 ? 1 : 180 / 215, attendu = Math.round(Math.round(d.pv * 0.85) * k * C);
+      if (corps[0] && Math.abs(corps[0].pvMax - attendu) > 3) out.ko.push(parChampion.champion + ' ' + d.id + ' : ' + corps[0].pvMax + ' PV au lieu d’environ ' + attendu);
+      const ryo0 = G.joueur.ryo; for (const x of G.ennemis) x.pv = 1; T.bot(12, { dieu: true, jusquaNettoyage: true });
+      const s = G.etage.salles[G.etage.boss], ram = s.ramassables.filter(r => !r.pris).map(r => r.type).concat(Array(Math.max(0, G.joueur.ryo - ryo0)).fill('ryo'));
+      if (!s.championBoss) out.ko.push('salle du boss sans trace du champion');
+      if (ram.filter(t => t === 'ryo').length < 5 || ram.filter(t => t === 'coeur' || t === 'protection').length < 2) out.ko.push('récompense du champion absente : ' + ram.join(','));
+      out.champion = parChampion.champion + ' ' + d.id + ' ' + (corps[0] && corps[0].pvMax) + ' PV ; butin ' + ram.length;
     }
     return out;
   });

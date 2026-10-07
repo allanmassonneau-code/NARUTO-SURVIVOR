@@ -79,6 +79,20 @@ function silhouetteMemo(c, couleur) {
   let m = _silhouettes.get(c); if (!m) { m = new Map(); _silhouettes.set(c, m); }
   let s = m.get(couleur); if (!s) { s = silhouette(c, couleur); m.set(couleur, s); } return s;
 }
+// Teinte qui garde le modelé (luminance → dégradé noir, couleur, blanc), mêlée à l'original : boss champions.
+const _teintes = new WeakMap();
+function teinteMemo(c, couleur, force = 0.62) {
+  let m = _teintes.get(c); if (!m) { m = new Map(); _teintes.set(c, m); }
+  const cle = couleur + '|' + force; let t = m.get(cle); if (t) return t;
+  t = toile(c.width, c.height); const g = ctxDe(t); g.drawImage(c, 0, 0);
+  const img = g.getImageData(0, 0, t.width, t.height), d = img.data, [R, V, B] = hexRgb(couleur);
+  for (let i = 0; i < d.length; i += 4) {
+    if (!d[i + 3]) continue; const l = (0.3 * d[i] + 0.59 * d[i + 1] + 0.11 * d[i + 2]) / 255;
+    const f = (x) => l < 0.5 ? x * l * 2 : x + (255 - x) * (l - 0.5) * 2;
+    d[i] = d[i] + (f(R) - d[i]) * force; d[i + 1] = d[i + 1] + (f(V) - d[i + 1]) * force; d[i + 2] = d[i + 2] + (f(B) - d[i + 2]) * force;
+  }
+  g.putImageData(img, 0, 0); m.set(cle, t); return t;
+}
 // Rotation au plus proche voisin (pas de flou) dans une toile carrée.
 function tourner(c, angle) {
   const n = Math.ceil(Math.hypot(c.width, c.height)) | 1; const out = toile(n, n), g = ctxDe(out);

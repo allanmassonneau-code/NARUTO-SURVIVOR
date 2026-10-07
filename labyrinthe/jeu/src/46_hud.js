@@ -132,7 +132,8 @@ function dessinerHUD(g) {
     const pw = Math.round(w * tot / max); g.fillStyle = '#c8283a'; g.fillRect(x0, y0, pw, 5); g.fillStyle = '#ff7a64'; g.fillRect(x0, y0, pw, 1); g.fillStyle = '#7a1024'; g.fillRect(x0, y0 + 4, pw, 1);
     for (let k = 1; k < 4; k++) { g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x0 + Math.round(w * k / 4), y0, 1, 5); }
     losange(g, x0 - 9, y0 + 2, '#e0b870'); losange(g, x0 + w + 8, y0 + 2, '#e0b870');
-    Police.ecrire(g, boss[0].def.nom, 320, 329, '#f8e0d4', { a: 'c', contour: '#1c1420' });
+    const C = boss[0].championBoss && CHAMPIONS_BOSS[boss[0].championBoss], nomB = boss[0].def.nom + (C ? ' · champion ' + C.nom : '');
+    Police.ecrire(g, nomB, 320, 329, C ? nuancer(C.couleur, 1.3) : '#f8e0d4', { a: 'c', contour: '#1c1420' });
   } else _traceBoss = null;
   // bannières et panneaux
   if (G.banniere && !bannieresRetenues()) dessinerBanniere(g);
@@ -183,10 +184,12 @@ function dessinerIntroBoss(g) {
   g.fillStyle = '#6a1020'; g.fillRect(0, 131, ECRAN_L, 1); g.fillRect(0, 208, ECRAN_L, 1);
   const x = lerp(-200, 320, Math.min(1, k * 4));
   // portrait : le boss peint entre par la droite, arme levée, découpé par le bandeau
-  const sp = spriteEnnemi({ def: I.d, frame: 0 }), im = sp.frames[sp.attaque ? 2 : 0];
+  const sp = spriteEnnemi({ def: I.d, frame: 0 }), im0 = sp.frames[sp.attaque ? 2 : 0], im = im0 && I.champion ? teinteMemo(im0, CHAMPIONS_BOSS[I.champion].couleur) : im0;
   if (im) { const px = Math.round(lerp(ECRAN_L + 40, ECRAN_L - 120, Math.min(1, k * 3.2))); g.save(); g.beginPath(); g.rect(0, 132, ECRAN_L, 76); g.clip(); g.drawImage(im, px - Math.round(im.width / 2), 207 - im.height + (sp.base || 0)); g.restore(); }
   Police.ecrire(g, I.d.titre || '', x, 146, '#d8a0a0', { a: 'c' });
   Police.ecrire(g, I.d.nom, x, 162, '#fff0e0', { a: 'c', e: 3, contour: '#1c1420' });
+  const C = I.champion && CHAMPIONS_BOSS[I.champion];
+  if (C) { const t = 'Champion ' + C.nom + ' : ' + C.desc, w = Police.largeur(t); losange(g, x - w / 2 - 8, 194, C.couleur); losange(g, x + w / 2 + 7, 194, C.couleur); Police.ecrire(g, t, x, 190, C.couleur, { a: 'c', contour: '#1c1420' }); }
   g.globalAlpha = 1;
 }
 function dessinerPanneauAchat(g, p) {

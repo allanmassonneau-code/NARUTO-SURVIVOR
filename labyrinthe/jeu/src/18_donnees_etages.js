@@ -87,7 +87,8 @@
   FL({ id: 'FLR_MYO_1', theme: 'THM_MYO', nom: 'Sentiers des crapauds', mod: { huile: 0.25 }, desc: 'Flaques d’huile des crapauds : le Katon les embrase.' });
   FL({ id: 'FLR_BIJ_1', theme: 'THM_BIJ', nom: 'Chambre des chaînes', mod: { chaines: 0.3 }, desc: 'Chaînes de sceau : murs temporaires qui s’ouvrent quand la salle est nettoyée.' });
 
-  // Positions d'étage : fourchette de salles, spéciales, boss possibles
+  // Positions d'étage : fourchette de salles, spéciales, boss possibles. Les deux étages d'un chapitre partagent
+  // leur réserve de boss (voir bossEtage) ; finRoute : gardiens de fin de route, propres à l'étage 6 ou 8.
   DON.positions = [
     null,
     { pos: 1, chapitre: 1, themes: ['THM_ACA', 'THM_FOR'], salles: [8, 10], speciales: { heritage: 1, boutique: 1 }, boss: ['BOS_001', 'BOS_002', 'BOS_003'], objetsAttendus: '2 à 3', degats: 1 },
@@ -95,9 +96,9 @@
     { pos: 3, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [11, 13], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.1, repos: 0.15 }, boss: ['BOS_006', 'BOS_007', 'BOS_008', 'BOS_024'], objetsAttendus: '2 à 4', degats: 1 },
     { pos: 4, chapitre: 2, themes: ['THM_SUN', 'THM_MAR'], salles: [12, 14], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.35, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.15 }, boss: ['BOS_009', 'BOS_010', 'BOS_027', 'BOS_028'], objetsAttendus: '2 à 4', degats: 1 },
     { pos: 5, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [13, 15], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_011', 'BOS_012', 'BOS_013', 'BOS_029'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 6, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [14, 16], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_014', 'BOS_030', 'BOS_031', 'BOS_033'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 6, chapitre: 3, themes: ['THM_ORO', 'THM_KIR'], salles: [14, 16], speciales: { heritage: 1, boutique: 1, defi_boss: 0.2, sacrifice: 0.12, malediction: 0.4, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.12, coffres: 0.12, repos: 0.2 }, boss: ['BOS_014', 'BOS_030', 'BOS_031', 'BOS_033'], finRoute: true, objetsAttendus: '2 à 4', degats: 2 },
     { pos: 7, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [15, 17], speciales: { heritage: 1, boutique: 1, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.3, bibliotheque: 0.15, coffres: 0.12, repos: 0.2 }, boss: ['BOS_015', 'BOS_016', 'BOS_017', 'BOS_034', 'BOS_032'], objetsAttendus: '2 à 4', degats: 2 },
-    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019', 'BOS_023', 'BOS_035'], objetsAttendus: '2 à 4', degats: 2 },
+    { pos: 8, chapitre: 4, themes: ['THM_AKA', 'THM_GUE'], salles: [16, 18], speciales: { heritage: 1, boutique: 1, defi_boss: 0.25, sacrifice: 0.12, malediction: 0.45, defi: 0.25, dispositifs: 0.4, bibliotheque: 0.15, coffres: 0.15, repos: 0.2 }, boss: ['BOS_018', 'BOS_019', 'BOS_023', 'BOS_035'], finRoute: true, objetsAttendus: '2 à 4', degats: 2 },
   ];
   DON.branches = {
     lumiere: { pos: 9, chapitre: 5, themes: ['THM_MYO'], salles: [16, 18], speciales: { heritage: 1, boutique: 0.6 }, boss: ['BOS_020'], degats: 2 },

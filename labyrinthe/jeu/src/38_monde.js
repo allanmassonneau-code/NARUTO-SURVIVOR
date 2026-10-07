@@ -28,6 +28,31 @@ function nouvellePartie(o) {
 }
 
 // Composition de l'étage n : position, thème (graine), variante, boss
+// Réserves de boss par chapitre, comme dans Isaac : les deux étages d'un chapitre piochent dans la même réserve
+// (7 boss au chapitre I, 8 au II), sans jamais le même boss deux fois dans la partie. Les étages 6 et 8 gardent
+// leurs gardiens de fin de route ; l'étage qui les précède pioche aussi parmi ceux qui n'y ont pas été tirés.
+// Tirage figé par le code de mission (la même graine redonne les mêmes boss).
+function ouvertsBoss(L) { const D = L.filter(b => Progression.estDebloque(b)); return D.length ? D : L; }
+function bossChapitre(code, ch) {
+  const etages = []; for (let k = 1; k < DON.positions.length; k++) if (DON.positions[k] && DON.positions[k].chapitre === ch) etages.push(k);
+  const [a, b] = etages, A = DON.positions[a], B = DON.positions[b], al = new Alea(code + '|' + VERSION_DONNEES + '|boss|' + ch), T = {};
+  if (!B) { T[a] = al.choix(ouvertsBoss(A.boss)); return T; }
+  if (B.finRoute) { T[b] = al.choix(ouvertsBoss(B.boss)); T[a] = al.choix(ouvertsBoss([...A.boss, ...B.boss.filter(x => x !== T[b])])); }
+  else { const L = al.melanger(ouvertsBoss([...A.boss, ...B.boss]).slice()); T[a] = L[0]; T[b] = L[1] || L[0]; }
+  return T;
+}
+function bossEtage(code, n) { return bossChapitre(code, DON.positions[n].chapitre)[n]; }
+// Boss champion (comme les champions d'Isaac) : teinte et comportement propres, récompense en plus.
+// 15 % aux étages 1 et 2, 20 % ensuite ; jamais pour les gardiens ultimes (étage 9, brèche).
+const CHAMPIONS_BOSS = {
+  furieux: { nom: 'furieux', couleur: '#ff4a3a', desc: 'plus rapide en tout', pv: 0.9, acceleration: 1.2 },
+  colosse: { nom: 'colosse', couleur: '#e8b040', desc: 'plus grand et bien plus résistant', pv: 1.45, acceleration: 0.92, echelle: 1.12 },
+  spectral: { nom: 'spectral', couleur: '#9a6aff', desc: 'lâche un anneau d’ombre toutes les 5 s', pv: 1.1, echo: 5 },
+};
+function championEtage(code, n, boss) {
+  const d = INDEX[boss]; if (n > 8 || !d || d.terminal || d.mini) return null;
+  const al = fluxEtage(code, n, 'champion'); return al.chance(n <= 2 ? 0.15 : 0.2) ? al.choix(Object.keys(CHAMPIONS_BOSS)) : null;
+}
 function configEtage(n) {
   const P = G.partie; const al = fluxEtage(P.code, n, 'theme');
   let pos = DON.positions[n];
@@ -36,11 +61,12 @@ function configEtage(n) {
   const theme = al.choix(themes);
   const variantes = DON.etages.filter(f => f.theme === theme);
   const variante = al.choix(variantes);
-  let boss = al.choix(pos.boss.filter(b => Progression.estDebloque(b)).length ? pos.boss.filter(b => Progression.estDebloque(b)) : pos.boss);
+  const boss = n === 9 ? al.choix(ouvertsBoss(pos.boss)) : bossEtage(P.code, n);
+  const championBoss = championEtage(P.code, n, boss);
   const nomsChap = ['', 'I', 'II', 'III', 'IV', 'V'];
   const cfg = {
     numero: n, theme, variante: variante.id, mod: variante.mod || {}, nom: INDEX[theme].nom + ' — ' + variante.nom, chapitre: pos.chapitre,
-    salles: pos.salles.slice(), speciales: Object.assign({}, pos.speciales), boss, degats: pos.degats, distBossMin: n <= 1 ? 3 : 4,
+    salles: pos.salles.slice(), speciales: Object.assign({}, pos.speciales), boss, championBoss, degats: pos.degats, distBossMin: n <= 1 ? 3 : 4,
     grandes: n <= 1 ? 0.1 : 0.2, verrouDes: 2, titre: 'Chapitre ' + nomsChap[pos.chapitre] + ' · Étage ' + n,
   };
   if (P.difficile) { cfg.salles[0]++; cfg.salles[1]++; }

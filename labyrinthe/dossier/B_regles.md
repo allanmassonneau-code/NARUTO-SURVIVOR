@@ -171,7 +171,7 @@ Les dégâts d’une émission : `dégâts × coefficient du profil × coefficie
 La puissance du joueur (dégâts × cadence × multitir) passe d'environ 9 à l'étage 1 à 25–40 à l'étage 8 ; les PV adverses suivent donc l'étage :
 
 - **Ennemis ordinaires** : PV × (1 + 0,10 × (étage − 1)), soit ×1,7 à l'étage 8 (`facteurPvEnnemi`).
-- **Boss** : PV × facteur de l'étage où on les affronte (`FACTEUR_PV_BOSS`) — 0,85 / 0,95 / 1,15 / 1,35 / 1,55 / 1,75 / 2,2 / 2,6 pour les étages 1 à 8, 1,9 pour les boss terminaux (déjà 800 à 1 000 PV de base). Les vagues de boss des épreuves et les gardiens de statue suivent le même facteur.
+- **Boss** : PV × facteur de l'étage où on les affronte (`FACTEUR_PV_BOSS`) — 0,85 / 0,95 / 1,15 / 1,35 / 1,55 / 1,75 / 2,2 / 2,6 pour les étages 1 à 8, 1,9 pour les boss terminaux (déjà 800 à 1 000 PV de base). Les vagues de boss des épreuves et les gardiens de statue suivent le même facteur. Un boss tiré à l'autre étage de son chapitre (réserves partagées, E §3) est en plus ramené au niveau de l'étage : × `PV_REF_ETAGE[étage] / PV_REF_ETAGE[étage d'origine]` ; un boss champion : ×0,9 (furieux), ×1,45 (colosse), ×1,1 (spectral).
 
 Ces facteurs viennent du **banc d'équilibrage** (`outils/equilibrage.mjs`) : douze parties simulées (une par personnage), huit étages, joueur invulnérable mais chaque coup qui l'aurait touché est compté. Avant / après le réglage (médianes et moyennes sur 12 à 24 parties) :
 
